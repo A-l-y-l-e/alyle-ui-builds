@@ -18,9 +18,6 @@ export declare class LyButton implements OnInit, AfterViewInit, OnDestroy {
     rippleSensitive: boolean;
     buttonContent: ElementRef;
     disabled: boolean;
-    readonly classes: {
-        currentConfig: string;
-    };
     constructor(elementRef: ElementRef, renderer: Renderer2, theme: LyTheme2, rippleStyles: LyRippleService, buttonService: LyButtonService, _ngZone: NgZone, bgAndColor: LyBgColorAndRaised);
     ngOnInit(): void;
     focused(): void;

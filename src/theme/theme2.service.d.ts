@@ -15,3 +15,4 @@ export declare class LyTheme2 {
     updateClassName(element: any, renderer: Renderer2, newClassname: string, oldClassname?: string): void;
     setTheme(nam: string): void;
 }
+export declare function toHyphenCase(str: string): string;

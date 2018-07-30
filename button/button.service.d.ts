@@ -1,12 +1,12 @@
-import { CoreTheme } from '@alyle/ui';
+import { LyTheme2, CoreTheme } from '@alyle/ui';
 export declare class LyButtonService {
     private coreTheme;
-    private rootClassName;
-    private themeClassName;
+    private theme;
     classes: {
         root: string;
         outlined: string;
         buttonContent: string;
+        currentConfig: string;
     };
-    constructor(coreTheme: CoreTheme);
+    constructor(coreTheme: CoreTheme, theme: LyTheme2);
 }
