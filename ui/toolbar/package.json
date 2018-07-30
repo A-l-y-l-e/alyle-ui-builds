@@ -1,0 +1,13 @@
+{
+  "main": "../bundles/alyle-ui-toolbar.umd.js",
+  "module": "../fesm5/alyle-ui-toolbar.js",
+  "es2015": "../fesm2015/alyle-ui-toolbar.js",
+  "esm5": "../esm5/toolbar/alyle-ui-toolbar.js",
+  "esm2015": "../esm2015/toolbar/alyle-ui-toolbar.js",
+  "fesm5": "../fesm5/alyle-ui-toolbar.js",
+  "fesm2015": "../fesm2015/alyle-ui-toolbar.js",
+  "typings": "alyle-ui-toolbar.d.ts",
+  "metadata": "alyle-ui-toolbar.metadata.json",
+  "sideEffects": false,
+  "name": "@alyle/ui/toolbar"
+}

@@ -1,0 +1,13 @@
+{
+  "main": "../bundles/alyle-ui-flex.umd.js",
+  "module": "../fesm5/alyle-ui-flex.js",
+  "es2015": "../fesm2015/alyle-ui-flex.js",
+  "esm5": "../esm5/flex/alyle-ui-flex.js",
+  "esm2015": "../esm2015/flex/alyle-ui-flex.js",
+  "fesm5": "../fesm5/alyle-ui-flex.js",
+  "fesm2015": "../fesm2015/alyle-ui-flex.js",
+  "typings": "alyle-ui-flex.d.ts",
+  "metadata": "alyle-ui-flex.metadata.json",
+  "sideEffects": false,
+  "name": "@alyle/ui/flex"
+}

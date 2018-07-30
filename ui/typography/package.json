@@ -1,0 +1,13 @@
+{
+  "main": "../bundles/alyle-ui-typography.umd.js",
+  "module": "../fesm5/alyle-ui-typography.js",
+  "es2015": "../fesm2015/alyle-ui-typography.js",
+  "esm5": "../esm5/typography/alyle-ui-typography.js",
+  "esm2015": "../esm2015/typography/alyle-ui-typography.js",
+  "fesm5": "../fesm5/alyle-ui-typography.js",
+  "fesm2015": "../fesm2015/alyle-ui-typography.js",
+  "typings": "alyle-ui-typography.d.ts",
+  "metadata": "alyle-ui-typography.metadata.json",
+  "sideEffects": false,
+  "name": "@alyle/ui/typography"
+}

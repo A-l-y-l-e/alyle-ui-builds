@@ -1,0 +1,13 @@
+{
+  "main": "../bundles/alyle-ui-responsive.umd.js",
+  "module": "../fesm5/alyle-ui-responsive.js",
+  "es2015": "../fesm2015/alyle-ui-responsive.js",
+  "esm5": "../esm5/responsive/alyle-ui-responsive.js",
+  "esm2015": "../esm2015/responsive/alyle-ui-responsive.js",
+  "fesm5": "../fesm5/alyle-ui-responsive.js",
+  "fesm2015": "../fesm2015/alyle-ui-responsive.js",
+  "typings": "alyle-ui-responsive.d.ts",
+  "metadata": "alyle-ui-responsive.metadata.json",
+  "sideEffects": false,
+  "name": "@alyle/ui/responsive"
+}

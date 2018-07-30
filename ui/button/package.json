@@ -1,0 +1,13 @@
+{
+  "main": "../bundles/alyle-ui-button.umd.js",
+  "module": "../fesm5/alyle-ui-button.js",
+  "es2015": "../fesm2015/alyle-ui-button.js",
+  "esm5": "../esm5/button/alyle-ui-button.js",
+  "esm2015": "../esm2015/button/alyle-ui-button.js",
+  "fesm5": "../fesm5/alyle-ui-button.js",
+  "fesm2015": "../fesm2015/alyle-ui-button.js",
+  "typings": "alyle-ui-button.d.ts",
+  "metadata": "alyle-ui-button.metadata.json",
+  "sideEffects": false,
+  "name": "@alyle/ui/button"
+}
