@@ -1,0 +1,13 @@
+{
+  "main": "../bundles/alyle-ui-radio.umd.js",
+  "module": "../fesm5/alyle-ui-radio.js",
+  "es2015": "../fesm2015/alyle-ui-radio.js",
+  "esm5": "../esm5/radio/alyle-ui-radio.js",
+  "esm2015": "../esm2015/radio/alyle-ui-radio.js",
+  "fesm5": "../fesm5/alyle-ui-radio.js",
+  "fesm2015": "../fesm2015/alyle-ui-radio.js",
+  "typings": "alyle-ui-radio.d.ts",
+  "metadata": "alyle-ui-radio.metadata.json",
+  "sideEffects": false,
+  "name": "@alyle/ui/radio"
+}

@@ -1,0 +1,42 @@
+{
+  "name": "@alyle/ui",
+  "version": "1.7.0-beta.3vwyc",
+  "description": "Minimal Design, a package of components for Angular",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/A-l-y-l-e/Alyle-UI.git"
+  },
+  "keywords": [
+    "angular",
+    "components",
+    "material",
+    "design",
+    "minimal",
+    "ui"
+  ],
+  "author": "Alyle",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/A-l-y-l-e/Alyle-UI/issues"
+  },
+  "homepage": "https://github.com/A-l-y-l-e/Alyle-UI#readme",
+  "peerDependencies": {
+    "@angular/common": "^6.0.0-rc.0 || ^6.0.0",
+    "@angular/core": "^6.0.0-rc.0 || ^6.0.0",
+    "chroma-js": "^1.3.6",
+    "hammerjs": "^2.0.8"
+  },
+  "main": "bundles/alyle-ui.umd.js",
+  "module": "fesm5/alyle-ui.js",
+  "es2015": "fesm2015/alyle-ui.js",
+  "esm5": "esm5/alyle-ui.js",
+  "esm2015": "esm2015/alyle-ui.js",
+  "fesm5": "fesm5/alyle-ui.js",
+  "fesm2015": "fesm2015/alyle-ui.js",
+  "typings": "alyle-ui.d.ts",
+  "metadata": "alyle-ui.metadata.json",
+  "sideEffects": false,
+  "dependencies": {
+    "tslib": "^1.9.0"
+  }
+}

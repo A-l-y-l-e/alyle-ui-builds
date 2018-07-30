@@ -1,0 +1,13 @@
+{
+  "main": "../bundles/alyle-ui-menu.umd.js",
+  "module": "../fesm5/alyle-ui-menu.js",
+  "es2015": "../fesm2015/alyle-ui-menu.js",
+  "esm5": "../esm5/menu/alyle-ui-menu.js",
+  "esm2015": "../esm2015/menu/alyle-ui-menu.js",
+  "fesm5": "../fesm5/alyle-ui-menu.js",
+  "fesm2015": "../fesm2015/alyle-ui-menu.js",
+  "typings": "alyle-ui-menu.d.ts",
+  "metadata": "alyle-ui-menu.metadata.json",
+  "sideEffects": false,
+  "name": "@alyle/ui/menu"
+}

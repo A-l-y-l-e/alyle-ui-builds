@@ -1,0 +1,8 @@
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
+export { LyHeaderPaginationModule } from './header-pagination.module';
+export { LyHeaderPagination } from './header-pagination.component';
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicHVibGljX2FwaS5qcyIsInNvdXJjZVJvb3QiOiJuZzovL0BhbHlsZS91aS9oZWFkZXItcGFnaW5hdGlvbi8iLCJzb3VyY2VzIjpbInB1YmxpY19hcGkudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7OztBQUFBLHlDQUFjLDRCQUE0QixDQUFDO0FBQzNDLG1DQUFjLCtCQUErQixDQUFDIiwic291cmNlc0NvbnRlbnQiOlsiZXhwb3J0ICogZnJvbSAnLi9oZWFkZXItcGFnaW5hdGlvbi5tb2R1bGUnO1xuZXhwb3J0ICogZnJvbSAnLi9oZWFkZXItcGFnaW5hdGlvbi5jb21wb25lbnQnO1xuIl19

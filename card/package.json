@@ -1,0 +1,13 @@
+{
+  "main": "../bundles/alyle-ui-card.umd.js",
+  "module": "../fesm5/alyle-ui-card.js",
+  "es2015": "../fesm2015/alyle-ui-card.js",
+  "esm5": "../esm5/card/alyle-ui-card.js",
+  "esm2015": "../esm2015/card/alyle-ui-card.js",
+  "fesm5": "../fesm5/alyle-ui-card.js",
+  "fesm2015": "../fesm2015/alyle-ui-card.js",
+  "typings": "alyle-ui-card.d.ts",
+  "metadata": "alyle-ui-card.metadata.json",
+  "sideEffects": false,
+  "name": "@alyle/ui/card"
+}

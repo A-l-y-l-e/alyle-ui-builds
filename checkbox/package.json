@@ -1,0 +1,13 @@
+{
+  "main": "../bundles/alyle-ui-checkbox.umd.js",
+  "module": "../fesm5/alyle-ui-checkbox.js",
+  "es2015": "../fesm2015/alyle-ui-checkbox.js",
+  "esm5": "../esm5/checkbox/alyle-ui-checkbox.js",
+  "esm2015": "../esm2015/checkbox/alyle-ui-checkbox.js",
+  "fesm5": "../fesm5/alyle-ui-checkbox.js",
+  "fesm2015": "../fesm2015/alyle-ui-checkbox.js",
+  "typings": "alyle-ui-checkbox.d.ts",
+  "metadata": "alyle-ui-checkbox.metadata.json",
+  "sideEffects": false,
+  "name": "@alyle/ui/checkbox"
+}
