@@ -13,6 +13,7 @@ export declare class LyTheme2 {
     setUpStyleSecondary<T>(key: string, styles: Style<T>, media?: string, invertMediaQuery?: InvertMediaQuery): string;
     colorOf(value: string): string;
     updateClassName(element: any, renderer: Renderer2, newClassname: string, oldClassname?: string): void;
+    updateClass(element: any, renderer: Renderer2, newClass: string, oldClass?: string): string;
     setTheme(nam: string): void;
 }
 export declare function toHyphenCase(str: string): string;

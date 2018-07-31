@@ -4,7 +4,10 @@ export declare class LyCard implements OnInit {
     private styler;
     private elementRef;
     private renderer;
-    elevation: any;
+    private _elevation;
+    private _elevationClass;
+    elevation: string | number;
     constructor(styler: LyTheme2, elementRef: ElementRef, renderer: Renderer2);
     ngOnInit(): void;
+    private _createElevationClass;
 }
