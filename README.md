@@ -7,7 +7,7 @@
 
 [![Build Status](https://travis-ci.org/A-l-y-l-e/Alyle-UI.svg?branch=master)](https://travis-ci.org/A-l-y-l-e/Alyle-UI)
 [![npm](https://img.shields.io/npm/v/@alyle/ui.svg?style=flat-square)](https://npmjs.com/package/@alyle/ui)
-[![npm](https://img.shields.io/npm/dt/@alyle/ui.svg?style=flat-square)](https://npmjs.com/package/@alyle/ui)
+[![npm](https://img.shields.io/npm/dt/@alyle/ui.svg?style=flat-square)](https://npmjs.com/package/@alyle/ui) [![Join the chat at https://gitter.im/A-l-y-l-e/Alyle-UI](https://badges.gitter.im/A-l-y-l-e/Alyle-UI.svg)](https://gitter.im/A-l-y-l-e/Alyle-UI?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 > Supports Server Side Rendering & AOT
 
@@ -26,7 +26,7 @@
 |core|beta||-|
 |drawer|beta|:x:|[Docs](https://alyle-ui.firebaseapp.com/components/drawer)|
 |flex layout|beta|:heavy_check_mark:|[Docs](https://alyle-ui.firebaseapp.com/layout/flex)|
-|grid|:x:|:x:|[Docs](https://alyle-ui.firebaseapp.com/layout/grid)|
+|grid|:heavy_check_mark:|:heavy_check_mark:|[Docs](https://alyle-ui.firebaseapp.com/layout/grid)|
 |media|:heavy_check_mark:|:heavy_check_mark:|[Docs](https://alyle-ui.firebaseapp.com/layout/responsive)|
 |icon button|:heavy_check_mark:|:heavy_check_mark:|[Docs](https://alyle-ui.firebaseapp.com/components/icon-button)|
 |icon|:heavy_check_mark:|:heavy_check_mark:|-|
@@ -37,4 +37,4 @@
 |tabs|beta|:x:|[Docs](https://alyle-ui.firebaseapp.com/components/tabs)|
 |toolbar|➕➖ |:x:|[Docs](https://alyle-ui.firebaseapp.com/components/toolbar)|
 |typography *(new)*|:heavy_check_mark:|:heavy_check_mark:|[Docs](https://alyle-ui.firebaseapp.com/components/typography)|
-|card *(new)*|:➕➖ :|:heavy_check_mark:|[Docs](https://alyle-ui.firebaseapp.com/components/card)|
+|card *(new)*|➕➖|:x:|[Docs](https://alyle-ui.firebaseapp.com/components/card)|
