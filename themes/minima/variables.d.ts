@@ -3,6 +3,8 @@ export declare const typography: {
     fontFamily: string;
     htmlFontSize: number;
     fontSize: number;
+    gutterTop: number;
+    gutterBottom: number;
     display4: TypographyConfig;
     display3: TypographyConfig;
     display2: TypographyConfig;

@@ -14,8 +14,11 @@ export declare class LyButton implements OnInit, AfterViewInit, OnDestroy {
     private _disabledClassName;
     private _outlinedClassName;
     private _rippleContainer;
+    private _size;
+    private _sizeClass;
     outlined: boolean;
     rippleSensitive: boolean;
+    size: string;
     buttonContent: ElementRef;
     disabled: boolean;
     constructor(elementRef: ElementRef, renderer: Renderer2, theme: LyTheme2, rippleStyles: LyRippleService, buttonService: LyButtonService, _ngZone: NgZone, bgAndColor: LyBgColorAndRaised);
@@ -23,5 +26,6 @@ export declare class LyButton implements OnInit, AfterViewInit, OnDestroy {
     focused(): void;
     ngAfterViewInit(): void;
     private disableStyle;
+    private _createSizeClass;
     ngOnDestroy(): void;
 }

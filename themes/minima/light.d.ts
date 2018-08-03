@@ -17,6 +17,8 @@ export declare class MinimaLight extends LyStyleUtils implements ThemeConfig {
         fontFamily: string;
         htmlFontSize: number;
         fontSize: number;
+        gutterTop: number;
+        gutterBottom: number;
         display4: import("../../../../../dist/@alyle/ui/src/style-utils").TypographyConfig;
         display3: import("../../../../../dist/@alyle/ui/src/style-utils").TypographyConfig;
         display2: import("../../../../../dist/@alyle/ui/src/style-utils").TypographyConfig;
