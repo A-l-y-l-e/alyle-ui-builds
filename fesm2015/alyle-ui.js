@@ -1,5 +1,5 @@
 import * as _chroma from 'chroma-js';
-import { Injectable, InjectionToken, Inject, RendererFactory2, Directive, Input, ElementRef, Renderer2, NgModule, ComponentFactoryResolver, Optional, isDevMode, ViewContainerRef, Output, EventEmitter, ChangeDetectorRef, NgZone, SkipSelf, defineInjectable, inject } from '@angular/core';
+import { Injectable, InjectionToken, Inject, RendererFactory2, Directive, Input, ElementRef, Renderer2, NgModule, ComponentFactoryResolver, Optional, isDevMode, ViewContainerRef, Output, EventEmitter, ChangeDetectorRef, NgZone, defineInjectable, SkipSelf, inject } from '@angular/core';
 import { DOCUMENT, CommonModule } from '@angular/common';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
