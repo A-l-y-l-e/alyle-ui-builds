@@ -1,4 +1,4 @@
-import { ThemeConfig, LyStyleUtils } from '@alyle/ui';
+import { ThemeConfig, LyStyleUtils, TypographyConfig } from '@alyle/ui';
 export declare class MinimaDark extends LyStyleUtils implements ThemeConfig {
     name: string;
     primary: {
@@ -19,19 +19,19 @@ export declare class MinimaDark extends LyStyleUtils implements ThemeConfig {
         fontSize: number;
         gutterTop: number;
         gutterBottom: number;
-        display4: import("../../../../../dist/@alyle/ui/src/style-utils").TypographyConfig;
-        display3: import("../../../../../dist/@alyle/ui/src/style-utils").TypographyConfig;
-        display2: import("../../../../../dist/@alyle/ui/src/style-utils").TypographyConfig;
-        display1: import("../../../../../dist/@alyle/ui/src/style-utils").TypographyConfig;
-        headline: import("../../../../../dist/@alyle/ui/src/style-utils").TypographyConfig;
-        title: import("../../../../../dist/@alyle/ui/src/style-utils").TypographyConfig;
-        subheading: import("../../../../../dist/@alyle/ui/src/style-utils").TypographyConfig;
-        subheading2: import("../../../../../dist/@alyle/ui/src/style-utils").TypographyConfig;
-        body2: import("../../../../../dist/@alyle/ui/src/style-utils").TypographyConfig;
-        body1: import("../../../../../dist/@alyle/ui/src/style-utils").TypographyConfig;
-        button: import("../../../../../dist/@alyle/ui/src/style-utils").TypographyConfig;
-        caption: import("../../../../../dist/@alyle/ui/src/style-utils").TypographyConfig;
-        overline: import("../../../../../dist/@alyle/ui/src/style-utils").TypographyConfig;
+        display4: TypographyConfig;
+        display3: TypographyConfig;
+        display2: TypographyConfig;
+        display1: TypographyConfig;
+        headline: TypographyConfig;
+        title: TypographyConfig;
+        subheading: TypographyConfig;
+        subheading2: TypographyConfig;
+        body2: TypographyConfig;
+        body1: TypographyConfig;
+        button: TypographyConfig;
+        caption: TypographyConfig;
+        overline: TypographyConfig;
     };
     background: {
         default: string;
