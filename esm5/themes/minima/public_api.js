@@ -2,7 +2,7 @@
  * @fileoverview added by tsickle
  * @suppress {checkTypes} checked by tsc
  */
-export { MinimaTheme, ThemeMinimaLight, ThemeMinimaDark, MinimaThemeModule } from './theme';
+export { MinimaTheme, ThemeMinimaLight, ThemeMinimaDark, ThemeMinimaModule } from './theme';
 export { typography, iconButton, icon, input } from './variables';
 export { MinimaLight } from './light';
 export { MinimaDark } from './dark';

@@ -1,7 +1,7 @@
 import { OnChanges, SimpleChanges, Renderer2, ElementRef } from '@angular/core';
 import { LyTheme2 } from './theme2.service';
 import { LyShadowService } from './shadow.service';
-export declare class LyBgColorAndRaised implements OnChanges {
+export declare class LyCommon implements OnChanges {
     private theme;
     private renderer;
     private elementRef;

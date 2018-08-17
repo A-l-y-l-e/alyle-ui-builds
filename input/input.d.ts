@@ -1,6 +1,6 @@
 import { Subscription } from 'rxjs';
 import { ElementRef, SimpleChanges, OnChanges, AfterContentInit, ChangeDetectorRef, OnInit, OnDestroy, Renderer2 } from '@angular/core';
-import { LyTheme2, LyBgColorAndRaised } from '@alyle/ui';
+import { LyTheme2, LyCommon } from '@alyle/ui';
 import { LyFieldDirective } from './ly-field.directive';
 export declare class LyInputCommon {
 }
@@ -50,7 +50,7 @@ export declare class LyInput implements OnInit, AfterContentInit, OnChanges, OnD
     _isErrorState(): boolean;
     private updateError;
     value(): any;
-    constructor(theme: LyTheme2, _changeDetectorRef: ChangeDetectorRef, bcr: LyBgColorAndRaised, renderer: Renderer2, elementRef: ElementRef);
+    constructor(theme: LyTheme2, _changeDetectorRef: ChangeDetectorRef, bcr: LyCommon, renderer: Renderer2, elementRef: ElementRef);
     private updateColor;
     toBoolean(val: any): boolean;
     readonly isPlaceholder: boolean;

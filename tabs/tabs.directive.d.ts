@@ -1,56 +1,63 @@
-import { QueryList, TemplateRef, EventEmitter, ChangeDetectorRef, Renderer2, ElementRef, OnInit, AfterViewInit } from '@angular/core';
+import { QueryList, TemplateRef, EventEmitter, ChangeDetectorRef, Renderer2, ElementRef, OnInit, AfterViewInit, AfterContentInit, OnDestroy } from '@angular/core';
 import { LyTabContent } from './tab-content.directive';
 import { LyTabsClassesService } from './tabs.clasess.service';
-import { Undefined, LyTheme2 } from '@alyle/ui';
-export declare class LyTabs implements OnInit, AfterViewInit {
-    classes: LyTabsClassesService;
+import { LyTheme2 } from '@alyle/ui';
+export declare class LyTabs implements OnInit, AfterViewInit, AfterContentInit, OnDestroy {
     private theme;
     private renderer;
     private el;
     private cd;
-    _selectedIndex: number | Undefined;
+    _selectedIndex: number;
     _selectedBeforeIndex: number;
     _selectedRequireCheck: boolean;
     _selectedTab: LyTab;
     _selectedBeforeTab: LyTab;
+    private _tabsSubscription;
     private _isViewInitLoaded;
     private _withColor;
     private _withColorClass;
+    readonly classes: any;
     tabContents: ElementRef;
     tabsIndicator: ElementRef;
+    selectedIndexOnChange: 'auto' | number;
     withColor: string;
     selectedIndex: number;
     selectedIndexChange: EventEmitter<any>;
     withBg: string;
     tabsList: QueryList<LyTab>;
-    constructor(classes: LyTabsClassesService, theme: LyTheme2, renderer: Renderer2, el: ElementRef, cd: ChangeDetectorRef);
+    constructor(tabsService: LyTabsClassesService, theme: LyTheme2, renderer: Renderer2, el: ElementRef, cd: ChangeDetectorRef);
     ngOnInit(): void;
     ngAfterViewInit(): void;
+    ngAfterContentInit(): void;
+    ngOnDestroy(): void;
+    private _findIndex;
     private _updateIndicator;
     markForCheck(): void;
     loadTemplate(tab: LyTab, index: number): TemplateRef<LyTabContent> | null;
     private _createWithColorClass;
 }
 export declare class LyTab implements OnInit, AfterViewInit {
+    private tabsService;
     private tabs;
     _renderer: Renderer2;
     _el: ElementRef;
     index: number;
     loaded: boolean;
+    protected readonly classes: any;
     templateRefLazy: TemplateRef<LyTabContent>;
     templateRef: TemplateRef<any>;
     tabIndicator: ElementRef;
     onClick(): void;
-    constructor(tabs: LyTabs, _renderer: Renderer2, _el: ElementRef);
+    constructor(tabsService: LyTabsClassesService, tabs: LyTabs, _renderer: Renderer2, _el: ElementRef);
     ngOnInit(): void;
     ngAfterViewInit(): void;
 }
 export declare class LyTabLabel implements OnInit {
     private renderer;
     private el;
-    private classes;
+    private tabsService;
     native: boolean;
-    constructor(renderer: Renderer2, el: ElementRef, classes: LyTabsClassesService);
+    constructor(renderer: Renderer2, el: ElementRef, tabsService: LyTabsClassesService);
     ngOnInit(): void;
 }
 /**
@@ -79,4 +86,5 @@ export declare class LyTabLabel implements OnInit {
  * => native: no aplica los estilos predeterminados, default undefined
  * => disabled: Disable/enable a tab, default undefined
  * => isActive: Si la pestaña está actualmente activa., default undefined
+ * => selectedIndexOnChange, default: auto, opts: number, with auto, the selectedIndex = current o current-1 or latest
  */

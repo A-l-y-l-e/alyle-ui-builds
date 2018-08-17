@@ -1,14 +1,17 @@
-import { AfterViewInit, ElementRef, Renderer2, NgZone, OnDestroy, OnInit } from '@angular/core';
-import { LyTheme2, LyBgColorAndRaised } from '@alyle/ui';
+import { ElementRef, Renderer2, NgZone, OnDestroy, OnInit } from '@angular/core';
+import { LyTheme2, LyCommon } from '@alyle/ui';
 import { LyRippleService } from '@alyle/ui/ripple';
-import { LyButtonService } from './button.service';
-export declare class LyButton implements OnInit, AfterViewInit, OnDestroy {
+export declare class LyButton implements OnInit, OnDestroy {
     private elementRef;
     private renderer;
     private theme;
     rippleStyles: LyRippleService;
-    private buttonService;
     private bgAndColor;
+    classes: {
+        root: string;
+        outlined: string;
+        content: string;
+    };
     _disabled: boolean;
     private _rippleSensitive;
     private _disabledClassName;
@@ -19,13 +22,10 @@ export declare class LyButton implements OnInit, AfterViewInit, OnDestroy {
     outlined: boolean;
     rippleSensitive: boolean;
     size: string;
-    buttonContent: ElementRef;
     disabled: boolean;
-    constructor(elementRef: ElementRef, renderer: Renderer2, theme: LyTheme2, rippleStyles: LyRippleService, buttonService: LyButtonService, _ngZone: NgZone, bgAndColor: LyBgColorAndRaised);
+    constructor(elementRef: ElementRef, renderer: Renderer2, theme: LyTheme2, rippleStyles: LyRippleService, _ngZone: NgZone, bgAndColor: LyCommon);
     ngOnInit(): void;
-    focused(): void;
-    ngAfterViewInit(): void;
+    focus(): void;
     private disableStyle;
-    private _createSizeClass;
     ngOnDestroy(): void;
 }

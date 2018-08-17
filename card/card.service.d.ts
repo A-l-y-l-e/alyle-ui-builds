@@ -1,9 +1,10 @@
 import { LyTheme2 } from '@alyle/ui';
-export declare class LyCardClasses {
-    private theme;
-    card: string;
-    cardContent: string;
-    cardActions: string;
-    cardActionsItem: string;
+export declare class LyCardService {
+    classes: {
+        root: string;
+        content: string;
+        actions: string;
+        actionsItem: string;
+    };
     constructor(theme: LyTheme2);
 }

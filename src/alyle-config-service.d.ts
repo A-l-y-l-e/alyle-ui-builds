@@ -1,11 +1,6 @@
 import { InjectionToken } from '@angular/core';
 export declare const THEME_VARIABLES: InjectionToken<PaletteVariables>;
 export declare const IS_CORE_THEME: InjectionToken<true>;
-export declare class StyleMap {
-    private themeName;
-    private styleMap;
-    constructor(themeName: string);
-}
 export interface Default {
     [key: string]: any;
 }

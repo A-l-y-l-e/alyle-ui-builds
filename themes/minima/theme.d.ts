@@ -8,7 +8,7 @@ export declare class ThemeMinimaLight {
 }
 export declare class ThemeMinimaDark {
 }
-export declare class MinimaThemeModule {
+export declare class ThemeMinimaModule {
 }
 export interface IMinimaTheme extends MinimaLight, MinimaDark {
 }

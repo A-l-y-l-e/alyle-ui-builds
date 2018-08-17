@@ -1,31 +1,31 @@
 import { Renderer2, ElementRef, OnInit } from '@angular/core';
 import { LyTheme2 } from '@alyle/ui';
-import { LyCardClasses } from './card.service';
+import { LyCardService } from './card.service';
 export declare class LyCard implements OnInit {
-    private classes;
+    private cardService;
     private styler;
     private el;
     private renderer;
     private _elevation;
     private _elevationClass;
     elevation: string | number;
-    constructor(classes: LyCardClasses, styler: LyTheme2, el: ElementRef, renderer: Renderer2);
+    constructor(cardService: LyCardService, styler: LyTheme2, el: ElementRef, renderer: Renderer2);
     ngOnInit(): void;
     private _createElevationClass;
 }
 export declare class LyCardContent implements OnInit {
     private el;
     private renderer;
-    private classes;
-    constructor(el: ElementRef, renderer: Renderer2, classes: LyCardClasses);
+    private cardService;
+    constructor(el: ElementRef, renderer: Renderer2, cardService: LyCardService);
     ngOnInit(): void;
 }
 export declare class LyCardActions implements OnInit {
     private el;
     private renderer;
-    private classes;
+    private cardService;
     disableActionSpacing: boolean;
-    constructor(el: ElementRef, renderer: Renderer2, classes: LyCardClasses);
+    constructor(el: ElementRef, renderer: Renderer2, cardService: LyCardService);
     ngOnInit(): void;
 }
 export declare class LyCardMedia implements OnInit {
