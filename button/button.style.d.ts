@@ -1,8 +1,5 @@
 export declare const styles: (theme: any) => {
     root: any;
-    outlined: {
-        border: string;
-    };
     content: {
         padding: number;
         display: string;

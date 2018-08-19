@@ -6,6 +6,10 @@ import { InvertMediaQuery } from '../media/invert-media-query';
 export interface StylesElementMap {
     el: any;
 }
+export declare enum TypeStyle {
+    Multiple = 0,
+    OnlyOne = 1
+}
 export declare class StylesInDocument {
     styles: Set<string>;
 }
@@ -45,7 +49,7 @@ export declare class LyTheme2 {
      * @param id unique id for style group
      */
     addStyleSheet<T>(styles: StylesFn2<T> | Styles2, id?: string): any;
-    _createStyleContent2<T>(styles: StylesFn2<T> | Styles2, id: string, forChangeTheme?: boolean, media?: string): void;
+    _createStyleContent2<T>(styles: StylesFn2<T> | Styles2, id: string, typeStyle: TypeStyle, forChangeTheme?: boolean, media?: string): void;
 }
 export interface StyleContainer {
     [key: string]: StyleContainer | string | number;

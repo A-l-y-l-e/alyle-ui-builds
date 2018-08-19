@@ -14,18 +14,14 @@ export declare class LyButton implements OnInit, OnDestroy {
     };
     _disabled: boolean;
     private _rippleSensitive;
-    private _disabledClassName;
-    private _outlinedClassName;
     private _rippleContainer;
     private _size;
     private _sizeClass;
-    outlined: boolean;
     rippleSensitive: boolean;
     size: string;
-    disabled: boolean;
+    readonly disabled: boolean;
     constructor(elementRef: ElementRef, renderer: Renderer2, theme: LyTheme2, rippleStyles: LyRippleService, _ngZone: NgZone, bgAndColor: LyCommon);
     ngOnInit(): void;
     focus(): void;
-    private disableStyle;
     ngOnDestroy(): void;
 }
