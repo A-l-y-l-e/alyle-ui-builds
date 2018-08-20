@@ -1,17 +1,14 @@
 import { Renderer2, ElementRef, OnInit } from '@angular/core';
-import { LyTheme2 } from '@alyle/ui';
+import { LyTheme2, LyCommon } from '@alyle/ui';
 import { LyCardService } from './card.service';
 export declare class LyCard implements OnInit {
     private cardService;
-    private styler;
+    private theme;
     private el;
     private renderer;
-    private _elevation;
-    private _elevationClass;
-    elevation: string | number;
-    constructor(cardService: LyCardService, styler: LyTheme2, el: ElementRef, renderer: Renderer2);
+    private common;
+    constructor(cardService: LyCardService, theme: LyTheme2, el: ElementRef, renderer: Renderer2, common: LyCommon);
     ngOnInit(): void;
-    private _createElevationClass;
 }
 export declare class LyCardContent implements OnInit {
     private el;

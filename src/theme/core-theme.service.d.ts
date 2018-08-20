@@ -9,6 +9,7 @@ export declare class CoreTheme {
     mediaStyleContainer: HTMLElement;
     primaryStyleContainer: HTMLElement;
     secondaryStyleContainer: HTMLElement;
+    firstElement: HTMLElement;
     private _themeMap;
     private _styleMap;
     private _styleCoreMap;

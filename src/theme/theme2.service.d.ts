@@ -3,25 +3,47 @@ import { ThemeConfig } from './theme-config';
 import { CoreTheme } from './core-theme.service';
 import { DataStyle, Style } from '../theme.service';
 import { InvertMediaQuery } from '../media/invert-media-query';
-export interface StylesElementMap {
-    el: any;
-}
-export declare enum TypeStyle {
+declare enum TypeStyle {
     Multiple = 0,
     OnlyOne = 1
 }
+export interface StyleMap4 {
+    [id: string]: {
+        styles: StylesFn2<any> | Styles2;
+        type: TypeStyle;
+        priority: number;
+        css: {
+            [themeName: string]: string;
+        } | string;
+        requireUpdate?: boolean;
+    };
+}
 export declare class StylesInDocument {
-    styles: Set<string>;
+    styles: {
+        [themeName: string]: {
+            [key: string]: HTMLStyleElement;
+        };
+    };
+    styleContainers: Map<number, HTMLElement>;
 }
 export declare class LyTheme2 {
     private stylesInDocument;
     core: CoreTheme;
+    private _document;
     config: ThemeConfig;
     _styleMap: Map<string, DataStyle>;
     prefix: string;
+    initialTheme: string;
+    elements: {
+        [key: string]: HTMLStyleElement;
+    };
     private _styleMap2;
-    readonly classes: {};
-    constructor(stylesInDocument: StylesInDocument, core: CoreTheme, themeName: any);
+    readonly classes: {
+        [idOrThemeName: string]: string | {
+            [className: string]: string;
+        };
+    };
+    constructor(stylesInDocument: StylesInDocument, core: CoreTheme, themeName: any, _document: any);
     setUpTheme(themeName: string): void;
     setUpStyle<T>(key: string, styles: Style<T>, media?: string, invertMediaQuery?: InvertMediaQuery): string;
     setUpStyleSecondary<T>(key: string, styles: Style<T>, media?: string, invertMediaQuery?: InvertMediaQuery): string;
@@ -32,7 +54,7 @@ export declare class LyTheme2 {
      * @param el Element
      * @param instance The instance of this, this replaces the existing style with a new one when it changes
      */
-    addStyle<T>(id: string, style: Style<T>, el?: any, instance?: string): string;
+    addStyle<T>(id: string, style: Style<T>, el?: any, instance?: string, priority?: number): string;
     colorOf(value: string): string;
     updateClassName(element: any, renderer: Renderer2, newClassname: string, oldClassname?: string): void;
     updateClass(element: any, renderer: Renderer2, newClass: string, oldClass?: string): string;
@@ -48,8 +70,13 @@ export declare class LyTheme2 {
      * @param styles styles
      * @param id unique id for style group
      */
-    addStyleSheet<T>(styles: StylesFn2<T> | Styles2, id?: string): any;
-    _createStyleContent2<T>(styles: StylesFn2<T> | Styles2, id: string, typeStyle: TypeStyle, forChangeTheme?: boolean, media?: string): void;
+    addStyleSheet<T>(styles: StylesFn2<T> | Styles2, id?: string, priority?: number): any;
+    _createStyleContent2<T>(styles: StylesFn2<T> | Styles2, id: string, priority: number, type: TypeStyle, forChangeTheme?: boolean, media?: string): any;
+    private _updateStylesBrowser;
+    private _createStyleContainer;
+    private findNode;
+    private _createElementStyle;
+    private _createInstanceForTheme;
 }
 export interface StyleContainer {
     [key: string]: StyleContainer | string | number;
@@ -60,3 +87,4 @@ export interface Styles2 {
 export declare type StylesFn2<T> = (T: any) => Styles2;
 export declare function toHyphenCase(str: string): string;
 export declare function capitalizeFirstLetter(str: string): string;
+export {};
