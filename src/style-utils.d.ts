@@ -13,4 +13,5 @@ export declare class LyStyleUtils {
         fontSize: number;
     };
     pxToRem(value: number): string;
+    colorOf(value: string): string;
 }

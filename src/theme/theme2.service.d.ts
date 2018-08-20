@@ -55,6 +55,7 @@ export declare class LyTheme2 {
      * @param instance The instance of this, this replaces the existing style with a new one when it changes
      */
     addStyle<T>(id: string, style: Style<T>, el?: any, instance?: string, priority?: number): string;
+    /** @deprecated */
     colorOf(value: string): string;
     updateClassName(element: any, renderer: Renderer2, newClassname: string, oldClassname?: string): void;
     updateClass(element: any, renderer: Renderer2, newClass: string, oldClass?: string): string;
