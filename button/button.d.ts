@@ -7,11 +7,7 @@ export declare class LyButton implements OnInit, OnDestroy {
     private theme;
     rippleStyles: LyRippleService;
     private bgAndColor;
-    classes: {
-        root: string;
-        outlined: string;
-        content: string;
-    };
+    classes: Record<"root" | "content", string>;
     _disabled: boolean;
     private _rippleSensitive;
     private _rippleContainer;

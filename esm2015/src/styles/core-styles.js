@@ -1,6 +1,6 @@
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
+ * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
  */
 import { Injectable } from '@angular/core';
 import { CoreTheme } from '../theme/core-theme.service';
@@ -42,17 +42,10 @@ LyCoreStyles.decorators = [
 ];
 /** @nocollapse */
 LyCoreStyles.ctorParameters = () => [
-    { type: CoreTheme, },
+    { type: CoreTheme }
 ];
 /** @nocollapse */ LyCoreStyles.ngInjectableDef = i0.defineInjectable({ factory: function LyCoreStyles_Factory() { return new LyCoreStyles(i0.inject(i1.CoreTheme)); }, token: LyCoreStyles, providedIn: "root" });
-function LyCoreStyles_tsickle_Closure_declarations() {
-    /** @type {!Array<{type: !Function, args: (undefined|!Array<?>)}>} */
-    LyCoreStyles.decorators;
-    /**
-     * @nocollapse
-     * @type {function(): !Array<(null|{type: ?, decorators: (undefined|!Array<{type: !Function, args: (undefined|!Array<?>)}>)})>}
-     */
-    LyCoreStyles.ctorParameters;
+if (false) {
     /** @type {?} */
     LyCoreStyles.prototype.classes;
     /** @type {?} */

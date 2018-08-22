@@ -1,6 +1,6 @@
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
+ * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
  */
 import { Injectable } from '@angular/core';
 import { CoreTheme } from '@alyle/ui';
@@ -24,17 +24,10 @@ LyTypographyClasses.decorators = [
 ];
 /** @nocollapse */
 LyTypographyClasses.ctorParameters = () => [
-    { type: CoreTheme, },
+    { type: CoreTheme }
 ];
 /** @nocollapse */ LyTypographyClasses.ngInjectableDef = i0.defineInjectable({ factory: function LyTypographyClasses_Factory() { return new LyTypographyClasses(i0.inject(i1.CoreTheme)); }, token: LyTypographyClasses, providedIn: "root" });
-function LyTypographyClasses_tsickle_Closure_declarations() {
-    /** @type {!Array<{type: !Function, args: (undefined|!Array<?>)}>} */
-    LyTypographyClasses.decorators;
-    /**
-     * @nocollapse
-     * @type {function(): !Array<(null|{type: ?, decorators: (undefined|!Array<{type: !Function, args: (undefined|!Array<?>)}>)})>}
-     */
-    LyTypographyClasses.ctorParameters;
+if (false) {
     /** @type {?} */
     LyTypographyClasses.prototype.root;
 }

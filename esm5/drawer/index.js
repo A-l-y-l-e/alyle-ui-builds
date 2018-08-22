@@ -1,6 +1,6 @@
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
+ * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
  */
 export { LyDrawerContent, LyDrawerContainer, LyDrawer, LyDrawerModule } from './public_api';
 

@@ -1,6 +1,6 @@
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
+ * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
  */
 import { Directive, TemplateRef } from '@angular/core';
 export class LyTabContent {
@@ -16,16 +16,9 @@ LyTabContent.decorators = [
 ];
 /** @nocollapse */
 LyTabContent.ctorParameters = () => [
-    { type: TemplateRef, },
+    { type: TemplateRef }
 ];
-function LyTabContent_tsickle_Closure_declarations() {
-    /** @type {!Array<{type: !Function, args: (undefined|!Array<?>)}>} */
-    LyTabContent.decorators;
-    /**
-     * @nocollapse
-     * @type {function(): !Array<(null|{type: ?, decorators: (undefined|!Array<{type: !Function, args: (undefined|!Array<?>)}>)})>}
-     */
-    LyTabContent.ctorParameters;
+if (false) {
     /** @type {?} */
     LyTabContent.prototype.template;
 }

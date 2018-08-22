@@ -1,6 +1,6 @@
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
+ * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
  */
 var LyFlexBase = /** @class */ (function () {
     function LyFlexBase(_elementRef, _renderer, _coreTheme, _mediaQueries) {
@@ -25,7 +25,7 @@ var LyFlexBase = /** @class */ (function () {
     return LyFlexBase;
 }());
 export { LyFlexBase };
-function LyFlexBase_tsickle_Closure_declarations() {
+if (false) {
     /** @type {?} */
     LyFlexBase.prototype._elementRef;
     /** @type {?} */

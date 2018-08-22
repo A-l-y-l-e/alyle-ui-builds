@@ -1,17 +1,13 @@
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
+ * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
  */
 import { InjectionToken } from '@angular/core';
-export var /** @type {?} */ LY_MEDIA_QUERIES = new InjectionToken('ly·media·queries');
+/** @type {?} */
+export var LY_MEDIA_QUERIES = new InjectionToken('ly·media·queries');
 /**
  * @record
  */
 export function LyMediaQueries() { }
-function LyMediaQueries_tsickle_Closure_declarations() {
-    /* TODO: handle strange member:
-    [key: string]: string;
-    */
-}
 
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoidG9rZW5zLmpzIiwic291cmNlUm9vdCI6Im5nOi8vQGFseWxlL3VpL3Jlc3BvbnNpdmUvIiwic291cmNlcyI6WyJ0b2tlbnMudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7OztBQUFBLE9BQU8sRUFBRSxjQUFjLEVBQUUsTUFBTSxlQUFlLENBQUM7QUFFL0MsTUFBTSxDQUFDLHFCQUFNLGdCQUFnQixHQUFHLElBQUksY0FBYyxDQUFpQixrQkFBa0IsQ0FBQyxDQUFDIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgSW5qZWN0aW9uVG9rZW4gfSBmcm9tICdAYW5ndWxhci9jb3JlJztcblxuZXhwb3J0IGNvbnN0IExZX01FRElBX1FVRVJJRVMgPSBuZXcgSW5qZWN0aW9uVG9rZW48THlNZWRpYVF1ZXJpZXM+KCdsecK3bWVkaWHCt3F1ZXJpZXMnKTtcblxuZXhwb3J0IGludGVyZmFjZSBMeU1lZGlhUXVlcmllcyB7IFtrZXk6IHN0cmluZ106IHN0cmluZzsgfVxuIl19
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoidG9rZW5zLmpzIiwic291cmNlUm9vdCI6Im5nOi8vQGFseWxlL3VpL3Jlc3BvbnNpdmUvIiwic291cmNlcyI6WyJ0b2tlbnMudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7OztBQUFBLE9BQU8sRUFBRSxjQUFjLEVBQUUsTUFBTSxlQUFlLENBQUM7O0FBRS9DLFdBQWEsZ0JBQWdCLEdBQUcsSUFBSSxjQUFjLENBQWlCLGtCQUFrQixDQUFDLENBQUMiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyBJbmplY3Rpb25Ub2tlbiB9IGZyb20gJ0Bhbmd1bGFyL2NvcmUnO1xuXG5leHBvcnQgY29uc3QgTFlfTUVESUFfUVVFUklFUyA9IG5ldyBJbmplY3Rpb25Ub2tlbjxMeU1lZGlhUXVlcmllcz4oJ2x5wrdtZWRpYcK3cXVlcmllcycpO1xuXG5leHBvcnQgaW50ZXJmYWNlIEx5TWVkaWFRdWVyaWVzIHsgW2tleTogc3RyaW5nXTogc3RyaW5nOyB9XG4iXX0=

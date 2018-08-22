@@ -1,6 +1,6 @@
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
+ * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
  */
 export { LyFlexModule } from './flex.module';
 export { ɵa, LyFlex, LyFlexItem, LyGrid, LyGridCol, LayoutModule } from '@alyle/ui/layout';

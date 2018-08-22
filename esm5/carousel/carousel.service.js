@@ -1,6 +1,6 @@
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
+ * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
  */
 import { Injectable } from '@angular/core';
 import { CoreTheme } from '@alyle/ui';
@@ -17,20 +17,13 @@ var CarouselService = /** @class */ (function () {
     ];
     /** @nocollapse */
     CarouselService.ctorParameters = function () { return [
-        { type: CoreTheme, },
+        { type: CoreTheme }
     ]; };
     /** @nocollapse */ CarouselService.ngInjectableDef = i0.defineInjectable({ factory: function CarouselService_Factory() { return new CarouselService(i0.inject(i1.CoreTheme)); }, token: CarouselService, providedIn: "root" });
     return CarouselService;
 }());
 export { CarouselService };
-function CarouselService_tsickle_Closure_declarations() {
-    /** @type {!Array<{type: !Function, args: (undefined|!Array<?>)}>} */
-    CarouselService.decorators;
-    /**
-     * @nocollapse
-     * @type {function(): !Array<(null|{type: ?, decorators: (undefined|!Array<{type: !Function, args: (undefined|!Array<?>)}>)})>}
-     */
-    CarouselService.ctorParameters;
+if (false) {
     /** @type {?} */
     CarouselService.prototype.coreTheme;
 }

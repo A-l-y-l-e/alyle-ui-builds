@@ -1,6 +1,6 @@
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
+ * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
  */
 import { Directive, TemplateRef } from '@angular/core';
 var LyTabContent = /** @class */ (function () {
@@ -12,19 +12,12 @@ var LyTabContent = /** @class */ (function () {
     ];
     /** @nocollapse */
     LyTabContent.ctorParameters = function () { return [
-        { type: TemplateRef, },
+        { type: TemplateRef }
     ]; };
     return LyTabContent;
 }());
 export { LyTabContent };
-function LyTabContent_tsickle_Closure_declarations() {
-    /** @type {!Array<{type: !Function, args: (undefined|!Array<?>)}>} */
-    LyTabContent.decorators;
-    /**
-     * @nocollapse
-     * @type {function(): !Array<(null|{type: ?, decorators: (undefined|!Array<{type: !Function, args: (undefined|!Array<?>)}>)})>}
-     */
-    LyTabContent.ctorParameters;
+if (false) {
     /** @type {?} */
     LyTabContent.prototype.template;
 }

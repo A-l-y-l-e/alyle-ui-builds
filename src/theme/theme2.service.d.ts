@@ -71,9 +71,8 @@ export declare class LyTheme2 {
      * @param styles styles
      * @param id unique id for style group
      */
-    addStyleSheet<T>(styles: StylesFn2<T> | Styles2, id?: string, priority?: number): any;
+    addStyleSheet<T>(styles: T & (StylesFn2<T> | Styles2), id?: string, priority?: number): IClasses<T>;
     _createStyleContent2<T>(styles: StylesFn2<T> | Styles2, id: string, priority: number, type: TypeStyle, forChangeTheme?: boolean, media?: string): any;
-    private _updateStylesBrowser;
     private _createStyleContainer;
     private findNode;
     private _createElementStyle;
@@ -88,4 +87,5 @@ export interface Styles2 {
 export declare type StylesFn2<T> = (T: any) => Styles2;
 export declare function toHyphenCase(str: string): string;
 export declare function capitalizeFirstLetter(str: string): string;
+declare type IClasses<T> = Record<(T extends ((...args: any[]) => any) ? (keyof ReturnType<T>) : keyof T), string>;
 export {};

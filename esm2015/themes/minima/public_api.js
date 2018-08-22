@@ -1,6 +1,6 @@
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
+ * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
  */
 export { MinimaTheme, ThemeMinimaLight, ThemeMinimaDark, ThemeMinimaModule } from './theme';
 export { typography, iconButton, icon, input } from './variables';

@@ -1,28 +1,26 @@
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
+ * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
  */
 import { InjectionToken } from '@angular/core';
-export var /** @type {?} */ THEME_CONFIG = new InjectionToken('ly.theme.config.root');
-export var /** @type {?} */ LY_THEME_CONFIG = new InjectionToken('ly_theme_config');
-export var /** @type {?} */ LY_THEME_NAME = new InjectionToken('ly.theme.name');
+/** @type {?} */
+export var THEME_CONFIG = new InjectionToken('ly.theme.config.root');
+/** @type {?} */
+export var LY_THEME_CONFIG = new InjectionToken('ly_theme_config');
+/** @type {?} */
+export var LY_THEME_NAME = new InjectionToken('ly.theme.name');
 /**
  * @record
  */
 export function ThemeConfig() { }
-function ThemeConfig_tsickle_Closure_declarations() {
-    /** @type {?} */
-    ThemeConfig.prototype.name;
-    /** @type {?} */
-    ThemeConfig.prototype.primary;
-    /** @type {?} */
-    ThemeConfig.prototype.accent;
-    /** @type {?} */
-    ThemeConfig.prototype.warn;
-    /* TODO: handle strange member:
-    [key: string]: any;
-    */
-}
+/** @type {?} */
+ThemeConfig.prototype.name;
+/** @type {?} */
+ThemeConfig.prototype.primary;
+/** @type {?} */
+ThemeConfig.prototype.accent;
+/** @type {?} */
+ThemeConfig.prototype.warn;
 var LyThemeConfig = /** @class */ (function () {
     function LyThemeConfig() {
         this.themes = [];
@@ -30,7 +28,7 @@ var LyThemeConfig = /** @class */ (function () {
     return LyThemeConfig;
 }());
 export { LyThemeConfig };
-function LyThemeConfig_tsickle_Closure_declarations() {
+if (false) {
     /** @type {?} */
     LyThemeConfig.prototype.themes;
 }
@@ -38,17 +36,13 @@ function LyThemeConfig_tsickle_Closure_declarations() {
  * @record
  */
 export function DefaultVal() { }
-function DefaultVal_tsickle_Closure_declarations() {
-    /** @type {?} */
-    DefaultVal.prototype.default;
-}
+/** @type {?} */
+DefaultVal.prototype.default;
 /**
  * @record
  */
 export function PaletteColor() { }
-function PaletteColor_tsickle_Closure_declarations() {
-    /** @type {?} */
-    PaletteColor.prototype.contrast;
-}
+/** @type {?} */
+PaletteColor.prototype.contrast;
 
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoidGhlbWUtY29uZmlnLmpzIiwic291cmNlUm9vdCI6Im5nOi8vQGFseWxlL3VpLyIsInNvdXJjZXMiOlsic3JjL3RoZW1lL3RoZW1lLWNvbmZpZy50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7O0FBQUEsT0FBTyxFQUFFLGNBQWMsRUFBRSxNQUFNLGVBQWUsQ0FBQztBQUUvQyxNQUFNLENBQUMscUJBQU0sWUFBWSxHQUFHLElBQUksY0FBYyxDQUE4QixzQkFBc0IsQ0FBQyxDQUFDO0FBQ3BHLE1BQU0sQ0FBQyxxQkFBTSxlQUFlLEdBQUcsSUFBSSxjQUFjLENBQWdCLGlCQUFpQixDQUFDLENBQUM7QUFDcEYsTUFBTSxDQUFDLHFCQUFNLGFBQWEsR0FBRyxJQUFJLGNBQWMsQ0FBUyxlQUFlLENBQUMsQ0FBQzs7Ozs7Ozs7Ozs7Ozs7Ozs7O0FBVXpFLElBQUE7O3NCQUNrQixFQUFFOzt3QkFmcEI7SUFnQkMsQ0FBQTtBQUZELHlCQUVDIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgSW5qZWN0aW9uVG9rZW4gfSBmcm9tICdAYW5ndWxhci9jb3JlJztcblxuZXhwb3J0IGNvbnN0IFRIRU1FX0NPTkZJRyA9IG5ldyBJbmplY3Rpb25Ub2tlbjxUaGVtZUNvbmZpZyB8IFRoZW1lQ29uZmlnW10+KCdseS50aGVtZS5jb25maWcucm9vdCcpO1xuZXhwb3J0IGNvbnN0IExZX1RIRU1FX0NPTkZJRyA9IG5ldyBJbmplY3Rpb25Ub2tlbjxMeVRoZW1lQ29uZmlnPignbHlfdGhlbWVfY29uZmlnJyk7XG5leHBvcnQgY29uc3QgTFlfVEhFTUVfTkFNRSA9IG5ldyBJbmplY3Rpb25Ub2tlbjxzdHJpbmc+KCdseS50aGVtZS5uYW1lJyk7XG5cbmV4cG9ydCBpbnRlcmZhY2UgVGhlbWVDb25maWcge1xuICBuYW1lOiBzdHJpbmc7XG4gIHByaW1hcnk6IERlZmF1bHRWYWwgJiBQYWxldHRlQ29sb3I7XG4gIGFjY2VudDogRGVmYXVsdFZhbCAmIFBhbGV0dGVDb2xvcjtcbiAgd2FybjogRGVmYXVsdFZhbCAmIFBhbGV0dGVDb2xvcjtcbiAgW2tleTogc3RyaW5nXTogYW55O1xufVxuXG5leHBvcnQgY2xhc3MgTHlUaGVtZUNvbmZpZyB7XG4gIHRoZW1lczogYW55W10gPSBbXTtcbn1cblxuZXhwb3J0IGludGVyZmFjZSBEZWZhdWx0VmFsIHtcbiAgZGVmYXVsdDogc3RyaW5nO1xufVxuZXhwb3J0IGludGVyZmFjZSBQYWxldHRlQ29sb3Ige1xuICBjb250cmFzdDogc3RyaW5nO1xufVxuIl19
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoidGhlbWUtY29uZmlnLmpzIiwic291cmNlUm9vdCI6Im5nOi8vQGFseWxlL3VpLyIsInNvdXJjZXMiOlsic3JjL3RoZW1lL3RoZW1lLWNvbmZpZy50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7O0FBQUEsT0FBTyxFQUFFLGNBQWMsRUFBRSxNQUFNLGVBQWUsQ0FBQzs7QUFFL0MsV0FBYSxZQUFZLEdBQUcsSUFBSSxjQUFjLENBQThCLHNCQUFzQixDQUFDLENBQUM7O0FBQ3BHLFdBQWEsZUFBZSxHQUFHLElBQUksY0FBYyxDQUFnQixpQkFBaUIsQ0FBQyxDQUFDOztBQUNwRixXQUFhLGFBQWEsR0FBRyxJQUFJLGNBQWMsQ0FBUyxlQUFlLENBQUMsQ0FBQzs7Ozs7Ozs7Ozs7OztBQVV6RSxJQUFBOztzQkFDa0IsRUFBRTs7d0JBZnBCO0lBZ0JDLENBQUE7QUFGRCx5QkFFQyIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IEluamVjdGlvblRva2VuIH0gZnJvbSAnQGFuZ3VsYXIvY29yZSc7XG5cbmV4cG9ydCBjb25zdCBUSEVNRV9DT05GSUcgPSBuZXcgSW5qZWN0aW9uVG9rZW48VGhlbWVDb25maWcgfCBUaGVtZUNvbmZpZ1tdPignbHkudGhlbWUuY29uZmlnLnJvb3QnKTtcbmV4cG9ydCBjb25zdCBMWV9USEVNRV9DT05GSUcgPSBuZXcgSW5qZWN0aW9uVG9rZW48THlUaGVtZUNvbmZpZz4oJ2x5X3RoZW1lX2NvbmZpZycpO1xuZXhwb3J0IGNvbnN0IExZX1RIRU1FX05BTUUgPSBuZXcgSW5qZWN0aW9uVG9rZW48c3RyaW5nPignbHkudGhlbWUubmFtZScpO1xuXG5leHBvcnQgaW50ZXJmYWNlIFRoZW1lQ29uZmlnIHtcbiAgbmFtZTogc3RyaW5nO1xuICBwcmltYXJ5OiBEZWZhdWx0VmFsICYgUGFsZXR0ZUNvbG9yO1xuICBhY2NlbnQ6IERlZmF1bHRWYWwgJiBQYWxldHRlQ29sb3I7XG4gIHdhcm46IERlZmF1bHRWYWwgJiBQYWxldHRlQ29sb3I7XG4gIFtrZXk6IHN0cmluZ106IGFueTtcbn1cblxuZXhwb3J0IGNsYXNzIEx5VGhlbWVDb25maWcge1xuICB0aGVtZXM6IGFueVtdID0gW107XG59XG5cbmV4cG9ydCBpbnRlcmZhY2UgRGVmYXVsdFZhbCB7XG4gIGRlZmF1bHQ6IHN0cmluZztcbn1cbmV4cG9ydCBpbnRlcmZhY2UgUGFsZXR0ZUNvbG9yIHtcbiAgY29udHJhc3Q6IHN0cmluZztcbn1cbiJdfQ==

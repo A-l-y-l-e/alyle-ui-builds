@@ -1,6 +1,6 @@
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
+ * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
  */
 export { CarouselMode, LyCarousel, LyCarouselItem } from './carousel';
 export { CarouselService } from './carousel.service';

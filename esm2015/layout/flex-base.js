@@ -1,6 +1,6 @@
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
+ * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
  */
 export class LyFlexBase {
     /**
@@ -24,7 +24,7 @@ export class LyFlexBase {
         this._coreTheme.updateClassName(this._elementRef.nativeElement, this._renderer, newClass, oldClass);
     }
 }
-function LyFlexBase_tsickle_Closure_declarations() {
+if (false) {
     /** @type {?} */
     LyFlexBase.prototype._elementRef;
     /** @type {?} */

@@ -1,6 +1,6 @@
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
+ * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
  */
 export { LyFlexModule, ɵa, LyFlex, LyFlexItem, LyGrid, LyGridCol, LayoutModule } from './public_api';
 

@@ -1,6 +1,6 @@
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes} checked by tsc
+ * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
  */
 import { Injectable } from '@angular/core';
 import { CoreTheme } from '@alyle/ui';
@@ -30,17 +30,10 @@ LyRadioService.decorators = [
 ];
 /** @nocollapse */
 LyRadioService.ctorParameters = () => [
-    { type: CoreTheme, },
+    { type: CoreTheme }
 ];
 /** @nocollapse */ LyRadioService.ngInjectableDef = i0.defineInjectable({ factory: function LyRadioService_Factory() { return new LyRadioService(i0.inject(i1.CoreTheme)); }, token: LyRadioService, providedIn: "root" });
-function LyRadioService_tsickle_Closure_declarations() {
-    /** @type {!Array<{type: !Function, args: (undefined|!Array<?>)}>} */
-    LyRadioService.decorators;
-    /**
-     * @nocollapse
-     * @type {function(): !Array<(null|{type: ?, decorators: (undefined|!Array<{type: !Function, args: (undefined|!Array<?>)}>)})>}
-     */
-    LyRadioService.ctorParameters;
+if (false) {
     /** @type {?} */
     LyRadioService.prototype.classes;
     /** @type {?} */
