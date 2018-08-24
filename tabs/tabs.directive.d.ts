@@ -34,7 +34,6 @@ export declare class LyTabs implements OnInit, AfterViewInit, AfterContentInit, 
     private _updateIndicator;
     markForCheck(): void;
     loadTemplate(tab: LyTab, index: number): TemplateRef<LyTabContent> | null;
-    private _createWithColorClass;
 }
 export declare class LyTab implements OnInit, AfterViewInit {
     private tabsService;

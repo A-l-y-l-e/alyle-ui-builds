@@ -1,10 +1,10 @@
 import { ElementRef, Renderer2, OnInit } from '@angular/core';
 import { LyTheme2 } from '@alyle/ui';
-import { LyTypographyClasses } from './typography.service';
 export declare class LyTypography implements OnInit {
     private style;
     private elementRef;
     private renderer;
+    classes: Record<"root", string>;
     private _lyTyp;
     private _lyTypClass;
     private _gutter;
@@ -17,7 +17,7 @@ export declare class LyTypography implements OnInit {
     gutter: boolean;
     gutterTop: boolean;
     gutterBottom: boolean;
-    constructor(style: LyTheme2, elementRef: ElementRef, renderer: Renderer2, classes: LyTypographyClasses);
+    constructor(style: LyTheme2, elementRef: ElementRef, renderer: Renderer2);
     ngOnInit(): void;
     private _createTypClass;
     private _createGutterClass;
