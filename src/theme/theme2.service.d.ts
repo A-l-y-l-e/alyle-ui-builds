@@ -37,7 +37,6 @@ export declare class LyTheme2 {
     elements: {
         [key: string]: HTMLStyleElement;
     };
-    private _styleMap2;
     readonly classes: {
         [idOrThemeName: string]: string | {
             [className: string]: string;
@@ -54,7 +53,7 @@ export declare class LyTheme2 {
      * @param el Element
      * @param instance The instance of this, this replaces the existing style with a new one when it changes
      */
-    addStyle<T>(id: string, style: Style<T>, el?: any, instance?: string, priority?: number): string;
+    addStyle(id: string, style: StyleContainer | ((theme: any) => StyleContainer) | ((theme: any) => string) | string, el?: any, instance?: string, priority?: number): string;
     /** @deprecated */
     colorOf(value: string): string;
     updateClassName(element: any, renderer: Renderer2, newClassname: string, oldClassname?: string): void;

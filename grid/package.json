@@ -1,0 +1,13 @@
+{
+  "main": "../bundles/alyle-ui-grid.umd.js",
+  "module": "../fesm5/alyle-ui-grid.js",
+  "es2015": "../fesm2015/alyle-ui-grid.js",
+  "esm5": "../esm5/grid/alyle-ui-grid.js",
+  "esm2015": "../esm2015/grid/alyle-ui-grid.js",
+  "fesm5": "../fesm5/alyle-ui-grid.js",
+  "fesm2015": "../fesm2015/alyle-ui-grid.js",
+  "typings": "alyle-ui-grid.d.ts",
+  "metadata": "alyle-ui-grid.metadata.json",
+  "sideEffects": false,
+  "name": "@alyle/ui/grid"
+}

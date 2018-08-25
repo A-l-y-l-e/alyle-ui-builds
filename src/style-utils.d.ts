@@ -15,3 +15,4 @@ export declare class LyStyleUtils {
     pxToRem(value: number): string;
     colorOf(value: string): string;
 }
+export declare function eachMedia(str: string, fn: ((val: string, media: string, len: number) => void)): void;
