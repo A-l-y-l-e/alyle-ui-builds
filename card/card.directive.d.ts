@@ -3,11 +3,10 @@ import { LyTheme2, LyCommon } from '@alyle/ui';
 import { LyCardService } from './card.service';
 export declare class LyCard implements OnInit {
     private cardService;
-    private theme;
     private el;
     private renderer;
     private common;
-    constructor(cardService: LyCardService, theme: LyTheme2, el: ElementRef, renderer: Renderer2, common: LyCommon);
+    constructor(cardService: LyCardService, el: ElementRef, renderer: Renderer2, common: LyCommon);
     ngOnInit(): void;
 }
 export declare class LyCardContent implements OnInit {

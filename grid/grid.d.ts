@@ -15,13 +15,16 @@ export declare class LyGrid {
     private mediaQueries;
     private theme;
     private elementRef;
+    /**
+     * Styles
+     * @ignore
+     */
     classes: Record<"root", string>;
     private _spacing;
     private _spacingClass;
     private _negativeMarginClass;
     /**
-     * example:
-     * <ly-grid container spacing="24 8@Small@XSmal">
+     * Defines the space between the component with the `item` attribute.
      */
     spacing: string | number;
     readonly spacingClass: string;
