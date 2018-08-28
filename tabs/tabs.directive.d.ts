@@ -1,7 +1,8 @@
-import { QueryList, TemplateRef, EventEmitter, ChangeDetectorRef, Renderer2, ElementRef, OnInit, AfterViewInit, AfterContentInit, OnDestroy } from '@angular/core';
+import { QueryList, TemplateRef, EventEmitter, ChangeDetectorRef, Renderer2, ElementRef, OnInit, AfterViewInit, AfterContentInit, OnDestroy, NgZone } from '@angular/core';
 import { LyTabContent } from './tab-content.directive';
 import { LyTabsClassesService } from './tabs.clasess.service';
 import { LyTheme2 } from '@alyle/ui';
+import { LyRippleService } from '@alyle/ui/ripple';
 export declare class LyTabs implements OnInit, AfterViewInit, AfterContentInit, OnDestroy {
     private theme;
     private renderer;
@@ -20,6 +21,7 @@ export declare class LyTabs implements OnInit, AfterViewInit, AfterContentInit, 
     tabContents: ElementRef;
     tabsIndicator: ElementRef;
     selectedIndexOnChange: 'auto' | number;
+    native: boolean;
     withColor: string;
     selectedIndex: number;
     selectedIndexChange: EventEmitter<any>;
@@ -30,6 +32,7 @@ export declare class LyTabs implements OnInit, AfterViewInit, AfterContentInit, 
     ngAfterViewInit(): void;
     ngAfterContentInit(): void;
     ngOnDestroy(): void;
+    private _getHostElement;
     private _findIndex;
     private _updateIndicator;
     markForCheck(): void;
@@ -51,13 +54,16 @@ export declare class LyTab implements OnInit, AfterViewInit {
     ngOnInit(): void;
     ngAfterViewInit(): void;
 }
-export declare class LyTabLabel implements OnInit {
+export declare class LyTabLabel implements OnInit, OnDestroy {
     private renderer;
-    private el;
+    private _el;
     private tabsService;
-    native: boolean;
-    constructor(renderer: Renderer2, el: ElementRef, tabsService: LyTabsClassesService);
+    private rippleService;
+    private _ngZone;
+    private _rippleContainer;
+    constructor(renderer: Renderer2, _el: ElementRef, tabsService: LyTabsClassesService, rippleService: LyRippleService, _ngZone: NgZone);
     ngOnInit(): void;
+    ngOnDestroy(): void;
 }
 /**
  * demo basic
@@ -65,7 +71,7 @@ export declare class LyTabLabel implements OnInit {
  *   <ly-tab>
  *     <ly-tab-label>HOME<ly-tab-label>
  *     <button ly-tab-label>HOME<button>
- *     <button ly-tab-label native ly-button>HOME<button>
+ *     <button ly-tab-label-native ly-button>HOME<button>
  *     <a [routerLink]="['home']" ly-tab-label native ly-button>HOME<a>
  *     Content
  *   </ly-tab>

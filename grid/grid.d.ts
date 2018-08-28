@@ -37,6 +37,7 @@ export declare class LyGridCol implements OnInit {
     private theme;
     private _col;
     private _colClass;
+    /** Defines the number of grids */
     col: string | number;
     constructor(mediaQueries: any, gridContainer: LyGrid, el: ElementRef, theme: LyTheme2);
     ngOnInit(): void;

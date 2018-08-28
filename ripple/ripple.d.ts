@@ -14,16 +14,15 @@ export declare class RippleRef {
 }
 export declare class Ripple {
     private _ngZone;
-    private stylesData;
+    private classes;
     private _containerElement;
     private _triggerElement?;
     private _rippleRef;
-    private _state;
     private _eventHandlers;
     private rippleConfig;
     private _transitionDuration;
     private _eventOptions;
-    constructor(_ngZone: NgZone, stylesData: string[], _containerElement: HTMLElement, _triggerElement?: HTMLElement);
+    constructor(_ngZone: NgZone, classes: any, _containerElement: HTMLElement, _triggerElement?: HTMLElement);
     setConfig(config: RippleConfig): void;
     private readonly _rectContainer;
     private setTriggerElement;
