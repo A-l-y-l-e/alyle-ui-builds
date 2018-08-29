@@ -1,19 +1,28 @@
-import { OnInit, Renderer2, ElementRef } from '@angular/core';
-import { CoreTheme } from '@alyle/ui';
-export declare class MediaDirective implements OnInit {
+import { OnInit, OnChanges, Renderer2, ElementRef } from '@angular/core';
+import { LyTheme2 } from '@alyle/ui';
+export declare class MediaDirective implements OnInit, OnChanges {
     private _renderer;
     private _elementRef;
-    private coreTheme;
+    private theme;
     private mediaQueries;
     private _show;
     private _showClass;
     private _hide;
     private _hideClass;
-    classes: {
-        hide: string;
-    };
+    /**
+     * Styles
+     * @ignore
+     */
+    classes: Record<"hide", string>;
+    /**
+     * Shows the item when the value is resolved as true
+     */
     lyShow: string;
+    /**
+     * Hides the item when the value is resolved as true
+     */
     lyHide: string;
-    constructor(_renderer: Renderer2, _elementRef: ElementRef, coreTheme: CoreTheme, mediaQueries: any);
+    constructor(_renderer: Renderer2, _elementRef: ElementRef, theme: LyTheme2, mediaQueries: any);
     ngOnInit(): void;
+    ngOnChanges(): void;
 }

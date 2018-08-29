@@ -9,23 +9,15 @@ export declare class UndefinedValue {
 }
 export declare class LyRadioGroup implements ControlValueAccessor {
     _radioService: LyRadioService;
-    private elementRef;
-    private _renderer;
     theme: LyTheme2;
     ngZone: NgZone;
     private cd;
     _value: UndefinedValue;
     name: string;
     _color: string;
-    private _classes;
-    readonly classes: {
-        label: string;
-        container: string;
-    };
+    classes: Record<"label" | "container", string>;
     value: any;
     readonly change: EventEmitter<void>;
-    /** @deprecated use withColor */
-    radioColor: string;
     withColor: string;
     _radios: QueryList<LyRadio>;
     /** The method to be called in order to update ngModel */
@@ -83,7 +75,7 @@ export declare class LyRadio implements OnInit, OnDestroy {
     private _radioContainer;
     _labelContainer: ElementRef;
     withColor: string;
-    onCheckedState: EventEmitter<boolean>;
+    change: EventEmitter<boolean>;
     value: any;
     checked: boolean;
     readonly inputId: string;

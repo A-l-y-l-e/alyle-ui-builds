@@ -1,4 +1,4 @@
-import { Renderer2, ElementRef, OnChanges, SimpleChanges, OnInit } from '@angular/core';
+import { Renderer2, ElementRef, OnChanges, OnInit } from '@angular/core';
 import { LyIconService } from './icon.service';
 import { LyTheme2 } from '@alyle/ui';
 export declare class Icon implements OnChanges, OnInit {
@@ -9,9 +9,6 @@ export declare class Icon implements OnChanges, OnInit {
     private _defaultClass;
     private _src;
     private _icon;
-    readonly classes: {
-        root: string;
-    };
     src: string;
     icon: string;
     constructor(iconService: LyIconService, elementRef: ElementRef, renderer: Renderer2, theme: LyTheme2);
@@ -21,7 +18,7 @@ export declare class Icon implements OnChanges, OnInit {
     private _appendDefaultSvgIcon;
     private _updateClass;
     ngOnInit(): void;
-    ngOnChanges(changes: SimpleChanges): void;
+    ngOnChanges(): void;
     /**
      * run only browser
      * remove current icon

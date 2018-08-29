@@ -1,6 +1,5 @@
-import { QueryList, AfterViewInit, OnDestroy, ElementRef, ChangeDetectorRef, OnChanges, SimpleChanges, OnInit, Renderer2 } from '@angular/core';
+import { QueryList, AfterViewInit, OnDestroy, ElementRef, ChangeDetectorRef, OnInit, Renderer2 } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { CarouselService } from './carousel.service';
 import { LyTheme2 } from '@alyle/ui';
 export declare enum CarouselMode {
     /** full */
@@ -13,7 +12,6 @@ export declare class LyCarousel implements OnInit, AfterViewInit, OnDestroy {
     private cd;
     private theme;
     private renderer;
-    private platformId;
     _selectedIndex: any;
     nullImg: string;
     private _intervalFn;
@@ -24,21 +22,13 @@ export declare class LyCarousel implements OnInit, AfterViewInit, OnDestroy {
     _positionLeft: string | number;
     selectedIndex: number;
     selectedElement: HTMLElement;
-    classes: {
-        root: string;
-        slideContainer: string;
-        slide: string;
-        slideContent: string;
-        slideAnim: string;
-        slideNoEvent: string;
-        carouselIndicators: string;
-    };
+    classes: Record<"slideContainer" | "root" | "slide" | "slideContent" | "slideAnim" | "slideNoEvent" | "carouselIndicators", string>;
     private _slideEvent;
     slideEvent: boolean;
     onDragStart(e: any): void;
     onDrag(e: any): void;
     onDragEnd(e: any): void;
-    constructor(elementRef: ElementRef, sanitizer: DomSanitizer, cd: ChangeDetectorRef, theme: LyTheme2, renderer: Renderer2, platformId: Object);
+    constructor(elementRef: ElementRef, sanitizer: DomSanitizer, cd: ChangeDetectorRef, theme: LyTheme2, renderer: Renderer2);
     ngOnInit(): void;
     private _onPan;
     private sanitizerStyle;
@@ -51,19 +41,11 @@ export declare class LyCarousel implements OnInit, AfterViewInit, OnDestroy {
     private _resetInterval;
     stop(): void;
 }
-export declare class LyCarouselItem implements OnInit, OnChanges {
-    private carouselService;
-    private cd;
-    private platformId;
+export declare class LyCarouselItem {
     private theme;
     private renderer;
-    className: string;
-    /** @deprecated use srcImg */
-    src: string;
+    private _className;
     srcImg: string;
-    private _carousel;
     _nativeElement: HTMLElement;
-    constructor(carousel: LyCarousel, carouselService: CarouselService, cd: ChangeDetectorRef, platformId: Object, theme: LyTheme2, renderer: Renderer2, elementRef: ElementRef);
-    ngOnChanges(changes: SimpleChanges): void;
-    ngOnInit(): void;
+    constructor(theme: LyTheme2, renderer: Renderer2, elementRef: ElementRef);
 }

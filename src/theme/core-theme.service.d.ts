@@ -4,7 +4,6 @@ import { DataStyle, Style } from '../theme.service';
 import { InvertMediaQuery } from '../media/invert-media-query';
 export declare class CoreTheme {
     private rendererFactory;
-    private _document;
     renderer: Renderer2;
     mediaStyleContainer: HTMLElement;
     primaryStyleContainer: HTMLElement;
@@ -26,6 +25,5 @@ export declare class CoreTheme {
     _ĸreateStyle<T>(themeConfig: any, key: any, style: Style<T>, mapStyles: Map<string, DataStyle>, _for: string, _in: any, _media?: string, invertMediaQuery?: InvertMediaQuery): string;
     /** #style */
     _createStyleContent<T>(themeConfig: T, styles: Style<T>, id: string, media?: string | string[]): string;
-    private setCoreStyle;
     updateClassName(element: any, renderer: Renderer2, newClassname: string, oldClassname?: string): void;
 }

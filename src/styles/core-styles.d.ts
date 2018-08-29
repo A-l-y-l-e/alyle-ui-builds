@@ -1,10 +1,6 @@
-import { CoreTheme } from '../theme/core-theme.service';
+import { LyTheme2 } from '../theme/theme2.service';
 export declare class LyCoreStyles {
-    private coreTheme;
-    classes: {
-        /** Position absolute */
-        Fill: string;
-        VisuallyHidden: string;
-    };
-    constructor(coreTheme: CoreTheme);
+    private theme;
+    classes: Record<"fill" | "visuallyHidden", string>;
+    constructor(theme: LyTheme2);
 }

@@ -65,6 +65,7 @@ export declare class LyTheme2 {
      * @param css style in string
      */
     private addCss;
+    private _addDefaultStyles;
     /**
      * Add new add a new style sheet
      * @param styles styles
