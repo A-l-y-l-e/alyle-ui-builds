@@ -1,6 +1,9 @@
 import { ElementRef, OnInit } from '@angular/core';
 import { LyTheme2 } from '@alyle/ui';
+declare type Justify = 'start' | 'center' | 'end' | 'between' | 'around' | 'evenly';
+declare type Direction = 'row' | 'row-reverse' | 'column' | 'column-reverse';
 /**
+ * Grid container
  * example:
  * <ly-grid container [spacing]="'16 8@XSmall'">
  *   <ly-grid item [col]="'6 12@XSmall'">
@@ -14,7 +17,7 @@ import { LyTheme2 } from '@alyle/ui';
 export declare class LyGrid {
     private mediaQueries;
     private theme;
-    private elementRef;
+    private el;
     /**
      * Styles
      * @ignore
@@ -23,12 +26,20 @@ export declare class LyGrid {
     private _spacing;
     private _spacingClass;
     private _negativeMarginClass;
+    private _justify;
+    private _justifyClass;
+    private _direction;
+    private _directionClass;
     /**
      * Defines the space between the component with the `item` attribute.
      */
     spacing: string | number;
     readonly spacingClass: string;
-    constructor(mediaQueries: any, theme: LyTheme2, elementRef: ElementRef);
+    /** Defines the justify-content style property. */
+    justify: Justify;
+    /** Defines the justify-content style property. */
+    direction: Direction;
+    constructor(mediaQueries: any, theme: LyTheme2, el: ElementRef);
 }
 export declare class LyGridCol implements OnInit {
     private mediaQueries;
@@ -43,3 +54,4 @@ export declare class LyGridCol implements OnInit {
     ngOnInit(): void;
     private _updateSpacing;
 }
+export {};
