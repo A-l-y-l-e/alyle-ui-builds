@@ -9,6 +9,7 @@ export declare class CoreTheme {
     primaryStyleContainer: HTMLElement;
     secondaryStyleContainer: HTMLElement;
     firstElement: HTMLElement;
+    readonly themes: Set<string>;
     private _themeMap;
     private _styleMap;
     private _styleCoreMap;
