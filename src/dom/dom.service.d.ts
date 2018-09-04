@@ -1,5 +1,5 @@
 import { ComponentFactoryResolver, TemplateRef, ComponentRef, ViewContainerRef } from '@angular/core';
-import { LyOverlayContainer } from './overlay-container.component';
+import { LyOverlayContainer } from './overlay-container';
 export declare class DomService {
     private componentFactoryResolver;
     private overlayContainer;
