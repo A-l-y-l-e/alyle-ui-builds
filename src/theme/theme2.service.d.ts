@@ -1,8 +1,7 @@
 import { Renderer2 } from '@angular/core';
 import { ThemeConfig } from './theme-config';
 import { CoreTheme } from './core-theme.service';
-import { DataStyle, Style } from '../theme.service';
-import { InvertMediaQuery } from '../media/invert-media-query';
+import { DataStyle } from '../theme.service';
 declare enum TypeStyle {
     Multiple = 0,
     OnlyOne = 1
@@ -32,7 +31,6 @@ export declare class LyTheme2 {
     private _document;
     config: ThemeConfig;
     _styleMap: Map<string, DataStyle>;
-    prefix: string;
     initialTheme: string;
     elements: {
         [key: string]: HTMLStyleElement;
@@ -44,8 +42,6 @@ export declare class LyTheme2 {
     };
     constructor(stylesInDocument: StylesInDocument, core: CoreTheme, themeName: any, _document: any);
     setUpTheme(themeName: string): void;
-    setUpStyle<T>(key: string, styles: Style<T>, media?: string, invertMediaQuery?: InvertMediaQuery): string;
-    setUpStyleSecondary<T>(key: string, styles: Style<T>, media?: string, invertMediaQuery?: InvertMediaQuery): string;
     /**
      * Add a new dynamic style, use only within @Input()
      * @param id Unique id
