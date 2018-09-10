@@ -41,15 +41,19 @@ export declare class LyGrid {
     direction: Direction;
     constructor(mediaQueries: any, theme: LyTheme2, el: ElementRef);
 }
-export declare class LyGridCol implements OnInit {
+export declare class LyGridItem implements OnInit {
     private mediaQueries;
     private gridContainer;
     private el;
     private theme;
     private _col;
     private _colClass;
+    private _order;
+    private _orderClass;
     /** Defines the number of grids */
     col: string | number;
+    /** Defines the order style property. */
+    order: string | number;
     constructor(mediaQueries: any, gridContainer: LyGrid, el: ElementRef, theme: LyTheme2);
     ngOnInit(): void;
     private _updateSpacing;

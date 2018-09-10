@@ -95,24 +95,9 @@ export declare class LyMenuTriggerFor implements OnDestroy {
     ngOnDestroy(): void;
 }
 /**
- * TODO: menu
- * @example fail
- * <ng-template #menu>
- *   <ly-menu>
- *     <button ly-menu-item >opt 1</button>
- *     <button ly-menu-item [lyMenuTriggerFor]="subMenu">opt 2</button>
- *   </ly-menu>
- * </ng-template>
- * <ng-template #subMenu>
- *   <ly-menu>
- *     <button ly-menu-item>opt 1</button>
- *     <button ly-menu-item>opt 2</button>
- *   </ly-menu>
- * </ng-template>
- * <button ly-button [lyMenuTriggerFor]="menu">toggle menu</button>
- * @example 2
- * <ng-template #menu let-menu>
- *   <ly-menu destroyOnClick="menu">
+ * @example
+ * <ng-template #menu let-M>
+ *   <ly-menu [ref]="M">
  *     <button ly-menu-item >opt 1</button>
  *     <button ly-menu-item [lyMenuTriggerFor]="subMenu">opt 2</button>
  *   </ly-menu>
