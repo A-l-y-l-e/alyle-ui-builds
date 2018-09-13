@@ -63,6 +63,7 @@ export declare class MinimaDark extends LyStyleUtils implements ThemeConfig {
     bar: string;
     divider: string;
     colorShadow: string;
+    shadow: string;
     input: {
         label: string;
         underline: string;

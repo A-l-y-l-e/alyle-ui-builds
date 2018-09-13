@@ -49,6 +49,7 @@ export declare class MinimaLight extends LyStyleUtils implements ThemeConfig {
     };
     divider: string;
     colorShadow: string;
+    shadow: string;
     /** Components variables */
     button: {
         disabled: string;
