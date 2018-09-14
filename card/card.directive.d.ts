@@ -1,27 +1,27 @@
 import { Renderer2, ElementRef, OnInit } from '@angular/core';
 import { LyTheme2, LyCommon } from '@alyle/ui';
-import { LyCardService } from './card.service';
 export declare class LyCard implements OnInit {
-    private cardService;
+    private theme;
     private el;
     private renderer;
     private common;
-    constructor(cardService: LyCardService, el: ElementRef, renderer: Renderer2, common: LyCommon);
+    classes: Record<"root" | "content" | "actions" | "actionsItem", string>;
+    constructor(theme: LyTheme2, el: ElementRef, renderer: Renderer2, common: LyCommon);
     ngOnInit(): void;
 }
 export declare class LyCardContent implements OnInit {
     private el;
     private renderer;
-    private cardService;
-    constructor(el: ElementRef, renderer: Renderer2, cardService: LyCardService);
+    private card;
+    constructor(el: ElementRef, renderer: Renderer2, card: LyCard);
     ngOnInit(): void;
 }
 export declare class LyCardActions implements OnInit {
     private el;
     private renderer;
-    private cardService;
+    private card;
     disableActionSpacing: boolean;
-    constructor(el: ElementRef, renderer: Renderer2, cardService: LyCardService);
+    constructor(el: ElementRef, renderer: Renderer2, card: LyCard);
     ngOnInit(): void;
 }
 export declare class LyCardMedia implements OnInit {

@@ -78,4 +78,20 @@ export declare class MinimaDark extends LyStyleUtils implements ThemeConfig {
     icon: {
         fontSize: string;
     };
+    breakpoints: {
+        XSmall: string;
+        Small: string;
+        Medium: string;
+        Large: string;
+        XLarge: string;
+        Handset: string;
+        Tablet: string;
+        Web: string;
+        HandsetPortrait: string;
+        TabletPortrait: string;
+        WebPortrait: string;
+        HandsetLandscape: string;
+        TabletLandscape: string;
+        WebLandscape: string;
+    };
 }

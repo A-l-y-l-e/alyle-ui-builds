@@ -15,7 +15,6 @@ declare type Direction = 'row' | 'row-reverse' | 'column' | 'column-reverse';
  * </ly-grid>
  */
 export declare class LyGrid {
-    private mediaQueries;
     private theme;
     private el;
     /**
@@ -39,10 +38,9 @@ export declare class LyGrid {
     justify: Justify;
     /** Defines the justify-content style property. */
     direction: Direction;
-    constructor(mediaQueries: any, theme: LyTheme2, el: ElementRef);
+    constructor(theme: LyTheme2, el: ElementRef);
 }
 export declare class LyGridItem implements OnInit {
-    private mediaQueries;
     private gridContainer;
     private el;
     private theme;
@@ -54,7 +52,7 @@ export declare class LyGridItem implements OnInit {
     col: string | number;
     /** Defines the order style property. */
     order: string | number;
-    constructor(mediaQueries: any, gridContainer: LyGrid, el: ElementRef, theme: LyTheme2);
+    constructor(gridContainer: LyGrid, el: ElementRef, theme: LyTheme2);
     ngOnInit(): void;
     private _updateSpacing;
 }

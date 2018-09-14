@@ -29,7 +29,7 @@ export declare class MinimaLight extends LyStyleUtils implements ThemeConfig {
         subheading2: TypographyConfig;
         body2: TypographyConfig;
         body1: TypographyConfig;
-        button: TypographyConfig; /** default color */
+        button: TypographyConfig;
         caption: TypographyConfig;
         overline: TypographyConfig;
     };
@@ -78,5 +78,21 @@ export declare class MinimaLight extends LyStyleUtils implements ThemeConfig {
     };
     icon: {
         fontSize: string;
+    };
+    breakpoints: {
+        XSmall: string;
+        Small: string;
+        Medium: string;
+        Large: string;
+        XLarge: string;
+        Handset: string;
+        Tablet: string;
+        Web: string;
+        HandsetPortrait: string;
+        TabletPortrait: string;
+        WebPortrait: string;
+        HandsetLandscape: string;
+        TabletLandscape: string;
+        WebLandscape: string;
     };
 }

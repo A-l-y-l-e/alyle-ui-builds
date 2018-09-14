@@ -1,4 +1,5 @@
 import { InjectionToken } from '@angular/core';
+import { LyStyleUtils } from '../style-utils';
 export declare const THEME_CONFIG: InjectionToken<ThemeConfig | ThemeConfig[]>;
 export declare const LY_THEME_CONFIG: InjectionToken<LyThemeConfig>;
 export declare const LY_THEME_NAME: InjectionToken<string>;
@@ -21,6 +22,10 @@ export interface ThemeConfig {
         secondary: string;
         disabled: string;
         hint: string;
+    };
+    typography: {
+        htmlFontSize: number;
+        fontSize: number;
     };
     /** color for divider */
     divider: string;
@@ -57,6 +62,7 @@ export interface ThemeConfig {
     };
 }
 export declare type PartialThemeConfig = Partial<ThemeConfig>;
+export declare type ThemeVariables = Partial<LyStyleUtils> & PartialThemeConfig;
 export declare class LyThemeConfig {
     themes: any[];
     /** global variables */

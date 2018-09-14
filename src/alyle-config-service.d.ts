@@ -4,19 +4,6 @@ export declare const IS_CORE_THEME: InjectionToken<true>;
 export interface Default {
     [key: string]: any;
 }
-export declare class ThemeVariables {
-    /** Theme name */
-    name: string;
-    primary?: PaletteVariables;
-    accent?: PaletteVariables;
-    /** warn or error color */
-    warn?: PaletteVariables;
-    scheme?: string;
-    colorSchemes?: {
-        [key: string]: ColorScheme;
-    };
-    [key: string]: any;
-}
 export interface PaletteVariables {
     default?: string;
     contrast?: string;

@@ -14,18 +14,3 @@ export declare const Breakpoints: {
     TabletLandscape: string;
     WebLandscape: string;
 };
-export declare const MediaQueries: {
-    'xs': string;
-    'sm': string;
-    'md': string;
-    'lg': string;
-    'xl': string;
-    'lt-sm': string;
-    'lt-md': string;
-    'lt-lg': string;
-    'lt-xl': string;
-    'gt-xs': string;
-    'gt-sm': string;
-    'gt-md': string;
-    'gt-lg': string;
-};

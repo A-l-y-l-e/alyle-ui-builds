@@ -4,7 +4,6 @@ export declare class MediaDirective implements OnInit, OnChanges {
     private _renderer;
     private _elementRef;
     private theme;
-    private mediaQueries;
     private _show;
     private _showClass;
     private _hide;
@@ -22,7 +21,7 @@ export declare class MediaDirective implements OnInit, OnChanges {
      * Hides the item when the value is resolved as true
      */
     lyHide: string;
-    constructor(_renderer: Renderer2, _elementRef: ElementRef, theme: LyTheme2, mediaQueries: any);
+    constructor(_renderer: Renderer2, _elementRef: ElementRef, theme: LyTheme2);
     ngOnInit(): void;
     ngOnChanges(): void;
 }
