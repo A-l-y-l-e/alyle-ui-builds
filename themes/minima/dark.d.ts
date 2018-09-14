@@ -35,7 +35,10 @@ export declare class MinimaDark extends LyStyleUtils implements ThemeConfig {
     };
     background: {
         default: string;
-        primary: string;
+        primary: {
+            default: string;
+            shadow: string;
+        };
         secondary: string;
         tertiary: string;
         base: string;

@@ -29,13 +29,16 @@ export declare class MinimaLight extends LyStyleUtils implements ThemeConfig {
         subheading2: TypographyConfig;
         body2: TypographyConfig;
         body1: TypographyConfig;
-        button: TypographyConfig;
+        button: TypographyConfig; /** default color */
         caption: TypographyConfig;
         overline: TypographyConfig;
     };
     background: {
         default: string;
-        primary: string;
+        primary: {
+            default: string;
+            shadow: string;
+        };
         secondary: string;
         tertiary: string;
         base: string;
