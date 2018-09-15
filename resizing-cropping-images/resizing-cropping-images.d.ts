@@ -1,8 +1,9 @@
 /**
  * TODO: add resizing image
  */
-import { ElementRef, ChangeDetectorRef, AfterContentInit, EventEmitter } from '@angular/core';
+import { ElementRef, ChangeDetectorRef, AfterContentInit, EventEmitter, Renderer2 } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { LyTheme2 } from '@alyle/ui';
 export interface LyResizingCroppingImagesConfig {
     width: number;
     height: number;
@@ -30,16 +31,17 @@ export interface ImageState {
     isCrop: boolean;
 }
 export declare class LyResizingCroppingImages implements AfterContentInit {
+    private _renderer;
+    private theme;
     private elementRef;
     private cd;
+    classes: Record<"root" | "imgContainer" | "croppingContainer" | "croppContent", string>;
     img: BehaviorSubject<HTMLImageElement>;
     result: string;
     fileName: string;
     private _img;
     private offset;
-    private eventDirection;
     private scale;
-    private _src;
     imgContainer: ElementRef;
     croppingContainer: ElementRef;
     src: string;
@@ -61,7 +63,7 @@ export declare class LyResizingCroppingImages implements AfterContentInit {
         transform: string;
     }>;
     private zoomScale;
-    constructor(elementRef: ElementRef, cd: ChangeDetectorRef);
+    constructor(_renderer: Renderer2, theme: LyTheme2, elementRef: ElementRef, cd: ChangeDetectorRef);
     selectInputEvent(img: Event): void;
     fixedNum(num: number): number;
     setScale(size: number): void;

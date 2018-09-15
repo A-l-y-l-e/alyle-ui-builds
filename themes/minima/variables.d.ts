@@ -29,17 +29,3 @@ export declare const input: {
     /** default color */
     withColor: string;
 };
-export declare const card: {
-    content: {
-        XSmall: {
-            /** TODO: change this for this breakpoint */
-            padding: string;
-        };
-    };
-    actions: {
-        XSmall: {
-            /** TODO: change this for this breakpoint */
-            padding: string;
-        };
-    };
-};
