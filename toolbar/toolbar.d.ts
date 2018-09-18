@@ -1,13 +1,15 @@
-import { Renderer2, ElementRef } from '@angular/core';
+import { Renderer2, ElementRef, OnInit } from '@angular/core';
 import { LyCommon, LyTheme2 } from '@alyle/ui';
-export declare class ToolbarItem {
-    constructor();
-}
-export declare class LyToolbar {
+declare type position = 'static' | 'absolute' | 'fixed' | 'sticky' | 'relative';
+export declare class LyToolbar implements OnInit {
+    private _el;
     private theme;
-    classes: Record<"row" | "root", string>;
-    constructor(renderer: Renderer2, el: ElementRef, theme: LyTheme2, bgAndColor: LyCommon);
+    private _common;
+    classes: Record<"root", string>;
+    private _position;
+    private _positionClass;
+    position: position;
+    constructor(renderer: Renderer2, _el: ElementRef, theme: LyTheme2, _common: LyCommon);
+    ngOnInit(): void;
 }
-export declare class LyToolbarRow {
-    constructor(el: ElementRef, renderer2: Renderer2, toolbar: LyToolbar);
-}
+export {};
