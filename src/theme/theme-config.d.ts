@@ -60,9 +60,15 @@ export interface ThemeConfig {
     icon: {
         fontSize: string;
     };
+    zIndex: {
+        toolbar: number;
+        drawer: number;
+        overlay: number;
+        [key: string]: number;
+    };
 }
 export declare type PartialThemeConfig = Partial<ThemeConfig>;
-export declare type ThemeVariables = Partial<LyStyleUtils> & PartialThemeConfig;
+export declare type ThemeVariables = LyStyleUtils & ThemeConfig;
 export declare class LyThemeConfig {
     themes: any[];
     /** global variables */

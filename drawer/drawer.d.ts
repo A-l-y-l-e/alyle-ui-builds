@@ -1,57 +1,54 @@
-import { ElementRef, QueryList, Renderer2, OnChanges, SimpleChanges } from '@angular/core';
-import { AnimationBuilder } from '@angular/animations';
-import { BehaviorSubject } from 'rxjs';
-export interface StyleMargin {
-    top?: string;
-    left?: string;
-    right?: string;
-    bottom?: string;
+import { ElementRef, Renderer2, OnInit, OnChanges } from '@angular/core';
+import { LyTheme2 } from '@alyle/ui';
+declare type position = 'start' | 'end' | 'top' | 'bottom';
+declare type mode = 'side' | 'over' | 'push';
+export declare class LyDrawerContainer {
+    private _theme;
+    private _renderer;
+    private _el;
+    classes: Record<"drawerContainer" | "drawer" | "drawerContent" | "drawerOpened", string>;
+    drawerContent: LyDrawerContent;
+    constructor(_theme: LyTheme2, _renderer: Renderer2, _el: ElementRef);
 }
 export declare class LyDrawerContent {
-    elementRef: ElementRef;
-    renderer: Renderer2;
-    margin: string;
-    _el: HTMLElement;
-    _lyAnimation: boolean;
-    constructor(elementRef: ElementRef, renderer: Renderer2);
-    setContentStyle(margin: StyleMargin): void;
+    private _theme;
+    private _renderer;
+    private _el;
+    constructor(_theme: LyTheme2, _renderer: Renderer2, _el: ElementRef, drawerContainer: LyDrawerContainer);
+    _getHostElement(): any;
 }
-export declare class LyDrawerContainer {
-    private renderer;
-    private elementRef;
-    private animationBuilder;
-    isDrawerBg: BehaviorSubject<boolean | "active" | "inactive">;
-    _drawers: QueryList<LyDrawer>;
-    _drawerContent: LyDrawerContent;
-    constructor(renderer: Renderer2, elementRef: ElementRef, animationBuilder: AnimationBuilder);
-    _closeAllSideAndPush(): void;
-    /** Close all open drawers */
-    closeAll(): void;
-}
-export declare class LyDrawer implements OnChanges {
-    private drawerContainer;
-    private elementRef;
+export declare class LyDrawer implements OnChanges, OnInit {
+    private _theme;
+    private _renderer;
+    private _el;
+    private _drawerContainer;
     private _opened;
-    config: LyDrawerConfig;
-    mode: 'side' | 'push' | 'over';
-    position: 'top' | 'bottom' | 'left' | 'right' | 'rtl';
-    isShowDrawer: boolean;
-    isOpenDrawer: 'open' | 'close' | boolean;
-    isDrawerHidden: boolean;
+    private _openedClass;
+    private _mode;
+    private _modeClass;
+    private _width;
+    private _widthClass;
+    private _height;
+    private _heightClass;
+    private _position;
+    private _positionClass;
+    private _drawerRootClass;
+    private _drawerClass;
+    private _drawerContentClass;
+    /** @deprecated */
+    config: any;
     opened: boolean;
-    constructor(drawerContainer: LyDrawerContainer, elementRef: ElementRef);
-    readonly _elementRect: ClientRect;
-    private updateDrawerMargin;
-    toBoolean(drawerState: boolean | 'open' | 'close'): boolean;
+    mode: mode;
+    spacingTop: string | number;
+    spacingBottom: string | number;
+    spacingStart: string | number;
+    spacingRight: string | number;
+    width: number | string;
+    height: number | string;
+    position: position;
+    constructor(_theme: LyTheme2, _renderer: Renderer2, _el: ElementRef, _drawerContainer: LyDrawerContainer);
+    ngOnChanges(): void;
+    ngOnInit(): void;
     toggle(): void;
-    open(is?: true): 'open' | boolean;
-    close(is?: false): 'close' | boolean;
-    private toogleDrawer;
-    setBgState(bgState: boolean | 'active' | 'inactive'): void;
-    resetMargin(): void;
-    ngOnChanges(changes: SimpleChanges): void;
 }
-export interface LyDrawerConfig {
-    width?: number;
-    height?: number;
-}
+export {};

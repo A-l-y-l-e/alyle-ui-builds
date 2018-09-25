@@ -29,3 +29,8 @@ export declare const input: {
     /** default color */
     withColor: string;
 };
+export declare const zIndex: {
+    toolbar: number;
+    drawer: number;
+    overlay: number;
+};

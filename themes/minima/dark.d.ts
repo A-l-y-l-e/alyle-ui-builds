@@ -94,4 +94,9 @@ export declare class MinimaDark extends LyStyleUtils implements ThemeConfig {
         TabletLandscape: string;
         WebLandscape: string;
     };
+    zIndex: {
+        toolbar: number;
+        drawer: number;
+        overlay: number;
+    };
 }
