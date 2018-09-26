@@ -50,9 +50,7 @@ export declare class LyTheme2 {
      * @param instance The instance of this, this replaces the existing style with a new one when it changes
      */
     addStyle(id: string, style: StyleContainer | ((theme: any) => StyleContainer) | ((theme: any) => string) | string, el?: any, instance?: string, priority?: number): string;
-    /** @deprecated */
-    colorOf(value: string): string;
-    updateClassName(element: any, renderer: Renderer2, newClassname: string, oldClassname?: string): void;
+    private updateClassName;
     updateClass(element: any, renderer: Renderer2, newClass: string, oldClass?: string): string;
     setTheme(nam: string): void;
     /**
