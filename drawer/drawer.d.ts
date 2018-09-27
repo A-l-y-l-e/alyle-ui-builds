@@ -1,7 +1,7 @@
-import { ElementRef, Renderer2, OnInit, OnChanges } from '@angular/core';
+import { ElementRef, Renderer2, OnChanges } from '@angular/core';
 import { LyTheme2 } from '@alyle/ui';
 declare type position = 'start' | 'end' | 'top' | 'bottom';
-declare type mode = 'side' | 'over' | 'push';
+declare type mode = 'side' | 'over';
 export declare class LyDrawerContainer {
     private _theme;
     private _renderer;
@@ -17,11 +17,12 @@ export declare class LyDrawerContent {
     constructor(_theme: LyTheme2, _renderer: Renderer2, _el: ElementRef, drawerContainer: LyDrawerContainer);
     _getHostElement(): any;
 }
-export declare class LyDrawer implements OnChanges, OnInit {
+export declare class LyDrawer implements OnChanges {
     private _theme;
     private _renderer;
     private _el;
     private _drawerContainer;
+    private _initialMode;
     private _opened;
     private _openedClass;
     private _mode;
@@ -48,7 +49,6 @@ export declare class LyDrawer implements OnChanges, OnInit {
     position: position;
     constructor(_theme: LyTheme2, _renderer: Renderer2, _el: ElementRef, _drawerContainer: LyDrawerContainer);
     ngOnChanges(): void;
-    ngOnInit(): void;
     toggle(): void;
 }
 export {};

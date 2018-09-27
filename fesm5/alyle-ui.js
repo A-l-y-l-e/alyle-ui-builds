@@ -1,6 +1,6 @@
 import * as _chroma from 'chroma-js';
 import { InjectionToken, Injectable, Optional, Inject, RendererFactory2, ViewEncapsulation, Directive, ElementRef, Input, NgModule, ComponentFactoryResolver, Component, HostListener, isDevMode, TemplateRef, ViewContainerRef, ChangeDetectorRef, NgZone, Renderer2, EventEmitter, Output, defineInjectable, inject, Injector, ApplicationRef, INJECTOR } from '@angular/core';
-import { __spread, __extends, __assign } from 'tslib';
+import { __extends, __spread, __assign } from 'tslib';
 import { DOCUMENT, CommonModule } from '@angular/common';
 import { fromEvent, empty, Subject, Subscription } from 'rxjs';
 import { map, share, auditTime, debounceTime } from 'rxjs/operators';
