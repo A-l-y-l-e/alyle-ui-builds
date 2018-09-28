@@ -4,7 +4,6 @@ import { HammerOptions, HammerInstance } from './gesture-annotations';
 export declare const LY_HAMMER_OPTIONS: InjectionToken<HammerOptions>;
 export declare class LyHammerGestureConfig extends HammerGestureConfig {
     private _hammerOptions;
-    private _hammer;
     events: string[];
     constructor(_hammerOptions: HammerOptions);
     buildHammer(element: HTMLElement): HammerInstance;

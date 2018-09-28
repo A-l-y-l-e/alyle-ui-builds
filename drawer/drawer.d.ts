@@ -23,6 +23,8 @@ export declare class LyDrawer implements OnChanges {
     private _el;
     private _drawerContainer;
     private _initialMode;
+    private _forceModeOver;
+    private _fromToggle;
     private _opened;
     private _openedClass;
     private _mode;
@@ -50,5 +52,6 @@ export declare class LyDrawer implements OnChanges {
     constructor(_theme: LyTheme2, _renderer: Renderer2, _el: ElementRef, _drawerContainer: LyDrawerContainer);
     ngOnChanges(): void;
     toggle(): void;
+    private _resetForceModeOver;
 }
 export {};
