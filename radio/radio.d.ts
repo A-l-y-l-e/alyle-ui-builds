@@ -69,7 +69,7 @@ export declare class LyRadio implements OnInit, OnDestroy {
     name: string;
     _value: any;
     private _withColor;
-    private _rippleContainer;
+    private _ripple;
     private _checked;
     private checkedClass;
     private _radioContainer;

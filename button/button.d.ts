@@ -1,4 +1,4 @@
-import { ElementRef, Renderer2, NgZone, OnDestroy, OnInit } from '@angular/core';
+import { ElementRef, Renderer2, NgZone, OnDestroy, OnInit, AfterViewInit } from '@angular/core';
 import { LyTheme2, LyCommon } from '@alyle/ui';
 import { LyRippleService } from '@alyle/ui/ripple';
 interface Size {
@@ -25,24 +25,28 @@ declare const Size: {
         minWidth: string;
     };
 };
-export declare class LyButton implements OnInit, OnDestroy {
-    private elementRef;
-    private renderer;
-    private theme;
+export declare class LyButton implements OnInit, AfterViewInit, OnDestroy {
+    private _elementRef;
+    private _renderer;
+    private _theme;
+    private _rippleService;
+    private _ngZone;
     /**
      * Style
      * @ignore
      */
-    classes: Record<"root" | "content", string>;
+    classes: Record<"root" | "content" | "rippleContainer", string>;
     private _rippleSensitive;
-    private _rippleContainer;
+    private _ripple;
     private _size;
     private _sizeClass;
+    _rippleContainer: ElementRef;
     /** @ignore */
     rippleSensitive: boolean;
     size: Record<keyof Size, string>;
-    constructor(elementRef: ElementRef, renderer: Renderer2, theme: LyTheme2, rippleService: LyRippleService, _ngZone: NgZone, bgAndColor: LyCommon);
+    constructor(_elementRef: ElementRef, _renderer: Renderer2, _theme: LyTheme2, _rippleService: LyRippleService, _ngZone: NgZone, bgAndColor: LyCommon);
     ngOnInit(): void;
+    ngAfterViewInit(): void;
     focus(): void;
     ngOnDestroy(): void;
 }
