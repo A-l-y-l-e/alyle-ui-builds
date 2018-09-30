@@ -1,4 +1,4 @@
-import { AfterViewInit, ElementRef, OnChanges, Renderer2, TemplateRef, ViewContainerRef } from '@angular/core';
+import { ElementRef, OnChanges, Renderer2, TemplateRef, ViewContainerRef } from '@angular/core';
 import { LyTheme2 } from '@alyle/ui';
 declare type position = 'start' | 'end' | 'top' | 'bottom';
 declare type mode = 'side' | 'over';
@@ -7,6 +7,7 @@ export declare class LyDrawerContainer {
     private _renderer;
     private _el;
     classes: Record<"drawerContainer" | "drawer" | "drawerContent" | "drawerOpened" | "backdrop", string>;
+    _openDrawers: number;
     drawerContent: LyDrawerContent;
     constructor(_theme: LyTheme2, _renderer: Renderer2, _el: ElementRef);
 }
@@ -16,33 +17,28 @@ export declare class LyDrawerContent {
     constructor(_renderer: Renderer2, _el: ElementRef, drawerContainer: LyDrawerContainer);
     _getHostElement(): any;
 }
-export declare class LyDrawer implements OnChanges, AfterViewInit {
+export declare class LyDrawer implements OnChanges {
     private _theme;
     private _renderer;
     private _el;
     private _drawerContainer;
     private _vcr;
+    /**
+     * Styles
+     * @ignore
+     */
     classes: Record<"drawerContainer" | "drawer" | "drawerContent" | "drawerOpened" | "backdrop", string>;
-    private _initialMode;
     private _forceModeOver;
     private _fromToggle;
     private _opened;
-    private _openedClass;
     private _viewRef;
-    private _mode;
-    private _modeClass;
-    private _width;
-    private _widthClass;
-    private _height;
-    private _heightClass;
     private _position;
     private _positionClass;
     private _drawerRootClass;
     private _drawerClass;
     private _drawerContentClass;
+    /** @ignore */
     _backdrop: TemplateRef<any>;
-    /** @deprecated */
-    config: any;
     opened: boolean;
     mode: mode;
     spacingTop: string | number;
@@ -54,7 +50,6 @@ export declare class LyDrawer implements OnChanges, AfterViewInit {
     position: position;
     constructor(_theme: LyTheme2, _renderer: Renderer2, _el: ElementRef, _drawerContainer: LyDrawerContainer, _vcr: ViewContainerRef);
     ngOnChanges(): void;
-    ngAfterViewInit(): void;
     toggle(): void;
     private _resetForceModeOver;
     private _updateBackdrop;
