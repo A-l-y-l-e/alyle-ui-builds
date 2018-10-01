@@ -1,7 +1,7 @@
 import { InjectionToken } from '@angular/core';
 import { LyStyleUtils } from '../style-utils';
-export declare const THEME_CONFIG: InjectionToken<ThemeConfig | ThemeConfig[]>;
-export declare const LY_THEME_CONFIG: InjectionToken<LyThemeConfig>;
+export declare const LY_THEME_GLOBAL_VARIABLES: InjectionToken<Partial<ThemeVariables>>;
+export declare const LY_THEME: InjectionToken<ThemeConfig | ThemeConfig[]>;
 export declare const LY_THEME_NAME: InjectionToken<string>;
 export interface ThemeConfig {
     name: string;
@@ -66,6 +66,7 @@ export interface ThemeConfig {
         overlay: number;
         [key: string]: number;
     };
+    direction?: 'ltr' | 'rtl';
     animations: {
         curves: {
             standard: string;
@@ -81,13 +82,8 @@ export interface ThemeConfig {
     };
     ripple: IRippleVariables;
 }
-export declare type PartialThemeConfig = Partial<ThemeConfig>;
 export declare type ThemeVariables = LyStyleUtils & ThemeConfig;
-export declare class LyThemeConfig {
-    themes: any[];
-    /** global variables */
-    variables?: any;
-}
+export declare type PartialThemeVariables = Partial<ThemeVariables>;
 export interface DefaultVal {
     default: string;
 }
