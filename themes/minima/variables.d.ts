@@ -34,3 +34,16 @@ export declare const zIndex: {
     drawer: number;
     overlay: number;
 };
+export declare const animations: {
+    curves: {
+        standard: string;
+        deceleration: string;
+        acceleration: string;
+        sharp: string;
+    };
+    durations: {
+        complex: number;
+        entering: number;
+        exiting: number;
+    };
+};

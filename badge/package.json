@@ -1,0 +1,13 @@
+{
+  "main": "../bundles/alyle-ui-badge.umd.js",
+  "module": "../fesm5/alyle-ui-badge.js",
+  "es2015": "../fesm2015/alyle-ui-badge.js",
+  "esm5": "../esm5/badge/alyle-ui-badge.js",
+  "esm2015": "../esm2015/badge/alyle-ui-badge.js",
+  "fesm5": "../fesm5/alyle-ui-badge.js",
+  "fesm2015": "../fesm2015/alyle-ui-badge.js",
+  "typings": "alyle-ui-badge.d.ts",
+  "metadata": "alyle-ui-badge.metadata.json",
+  "sideEffects": false,
+  "name": "@alyle/ui/badge"
+}

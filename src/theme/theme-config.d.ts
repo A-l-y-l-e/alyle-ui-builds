@@ -66,6 +66,20 @@ export interface ThemeConfig {
         overlay: number;
         [key: string]: number;
     };
+    animations: {
+        curves: {
+            standard: string;
+            deceleration: string;
+            acceleration: string;
+            sharp: string;
+        };
+        durations: {
+            complex: number;
+            entering: number;
+            exiting: number;
+        };
+    };
+    ripple: IRippleVariables;
 }
 export declare type PartialThemeConfig = Partial<ThemeConfig>;
 export declare type ThemeVariables = LyStyleUtils & ThemeConfig;
@@ -81,4 +95,11 @@ export interface PaletteColor {
     contrast?: string;
     /** shadow color */
     shadow?: string;
+}
+export interface IRippleVariables {
+    transition: {
+        opacity: string;
+        transform: string;
+    };
+    duration: number;
 }

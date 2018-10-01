@@ -29,13 +29,13 @@ export declare class LyButton implements OnInit, AfterViewInit, OnDestroy {
     private _elementRef;
     private _renderer;
     private _theme;
-    private _rippleService;
     private _ngZone;
+    _rippleService: LyRippleService;
     /**
      * Style
      * @ignore
      */
-    classes: Record<"root" | "content" | "rippleContainer", string>;
+    classes: Record<"root" | "content", string>;
     private _rippleSensitive;
     private _ripple;
     private _size;
@@ -44,7 +44,7 @@ export declare class LyButton implements OnInit, AfterViewInit, OnDestroy {
     /** @ignore */
     rippleSensitive: boolean;
     size: Record<keyof Size, string>;
-    constructor(_elementRef: ElementRef, _renderer: Renderer2, _theme: LyTheme2, _rippleService: LyRippleService, _ngZone: NgZone, bgAndColor: LyCommon);
+    constructor(_elementRef: ElementRef, _renderer: Renderer2, _theme: LyTheme2, _ngZone: NgZone, _rippleService: LyRippleService, bgAndColor: LyCommon);
     ngOnInit(): void;
     ngAfterViewInit(): void;
     focus(): void;

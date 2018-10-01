@@ -1,5 +1,5 @@
 import { Renderer2 } from '@angular/core';
-import { ThemeConfig } from './theme-config';
+import { ThemeVariables } from './theme-config';
 import { CoreTheme } from './core-theme.service';
 import { DataStyle } from '../theme.service';
 declare enum TypeStyle {
@@ -29,7 +29,7 @@ export declare class LyTheme2 {
     private stylesInDocument;
     core: CoreTheme;
     private _document;
-    config: ThemeConfig;
+    config: ThemeVariables;
     _styleMap: Map<string, DataStyle>;
     initialTheme: string;
     elements: {

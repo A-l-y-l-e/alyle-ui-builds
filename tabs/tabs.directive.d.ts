@@ -60,8 +60,9 @@ export declare class LyTabLabel implements OnInit, OnDestroy {
     private tabsService;
     private rippleService;
     private _ngZone;
+    private _theme;
     private _rippleContainer;
-    constructor(renderer: Renderer2, _el: ElementRef, tabsService: LyTabsClassesService, rippleService: LyRippleService, _ngZone: NgZone);
+    constructor(renderer: Renderer2, _el: ElementRef, tabsService: LyTabsClassesService, rippleService: LyRippleService, _ngZone: NgZone, _theme: LyTheme2);
     ngOnInit(): void;
     ngOnDestroy(): void;
 }

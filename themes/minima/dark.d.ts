@@ -1,5 +1,6 @@
-import { ThemeConfig, LyStyleUtils, TypographyConfig } from '@alyle/ui';
-export declare class MinimaDark extends LyStyleUtils implements ThemeConfig {
+import { ThemeConfig } from '@alyle/ui';
+import { MinimaBase } from './base';
+export declare class MinimaDark extends MinimaBase implements ThemeConfig {
     name: string;
     primary: {
         default: string;
@@ -12,26 +13,6 @@ export declare class MinimaDark extends LyStyleUtils implements ThemeConfig {
     warn: {
         default: string;
         contrast: string;
-    };
-    typography: {
-        fontFamily: string;
-        htmlFontSize: number;
-        fontSize: number;
-        gutterTop: number;
-        gutterBottom: number;
-        display4: TypographyConfig;
-        display3: TypographyConfig;
-        display2: TypographyConfig;
-        display1: TypographyConfig;
-        headline: TypographyConfig;
-        title: TypographyConfig;
-        subheading: TypographyConfig;
-        subheading2: TypographyConfig;
-        body2: TypographyConfig;
-        body1: TypographyConfig;
-        button: TypographyConfig;
-        caption: TypographyConfig;
-        overline: TypographyConfig;
     };
     background: {
         default: string;
@@ -71,32 +52,5 @@ export declare class MinimaDark extends LyStyleUtils implements ThemeConfig {
         label: string;
         underline: string;
         withColor: string;
-    };
-    iconButton: {
-        size: string;
-    };
-    icon: {
-        fontSize: string;
-    };
-    breakpoints: {
-        XSmall: string;
-        Small: string;
-        Medium: string;
-        Large: string;
-        XLarge: string;
-        Handset: string;
-        Tablet: string;
-        Web: string;
-        HandsetPortrait: string;
-        TabletPortrait: string;
-        WebPortrait: string;
-        HandsetLandscape: string;
-        TabletLandscape: string;
-        WebLandscape: string;
-    };
-    zIndex: {
-        toolbar: number;
-        drawer: number;
-        overlay: number;
     };
 }

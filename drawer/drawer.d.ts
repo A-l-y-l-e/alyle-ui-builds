@@ -6,7 +6,7 @@ export declare class LyDrawerContainer {
     private _theme;
     private _renderer;
     private _el;
-    classes: Record<"drawerContainer" | "drawer" | "drawerContent" | "drawerOpened" | "backdrop", string>;
+    classes: Record<"drawerContainer" | "drawer" | "drawerContent" | "drawerOpened" | "backdrop" | "transition", string>;
     _openDrawers: number;
     drawerContent: LyDrawerContent;
     constructor(_theme: LyTheme2, _renderer: Renderer2, _el: ElementRef);
@@ -27,11 +27,12 @@ export declare class LyDrawer implements OnChanges {
      * Styles
      * @ignore
      */
-    classes: Record<"drawerContainer" | "drawer" | "drawerContent" | "drawerOpened" | "backdrop", string>;
+    classes: Record<"drawerContainer" | "drawer" | "drawerContent" | "drawerOpened" | "backdrop" | "transition", string>;
     private _forceModeOver;
     private _fromToggle;
     private _opened;
     private _viewRef;
+    private _isAnimation;
     private _position;
     private _positionClass;
     private _drawerRootClass;
@@ -53,5 +54,6 @@ export declare class LyDrawer implements OnChanges {
     toggle(): void;
     private _resetForceModeOver;
     private _updateBackdrop;
+    private _updateAnimations;
 }
 export {};
