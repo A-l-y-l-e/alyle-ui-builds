@@ -1,0 +1,32 @@
+import { ElementRef, OnInit, Renderer2, OnDestroy } from '@angular/core';
+import { NgControl, NgForm, FormGroupDirective } from '@angular/forms';
+import { LyTheme2 } from '@alyle/ui';
+import { Subject } from 'rxjs';
+export declare class LyInputNative implements OnInit, OnDestroy {
+    private _el;
+    private _renderer;
+    private _theme;
+    /** @ignore */
+    ngControl: NgControl;
+    /** @ignore */
+    _hostElement: HTMLInputElement | HTMLTextAreaElement;
+    protected _disabled: boolean;
+    protected _required: boolean;
+    protected _placeholder: string;
+    readonly valueChanges: Subject<void>;
+    focused: boolean;
+    _onInput(): void;
+    _onBlur(): void;
+    _onFocus(): void;
+    value: any;
+    disabled: boolean;
+    required: boolean;
+    placeholder: string;
+    constructor(_el: ElementRef<HTMLInputElement | HTMLTextAreaElement>, _renderer: Renderer2, _theme: LyTheme2, 
+    /** @ignore */
+    ngControl: NgControl, _parentForm: NgForm, _parentFormGroup: FormGroupDirective);
+    ngOnInit(): void;
+    ngOnDestroy(): void;
+    /** Focuses the input. */
+    focus(): void;
+}
