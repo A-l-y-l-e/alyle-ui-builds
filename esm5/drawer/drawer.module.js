@@ -17,7 +17,7 @@ var LyDrawerModule = /** @class */ (function () {
                     ],
                     exports: [LyDrawer, LyDrawerContainer, LyDrawerContent],
                     declarations: [LyDrawer, LyDrawerContainer, LyDrawerContent],
-                },] },
+                },] }
     ];
     return LyDrawerModule;
 }());

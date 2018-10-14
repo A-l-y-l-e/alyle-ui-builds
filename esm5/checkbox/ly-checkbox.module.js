@@ -28,7 +28,7 @@ var LyCheckboxModule = /** @class */ (function () {
                     exports: [LyCheckbox],
                     declarations: [LyCheckbox],
                     providers: [LyCheckboxService]
-                },] },
+                },] }
     ];
     return LyCheckboxModule;
 }());

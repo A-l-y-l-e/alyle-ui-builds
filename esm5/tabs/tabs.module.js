@@ -16,7 +16,7 @@ var LyTabsModule = /** @class */ (function () {
                     imports: [LyThemeModule, CommonModule, LyCommonModule, LyRippleModule, NgTranscludeModule],
                     exports: [LyTabs, LyTab, LyTabLabel, LyTabContent],
                     declarations: [LyTabs, LyTab, LyTabLabel, LyTabContent]
-                },] },
+                },] }
     ];
     return LyTabsModule;
 }());

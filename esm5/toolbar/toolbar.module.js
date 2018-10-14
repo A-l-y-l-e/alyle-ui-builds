@@ -14,7 +14,7 @@ var LyToolbarModule = /** @class */ (function () {
                     imports: [CommonModule, LyCommonModule],
                     exports: [LyToolbar, LyCommonModule],
                     declarations: [LyToolbar]
-                },] },
+                },] }
     ];
     return LyToolbarModule;
 }());

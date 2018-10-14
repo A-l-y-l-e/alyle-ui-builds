@@ -11,7 +11,7 @@ var LyGridModule = /** @class */ (function () {
         { type: NgModule, args: [{
                     exports: [LyGrid, LyGridItem],
                     declarations: [LyGrid, LyGridItem]
-                },] },
+                },] }
     ];
     return LyGridModule;
 }());

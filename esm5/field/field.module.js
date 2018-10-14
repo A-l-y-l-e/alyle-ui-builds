@@ -32,7 +32,7 @@ var LyFieldModule = /** @class */ (function () {
                         LyCommonModule
                     ],
                     declarations: [LyField, LyPlaceholder, LyLabel, LyInputNative, LyPrefix, LySuffix, LyHint]
-                },] },
+                },] }
     ];
     return LyFieldModule;
 }());

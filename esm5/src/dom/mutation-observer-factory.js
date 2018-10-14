@@ -25,7 +25,7 @@ var MutationObserverFactory = /** @class */ (function () {
         return typeof MutationObserver === 'undefined' ? null : new MutationObserver(callback);
     };
     MutationObserverFactory.decorators = [
-        { type: Injectable, args: [{ providedIn: 'root' },] },
+        { type: Injectable, args: [{ providedIn: 'root' },] }
     ];
     /** @nocollapse */ MutationObserverFactory.ngInjectableDef = i0.defineInjectable({ factory: function MutationObserverFactory_Factory() { return new MutationObserverFactory(); }, token: MutationObserverFactory, providedIn: "root" });
     return MutationObserverFactory;
@@ -93,7 +93,7 @@ var ElementObserver = /** @class */ (function () {
         }
     };
     ElementObserver.decorators = [
-        { type: Injectable, args: [{ providedIn: 'root' },] },
+        { type: Injectable, args: [{ providedIn: 'root' },] }
     ];
     /** @nocollapse */
     ElementObserver.ctorParameters = function () { return [

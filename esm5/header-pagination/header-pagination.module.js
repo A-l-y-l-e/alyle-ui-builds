@@ -15,7 +15,7 @@ var LyHeaderPaginationModule = /** @class */ (function () {
                     imports: [CommonModule, FormsModule, LyRippleModule],
                     exports: [LyHeaderPagination],
                     declarations: [LyHeaderPagination]
-                },] },
+                },] }
     ];
     return LyHeaderPaginationModule;
 }());

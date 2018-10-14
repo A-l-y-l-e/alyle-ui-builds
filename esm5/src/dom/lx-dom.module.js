@@ -16,7 +16,7 @@ var LxDomModule = /** @class */ (function () {
                     providers: [
                         DomService
                     ]
-                },] },
+                },] }
     ];
     return LxDomModule;
 }());

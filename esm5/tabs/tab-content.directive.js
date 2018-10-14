@@ -8,7 +8,7 @@ var LyTabContent = /** @class */ (function () {
         this.template = template;
     }
     LyTabContent.decorators = [
-        { type: Directive, args: [{ selector: '[ly-tab-content]' },] },
+        { type: Directive, args: [{ selector: '[ly-tab-content]' },] }
     ];
     /** @nocollapse */
     LyTabContent.ctorParameters = function () { return [

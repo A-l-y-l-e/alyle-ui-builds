@@ -12,7 +12,7 @@ var LySuffix = /** @class */ (function () {
     LySuffix.decorators = [
         { type: Directive, args: [{
                     selector: '[lySuffix]',
-                },] },
+                },] }
     ];
     return LySuffix;
 }());

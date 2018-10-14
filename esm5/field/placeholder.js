@@ -9,7 +9,7 @@ var LyPlaceholder = /** @class */ (function () {
     LyPlaceholder.decorators = [
         { type: Directive, args: [{
                     selector: 'ly-field > ly-placeholder'
-                },] },
+                },] }
     ];
     return LyPlaceholder;
 }());

@@ -7,7 +7,7 @@ var LyCheckboxService = /** @class */ (function () {
     function LyCheckboxService() {
     }
     LyCheckboxService.decorators = [
-        { type: Injectable },
+        { type: Injectable }
     ];
     /** @nocollapse */
     LyCheckboxService.ctorParameters = function () { return []; };

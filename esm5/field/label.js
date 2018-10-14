@@ -9,7 +9,7 @@ var LyLabel = /** @class */ (function () {
     LyLabel.decorators = [
         { type: Directive, args: [{
                     selector: 'ly-field > ly-label'
-                },] },
+                },] }
     ];
     return LyLabel;
 }());

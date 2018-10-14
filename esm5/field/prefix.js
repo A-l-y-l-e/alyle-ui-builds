@@ -12,7 +12,7 @@ var LyPrefix = /** @class */ (function () {
     LyPrefix.decorators = [
         { type: Directive, args: [{
                     selector: '[lyPrefix]',
-                },] },
+                },] }
     ];
     return LyPrefix;
 }());

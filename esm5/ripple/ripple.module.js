@@ -15,7 +15,7 @@ var LyRippleModule = /** @class */ (function () {
                     ],
                     declarations: [LyRipple],
                     exports: [LyRipple]
-                },] },
+                },] }
     ];
     return LyRippleModule;
 }());

@@ -16,7 +16,7 @@ var LyFocusStateModule = /** @class */ (function () {
                     ],
                     declarations: [LyFocusState],
                     exports: [LyFocusState]
-                },] },
+                },] }
     ];
     return LyFocusStateModule;
 }());

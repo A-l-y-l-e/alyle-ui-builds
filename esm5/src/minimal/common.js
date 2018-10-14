@@ -43,7 +43,7 @@ var NgTranscludeDirective = /** @class */ (function () {
     NgTranscludeDirective.decorators = [
         { type: Directive, args: [{
                     selector: '[ngTransclude]'
-                },] },
+                },] }
     ];
     /** @nocollapse */
     NgTranscludeDirective.ctorParameters = function () { return [
@@ -68,7 +68,7 @@ var NgTranscludeModule = /** @class */ (function () {
         { type: NgModule, args: [{
                     exports: [NgTranscludeDirective],
                     declarations: [NgTranscludeDirective]
-                },] },
+                },] }
     ];
     return NgTranscludeModule;
 }());

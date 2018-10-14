@@ -11,7 +11,7 @@ var ResponsiveModule = /** @class */ (function () {
         { type: NgModule, args: [{
                     declarations: [MediaDirective],
                     exports: [MediaDirective],
-                },] },
+                },] }
     ];
     return ResponsiveModule;
 }());

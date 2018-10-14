@@ -76,7 +76,7 @@ var LyRipple = /** @class */ (function () {
         { type: Directive, args: [{
                     selector: '[lyRipple], [ly-ripple]',
                     exportAs: 'lyRipple'
-                },] },
+                },] }
     ];
     /** @nocollapse */
     LyRipple.ctorParameters = function () { return [

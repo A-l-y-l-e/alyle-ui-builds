@@ -15,7 +15,7 @@ var LyMenuModule = /** @class */ (function () {
                     imports: [CommonModule, FormsModule, LyCommonModule, LxDomModule, LyOverlayModule],
                     exports: [LyMenu, LyMenuItem, LyMenuTriggerFor],
                     declarations: [LyMenu, LyMenuItem, LyMenuTriggerFor],
-                },] },
+                },] }
     ];
     return LyMenuModule;
 }());

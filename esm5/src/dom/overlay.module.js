@@ -11,7 +11,7 @@ var LyOverlayModule = /** @class */ (function () {
         { type: NgModule, args: [{
                     declarations: [LyOverlayBackdrop],
                     entryComponents: [LyOverlayBackdrop]
-                },] },
+                },] }
     ];
     return LyOverlayModule;
 }());

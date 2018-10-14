@@ -9,7 +9,7 @@ var LyInputContents = /** @class */ (function () {
     LyInputContents.decorators = [
         { type: Directive, args: [{
                     selector: 'ly-before-input, ly-after-input'
-                },] },
+                },] }
     ];
     return LyInputContents;
 }());

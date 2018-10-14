@@ -16,7 +16,7 @@ var LyCardModule = /** @class */ (function () {
                     ],
                     exports: [LyCard, LyCardContent, LyCardActions, LyCardMedia, LyCommonModule],
                     declarations: [LyCard, LyCardContent, LyCardActions, LyCardMedia]
-                },] },
+                },] }
     ];
     return LyCardModule;
 }());

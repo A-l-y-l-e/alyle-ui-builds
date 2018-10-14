@@ -14,7 +14,7 @@ var ThemeMinimaLight = /** @class */ (function () {
                         LyTheme2,
                         { provide: LY_THEME_NAME, useValue: 'minima-light' }
                     ]
-                },] },
+                },] }
     ];
     return ThemeMinimaLight;
 }());
@@ -29,7 +29,7 @@ var ThemeMinimaDark = /** @class */ (function () {
                         LyTheme2,
                         { provide: LY_THEME_NAME, useValue: 'minima-dark' }
                     ]
-                },] },
+                },] }
     ];
     return ThemeMinimaDark;
 }());
@@ -41,7 +41,7 @@ var ThemeMinimaModule = /** @class */ (function () {
         { type: NgModule, args: [{
                     declarations: [ThemeMinimaDark, ThemeMinimaLight],
                     exports: [ThemeMinimaDark, ThemeMinimaLight]
-                },] },
+                },] }
     ];
     return ThemeMinimaModule;
 }());

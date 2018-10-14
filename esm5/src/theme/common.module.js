@@ -12,7 +12,7 @@ var LyCommonModule = /** @class */ (function () {
         { type: NgModule, args: [{
                     declarations: [LyCommon, LyWithClass],
                     exports: [LyCommon, LyWithClass]
-                },] },
+                },] }
     ];
     return LyCommonModule;
 }());

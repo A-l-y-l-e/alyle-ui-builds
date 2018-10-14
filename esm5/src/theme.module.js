@@ -26,7 +26,7 @@ var LyThemeModule = /** @class */ (function () {
         };
     };
     LyThemeModule.decorators = [
-        { type: NgModule },
+        { type: NgModule }
     ];
     return LyThemeModule;
 }());

@@ -15,7 +15,7 @@ var LyIconModule = /** @class */ (function () {
                     ],
                     declarations: [Icon],
                     exports: [Icon]
-                },] },
+                },] }
     ];
     return LyIconModule;
 }());

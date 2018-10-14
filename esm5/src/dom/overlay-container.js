@@ -40,7 +40,7 @@ var WindowScrollService = /** @class */ (function () {
     WindowScrollService.decorators = [
         { type: Injectable, args: [{
                     providedIn: 'root'
-                },] },
+                },] }
     ];
     /** @nocollapse */
     WindowScrollService.ctorParameters = function () { return [
@@ -145,7 +145,7 @@ var LyOverlayContainer = /** @class */ (function () {
     LyOverlayContainer.decorators = [
         { type: Injectable, args: [{
                     providedIn: 'root'
-                },] },
+                },] }
     ];
     /** @nocollapse */
     LyOverlayContainer.ctorParameters = function () { return [
@@ -186,7 +186,7 @@ var LyOverlayBackdrop = /** @class */ (function () {
         { type: Component, args: [{
                     selector: 'ly-overlay-backdrop',
                     template: ""
-                },] },
+                }] }
     ];
     /** @nocollapse */
     LyOverlayBackdrop.ctorParameters = function () { return [

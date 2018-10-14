@@ -14,7 +14,7 @@ var LyBadgeModule = /** @class */ (function () {
                     imports: [CommonModule, LyCommonModule],
                     exports: [LyBadge, LyCommonModule],
                     declarations: [LyBadge]
-                },] },
+                },] }
     ];
     return LyBadgeModule;
 }());

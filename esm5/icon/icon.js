@@ -158,7 +158,7 @@ var Icon = /** @class */ (function () {
     Icon.decorators = [
         { type: Directive, args: [{
                     selector: 'ly-icon'
-                },] },
+                },] }
     ];
     /** @nocollapse */
     Icon.ctorParameters = function () { return [

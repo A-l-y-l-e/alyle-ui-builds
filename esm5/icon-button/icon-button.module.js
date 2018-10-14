@@ -14,7 +14,7 @@ var LyIconButtonModule = /** @class */ (function () {
                     imports: [CommonModule, LyRippleModule],
                     exports: [LyIconButton],
                     declarations: [LyIconButton],
-                },] },
+                },] }
     ];
     return LyIconButtonModule;
 }());

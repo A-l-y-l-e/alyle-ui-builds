@@ -18,7 +18,7 @@ var LyResizingCroppingImageModule = /** @class */ (function () {
                         { provide: HAMMER_GESTURE_CONFIG, useClass: LyHammerGestureConfig }
                     ],
                     declarations: [LyResizingCroppingImages]
-                },] },
+                },] }
     ];
     return LyResizingCroppingImageModule;
 }());

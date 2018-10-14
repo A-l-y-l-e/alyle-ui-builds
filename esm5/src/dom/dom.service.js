@@ -73,7 +73,7 @@ var DomService = /** @class */ (function () {
         }, delay);
     };
     DomService.decorators = [
-        { type: Injectable },
+        { type: Injectable }
     ];
     /** @nocollapse */
     DomService.ctorParameters = function () { return [

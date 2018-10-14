@@ -24,7 +24,7 @@ var LyWithClass = /** @class */ (function () {
     LyWithClass.decorators = [
         { type: Directive, args: [{
                     selector: '[withClass]'
-                },] },
+                },] }
     ];
     /** @nocollapse */
     LyWithClass.ctorParameters = function () { return [

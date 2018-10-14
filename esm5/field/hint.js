@@ -12,7 +12,7 @@ var LyHint = /** @class */ (function () {
     LyHint.decorators = [
         { type: Directive, args: [{
                     selector: 'ly-field > ly-hint'
-                },] },
+                },] }
     ];
     return LyHint;
 }());

@@ -142,7 +142,7 @@ var LyCommon = /** @class */ (function () {
     LyCommon.decorators = [
         { type: Directive, args: [{
                     selector: "\n            [bg],\n            [color],\n            [raised],\n            [raised][shadowColor],\n            [ly-button][outlined],\n            [elevation],\n            [elevation][shadowColor],\n            [disabled],\n            ly-card,\n            ly-toolbar\n            "
-                },] },
+                },] }
     ];
     /** @nocollapse */
     LyCommon.ctorParameters = function () { return [

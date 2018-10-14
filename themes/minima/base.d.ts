@@ -47,7 +47,7 @@ export declare class MinimaBase extends LyStyleUtils {
         drawer: number;
         overlay: number;
     };
-    ripple: import("../../../../../dist/@alyle/ui/src/theme/theme-config").IRippleVariables;
+    ripple: import("../../../@alyle/ui/src/theme/theme-config").IRippleVariables;
     animations: {
         curves: {
             standard: string;

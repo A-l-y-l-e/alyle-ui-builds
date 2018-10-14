@@ -15,7 +15,7 @@ var LyTypographyModule = /** @class */ (function () {
                     ],
                     exports: [LyTypography],
                     declarations: [LyTypography]
-                },] },
+                },] }
     ];
     return LyTypographyModule;
 }());

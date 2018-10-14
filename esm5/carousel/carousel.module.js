@@ -17,7 +17,7 @@ var LyCarouselModule = /** @class */ (function () {
                     imports: [CommonModule, LyCommonModule, LyRippleModule],
                     exports: [LY_CAROUSEL_DIRECTIVES, LyCommonModule],
                     declarations: [LY_CAROUSEL_DIRECTIVES]
-                },] },
+                },] }
     ];
     return LyCarouselModule;
 }());

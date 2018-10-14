@@ -15,7 +15,7 @@ var LyButtonModule = /** @class */ (function () {
                     imports: [CommonModule, LyRippleModule, LyCommonModule],
                     exports: [LyButton, LyCommonModule],
                     declarations: [LyButton]
-                },] },
+                },] }
     ];
     return LyButtonModule;
 }());
