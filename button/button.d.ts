@@ -1,30 +1,7 @@
 import { ElementRef, Renderer2, NgZone, OnDestroy, OnInit, AfterViewInit } from '@angular/core';
 import { LyTheme2, LyCommon } from '@alyle/ui';
 import { LyRippleService } from '@alyle/ui/ripple';
-interface Size {
-    small: any;
-    medium: any;
-    large: any;
-}
-declare const Size: {
-    small: (theme: any) => {
-        padding: string;
-        fontSize: any;
-        minHeight: string;
-        minWidth: string;
-    };
-    medium: {
-        padding: string;
-        minHeight: string;
-        minWidth: string;
-    };
-    large: (theme: any) => {
-        padding: string;
-        fontSize: any;
-        minHeight: string;
-        minWidth: string;
-    };
-};
+declare type LyButtonSize = 'small' | 'medium' | 'large';
 export declare class LyButton implements OnInit, AfterViewInit, OnDestroy {
     private _elementRef;
     private _renderer;
@@ -40,10 +17,15 @@ export declare class LyButton implements OnInit, AfterViewInit, OnDestroy {
     private _ripple;
     private _size;
     private _sizeClass;
+    private _disableRipple;
+    /** @ignore */
     _rippleContainer: ElementRef;
     /** @ignore */
     rippleSensitive: boolean;
-    size: Record<keyof Size, string>;
+    /** Whether ripples are disabled. */
+    disableRipple: boolean;
+    /** Button size */
+    size: LyButtonSize;
     constructor(_elementRef: ElementRef, _renderer: Renderer2, _theme: LyTheme2, _ngZone: NgZone, _rippleService: LyRippleService, bgAndColor: LyCommon);
     ngOnInit(): void;
     ngAfterViewInit(): void;
