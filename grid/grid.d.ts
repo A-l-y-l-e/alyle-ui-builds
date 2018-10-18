@@ -1,7 +1,7 @@
 import { ElementRef, OnInit } from '@angular/core';
 import { LyTheme2 } from '@alyle/ui';
 declare type Justify = 'start' | 'center' | 'end' | 'between' | 'around' | 'evenly';
-declare type Direction = 'row' | 'row-reverse' | 'column' | 'column-reverse';
+declare type Direction = 'row' | 'rowReverse' | 'column' | 'columnReverse';
 /**
  * Grid container
  * example:
