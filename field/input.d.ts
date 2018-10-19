@@ -13,12 +13,14 @@ export declare class LyInputNative implements OnInit, OnDestroy {
     protected _disabled: boolean;
     protected _required: boolean;
     protected _placeholder: string;
-    readonly valueChanges: Subject<void>;
+    readonly stateChanges: Subject<void>;
     focused: boolean;
     _onInput(): void;
     _onBlur(): void;
     _onFocus(): void;
+    /** @ignore */
     value: any;
+    /** Whether the input is disabled. */
     disabled: boolean;
     required: boolean;
     placeholder: string;

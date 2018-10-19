@@ -4,6 +4,10 @@ export declare class LyBadge implements OnInit {
     private _el;
     private _theme;
     private _renderer;
+    /**
+     * Styles
+     * @ignore
+     */
     classes: Record<"relative" | "root", string>;
     private _content;
     private _position;

@@ -17,7 +17,7 @@ export declare class LyField implements OnInit, AfterContentInit, AfterViewInit 
      * styles
      * @ignore
      */
-    classes: Record<"placeholder" | "root" | "container" | "fieldset" | "fieldsetSpan" | "labelSpan" | "prefix" | "infix" | "suffix" | "labelContainer" | "labelSpacingStart" | "labelCenter" | "labelSpacingEnd" | "label" | "isFloatingLabel" | "floatingLabel" | "focused" | "hint" | "inputNative", string>;
+    classes: Record<"placeholder" | "root" | "animations" | "container" | "fieldset" | "fieldsetSpan" | "labelSpan" | "prefix" | "infix" | "suffix" | "labelContainer" | "labelSpacingStart" | "labelCenter" | "labelSpacingEnd" | "label" | "isFloatingLabel" | "floatingLabel" | "focused" | "hint" | "inputNative", string>;
     protected _appearance: string;
     protected _appearanceClass: string;
     protected _withColor: string;
@@ -39,8 +39,11 @@ export declare class LyField implements OnInit, AfterContentInit, AfterViewInit 
     _hintChildren: QueryList<LyHint>;
     _prefixChildren: QueryList<LyPrefix>;
     _suffixChildren: QueryList<LySuffix>;
+    /** Whether the label is floating. */
     floatingLabel: boolean;
+    /** Theme color for the component. */
     withColor: string;
+    /** The field appearance style. */
     appearance: string;
     constructor(_renderer: Renderer2, _el: ElementRef, _elementObserver: ElementObserver, _theme: LyTheme2, _cd: ChangeDetectorRef, _ngZone: NgZone);
     ngOnInit(): void;
