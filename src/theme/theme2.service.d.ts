@@ -6,22 +6,28 @@ declare enum TypeStyle {
     Multiple = 0,
     OnlyOne = 1
 }
-export interface StyleMap4 {
-    [id: string]: {
-        styles: StylesFn2<any> | Styles2;
-        type: TypeStyle;
-        priority: number;
-        css: {
-            [themeName: string]: string;
+export interface StyleMap5 {
+    styles: StylesFn2<any> | Styles2;
+    type: TypeStyle;
+    priority: number;
+    css: {
+        [themeName: string]: string;
+    } | string;
+    /** global theme */
+    classes?: {
+        [key: string]: string;
+    } | string;
+    /** requireUpdate */
+    classesWithTheme?: {
+        [themeName: string]: {
+            [key: string]: string;
         } | string;
-        requireUpdate?: boolean;
     };
+    requireUpdate?: boolean;
 }
 export declare class StylesInDocument {
     styles: {
-        [themeName: string]: {
-            [key: string]: HTMLStyleElement;
-        };
+        [themeName: string]: Map<string | object, HTMLStyleElement>;
     };
     styleContainers: Map<number, HTMLElement>;
 }
@@ -32,9 +38,8 @@ export declare class LyTheme2 {
     config: ThemeVariables;
     _styleMap: Map<string, DataStyle>;
     initialTheme: string;
-    elements: {
-        [key: string]: HTMLStyleElement;
-    };
+    elements: Map<string | object, HTMLStyleElement>;
+    _elementsMap: Map<any, HTMLStyleElement>;
     readonly classes: {
         [idOrThemeName: string]: string | {
             [className: string]: string;
@@ -60,13 +65,10 @@ export declare class LyTheme2 {
      */
     private addCss;
     private _addDefaultStyles;
-    /**
-     * Add new add a new style sheet
-     * @param styles styles
-     * @param id unique id for style group
-     */
-    addStyleSheet<T>(styles: T & (StylesFn2<T> | Styles2), id?: string, priority?: number): IClasses<T>;
-    _createStyleContent2<T>(styles: StylesFn2<T> | Styles2, id: string, priority: number, type: TypeStyle, forChangeTheme?: boolean, media?: string): any;
+    addStyleSheet<T>(styles: T & (StylesFn2<T> | Styles2), priority?: number): IClasses<T>;
+    addStyleSheet<T>(styles: T & (StylesFn2<T> | Styles2), id: string): IClasses<T>;
+    addStyleSheet<T>(styles: T & (StylesFn2<T> | Styles2), id: string | string, priority: number): IClasses<T>;
+    private _createStyleContent2;
     private _createStyleContainer;
     private findNode;
     private _createElementStyle;
