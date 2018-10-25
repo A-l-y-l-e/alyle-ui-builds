@@ -54,8 +54,8 @@ export declare class LyResizingCroppingImages implements AfterContentInit {
     private _img;
     private offset;
     private _scale;
-    private _config;
     private _minScale;
+    private _config;
     imgContainer: ElementRef;
     croppingContainer: ElementRef;
     /** @deprecated */
@@ -63,6 +63,8 @@ export declare class LyResizingCroppingImages implements AfterContentInit {
     config: ImgCropperConfig;
     /** get current scale */
     readonly scale: number;
+    /** get min scale */
+    readonly minScale: number;
     isLoaded: boolean;
     isCropped: boolean;
     /** On loaded new image */
