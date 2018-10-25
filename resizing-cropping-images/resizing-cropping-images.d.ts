@@ -1,29 +1,42 @@
-/**
- * TODO: add resizing image
- */
 import { ElementRef, ChangeDetectorRef, AfterContentInit, EventEmitter, Renderer2 } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
 import { LyTheme2 } from '@alyle/ui';
 export interface LyResizingCroppingImagesConfig {
+    /** Cropper area width*/
     width: number;
+    /** Cropper area height*/
     height: number;
     /** If this is not defined, the new image will be automatically defined */
     type?: string;
     /** Background color( default: null), if is null in png is transparent but not in jpg */
     fill?: string | null;
+    /** Set anti-aliased( default: true) */
+    antiAliased?: boolean;
     output?: {
         width: number;
         height: number;
-    } | ImageResolution;
+    } | ImageResolution | ImgResolution;
 }
+export declare type ImgCropperConfig = LyResizingCroppingImagesConfig;
+export declare enum ImgResolution {
+    /** Resizing & cropping */
+    Default = 0,
+    /** Only cropping */
+    OriginalImage = 1
+}
+/** @deprecated, use `ImgResolution` instead */
 export declare enum ImageResolution {
     /** Resizing & cropping */
     Default = 0,
     /** Only cropping */
     OriginalImage = 1
 }
-export interface CroppedImage {
+/** @deprecated, use `ImgCropperEvent` instead */
+export declare type CroppedImage = ImgCropperEvent;
+export interface ImgCropperEvent {
+    /** @deprecated, use `base64` instead */
     base64Image: string;
+    base64: string;
+    name: string;
     type: string;
 }
 export interface ImageState {
@@ -36,38 +49,35 @@ export declare class LyResizingCroppingImages implements AfterContentInit {
     private elementRef;
     private cd;
     classes: Record<"root" | "imgContainer" | "croppingContainer" | "croppContent", string>;
-    img: BehaviorSubject<HTMLImageElement>;
     result: string;
-    fileName: string;
+    private _fileName;
     private _img;
     private offset;
-    private scale;
+    private _scale;
+    private _config;
     imgContainer: ElementRef;
     croppingContainer: ElementRef;
+    /** @deprecated */
     src: string;
-    format: string;
-    config: LyResizingCroppingImagesConfig;
+    config: ImgCropperConfig;
     isLoaded: boolean;
     isCropped: boolean;
     /** On loaded new image */
-    loaded: EventEmitter<null>;
+    loaded: EventEmitter<void>;
     /** On crop new image */
-    cropped: EventEmitter<CroppedImage>;
-    /** On error new image */
-    error: EventEmitter<null>;
+    cropped: EventEmitter<ImgCropperEvent>;
+    /** issues an error when the loaded image is not valid */
+    error: EventEmitter<ImgCropperEvent>;
     private defaultType;
-    private _dragData;
-    dragData: Observable<{
-        width: string;
-        height: string;
-        transform: string;
-    }>;
     private zoomScale;
-    constructor(_renderer: Renderer2, theme: LyTheme2, elementRef: ElementRef, cd: ChangeDetectorRef);
+    constructor(_renderer: Renderer2, theme: LyTheme2, elementRef: ElementRef<HTMLElement>, cd: ChangeDetectorRef);
+    private _imgLoaded;
+    private _setStylesForContImg;
     selectInputEvent(img: Event): void;
-    fixedNum(num: number): number;
+    /** Set the size of the image, the values can be 0 between 1, where 1 is the original size */
     setScale(size: number): void;
     private customCenter;
+    /** @deprecated, instead use setScale(1) */
     '1:1'(): void;
     /**
      * Ajustar a la pantalla
@@ -90,9 +100,9 @@ export declare class LyResizingCroppingImages implements AfterContentInit {
      * Crop Image
      * Resizing & cropping image
      */
-    crop(): CroppedImage;
+    crop(config?: ImgCropperConfig): ImgCropperEvent;
     /**
      * Deprecated, use crop() instead
      */
-    cropp(): string;
+    cropp(myConfig: ImgCropperConfig): string;
 }
