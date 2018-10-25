@@ -55,11 +55,14 @@ export declare class LyResizingCroppingImages implements AfterContentInit {
     private offset;
     private _scale;
     private _config;
+    private _minScale;
     imgContainer: ElementRef;
     croppingContainer: ElementRef;
     /** @deprecated */
     src: string;
     config: ImgCropperConfig;
+    /** get current scale */
+    readonly scale: number;
     isLoaded: boolean;
     isCropped: boolean;
     /** On loaded new image */
@@ -69,7 +72,6 @@ export declare class LyResizingCroppingImages implements AfterContentInit {
     /** issues an error when the loaded image is not valid */
     error: EventEmitter<ImgCropperEvent>;
     private defaultType;
-    private zoomScale;
     constructor(_renderer: Renderer2, theme: LyTheme2, elementRef: ElementRef<HTMLElement>, cd: ChangeDetectorRef);
     private _imgLoaded;
     private _setStylesForContImg;
