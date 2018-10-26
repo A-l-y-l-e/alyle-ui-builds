@@ -38,6 +38,8 @@ export interface ImgCropperEvent {
     base64: string;
     name: string;
     type: string;
+    width: number;
+    height: number;
 }
 export interface ImageState {
     isLoaded: boolean;
@@ -68,7 +70,7 @@ export declare class LyResizingCroppingImages implements AfterContentInit {
     isLoaded: boolean;
     isCropped: boolean;
     /** On loaded new image */
-    loaded: EventEmitter<void>;
+    loaded: EventEmitter<ImgCropperEvent>;
     /** On crop new image */
     cropped: EventEmitter<ImgCropperEvent>;
     /** issues an error when the loaded image is not valid */
@@ -108,5 +110,12 @@ export declare class LyResizingCroppingImages implements AfterContentInit {
     /**
      * Deprecated, use crop() instead
      */
-    cropp(myConfig: ImgCropperConfig): string;
+    cropp(myConfig: ImgCropperConfig): {
+        base64Image: any;
+        base64: any;
+        type: string;
+        name: string;
+        width: number;
+        height: number;
+    };
 }
