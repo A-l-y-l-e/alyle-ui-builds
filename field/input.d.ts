@@ -1,11 +1,9 @@
 import { ElementRef, OnInit, Renderer2, OnDestroy } from '@angular/core';
 import { NgControl, NgForm, FormGroupDirective } from '@angular/forms';
-import { LyTheme2 } from '@alyle/ui';
 import { Subject } from 'rxjs';
 export declare class LyInputNative implements OnInit, OnDestroy {
     private _el;
     private _renderer;
-    private _theme;
     /** @ignore */
     ngControl: NgControl;
     /** @ignore */
@@ -24,7 +22,7 @@ export declare class LyInputNative implements OnInit, OnDestroy {
     disabled: boolean;
     required: boolean;
     placeholder: string;
-    constructor(_el: ElementRef<HTMLInputElement | HTMLTextAreaElement>, _renderer: Renderer2, _theme: LyTheme2, 
+    constructor(_el: ElementRef<HTMLInputElement | HTMLTextAreaElement>, _renderer: Renderer2, 
     /** @ignore */
     ngControl: NgControl, _parentForm: NgForm, _parentFormGroup: FormGroupDirective);
     ngOnInit(): void;
