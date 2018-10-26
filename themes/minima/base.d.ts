@@ -1,4 +1,5 @@
-import { LyStyleUtils, TypographyConfig } from '@alyle/ui';
+import { LyStyleUtils, TypographyConfig, // Do not delete this, this is necessary to generate the types correctly
+IRippleVariables } from '@alyle/ui';
 export declare class MinimaBase extends LyStyleUtils {
     typography: {
         fontFamily: string;
@@ -47,7 +48,7 @@ export declare class MinimaBase extends LyStyleUtils {
         drawer: number;
         overlay: number;
     };
-    ripple: import("../../../@alyle/ui/src/theme/theme-config").IRippleVariables;
+    ripple: IRippleVariables;
     animations: {
         curves: {
             standard: string;

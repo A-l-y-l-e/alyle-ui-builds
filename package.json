@@ -1,6 +1,6 @@
 {
   "name": "@alyle/ui",
-  "version": "1.7.6-nightly.20181026-jnpr34ge",
+  "version": "1.7.6",
   "description": "Minimal Design, a package of components for Angular",
   "repository": {
     "type": "git",
@@ -10,9 +10,10 @@
     "angular",
     "components",
     "material",
-    "design",
+    "material design",
     "minimal",
-    "ui"
+    "ui",
+    "material components web"
   ],
   "author": "Alyle",
   "license": "MIT",
