@@ -6,9 +6,10 @@ export declare class LyDrawerContainer {
     private _theme;
     private _renderer;
     private _el;
+    /** @ignore */
     classes: Record<"drawerContainer" | "drawer" | "drawerContent" | "drawerOpened" | "backdrop" | "transition", string>;
     _openDrawers: number;
-    drawerContent: LyDrawerContent;
+    _drawerContent: LyDrawerContent;
     constructor(_theme: LyTheme2, _renderer: Renderer2, _el: ElementRef);
 }
 export declare class LyDrawerContent {

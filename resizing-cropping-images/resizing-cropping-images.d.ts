@@ -1,4 +1,4 @@
-import { ElementRef, ChangeDetectorRef, AfterContentInit, EventEmitter, Renderer2 } from '@angular/core';
+import { ElementRef, ChangeDetectorRef, EventEmitter, Renderer2 } from '@angular/core';
 import { LyTheme2 } from '@alyle/ui';
 export interface LyResizingCroppingImagesConfig {
     /** Cropper area width*/
@@ -17,13 +17,14 @@ export interface LyResizingCroppingImagesConfig {
     } | ImageResolution | ImgResolution;
 }
 export declare type ImgCropperConfig = LyResizingCroppingImagesConfig;
+/** Image output */
 export declare enum ImgResolution {
     /** Resizing & cropping */
     Default = 0,
     /** Only cropping */
     OriginalImage = 1
 }
-/** @deprecated, use `ImgResolution` instead */
+/** @ignore @deprecated, use `ImgResolution` instead */
 export declare enum ImageResolution {
     /** Resizing & cropping */
     Default = 0,
@@ -45,7 +46,7 @@ export interface ImageState {
     isLoaded: boolean;
     isCrop: boolean;
 }
-export declare class LyResizingCroppingImages implements AfterContentInit {
+export declare class LyResizingCroppingImages {
     private _renderer;
     private theme;
     private elementRef;
@@ -58,9 +59,9 @@ export declare class LyResizingCroppingImages implements AfterContentInit {
     private _scale;
     private _minScale;
     private _config;
-    imgContainer: ElementRef;
-    croppingContainer: ElementRef;
-    /** @deprecated */
+    _imgContainer: ElementRef;
+    _croppingContainer: ElementRef;
+    /** @deprecated @ignore */
     src: string;
     config: ImgCropperConfig;
     /** get current scale */
@@ -83,7 +84,7 @@ export declare class LyResizingCroppingImages implements AfterContentInit {
     /** Set the size of the image, the values can be 0 between 1, where 1 is the original size */
     setScale(size: number): void;
     private customCenter;
-    /** @deprecated, instead use setScale(1) */
+    /** @ignore @deprecated, instead use setScale(1) */
     '1:1'(): void;
     /**
      * Ajustar a la pantalla
@@ -97,9 +98,8 @@ export declare class LyResizingCroppingImages implements AfterContentInit {
     zoomIn(): void;
     /**- */
     zoomOut(): void;
-    ngAfterContentInit(): void;
-    center(img?: HTMLImageElement): void;
-    setImageUrl(src: string): void;
+    center(): void;
+    private _setImageUrl;
     private max;
     private imageSmoothingQuality;
     /**
@@ -108,7 +108,7 @@ export declare class LyResizingCroppingImages implements AfterContentInit {
      */
     crop(config?: ImgCropperConfig): ImgCropperEvent;
     /**
-     * Deprecated, use crop() instead
+     * @ignore @deprecated, use crop() instead
      */
     cropp(myConfig: ImgCropperConfig): {
         base64Image: any;

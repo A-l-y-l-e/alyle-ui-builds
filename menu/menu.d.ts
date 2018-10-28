@@ -1,16 +1,18 @@
 import { ElementRef, TemplateRef, OnDestroy } from '@angular/core';
 import { LyOverlay, OverlayFromTemplateRef, LyTheme2 } from '@alyle/ui';
-export declare type position = 'left' | 'right' | 'top' | 'bottom' | 'center' | 'middle';
-export declare class Origin {
-    horizontal: position;
-    vertical: position;
-}
 /** Menu container */
 export declare class LyMenu {
     private theme;
     private _el;
+    /**
+     * styles
+     * @ignore
+     */
     classes: Record<"root", string>;
-    /** Destroy menu */
+    /**
+     * Destroy menu
+     * @ignore
+     */
     destroy: () => void;
     ref: LyMenuTriggerFor;
     menuEnter: any;
