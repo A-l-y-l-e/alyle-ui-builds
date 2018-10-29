@@ -5,6 +5,10 @@ export declare class LyCard implements OnInit {
     private el;
     private renderer;
     private common;
+    /**
+     * styles
+     * @ignore
+     */
     classes: Record<"root" | "content" | "actions" | "actionsItem", string>;
     constructor(theme: LyTheme2, el: ElementRef, renderer: Renderer2, common: LyCommon);
     ngOnInit(): void;

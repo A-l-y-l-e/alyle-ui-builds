@@ -51,7 +51,12 @@ export declare class LyResizingCroppingImages {
     private theme;
     private elementRef;
     private cd;
+    /**
+     * styles
+     * @ignore
+     */
     classes: Record<"root" | "imgContainer" | "croppingContainer" | "croppContent", string>;
+    /** @deprecated */
     result: string;
     private _fileName;
     private _img;
@@ -64,9 +69,9 @@ export declare class LyResizingCroppingImages {
     /** @deprecated @ignore */
     src: string;
     config: ImgCropperConfig;
-    /** get current scale */
+    /** Get current scale */
     readonly scale: number;
-    /** get min scale */
+    /** Get min scale */
     readonly minScale: number;
     isLoaded: boolean;
     isCropped: boolean;
@@ -74,9 +79,9 @@ export declare class LyResizingCroppingImages {
     loaded: EventEmitter<ImgCropperEvent>;
     /** On crop new image */
     cropped: EventEmitter<ImgCropperEvent>;
-    /** issues an error when the loaded image is not valid */
+    /** Emit an error when the loaded image is not valid */
     error: EventEmitter<ImgCropperEvent>;
-    private defaultType;
+    private _defaultType;
     constructor(_renderer: Renderer2, theme: LyTheme2, elementRef: ElementRef<HTMLElement>, cd: ChangeDetectorRef);
     private _imgLoaded;
     private _setStylesForContImg;
@@ -96,6 +101,8 @@ export declare class LyResizingCroppingImages {
     private roundNumber;
     /**+ */
     zoomIn(): void;
+    /** Clean the img cropper */
+    clean(): void;
     /**- */
     zoomOut(): void;
     center(): void;

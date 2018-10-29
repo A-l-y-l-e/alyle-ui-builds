@@ -1,5 +1,5 @@
 import { InjectionToken } from '@angular/core';
-import { LyStyleUtils } from '../style-utils';
+import { LyStyleUtils, Dir } from '../style-utils';
 import { StyleContainer } from './theme2.service';
 export declare const LY_THEME_GLOBAL_VARIABLES: InjectionToken<Partial<ThemeVariables>>;
 export declare const LY_THEME: InjectionToken<ThemeConfig | ThemeConfig[]>;
@@ -86,7 +86,7 @@ export interface ThemeConfig {
         overlay: number;
         [key: string]: number;
     };
-    direction?: 'ltr' | 'rtl';
+    direction?: Dir;
     animations: {
         curves: {
             standard: string;

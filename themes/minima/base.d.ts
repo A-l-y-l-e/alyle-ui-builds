@@ -62,4 +62,7 @@ export declare class MinimaBase extends LyStyleUtils {
             exiting: number;
         };
     };
+    badge: {
+        position: {};
+    };
 }

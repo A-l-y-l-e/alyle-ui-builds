@@ -30,11 +30,19 @@ export declare class LyStyleUtils {
         WebLandscape: string;
         [key: string]: string;
     };
-    direction?: 'ltr' | 'rtl';
+    direction?: Dir;
     pxToRem(value: number): string;
     colorOf(value: string, optional?: string): string;
     getBreakpoint(key: string): string;
-    getDirection(val: 'start' | 'end'): "left" | "right";
+    getDirection(val: Dir): "left" | "right";
+}
+export declare enum Dir {
+    start = "start",
+    end = "end",
+    rtl = "rtl",
+    ltr = "ltr",
+    left = "left",
+    right = "right"
 }
 export declare function eachMedia(str: string | number, fn: ((val: string, media: string, isMedia: number) => void)): void;
 /**

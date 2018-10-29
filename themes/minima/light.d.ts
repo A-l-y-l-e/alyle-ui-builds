@@ -1,4 +1,4 @@
-import { ThemeConfig } from '@alyle/ui';
+import { ThemeConfig, Dir } from '@alyle/ui';
 import { MinimaBase } from './base';
 export declare class MinimaLight extends MinimaBase implements ThemeConfig {
     name: string;
@@ -184,4 +184,5 @@ export declare class MinimaLight extends MinimaBase implements ThemeConfig {
             };
         };
     };
+    direction: Dir;
 }
