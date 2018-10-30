@@ -136,6 +136,7 @@ export declare class MinimaDark extends MinimaBase implements ThemeConfig {
         };
     } & {
         borderColor: string;
+        labelColor: string;
         appearance: {
             filled: {
                 container: {
@@ -143,12 +144,6 @@ export declare class MinimaDark extends MinimaBase implements ThemeConfig {
                 };
             };
         };
-    };
-    input: {
-        /** @deprecated */
-        label: string;
-        /** @deprecated */
-        underline: string;
     };
     badge: {};
 }

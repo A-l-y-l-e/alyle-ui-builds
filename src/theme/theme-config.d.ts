@@ -49,17 +49,9 @@ export interface ThemeConfig {
         /** color for drawer:backdrop */
         backdrop: string;
     };
-    input: {
-        /** @deprecated */
-        label?: string;
-        /** @deprecated */
-        underline?: string;
-        /** @deprecated */
-        withColor?: string;
-    };
-    /** @deprecated */
     field: {
         borderColor: string;
+        labelColor: string;
         appearance: {
             [appearanceName: string]: {
                 container?: StyleContainer;

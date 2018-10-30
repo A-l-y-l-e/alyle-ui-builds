@@ -14,7 +14,7 @@ export interface LyResizingCroppingImagesConfig {
     output?: {
         width: number;
         height: number;
-    } | ImageResolution | ImgResolution;
+    } | ImgResolution;
 }
 export declare type ImgCropperConfig = LyResizingCroppingImagesConfig;
 /** Image output */
@@ -24,18 +24,7 @@ export declare enum ImgResolution {
     /** Only cropping */
     OriginalImage = 1
 }
-/** @ignore @deprecated, use `ImgResolution` instead */
-export declare enum ImageResolution {
-    /** Resizing & cropping */
-    Default = 0,
-    /** Only cropping */
-    OriginalImage = 1
-}
-/** @deprecated, use `ImgCropperEvent` instead */
-export declare type CroppedImage = ImgCropperEvent;
 export interface ImgCropperEvent {
-    /** @deprecated, use `base64` instead */
-    base64Image: string;
     base64: string;
     name: string;
     type: string;
@@ -56,8 +45,7 @@ export declare class LyResizingCroppingImages {
      * @ignore
      */
     classes: Record<"root" | "imgContainer" | "croppingContainer" | "croppContent", string>;
-    /** @deprecated */
-    result: string;
+    _originalImgBase64: string;
     private _fileName;
     private _img;
     private offset;
@@ -66,8 +54,6 @@ export declare class LyResizingCroppingImages {
     private _config;
     _imgContainer: ElementRef;
     _croppingContainer: ElementRef;
-    /** @deprecated @ignore */
-    src: string;
     config: ImgCropperConfig;
     /** Get current scale */
     readonly scale: number;
@@ -89,8 +75,6 @@ export declare class LyResizingCroppingImages {
     /** Set the size of the image, the values can be 0 between 1, where 1 is the original size */
     setScale(size: number): void;
     private customCenter;
-    /** @ignore @deprecated, instead use setScale(1) */
-    '1:1'(): void;
     /**
      * Ajustar a la pantalla
      */
@@ -115,10 +99,9 @@ export declare class LyResizingCroppingImages {
      */
     crop(config?: ImgCropperConfig): ImgCropperEvent;
     /**
-     * @ignore @deprecated, use crop() instead
+     * @ignore
      */
-    cropp(myConfig: ImgCropperConfig): {
-        base64Image: any;
+    _imgCrop(myConfig: ImgCropperConfig): {
         base64: any;
         type: string;
         name: string;
