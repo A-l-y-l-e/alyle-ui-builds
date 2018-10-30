@@ -25,43 +25,8 @@ export declare const iconButton: {
 export declare const icon: {
     fontSize: string;
 };
-export declare const input: {
-    /** @deprecated default color */
-    withColor: string;
+export declare const field: {
     appearance: {
-        standard: {
-            container: {
-                padding: string;
-                '&:after': {
-                    borderBottomStyle: string;
-                    borderBottomWidth: string;
-                };
-                '&:hover:after': {
-                    borderBottomColor: string;
-                };
-            };
-            containerFocused: {
-                '&:after': {
-                    borderWidth: string;
-                    borderColor: string;
-                };
-            };
-            containerLabelHover: {
-                color: string;
-            };
-            label: {
-                margin: string;
-            };
-            placeholder: {
-                margin: string;
-            };
-            input: {
-                margin: string;
-            };
-            floatingLabel: {
-                transform: string;
-            };
-        };
         outlined: {
             container: {
                 padding: string;

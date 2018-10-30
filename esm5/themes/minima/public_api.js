@@ -3,7 +3,7 @@
  * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
  */
 export { ThemeMinimaLight, ThemeMinimaDark, ThemeMinimaModule } from './theme';
-export { typography, iconButton, icon, input, zIndex, animations } from './variables';
+export { typography, iconButton, icon, field, zIndex, animations } from './variables';
 export { MinimaLight } from './light';
 export { MinimaDark } from './dark';
 

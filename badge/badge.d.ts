@@ -18,7 +18,7 @@ export declare class LyBadge implements OnInit {
     /** The content for the badge */
     content: string | number;
     /** The position for the badge */
-    position: 'start top' | 'start bottom' | 'end top' | 'end bottom';
+    position: string;
     /** The color of the badge  */
     bg: string;
     private _bg;

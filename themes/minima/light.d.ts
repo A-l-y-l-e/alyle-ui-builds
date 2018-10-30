@@ -1,4 +1,4 @@
-import { ThemeConfig, Dir } from '@alyle/ui';
+import { ThemeConfig } from '@alyle/ui';
 import { MinimaBase } from './base';
 export declare class MinimaLight extends MinimaBase implements ThemeConfig {
     name: string;
@@ -41,49 +41,13 @@ export declare class MinimaLight extends MinimaBase implements ThemeConfig {
     radio: {
         radioOuterCircle: string;
     };
-    menu: {
-        bg: string;
-    };
+    menu: {};
     drawer: {
         backdrop: string;
     };
     bar: string;
-    input: {
-        withColor: string;
+    field: {
         appearance: {
-            standard: {
-                container: {
-                    padding: string;
-                    '&:after': {
-                        borderBottomStyle: string;
-                        borderBottomWidth: string;
-                    };
-                    '&:hover:after': {
-                        borderBottomColor: string;
-                    };
-                };
-                containerFocused: {
-                    '&:after': {
-                        borderWidth: string;
-                        borderColor: string;
-                    };
-                };
-                containerLabelHover: {
-                    color: string;
-                };
-                label: {
-                    margin: string;
-                };
-                placeholder: {
-                    margin: string;
-                };
-                input: {
-                    margin: string;
-                };
-                floatingLabel: {
-                    transform: string;
-                };
-            };
             outlined: {
                 container: {
                     padding: string;
@@ -171,10 +135,6 @@ export declare class MinimaLight extends MinimaBase implements ThemeConfig {
             };
         };
     } & {
-        /** @deprecated */
-        label: string;
-        /** @deprecated */
-        underline: string;
         borderColor: string;
         appearance: {
             filled: {
@@ -184,5 +144,11 @@ export declare class MinimaLight extends MinimaBase implements ThemeConfig {
             };
         };
     };
-    direction: Dir;
+    input: {
+        /** @deprecated */
+        label: string;
+        /** @deprecated */
+        underline: string;
+    };
+    badge: {};
 }

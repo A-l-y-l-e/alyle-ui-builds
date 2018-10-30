@@ -43,7 +43,7 @@ export interface ThemeConfig {
         radioOuterCircle?: string;
     };
     menu: {
-        bg: string;
+        root?: StyleContainer;
     };
     drawer: {
         /** color for drawer:backdrop */
@@ -56,6 +56,9 @@ export interface ThemeConfig {
         underline?: string;
         /** @deprecated */
         withColor?: string;
+    };
+    /** @deprecated */
+    field: {
         borderColor: string;
         appearance: {
             [appearanceName: string]: {
@@ -101,6 +104,12 @@ export interface ThemeConfig {
         };
     };
     ripple: IRippleVariables;
+    badge: {
+        root?: StyleContainer;
+        position?: {
+            [positionName: string]: StyleContainer;
+        };
+    };
 }
 export declare type ThemeVariables = LyStyleUtils & ThemeConfig;
 export declare type PartialThemeVariables = Partial<ThemeVariables>;

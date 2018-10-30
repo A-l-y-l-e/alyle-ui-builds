@@ -34,13 +34,17 @@ export declare class LyStyleUtils {
     pxToRem(value: number): string;
     colorOf(value: string, optional?: string): string;
     getBreakpoint(key: string): string;
-    getDirection(val: Dir): "left" | "right";
+    getDirection(val: DirAlias): "left" | "right";
 }
 export declare enum Dir {
-    start = "start",
-    end = "end",
     rtl = "rtl",
-    ltr = "ltr",
+    ltr = "ltr"
+}
+export declare enum DirAlias {
+    start = "start",
+    end = "end"
+}
+export declare enum DirPosition {
     left = "left",
     right = "right"
 }

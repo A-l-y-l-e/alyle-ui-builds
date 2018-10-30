@@ -1,5 +1,6 @@
 import { LyStyleUtils, TypographyConfig, // Do not delete this, this is necessary to generate the types correctly
-IRippleVariables } from '@alyle/ui';
+IRippleVariables, // Do not delete this, this is necessary to generate the types correctly
+Dir } from '@alyle/ui';
 export declare class MinimaBase extends LyStyleUtils {
     typography: {
         fontFamily: string;
@@ -62,7 +63,5 @@ export declare class MinimaBase extends LyStyleUtils {
             exiting: number;
         };
     };
-    badge: {
-        position: {};
-    };
+    direction: Dir;
 }
