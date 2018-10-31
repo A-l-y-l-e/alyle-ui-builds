@@ -1,6 +1,7 @@
 import { ElementRef, ChangeDetectorRef, EventEmitter, Renderer2 } from '@angular/core';
 import { LyTheme2 } from '@alyle/ui';
-export interface LyResizingCroppingImagesConfig {
+/** Image Cropper Config */
+export interface ImgCropperConfig {
     /** Cropper area width*/
     width: number;
     /** Cropper area height*/
@@ -16,7 +17,8 @@ export interface LyResizingCroppingImagesConfig {
         height: number;
     } | ImgResolution;
 }
-export declare type ImgCropperConfig = LyResizingCroppingImagesConfig;
+/** @deprecated */
+export declare type LyResizingCroppingImagesConfig = ImgCropperConfig;
 /** Image output */
 export declare enum ImgResolution {
     /** Resizing & cropping */
@@ -25,15 +27,15 @@ export declare enum ImgResolution {
     OriginalImage = 1
 }
 export interface ImgCropperEvent {
+    /** Cropped image in base64 */
     base64: string;
     name: string;
+    /** Filetype */
     type: string;
     width: number;
     height: number;
-}
-export interface ImageState {
-    isLoaded: boolean;
-    isCrop: boolean;
+    /** Original Image in base64 */
+    originalBase64: string;
 }
 export declare class LyResizingCroppingImages {
     private _renderer;
@@ -107,5 +109,6 @@ export declare class LyResizingCroppingImages {
         name: string;
         width: number;
         height: number;
+        originalBase64: string;
     };
 }
