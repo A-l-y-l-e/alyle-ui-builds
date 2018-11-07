@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { LyTheme2 } from '@alyle/ui';
 export interface SvgIcon {
     obs: Observable<SVGElement>;
-    loaded?: boolean;
+    svg?: SVGElement;
 }
 export declare class LyIconService {
     private http;
@@ -11,8 +11,10 @@ export declare class LyIconService {
     private theme;
     private svgMap;
     classes: Record<"svg", string>;
+    readonly defaultSvgIcon: SVGElement;
     constructor(http: HttpClient, document: any, theme: LyTheme2);
     setSvg(key: string, url: string): void;
-    textToSvg(str: string): SVGElement;
+    private _textToSvg;
+    private _cacheSvgIcon;
     getSvg(key: string): SvgIcon;
 }

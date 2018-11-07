@@ -17,16 +17,17 @@ export declare class LyField implements OnInit, AfterContentInit, AfterViewInit 
      * styles
      * @ignore
      */
-    classes: Record<"placeholder" | "root" | "animations" | "container" | "fieldset" | "fieldsetSpan" | "labelSpan" | "prefix" | "infix" | "suffix" | "labelContainer" | "labelSpacingStart" | "labelCenter" | "labelSpacingEnd" | "label" | "isFloatingLabel" | "floatingLabel" | "focused" | "hint" | "inputNative", string>;
+    classes: Record<"placeholder" | "root" | "animations" | "container" | "fieldset" | "fieldsetSpan" | "labelSpan" | "prefix" | "infix" | "suffix" | "labelContainer" | "labelSpacingStart" | "labelCenter" | "labelSpacingEnd" | "label" | "isFloatingLabel" | "floatingLabel" | "focused" | "inputNative" | "hint", string>;
     protected _appearance: string;
     protected _appearanceClass: string;
     protected _withColor: string;
     protected _withColorClass: string;
     protected _isFloating: boolean;
     protected _floatingLabel: boolean;
-    protected _fielsetStartClass: string;
-    protected _fielsetEndClass: string;
-    protected _fielsetSpanClass: string;
+    private _fielsetSpanClass;
+    private _marginStartClass;
+    private _marginEndClass;
+    private _fieldsetLegendClass;
     _labelContainer: ElementRef<HTMLDivElement>;
     _labelContainer2: ElementRef<HTMLDivElement>;
     _labelSpan: ElementRef<HTMLDivElement>;

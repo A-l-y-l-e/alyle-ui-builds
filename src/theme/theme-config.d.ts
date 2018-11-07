@@ -1,6 +1,8 @@
 import { InjectionToken } from '@angular/core';
 import { LyStyleUtils, Dir } from '../style-utils';
 import { StyleContainer } from './theme2.service';
+import { RippleVariables } from './variables/ripple';
+import { TypographyVariables } from './variables/typography';
 export declare const LY_THEME_GLOBAL_VARIABLES: InjectionToken<Partial<ThemeVariables>>;
 export declare const LY_THEME: InjectionToken<ThemeConfig | ThemeConfig[]>;
 export declare const LY_THEME_NAME: InjectionToken<string>;
@@ -24,10 +26,7 @@ export interface ThemeConfig {
         disabled: string;
         hint: string;
     };
-    typography: {
-        htmlFontSize: number;
-        fontSize: number;
-    };
+    typography: TypographyVariables;
     /** color for divider */
     divider: string;
     shadow: string;
@@ -66,6 +65,7 @@ export interface ThemeConfig {
                 prefix?: StyleContainer;
                 infix?: StyleContainer;
                 suffix?: StyleContainer;
+                hint?: StyleContainer;
             };
         };
     };
@@ -95,7 +95,7 @@ export interface ThemeConfig {
             exiting: number;
         };
     };
-    ripple: IRippleVariables;
+    ripple: RippleVariables;
     badge: {
         root?: StyleContainer;
         position?: {
@@ -112,11 +112,4 @@ export interface PaletteColor {
     contrast?: string;
     /** shadow color */
     shadow?: string;
-}
-export interface IRippleVariables {
-    transition: {
-        opacity: string;
-        transform: string;
-    };
-    duration: number;
 }

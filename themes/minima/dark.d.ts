@@ -93,6 +93,9 @@ export declare class MinimaDark extends MinimaBase implements ThemeConfig {
                 floatingLabel: {
                     transform: string;
                 };
+                hint: {
+                    padding: string;
+                };
             };
             filled: {
                 container: {
@@ -131,6 +134,9 @@ export declare class MinimaDark extends MinimaBase implements ThemeConfig {
                 };
                 floatingLabel: {
                     transform: string;
+                };
+                hint: {
+                    padding: string;
                 };
             };
         };

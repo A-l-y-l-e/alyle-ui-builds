@@ -1,6 +1,4 @@
-import { LyStyleUtils, TypographyConfig, // Do not delete this, this is necessary to generate the types correctly
-IRippleVariables, // Do not delete this, this is necessary to generate the types correctly
-Dir } from '@alyle/ui';
+import { LyStyleUtils, Dir } from '@alyle/ui';
 export declare class MinimaBase extends LyStyleUtils {
     typography: {
         fontFamily: string;
@@ -8,19 +6,74 @@ export declare class MinimaBase extends LyStyleUtils {
         fontSize: number;
         gutterTop: number;
         gutterBottom: number;
-        display4: TypographyConfig;
-        display3: TypographyConfig;
-        display2: TypographyConfig;
-        display1: TypographyConfig;
-        headline: TypographyConfig;
-        title: TypographyConfig;
-        subheading: TypographyConfig;
-        subheading2: TypographyConfig;
-        body2: TypographyConfig;
-        body1: TypographyConfig;
-        button: TypographyConfig;
-        caption: TypographyConfig;
-        overline: TypographyConfig;
+        lyTyp: {
+            display4: {
+                fontSize: number;
+                fontWeight: number;
+                letterSpacing: number;
+            };
+            display3: {
+                fontSize: number;
+                fontWeight: number;
+                letterSpacing: number;
+            };
+            display2: {
+                fontSize: number;
+                fontWeight: number;
+                letterSpacing: number;
+            };
+            display1: {
+                fontSize: number;
+                fontWeight: number;
+                letterSpacing: number;
+            };
+            headline: {
+                fontSize: number;
+                fontWeight: number;
+                letterSpacing: number;
+            };
+            title: {
+                fontSize: number;
+                fontWeight: number;
+                letterSpacing: number;
+            };
+            subheading: {
+                fontSize: number;
+                fontWeight: number;
+                letterSpacing: number;
+                lineHeight: number;
+            };
+            subheading2: {
+                fontSize: number;
+                fontWeight: number;
+                letterSpacing: number;
+            };
+            body2: {
+                fontSize: number;
+                fontWeight: number;
+                letterSpacing: number;
+            };
+            body1: {
+                fontSize: number;
+                fontWeight: number;
+                letterSpacing: number;
+            };
+            button: {
+                fontSize: number;
+                fontWeight: number;
+            };
+            caption: {
+                fontSize: number;
+                fontWeight: number;
+                letterSpacing: number;
+            };
+            overline: {
+                fontSize: number;
+                fontWeight: number;
+                letterSpacing: number;
+                textTransform: string;
+            };
+        };
     };
     iconButton: {
         size: string;
@@ -49,7 +102,13 @@ export declare class MinimaBase extends LyStyleUtils {
         drawer: number;
         overlay: number;
     };
-    ripple: IRippleVariables;
+    ripple: {
+        transition: {
+            opacity: string;
+            transform: string;
+        };
+        duration: number;
+    };
     animations: {
         curves: {
             standard: string;
