@@ -152,4 +152,9 @@ export declare class MinimaLight extends MinimaBase implements ThemeConfig {
         };
     };
     badge: {};
+    checkbox: {
+        unchecked: {
+            color: string;
+        };
+    };
 }

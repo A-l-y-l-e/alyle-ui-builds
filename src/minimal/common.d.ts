@@ -1,4 +1,4 @@
-import { TemplateRef, ViewContainerRef, OnDestroy } from '@angular/core';
+import { TemplateRef, ViewContainerRef, OnDestroy, ElementRef } from '@angular/core';
 export interface KeyAttribute {
     [key: string]: any;
 }
@@ -11,3 +11,7 @@ export declare class NgTranscludeDirective implements OnDestroy {
 }
 export declare class NgTranscludeModule {
 }
+/**
+ * @ignore
+ */
+export declare function getNativeElement(element: HTMLElement | ElementRef<HTMLElement>): HTMLElement;
