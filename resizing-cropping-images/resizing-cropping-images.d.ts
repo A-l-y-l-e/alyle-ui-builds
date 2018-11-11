@@ -1,4 +1,4 @@
-import { ElementRef, ChangeDetectorRef, EventEmitter, Renderer2 } from '@angular/core';
+import { ElementRef, ChangeDetectorRef, EventEmitter, Renderer2, NgZone } from '@angular/core';
 import { LyTheme2 } from '@alyle/ui';
 /** Image Cropper Config */
 export interface ImgCropperConfig {
@@ -12,6 +12,7 @@ export interface ImgCropperConfig {
     fill?: string | null;
     /** Set anti-aliased( default: true) */
     antiAliased?: boolean;
+    autoCrop?: boolean;
     output?: {
         width: number;
         height: number;
@@ -27,56 +28,75 @@ export declare enum ImgResolution {
     OriginalImage = 1
 }
 export interface ImgCropperEvent {
-    /** Cropped image in base64 */
+    /** Cropped image in base64, !deprecated use instead `dataURL` */
     base64: string;
+    /** Cropped image data URL */
+    dataURL: string;
     name: string;
     /** Filetype */
     type: string;
     width: number;
     height: number;
-    /** Original Image in base64 */
-    originalBase64: string;
+    /** Original Image data URL */
+    originalDataURL: string;
+    scale: number;
+    /** Current rotation in degrees */
+    rotation: number;
+    position: {
+        x: number;
+        y: number;
+    };
 }
 export declare class LyResizingCroppingImages {
     private _renderer;
     private theme;
     private elementRef;
     private cd;
+    private _ngZone;
     /**
      * styles
      * @ignore
      */
-    classes: Record<"root" | "imgContainer" | "croppingContainer" | "croppContent", string>;
+    readonly classes: Record<"root" | "imgContainer" | "croppingContainer" | "croppContent", string>;
     _originalImgBase64: string;
     private _fileName;
+    /** Original image */
     private _img;
     private offset;
     private _scale;
     private _minScale;
     private _config;
+    private _imgRect;
+    private _rotation;
     _imgContainer: ElementRef;
     _croppingContainer: ElementRef;
+    _imgCanvas: ElementRef<HTMLCanvasElement>;
     config: ImgCropperConfig;
-    /** Get current scale */
-    readonly scale: number;
+    /** Set scale */
+    scale: number;
+    readonly scaleChange: EventEmitter<number>;
     /** Get min scale */
     readonly minScale: number;
+    /** When is loaded image */
+    _isLoadedImg: boolean;
+    /** When is loaded image & ready for crop */
     isLoaded: boolean;
     isCropped: boolean;
     /** On loaded new image */
-    loaded: EventEmitter<ImgCropperEvent>;
+    readonly loaded: EventEmitter<ImgCropperEvent>;
     /** On crop new image */
-    cropped: EventEmitter<ImgCropperEvent>;
+    readonly cropped: EventEmitter<ImgCropperEvent>;
     /** Emit an error when the loaded image is not valid */
-    error: EventEmitter<ImgCropperEvent>;
+    readonly error: EventEmitter<ImgCropperEvent>;
     private _defaultType;
-    constructor(_renderer: Renderer2, theme: LyTheme2, elementRef: ElementRef<HTMLElement>, cd: ChangeDetectorRef);
+    constructor(_renderer: Renderer2, theme: LyTheme2, elementRef: ElementRef<HTMLElement>, cd: ChangeDetectorRef, _ngZone: NgZone);
     private _imgLoaded;
     private _setStylesForContImg;
+    resize$(): void;
     selectInputEvent(img: Event): void;
     /** Set the size of the image, the values can be 0 between 1, where 1 is the original size */
-    setScale(size: number): void;
-    private customCenter;
+    setScale(size: number, noAutoCrop?: boolean): void;
+    private _customCenter;
     /**
      * Ajustar a la pantalla
      */
@@ -84,7 +104,9 @@ export declare class LyResizingCroppingImages {
     fit(): void;
     _moveStart(event: any): void;
     _move(event: any): void;
-    private roundNumber;
+    updatePosition(x?: number, y?: number): void;
+    _slideEnd(): void;
+    private _cropIfAutoCrop;
     /**+ */
     zoomIn(): void;
     /** Clean the img cropper */
@@ -92,8 +114,9 @@ export declare class LyResizingCroppingImages {
     /**- */
     zoomOut(): void;
     center(): void;
-    private _setImageUrl;
-    private max;
+    /** Set Img */
+    setImageUrl(src: string): void;
+    rotate(degrees: number): void;
     private imageSmoothingQuality;
     /**
      * Crop Image
@@ -104,11 +127,21 @@ export declare class LyResizingCroppingImages {
      * @ignore
      */
     _imgCrop(myConfig: ImgCropperConfig): {
+        dataURL: any;
         base64: any;
         type: string;
         name: string;
         width: number;
         height: number;
-        originalBase64: string;
+        originalDataURL: string;
+        scale: number;
+        rotation: number;
+        position: {
+            x: number;
+            y: number;
+        };
     };
+    private _rootRect;
+    private _imgContainerRect;
+    private _areaCropperRect;
 }
