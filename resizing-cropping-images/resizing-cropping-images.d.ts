@@ -64,6 +64,7 @@ export declare class LyResizingCroppingImages {
     private _img;
     private offset;
     private _scale;
+    private _scal3Fix;
     private _minScale;
     private _config;
     private _imgRect;
@@ -71,10 +72,10 @@ export declare class LyResizingCroppingImages {
     _imgContainer: ElementRef;
     _croppingContainer: ElementRef;
     _imgCanvas: ElementRef<HTMLCanvasElement>;
+    readonly scaleChange: EventEmitter<number>;
     config: ImgCropperConfig;
     /** Set scale */
     scale: number;
-    readonly scaleChange: EventEmitter<number>;
     /** Get min scale */
     readonly minScale: number;
     /** When is loaded image */
