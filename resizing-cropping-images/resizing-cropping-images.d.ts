@@ -97,7 +97,7 @@ export declare class LyResizingCroppingImages {
     selectInputEvent(img: Event): void;
     /** Set the size of the image, the values can be 0 between 1, where 1 is the original size */
     setScale(size: number, noAutoCrop?: boolean): void;
-    private _customCenter;
+    private _getCenterPoints;
     /**
      * Ajustar a la pantalla
      */
