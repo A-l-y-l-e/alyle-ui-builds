@@ -30,7 +30,6 @@ export declare const styles: (theme: ThemeVariables) => {
         userSelect: string;
         textDecorationLine: string;
         '-webkit-text-decoration-line': string;
-        transition: string;
         '&::-moz-focus-inner, &::-moz-focus-inner': {
             border: number;
         };
@@ -44,5 +43,10 @@ export declare const styles: (theme: ThemeVariables) => {
         width: string;
         height: string;
         boxSizing: string;
+    };
+    animations: {
+        '&': {
+            transition: string;
+        };
     };
 };

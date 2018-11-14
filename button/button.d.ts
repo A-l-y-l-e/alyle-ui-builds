@@ -12,7 +12,7 @@ export declare class LyButton implements OnInit, AfterViewInit, OnDestroy {
      * Style
      * @ignore
      */
-    classes: Record<"root" | "content", string>;
+    classes: Record<"root" | "content" | "animations", string>;
     private _rippleSensitive;
     private _ripple;
     private _size;

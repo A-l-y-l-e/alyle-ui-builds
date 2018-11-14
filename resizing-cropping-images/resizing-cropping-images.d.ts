@@ -103,7 +103,7 @@ export declare class LyResizingCroppingImages {
      */
     fitToScreen(): void;
     fit(): void;
-    _moveStart(event: any): void;
+    _moveStart(): void;
     _move(event: any): void;
     updatePosition(x?: number, y?: number): void;
     _slideEnd(): void;
@@ -143,6 +143,5 @@ export declare class LyResizingCroppingImages {
         };
     };
     private _rootRect;
-    private _imgContainerRect;
     private _areaCropperRect;
 }
