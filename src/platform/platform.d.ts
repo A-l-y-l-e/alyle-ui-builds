@@ -5,13 +5,13 @@
 export declare class Platform {
     static readonly isBrowser: boolean;
     /** Layout Engines */
-    EDGE: boolean;
-    TRIDENT: boolean;
-    BLINK: boolean;
-    WEBKIT: boolean;
+    static readonly EDGE: boolean;
+    static readonly TRIDENT: boolean;
+    static readonly BLINK: boolean;
+    static readonly WEBKIT: boolean;
     /** Browsers and Platform Types */
-    IOS: boolean;
-    FIREFOX: boolean;
-    ANDROID: boolean;
-    SAFARI: boolean;
+    static readonly IOS: boolean;
+    static readonly FIREFOX: boolean;
+    static readonly ANDROID: boolean;
+    static readonly SAFARI: boolean;
 }
