@@ -2,6 +2,8 @@ import { TemplateRef, ApplicationRef, ComponentFactoryResolver, Injector } from 
 import { LyOverlayContainer, WindowScrollService } from './overlay-container';
 interface OverlayConfig {
     styles: Object;
+    classes?: string[];
+    backdrop?: boolean;
     fnDestroy?: (...arg: any[]) => void;
     host?: any;
 }
@@ -12,6 +14,7 @@ export interface OverlayFromTemplateRef {
     remove: () => void;
     /** Detach & remove */
     destroy: () => void;
+    containerElement: HTMLDivElement;
 }
 export declare class LyOverlay {
     private _overlayContainer;

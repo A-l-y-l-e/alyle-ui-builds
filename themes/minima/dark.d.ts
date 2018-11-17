@@ -157,4 +157,10 @@ export declare class MinimaDark extends MinimaBase implements ThemeConfig {
             color: string;
         };
     };
+    snackBar: {
+        root: {
+            background: string;
+            color: string;
+        };
+    };
 }
