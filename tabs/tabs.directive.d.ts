@@ -1,9 +1,19 @@
-import { QueryList, TemplateRef, EventEmitter, ChangeDetectorRef, Renderer2, ElementRef, OnInit, AfterViewInit, AfterContentInit, OnDestroy, NgZone } from '@angular/core';
+import { AfterContentInit, AfterViewInit, ChangeDetectorRef, ElementRef, EventEmitter, NgZone, OnChanges, OnDestroy, OnInit, QueryList, Renderer2, TemplateRef, SimpleChanges } from '@angular/core';
+import { LyTheme2 } from '@alyle/ui';
 import { LyTabContent } from './tab-content.directive';
 import { LyTabsClassesService } from './tabs.clasess.service';
-import { LyTheme2 } from '@alyle/ui';
-import { LyRippleService } from '@alyle/ui/ripple';
-export declare class LyTabs implements OnInit, AfterViewInit, AfterContentInit, OnDestroy {
+export declare class LyTabsBase {
+    _theme: LyTheme2;
+    constructor(_theme: LyTheme2);
+}
+export declare const LyTabsMixinBase: import("../../@alyle/ui/src/common/constructor").Constructor<import("../../@alyle/ui/src/common/bg").CanBg> & import("../../@alyle/ui/src/common/constructor").Constructor<import("../../@alyle/ui/src/common/flat").CanFlat> & import("../../@alyle/ui/src/common/constructor").Constructor<import("../../@alyle/ui/src/common/color").CanColor> & typeof LyTabsBase;
+export declare class LyTabLabelBase {
+    _theme: LyTheme2;
+    _ngZone: NgZone;
+    constructor(_theme: LyTheme2, _ngZone: NgZone);
+}
+export declare const LyTabLabelMixinBase: import("../../@alyle/ui/src/common/constructor").Constructor<import("../../@alyle/ui/src/common/build-common-behaviors").CanStyleUpdater> & import("../../@alyle/ui/src/common/constructor").Constructor<import("../../@alyle/ui/src/common/bg").CanBg> & import("../../@alyle/ui/src/common/constructor").Constructor<import("../../@alyle/ui/src/common/flat").CanFlat> & import("../../@alyle/ui/src/common/constructor").Constructor<import("../../@alyle/ui/src/common/color").CanColor> & import("../../@alyle/ui/src/common/constructor").Constructor<import("../../@alyle/ui/src/common/raised").CanRaised> & import("../../@alyle/ui/src/common/constructor").Constructor<import("../../@alyle/ui/src/common/disabled").CanDisable> & import("../../@alyle/ui/src/common/constructor").Constructor<import("../../@alyle/ui/src/common/outlined").CanOutlined> & import("../../@alyle/ui/src/common/constructor").Constructor<import("../../@alyle/ui/src/common/elevation").CanElevation> & import("../../@alyle/ui/src/common/constructor").Constructor<import("../../@alyle/ui/src/common/shadow-color").CanShadowColor> & import("../../@alyle/ui/src/common/constructor").Constructor<import("../../@alyle/ui/src/common/disable-ripple").CanDisableRipple> & typeof LyTabLabelBase;
+export declare class LyTabs extends LyTabsMixinBase implements OnChanges, OnInit, AfterViewInit, AfterContentInit, OnDestroy {
     private theme;
     private renderer;
     private el;
@@ -28,6 +38,7 @@ export declare class LyTabs implements OnInit, AfterViewInit, AfterContentInit, 
     withBg: string;
     tabsList: QueryList<LyTab>;
     constructor(tabsService: LyTabsClassesService, theme: LyTheme2, renderer: Renderer2, el: ElementRef, cd: ChangeDetectorRef);
+    ngOnChanges(changes: SimpleChanges): void;
     ngOnInit(): void;
     ngAfterViewInit(): void;
     ngAfterContentInit(): void;
@@ -54,15 +65,12 @@ export declare class LyTab implements OnInit, AfterViewInit {
     ngOnInit(): void;
     ngAfterViewInit(): void;
 }
-export declare class LyTabLabel implements OnInit, OnDestroy {
+export declare class LyTabLabel extends LyTabLabelMixinBase implements OnChanges, OnInit, OnDestroy {
     private renderer;
     private _el;
-    private tabsService;
-    private rippleService;
-    private _ngZone;
-    private _theme;
-    private _rippleContainer;
-    constructor(renderer: Renderer2, _el: ElementRef, tabsService: LyTabsClassesService, rippleService: LyRippleService, _ngZone: NgZone, _theme: LyTheme2);
+    private _tabsService;
+    constructor(renderer: Renderer2, _el: ElementRef, _tabsService: LyTabsClassesService, _ngZone: NgZone, _theme: LyTheme2);
+    ngOnChanges(): void;
     ngOnInit(): void;
     ngOnDestroy(): void;
 }

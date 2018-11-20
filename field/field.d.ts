@@ -1,4 +1,4 @@
-import { AfterContentInit, AfterViewInit, ChangeDetectorRef, ElementRef, OnInit, Renderer2, QueryList, NgZone } from '@angular/core';
+import { AfterContentInit, AfterViewInit, ChangeDetectorRef, ElementRef, OnInit, Renderer2, QueryList, NgZone, OnChanges, SimpleChanges } from '@angular/core';
 import { LyTheme2, ElementObserver } from '@alyle/ui';
 import { LyInputNative } from './input';
 import { LyLabel } from './label';
@@ -6,7 +6,10 @@ import { LyPlaceholder } from './placeholder';
 import { LyHint } from './hint';
 import { LyPrefix } from './prefix';
 import { LySuffix } from './suffix';
-export declare class LyField implements OnInit, AfterContentInit, AfterViewInit {
+export declare class LyFieldBase {
+}
+export declare const LyFieldMixinBase: import("../../@alyle/ui/src/common/constructor").Constructor<import("../../@alyle/ui/src/common/color").CanColor> & typeof LyFieldBase;
+export declare class LyField extends LyFieldMixinBase implements OnChanges, OnInit, AfterContentInit, AfterViewInit {
     private _renderer;
     private _el;
     private _elementObserver;
@@ -27,7 +30,6 @@ export declare class LyField implements OnInit, AfterContentInit, AfterViewInit 
     private _fielsetSpanClass;
     private _marginStartClass;
     private _marginEndClass;
-    private _fieldsetLegendClass;
     _labelContainer: ElementRef<HTMLDivElement>;
     _labelContainer2: ElementRef<HTMLDivElement>;
     _labelSpan: ElementRef<HTMLDivElement>;
@@ -42,11 +44,12 @@ export declare class LyField implements OnInit, AfterContentInit, AfterViewInit 
     _suffixChildren: QueryList<LySuffix>;
     /** Whether the label is floating. */
     floatingLabel: boolean;
-    /** Theme color for the component. */
+    /** Deprecated, instead use `[color], theme color for the component. */
     withColor: string;
     /** The field appearance style. */
     appearance: string;
     constructor(_renderer: Renderer2, _el: ElementRef, _elementObserver: ElementObserver, _theme: LyTheme2, _cd: ChangeDetectorRef, _ngZone: NgZone);
+    ngOnChanges(changes: SimpleChanges): void;
     ngOnInit(): void;
     ngAfterContentInit(): void;
     ngAfterViewInit(): void;

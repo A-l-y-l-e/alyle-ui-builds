@@ -1,4 +1,5 @@
-import { LyTheme2, ThemeVariables } from '@alyle/ui';
+import { ThemeVariables } from '../theme/theme-config';
+import { LyTheme2 } from '../theme/theme2.service';
 export declare const styles: (theme: ThemeVariables) => {
     rippleContainer: {
         position: string;

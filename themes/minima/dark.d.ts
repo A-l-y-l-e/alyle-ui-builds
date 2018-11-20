@@ -14,6 +14,7 @@ export declare class MinimaDark extends MinimaBase implements ThemeConfig {
         default: string;
         contrast: string;
     };
+    disabled: string;
     background: {
         default: string;
         primary: {
@@ -32,9 +33,6 @@ export declare class MinimaDark extends MinimaBase implements ThemeConfig {
         hint: string;
     };
     /** Components variables */
-    button: {
-        disabled: string;
-    };
     radio: {
         radioOuterCircle: string;
     };

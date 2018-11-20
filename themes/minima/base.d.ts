@@ -123,4 +123,40 @@ export declare class MinimaBase extends LyStyleUtils {
         };
     };
     direction: Dir;
+    button: {
+        size: {
+            small: {
+                fontSize: string;
+            };
+            medium: {
+                fontSize: string;
+            };
+            large: {
+                fontSize: string;
+            };
+        };
+        appearance: {
+            icon: {
+                minWidth: string;
+                width: string;
+                height: string;
+                padding: number;
+                borderRadius: string;
+            };
+            fab: {
+                minWidth: string;
+                width: string;
+                height: string;
+                padding: number;
+                borderRadius: string;
+            };
+            miniFab: {
+                minWidth: string;
+                width: string;
+                height: string;
+                padding: number;
+                borderRadius: string;
+            };
+        };
+    };
 }

@@ -1,17 +1,24 @@
-import { Renderer2, ElementRef, OnInit } from '@angular/core';
-import { LyTheme2, LyCommon } from '@alyle/ui';
-export declare class LyCard implements OnInit {
+import { ElementRef, NgZone, OnChanges, OnDestroy, OnInit, Renderer2 } from '@angular/core';
+import { LyTheme2 } from '@alyle/ui';
+export declare class LyCardBase {
+    _theme: LyTheme2;
+    _ngZone: NgZone;
+    constructor(_theme: LyTheme2, _ngZone: NgZone);
+}
+export declare const LyCardMixinBase: import("../../@alyle/ui/src/common/constructor").Constructor<import("../../@alyle/ui/src/common/build-common-behaviors").CanStyleUpdater> & import("../../@alyle/ui/src/common/constructor").Constructor<import("../../@alyle/ui/src/common/bg").CanBg> & import("../../@alyle/ui/src/common/constructor").Constructor<import("../../@alyle/ui/src/common/flat").CanFlat> & import("../../@alyle/ui/src/common/constructor").Constructor<import("../../@alyle/ui/src/common/color").CanColor> & import("../../@alyle/ui/src/common/constructor").Constructor<import("../../@alyle/ui/src/common/raised").CanRaised> & import("../../@alyle/ui/src/common/constructor").Constructor<import("../../@alyle/ui/src/common/disabled").CanDisable> & import("../../@alyle/ui/src/common/constructor").Constructor<import("../../@alyle/ui/src/common/outlined").CanOutlined> & import("../../@alyle/ui/src/common/constructor").Constructor<import("../../@alyle/ui/src/common/elevation").CanElevation> & import("../../@alyle/ui/src/common/constructor").Constructor<import("../../@alyle/ui/src/common/shadow-color").CanShadowColor> & import("../../@alyle/ui/src/common/constructor").Constructor<import("../../@alyle/ui/src/common/disable-ripple").CanDisableRipple> & typeof LyCardBase;
+export declare class LyCard extends LyCardMixinBase implements OnChanges, OnInit, OnDestroy {
     private theme;
-    private el;
+    private _el;
     private renderer;
-    private common;
     /**
      * styles
      * @ignore
      */
     classes: Record<"root" | "content" | "actions" | "actionsItem", string>;
-    constructor(theme: LyTheme2, el: ElementRef, renderer: Renderer2, common: LyCommon);
+    constructor(theme: LyTheme2, _el: ElementRef, renderer: Renderer2, ngZone: NgZone);
+    ngOnChanges(): void;
     ngOnInit(): void;
+    ngOnDestroy(): void;
 }
 export declare class LyCardContent implements OnInit {
     private el;

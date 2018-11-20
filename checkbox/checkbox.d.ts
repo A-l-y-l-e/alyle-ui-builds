@@ -1,7 +1,6 @@
-import { ElementRef, Renderer2, NgZone, ChangeDetectorRef, AfterViewInit, OnDestroy, EventEmitter, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, ElementRef, EventEmitter, NgZone, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { ControlValueAccessor } from '@angular/forms';
-import { LyCoreStyles as LyCommonStyles, LyTheme2, LyFocusState } from '@alyle/ui';
-import { LyRippleService } from '@alyle/ui/ripple';
+import { LyCoreStyles as LyCommonStyles, LyFocusState, LyTheme2 } from '@alyle/ui';
 /**
  * This allows it to support [(ngModel)].
  * @ignore
@@ -14,20 +13,23 @@ export declare class LyCheckboxChange {
     /** The new `checked` value of the checkbox. */
     checked: boolean;
 }
-export declare class LyCheckbox implements ControlValueAccessor, OnInit, AfterViewInit, OnDestroy {
+export declare class LyCheckboxBase {
+    _theme: LyTheme2;
+    _ngZone: NgZone;
+    constructor(_theme: LyTheme2, _ngZone: NgZone);
+}
+export declare const LyCheckboxMixinBase: import("../../@alyle/ui/src/common/constructor").Constructor<import("../../@alyle/ui/src/common/build-common-behaviors").CanStyleUpdater> & import("../../@alyle/ui/src/common/constructor").Constructor<import("../../@alyle/ui/src/common/bg").CanBg> & import("../../@alyle/ui/src/common/constructor").Constructor<import("../../@alyle/ui/src/common/flat").CanFlat> & import("../../@alyle/ui/src/common/constructor").Constructor<import("../../@alyle/ui/src/common/color").CanColor> & import("../../@alyle/ui/src/common/constructor").Constructor<import("../../@alyle/ui/src/common/raised").CanRaised> & import("../../@alyle/ui/src/common/constructor").Constructor<import("../../@alyle/ui/src/common/outlined").CanOutlined> & import("../../@alyle/ui/src/common/constructor").Constructor<import("../../@alyle/ui/src/common/elevation").CanElevation> & import("../../@alyle/ui/src/common/constructor").Constructor<import("../../@alyle/ui/src/common/shadow-color").CanShadowColor> & import("../../@alyle/ui/src/common/constructor").Constructor<import("../../@alyle/ui/src/common/disable-ripple").CanDisableRipple> & typeof LyCheckboxBase;
+export declare class LyCheckbox extends LyCheckboxMixinBase implements ControlValueAccessor, OnInit, AfterViewInit, OnDestroy {
     _commonStyles: LyCommonStyles;
-    private _theme;
     private _el;
     private _renderer;
     private _changeDetectorRef;
     private _focusState;
-    private _ngZone;
-    private _rippleService;
     /**
      * styles
      * @ignore
      */
-    readonly classes: Record<"root" | "layout" | "icon" | "checked" | "input" | "onFocusByKeyboard" | "disabled" | "animations", string>;
+    readonly classes: Record<"disabled" | "root" | "layout" | "icon" | "checked" | "input" | "onFocusByKeyboard" | "animations", string>;
     protected _withColor: string;
     protected _withColorClass: string;
     protected _required: boolean;
@@ -35,14 +37,10 @@ export declare class LyCheckbox implements ControlValueAccessor, OnInit, AfterVi
     protected _checked: boolean;
     protected _disabled: any;
     private _onFocusByKeyboardState;
-    private _disableRipple;
-    private _ripple;
     _innerContainer: ElementRef<HTMLDivElement>;
     /** The value attribute of the native input element */
     value: string;
     withColor: string;
-    /** Whether ripples are disabled. */
-    disableRipple: boolean;
     /**
      * Whether the checkbox is checked.
      */
@@ -55,10 +53,9 @@ export declare class LyCheckbox implements ControlValueAccessor, OnInit, AfterVi
     _inputElement: ElementRef<HTMLInputElement>;
     _onTouched: () => any;
     private _controlValueAccessorChangeFn;
-    constructor(_commonStyles: LyCommonStyles, _theme: LyTheme2, _el: ElementRef, _renderer: Renderer2, _changeDetectorRef: ChangeDetectorRef, _focusState: LyFocusState, _ngZone: NgZone, _rippleService: LyRippleService);
+    constructor(_commonStyles: LyCommonStyles, _theme: LyTheme2, _el: ElementRef, _renderer: Renderer2, _changeDetectorRef: ChangeDetectorRef, _focusState: LyFocusState, ngZone: NgZone);
     ngOnInit(): void;
     ngAfterViewInit(): void;
-    private _destroyRipple;
     ngOnDestroy(): void;
     writeValue(value: any): void;
     registerOnChange(fn: (value: any) => void): void;

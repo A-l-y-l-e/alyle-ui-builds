@@ -1,8 +1,12 @@
-import { ElementRef, Renderer2, OnInit } from '@angular/core';
-import { LyCommon, LyTheme2 } from '@alyle/ui';
-export declare class LyBadge implements OnInit {
+import { ElementRef, OnChanges, OnInit, Renderer2 } from '@angular/core';
+import { LyTheme2 } from '@alyle/ui';
+export declare class LyBadgeBase {
+    _theme: LyTheme2;
+    constructor(_theme: LyTheme2);
+}
+export declare const LyBadgeMixinBase: import("../../@alyle/ui/src/common/constructor").Constructor<import("../../@alyle/ui/src/common/build-common-behaviors").CanStyleUpdater> & import("../../@alyle/ui/src/common/constructor").Constructor<import("../../@alyle/ui/src/common/bg").CanBg> & import("../../@alyle/ui/src/common/constructor").Constructor<import("../../@alyle/ui/src/common/flat").CanFlat> & import("../../@alyle/ui/src/common/constructor").Constructor<import("../../@alyle/ui/src/common/color").CanColor> & import("../../@alyle/ui/src/common/constructor").Constructor<import("../../@alyle/ui/src/common/raised").CanRaised> & import("../../@alyle/ui/src/common/constructor").Constructor<import("../../@alyle/ui/src/common/disabled").CanDisable> & import("../../@alyle/ui/src/common/constructor").Constructor<import("../../@alyle/ui/src/common/outlined").CanOutlined> & import("../../@alyle/ui/src/common/constructor").Constructor<import("../../@alyle/ui/src/common/elevation").CanElevation> & import("../../@alyle/ui/src/common/constructor").Constructor<import("../../@alyle/ui/src/common/shadow-color").CanShadowColor> & typeof LyBadgeBase;
+export declare class LyBadge extends LyBadgeMixinBase implements OnChanges, OnInit {
     private _el;
-    private _theme;
     private _renderer;
     /**
      * Styles
@@ -14,15 +18,16 @@ export declare class LyBadge implements OnInit {
     private _positionClass;
     private _elContainer;
     private _badgeElementRef;
-    private _bgClass;
+    private _lyBadgeBgClass;
     /** The content for the badge */
     content: string | number;
     /** The position for the badge */
     position: string;
-    /** The color of the badge  */
-    bg: string;
-    private _bg;
-    constructor(_el: ElementRef, _theme: LyTheme2, _renderer: Renderer2, _common: LyCommon);
+    /** The color of the badge */
+    lyBadgeBg: string;
+    private _lyBadgeBg;
+    constructor(_el: ElementRef, _theme: LyTheme2, _renderer: Renderer2);
+    ngOnChanges(): void;
     ngOnInit(): void;
     private _createBadge;
 }

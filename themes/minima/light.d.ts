@@ -14,6 +14,7 @@ export declare class MinimaLight extends MinimaBase implements ThemeConfig {
         default: string;
         contrast: string;
     };
+    disabled: string;
     background: {
         default: string;
         primary: {
@@ -35,9 +36,6 @@ export declare class MinimaLight extends MinimaBase implements ThemeConfig {
     colorShadow: string;
     shadow: string;
     /** Components variables */
-    button: {
-        disabled: string;
-    };
     radio: {
         radioOuterCircle: string;
     };

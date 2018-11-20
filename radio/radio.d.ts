@@ -1,5 +1,4 @@
-import { ChangeDetectorRef, OnInit, OnDestroy, QueryList, EventEmitter, NgZone, ElementRef, Renderer2 } from '@angular/core';
-import { LyRippleService } from '@alyle/ui/ripple';
+import { ChangeDetectorRef, OnInit, OnDestroy, QueryList, EventEmitter, NgZone, ElementRef, Renderer2, SimpleChanges, OnChanges, AfterViewInit } from '@angular/core';
 import { ControlValueAccessor } from '@angular/forms';
 import { LyTheme2, LyCoreStyles } from '@alyle/ui';
 import { LyRadioService } from './radio.service';
@@ -18,7 +17,7 @@ export declare class LyRadioGroup implements ControlValueAccessor {
     classes: Record<"label" | "container", string>;
     value: any;
     readonly change: EventEmitter<void>;
-    withColor: string;
+    color: string;
     _radios: QueryList<LyRadio>;
     /** The method to be called in order to update ngModel */
     _controlValueAccessorChangeFn: (value: any) => void;
@@ -56,25 +55,25 @@ export declare class LyRadioGroup implements ControlValueAccessor {
     markForCheck(): void;
     _radioResetChecked(): void;
 }
-export declare class LyRadio implements OnInit, OnDestroy {
+export declare class LyRadioBase {
+    _theme: LyTheme2;
+    _ngZone: NgZone;
+    constructor(_theme: LyTheme2, _ngZone: NgZone);
+}
+export declare const LyRadioMixinBase: import("../../@alyle/ui/src/common/constructor").Constructor<import("../../@alyle/ui/src/common/disable-ripple").CanDisableRipple> & import("../../@alyle/ui/src/common/constructor").Constructor<import("../../@alyle/ui/src/common/color").CanColor> & typeof LyRadioBase;
+export declare class LyRadio extends LyRadioMixinBase implements OnChanges, OnInit, AfterViewInit, OnDestroy {
     radioGroup: LyRadioGroup;
     private _elementRef;
     private _renderer;
-    theme: LyTheme2;
     private changeDetectorRef;
-    private ngZone;
     coreStyles: LyCoreStyles;
-    private _rippleService;
     id: string;
     name: string;
     _value: any;
-    private _withColor;
-    private _ripple;
     private _checked;
     private checkedClass;
     private _radioContainer;
     _labelContainer: ElementRef;
-    withColor: string;
     change: EventEmitter<boolean>;
     value: any;
     checked: boolean;
@@ -83,10 +82,12 @@ export declare class LyRadio implements OnInit, OnDestroy {
     _onInputClick(event: Event): void;
     _setCheckedToFalsy(): void;
     _createStyleWithColor(val: string): string;
+    ngOnChanges(changes: SimpleChanges): void;
     ngOnInit(): void;
+    ngAfterViewInit(): void;
     _markForCheck(): void;
     ngOnDestroy(): void;
-    constructor(radioGroup: LyRadioGroup, _elementRef: ElementRef, _renderer: Renderer2, theme: LyTheme2, changeDetectorRef: ChangeDetectorRef, ngZone: NgZone, coreStyles: LyCoreStyles, _rippleService: LyRippleService);
+    constructor(radioGroup: LyRadioGroup, _elementRef: ElementRef, _renderer: Renderer2, theme: LyTheme2, changeDetectorRef: ChangeDetectorRef, ngZone: NgZone, coreStyles: LyCoreStyles);
 }
 export declare class LyRadioModule {
 }

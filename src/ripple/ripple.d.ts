@@ -1,5 +1,5 @@
 import { NgZone } from '@angular/core';
-import { ThemeVariables } from '@alyle/ui';
+import { ThemeVariables } from '../theme/theme-config';
 export interface RippleConfig {
     centered?: boolean;
     disabled?: boolean;
@@ -21,7 +21,7 @@ export declare class Ripple {
     private _triggerElement?;
     private _rippleRef;
     private _eventHandlers;
-    private rippleConfig;
+    config: RippleConfig;
     private _transitionDuration;
     private _eventOptions;
     constructor(_themeVariables: ThemeVariables, _ngZone: NgZone, classes: any, _containerElement: HTMLElement, _triggerElement?: HTMLElement);
