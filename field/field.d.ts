@@ -8,7 +8,7 @@ import { LyPrefix } from './prefix';
 import { LySuffix } from './suffix';
 export declare class LyFieldBase {
 }
-export declare const LyFieldMixinBase: import("../../@alyle/ui/src/common/constructor").Constructor<import("../../@alyle/ui/src/common/color").CanColor> & typeof LyFieldBase;
+export declare const LyFieldMixinBase: import("@alyle/ui/src/common/constructor").Constructor<import("@alyle/ui/src/common/color").CanColor> & typeof LyFieldBase;
 export declare class LyField extends LyFieldMixinBase implements OnChanges, OnInit, AfterContentInit, AfterViewInit {
     private _renderer;
     private _el;
