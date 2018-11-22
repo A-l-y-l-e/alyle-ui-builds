@@ -10,11 +10,17 @@ export declare class LyIcon extends LyButtonMixinBase implements OnChanges, OnIn
     private iconService;
     private _el;
     private _renderer;
-    private _defaultClass;
     private _src;
     private _icon;
+    private _fontSet;
+    private _previousFontSet;
+    private _currentClass;
+    private _fontIcon;
+    /** deprecated */
     src: string;
     icon: string;
+    fontSet: string;
+    fontIcon: string;
     constructor(iconService: LyIconService, _el: ElementRef, _renderer: Renderer2, theme: LyTheme2);
     ngOnChanges(): void;
     private _isDefault;
@@ -28,4 +34,5 @@ export declare class LyIcon extends LyButtonMixinBase implements OnChanges, OnIn
      * remove current icon
      */
     private _cleanIcon;
+    private _updateFontClass;
 }

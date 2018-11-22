@@ -1,6 +1,23 @@
 import { ThemeVariables } from '@alyle/ui';
 export declare const styles: (theme: ThemeVariables) => {
     root: {
+        '&::after': {
+            width: string;
+            height: string;
+            background: string;
+            opacity: number;
+            position: string;
+            top: number;
+            bottom: number;
+            left: number;
+            right: number;
+            content: string;
+        };
+        '&{onFocusByKeyboard}::after, &:hover::after': {
+            background: string;
+            opacity: number;
+            borderRadius: string;
+        };
         fontSize?: number;
         fontFamily: string;
         fontWeight: number;
@@ -44,8 +61,9 @@ export declare const styles: (theme: ThemeVariables) => {
         height: string;
         boxSizing: string;
     };
+    onFocusByKeyboard: {};
     animations: {
-        '&': {
+        '&,&::after': {
             transition: string;
         };
     };
