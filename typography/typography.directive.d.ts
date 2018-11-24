@@ -4,7 +4,8 @@ export declare class LyTypography implements OnInit {
     private style;
     private elementRef;
     private renderer;
-    classes: Record<"root", string>;
+    /** @docs-private */
+    readonly classes: Record<"root", string>;
     private _lyTyp;
     private _lyTypClass;
     private _gutter;

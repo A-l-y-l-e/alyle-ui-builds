@@ -18,7 +18,10 @@ export interface ImgCropperConfig {
         height: number;
     } | ImgResolution;
 }
-/** @deprecated */
+/**
+ * Deprecated, use instead ImgCropperConfig
+ * @deprecated
+ */
 export declare type LyResizingCroppingImagesConfig = ImgCropperConfig;
 /** Image output */
 export declare enum ImgResolution {

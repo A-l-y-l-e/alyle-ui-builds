@@ -55,11 +55,13 @@ export declare class LyRadioGroup implements ControlValueAccessor {
     markForCheck(): void;
     _radioResetChecked(): void;
 }
+/** @docs-private */
 export declare class LyRadioBase {
     _theme: LyTheme2;
     _ngZone: NgZone;
     constructor(_theme: LyTheme2, _ngZone: NgZone);
 }
+/** @docs-private */
 export declare const LyRadioMixinBase: import("@alyle/ui/src/common/constructor").Constructor<import("@alyle/ui/src/common/disable-ripple").CanDisableRipple> & import("@alyle/ui/src/common/constructor").Constructor<import("@alyle/ui/src/common/color").CanColor> & typeof LyRadioBase;
 export declare class LyRadio extends LyRadioMixinBase implements OnChanges, OnInit, AfterViewInit, OnDestroy {
     radioGroup: LyRadioGroup;

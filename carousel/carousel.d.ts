@@ -1,6 +1,7 @@
 import { QueryList, AfterViewInit, OnDestroy, ElementRef, ChangeDetectorRef, OnInit, Renderer2 } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { LyTheme2 } from '@alyle/ui';
+/** @docs-private */
 export declare enum CarouselMode {
     /** full */
     default = 0,
