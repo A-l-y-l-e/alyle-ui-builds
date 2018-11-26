@@ -8,45 +8,53 @@ export declare enum CarouselMode {
     inline = 1
 }
 export declare class LyCarousel implements OnInit, AfterViewInit, OnDestroy {
-    private elementRef;
-    private sanitizer;
+    private _el;
+    private _sanitizer;
     private cd;
     private theme;
     private renderer;
+    /** @docs-private */
+    readonly classes: Record<"root" | "actions" | "slideContainer" | "slide" | "slideContent" | "slideAnim" | "slideNoEvent" | "carouselIndicators", string>;
     _selectedIndex: any;
     nullImg: string;
     private _intervalFn;
+    /** @docs-private */
+    _positionLeft: string | number;
     slideContainer: ElementRef;
     lyItems: QueryList<LyCarouselItem>;
     mode: CarouselMode;
     interval: number;
-    _positionLeft: string | number;
     selectedIndex: number;
     selectedElement: HTMLElement;
-    classes: Record<"slideContainer" | "root" | "slide" | "slideContent" | "slideAnim" | "slideNoEvent" | "carouselIndicators", string>;
-    private _slideEvent;
-    slideEvent: boolean;
-    onDragStart(e: any): void;
-    onDrag(e: any): void;
-    onDragEnd(e: any): void;
-    constructor(elementRef: ElementRef, sanitizer: DomSanitizer, cd: ChangeDetectorRef, theme: LyTheme2, renderer: Renderer2);
+    private _touch;
+    touch: boolean;
+    constructor(_el: ElementRef, _sanitizer: DomSanitizer, cd: ChangeDetectorRef, theme: LyTheme2, renderer: Renderer2);
     ngOnInit(): void;
-    private _onPan;
-    private sanitizerStyle;
-    ngOnDestroy(): void;
-    _markForCheck(): void;
     ngAfterViewInit(): void;
+    ngOnDestroy(): void;
+    /** @docs-private */
+    _onDragStart(): void;
+    /** @docs-private */
+    _onDrag(e: any): void;
+    /** @docs-private */
+    _onDragEnd(e: any): void;
+    /** @docs-private */
+    _onDragCancel(): void;
     select(val: number, notResetInterval?: boolean): void;
     prev(): void;
     next(notResetInterval?: boolean): void;
-    private _resetInterval;
     stop(): void;
+    private _resetInterval;
+    private _onPan;
+    private _sanitizerStyle;
+    /** @docs-private */
+    private _markForCheck;
 }
 export declare class LyCarouselItem {
     private theme;
-    private renderer;
     private _className;
     srcImg: string;
+    /** @docs-private */
     _nativeElement: HTMLElement;
-    constructor(theme: LyTheme2, renderer: Renderer2, elementRef: ElementRef);
+    constructor(theme: LyTheme2, _el: ElementRef);
 }

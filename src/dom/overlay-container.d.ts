@@ -1,11 +1,11 @@
-import { ElementRef } from '@angular/core';
+import { ElementRef, NgZone } from '@angular/core';
 import { LyTheme2 } from '../theme/theme2.service';
 import { LyCoreStyles } from '../styles/core-styles';
 import { Observable } from 'rxjs';
 export declare class WindowScrollService {
     private document;
     scroll$: Observable<number>;
-    constructor(document: any);
+    constructor(document: any, ngZone: NgZone);
 }
 export declare class LyOverlayContainer {
     private theme;
