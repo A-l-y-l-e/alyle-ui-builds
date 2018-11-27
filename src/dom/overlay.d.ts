@@ -23,6 +23,6 @@ export declare class LyOverlay {
     private _injector;
     private _windowScroll;
     constructor(_overlayContainer: LyOverlayContainer, _componentFactoryResolver: ComponentFactoryResolver, _appRef: ApplicationRef, _injector: Injector, _windowScroll: WindowScrollService);
-    create(template: TemplateRef<any>, context?: any, config?: OverlayConfig): OverlayFromTemplateRef;
+    create(template: TemplateRef<any> | string, context?: any, config?: OverlayConfig): OverlayFromTemplateRef;
 }
 export {};

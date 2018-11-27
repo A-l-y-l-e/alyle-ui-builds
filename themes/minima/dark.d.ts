@@ -161,4 +161,10 @@ export declare class MinimaDark extends MinimaBase implements ThemeConfig {
             color: string;
         };
     };
+    tooltip: {
+        root: {
+            background: string;
+            color: string;
+        };
+    };
 }

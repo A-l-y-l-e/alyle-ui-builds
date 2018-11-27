@@ -6,6 +6,7 @@ export declare const styles: (theme: ThemeVariables) => {
             height: string;
             background: string;
             opacity: number;
+            pointerEvents: string;
             position: string;
             top: number;
             bottom: number;
