@@ -1,7 +1,7 @@
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/animations'), require('@alyle/ui'), require('@angular/forms'), require('@angular/common')) :
     typeof define === 'function' && define.amd ? define('@alyle/ui/menu', ['exports', '@angular/core', '@angular/animations', '@alyle/ui', '@angular/forms', '@angular/common'], factory) :
-    (factory((global.alyle = global.alyle || {}, global.alyle.ui = global.alyle.ui || {}, global.alyle.ui.menu = {}),global.ng.core,global.ng.animations,global.alyle.ui,global.ng.forms,global.ng.common));
+    (factory((global.ly = global.ly || {}, global.ly.menu = {}),global.ng.core,global.ng.animations,global.ly.core,global.ng.forms,global.ng.common));
 }(this, (function (exports,core,animations,ui,forms,common) { 'use strict';
 
     /*! *****************************************************************************

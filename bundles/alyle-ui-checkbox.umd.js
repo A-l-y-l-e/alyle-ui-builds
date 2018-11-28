@@ -1,7 +1,7 @@
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/forms'), require('@alyle/ui'), require('@angular/common')) :
     typeof define === 'function' && define.amd ? define('@alyle/ui/checkbox', ['exports', '@angular/core', '@angular/forms', '@alyle/ui', '@angular/common'], factory) :
-    (factory((global.alyle = global.alyle || {}, global.alyle.ui = global.alyle.ui || {}, global.alyle.ui.checkbox = {}),global.ng.core,global.ng.forms,global.alyle.ui,global.ng.common));
+    (factory((global.ly = global.ly || {}, global.ly.checkbox = {}),global.ng.core,global.ng.forms,global.ly.core,global.ng.common));
 }(this, (function (exports,core,forms,ui,common) { 'use strict';
 
     /*! *****************************************************************************

@@ -1,7 +1,7 @@
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@alyle/ui'), require('@angular/core'), require('@angular/common')) :
     typeof define === 'function' && define.amd ? define('@alyle/ui/icon-button', ['exports', '@alyle/ui', '@angular/core', '@angular/common'], factory) :
-    (factory((global.alyle = global.alyle || {}, global.alyle.ui = global.alyle.ui || {}, global.alyle.ui['icon-button'] = {}),global.alyle.ui,global.ng.core,global.ng.common));
+    (factory((global.ly = global.ly || {}, global.ly.iconButton = {}),global.ly.core,global.ng.core,global.ng.common));
 }(this, (function (exports,i1,i0,common) { 'use strict';
 
     /*! *****************************************************************************

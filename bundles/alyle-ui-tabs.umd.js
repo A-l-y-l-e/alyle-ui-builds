@@ -1,7 +1,7 @@
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@alyle/ui'), require('rxjs'), require('@angular/common')) :
     typeof define === 'function' && define.amd ? define('@alyle/ui/tabs', ['exports', '@angular/core', '@alyle/ui', 'rxjs', '@angular/common'], factory) :
-    (factory((global.alyle = global.alyle || {}, global.alyle.ui = global.alyle.ui || {}, global.alyle.ui.tabs = {}),global.ng.core,global.alyle.ui,global.rxjs,global.ng.common));
+    (factory((global.ly = global.ly || {}, global.ly.tabs = {}),global.ng.core,global.ly.core,global.rxjs,global.ng.common));
 }(this, (function (exports,i0,i1,rxjs,common) { 'use strict';
 
     /*! *****************************************************************************

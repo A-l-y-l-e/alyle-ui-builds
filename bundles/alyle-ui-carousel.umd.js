@@ -1,7 +1,7 @@
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/platform-browser'), require('@alyle/ui'), require('chroma-js'), require('@angular/common')) :
     typeof define === 'function' && define.amd ? define('@alyle/ui/carousel', ['exports', '@angular/core', '@angular/platform-browser', '@alyle/ui', 'chroma-js', '@angular/common'], factory) :
-    (factory((global.alyle = global.alyle || {}, global.alyle.ui = global.alyle.ui || {}, global.alyle.ui.carousel = {}),global.ng.core,global.ng.platformBrowser,global.alyle.ui,global._chroma,global.ng.common));
+    (factory((global.ly = global.ly || {}, global.ly.carousel = {}),global.ng.core,global.ng.platformBrowser,global.ly.core,global.chroma,global.ng.common));
 }(this, (function (exports,core,platformBrowser,ui,_chroma,common) { 'use strict';
 
     /**

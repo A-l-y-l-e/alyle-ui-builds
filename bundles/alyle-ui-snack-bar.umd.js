@@ -1,7 +1,7 @@
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('rxjs'), require('@alyle/ui')) :
     typeof define === 'function' && define.amd ? define('@alyle/ui/snack-bar', ['exports', '@angular/core', 'rxjs', '@alyle/ui'], factory) :
-    (factory((global.alyle = global.alyle || {}, global.alyle.ui = global.alyle.ui || {}, global.alyle.ui['snack-bar'] = {}),global.ng.core,global.rxjs,global.alyle.ui));
+    (factory((global.ly = global.ly || {}, global.ly.snackBar = {}),global.ng.core,global.rxjs,global.ly.core));
 }(this, (function (exports,i0,rxjs,ui) { 'use strict';
 
     /*! *****************************************************************************

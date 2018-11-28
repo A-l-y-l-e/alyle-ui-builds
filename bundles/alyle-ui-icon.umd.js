@@ -1,7 +1,7 @@
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/common/http'), require('@angular/common'), require('rxjs/operators'), require('@alyle/ui'), require('@angular/platform-browser')) :
     typeof define === 'function' && define.amd ? define('@alyle/ui/icon', ['exports', '@angular/core', '@angular/common/http', '@angular/common', 'rxjs/operators', '@alyle/ui', '@angular/platform-browser'], factory) :
-    (factory((global.alyle = global.alyle || {}, global.alyle.ui = global.alyle.ui || {}, global.alyle.ui.icon = {}),global.ng.core,global.ng.common.http,global.ng.common,global.rxjs.operators,global.alyle.ui,global.ng.platformBrowser));
+    (factory((global.ly = global.ly || {}, global.ly.icon = {}),global.ng.core,global.ng.common.http,global.ng.common,global.rxjs.operators,global.ly.core,global.ng.platformBrowser));
 }(this, (function (exports,i0,i1,i3,operators,i4,i2) { 'use strict';
 
     /*! *****************************************************************************
