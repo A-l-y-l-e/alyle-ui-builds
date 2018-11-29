@@ -24,12 +24,14 @@ export interface StyleMap5 {
         } | string;
     };
     requireUpdate?: boolean;
+    id: string;
 }
 export declare class StylesInDocument {
     styles: {
         [themeName: string]: Map<string | object, HTMLStyleElement>;
     };
     styleContainers: Map<number, HTMLElement>;
+    styleElementGlobalMap: Map<string | object, HTMLStyleElement>;
 }
 export declare class LyTheme2 {
     private stylesInDocument;
@@ -40,11 +42,7 @@ export declare class LyTheme2 {
     initialTheme: string;
     elements: Map<string | object, HTMLStyleElement>;
     _elementsMap: Map<any, HTMLStyleElement>;
-    readonly classes: {
-        [idOrThemeName: string]: string | {
-            [className: string]: string;
-        };
-    };
+    private themeMap;
     constructor(stylesInDocument: StylesInDocument, core: CoreTheme, themeName: any, _document: any);
     setUpTheme(themeName: string): void;
     /**
@@ -65,14 +63,16 @@ export declare class LyTheme2 {
      */
     private addCss;
     private _addDefaultStyles;
+    /**
+     * Add new add a new style sheet
+     * @param styles styles
+     * @param priority priority for style
+     */
     addStyleSheet<T>(styles: T & (StylesFn2<T> | Styles2), priority?: number): IClasses<T>;
-    addStyleSheet<T>(styles: T & (StylesFn2<T> | Styles2), id: string): IClasses<T>;
-    addStyleSheet<T>(styles: T & (StylesFn2<T> | Styles2), id: string | string, priority: number): IClasses<T>;
     private _createStyleContent2;
     private _createStyleContainer;
     private findNode;
     private _createElementStyle;
-    private _createInstanceForTheme;
 }
 export interface StyleContainer {
     [key: string]: StyleContainer | string | number;
