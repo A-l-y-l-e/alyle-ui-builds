@@ -43,6 +43,7 @@ export declare class LyTheme2 {
     elements: Map<string | object, HTMLStyleElement>;
     _elementsMap: Map<any, HTMLStyleElement>;
     private themeMap;
+    private isDevOrServer;
     constructor(stylesInDocument: StylesInDocument, core: CoreTheme, themeName: any, _document: any);
     setUpTheme(themeName: string): void;
     /**
