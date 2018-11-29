@@ -7,7 +7,7 @@ declare enum TypeStyle {
     OnlyOne = 1
 }
 export interface StyleMap5 {
-    styles: StylesFn2<any> | Styles2;
+    styles: StylesFn2 | Styles2;
     type: TypeStyle;
     priority: number;
     css: {
@@ -68,7 +68,7 @@ export declare class LyTheme2 {
      * @param styles styles
      * @param priority priority for style
      */
-    addStyleSheet<T>(styles: T & (StylesFn2<T> | Styles2), priority?: number): IClasses<T>;
+    addStyleSheet<T>(styles: T & Styles, priority?: number): IClasses<T>;
     private _createStyleContent2;
     private _createStyleContainer;
     private findNode;
@@ -78,9 +78,12 @@ export interface StyleContainer {
     [key: string]: StyleContainer | string | number;
 }
 export interface Styles2 {
-    [key: string]: StyleContainer;
+    /** Prefix name */
+    $name?: string;
+    [key: string]: StyleContainer | string;
 }
-export declare type StylesFn2<T> = (T: any) => Styles2;
+export declare type StylesFn2 = (T: any) => Styles2;
+export declare type Styles = StylesFn2 | Styles2;
 export declare function toHyphenCase(str: string): string;
 export declare function capitalizeFirstLetter(str: string): string;
 declare type IClasses<T> = Record<(T extends ((...args: any[]) => any) ? (keyof ReturnType<T>) : keyof T), string>;
