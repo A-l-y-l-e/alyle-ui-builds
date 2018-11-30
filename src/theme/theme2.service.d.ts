@@ -1,4 +1,4 @@
-import { Renderer2 } from '@angular/core';
+import { Renderer2, NgZone } from '@angular/core';
 import { ThemeVariables } from './theme-config';
 import { CoreTheme } from './core-theme.service';
 import { DataStyle } from '../theme.service';
@@ -37,6 +37,7 @@ export declare class LyTheme2 {
     private stylesInDocument;
     core: CoreTheme;
     private _document;
+    private _ngZone;
     config: ThemeVariables;
     _styleMap: Map<string, DataStyle>;
     initialTheme: string;
@@ -44,7 +45,7 @@ export declare class LyTheme2 {
     _elementsMap: Map<any, HTMLStyleElement>;
     private themeMap;
     private isDevOrServer;
-    constructor(stylesInDocument: StylesInDocument, core: CoreTheme, themeName: any, _document: any);
+    constructor(stylesInDocument: StylesInDocument, core: CoreTheme, themeName: any, _document: any, _ngZone: NgZone);
     setUpTheme(themeName: string): void;
     /**
      * Add a new dynamic style, use only within @Input()
@@ -74,9 +75,10 @@ export declare class LyTheme2 {
     private _createStyleContainer;
     private findNode;
     private _createElementStyle;
+    requestAnimationFrame(fn: (...args: any[]) => void): void;
 }
 export interface StyleContainer {
-    [key: string]: StyleContainer | string | number;
+    [key: string]: StyleContainer | string | number | string[];
 }
 export interface Styles2 {
     /** Prefix name */
@@ -85,7 +87,12 @@ export interface Styles2 {
 }
 export declare type StylesFn2 = (T: any) => Styles2;
 export declare type Styles = StylesFn2 | Styles2;
+export interface Keyframes {
+    [name: string]: {
+        [percent: number]: StyleContainer;
+    };
+}
 export declare function toHyphenCase(str: string): string;
 export declare function capitalizeFirstLetter(str: string): string;
-declare type OnlyClasses<T> = Record<(Exclude<(T extends ((...args: any[]) => any) ? (keyof ReturnType<T>) : keyof T), '$name' | '$sheet'>), string>;
+declare type OnlyClasses<T> = Record<(Exclude<(T extends ((...args: any[]) => any) ? (keyof ReturnType<T>) : keyof T), '$name' | '$sheet' | '$keyframes'>), string>;
 export {};
