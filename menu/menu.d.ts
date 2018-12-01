@@ -1,24 +1,34 @@
-import { ElementRef, TemplateRef, OnDestroy } from '@angular/core';
-import { LyOverlay, OverlayFromTemplateRef, LyTheme2 } from '@alyle/ui';
+import { ElementRef, TemplateRef, OnDestroy, AfterViewInit, Renderer2, OnInit } from '@angular/core';
+import { LyOverlay, OverlayFromTemplateRef, LyTheme2, Placement, XPosition, YPosition } from '@alyle/ui';
 /** Menu container */
-export declare class LyMenu {
-    private theme;
+export declare class LyMenu implements OnInit, AfterViewInit {
+    private _theme;
     private _el;
+    private _renderer;
     /**
      * styles
-     * @ignore
+     * @docs-private
      */
-    classes: Record<"root", string>;
+    readonly classes: Record<"container", string>;
     /**
      * Destroy menu
-     * @ignore
+     * @docs-private
      */
     destroy: () => void;
     ref: LyMenuTriggerFor;
-    menuEnter: any;
+    /** Position where the menu will be placed. */
+    placement: Placement;
+    /** The x-axis position of the menu. */
+    xPosition: XPosition;
+    /** The y-axis position of the menu. */
+    yPosition: YPosition;
     menuLeave2: any;
     endAnimation(e: any): void;
-    constructor(theme: LyTheme2, _el: ElementRef);
+    constructor(_theme: LyTheme2, _el: ElementRef, _renderer: Renderer2);
+    ngOnInit(): void;
+    ngAfterViewInit(): void;
+    private _updatePlacement;
+    private _setTransform;
 }
 export declare class LyMenuItem {
     private _menu;
@@ -32,7 +42,8 @@ export declare class LyMenuTriggerFor implements OnDestroy {
     _menuRef: OverlayFromTemplateRef;
     lyMenuTriggerFor: TemplateRef<any>;
     constructor(elementRef: ElementRef, overlay: LyOverlay);
-    targetPosition(): ClientRect;
+    /** @docs-private */
+    _targetPosition(): ClientRect;
     _handleClick(): void;
     detach(): void;
     destroy(): void;
