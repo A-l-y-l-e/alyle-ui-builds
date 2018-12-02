@@ -26,7 +26,7 @@ export declare class LyButton extends LyButtonMixinBase implements OnChanges, On
     private _appearanceClass;
     private _onFocusByKeyboardState;
     _rippleContainer: ElementRef;
-    /** @ignore */
+    /** @docs-private */
     rippleSensitive: boolean;
     /** Button size */
     size: LyButtonSize;

@@ -1,5 +1,6 @@
 import { TemplateRef, ApplicationRef, ComponentFactoryResolver, Injector } from '@angular/core';
 import { LyOverlayContainer, WindowScrollService } from './overlay-container';
+import { ResizeService } from './resize';
 interface OverlayConfig {
     styles: Object;
     classes?: string[];
@@ -22,7 +23,8 @@ export declare class LyOverlay {
     private _appRef;
     private _injector;
     private _windowScroll;
-    constructor(_overlayContainer: LyOverlayContainer, _componentFactoryResolver: ComponentFactoryResolver, _appRef: ApplicationRef, _injector: Injector, _windowScroll: WindowScrollService);
+    private _resizeService;
+    constructor(_overlayContainer: LyOverlayContainer, _componentFactoryResolver: ComponentFactoryResolver, _appRef: ApplicationRef, _injector: Injector, _windowScroll: WindowScrollService, _resizeService: ResizeService);
     create(template: TemplateRef<any> | string, context?: any, config?: OverlayConfig): OverlayFromTemplateRef;
 }
 export {};

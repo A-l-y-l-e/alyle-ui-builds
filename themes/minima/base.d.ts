@@ -126,13 +126,21 @@ export declare class MinimaBase extends LyStyleUtils {
     button: {
         size: {
             small: {
+                padding: string;
                 fontSize: string;
+                minHeight: string;
+                minWidth: string;
             };
             medium: {
-                fontSize: string;
+                padding: string;
+                minHeight: string;
+                minWidth: string;
             };
             large: {
+                padding: string;
                 fontSize: string;
+                minHeight: string;
+                minWidth: string;
             };
         };
         appearance: {

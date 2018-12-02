@@ -24,7 +24,6 @@ export declare class LyTabs extends LyTabsMixinBase implements OnChanges, OnInit
     private cd;
     _selectedIndex: number;
     _selectedBeforeIndex: number;
-    _selectedRequireCheck: boolean;
     _selectedTab: LyTab;
     _selectedBeforeTab: LyTab;
     private _tabsSubscription;
@@ -59,7 +58,6 @@ export declare class LyTab implements OnInit, AfterViewInit {
     _renderer: Renderer2;
     _el: ElementRef;
     index: number;
-    loaded: boolean;
     protected readonly classes: any;
     templateRefLazy: TemplateRef<LyTabContent>;
     templateRef: TemplateRef<any>;
