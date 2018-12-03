@@ -1,0 +1,13 @@
+{
+  "main": "../bundles/alyle-ui-avatar.umd.js",
+  "module": "../fesm5/alyle-ui-avatar.js",
+  "es2015": "../fesm2015/alyle-ui-avatar.js",
+  "esm5": "../esm5/avatar/alyle-ui-avatar.js",
+  "esm2015": "../esm2015/avatar/alyle-ui-avatar.js",
+  "fesm5": "../fesm5/alyle-ui-avatar.js",
+  "fesm2015": "../fesm2015/alyle-ui-avatar.js",
+  "typings": "alyle-ui-avatar.d.ts",
+  "metadata": "alyle-ui-avatar.metadata.json",
+  "sideEffects": false,
+  "name": "@alyle/ui/avatar"
+}
