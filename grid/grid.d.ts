@@ -1,7 +1,7 @@
 import { ElementRef, OnInit } from '@angular/core';
 import { LyTheme2 } from '@alyle/ui';
-declare type Justify = 'start' | 'center' | 'end' | 'between' | 'around' | 'evenly';
-declare type Direction = 'row' | 'rowReverse' | 'column' | 'columnReverse';
+export declare type Justify = 'start' | 'center' | 'end' | 'between' | 'around' | 'evenly';
+export declare type Direction = 'row' | 'rowReverse' | 'column' | 'columnReverse';
 /**
  * Grid container
  * example:
@@ -19,7 +19,7 @@ export declare class LyGrid {
     private el;
     /**
      * Styles
-     * @ignore
+     * @docs-private
      */
     classes: Record<"root", string>;
     private _spacing;
@@ -33,6 +33,7 @@ export declare class LyGrid {
      * Defines the space between the component with the `item` attribute.
      */
     spacing: string | number;
+    /** @docs-private */
     readonly spacingClass: string;
     /** Defines the justify-content style property. */
     justify: Justify;
@@ -56,4 +57,3 @@ export declare class LyGridItem implements OnInit {
     ngOnInit(): void;
     private _updateSpacing;
 }
-export {};

@@ -1,13 +1,13 @@
 import { ElementRef, OnChanges, Renderer2, TemplateRef, ViewContainerRef } from '@angular/core';
-import { LyTheme2 } from '@alyle/ui';
-declare type position = 'start' | 'end' | 'top' | 'bottom';
+import { LyTheme2, Placement } from '@alyle/ui';
+export declare type position = 'start' | 'end' | 'top' | 'bottom' | Placement;
 declare type mode = 'side' | 'over';
 export declare class LyDrawerContainer {
     private _theme;
     private _renderer;
     private _el;
-    /** @ignore */
-    classes: Record<"drawerContainer" | "drawer" | "drawerContent" | "drawerOpened" | "backdrop" | "transition", string>;
+    /** @docs-private */
+    readonly classes: Record<"drawerContainer" | "drawer" | "drawerContent" | "drawerOpened" | "backdrop" | "transition", string>;
     _openDrawers: number;
     _drawerContent: LyDrawerContent;
     constructor(_theme: LyTheme2, _renderer: Renderer2, _el: ElementRef);
@@ -26,9 +26,9 @@ export declare class LyDrawer implements OnChanges {
     private _vcr;
     /**
      * Styles
-     * @ignore
+     * @docs-private
      */
-    classes: Record<"drawerContainer" | "drawer" | "drawerContent" | "drawerOpened" | "backdrop" | "transition", string>;
+    readonly classes: Record<"drawerContainer" | "drawer" | "drawerContent" | "drawerOpened" | "backdrop" | "transition", string>;
     private _forceModeOver;
     private _fromToggle;
     private _opened;
@@ -43,9 +43,13 @@ export declare class LyDrawer implements OnChanges {
     _backdrop: TemplateRef<any>;
     opened: boolean;
     mode: mode;
+    spacingAbove: string | number;
     spacingTop: string | number;
+    spacingBelow: string | number;
     spacingBottom: string | number;
     spacingStart: string | number;
+    spacingBefore: string | number;
+    spacingAfter: string | number;
     spacingRight: string | number;
     width: number | string;
     height: number | string;

@@ -92,7 +92,7 @@ export interface Keyframes {
         [percent: number]: StyleContainer;
     };
 }
-export declare function toHyphenCase(str: string): string;
+export declare function converterToCssKeyAndStyle(str: string, themeVariables: ThemeVariables): string;
 export declare function capitalizeFirstLetter(str: string): string;
 declare type OnlyClasses<T> = Record<(Exclude<(T extends ((...args: any[]) => any) ? (keyof ReturnType<T>) : keyof T), '$name' | '$sheet' | '$keyframes'>), string>;
 export {};
