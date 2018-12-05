@@ -21,7 +21,7 @@ export declare class LyStyleUtils {
         WebLandscape: string;
         [key: string]: string;
     };
-    direction?: Dir;
+    direction: Dir;
     pxToRem(value: number): string;
     colorOf(value: string, optional?: string): string;
     getBreakpoint(key: string): string;
@@ -32,7 +32,9 @@ export declare enum Dir {
     ltr = "ltr"
 }
 export declare enum DirAlias {
+    /** @deprecated, use `before` instead */
     start = "start",
+    /** @deprecated, use `after` instead */
     end = "end",
     before = "before",
     after = "after"

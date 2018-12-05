@@ -13,7 +13,7 @@ export declare class LySnackBar {
     private _overlay;
     private _snackBarService;
     duration: number;
-    horizontalPosition: 'start' | 'center' | 'end' | 'left' | 'right' | XPosition;
+    horizontalPosition: 'center' | XPosition;
     verticalPosition: YPosition;
     afterDismissed: EventEmitter<LySnackBarDismiss>;
     constructor(_templateRef: TemplateRef<any>, _theme: LyTheme2, _overlay: LyOverlay, _snackBarService: LySnackBarService);

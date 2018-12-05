@@ -58,6 +58,9 @@ export declare class LyTheme2 {
     private updateClassName;
     updateClass(element: any, renderer: Renderer2, newClass: string, oldClass?: string): string;
     setTheme(nam: string): void;
+    /** Toggle right-to-left/left-to-right */
+    toggleDirection(): void;
+    private _updateAllStyles;
     /**
      * add style, similar to setUpStyle but this only accept string
      * @param id id of style
