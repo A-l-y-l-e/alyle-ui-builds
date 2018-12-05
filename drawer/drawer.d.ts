@@ -34,6 +34,7 @@ export declare class LyDrawer implements OnChanges {
     private _opened;
     private _viewRef;
     private _isAnimation;
+    private _hasBackdrop;
     private _position;
     private _positionClass;
     private _drawerRootClass;
@@ -44,15 +45,18 @@ export declare class LyDrawer implements OnChanges {
     opened: boolean;
     mode: mode;
     spacingAbove: string | number;
+    /** @deprecated, use `spacingAbove` instead */
     spacingTop: string | number;
     spacingBelow: string | number;
+    /** @deprecated, use `spacingBelow` instead */
     spacingBottom: string | number;
-    spacingStart: string | number;
     spacingBefore: string | number;
     spacingAfter: string | number;
     spacingRight: string | number;
+    spacingLeft: string | number;
     width: number | string;
     height: number | string;
+    hasBackdrop: any;
     position: position;
     constructor(_theme: LyTheme2, _renderer: Renderer2, _el: ElementRef, _drawerContainer: LyDrawerContainer, _vcr: ViewContainerRef);
     ngOnChanges(): void;
