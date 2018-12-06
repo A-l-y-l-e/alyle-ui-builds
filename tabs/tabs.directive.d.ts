@@ -46,7 +46,6 @@ export declare class LyTabs extends LyTabsMixinBase implements OnChanges, OnInit
     ngAfterViewInit(): void;
     ngAfterContentInit(): void;
     ngOnDestroy(): void;
-    private _getHostElement;
     private _findIndex;
     private _updateIndicator;
     markForCheck(): void;
