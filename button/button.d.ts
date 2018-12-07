@@ -1,6 +1,6 @@
 import { ElementRef, Renderer2, NgZone, OnDestroy, OnInit, AfterViewInit, OnChanges } from '@angular/core';
 import { LyTheme2, LyRippleService, LyFocusState } from '@alyle/ui';
-declare type LyButtonSize = 'small' | 'medium' | 'large';
+export declare type LyButtonSize = 'small' | 'medium' | 'large';
 /** @docs-private */
 export declare class LyButtonBase {
     _theme: LyTheme2;
@@ -39,4 +39,3 @@ export declare class LyButton extends LyButtonMixinBase implements OnChanges, On
     focus(): void;
     ngOnDestroy(): void;
 }
-export {};
