@@ -28,7 +28,6 @@ export declare class LyMenu implements OnInit, AfterViewInit {
     ngOnInit(): void;
     ngAfterViewInit(): void;
     private _updatePlacement;
-    private _setTransform;
 }
 export declare class LyMenuItem {
     private _menu;
@@ -48,4 +47,5 @@ export declare class LyMenuTriggerFor implements OnDestroy {
     detach(): void;
     destroy(): void;
     ngOnDestroy(): void;
+    _getHostElement(): any;
 }
