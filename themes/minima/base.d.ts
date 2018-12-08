@@ -6,74 +6,7 @@ export declare class MinimaBase extends LyStyleUtils {
         fontSize: number;
         gutterTop: number;
         gutterBottom: number;
-        lyTyp: {
-            display4: {
-                fontSize: number;
-                fontWeight: number;
-                letterSpacing: number;
-            };
-            display3: {
-                fontSize: number;
-                fontWeight: number;
-                letterSpacing: number;
-            };
-            display2: {
-                fontSize: number;
-                fontWeight: number;
-                letterSpacing: number;
-            };
-            display1: {
-                fontSize: number;
-                fontWeight: number;
-                letterSpacing: number;
-            };
-            headline: {
-                fontSize: number;
-                fontWeight: number;
-                letterSpacing: number;
-            };
-            title: {
-                fontSize: number;
-                fontWeight: number;
-                letterSpacing: number;
-            };
-            subheading: {
-                fontSize: number;
-                fontWeight: number;
-                letterSpacing: number;
-                lineHeight: number;
-            };
-            subheading2: {
-                fontSize: number;
-                fontWeight: number;
-                letterSpacing: number;
-            };
-            body2: {
-                fontSize: number;
-                fontWeight: number;
-                letterSpacing: number;
-            };
-            body1: {
-                fontSize: number;
-                fontWeight: number;
-                letterSpacing: number;
-            };
-            button: {
-                fontSize: number;
-                fontWeight: number;
-            };
-            caption: {
-                fontSize: number;
-                fontWeight: number;
-                letterSpacing: number;
-            };
-            overline: {
-                fontSize: number;
-                fontWeight: number;
-                letterSpacing: number;
-                textTransform: string;
-            };
-        };
+        lyTyp: any;
     };
     iconButton: {
         size: string;
@@ -167,4 +100,5 @@ export declare class MinimaBase extends LyStyleUtils {
             };
         };
     };
+    constructor();
 }

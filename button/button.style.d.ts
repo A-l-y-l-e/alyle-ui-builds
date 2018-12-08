@@ -19,10 +19,10 @@ export declare const styles: (theme: ThemeVariables) => {
             opacity: number;
             borderRadius: string;
         };
-        fontSize?: number;
+        fontSize?: string;
         fontFamily: string;
         fontWeight: number;
-        letterSpacing?: number;
+        letterSpacing?: string;
         textTransform?: string;
         gutterTop?: number;
         gutterBottom?: number;
