@@ -1,17 +1,13 @@
-import { AfterContentInit, AfterViewInit, ChangeDetectorRef, ElementRef, OnInit, Renderer2, QueryList, NgZone, OnChanges, SimpleChanges } from '@angular/core';
+import { AfterContentInit, AfterViewInit, ChangeDetectorRef, ElementRef, OnInit, Renderer2, QueryList, NgZone, OnDestroy } from '@angular/core';
 import { LyTheme2, ElementObserver } from '@alyle/ui';
-import { LyInputNative } from './input';
 import { LyLabel } from './label';
 import { LyPlaceholder } from './placeholder';
 import { LyHint } from './hint';
 import { LyPrefix } from './prefix';
 import { LySuffix } from './suffix';
-/** @docs-private */
-export declare class LyFieldBase {
-}
-/** @docs-private */
-export declare const LyFieldMixinBase: import("@alyle/ui/src/common/constructor").Constructor<import("@alyle/ui/src/common/color").CanColor> & typeof LyFieldBase;
-export declare class LyField extends LyFieldMixinBase implements OnChanges, OnInit, AfterContentInit, AfterViewInit {
+import { Subject } from 'rxjs';
+import { NgControl, NgForm, FormGroupDirective } from '@angular/forms';
+export declare class LyField implements OnInit, AfterContentInit, AfterViewInit {
     private _renderer;
     private _el;
     private _elementObserver;
@@ -20,13 +16,13 @@ export declare class LyField extends LyFieldMixinBase implements OnChanges, OnIn
     private _ngZone;
     /**
      * styles
-     * @ignore
+     * @docs-private
      */
-    classes: Record<"placeholder" | "root" | "animations" | "container" | "fieldset" | "fieldsetSpan" | "labelSpan" | "prefix" | "infix" | "suffix" | "labelContainer" | "labelSpacingStart" | "labelCenter" | "labelSpacingEnd" | "label" | "isFloatingLabel" | "floatingLabel" | "focused" | "inputNative" | "hint", string>;
+    readonly classes: Record<"root" | "animations" | "container" | "fieldset" | "fieldsetSpan" | "labelSpan" | "prefix" | "infix" | "suffix" | "labelContainer" | "labelSpacingStart" | "labelCenter" | "labelSpacingEnd" | "label" | "isFloatingLabel" | "floatingLabel" | "placeholder" | "focused" | "inputNative" | "hint" | "disabled", string>;
     protected _appearance: string;
     protected _appearanceClass: string;
-    protected _withColor: string;
-    protected _withColorClass: string;
+    protected _color: string;
+    protected _colorClass: string;
     protected _isFloating: boolean;
     protected _floatingLabel: boolean;
     private _fielsetSpanClass;
@@ -46,12 +42,11 @@ export declare class LyField extends LyFieldMixinBase implements OnChanges, OnIn
     _suffixChildren: QueryList<LySuffix>;
     /** Whether the label is floating. */
     floatingLabel: boolean;
-    /** Deprecated, instead use `[color], theme color for the component. */
-    withColor: string;
+    /** Theme color for the component. */
+    color: string;
     /** The field appearance style. */
     appearance: string;
     constructor(_renderer: Renderer2, _el: ElementRef, _elementObserver: ElementObserver, _theme: LyTheme2, _cd: ChangeDetectorRef, _ngZone: NgZone);
-    ngOnChanges(changes: SimpleChanges): void;
     ngOnInit(): void;
     ngAfterContentInit(): void;
     ngAfterViewInit(): void;
@@ -65,4 +60,35 @@ export declare class LyField extends LyFieldMixinBase implements OnChanges, OnIn
     _isEmpty(): boolean;
     private _updateFloatingLabel;
     private _markForCheck;
+    _getHostElement(): any;
+}
+export declare class LyInputNative implements OnInit, OnDestroy {
+    private _el;
+    private _renderer;
+    private _field;
+    /** @docs-private */
+    ngControl: NgControl;
+    _hostElement: HTMLInputElement | HTMLTextAreaElement;
+    protected _disabled: boolean;
+    protected _required: boolean;
+    protected _placeholder: string;
+    readonly stateChanges: Subject<void>;
+    private _hasDisabledClass;
+    focused: boolean;
+    _onInput(): void;
+    _onBlur(): void;
+    _onFocus(): void;
+    /** @ignore */
+    value: any;
+    /** Whether the input is disabled. */
+    disabled: boolean;
+    required: boolean;
+    placeholder: string;
+    constructor(_el: ElementRef<HTMLInputElement | HTMLTextAreaElement>, _renderer: Renderer2, _field: LyField, 
+    /** @docs-private */
+    ngControl: NgControl, _parentForm: NgForm, _parentFormGroup: FormGroupDirective);
+    ngOnInit(): void;
+    ngOnDestroy(): void;
+    /** Focuses the input. */
+    focus(): void;
 }

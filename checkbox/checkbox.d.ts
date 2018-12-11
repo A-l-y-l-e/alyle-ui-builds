@@ -20,7 +20,7 @@ export declare class LyCheckboxBase {
     constructor(_theme: LyTheme2, _ngZone: NgZone);
 }
 /** @docs-private */
-export declare const LyCheckboxMixinBase: import("@alyle/ui/src/common/constructor").Constructor<import("@alyle/ui/src/common/build-common-behaviors").CanStyleUpdater> & import("@alyle/ui/src/common/constructor").Constructor<import("@alyle/ui/src/common/bg").CanBg> & import("@alyle/ui/src/common/constructor").Constructor<import("@alyle/ui/src/common/color").CanColor> & import("@alyle/ui/src/common/constructor").Constructor<import("@alyle/ui/src/common/raised").CanRaised> & import("@alyle/ui/src/common/constructor").Constructor<import("@alyle/ui/src/common/outlined").CanOutlined> & import("@alyle/ui/src/common/constructor").Constructor<import("@alyle/ui/src/common/elevation").CanElevation> & import("@alyle/ui/src/common/constructor").Constructor<import("@alyle/ui/src/common/shadow-color").CanShadowColor> & import("@alyle/ui/src/common/constructor").Constructor<import("@alyle/ui/src/common/disable-ripple").CanDisableRipple> & typeof LyCheckboxBase;
+export declare const LyCheckboxMixinBase: import("@alyle/ui/src/common/constructor").Constructor<import("@alyle/ui/src/common/disable-ripple").CanDisableRipple> & typeof LyCheckboxBase;
 export declare class LyCheckbox extends LyCheckboxMixinBase implements ControlValueAccessor, OnInit, AfterViewInit, OnDestroy {
     _commonStyles: LyCommonStyles;
     private _el;
@@ -31,9 +31,9 @@ export declare class LyCheckbox extends LyCheckboxMixinBase implements ControlVa
      * styles
      * @ignore
      */
-    readonly classes: Record<"disabled" | "root" | "layout" | "icon" | "checked" | "input" | "onFocusByKeyboard" | "animations", string>;
-    protected _withColor: string;
-    protected _withColorClass: string;
+    readonly classes: Record<"root" | "layout" | "icon" | "checked" | "input" | "onFocusByKeyboard" | "disabled" | "animations", string>;
+    protected _color: string;
+    protected _colorClass: string;
     protected _required: boolean;
     protected _indeterminate: boolean;
     protected _checked: boolean;
@@ -42,7 +42,7 @@ export declare class LyCheckbox extends LyCheckboxMixinBase implements ControlVa
     _innerContainer: ElementRef<HTMLDivElement>;
     /** The value attribute of the native input element */
     value: string;
-    withColor: string;
+    color: string;
     /**
      * Whether the checkbox is checked.
      */
@@ -66,6 +66,7 @@ export declare class LyCheckbox extends LyCheckboxMixinBase implements ControlVa
     /** Toggles the `checked` state of the checkbox. */
     toggle(): void;
     _onInputClick(event: Event): void;
+    _onChange(event: Event): void;
     private _emitChangeEvent;
     private _markForCheck;
 }

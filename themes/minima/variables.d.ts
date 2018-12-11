@@ -7,6 +7,15 @@ export declare const icon: {
 export declare const field: {
     appearance: {
         outlined: {
+            root: {
+                '&:not({focused}):not({disabled}):hover {fieldset}': {
+                    borderColor: string;
+                };
+                '&{focused} {fieldset}': {
+                    borderWidth: string;
+                    borderColor: string;
+                };
+            };
             container: {
                 padding: string;
             };
@@ -14,13 +23,6 @@ export declare const field: {
                 borderWidth: string;
                 borderRadius: string;
                 padding: string;
-            };
-            fieldsetHover: {
-                borderWidth: string;
-                borderColor: string;
-            };
-            fieldsetFocused: {
-                borderWidth: string;
             };
             containerLabelFocused: {
                 color: string;
@@ -56,15 +58,17 @@ export declare const field: {
             };
         };
         filled: {
+            root: {
+                '&:not({focused}):not({disabled}) {container}:hover:after': {
+                    borderBottomWidth: string;
+                };
+            };
             container: {
                 borderRadius: string;
                 padding: string;
                 '&:after': {
                     borderBottomStyle: string;
                     borderBottomColor: string;
-                    borderBottomWidth: string;
-                };
-                '&:hover:after': {
                     borderBottomWidth: string;
                 };
             };

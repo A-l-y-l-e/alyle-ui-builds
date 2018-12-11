@@ -14,7 +14,10 @@ export declare class MinimaDark extends MinimaBase implements ThemeConfig {
         default: string;
         contrast: string;
     };
-    disabled: string;
+    disabled: {
+        default: string;
+        contrast: string;
+    };
     background: {
         default: string;
         primary: {
@@ -24,6 +27,10 @@ export declare class MinimaDark extends MinimaBase implements ThemeConfig {
         secondary: string;
         tertiary: string;
         base: string;
+    };
+    paper: {
+        default: string;
+        shadow: string;
     };
     text: {
         default: string;
@@ -47,6 +54,15 @@ export declare class MinimaDark extends MinimaBase implements ThemeConfig {
     field: {
         appearance: {
             outlined: {
+                root: {
+                    '&:not({focused}):not({disabled}):hover {fieldset}': {
+                        borderColor: string;
+                    };
+                    '&{focused} {fieldset}': {
+                        borderWidth: string;
+                        borderColor: string;
+                    };
+                };
                 container: {
                     padding: string;
                 };
@@ -54,13 +70,6 @@ export declare class MinimaDark extends MinimaBase implements ThemeConfig {
                     borderWidth: string;
                     borderRadius: string;
                     padding: string;
-                };
-                fieldsetHover: {
-                    borderWidth: string;
-                    borderColor: string;
-                };
-                fieldsetFocused: {
-                    borderWidth: string;
                 };
                 containerLabelFocused: {
                     color: string;
@@ -84,7 +93,7 @@ export declare class MinimaDark extends MinimaBase implements ThemeConfig {
                 };
                 label: {
                     margin: string;
-                };
+                }; /** Components variables */
                 placeholder: {
                     margin: string;
                 };
@@ -96,15 +105,17 @@ export declare class MinimaDark extends MinimaBase implements ThemeConfig {
                 };
             };
             filled: {
+                root: {
+                    '&:not({focused}):not({disabled}) {container}:hover:after': {
+                        borderBottomWidth: string;
+                    };
+                };
                 container: {
                     borderRadius: string;
                     padding: string;
                     '&:after': {
                         borderBottomStyle: string;
                         borderBottomColor: string;
-                        borderBottomWidth: string;
-                    };
-                    '&:hover:after': {
                         borderBottomWidth: string;
                     };
                 };

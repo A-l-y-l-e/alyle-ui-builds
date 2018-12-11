@@ -23,6 +23,8 @@ export interface StyleMap5 {
             [key: string]: string;
         } | string;
     };
+    /** Only for styles of TypeStyle.one */
+    parentStyle?: Styles;
     requireUpdate?: boolean;
     id: string;
 }
@@ -44,6 +46,7 @@ export declare class LyTheme2 {
     elements: Map<string | object, HTMLStyleElement>;
     _elementsMap: Map<any, HTMLStyleElement>;
     private themeMap;
+    /** ssr or hmr */
     private isDevOrServer;
     constructor(stylesInDocument: StylesInDocument, core: CoreTheme, themeName: any, _document: any, _ngZone: NgZone);
     setUpTheme(themeName: string): void;
@@ -53,8 +56,9 @@ export declare class LyTheme2 {
      * @param style Styles
      * @param el Element
      * @param instance The instance of this, this replaces the existing style with a new one when it changes
+     * @param parentStyle
      */
-    addStyle(id: string, style: StyleContainer | ((theme: any) => StyleContainer) | ((theme: any) => string) | string, el?: any, instance?: string, priority?: number): string;
+    addStyle(id: string, style: StyleContainer | ((theme: any) => StyleContainer) | ((theme: any) => string) | string, el?: any, instance?: string, priority?: number, parentStyle?: Styles): string;
     private updateClassName;
     updateClass(element: any, renderer: Renderer2, newClass: string, oldClass?: string): string;
     setTheme(nam: string): void;
@@ -62,11 +66,13 @@ export declare class LyTheme2 {
     toggleDirection(): void;
     private _updateAllStyles;
     /**
-     * add style, similar to setUpStyle but this only accept string
+     * Create a simple style
+     * return className
      * @param id id of style
-     * @param css style in string
+     * @param css style object or string
+     * @param priority style priority
      */
-    private addCss;
+    addSimpleStyle(id: string, css: StyleContainer | ((theme: any) => StyleContainer), priority?: number): string;
     private _addDefaultStyles;
     /**
      * Add new add a new style sheet
