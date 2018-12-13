@@ -79,16 +79,18 @@ export declare class LyTab implements OnInit {
     constructor(_tabs: LyTabs, _renderer: Renderer2, _el: ElementRef);
     ngOnInit(): void;
 }
-export declare class LyTabLabel extends LyButton implements OnInit, DoCheck {
+export declare class LyTabLabel extends LyButton implements OnInit, DoCheck, AfterViewInit {
     private _tab;
     private _tabs;
     private _active;
+    private isAfterViewInit;
     _isBrowser: boolean;
     _rippleContainer: ElementRef;
     onClickTab(): void;
     constructor(_el: ElementRef, _renderer: Renderer2, _theme: LyTheme2, _ngZone: NgZone, _rippleService: LyRippleService, _focusState: LyFocusState, _tab: LyTab, _tabs: LyTabs);
     ngOnInit(): void;
     ngDoCheck(): void;
+    ngAfterViewInit(): void;
 }
 /**
  * demo basic

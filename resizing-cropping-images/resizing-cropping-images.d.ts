@@ -119,8 +119,12 @@ export declare class LyResizingCroppingImages {
     /**- */
     zoomOut(): void;
     center(): void;
-    /** Set Img */
-    setImageUrl(src: string): void;
+    /**
+     * Load Image from URL
+     * @param src URL
+     * @param fn function that will be called before emit the event loaded
+     */
+    setImageUrl(src: string, fn?: () => void): void;
     rotate(degrees: number): void;
     private imageSmoothingQuality;
     /**
