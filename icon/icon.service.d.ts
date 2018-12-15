@@ -16,7 +16,7 @@ export interface SvgIcon {
 export declare class LyIconService {
     private http;
     private _sanitizer;
-    private document;
+    private _document;
     private theme;
     private _defaultClass;
     private _defaultClassPrefix;
@@ -26,7 +26,7 @@ export declare class LyIconService {
     readonly defaultSvgIcon: SVGElement;
     readonly defaultClass: string;
     readonly defaultClassPrefix: string;
-    constructor(http: HttpClient, _sanitizer: DomSanitizer, document: any, theme: LyTheme2);
+    constructor(http: HttpClient, _sanitizer: DomSanitizer, _document: any, theme: LyTheme2);
     setSvg(key: string, url: SafeResourceUrl): void;
     addSvgIconLiteral(key: string, literal: SafeHtml): void;
     private _textToSvg;
@@ -45,10 +45,11 @@ export declare class LyIconService {
      * Register new font class alias
      * demo:
      * For FontAwesome
-     * registerFontClass('fa', 'fa', 'fa-')
-     * @param key
-     * @param className
-     * @param prefix Class prefix
+     * registerFontClass({
+     *   key: 'fa',
+     *   class: 'fa'
+     *   prefix: 'fa-'
+     * })
      */
     registerFontClass(opt: FontClassOptions): void;
     getFontClass(key: string): FontClassOptions;

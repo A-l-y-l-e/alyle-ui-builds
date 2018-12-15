@@ -1,4 +1,4 @@
-import { Renderer2, ElementRef, OnInit, OnChanges } from '@angular/core';
+import { Renderer2, ElementRef, OnInit, OnChanges, OnDestroy } from '@angular/core';
 import { LyIconService } from './icon.service';
 import { LyTheme2 } from '@alyle/ui';
 /** @docs-private */
@@ -8,7 +8,7 @@ export declare class LyIconBase {
 }
 /** @docs-private */
 export declare const LyIconMixinBase: import("@alyle/ui/src/common/constructor").Constructor<import("@alyle/ui/src/common/build-common-behaviors").CanStyleUpdater> & import("@alyle/ui/src/common/constructor").Constructor<import("@alyle/ui/src/common/bg").CanBg> & import("@alyle/ui/src/common/constructor").Constructor<import("@alyle/ui/src/common/color").CanColor> & import("@alyle/ui/src/common/constructor").Constructor<import("@alyle/ui/src/common/raised").CanRaised> & import("@alyle/ui/src/common/constructor").Constructor<import("@alyle/ui/src/common/outlined").CanOutlined> & import("@alyle/ui/src/common/constructor").Constructor<import("@alyle/ui/src/common/elevation").CanElevation> & import("@alyle/ui/src/common/constructor").Constructor<import("@alyle/ui/src/common/shadow-color").CanShadowColor> & typeof LyIconBase;
-export declare class LyIcon extends LyIconMixinBase implements OnChanges, OnInit {
+export declare class LyIcon extends LyIconMixinBase implements OnChanges, OnInit, OnDestroy {
     private iconService;
     private _el;
     private _renderer;
@@ -17,6 +17,7 @@ export declare class LyIcon extends LyIconMixinBase implements OnChanges, OnInit
     private _previousFontSet;
     private _currentClass;
     private _fontIcon;
+    private _iconElement;
     icon: string;
     fontSet: string;
     fontIcon: string;
@@ -28,6 +29,7 @@ export declare class LyIcon extends LyIconMixinBase implements OnChanges, OnInit
     private _appendDefaultSvgIcon;
     private _updateClass;
     ngOnInit(): void;
+    ngOnDestroy(): void;
     /**
      * run only browser
      * remove current icon
