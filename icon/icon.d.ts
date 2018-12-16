@@ -1,4 +1,4 @@
-import { Renderer2, ElementRef, OnInit, OnChanges, OnDestroy } from '@angular/core';
+import { ElementRef, OnChanges, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { LyIconService } from './icon.service';
 import { LyTheme2 } from '@alyle/ui';
 /** @docs-private */

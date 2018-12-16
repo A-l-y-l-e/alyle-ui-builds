@@ -14,6 +14,10 @@ export declare class MinimaLight extends MinimaBase implements ThemeConfig {
         default: string;
         contrast: string;
     };
+    action: {
+        default: string;
+        contrast: string;
+    };
     background: {
         default: string;
         primary: {
@@ -178,4 +182,5 @@ export declare class MinimaLight extends MinimaBase implements ThemeConfig {
             color: string;
         };
     };
+    avatar: {};
 }

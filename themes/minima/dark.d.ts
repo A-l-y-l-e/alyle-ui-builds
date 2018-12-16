@@ -18,6 +18,10 @@ export declare class MinimaDark extends MinimaBase implements ThemeConfig {
         default: string;
         contrast: string;
     };
+    action: {
+        default: string;
+        contrast: string;
+    };
     background: {
         default: string;
         primary: {
@@ -93,7 +97,7 @@ export declare class MinimaDark extends MinimaBase implements ThemeConfig {
                 };
                 label: {
                     margin: string;
-                }; /** Components variables */
+                };
                 placeholder: {
                     margin: string;
                 };
@@ -178,4 +182,5 @@ export declare class MinimaDark extends MinimaBase implements ThemeConfig {
             color: string;
         };
     };
+    avatar: {};
 }

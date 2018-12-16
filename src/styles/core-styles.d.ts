@@ -20,9 +20,25 @@ export declare const LY_COMMON_STYLES: {
         '-webkit-appearance': string;
         '-moz-appearance': string;
     };
+    button: {
+        '-webkit-tap-highlight-color': string;
+        backgroundColor: string;
+        border: number;
+        '-moz-appearance': string;
+        '-webkit-appearance': string;
+        margin: number;
+        outline: string;
+        boxSizing: string;
+        position: string;
+        textDecorationLine: string;
+        '-webkit-text-decoration-line': string;
+        '&::-moz-focus-inner': {
+            border: number;
+        };
+    };
 };
 export declare class LyCoreStyles {
     private theme;
-    classes: Record<"fill" | "visuallyHidden", string>;
+    classes: Record<"button" | "fill" | "visuallyHidden", string>;
     constructor(theme: LyTheme2);
 }
