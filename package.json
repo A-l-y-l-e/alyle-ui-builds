@@ -1,6 +1,6 @@
 {
   "name": "@alyle/ui",
-  "version": "1.9.8-nightly.20181217-jps1xzc9",
+  "version": "1.9.8",
   "description": "Minimal Design, a package of components for Angular",
   "repository": {
     "type": "git",

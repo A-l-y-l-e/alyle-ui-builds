@@ -1,4 +1,4 @@
-import { AfterContentInit, AfterViewInit, ChangeDetectorRef, ElementRef, EventEmitter, NgZone, OnChanges, OnDestroy, OnInit, QueryList, Renderer2, TemplateRef, DoCheck } from '@angular/core';
+import { AfterContentInit, AfterViewInit, ChangeDetectorRef, ElementRef, EventEmitter, NgZone, OnChanges, OnDestroy, OnInit, QueryList, Renderer2, TemplateRef } from '@angular/core';
 import { LyTheme2, LyRippleService, LyFocusState, ResizeService } from '@alyle/ui';
 import { LyButton } from '@alyle/ui/button';
 import { LyTabContent } from './tab-content.directive';
@@ -26,13 +26,13 @@ export declare class LyTabs extends LyTabsMixinBase implements OnChanges, OnInit
     private cd;
     private _resizeService;
     /** @docs-private */
-    readonly classes: Record<"root" | "container" | "tab" | "contentContainer" | "tabsLabels" | "tabsLabelsContainer" | "label" | "tabLabelActive" | "tabContents" | "tabContent" | "tabsIndicator" | "tabsIndicatorForServer" | "rippleContainer", string>;
+    readonly classes: Record<"root" | "container" | "tab" | "contentContainer" | "tabsLabels" | "tabsLabelsContainer" | "label" | "tabLabelActive" | "tabContents" | "tabContent" | "tabsIndicator" | "tabsIndicatorForServer" | "rippleContainer" | "scrollable", string>;
     _selectedIndex: number;
     _selectedBeforeIndex: number;
     _selectedTab: LyTab;
     _selectedBeforeTab: LyTab;
+    _isViewInitLoaded: boolean;
     private _tabsSubscription;
-    private _isViewInitLoaded;
     private _color;
     private _colorClass;
     private _headerPlacement;
@@ -43,11 +43,12 @@ export declare class LyTabs extends LyTabsMixinBase implements OnChanges, OnInit
     private _textColorClass;
     private _selectedIndexClass;
     private _tabResizeSub;
+    private _scrollable;
     tabsRef: ElementRef;
     tabContents: ElementRef;
     tabsIndicator: ElementRef;
     selectedIndexOnChange: 'auto' | number;
-    native: boolean;
+    scrollable: any;
     indicatorColor: string;
     headerPlacement: LyTabsHeaderPlacement;
     alignTabs: AlignTabs;
@@ -73,23 +74,24 @@ export declare class LyTab implements OnInit {
     _renderer: Renderer2;
     _el: ElementRef;
     index: number;
+    _isBrowser: boolean;
     templateRefLazy: TemplateRef<LyTabContent>;
     templateRef: TemplateRef<any>;
     tabIndicator: ElementRef;
+    _tabLabel: LyTabLabel;
     constructor(_tabs: LyTabs, _renderer: Renderer2, _el: ElementRef);
     ngOnInit(): void;
 }
-export declare class LyTabLabel extends LyButton implements OnInit, DoCheck, AfterViewInit {
+export declare class LyTabLabel extends LyButton implements OnInit, AfterViewInit {
     private _tab;
     private _tabs;
     private _active;
-    private isAfterViewInit;
     _isBrowser: boolean;
     _rippleContainer: ElementRef;
     onClickTab(): void;
     constructor(_el: ElementRef, _renderer: Renderer2, _theme: LyTheme2, _ngZone: NgZone, _rippleService: LyRippleService, _focusState: LyFocusState, _tab: LyTab, _tabs: LyTabs);
     ngOnInit(): void;
-    ngDoCheck(): void;
+    _updateTabState(): void;
     ngAfterViewInit(): void;
 }
 /**
