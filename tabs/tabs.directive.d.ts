@@ -26,7 +26,7 @@ export declare class LyTabs extends LyTabsMixinBase implements OnChanges, OnInit
     private cd;
     private _resizeService;
     /** @docs-private */
-    readonly classes: Record<"root" | "container" | "tab" | "contentContainer" | "tabsLabels" | "label" | "tabLabelActive" | "tabContents" | "tabContent" | "tabsIndicator" | "tabsIndicatorForServer" | "rippleContainer", string>;
+    readonly classes: Record<"root" | "container" | "tab" | "contentContainer" | "tabsLabels" | "tabsLabelsContainer" | "label" | "tabLabelActive" | "tabContents" | "tabContent" | "tabsIndicator" | "tabsIndicatorForServer" | "rippleContainer", string>;
     _selectedIndex: number;
     _selectedBeforeIndex: number;
     _selectedTab: LyTab;

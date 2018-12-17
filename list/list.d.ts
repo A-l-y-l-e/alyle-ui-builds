@@ -4,6 +4,7 @@ import { LyAvatar } from '@alyle/ui/avatar';
 /** List container */
 export declare class LyList {
     private theme;
+    /** @docs-private */
     readonly classes: Record<"list" | "listItem" | "onFocusByKeyboard" | "listItemContent" | "oneLine" | "twoLine" | "actionListItem" | "lines" | "listItemWithIcon" | "twoLineWithIcon", string>;
     constructor(theme: LyTheme2);
 }
@@ -32,7 +33,7 @@ export declare class LyListItem extends LyListItemMixinBase implements OnInit, A
     _lines: QueryList<LyLine>;
     _icon: LyListIcon;
     _avatar: LyAvatar;
-    readonly listItemClasses: string[];
+    readonly _listItemClasses: string[];
     /** @docs-private */
     isActionListItem: any;
     constructor(_el: ElementRef, _renderer: Renderer2, theme: LyTheme2, ngZone: NgZone, _rippleService: LyRippleService, _focusState: LyFocusState, _list: LyList, _cd: ChangeDetectorRef);
