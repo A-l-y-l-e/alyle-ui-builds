@@ -1,5 +1,5 @@
-import { ElementRef, TemplateRef, OnDestroy, AfterViewInit, Renderer2, OnInit } from '@angular/core';
-import { LyOverlay, OverlayFromTemplateRef, LyTheme2, Placement, XPosition, YPosition } from '@alyle/ui';
+import { AfterViewInit, ElementRef, OnDestroy, OnInit, Renderer2, TemplateRef } from '@angular/core';
+import { LyOverlay, LyTheme2, OverlayFromTemplateRef, Placement, XPosition, YPosition } from '@alyle/ui';
 /** Menu container */
 export declare class LyMenu implements OnInit, AfterViewInit {
     private _theme;

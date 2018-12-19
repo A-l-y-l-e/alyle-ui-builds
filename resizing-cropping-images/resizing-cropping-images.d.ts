@@ -108,7 +108,11 @@ export declare class LyResizingCroppingImages {
     fitToScreen(): void;
     fit(): void;
     _moveStart(): void;
-    _move(event: any): void;
+    _move(event: {
+        srcEvent?: {};
+        deltaX: any;
+        deltaY: any;
+    }): void;
     updatePosition(x?: number, y?: number): void;
     _slideEnd(): void;
     private _cropIfAutoCrop;
