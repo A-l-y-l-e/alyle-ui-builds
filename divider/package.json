@@ -1,0 +1,13 @@
+{
+  "main": "../bundles/alyle-ui-divider.umd.js",
+  "module": "../fesm5/alyle-ui-divider.js",
+  "es2015": "../fesm2015/alyle-ui-divider.js",
+  "esm5": "../esm5/divider/alyle-ui-divider.js",
+  "esm2015": "../esm2015/divider/alyle-ui-divider.js",
+  "fesm5": "../fesm5/alyle-ui-divider.js",
+  "fesm2015": "../fesm2015/alyle-ui-divider.js",
+  "typings": "alyle-ui-divider.d.ts",
+  "metadata": "alyle-ui-divider.metadata.json",
+  "sideEffects": false,
+  "name": "@alyle/ui/divider"
+}
