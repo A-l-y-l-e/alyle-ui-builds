@@ -92,6 +92,7 @@ export declare class LyTabLabel extends LyButton implements OnInit, AfterViewIni
     constructor(_el: ElementRef, _renderer: Renderer2, _theme: LyTheme2, _ngZone: NgZone, _rippleService: LyRippleService, _focusState: LyFocusState, _tab: LyTab, _tabs: LyTabs);
     ngOnInit(): void;
     _updateTabState(): void;
+    _updateTabScroll(): void;
     ngAfterViewInit(): void;
 }
 /**

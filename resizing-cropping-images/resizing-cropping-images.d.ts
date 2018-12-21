@@ -97,7 +97,7 @@ export declare class LyResizingCroppingImages {
     constructor(_renderer: Renderer2, theme: LyTheme2, elementRef: ElementRef<HTMLElement>, cd: ChangeDetectorRef, _ngZone: NgZone);
     private _imgLoaded;
     private _setStylesForContImg;
-    resize$(): void;
+    _resize$(): void;
     selectInputEvent(img: Event): void;
     /** Set the size of the image, the values can be 0 between 1, where 1 is the original size */
     setScale(size: number, noAutoCrop?: boolean): void;
