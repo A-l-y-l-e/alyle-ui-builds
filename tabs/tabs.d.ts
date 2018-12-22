@@ -1,5 +1,5 @@
 import { AfterContentInit, AfterViewInit, ChangeDetectorRef, ElementRef, EventEmitter, NgZone, OnChanges, OnDestroy, OnInit, QueryList, Renderer2, TemplateRef } from '@angular/core';
-import { LyTheme2, LyRippleService, LyFocusState, ResizeService } from '@alyle/ui';
+import { LyTheme2, LyRippleService, LyFocusState, WinResize } from '@alyle/ui';
 import { LyButton } from '@alyle/ui/button';
 import { LyTabContent } from './tab-content.directive';
 export declare type AlignTabs = 'start' | 'center' | 'end' | 'stretch' | 'baseline';
@@ -56,7 +56,7 @@ export declare class LyTabs extends LyTabsMixinBase implements OnChanges, OnInit
     selectedIndex: number;
     selectedIndexChange: EventEmitter<any>;
     tabsList: QueryList<LyTab>;
-    constructor(theme: LyTheme2, renderer: Renderer2, el: ElementRef, cd: ChangeDetectorRef, _resizeService: ResizeService);
+    constructor(theme: LyTheme2, renderer: Renderer2, el: ElementRef, cd: ChangeDetectorRef, _resizeService: WinResize);
     ngOnChanges(): void;
     ngOnInit(): void;
     ngAfterContentInit(): void;

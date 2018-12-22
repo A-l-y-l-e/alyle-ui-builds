@@ -8,7 +8,7 @@ import { SnackBarVariables } from './variables/snack-bar';
 import { ButtonVariables } from './variables/button';
 import { TooltipVariables } from './variables/tooltip';
 import { AvatarVariables } from './variables/avatar';
-export declare const LY_THEME_GLOBAL_VARIABLES: InjectionToken<Partial<ThemeVariables>>;
+export declare const LY_THEME_GLOBAL_VARIABLES: InjectionToken<RecursivePartial<ThemeVariables>>;
 export declare const LY_THEME: InjectionToken<ThemeConfig | ThemeConfig[]>;
 export declare const LY_THEME_NAME: InjectionToken<string>;
 export interface ThemeConfig {
@@ -126,7 +126,7 @@ export interface ThemeConfig {
     avatar: AvatarVariables;
 }
 export declare type ThemeVariables = LyStyleUtils & ThemeConfig;
-export declare type PartialThemeVariables = Partial<ThemeVariables>;
+export declare type PartialThemeVariables = RecursivePartial<ThemeVariables>;
 export interface DefaultVal {
     default: string;
 }
@@ -135,3 +135,7 @@ export interface PaletteColor {
     /** shadow color */
     shadow?: string;
 }
+declare type RecursivePartial<T> = {
+    [P in keyof T]?: RecursivePartial<T[P]>;
+};
+export {};

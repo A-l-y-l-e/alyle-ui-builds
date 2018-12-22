@@ -32,10 +32,6 @@ export declare enum Dir {
     ltr = "ltr"
 }
 export declare enum DirAlias {
-    /** @deprecated, use `before` instead */
-    start = "start",
-    /** @deprecated, use `after` instead */
-    end = "end",
     before = "before",
     after = "after"
 }

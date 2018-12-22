@@ -1,6 +1,6 @@
 import { ElementRef, OnChanges, Renderer2, TemplateRef, ViewContainerRef } from '@angular/core';
 import { LyTheme2, Placement } from '@alyle/ui';
-export declare type position = 'start' | 'end' | 'top' | 'bottom' | Placement;
+export declare type position = Placement;
 declare type mode = 'side' | 'over';
 export declare class LyDrawerContainer {
     private _theme;
@@ -45,11 +45,7 @@ export declare class LyDrawer implements OnChanges {
     opened: boolean;
     mode: mode;
     spacingAbove: string | number;
-    /** @deprecated, use `spacingAbove` instead */
-    spacingTop: string | number;
     spacingBelow: string | number;
-    /** @deprecated, use `spacingBelow` instead */
-    spacingBottom: string | number;
     spacingBefore: string | number;
     spacingAfter: string | number;
     spacingRight: string | number;

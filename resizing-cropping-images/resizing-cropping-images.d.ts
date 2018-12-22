@@ -19,11 +19,6 @@ export interface ImgOutput {
     width: number;
     height: number;
 }
-/**
- * Deprecated, use instead ImgCropperConfig
- * @deprecated
- */
-export declare type LyResizingCroppingImagesConfig = ImgCropperConfig;
 /** Image output */
 export declare enum ImgResolution {
     /** Resizing & cropping */
@@ -32,8 +27,6 @@ export declare enum ImgResolution {
     OriginalImage = 1
 }
 export interface ImgCropperEvent {
-    /** Cropped image in base64, !deprecated use instead `dataURL` */
-    base64: string;
     /** Cropped image data URL */
     dataURL: string;
     name: string;
@@ -139,21 +132,7 @@ export declare class LyResizingCroppingImages {
     /**
      * @ignore
      */
-    _imgCrop(myConfig: ImgCropperConfig): {
-        dataURL: any;
-        base64: any;
-        type: string;
-        name: string;
-        width: number;
-        height: number;
-        originalDataURL: string;
-        scale: number;
-        rotation: number;
-        position: {
-            x: number;
-            y: number;
-        };
-    };
+    _imgCrop(myConfig: ImgCropperConfig): ImgCropperEvent;
     private _rootRect;
     private _areaCropperRect;
 }

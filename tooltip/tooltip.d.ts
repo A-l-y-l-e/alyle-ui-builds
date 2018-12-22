@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, ElementRef, NgZone, OnDestroy, TemplateRef, OnInit, Renderer2 } from '@angular/core';
-import { LyFocusState, LyOverlay, LyTheme2, Placement, WindowScrollService, XPosition, YPosition } from '@alyle/ui';
+import { LyFocusState, LyOverlay, LyTheme2, Placement, WinScroll, XPosition, YPosition } from '@alyle/ui';
 export declare class LyTooltip implements OnInit, OnDestroy {
     private _theme;
     private _overlay;
@@ -21,7 +21,7 @@ export declare class LyTooltip implements OnInit, OnDestroy {
     placement: Placement;
     xPosition: XPosition;
     yPosition: YPosition;
-    constructor(_theme: LyTheme2, _overlay: LyOverlay, _el: ElementRef, _renderer: Renderer2, _cd: ChangeDetectorRef, focusState: LyFocusState, ngZone: NgZone, scroll: WindowScrollService);
+    constructor(_theme: LyTheme2, _overlay: LyOverlay, _el: ElementRef, _renderer: Renderer2, _cd: ChangeDetectorRef, focusState: LyFocusState, ngZone: NgZone, scroll: WinScroll);
     ngOnInit(): void;
     ngOnDestroy(): void;
     show(delay?: number): void;
