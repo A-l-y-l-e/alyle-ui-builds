@@ -14,7 +14,11 @@ export declare class LyTypography implements OnInit {
     private _gutterTopClass;
     private _gutterBottom;
     private _gutterBottomClass;
+    private _noWrap;
+    private _noWrapClass;
     lyTyp: string;
+    /** The text will truncate with an ellipsis. */
+    noWrap: boolean;
     gutter: boolean;
     gutterTop: boolean;
     gutterBottom: boolean;
