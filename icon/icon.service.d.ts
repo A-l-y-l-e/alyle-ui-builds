@@ -22,7 +22,11 @@ export declare class LyIconService {
     private _defaultClassPrefix;
     private svgMap;
     private _fontClasses;
-    classes: Record<"svg", string>;
+    /**
+     * Styles
+     * @docs-private
+     */
+    readonly classes: Record<"svg", string>;
     readonly defaultSvgIcon: SVGElement;
     readonly defaultClass: string;
     readonly defaultClassPrefix: string;

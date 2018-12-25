@@ -73,11 +73,12 @@ export declare class LyTab implements OnInit {
     private _tabs;
     _renderer: Renderer2;
     _el: ElementRef;
+    /** Current tab index */
     index: number;
     _isBrowser: boolean;
-    templateRefLazy: TemplateRef<LyTabContent>;
-    templateRef: TemplateRef<any>;
-    tabIndicator: ElementRef;
+    _templateRefLazy: TemplateRef<LyTabContent>;
+    _templateRef: TemplateRef<any>;
+    _tabIndicator: ElementRef;
     _tabLabel: LyTabLabel;
     constructor(_tabs: LyTabs, _renderer: Renderer2, _el: ElementRef);
     ngOnInit(): void;
@@ -88,7 +89,7 @@ export declare class LyTabLabel extends LyButton implements OnInit, AfterViewIni
     private _active;
     _isBrowser: boolean;
     _rippleContainer: ElementRef;
-    onClickTab(): void;
+    _onClickTab(): void;
     constructor(_el: ElementRef, _renderer: Renderer2, _theme: LyTheme2, _ngZone: NgZone, _rippleService: LyRippleService, _focusState: LyFocusState, _tab: LyTab, _tabs: LyTabs);
     ngOnInit(): void;
     _updateTabState(): void;

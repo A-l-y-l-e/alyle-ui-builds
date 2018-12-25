@@ -1,7 +1,7 @@
 import { ElementRef, OnChanges, Renderer2, TemplateRef, ViewContainerRef } from '@angular/core';
 import { LyTheme2, Placement } from '@alyle/ui';
-export declare type position = Placement;
-declare type mode = 'side' | 'over';
+export declare type LyDrawerPosition = Placement;
+export declare type LyDrawerMode = 'side' | 'over';
 export declare class LyDrawerContainer {
     private _theme;
     private _renderer;
@@ -40,20 +40,17 @@ export declare class LyDrawer implements OnChanges {
     private _drawerRootClass;
     private _drawerClass;
     private _drawerContentClass;
-    /** @ignore */
     _backdrop: TemplateRef<any>;
     opened: boolean;
-    mode: mode;
+    mode: LyDrawerMode;
     spacingAbove: string | number;
     spacingBelow: string | number;
     spacingBefore: string | number;
     spacingAfter: string | number;
-    spacingRight: string | number;
-    spacingLeft: string | number;
     width: number | string;
     height: number | string;
     hasBackdrop: any;
-    position: position;
+    position: LyDrawerPosition;
     constructor(_theme: LyTheme2, _renderer: Renderer2, _el: ElementRef, _drawerContainer: LyDrawerContainer, _vcr: ViewContainerRef);
     ngOnChanges(): void;
     toggle(): void;
@@ -61,4 +58,3 @@ export declare class LyDrawer implements OnChanges {
     private _updateBackdrop;
     private _updateAnimations;
 }
-export {};
