@@ -43,5 +43,5 @@ export declare class Positioning {
     private checkTop;
     private checkBottom;
     private checkAll;
-    private invertPosition;
 }
+export declare function invertPlacement(placement: Placement): Placement;
