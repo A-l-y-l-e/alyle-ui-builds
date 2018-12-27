@@ -1,5 +1,29 @@
 import { ElementRef, NgZone, OnChanges, OnDestroy, OnInit, Renderer2 } from '@angular/core';
-import { LyTheme2 } from '@alyle/ui';
+import { LyTheme2, ThemeVariables } from '@alyle/ui';
+export declare const STYLES: (theme: ThemeVariables) => {
+    root: {
+        display: string;
+        overflow: string;
+        borderRadius: string;
+    };
+    content: {
+        [x: string]: string | {
+            padding: string;
+        };
+        display: string;
+        padding: string;
+    };
+    actions: {
+        [x: string]: string | {
+            padding: string;
+        };
+        display: string;
+        padding: string;
+    };
+    actionsItem: {
+        margin: string;
+    };
+};
 /** @docs-private */
 export declare class LyCardBase {
     _theme: LyTheme2;
@@ -14,7 +38,7 @@ export declare class LyCard extends LyCardMixinBase implements OnChanges, OnInit
     private renderer;
     /**
      * styles
-     * @ignore
+     * @docs-private
      */
     classes: Record<"root" | "content" | "actions" | "actionsItem", string>;
     constructor(theme: LyTheme2, _el: ElementRef, renderer: Renderer2, ngZone: NgZone);
