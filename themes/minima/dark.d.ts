@@ -43,9 +43,8 @@ export declare class MinimaDark extends MinimaBase implements ThemeConfig {
         disabled: string;
         hint: string;
     };
-    /** Components variables */
     radio: {
-        radioOuterCircle: string;
+        outerCircle: string;
     };
     menu: {};
     drawer: {

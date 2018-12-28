@@ -46,9 +46,8 @@ export declare class MinimaLight extends MinimaBase implements ThemeConfig {
     divider: string;
     colorShadow: string;
     shadow: string;
-    /** Components variables */
     radio: {
-        radioOuterCircle: string;
+        outerCircle: string;
     };
     menu: {};
     drawer: {

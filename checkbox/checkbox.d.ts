@@ -59,9 +59,13 @@ export declare class LyCheckbox extends LyCheckboxMixinBase implements ControlVa
     ngOnInit(): void;
     ngAfterViewInit(): void;
     ngOnDestroy(): void;
+    /** @docs-private */
     writeValue(value: any): void;
+    /** @docs-private */
     registerOnChange(fn: (value: any) => void): void;
+    /** @docs-private */
     registerOnTouched(fn: any): void;
+    /** @docs-private */
     setDisabledState(isDisabled: boolean): void;
     /** Toggles the `checked` state of the checkbox. */
     toggle(): void;

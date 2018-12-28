@@ -1,20 +1,75 @@
-import { ChangeDetectorRef, OnInit, OnDestroy, QueryList, EventEmitter, NgZone, ElementRef, Renderer2, SimpleChanges, OnChanges, AfterViewInit } from '@angular/core';
+import { ChangeDetectorRef, OnInit, OnDestroy, QueryList, EventEmitter, NgZone, ElementRef, Renderer2, AfterViewInit } from '@angular/core';
 import { ControlValueAccessor } from '@angular/forms';
-import { LyTheme2, LyCoreStyles } from '@alyle/ui';
-import { LyRadioService } from './radio.service';
+import { LyTheme2, LyCoreStyles, ThemeVariables } from '@alyle/ui';
 export declare const LY_RADIO_CONTROL_VALUE_ACCESSOR: any;
 export declare class UndefinedValue {
     constructor();
 }
+export declare const STYLES: (theme: ThemeVariables) => {
+    radioGroup: {
+        display: string;
+    };
+    radio: {
+        display: string;
+        '&{checked}': {
+            '{container}': {
+                'div:nth-child(1)': {
+                    transform: string;
+                };
+                'div:nth-child(2)': {
+                    transform: string;
+                };
+            };
+        };
+    };
+    label: {
+        cursor: string;
+        whiteSpace: string;
+        position: string;
+        display: string;
+        alignItems: string;
+    };
+    labelContent: {
+        padding: string;
+    };
+    container: {
+        position: string;
+        marginRight: string;
+        marginTop: string;
+        marginBottom: string;
+        width: string;
+        height: string;
+        'div': {
+            margin: string;
+            borderRadius: string;
+            width: string;
+            height: string;
+        };
+        'div:nth-child(2)': {
+            background: string;
+            transform: string;
+        };
+        'div:nth-child(1)': {
+            transform: string;
+            border: string;
+            color: string;
+        };
+    };
+    checked: any;
+    _animations: {
+        '{container} div': {
+            transition: string;
+            transitionDuration: string;
+        };
+    };
+};
 export declare class LyRadioGroup implements ControlValueAccessor {
-    _radioService: LyRadioService;
     theme: LyTheme2;
     ngZone: NgZone;
     private cd;
-    _value: UndefinedValue;
+    private _value;
     name: string;
-    _color: string;
-    classes: Record<"label" | "container", string>;
+    classes: Record<"radioGroup" | "radio" | "label" | "labelContent" | "container" | "checked" | "_animations", string>;
     value: any;
     readonly change: EventEmitter<void>;
     color: string;
@@ -31,17 +86,20 @@ export declare class LyRadioGroup implements ControlValueAccessor {
      * radio buttons upon their blur.
      */
     _touch(): void;
+    /** @docs-private */
     writeValue(value: any): void;
     /**
      * Registers a callback to be triggered when the model value changes.
      * Implemented as part of ControlValueAccessor.
      * @param fn Callback to be registered.
+     * @docs-private
      */
     registerOnChange(fn: (value: any) => void): void;
     /**
      * Registers a callback to be triggered when the control is touched.
      * Implemented as part of ControlValueAccessor.
      * @param fn Callback to be registered.
+     * @docs-private
      */
     registerOnTouched(fn: any): void;
     /**
@@ -49,7 +107,7 @@ export declare class LyRadioGroup implements ControlValueAccessor {
      * @param isDisabled Whether the control should be disabled.
      */
     setDisabledState(isDisabled: boolean): void;
-    constructor(_radioService: LyRadioService, elementRef: ElementRef, _renderer: Renderer2, theme: LyTheme2, ngZone: NgZone, cd: ChangeDetectorRef);
+    constructor(elementRef: ElementRef, _renderer: Renderer2, theme: LyTheme2, ngZone: NgZone, cd: ChangeDetectorRef);
     _updateCheckFromValue(val: any): void;
     updatevalue(value: any): void;
     markForCheck(): void;
@@ -62,34 +120,37 @@ export declare class LyRadioBase {
     constructor(_theme: LyTheme2, _ngZone: NgZone);
 }
 /** @docs-private */
-export declare const LyRadioMixinBase: import("@alyle/ui/src/common/constructor").Constructor<import("@alyle/ui/src/common/disable-ripple").CanDisableRipple> & import("@alyle/ui/src/common/constructor").Constructor<import("@alyle/ui/src/common/color").CanColor> & typeof LyRadioBase;
-export declare class LyRadio extends LyRadioMixinBase implements OnChanges, OnInit, AfterViewInit, OnDestroy {
+export declare const LyRadioMixinBase: import("@alyle/ui/src/common/constructor").Constructor<import("@alyle/ui/src/common/disable-ripple").CanDisableRipple> & typeof LyRadioBase;
+export declare class LyRadio extends LyRadioMixinBase implements OnInit, AfterViewInit, OnDestroy {
     radioGroup: LyRadioGroup;
     private _elementRef;
     private _renderer;
     private changeDetectorRef;
     coreStyles: LyCoreStyles;
+    readonly classes: Record<"radioGroup" | "radio" | "label" | "labelContent" | "container" | "checked" | "_animations", string>;
     id: string;
     name: string;
-    _value: any;
+    private _value;
     private _checked;
-    private checkedClass;
+    private _color;
+    private _colorClass;
+    private _animClass;
     private _radioContainer;
     _labelContainer: ElementRef;
     change: EventEmitter<boolean>;
     value: any;
+    color: any;
     checked: boolean;
     readonly inputId: string;
-    _onInputChange(event: any): void;
-    _onInputClick(event: Event): void;
-    _setCheckedToFalsy(): void;
-    _createStyleWithColor(val: string): string;
-    ngOnChanges(changes: SimpleChanges): void;
+    constructor(radioGroup: LyRadioGroup, _elementRef: ElementRef, _renderer: Renderer2, theme: LyTheme2, changeDetectorRef: ChangeDetectorRef, ngZone: NgZone, coreStyles: LyCoreStyles);
     ngOnInit(): void;
     ngAfterViewInit(): void;
     _markForCheck(): void;
     ngOnDestroy(): void;
-    constructor(radioGroup: LyRadioGroup, _elementRef: ElementRef, _renderer: Renderer2, theme: LyTheme2, changeDetectorRef: ChangeDetectorRef, ngZone: NgZone, coreStyles: LyCoreStyles);
+    _onInputChange(event: any): void;
+    private _addAnim;
+    _onInputClick(event: Event): void;
+    _setCheckedToFalsy(): void;
 }
 export declare class LyRadioModule {
 }
