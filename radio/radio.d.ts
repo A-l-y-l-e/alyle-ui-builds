@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, OnInit, OnDestroy, QueryList, EventEmitter, NgZone, ElementRef, Renderer2, AfterViewInit } from '@angular/core';
 import { ControlValueAccessor } from '@angular/forms';
-import { LyTheme2, LyCoreStyles, ThemeVariables } from '@alyle/ui';
+import { LyTheme2, LyCoreStyles, ThemeVariables, LyFocusState } from '@alyle/ui';
 export declare const LY_RADIO_CONTROL_VALUE_ACCESSOR: any;
 export declare class UndefinedValue {
     constructor();
@@ -21,6 +21,12 @@ export declare const STYLES: (theme: ThemeVariables) => {
                 };
             };
         };
+        '&{onFocusByKeyboard} {container}::after': {
+            boxShadow: string;
+            background: string;
+            opacity: number;
+            borderRadius: string;
+        };
     };
     label: {
         cursor: string;
@@ -34,9 +40,7 @@ export declare const STYLES: (theme: ThemeVariables) => {
     };
     container: {
         position: string;
-        marginRight: string;
-        marginTop: string;
-        marginBottom: string;
+        margin: string;
         width: string;
         height: string;
         'div': {
@@ -44,6 +48,17 @@ export declare const STYLES: (theme: ThemeVariables) => {
             borderRadius: string;
             width: string;
             height: string;
+        };
+        '&::after': {
+            width: string;
+            height: string;
+            margin: string;
+            position: string;
+            top: number;
+            bottom: number;
+            left: number;
+            right: number;
+            content: string;
         };
         'div:nth-child(2)': {
             background: string;
@@ -62,14 +77,22 @@ export declare const STYLES: (theme: ThemeVariables) => {
             transitionDuration: string;
         };
     };
+    onFocusByKeyboard: any;
+    disabled: {
+        color: string;
+        '{container} div': {
+            color: string;
+        };
+    };
 };
 export declare class LyRadioGroup implements ControlValueAccessor {
-    theme: LyTheme2;
-    ngZone: NgZone;
-    private cd;
+    private _theme;
+    private _cd;
+    /** @docs-private */
+    readonly classes: Record<"radioGroup" | "radio" | "label" | "labelContent" | "container" | "checked" | "_animations" | "onFocusByKeyboard" | "disabled", string>;
     private _value;
+    /** @docs-private */
     name: string;
-    classes: Record<"radioGroup" | "radio" | "label" | "labelContent" | "container" | "checked" | "_animations", string>;
     value: any;
     readonly change: EventEmitter<void>;
     color: string;
@@ -105,12 +128,14 @@ export declare class LyRadioGroup implements ControlValueAccessor {
     /**
      * Sets the disabled state of the control. Implemented as a part of ControlValueAccessor.
      * @param isDisabled Whether the control should be disabled.
+     * @docs-private
      */
     setDisabledState(isDisabled: boolean): void;
-    constructor(elementRef: ElementRef, _renderer: Renderer2, theme: LyTheme2, ngZone: NgZone, cd: ChangeDetectorRef);
+    constructor(elementRef: ElementRef, renderer: Renderer2, _theme: LyTheme2, _cd: ChangeDetectorRef);
     _updateCheckFromValue(val: any): void;
+    /** @docs-private */
     updatevalue(value: any): void;
-    markForCheck(): void;
+    _markForCheck(): void;
     _radioResetChecked(): void;
 }
 /** @docs-private */
@@ -122,27 +147,39 @@ export declare class LyRadioBase {
 /** @docs-private */
 export declare const LyRadioMixinBase: import("@alyle/ui/src/common/constructor").Constructor<import("@alyle/ui/src/common/disable-ripple").CanDisableRipple> & typeof LyRadioBase;
 export declare class LyRadio extends LyRadioMixinBase implements OnInit, AfterViewInit, OnDestroy {
+    /** @docs-private */
     radioGroup: LyRadioGroup;
     private _elementRef;
     private _renderer;
     private changeDetectorRef;
-    coreStyles: LyCoreStyles;
-    readonly classes: Record<"radioGroup" | "radio" | "label" | "labelContent" | "container" | "checked" | "_animations", string>;
+    _coreStyles: LyCoreStyles;
+    private _focusState;
+    /** @docs-private */
+    readonly classes: Record<"radioGroup" | "radio" | "label" | "labelContent" | "container" | "checked" | "_animations" | "onFocusByKeyboard" | "disabled", string>;
+    /** @docs-private */
     id: string;
+    /** @docs-private */
     name: string;
     private _value;
     private _checked;
     private _color;
     private _colorClass;
     private _animClass;
+    private _disabled;
+    private _disabledClass;
+    _input: ElementRef;
     private _radioContainer;
     _labelContainer: ElementRef;
     change: EventEmitter<boolean>;
     value: any;
     color: any;
     checked: boolean;
+    /** @docs-private */
     readonly inputId: string;
-    constructor(radioGroup: LyRadioGroup, _elementRef: ElementRef, _renderer: Renderer2, theme: LyTheme2, changeDetectorRef: ChangeDetectorRef, ngZone: NgZone, coreStyles: LyCoreStyles);
+    disabled: boolean;
+    constructor(
+    /** @docs-private */
+    radioGroup: LyRadioGroup, _elementRef: ElementRef, _renderer: Renderer2, theme: LyTheme2, changeDetectorRef: ChangeDetectorRef, ngZone: NgZone, _coreStyles: LyCoreStyles, _focusState: LyFocusState);
     ngOnInit(): void;
     ngAfterViewInit(): void;
     _markForCheck(): void;

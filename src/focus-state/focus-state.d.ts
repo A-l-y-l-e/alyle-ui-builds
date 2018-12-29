@@ -10,10 +10,7 @@ export interface FocusStateInfo {
     unlisten: () => void;
     subject: Subject<FocusState>;
 }
-export interface FocusState {
-    event: FocusEvent;
-    by: 'keyboard' | 'mouse';
-}
+export declare type FocusState = 'keyboard' | 'mouse' | null;
 export declare class LyFocusState implements OnDestroy {
     private _ngZone;
     private _elementMap;
