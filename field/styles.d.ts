@@ -3,7 +3,7 @@ export declare const STYLES: (theme: ThemeVariables) => {
     root: {
         display: string;
         position: string;
-        marginBottom: string;
+        marginTop: string;
         lineHeight: number;
         '& {hint}, & {error}': {
             display: string;
@@ -131,11 +131,14 @@ export declare const STYLES: (theme: ThemeVariables) => {
         width: string;
     };
     hintContainer: {
-        display: string;
-        flex: string;
-        maxWidth: string;
-        overflow: string;
-        justifyContent: string;
+        minHeight: string;
+        '>div': {
+            display: string;
+            flex: string;
+            maxWidth: string;
+            overflow: string;
+            justifyContent: string;
+        };
     };
     disabled: {
         '&, & {label}, & {container}:after': {
@@ -155,8 +158,36 @@ export declare const STYLES: (theme: ThemeVariables) => {
         '& {inputNative}': {
             caretColor: string;
         };
-        '& {hintContainer} ly-hint:last-child': {
+        '& {hintContainer} ly-hint:not({hintAfter})': {
             display: string;
+        };
+        '& {labelSpan}': {
+            animation: string;
+        };
+    };
+    hintAfter: {
+        marginBefore: string;
+    };
+    hintBefore: {
+        marginAfter: string;
+    };
+    $keyframes: {
+        shake: {
+            0: {
+                marginBefore: number;
+            };
+            40: {
+                marginBefore: string;
+            };
+            50: {
+                marginBefore: string;
+            };
+            70: {
+                marginBefore: string;
+            };
+            100: {
+                marginBefore: number;
+            };
         };
     };
 };

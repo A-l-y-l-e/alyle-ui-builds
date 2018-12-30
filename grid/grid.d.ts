@@ -22,9 +22,13 @@ export declare class LyGrid {
      * Styles
      * @docs-private
      */
-    classes: Record<"root", string>;
+    readonly classes: Record<"root", string>;
     private _spacing;
-    private _spacingClass;
+    _spacingClass: string;
+    private _spacingX;
+    _spacingXClass: string;
+    private _spacingY;
+    _spacingYClass: string;
     private _negativeMarginClass;
     private _justify;
     private _justifyClass;
@@ -32,13 +36,17 @@ export declare class LyGrid {
     private _directionClass;
     private _alignItems;
     private _alignItemsClass;
+    spacingX: string | number;
+    spacingY: string | number;
     /**
      * Defines the space between the component with the `item` attribute.
      * Support breakpoints
      */
     spacing: string | number;
-    /** @docs-private */
-    readonly spacingClass: string;
+    /**
+     * Only one param must be defined
+     */
+    private _createSpacingClass;
     /**
      * Defines the justify-content style property.
      * Support breakpoints
