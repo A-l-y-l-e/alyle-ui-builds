@@ -1,6 +1,6 @@
 {
   "name": "@alyle/ui",
-  "version": "2.0.1-nightly.20181231-jqc23vqc",
+  "version": "2.0.1-nightly.20190101-jqdhj0th",
   "description": "Minimal Design, a set of components for Angular",
   "repository": {
     "type": "git",
@@ -29,6 +29,12 @@
     "@angular/core": "^6.1.0 || ^7.0.0 || ^7.0.0-beta.0",
     "chroma-js": "^1.3.6",
     "hammerjs": "^2.0.8"
+  },
+  "schematics": "./schematics/collection.json",
+  "ng-update": {
+    "packageGroup": [
+      "@@alyle/ui"
+    ]
   },
   "main": "bundles/alyle-ui.umd.js",
   "module": "fesm5/alyle-ui.js",
