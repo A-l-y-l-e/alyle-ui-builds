@@ -17,9 +17,7 @@ export interface Recognizer {
     new (options?: any): Recognizer;
     recognizeWith(otherRecognizer: Recognizer | string): Recognizer;
 }
-export interface RecognizerStatic {
-    new (options?: any): Recognizer;
-}
+export declare type RecognizerStatic = new (options?: any) => Recognizer;
 export interface HammerInstance {
     on(eventName: string, callback: Function): void;
     off(eventName: string, callback: Function): void;

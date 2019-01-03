@@ -127,10 +127,10 @@ export declare class LyRadioGroup implements ControlValueAccessor {
     registerOnTouched(fn: any): void;
     /**
      * Sets the disabled state of the control. Implemented as a part of ControlValueAccessor.
-     * @param isDisabled Whether the control should be disabled.
+     * @param _isDisabled Whether the control should be disabled.
      * @docs-private
      */
-    setDisabledState(isDisabled: boolean): void;
+    setDisabledState(_isDisabled: boolean): void;
     constructor(elementRef: ElementRef, renderer: Renderer2, _theme: LyTheme2, _cd: ChangeDetectorRef);
     _updateCheckFromValue(val: any): void;
     /** @docs-private */
