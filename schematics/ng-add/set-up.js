@@ -10,7 +10,6 @@ const project_targets_1 = require("@schematics/angular/utility/project-targets")
 const path_1 = require("path");
 const rxjs_1 = require("rxjs");
 const schematics_1 = require("@angular-devkit/schematics");
-const tasks_1 = require("@angular-devkit/schematics/tasks");
 checkVersionAngularCLI();
 function checkVersionAngularCLI() {
     const version = require(path_1.join(process.cwd(), 'package.json')).devDependencies['@angular/cli'];
@@ -131,7 +130,6 @@ function setUpAppModule(_options) {
                     updateAppModule(host, _context, _options, selectedTheme, themes);
                     _.next(host);
                     _.complete();
-                    _context.addTask(new tasks_1.NodePackageInstallTask());
                 });
             }
             else {
@@ -139,7 +137,6 @@ function setUpAppModule(_options) {
                 updateAppModule(host, _context, _options, selectedTheme, [selectedTheme]);
                 _.next(host);
                 _.complete();
-                _context.addTask(new tasks_1.NodePackageInstallTask());
             }
         });
     };
