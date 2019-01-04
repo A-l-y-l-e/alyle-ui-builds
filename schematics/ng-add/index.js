@@ -6,7 +6,7 @@ const path_1 = require("path");
 const gestures_1 = require("./gestures");
 const set_up_1 = require("./set-up");
 const AUI_VERSION = require(`@alyle/ui/package.json`).version;
-const ANGULAR_CORE_VERSION = require(path_1.join(process.cwd(), 'package.json')).devDependencies['@angular/core'];
+const ANGULAR_CORE_VERSION = require(path_1.join(process.cwd(), 'package.json')).dependencies['@angular/core'];
 const HAMMERJS_VERSION = '^2.0.8';
 const CHROMA_JS_VERSION = '^1.3.6';
 /**
