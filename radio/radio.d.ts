@@ -145,7 +145,7 @@ export declare class LyRadioBase {
     constructor(_theme: LyTheme2, _ngZone: NgZone);
 }
 /** @docs-private */
-export declare const LyRadioMixinBase: import("../../@alyle/ui/src/common/constructor").Constructor<import("../../@alyle/ui/src/common/disable-ripple").CanDisableRipple> & typeof LyRadioBase;
+export declare const LyRadioMixinBase: import("@alyle/ui/src/common/constructor").Constructor<import("@alyle/ui/src/common/disable-ripple").CanDisableRipple> & typeof LyRadioBase;
 export declare class LyRadio extends LyRadioMixinBase implements OnInit, AfterViewInit, OnDestroy {
     /** @docs-private */
     radioGroup: LyRadioGroup;
