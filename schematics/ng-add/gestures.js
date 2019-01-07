@@ -6,7 +6,8 @@ const get_project_target_1 = require("../utils/get-project-target");
 const hammerjsImportStatement = `import 'hammerjs';`;
 /** Adds HammerJS to the main file of the specified Angular CLI project. */
 function addHammerJsToMain(options) {
-    return (host) => {
+    return (host, context) => {
+        context.logger.debug('addHammerJsToMain');
         if (!options.gestures) {
             return;
         }

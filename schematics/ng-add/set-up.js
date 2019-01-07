@@ -1,22 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const inquirer = require("inquirer");
-const semver = require("semver");
+const inquirer_1 = require("inquirer");
 const core_1 = require("@angular-devkit/core");
-const ts = require("@schematics/angular/node_modules/typescript/lib/typescript");
+const ts = require("@schematics/angular/node_modules/typescript");
 const ast_utils_1 = require("@schematics/angular/utility/ast-utils");
 const ng_ast_utils_1 = require("@schematics/angular/utility/ng-ast-utils");
 const project_targets_1 = require("@schematics/angular/utility/project-targets");
-const path_1 = require("path");
 const rxjs_1 = require("rxjs");
 const schematics_1 = require("@angular-devkit/schematics");
-checkVersionAngularCLI();
-function checkVersionAngularCLI() {
-    const version = require(path_1.join(process.cwd(), 'package.json')).devDependencies['@angular/cli'];
-    if (!semver.satisfies(semver.coerce(version), '>=7.2.0-rc.0 || 7.2.x')) {
-        throw new schematics_1.SchematicsException(`Alyle UI Schematics require "@angular/cli@>=7.2.0-rc.0 || 7.2.x"`);
-    }
-}
 function updateAppModule(host, _context, options, themeName, themes) {
     _context.logger.debug('Updating appmodule');
     // find app module
@@ -114,30 +105,42 @@ function getTsSourceFile(host, path) {
 // per file.
 function setUpAppModule(_options) {
     return (host, _context) => {
+        const themeList = ['minima-light', 'minima-dark'];
         return new rxjs_1.Observable((_) => {
-            if (_options.themes.length > 1) {
-                inquirer
-                    .prompt([
-                    {
-                        type: 'list',
-                        name: 'selectedTheme',
-                        message: 'Set Theme',
-                        choices: _options.themes
-                    },
-                ])
-                    .then(({ selectedTheme }) => {
-                    const themes = _options.themes;
-                    updateAppModule(host, _context, _options, selectedTheme, themes);
+            // Select Theme for AppModule
+            inquirer_1.prompt([
+                {
+                    type: 'checkbox',
+                    name: 'themes',
+                    message: 'Select the themes that will be added to AppModule',
+                    choices: themeList,
+                    default: [themeList[0]]
+                }
+            ])
+                .then(({ themes }) => {
+                if (themes.length > 1) {
+                    inquirer_1.prompt([
+                        {
+                            type: 'list',
+                            name: 'selectedTheme',
+                            message: 'Set Theme for AppModule',
+                            choices: themes,
+                            default: themes[0]
+                        }
+                    ])
+                        .then(({ selectedTheme }) => {
+                        updateAppModule(host, _context, _options, selectedTheme, themes);
+                        _.next(host);
+                        _.complete();
+                    });
+                }
+                else {
+                    const selectedTheme = [...themes, 'minima-light'][0];
+                    updateAppModule(host, _context, _options, selectedTheme, [selectedTheme]);
                     _.next(host);
                     _.complete();
-                });
-            }
-            else {
-                const selectedTheme = [..._options.themes, 'minima-light'][0];
-                updateAppModule(host, _context, _options, selectedTheme, [selectedTheme]);
-                _.next(host);
-                _.complete();
-            }
+                }
+            });
         });
     };
 }
