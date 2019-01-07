@@ -39,7 +39,7 @@ function setUpStyles(options, filePath) {
         let constructor;
         let __recorder = host.beginUpdate(filePath);
         const propertyValue = `\n  readonly classes = this.theme.addStyleSheet(STYLES);\n`;
-        const constructorCall = `  constructor(\n    private theme: LyTheme\n  ) { }\n`;
+        const constructorCall = `  constructor(\n    private theme: LyTheme2\n  ) { }\n`;
         const OpenBraceTokenPos = ast_utils_1.findNodes(component, ts.SyntaxKind.OpenBraceToken)
             .filter(prop => prop.parent === component).map(prop => prop.end)[0];
         __recorder.insertLeft(OpenBraceTokenPos, propertyValue);

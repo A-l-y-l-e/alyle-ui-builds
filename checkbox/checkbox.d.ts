@@ -20,7 +20,7 @@ export declare class LyCheckboxBase {
     constructor(_theme: LyTheme2, _ngZone: NgZone);
 }
 /** @docs-private */
-export declare const LyCheckboxMixinBase: import("@alyle/ui/src/common/constructor").Constructor<import("@alyle/ui/src/common/disable-ripple").CanDisableRipple> & typeof LyCheckboxBase;
+export declare const LyCheckboxMixinBase: import("../../@alyle/ui/src/common/constructor").Constructor<import("../../@alyle/ui/src/common/disable-ripple").CanDisableRipple> & typeof LyCheckboxBase;
 export declare class LyCheckbox extends LyCheckboxMixinBase implements ControlValueAccessor, OnInit, AfterViewInit, OnDestroy {
     _commonStyles: LyCommonStyles;
     private _el;
