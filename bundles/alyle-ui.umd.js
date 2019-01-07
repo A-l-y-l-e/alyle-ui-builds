@@ -3201,9 +3201,9 @@
      * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
      */
     /** @type {?} */
-    var AUI_VERSION = '2.0.2-nightly.20190107-jqlzvpmi';
+    var AUI_VERSION = '2.0.2';
     /** @type {?} */
-    var AUI_LAST_UPDATE = '2019-01-07T07:18:34.361Z';
+    var AUI_LAST_UPDATE = '2019-01-07T07:30:21.208Z';
 
     /**
      * @fileoverview added by tsickle
