@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const inquirer_1 = require("inquirer");
 const core_1 = require("@angular-devkit/core");
-const ts = require("@schematics/angular/node_modules/typescript");
+const ts = require("typescript");
 const ast_utils_1 = require("@schematics/angular/utility/ast-utils");
 const ng_ast_utils_1 = require("@schematics/angular/utility/ng-ast-utils");
 const project_targets_1 = require("@schematics/angular/utility/project-targets");

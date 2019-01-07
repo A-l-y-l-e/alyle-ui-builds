@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const project_targets_1 = require("@schematics/angular/utility/project-targets");
 const ng_ast_utils_1 = require("@schematics/angular/utility/ng-ast-utils");
 const ast_utils_1 = require("@schematics/angular/utility/ast-utils");
-const ts = require("@schematics/angular/node_modules/typescript");
+const ts = require("typescript");
 const path_1 = require("path");
 const core_1 = require("@angular-devkit/core");
 const ast_1 = require("./ast");

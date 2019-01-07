@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const ts = require("@schematics/angular/node_modules/typescript");
+const ts = require("typescript");
 const schematics_1 = require("@angular-devkit/schematics");
 const project_targets_1 = require("@schematics/angular/utility/project-targets");
 const ast_1 = require("../utils/ast");

@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const schematics_1 = require("@angular-devkit/schematics");
-const ts = require("@schematics/angular/node_modules/typescript");
+const ts = require("typescript");
 const ast_utils_1 = require("@schematics/angular/utility/ast-utils");
 function getTsSourceFile(host, path) {
     const buffer = host.read(path);
