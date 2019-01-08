@@ -76,6 +76,8 @@
             },
             radio: {
                 display: 'inline-block',
+                marginAfter: '16px',
+                marginBefore: '-16px',
                 '&{checked}': {
                     '{container}': {
                         'div:nth-child(1)': {
@@ -94,18 +96,22 @@
                 }
             },
             label: {
+                marginBefore: '16px',
                 cursor: 'pointer',
                 whiteSpace: 'nowrap',
                 position: 'relative',
                 display: 'flex',
-                alignItems: 'baseline'
+                alignItems: 'baseline',
+                paddingTop: '12px',
+                paddingBottom: '12px'
             },
-            labelContent: {
-                padding: '0 0.5em'
-            },
+            labelContent: null,
             container: {
                 position: 'relative',
-                margin: 'auto 2px',
+                marginBefore: '.125em',
+                marginAfter: '.5em',
+                marginTop: 'auto',
+                marginBottom: 'auto',
                 width: '16px',
                 height: '16px',
                 'div': {

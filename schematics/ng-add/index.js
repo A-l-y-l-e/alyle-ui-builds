@@ -7,7 +7,7 @@ const gestures_1 = require("./gestures");
 const set_up_1 = require("./set-up");
 const fonts_1 = require("./fonts");
 const get_app_component_path_1 = require("../utils/get-app-component-path");
-const styles_1 = require("./styles");
+const styles_1 = require("../utils/styles");
 let AUI_VERSION;
 try {
     AUI_VERSION = require(`@alyle/ui/package.json`).version;
@@ -53,16 +53,25 @@ function installPkgs(options) {
         _context.addTask(new tasks_1.NodePackageInstallTask());
     };
 }
-// You don't have to export the function as default. You can also have more than one rule factory
-// per file.
-function ngAdd(options) {
+function default_1(options) {
+    const STYLES = `\n\nconst STYLES = (theme: ThemeVariables) => ({
+  '@global': {
+    body: {
+      backgroundColor: theme.background.default,
+      color: theme.text.default,
+      fontFamily: theme.typography.fontFamily,
+      margin: 0,
+      direction: theme.direction
+    }
+  }
+});`;
     return (host) => schematics_1.chain([
         gestures_1.addHammerJsToMain(options),
         set_up_1.setUpAppModule(options),
         fonts_1.addFontsToIndex(options),
-        styles_1.setUpStyles(options, get_app_component_path_1.getAppComponentPath(host, options)),
+        styles_1.setUpStyles(options, get_app_component_path_1.getAppComponentPath(host, options), STYLES),
         installPkgs(options)
     ]);
 }
-exports.ngAdd = ngAdd;
+exports.default = default_1;
 //# sourceMappingURL=index.js.map

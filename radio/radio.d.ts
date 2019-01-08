@@ -11,6 +11,8 @@ export declare const STYLES: (theme: ThemeVariables) => {
     };
     radio: {
         display: string;
+        marginAfter: string;
+        marginBefore: string;
         '&{checked}': {
             '{container}': {
                 'div:nth-child(1)': {
@@ -29,18 +31,22 @@ export declare const STYLES: (theme: ThemeVariables) => {
         };
     };
     label: {
+        marginBefore: string;
         cursor: string;
         whiteSpace: string;
         position: string;
         display: string;
         alignItems: string;
+        paddingTop: string;
+        paddingBottom: string;
     };
-    labelContent: {
-        padding: string;
-    };
+    labelContent: any;
     container: {
         position: string;
-        margin: string;
+        marginBefore: string;
+        marginAfter: string;
+        marginTop: string;
+        marginBottom: string;
         width: string;
         height: string;
         'div': {

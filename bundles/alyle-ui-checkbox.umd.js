@@ -59,6 +59,9 @@
     var STYLES = function (theme) {
         return ({
             root: {
+                marginAfter: '16px',
+                marginBefore: '-16px',
+                display: 'inline-flex',
                 '&{disabled}:not({checked}) {icon}:before': {
                     color: theme.disabled.default
                 },
@@ -82,7 +85,10 @@
             layout: {
                 display: 'inline-flex',
                 alignItems: 'baseline',
-                cursor: 'pointer'
+                cursor: 'pointer',
+                marginBefore: '16px',
+                paddingTop: '12px',
+                paddingBottom: '12px'
             },
             icon: __assign({ position: 'relative', marginAfter: '8px', marginTop: 'auto', marginBottom: 'auto', width: '16px', height: '16px', userSelect: 'none' }, theme.checkbox.root, { '&::before, &::after': __assign({ content: "''" }, ui.LY_COMMON_STYLES.fill, { width: '16px', height: '16px', margin: 'auto' }), '&::before': {
                     border: 'solid 2px',

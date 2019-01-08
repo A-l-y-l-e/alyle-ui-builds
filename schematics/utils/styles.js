@@ -6,7 +6,7 @@ const project_targets_1 = require("@schematics/angular/utility/project-targets")
 const ast_1 = require("../utils/ast");
 const ast_utils_1 = require("@schematics/angular/utility/ast-utils");
 /** Adds the styles to the src/app/app.component.ts file. */
-function setUpStyles(options, filePath) {
+function setUpStyles(options, filePath, content) {
     return (host) => {
         const projectTargets = project_targets_1.getProjectTargets(host, options.project);
         if (!projectTargets.build) {
@@ -20,18 +20,9 @@ function setUpStyles(options, filePath) {
         ast_1.addImport(host, filePath, ['LyTheme2', 'ThemeVariables'], '@alyle/ui');
         let component = getComponentOrDirective(host, filePath);
         const componentStartPos = component.decorators[0].pos;
+        const defaultContentStyle = `\n\nconst STYLES = (_theme: ThemeVariables) => ({ });`;
         const recorder = host.beginUpdate(filePath);
-        recorder.insertLeft(componentStartPos, `\n\nconst STYLES = (theme: ThemeVariables) => ({
-  '@global': {
-    body: {
-      backgroundColor: theme.background.default,
-      color: theme.text.default,
-      fontFamily: theme.typography.fontFamily,
-      margin: 0,
-      direction: theme.direction
-    }
-  }
-});`);
+        recorder.insertLeft(componentStartPos, content || defaultContentStyle);
         host.commitUpdate(recorder);
         component = getComponentOrDirective(host, filePath);
         const hasConstructor = component.members
