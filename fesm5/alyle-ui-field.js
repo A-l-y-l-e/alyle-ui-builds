@@ -777,7 +777,7 @@ var LyField = /** @class */ (function () {
         _prefixContainer: [{ type: ViewChild, args: ['_prefixContainer',] }],
         _suffixContainer: [{ type: ViewChild, args: ['_suffixContainer',] }],
         _fieldsetLegend: [{ type: ViewChild, args: ['_fieldsetLegend',] }],
-        _input: [{ type: ContentChild, args: [forwardRef(function () { return LyInputNative; }),] }],
+        _input: [{ type: ContentChild, args: [forwardRef(function () { return LyNativeControl; }),] }],
         _placeholderChild: [{ type: ContentChild, args: [LyPlaceholder,] }],
         _labelChild: [{ type: ContentChild, args: [LyLabel,] }],
         _hintChildren: [{ type: ContentChildren, args: [LyHint,] }],
@@ -792,8 +792,8 @@ var LyField = /** @class */ (function () {
     };
     return LyField;
 }());
-var LyInputNative = /** @class */ (function () {
-    function LyInputNative(_el, _renderer, _field, ngControl, _parentForm, _parentFormGroup) {
+var LyNativeControl = /** @class */ (function () {
+    function LyNativeControl(_el, _renderer, _field, ngControl, _parentForm, _parentFormGroup) {
         this._el = _el;
         this._renderer = _renderer;
         this._field = _field;
@@ -811,7 +811,7 @@ var LyInputNative = /** @class */ (function () {
     /**
      * @return {?}
      */
-    LyInputNative.prototype._onInput = /**
+    LyNativeControl.prototype._onInput = /**
      * @return {?}
      */
     function () {
@@ -820,7 +820,7 @@ var LyInputNative = /** @class */ (function () {
     /**
      * @return {?}
      */
-    LyInputNative.prototype._onBlur = /**
+    LyNativeControl.prototype._onBlur = /**
      * @return {?}
      */
     function () {
@@ -832,7 +832,7 @@ var LyInputNative = /** @class */ (function () {
     /**
      * @return {?}
      */
-    LyInputNative.prototype._onFocus = /**
+    LyNativeControl.prototype._onFocus = /**
      * @return {?}
      */
     function () {
@@ -841,7 +841,7 @@ var LyInputNative = /** @class */ (function () {
             this.stateChanges.next();
         }
     };
-    Object.defineProperty(LyInputNative.prototype, "value", {
+    Object.defineProperty(LyNativeControl.prototype, "value", {
         get: /**
          * @return {?}
          */
@@ -863,7 +863,7 @@ var LyInputNative = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(LyInputNative.prototype, "disabled", {
+    Object.defineProperty(LyNativeControl.prototype, "disabled", {
         get: /**
          * @return {?}
          */
@@ -882,20 +882,22 @@ var LyInputNative = /** @class */ (function () {
         function (val) {
             if (val !== this._disabled) {
                 this._disabled = toBoolean(val);
-                if (!val && this._hasDisabledClass) {
-                    this._renderer.removeClass(this._field._getHostElement(), this._field.classes.disabled);
-                    this._hasDisabledClass = null;
-                }
-                else if (val) {
-                    this._renderer.addClass(this._field._getHostElement(), this._field.classes.disabled);
-                    this._hasDisabledClass = true;
+                if (this._field) {
+                    if (!val && this._hasDisabledClass) {
+                        this._renderer.removeClass(this._field._getHostElement(), this._field.classes.disabled);
+                        this._hasDisabledClass = null;
+                    }
+                    else if (val) {
+                        this._renderer.addClass(this._field._getHostElement(), this._field.classes.disabled);
+                        this._hasDisabledClass = true;
+                    }
                 }
             }
         },
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(LyInputNative.prototype, "required", {
+    Object.defineProperty(LyNativeControl.prototype, "required", {
         get: /**
          * @return {?}
          */
@@ -910,7 +912,7 @@ var LyInputNative = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(LyInputNative.prototype, "placeholder", {
+    Object.defineProperty(LyNativeControl.prototype, "placeholder", {
         get: /**
          * @return {?}
          */
@@ -928,7 +930,7 @@ var LyInputNative = /** @class */ (function () {
     /**
      * @return {?}
      */
-    LyInputNative.prototype.ngOnInit = /**
+    LyNativeControl.prototype.ngOnInit = /**
      * @return {?}
      */
     function () {
@@ -946,7 +948,7 @@ var LyInputNative = /** @class */ (function () {
     /**
      * @return {?}
      */
-    LyInputNative.prototype.ngDoCheck = /**
+    LyNativeControl.prototype.ngDoCheck = /**
      * @return {?}
      */
     function () {
@@ -956,22 +958,24 @@ var LyInputNative = /** @class */ (function () {
         var newVal = !!(this.ngControl && this.ngControl.invalid && (this.ngControl.touched || (this._form && this._form.submitted)));
         if (newVal !== oldVal) {
             this.errorState = newVal;
-            /** @type {?} */
-            var errorClass = this._field.classes.errorState;
-            if (newVal) {
-                this._renderer.addClass(this._field._getHostElement(), errorClass);
-                this._errorClass = errorClass;
-            }
-            else if (this._errorClass) {
-                this._renderer.removeClass(this._field._getHostElement(), errorClass);
-                this._errorClass = null;
+            if (this._field) {
+                /** @type {?} */
+                var errorClass = this._field.classes.errorState;
+                if (newVal) {
+                    this._renderer.addClass(this._field._getHostElement(), errorClass);
+                    this._errorClass = errorClass;
+                }
+                else if (this._errorClass) {
+                    this._renderer.removeClass(this._field._getHostElement(), errorClass);
+                    this._errorClass = null;
+                }
             }
         }
     };
     /**
      * @return {?}
      */
-    LyInputNative.prototype.ngOnDestroy = /**
+    LyNativeControl.prototype.ngOnDestroy = /**
      * @return {?}
      */
     function () {
@@ -982,27 +986,27 @@ var LyInputNative = /** @class */ (function () {
      * Focuses the input.
      * @return {?}
      */
-    LyInputNative.prototype.focus = /**
+    LyNativeControl.prototype.focus = /**
      * Focuses the input.
      * @return {?}
      */
     function () { this._hostElement.focus(); };
-    LyInputNative.decorators = [
+    LyNativeControl.decorators = [
         { type: Directive, args: [{
-                    selector: 'input[lyInput], textarea[lyInput]',
-                    exportAs: 'lyInput'
+                    selector: 'input[lyInput], textarea[lyInput], input[lyNativeControl], textarea[lyNativeControl]',
+                    exportAs: 'LyNativeControl'
                 },] }
     ];
     /** @nocollapse */
-    LyInputNative.ctorParameters = function () { return [
+    LyNativeControl.ctorParameters = function () { return [
         { type: ElementRef },
         { type: Renderer2 },
-        { type: LyField },
+        { type: LyField, decorators: [{ type: Optional }] },
         { type: NgControl, decorators: [{ type: Optional }, { type: Self }] },
         { type: NgForm, decorators: [{ type: Optional }] },
         { type: FormGroupDirective, decorators: [{ type: Optional }] }
     ]; };
-    LyInputNative.propDecorators = {
+    LyNativeControl.propDecorators = {
         _onInput: [{ type: HostListener, args: ['input',] }],
         _onBlur: [{ type: HostListener, args: ['blur',] }],
         _onFocus: [{ type: HostListener, args: ['focus',] }],
@@ -1011,7 +1015,7 @@ var LyInputNative = /** @class */ (function () {
         required: [{ type: HostBinding }, { type: Input }],
         placeholder: [{ type: Input }]
     };
-    return LyInputNative;
+    return LyNativeControl;
 }());
 
 /**
@@ -1031,14 +1035,14 @@ var LyFieldModule = /** @class */ (function () {
                         LyField,
                         LyPlaceholder,
                         LyLabel,
-                        LyInputNative,
+                        LyNativeControl,
                         LyPrefix,
                         LySuffix,
                         LyHint,
                         LyError,
                         LyCommonModule
                     ],
-                    declarations: [LyField, LyPlaceholder, LyLabel, LyInputNative, LyPrefix, LySuffix, LyHint, LyError]
+                    declarations: [LyField, LyPlaceholder, LyLabel, LyNativeControl, LyPrefix, LySuffix, LyHint, LyError]
                 },] }
     ];
     return LyFieldModule;
@@ -1059,6 +1063,6 @@ var LyFieldModule = /** @class */ (function () {
  * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
  */
 
-export { LyField, LyInputNative, LyFieldModule, LyError as ɵf, LyHint as ɵc, LyLabel as ɵb, LyPlaceholder as ɵa, LyPrefix as ɵd, LySuffix as ɵe };
+export { LyField, LyNativeControl, LyFieldModule, LyError as ɵf, LyHint as ɵc, LyLabel as ɵb, LyPlaceholder as ɵa, LyPrefix as ɵd, LySuffix as ɵe };
 
 //# sourceMappingURL=alyle-ui-field.js.map

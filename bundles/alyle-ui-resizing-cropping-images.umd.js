@@ -1,8 +1,8 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('rxjs/operators'), require('@angular/platform-browser'), require('@angular/core'), require('@angular/common'), require('@alyle/ui')) :
-    typeof define === 'function' && define.amd ? define('@alyle/ui/resizing-cropping-images', ['exports', 'rxjs/operators', '@angular/platform-browser', '@angular/core', '@angular/common', '@alyle/ui'], factory) :
-    (factory((global.ly = global.ly || {}, global.ly.resizingCroppingImages = {}),global.rxjs.operators,global.ng.platformBrowser,global.ng.core,global.ng.common,global.ly.core));
-}(this, (function (exports,operators,platformBrowser,core,common,ui) { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('rxjs/operators'), require('rxjs'), require('@angular/platform-browser'), require('@angular/core'), require('@angular/common'), require('@alyle/ui')) :
+    typeof define === 'function' && define.amd ? define('@alyle/ui/resizing-cropping-images', ['exports', 'rxjs/operators', 'rxjs', '@angular/platform-browser', '@angular/core', '@angular/common', '@alyle/ui'], factory) :
+    (factory((global.ly = global.ly || {}, global.ly.resizingCroppingImages = {}),global.rxjs.operators,global.rxjs,global.ng.platformBrowser,global.ng.core,global.ng.common,global.ly.core));
+}(this, (function (exports,operators,rxjs,platformBrowser,core,common,ui) { 'use strict';
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
@@ -119,10 +119,11 @@
             this._ngZone = _ngZone;
             /**
              * styles
-             * @ignore
+             * \@docs-private
              */
             this.classes = this.theme.addStyleSheet(styles, STYLE_PRIORITY);
             this._imgRect = ( /** @type {?} */({}));
+            this._listeners = new Set();
             this.scaleChange = new core.EventEmitter();
             /**
              * On loaded new image
@@ -181,6 +182,16 @@
             enumerable: true,
             configurable: true
         });
+        /**
+         * @return {?}
+         */
+        LyResizingCroppingImages.prototype.ngOnDestroy = /**
+         * @return {?}
+         */
+            function () {
+                this._listeners.forEach(function (listen) { return listen.unsubscribe(); });
+                this._listeners.clear();
+            };
         /**
          * @param {?} imgElement
          * @return {?}
@@ -265,7 +276,10 @@
                 /** @type {?} */
                 var fileReader = new FileReader();
                 this._fileName = _img.value.replace(/.*(\/|\\)/, '');
-                fileReader.addEventListener('loadend', function (loadEvent) {
+                /** @type {?} */
+                var listener = rxjs.fromEvent(fileReader, 'loadend')
+                    .pipe(operators.take(1))
+                    .subscribe(function (loadEvent) {
                     /** @type {?} */
                     var originalImageUrl = ( /** @type {?} */((( /** @type {?} */(loadEvent.target))).result));
                     _this.setImageUrl(originalImageUrl);
@@ -274,7 +288,9 @@
                         _this._defaultType = _img.files[0].type;
                     }
                     _this.cd.markForCheck();
+                    _this._listeners.delete(listener);
                 });
+                this._listeners.add(listener);
                 fileReader.readAsDataURL(_img.files[0]);
             };
         /** Set the size of the image, the values can be 0 between 1, where 1 is the original size */
@@ -622,10 +638,15 @@
                     position: null
                 };
                 img.src = src;
-                img.addEventListener('error', function () {
+                /** @type {?} */
+                var errorListen = rxjs.fromEvent(img, 'error').pipe(operators.take(1)).subscribe(function () {
                     _this.error.emit(cropEvent);
+                    _this._listeners.delete(errorListen);
                 });
-                img.addEventListener('load', function () {
+                this._listeners.add(errorListen);
+                /** @type {?} */
+                var loadListen = rxjs.fromEvent(img, 'load')
+                    .pipe(operators.take(1)).subscribe(function () {
                     _this._imgLoaded(img);
                     cropEvent.width = img.width;
                     cropEvent.height = img.height;
@@ -649,7 +670,9 @@
                             _this.cd.markForCheck();
                         });
                     });
+                    _this._listeners.delete(loadListen);
                 });
+                this._listeners.add(loadListen);
             };
         /**
          * @param {?} degrees

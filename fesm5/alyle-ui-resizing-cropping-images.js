@@ -1,5 +1,6 @@
 import { __assign } from 'tslib';
 import { take } from 'rxjs/operators';
+import { fromEvent } from 'rxjs';
 import { HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { Component, ElementRef, Input, Output, ChangeDetectionStrategy, ChangeDetectorRef, ViewChild, EventEmitter, Renderer2, NgZone, HostListener, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -93,10 +94,11 @@ var LyResizingCroppingImages = /** @class */ (function () {
         this._ngZone = _ngZone;
         /**
          * styles
-         * @ignore
+         * \@docs-private
          */
         this.classes = this.theme.addStyleSheet(styles, STYLE_PRIORITY);
         this._imgRect = (/** @type {?} */ ({}));
+        this._listeners = new Set();
         this.scaleChange = new EventEmitter();
         /**
          * On loaded new image
@@ -160,6 +162,16 @@ var LyResizingCroppingImages = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
+    /**
+     * @return {?}
+     */
+    LyResizingCroppingImages.prototype.ngOnDestroy = /**
+     * @return {?}
+     */
+    function () {
+        this._listeners.forEach(function (listen) { return listen.unsubscribe(); });
+        this._listeners.clear();
+    };
     /**
      * @param {?} imgElement
      * @return {?}
@@ -244,7 +256,10 @@ var LyResizingCroppingImages = /** @class */ (function () {
         /** @type {?} */
         var fileReader = new FileReader();
         this._fileName = _img.value.replace(/.*(\/|\\)/, '');
-        fileReader.addEventListener('loadend', function (loadEvent) {
+        /** @type {?} */
+        var listener = fromEvent(fileReader, 'loadend')
+            .pipe(take(1))
+            .subscribe(function (loadEvent) {
             /** @type {?} */
             var originalImageUrl = (/** @type {?} */ (((/** @type {?} */ (loadEvent.target))).result));
             _this.setImageUrl(originalImageUrl);
@@ -253,7 +268,9 @@ var LyResizingCroppingImages = /** @class */ (function () {
                 _this._defaultType = _img.files[0].type;
             }
             _this.cd.markForCheck();
+            _this._listeners.delete(listener);
         });
+        this._listeners.add(listener);
         fileReader.readAsDataURL(_img.files[0]);
     };
     /** Set the size of the image, the values can be 0 between 1, where 1 is the original size */
@@ -601,10 +618,15 @@ var LyResizingCroppingImages = /** @class */ (function () {
             position: null
         };
         img.src = src;
-        img.addEventListener('error', function () {
+        /** @type {?} */
+        var errorListen = fromEvent(img, 'error').pipe(take(1)).subscribe(function () {
             _this.error.emit(cropEvent);
+            _this._listeners.delete(errorListen);
         });
-        img.addEventListener('load', function () {
+        this._listeners.add(errorListen);
+        /** @type {?} */
+        var loadListen = fromEvent(img, 'load')
+            .pipe(take(1)).subscribe(function () {
             _this._imgLoaded(img);
             cropEvent.width = img.width;
             cropEvent.height = img.height;
@@ -626,7 +648,9 @@ var LyResizingCroppingImages = /** @class */ (function () {
                 _this._cropIfAutoCrop();
                 _this.cd.markForCheck();
             }); });
+            _this._listeners.delete(loadListen);
         });
+        this._listeners.add(loadListen);
     };
     /**
      * @param {?} degrees

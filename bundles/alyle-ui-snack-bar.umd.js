@@ -146,6 +146,15 @@
         /**
          * @return {?}
          */
+        LySnackBar.prototype.ngOnDestroy = /**
+         * @return {?}
+         */
+            function () {
+                this.dismiss();
+            };
+        /**
+         * @return {?}
+         */
         LySnackBar.prototype.open = /**
          * @return {?}
          */
@@ -205,6 +214,7 @@
                         transform: 'translateY(0)'
                     }), snackBar.containerElement, undefined, STYLE_PRIORITY);
                 });
+                window.getComputedStyle(snackBar.containerElement).getPropertyValue('opacity');
                 /** @type {?} */
                 var sbr = new LySnackBarRef(this._snackBarService, snackBar, this.afterDismissed, duration, this._theme);
                 this._snackBarService._currentSnackBar = sbr;

@@ -14,7 +14,7 @@ export declare class LyBadge extends LyBadgeMixinBase implements OnChanges, OnIn
      * Styles
      * @docs-private
      */
-    classes: Record<"relative" | "root", string>;
+    readonly classes: Record<"relative" | "root", string>;
     private _content;
     private _position;
     private _positionClass;

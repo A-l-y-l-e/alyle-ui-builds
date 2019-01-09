@@ -37,7 +37,7 @@ export declare class LyField implements OnInit, AfterContentInit, AfterViewInit 
     _prefixContainer: ElementRef<HTMLDivElement>;
     _suffixContainer: ElementRef<HTMLDivElement>;
     _fieldsetLegend: ElementRef<HTMLDivElement>;
-    _input: LyInputNative;
+    _input: LyNativeControl;
     _placeholderChild: LyPlaceholder;
     _labelChild: LyLabel;
     _hintChildren: QueryList<LyHint>;
@@ -69,7 +69,7 @@ export declare class LyField implements OnInit, AfterContentInit, AfterViewInit 
     private _markForCheck;
     _getHostElement(): any;
 }
-export declare class LyInputNative implements OnInit, DoCheck, OnDestroy {
+export declare class LyNativeControl implements OnInit, DoCheck, OnDestroy {
     private _el;
     private _renderer;
     private _field;

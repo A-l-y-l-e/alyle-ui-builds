@@ -1,4 +1,5 @@
 import { take } from 'rxjs/operators';
+import { fromEvent } from 'rxjs';
 import { HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { Component, ElementRef, Input, Output, ChangeDetectionStrategy, ChangeDetectorRef, ViewChild, EventEmitter, Renderer2, NgZone, HostListener, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -99,10 +100,11 @@ class LyResizingCroppingImages {
         this._ngZone = _ngZone;
         /**
          * styles
-         * @ignore
+         * \@docs-private
          */
         this.classes = this.theme.addStyleSheet(styles, STYLE_PRIORITY);
         this._imgRect = (/** @type {?} */ ({}));
+        this._listeners = new Set();
         this.scaleChange = new EventEmitter();
         /**
          * On loaded new image
@@ -151,6 +153,13 @@ class LyResizingCroppingImages {
      */
     get minScale() {
         return this._minScale;
+    }
+    /**
+     * @return {?}
+     */
+    ngOnDestroy() {
+        this._listeners.forEach(listen => listen.unsubscribe());
+        this._listeners.clear();
     }
     /**
      * @param {?} imgElement
@@ -220,7 +229,10 @@ class LyResizingCroppingImages {
         /** @type {?} */
         const fileReader = new FileReader();
         this._fileName = _img.value.replace(/.*(\/|\\)/, '');
-        fileReader.addEventListener('loadend', (loadEvent) => {
+        /** @type {?} */
+        const listener = fromEvent(fileReader, 'loadend')
+            .pipe(take(1))
+            .subscribe(loadEvent => {
             /** @type {?} */
             const originalImageUrl = (/** @type {?} */ (((/** @type {?} */ (loadEvent.target))).result));
             this.setImageUrl(originalImageUrl);
@@ -229,7 +241,9 @@ class LyResizingCroppingImages {
                 this._defaultType = _img.files[0].type;
             }
             this.cd.markForCheck();
+            this._listeners.delete(listener);
         });
+        this._listeners.add(listener);
         fileReader.readAsDataURL(_img.files[0]);
     }
     /**
@@ -509,10 +523,15 @@ class LyResizingCroppingImages {
             position: null
         };
         img.src = src;
-        img.addEventListener('error', () => {
+        /** @type {?} */
+        const errorListen = fromEvent(img, 'error').pipe(take(1)).subscribe(() => {
             this.error.emit(cropEvent);
+            this._listeners.delete(errorListen);
         });
-        img.addEventListener('load', () => {
+        this._listeners.add(errorListen);
+        /** @type {?} */
+        const loadListen = fromEvent(img, 'load')
+            .pipe(take(1)).subscribe(() => {
             this._imgLoaded(img);
             cropEvent.width = img.width;
             cropEvent.height = img.height;
@@ -534,7 +553,9 @@ class LyResizingCroppingImages {
                 this._cropIfAutoCrop();
                 this.cd.markForCheck();
             }));
+            this._listeners.delete(loadListen);
         });
+        this._listeners.add(loadListen);
     }
     /**
      * @param {?} degrees

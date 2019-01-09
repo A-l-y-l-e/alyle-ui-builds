@@ -701,7 +701,7 @@ LyField.propDecorators = {
     _prefixContainer: [{ type: ViewChild, args: ['_prefixContainer',] }],
     _suffixContainer: [{ type: ViewChild, args: ['_suffixContainer',] }],
     _fieldsetLegend: [{ type: ViewChild, args: ['_fieldsetLegend',] }],
-    _input: [{ type: ContentChild, args: [forwardRef(() => LyInputNative),] }],
+    _input: [{ type: ContentChild, args: [forwardRef(() => LyNativeControl),] }],
     _placeholderChild: [{ type: ContentChild, args: [LyPlaceholder,] }],
     _labelChild: [{ type: ContentChild, args: [LyLabel,] }],
     _hintChildren: [{ type: ContentChildren, args: [LyHint,] }],
@@ -714,7 +714,7 @@ LyField.propDecorators = {
     color: [{ type: Input }],
     appearance: [{ type: Input }]
 };
-class LyInputNative {
+class LyNativeControl {
     /**
      * @param {?} _el
      * @param {?} _renderer
@@ -787,13 +787,15 @@ class LyInputNative {
     set disabled(val) {
         if (val !== this._disabled) {
             this._disabled = toBoolean(val);
-            if (!val && this._hasDisabledClass) {
-                this._renderer.removeClass(this._field._getHostElement(), this._field.classes.disabled);
-                this._hasDisabledClass = null;
-            }
-            else if (val) {
-                this._renderer.addClass(this._field._getHostElement(), this._field.classes.disabled);
-                this._hasDisabledClass = true;
+            if (this._field) {
+                if (!val && this._hasDisabledClass) {
+                    this._renderer.removeClass(this._field._getHostElement(), this._field.classes.disabled);
+                    this._hasDisabledClass = null;
+                }
+                else if (val) {
+                    this._renderer.addClass(this._field._getHostElement(), this._field.classes.disabled);
+                    this._hasDisabledClass = true;
+                }
             }
         }
     }
@@ -852,15 +854,17 @@ class LyInputNative {
         const newVal = !!(this.ngControl && this.ngControl.invalid && (this.ngControl.touched || (this._form && this._form.submitted)));
         if (newVal !== oldVal) {
             this.errorState = newVal;
-            /** @type {?} */
-            const errorClass = this._field.classes.errorState;
-            if (newVal) {
-                this._renderer.addClass(this._field._getHostElement(), errorClass);
-                this._errorClass = errorClass;
-            }
-            else if (this._errorClass) {
-                this._renderer.removeClass(this._field._getHostElement(), errorClass);
-                this._errorClass = null;
+            if (this._field) {
+                /** @type {?} */
+                const errorClass = this._field.classes.errorState;
+                if (newVal) {
+                    this._renderer.addClass(this._field._getHostElement(), errorClass);
+                    this._errorClass = errorClass;
+                }
+                else if (this._errorClass) {
+                    this._renderer.removeClass(this._field._getHostElement(), errorClass);
+                    this._errorClass = null;
+                }
             }
         }
     }
@@ -876,22 +880,22 @@ class LyInputNative {
      */
     focus() { this._hostElement.focus(); }
 }
-LyInputNative.decorators = [
+LyNativeControl.decorators = [
     { type: Directive, args: [{
-                selector: 'input[lyInput], textarea[lyInput]',
-                exportAs: 'lyInput'
+                selector: 'input[lyInput], textarea[lyInput], input[lyNativeControl], textarea[lyNativeControl]',
+                exportAs: 'LyNativeControl'
             },] }
 ];
 /** @nocollapse */
-LyInputNative.ctorParameters = () => [
+LyNativeControl.ctorParameters = () => [
     { type: ElementRef },
     { type: Renderer2 },
-    { type: LyField },
+    { type: LyField, decorators: [{ type: Optional }] },
     { type: NgControl, decorators: [{ type: Optional }, { type: Self }] },
     { type: NgForm, decorators: [{ type: Optional }] },
     { type: FormGroupDirective, decorators: [{ type: Optional }] }
 ];
-LyInputNative.propDecorators = {
+LyNativeControl.propDecorators = {
     _onInput: [{ type: HostListener, args: ['input',] }],
     _onBlur: [{ type: HostListener, args: ['blur',] }],
     _onFocus: [{ type: HostListener, args: ['focus',] }],
@@ -917,14 +921,14 @@ LyFieldModule.decorators = [
                     LyField,
                     LyPlaceholder,
                     LyLabel,
-                    LyInputNative,
+                    LyNativeControl,
                     LyPrefix,
                     LySuffix,
                     LyHint,
                     LyError,
                     LyCommonModule
                 ],
-                declarations: [LyField, LyPlaceholder, LyLabel, LyInputNative, LyPrefix, LySuffix, LyHint, LyError]
+                declarations: [LyField, LyPlaceholder, LyLabel, LyNativeControl, LyPrefix, LySuffix, LyHint, LyError]
             },] }
 ];
 
@@ -943,6 +947,6 @@ LyFieldModule.decorators = [
  * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
  */
 
-export { LyField, LyInputNative, LyFieldModule, LyError as ɵf, LyHint as ɵc, LyLabel as ɵb, LyPlaceholder as ɵa, LyPrefix as ɵd, LySuffix as ɵe };
+export { LyField, LyNativeControl, LyFieldModule, LyError as ɵf, LyHint as ɵc, LyLabel as ɵb, LyPlaceholder as ɵa, LyPrefix as ɵd, LySuffix as ɵe };
 
 //# sourceMappingURL=alyle-ui-field.js.map
