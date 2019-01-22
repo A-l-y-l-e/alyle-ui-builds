@@ -3,7 +3,7 @@ import { Directive, ElementRef, Input, NgModule } from '@angular/core';
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 const STYLE_PRIORITY = -1;
@@ -72,7 +72,7 @@ class LyGrid {
     set spacingX(val) {
         if (val !== this.spacingX) {
             this._spacingX = val;
-            this._createSpacingClass(null, val);
+            this._createSpacingClass(undefined, val);
         }
     }
     /**
@@ -88,7 +88,7 @@ class LyGrid {
     set spacingY(val) {
         if (val !== this.spacingY) {
             this._spacingY = val;
-            this._createSpacingClass(null, null, val);
+            this._createSpacingClass(undefined, undefined, val);
         }
     }
     /**
@@ -111,6 +111,7 @@ class LyGrid {
     }
     /**
      * Only one param must be defined
+     * @private
      * @param {?=} xy
      * @param {?=} x
      * @param {?=} y
@@ -159,7 +160,7 @@ class LyGrid {
             const val = xy || x || y;
             /** @type {?} */
             let negativeMarginStyles;
-            eachMedia(val, (value, media, len) => {
+            eachMedia(val, (value, media) => {
                 /** @type {?} */
                 const valueMargin = `${(-value) / 2}px`;
                 /** @type {?} */
@@ -173,7 +174,7 @@ class LyGrid {
                 if (xy != null || x != null) {
                     negativeMarginstyles.width = `calc(100% + ${value}px)`;
                 }
-                if (len) {
+                if (media) {
                     if (!negativeMarginStyles) {
                         negativeMarginStyles = {};
                     }
@@ -183,7 +184,7 @@ class LyGrid {
                     negativeMarginStyles = negativeMarginstyles;
                 }
             });
-            return negativeMarginStyles;
+            return (/** @type {?} */ (negativeMarginStyles));
         }, this.el.nativeElement, this._negativeMarginClass, STYLE_PRIORITY);
     }
     /**
@@ -204,14 +205,14 @@ class LyGrid {
             this._justifyClass = this.theme.addStyle(`lyGrid-justify:${val}`, (theme) => {
                 /** @type {?} */
                 let justifyStyles;
-                eachMedia(val, (value, media, isMedia) => {
+                eachMedia(val, (value, media) => {
                     /** @type {?} */
                     const newJustifyStyles = {
                         justifyContent: value in ALIGN_ALIAS
                             ? ALIGN_ALIAS[value]
                             : value
                     };
-                    if (isMedia) {
+                    if (media) {
                         if (!justifyStyles) {
                             justifyStyles = {};
                         }
@@ -221,7 +222,7 @@ class LyGrid {
                         justifyStyles = newJustifyStyles;
                     }
                 });
-                return justifyStyles;
+                return (/** @type {?} */ (justifyStyles));
             }, this.el.nativeElement, this._justifyClass, STYLE_PRIORITY);
         }
     }
@@ -243,14 +244,14 @@ class LyGrid {
             this._directionClass = this.theme.addStyle(`lyGrid-direction:${val}`, (theme) => {
                 /** @type {?} */
                 let directionStyles;
-                eachMedia(val, (value, media, isMedia) => {
+                eachMedia(val, (value, media) => {
                     /** @type {?} */
                     const newDirectionStyles = {
                         flexDirection: value in ALIGN_ALIAS
                             ? ALIGN_ALIAS[value]
                             : value
                     };
-                    if (isMedia) {
+                    if (media) {
                         if (!directionStyles) {
                             directionStyles = {};
                         }
@@ -260,7 +261,7 @@ class LyGrid {
                         directionStyles = newDirectionStyles;
                     }
                 });
-                return directionStyles;
+                return (/** @type {?} */ (directionStyles));
             }, this.el.nativeElement, this._directionClass, STYLE_PRIORITY);
         }
     }
@@ -275,14 +276,14 @@ class LyGrid {
         this._alignItemsClass = this.theme.addStyle(`lyGrid.align:${val}`, (theme) => {
             /** @type {?} */
             let alignItemsStyles;
-            eachMedia(val, (value, media, isMedia) => {
+            eachMedia(val, (value, media) => {
                 /** @type {?} */
                 const newAlignItemsStyles = {
                     alignItems: value in ALIGN_ALIAS
                         ? ALIGN_ALIAS[value]
                         : value
                 };
-                if (isMedia) {
+                if (media) {
                     if (!alignItemsStyles) {
                         alignItemsStyles = {};
                     }
@@ -292,7 +293,7 @@ class LyGrid {
                     alignItemsStyles = newAlignItemsStyles;
                 }
             });
-            return alignItemsStyles;
+            return (/** @type {?} */ (alignItemsStyles));
         }, this.el.nativeElement, this._alignItemsClass, STYLE_PRIORITY);
     }
     /**
@@ -356,10 +357,10 @@ class LyGridItem {
                 else {
                     /** @type {?} */
                     let colStyles;
-                    eachMedia(val, (value, media, len) => {
+                    eachMedia(val, (value, media) => {
                         /** @type {?} */
                         const newColStyles = getColStyle(+value);
-                        if (len) {
+                        if (media) {
                             if (!colStyles) {
                                 colStyles = {};
                             }
@@ -369,7 +370,7 @@ class LyGridItem {
                             colStyles = newColStyles;
                         }
                     });
-                    return colStyles;
+                    return (/** @type {?} */ (colStyles));
                 }
             }, this.el.nativeElement, this._colClass, STYLE_PRIORITY);
         }
@@ -392,12 +393,12 @@ class LyGridItem {
             this._orderClass = this.theme.addStyle(`lyGrid-order:${val}`, (theme) => {
                 /** @type {?} */
                 let orderStyles;
-                eachMedia(`${val}`, (value, media, isMedia) => {
+                eachMedia(`${val}`, (value, media) => {
                     /** @type {?} */
                     const newOrderStyles = {
                         order: value
                     };
-                    if (isMedia) {
+                    if (media) {
                         if (!orderStyles) {
                             orderStyles = {};
                         }
@@ -407,7 +408,7 @@ class LyGridItem {
                         orderStyles = newOrderStyles;
                     }
                 });
-                return orderStyles;
+                return (/** @type {?} */ (orderStyles));
             }, this.el.nativeElement, this._orderClass, STYLE_PRIORITY);
         }
     }
@@ -418,6 +419,7 @@ class LyGridItem {
         this._updateSpacing();
     }
     /**
+     * @private
      * @return {?}
      */
     _updateSpacing() {
@@ -472,7 +474,7 @@ function getColVal(val) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class LyGridModule {
 }
@@ -485,17 +487,17 @@ LyGridModule.decorators = [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 export { LyGrid, LyGridItem, LyGridModule };

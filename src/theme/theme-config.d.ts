@@ -81,7 +81,7 @@ export interface ThemeConfig {
                 infix?: StyleContainer;
                 suffix?: StyleContainer;
                 hint?: StyleContainer;
-            };
+            } | undefined;
         };
     };
     iconButton: {

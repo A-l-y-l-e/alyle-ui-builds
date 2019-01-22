@@ -1,6 +1,6 @@
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 export { LyList, LyListItemBase, LyListItemMixinBase, LyListItem, LyListIcon, LyLine } from './list';
 export { LyListModule } from './list.module';

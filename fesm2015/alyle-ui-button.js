@@ -3,7 +3,7 @@ import { LY_COMMON_STYLES, Platform, toBoolean, LyTheme2, mixinDisabled, mixinCo
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 const styles = (theme) => {
@@ -11,9 +11,9 @@ const styles = (theme) => {
     const typography = theme.typography;
     /** @type {?} */
     const _styles = ({
-        root: Object.assign({ fontFamily: typography.fontFamily, color: theme.text.default, '-webkit-tap-highlight-color': 'transparent', backgroundColor: `rgba(0, 0, 0, 0)`, border: 0, padding: '0 1em', '-moz-appearance': 'none', margin: 0, borderRadius: '3px', outline: 'none', fontWeight: 500, boxSizing: 'border-box', position: 'relative', justifyContent: 'center', alignItems: 'center', alignContent: 'center', display: 'inline-flex', cursor: 'pointer', '-webkit-user-select': 'none', '-moz-user-select': 'none', '-ms-user-select': 'none', userSelect: 'none', textDecorationLine: 'none', '-webkit-text-decoration-line': 'none', '&::-moz-focus-inner, &::-moz-focus-inner': {
+        root: Object.assign({ fontFamily: typography.fontFamily, color: theme.text.default, '-webkit-tap-highlight-color': 'transparent', backgroundColor: `rgba(0, 0, 0, 0)`, border: 0, padding: '0 1em', '-moz-appearance': 'none', margin: 0, borderRadius: '3px', outline: 'none', fontWeight: 500, boxSizing: 'border-box', position: 'relative', justifyContent: 'center', alignItems: 'center', alignContent: 'center', display: 'inline-flex', cursor: 'pointer', '-webkit-user-select': 'none', '-moz-user-select': 'none', '-ms-user-select': 'none', userSelect: 'none', textDecorationLine: 'none', '-webkit-text-decoration-line': 'none', fontSize: theme.pxToRem(14), '&::-moz-focus-inner': {
                 border: 0
-            } }, typography.lyTyp.button, theme.button.root, { '&::after': Object.assign({ content: `''` }, LY_COMMON_STYLES.fill, { width: '100%', height: '100%', background: 'transparent', opacity: 0, pointerEvents: 'none' }), '&{onFocusByKeyboard}::after, &:hover::after': {
+            } }, theme.button.root, { '&::after': Object.assign({ content: `''` }, LY_COMMON_STYLES.fill, { width: '100%', height: '100%', background: 'transparent', opacity: 0, pointerEvents: 'none' }), '&{onFocusByKeyboard}::after, &:hover::after': {
                 background: 'currentColor',
                 opacity: .13,
                 borderRadius: 'inherit'
@@ -28,25 +28,19 @@ const styles = (theme) => {
             height: '100%',
             boxSizing: 'border-box'
         },
-        onFocusByKeyboard: {},
+        onFocusByKeyboard: null,
         animations: {
             '&,&::after': {
                 transition: 'background 375ms cubic-bezier(0.23, 1, 0.32, 1) 0ms, box-shadow 280ms cubic-bezier(.4,0,.2,1) 0ms'
             }
         }
     });
-    if (typeof _styles.root.fontSize === 'number') {
-        _styles.root.fontSize = (/** @type {?} */ (theme.pxToRem(_styles.root.fontSize)));
-    }
-    if (typeof _styles.root.letterSpacing === 'number') {
-        _styles.root.letterSpacing = (/** @type {?} */ (theme.pxToRem(_styles.root.letterSpacing)));
-    }
     return _styles;
 };
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 const DEFAULT_SIZE = 'medium';
@@ -133,7 +127,12 @@ class LyButton extends LyButtonMixinBase {
     set size(val) {
         if (val !== this.size) {
             this._size = val;
-            this._sizeClass = this._theme.addStyle(`lyButton.size:${val}`, (theme) => theme.button.size[val], this._el.nativeElement, this._sizeClass, STYLE_PRIORITY);
+            this._sizeClass = this._theme.addStyle(`lyButton.size:${val}`, (theme) => {
+                if (!(theme.button.size && theme.button.size[val])) {
+                    throw new Error(`Value button.size['${val}'] not found in ThemeVariables`);
+                }
+                return (/** @type {?} */ (theme.button.size[val]));
+            }, this._el.nativeElement, this._sizeClass, STYLE_PRIORITY);
         }
     }
     /**
@@ -151,7 +150,12 @@ class LyButton extends LyButtonMixinBase {
                 this._rippleConfig.centered = true;
             }
             this._appearance = val;
-            this._appearanceClass = this._theme.addStyle(`lyButton.appearance:${val}`, (theme) => (theme.button.appearance[val]), this._el.nativeElement, this._appearanceClass, STYLE_PRIORITY + 1);
+            this._appearanceClass = this._theme.addStyle(`lyButton.appearance:${val}`, (theme) => {
+                if (!(theme.button.appearance && theme.button.appearance[val])) {
+                    throw new Error(`Value button.appearance['${val}'] not found in ThemeVariables`);
+                }
+                return (/** @type {?} */ (theme.button.appearance[val]));
+            }, this._el.nativeElement, this._appearanceClass, STYLE_PRIORITY + 1);
         }
     }
     /**
@@ -284,7 +288,7 @@ LyAnchor.ctorParameters = () => [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class LyButtonModule {
 }
@@ -297,17 +301,17 @@ LyButtonModule.decorators = [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 export { LyButtonBase, LyButtonMixinBase, LyButton, LyAnchor, LyButtonModule };

@@ -17,7 +17,7 @@ export declare class LyIcon extends LyIconMixinBase implements OnChanges, OnInit
     private _previousFontSet;
     private _currentClass;
     private _fontIcon;
-    private _iconElement;
+    private _iconElement?;
     icon: string;
     fontSet: string;
     fontIcon: string;

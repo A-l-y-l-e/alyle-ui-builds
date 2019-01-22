@@ -6,7 +6,7 @@ import { LY_COMMON_STYLES, LyCoreStyles, LyFocusState, LyTheme2, mixinDisableRip
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 var STYLE_PRIORITY = -2;
@@ -408,9 +408,11 @@ var LyCheckbox = /** @class */ (function (_super) {
         event.stopPropagation();
     };
     /**
+     * @private
      * @return {?}
      */
     LyCheckbox.prototype._emitChangeEvent = /**
+     * @private
      * @return {?}
      */
     function () {
@@ -421,9 +423,11 @@ var LyCheckbox = /** @class */ (function (_super) {
         });
     };
     /**
+     * @private
      * @return {?}
      */
     LyCheckbox.prototype._markForCheck = /**
+     * @private
      * @return {?}
      */
     function () {
@@ -467,7 +471,7 @@ var LyCheckbox = /** @class */ (function (_super) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var LyCheckboxModule = /** @class */ (function () {
     function LyCheckboxModule() {
@@ -492,17 +496,17 @@ var LyCheckboxModule = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 export { LyCheckboxModule, LY_CHECKBOX_CONTROL_VALUE_ACCESSOR, LyCheckboxChange, LyCheckboxBase, LyCheckboxMixinBase, LyCheckbox };

@@ -4,7 +4,7 @@ import { LyTheme2, mixinBg, mixinColor, mixinDisabled, mixinElevation, mixinOutl
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 var STYLE_PRIORITY = -2;
@@ -175,9 +175,11 @@ var LyBadge = /** @class */ (function (_super) {
         }
     };
     /**
+     * @private
      * @return {?}
      */
     LyBadge.prototype._createBadge = /**
+     * @private
      * @return {?}
      */
     function () {
@@ -221,7 +223,7 @@ var LyBadge = /** @class */ (function (_super) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var LyBadgeModule = /** @class */ (function () {
     function LyBadgeModule() {
@@ -237,17 +239,17 @@ var LyBadgeModule = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 export { LyBadgeBase, LyBadgeMixinBase, LyBadge, LyBadgeModule };

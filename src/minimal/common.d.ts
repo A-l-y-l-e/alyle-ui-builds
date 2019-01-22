@@ -6,6 +6,7 @@ export declare class NgTranscludeDirective implements OnDestroy {
     private _viewRef;
     private _ngTransclude;
     ngTransclude: TemplateRef<any>;
+    readonly getNgTransclude: TemplateRef<any>;
     constructor(_viewRef: ViewContainerRef);
     ngOnDestroy(): void;
 }

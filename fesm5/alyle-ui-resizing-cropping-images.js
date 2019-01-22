@@ -8,7 +8,7 @@ import { LyTheme2, mergeDeep, LY_COMMON_STYLES, LyHammerGestureConfig } from '@a
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 var STYLE_PRIORITY = -2;
@@ -173,10 +173,12 @@ var LyResizingCroppingImages = /** @class */ (function () {
         this._listeners.clear();
     };
     /**
+     * @private
      * @param {?} imgElement
      * @return {?}
      */
     LyResizingCroppingImages.prototype._imgLoaded = /**
+     * @private
      * @param {?} imgElement
      * @return {?}
      */
@@ -188,7 +190,7 @@ var LyResizingCroppingImages = /** @class */ (function () {
             canvas.width = imgElement.width;
             canvas.height = imgElement.height;
             /** @type {?} */
-            var ctx = canvas.getContext('2d');
+            var ctx = (/** @type {?} */ (canvas.getContext('2d')));
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             ctx.drawImage(imgElement, 0, 0);
             /** set min scale */
@@ -196,10 +198,12 @@ var LyResizingCroppingImages = /** @class */ (function () {
         }
     };
     /**
+     * @private
      * @param {?} values
      * @return {?}
      */
     LyResizingCroppingImages.prototype._setStylesForContImg = /**
+     * @private
      * @param {?} values
      * @return {?}
      */
@@ -250,7 +254,7 @@ var LyResizingCroppingImages = /** @class */ (function () {
         var _this = this;
         /** @type {?} */
         var _img = (/** @type {?} */ (img.target));
-        if (_img.files.length !== 1) {
+        if (_img.files && _img.files.length !== 1) {
             return;
         }
         /** @type {?} */
@@ -265,31 +269,31 @@ var LyResizingCroppingImages = /** @class */ (function () {
             _this.setImageUrl(originalImageUrl);
             /** Set type */
             if (!_this.config.type) {
-                _this._defaultType = _img.files[0].type;
+                _this._defaultType = (/** @type {?} */ (_img.files))[0].type;
             }
             _this.cd.markForCheck();
             _this._listeners.delete(listener);
         });
         this._listeners.add(listener);
-        fileReader.readAsDataURL(_img.files[0]);
+        fileReader.readAsDataURL((/** @type {?} */ (_img.files))[0]);
     };
     /** Set the size of the image, the values can be 0 between 1, where 1 is the original size */
     /**
      * Set the size of the image, the values can be 0 between 1, where 1 is the original size
-     * @param {?} size
+     * @param {?=} size
      * @param {?=} noAutoCrop
      * @return {?}
      */
     LyResizingCroppingImages.prototype.setScale = /**
      * Set the size of the image, the values can be 0 between 1, where 1 is the original size
-     * @param {?} size
+     * @param {?=} size
      * @param {?=} noAutoCrop
      * @return {?}
      */
     function (size, noAutoCrop) {
         // fix min scale
         /** @type {?} */
-        var newSize = size >= this.minScale && size <= 1 ? size : this.minScale;
+        var newSize = (/** @type {?} */ (size)) >= (/** @type {?} */ (this.minScale)) && (/** @type {?} */ (size)) <= 1 ? size : this.minScale;
         // check
         /** @type {?} */
         var changed = size != null && size !== this.scale && newSize !== this.scale;
@@ -331,9 +335,11 @@ var LyResizingCroppingImages = /** @class */ (function () {
         }
     };
     /**
+     * @private
      * @return {?}
      */
     LyResizingCroppingImages.prototype._getCenterPoints = /**
+     * @private
      * @return {?}
      */
     function () {
@@ -423,6 +429,9 @@ var LyResizingCroppingImages = /** @class */ (function () {
         var config = this.config;
         /** @type {?} */
         var startP = this.offset;
+        if (!scaleFix || !startP) {
+            return;
+        }
         // Limit for left
         if ((config.width / 2 / scaleFix) >= startP.left - (event.deltaX / scaleFix)) {
             x = startP.x + (startP.left) - (config.width / 2 / scaleFix);
@@ -448,10 +457,10 @@ var LyResizingCroppingImages = /** @class */ (function () {
         //   }
         // }
         if (x === void 0) {
-            x = (event.deltaX / scaleFix) + (this.offset.x);
+            x = (event.deltaX / scaleFix) + (startP.x);
         }
         if (y === void 0) {
-            y = (event.deltaY / scaleFix) + (this.offset.y);
+            y = (event.deltaY / scaleFix) + (startP.y);
         }
         this._setStylesForContImg({
             x: x, y: y
@@ -472,12 +481,12 @@ var LyResizingCroppingImages = /** @class */ (function () {
         var hostRect = this._rootRect();
         /** @type {?} */
         var croppingContainerRect = this._areaCropperRect();
-        if (x === void 0 && y === void 0) {
+        if (x === undefined && y === undefined) {
             x = this._imgRect.xc;
             y = this._imgRect.yc;
         }
-        x = (croppingContainerRect.x - hostRect.x) - (x - (this.config.width / 2));
-        y = (croppingContainerRect.y - hostRect.y) - (y - (this.config.height / 2));
+        x = (croppingContainerRect.x - hostRect.x) - ((/** @type {?} */ (x)) - (this.config.width / 2));
+        y = (croppingContainerRect.y - hostRect.y) - ((/** @type {?} */ (y)) - (this.config.height / 2));
         this._setStylesForContImg({
             x: x, y: y
         });
@@ -492,9 +501,11 @@ var LyResizingCroppingImages = /** @class */ (function () {
         this._cropIfAutoCrop();
     };
     /**
+     * @private
      * @return {?}
      */
     LyResizingCroppingImages.prototype._cropIfAutoCrop = /**
+     * @private
      * @return {?}
      */
     function () {
@@ -513,7 +524,7 @@ var LyResizingCroppingImages = /** @class */ (function () {
      */
     function () {
         /** @type {?} */
-        var scale = this._scal3Fix + .05;
+        var scale = (/** @type {?} */ (this._scal3Fix)) + .05;
         if (scale > 0 && scale <= 1) {
             this.setScale(scale);
         }
@@ -533,15 +544,15 @@ var LyResizingCroppingImages = /** @class */ (function () {
     function () {
         if (this.isLoaded) {
             this._imgRect = (/** @type {?} */ ({}));
-            this.offset = null;
-            this.scale = null;
-            this._scal3Fix = null;
+            this.offset = undefined;
+            this.scale = (/** @type {?} */ (undefined));
+            this._scal3Fix = undefined;
             this._rotation = 0;
-            this._minScale = null;
-            this._defaultType = null;
-            this._isLoadedImg = undefined;
-            this.isLoaded = null;
-            this.isCropped = undefined;
+            this._minScale = undefined;
+            this._defaultType = undefined;
+            this._isLoadedImg = false;
+            this.isLoaded = false;
+            this.isCropped = false;
             this._originalImgBase64 = undefined;
             /** @type {?} */
             var canvas = this._imgCanvas.nativeElement;
@@ -561,8 +572,8 @@ var LyResizingCroppingImages = /** @class */ (function () {
      */
     function () {
         /** @type {?} */
-        var scale = this._scal3Fix - .05;
-        if (scale > this.minScale && scale <= 1) {
+        var scale = (/** @type {?} */ (this._scal3Fix)) - .05;
+        if (scale > (/** @type {?} */ (this.minScale)) && scale <= 1) {
             this.setScale(scale);
         }
         else {
@@ -609,13 +620,7 @@ var LyResizingCroppingImages = /** @class */ (function () {
         var cropEvent = {
             name: this._fileName,
             type: this._defaultType,
-            dataURL: null,
-            width: null,
-            height: null,
-            scale: null,
             originalDataURL: src,
-            rotation: null,
-            position: null
         };
         img.src = src;
         /** @type {?} */
@@ -636,7 +641,7 @@ var LyResizingCroppingImages = /** @class */ (function () {
                 .onStable
                 .pipe(take(1))
                 .subscribe(function () { return _this._ngZone.run(function () {
-                _this.isLoaded = null;
+                _this.isLoaded = false;
                 if (fn) {
                     fn();
                 }
@@ -670,11 +675,11 @@ var LyResizingCroppingImages = /** @class */ (function () {
         /** @type {?} */
         var canvasClon = createCanvasImg(canvas);
         /** @type {?} */
-        var ctx = canvas.getContext('2d');
+        var ctx = (/** @type {?} */ (canvas.getContext('2d')));
         // clear
         ctx.clearRect(0, 0, canvasClon.width, canvasClon.height);
         // rotate canvas image
-        this._renderer.setStyle(canvas, 'transform', "rotate(" + validDegrees + "deg) scale(" + 1 / this._scal3Fix + ")");
+        this._renderer.setStyle(canvas, 'transform', "rotate(" + validDegrees + "deg) scale(" + 1 / (/** @type {?} */ (this._scal3Fix)) + ")");
         this._renderer.setStyle(canvas, 'transformOrigin', this._imgRect.xc + "px " + this._imgRect.yc + "px 0");
         var _a = (/** @type {?} */ (canvas.getBoundingClientRect())), x = _a.x, y = _a.y;
         // save rect
@@ -699,7 +704,7 @@ var LyResizingCroppingImages = /** @class */ (function () {
         // Update min scale
         this._minScale = getMinScale(this.config.width, this.config.height, canvas.width, canvas.height);
         // set the minimum scale, only if necessary
-        if (this.scale < this.minScale) {
+        if ((/** @type {?} */ (this.scale)) < (/** @type {?} */ (this.minScale))) {
             this.setScale(0, true);
         } //                ↑ no AutoCrop
         //                ↑ no AutoCrop
@@ -727,12 +732,14 @@ var LyResizingCroppingImages = /** @class */ (function () {
         this._cropIfAutoCrop();
     };
     /**
+     * @private
      * @param {?} img
      * @param {?} config
      * @param {?} quality
      * @return {?}
      */
     LyResizingCroppingImages.prototype.imageSmoothingQuality = /**
+     * @private
      * @param {?} img
      * @param {?} config
      * @param {?} quality
@@ -754,7 +761,7 @@ var LyResizingCroppingImages = /** @class */ (function () {
          * Context
          * @type {?}
          */
-        var octx = img.getContext('2d');
+        var octx = (/** @type {?} */ (img.getContext('2d')));
         /** @type {?} */
         var q = (Math.pow((quality * 10), numSteps)) / (Math.pow(10, numSteps));
         /** @type {?} */
@@ -784,7 +791,7 @@ var LyResizingCroppingImages = /** @class */ (function () {
          */
         var oc = document.createElement('canvas');
         /** @type {?} */
-        var ctx = oc.getContext('2d');
+        var ctx = (/** @type {?} */ (oc.getContext('2d')));
         oc.width = config.width;
         oc.height = config.height;
         ctx.drawImage(img, 0, 0, img.width * q, img.height * q, 0, 0, oc.width, oc.height);
@@ -815,15 +822,17 @@ var LyResizingCroppingImages = /** @class */ (function () {
         return cropEvent;
     };
     /**
-     * @ignore
+     * @docs-private
      */
     /**
-     * @ignore
+     * \@docs-private
+     * @private
      * @param {?} myConfig
      * @return {?}
      */
     LyResizingCroppingImages.prototype._imgCrop = /**
-     * @ignore
+     * \@docs-private
+     * @private
      * @param {?} myConfig
      * @return {?}
      */
@@ -831,9 +840,9 @@ var LyResizingCroppingImages = /** @class */ (function () {
         /** @type {?} */
         var canvasElement = document.createElement('canvas');
         /** @type {?} */
-        var imgRect = this._imgRect;
+        var imgRect = (/** @type {?} */ (this._imgRect));
         /** @type {?} */
-        var scaleFix = this._scal3Fix;
+        var scaleFix = (/** @type {?} */ (this._scal3Fix));
         /** @type {?} */
         var left = imgRect.xc - (myConfig.width / 2 / scaleFix);
         /** @type {?} */
@@ -846,7 +855,7 @@ var LyResizingCroppingImages = /** @class */ (function () {
         canvasElement.width = config.width / scaleFix;
         canvasElement.height = config.height / scaleFix;
         /** @type {?} */
-        var ctx = canvasElement.getContext('2d');
+        var ctx = (/** @type {?} */ (canvasElement.getContext('2d')));
         if (myConfig.fill) {
             ctx.fillStyle = myConfig.fill;
             ctx.fillRect(0, 0, canvasElement.width, canvasElement.height);
@@ -890,18 +899,22 @@ var LyResizingCroppingImages = /** @class */ (function () {
         return cropEvent;
     };
     /**
+     * @private
      * @return {?}
      */
     LyResizingCroppingImages.prototype._rootRect = /**
+     * @private
      * @return {?}
      */
     function () {
         return (/** @type {?} */ (this.elementRef.nativeElement.getBoundingClientRect()));
     };
     /**
+     * @private
      * @return {?}
      */
     LyResizingCroppingImages.prototype._areaCropperRect = /**
+     * @private
      * @return {?}
      */
     function () {
@@ -998,7 +1011,7 @@ function createCanvasImg(img) {
     /** @type {?} */
     var newCanvas = document.createElement('canvas');
     /** @type {?} */
-    var context = newCanvas.getContext('2d');
+    var context = (/** @type {?} */ (newCanvas.getContext('2d')));
     // set dimensions
     newCanvas.width = img.width;
     newCanvas.height = img.height;
@@ -1021,7 +1034,7 @@ function getMinScale(mw, mh, w, h) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var LyResizingCroppingImageModule = /** @class */ (function () {
     function LyResizingCroppingImageModule() {
@@ -1041,17 +1054,17 @@ var LyResizingCroppingImageModule = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 export { ImgResolution, LyResizingCroppingImages, LyResizingCroppingImageModule };

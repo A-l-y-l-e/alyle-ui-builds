@@ -6,7 +6,7 @@ import { LyTheme2, mixinBg, mixinColor, mixinDisabled, mixinDisableRipple, mixin
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class LyTabContent {
     /**
@@ -26,7 +26,7 @@ LyTabContent.ctorParameters = () => [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 const DEFAULT_DISABLE_RIPPLE = false;
@@ -430,6 +430,7 @@ class LyTabs extends LyTabsMixinBase {
         }
     }
     /**
+     * @private
      * @param {?} selectedIndex
      * @param {?} index
      * @return {?}
@@ -473,6 +474,7 @@ class LyTabs extends LyTabsMixinBase {
         }
     }
     /**
+     * @private
      * @return {?}
      */
     _updateStylesOfSelectedTab() {
@@ -530,6 +532,7 @@ class LyTabs extends LyTabsMixinBase {
         }
     }
     /**
+     * @private
      * @param {?} val
      * @return {?}
      */
@@ -681,7 +684,7 @@ class LyTabLabel extends LyButton {
             const tabContainer = (/** @type {?} */ (this._tabs.tabsRef.nativeElement));
             if (tabContainer.scrollWidth !== tabContainer.offsetWidth) {
                 /** @type {?} */
-                const dir = this._theme.config.direction;
+                const dir = this._theme.variables.direction;
                 /** @type {?} */
                 const max = tabContainer.scrollWidth - tabContainer.offsetWidth;
                 /** @type {?} */
@@ -738,7 +741,7 @@ LyTabLabel.propDecorators = {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class LyTabsModule {
 }
@@ -752,17 +755,17 @@ LyTabsModule.decorators = [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 export { LyTabsBase, LyTabsMixinBase, LyTabLabelBase, LyTabLabelMixinBase, LyTabs, LyTab, LyTabLabel, LyTabsModule, LyTabContent as ɵa };

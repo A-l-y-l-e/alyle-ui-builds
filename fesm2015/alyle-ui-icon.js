@@ -7,7 +7,7 @@ import { map, share, take } from 'rxjs/operators';
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 const STYLE_PRIORITY = -2;
@@ -90,6 +90,9 @@ class LyIconService {
         if (!this.svgMap.has(key)) {
             /** @type {?} */
             const sanitizedLiteral = this._sanitizer.sanitize(SecurityContext.HTML, literal);
+            if (!sanitizedLiteral) {
+                throw new Error(`LyIconService: Failed sanitize '${key}'`);
+            }
             /** @type {?} */
             const svg = this._textToSvg(sanitizedLiteral);
             this.svgMap.set(key, {
@@ -98,6 +101,7 @@ class LyIconService {
         }
     }
     /**
+     * @private
      * @param {?} str
      * @return {?}
      */
@@ -110,6 +114,7 @@ class LyIconService {
         return svg;
     }
     /**
+     * @private
      * @param {?} svg
      * @param {?} key
      * @return {?}
@@ -117,8 +122,8 @@ class LyIconService {
     _cacheSvgIcon(svg, key) {
         /** @type {?} */
         const svgIconInfo = this.svgMap.get(key);
-        if (!svgIconInfo.svg) {
-            this.svgMap.get(key).svg = svg;
+        if (!(/** @type {?} */ (svgIconInfo)).svg) {
+            (/** @type {?} */ (this.svgMap.get(key))).svg = svg;
         }
     }
     /**
@@ -126,11 +131,14 @@ class LyIconService {
      * @return {?}
      */
     getSvg(key) {
-        return this.svgMap.get(key);
+        if (!this.svgMap.has(key)) {
+            throw new Error(`LyIconService: Icon ${key} not found`);
+        }
+        return (/** @type {?} */ (this.svgMap.get(key)));
     }
     /**
      * Set default className for `ly-icon`
-     * @param {?} className class name
+     * @param {?=} className class name
      * @param {?=} prefix Class prefix,
      * For example if you use FontAwesome your prefix would be `fa-`,
      * then in the template it is no longer necessary to use the prefix
@@ -180,7 +188,7 @@ LyIconService.ctorParameters = () => [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 const STYLE_PRIORITY$1 = -2;
@@ -269,12 +277,14 @@ class LyIcon extends LyIconMixinBase {
         this.updateStyle(this._el);
     }
     /**
+     * @private
      * @return {?}
      */
     _isDefault() {
         return !(this.icon || this.fontSet);
     }
     /**
+     * @private
      * @param {?} svgIcon
      * @return {?}
      */
@@ -283,14 +293,14 @@ class LyIcon extends LyIconMixinBase {
             this._appendChild((/** @type {?} */ (svgIcon.svg.cloneNode(true))));
         }
         else {
-            svgIcon.obs
-                .pipe(take(1))
+            (/** @type {?} */ (svgIcon.obs)).pipe(take(1))
                 .subscribe((svgElement) => {
                 this._appendChild((/** @type {?} */ (svgElement.cloneNode(true))));
             });
         }
     }
     /**
+     * @private
      * @param {?} svg
      * @return {?}
      */
@@ -301,16 +311,18 @@ class LyIcon extends LyIconMixinBase {
         this._renderer.appendChild(this._el.nativeElement, svg);
     }
     /**
+     * @private
      * @return {?}
      */
     _appendDefaultSvgIcon() {
         this._appendChild(this.iconService.defaultSvgIcon);
     }
     /**
+     * @private
      * @return {?}
      */
     _updateClass() {
-        if (this._isDefault()) {
+        if (this._isDefault() && this.iconService.defaultClass) {
             this._renderer.addClass(this._el.nativeElement, this.iconService.defaultClass);
         }
     }
@@ -337,6 +349,7 @@ class LyIcon extends LyIconMixinBase {
     /**
      * run only browser
      * remove current icon
+     * @private
      * @return {?}
      */
     _cleanIcon() {
@@ -344,10 +357,11 @@ class LyIcon extends LyIconMixinBase {
         const icon = this._iconElement;
         if (icon) {
             this._renderer.removeChild(this._el.nativeElement, icon);
-            this._iconElement = null;
+            this._iconElement = undefined;
         }
     }
     /**
+     * @private
      * @return {?}
      */
     _updateFontClass() {
@@ -371,6 +385,9 @@ class LyIcon extends LyIconMixinBase {
         }
         if (iconClass) {
             this._previousFontSet = iconClass;
+        }
+        else {
+            throw new Error(`Icon with key${fontSetKey} not found`);
         }
         this._currentClass = `${iconClass.prefix}${icon}`;
         this._renderer.addClass(el, this._currentClass);
@@ -404,7 +421,7 @@ LyIcon.propDecorators = {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class LyIconModule {
 }
@@ -417,17 +434,17 @@ LyIconModule.decorators = [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 export { LyIconModule, LyIconService, LyIconBase, LyIconMixinBase, LyIcon };

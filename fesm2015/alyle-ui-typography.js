@@ -3,7 +3,7 @@ import { LyTheme2, toBoolean, LyCommonModule } from '@alyle/ui';
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 const STYLE_PRIORITY = -1;
@@ -47,7 +47,7 @@ class LyTypography {
             }
             else if (this._lyTypClass) {
                 this.renderer.removeClass(this.elementRef.nativeElement, this._lyTypClass);
-                this._lyTypClass = null;
+                this._lyTypClass = undefined;
             }
         }
     }
@@ -75,7 +75,7 @@ class LyTypography {
         }
         else if (this._noWrapClass) {
             this.renderer.removeClass(this.elementRef.nativeElement, this._noWrapClass);
-            this._noWrapClass = null;
+            this._noWrapClass = undefined;
         }
     }
     /**
@@ -148,8 +148,9 @@ class LyTypography {
         }
     }
     /**
+     * @private
      * @param {?} key
-     * @param {?} instance
+     * @param {?=} instance
      * @return {?}
      */
     _createTypClass(key, instance) {
@@ -171,6 +172,7 @@ class LyTypography {
         }, this.elementRef.nativeElement, instance, STYLE_PRIORITY);
     }
     /**
+     * @private
      * @param {?} name
      * @param {?} val
      * @param {?} instance
@@ -206,7 +208,7 @@ LyTypography.propDecorators = {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class LyTypographyModule {
 }
@@ -219,17 +221,17 @@ LyTypographyModule.decorators = [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 export { LyTypographyModule, LyTypography };

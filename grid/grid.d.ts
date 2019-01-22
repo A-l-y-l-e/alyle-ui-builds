@@ -24,18 +24,18 @@ export declare class LyGrid {
      */
     readonly classes: Record<"root", string>;
     private _spacing;
-    _spacingClass: string;
+    _spacingClass?: string;
     private _spacingX;
-    _spacingXClass: string;
+    _spacingXClass?: string;
     private _spacingY;
-    _spacingYClass: string;
-    private _negativeMarginClass;
+    _spacingYClass?: string;
+    private _negativeMarginClass?;
     private _justify;
-    private _justifyClass;
+    private _justifyClass?;
     private _direction;
-    private _directionClass;
+    private _directionClass?;
     private _alignItems;
-    private _alignItemsClass;
+    private _alignItemsClass?;
     spacingX: string | number;
     spacingY: string | number;
     /**

@@ -47,7 +47,7 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /** @type {?} */
     var STYLE_PRIORITY = -2;
@@ -155,7 +155,6 @@
              * \@docs-private
              */
             this.classes = this._theme.addStyleSheet(STYLES, STYLE_PRIORITY);
-            this._value = new UndefinedValue;
             /**
              * \@docs-private
              */
@@ -317,10 +316,10 @@
                         radioButton.checked = false;
                     }
                 });
-                if (!newChecked) {
+                if (!( /** @type {?} */(newChecked))) {
                     /** when val not exist in radio button !==  */
                     this._controlValueAccessorChangeFn(null);
-                    if (this._value !== null) {
+                    if (this._value != null) {
                         this._value = null;
                     }
                 }
@@ -536,7 +535,7 @@
                 }
                 else if (this._disabledClass) {
                     this._renderer.removeClass(this._elementRef.nativeElement, this.classes.disabled);
-                    this._disabledClass = null;
+                    this._disabledClass = undefined;
                 }
                 this._disabled = ui.toBoolean(value);
                 this._markForCheck();
@@ -601,6 +600,7 @@
          * @return {?}
          */
             function () {
+                this._focusState.unlisten(this._elementRef);
                 this._removeRippleEvents();
             };
         /**
@@ -618,9 +618,11 @@
                 this._addAnim();
             };
         /**
+         * @private
          * @return {?}
          */
         LyRadio.prototype._addAnim = /**
+         * @private
          * @return {?}
          */
             function () {
@@ -698,17 +700,17 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
 
     exports.LY_RADIO_CONTROL_VALUE_ACCESSOR = LY_RADIO_CONTROL_VALUE_ACCESSOR;

@@ -7,7 +7,7 @@ import { InjectionToken, Injectable, Optional, Inject, RendererFactory2, ViewEnc
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @param {?} hexcolor
@@ -27,12 +27,12 @@ function getContrastYIQ(hexcolor) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 const chroma = _chroma;
@@ -117,7 +117,7 @@ function shadowBuilder(elevation, color) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 const THEME_VARIABLES = new InjectionToken('ly.theme.variables');
@@ -126,7 +126,7 @@ const IS_CORE_THEME = new InjectionToken('ly.is.root');
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 // Whether the current platform supports the V8 Break Iterator. The V8 check
 // is necessary to detect all Blink based browsers.
@@ -169,7 +169,7 @@ Platform.SAFARI = Platform.isBrowser && /safari/i.test(navigator.userAgent) && P
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 let supportsPassive;
@@ -185,8 +185,8 @@ function supportsPassiveEventListeners() {
                     supportsPassive = true;
                 }
             });
-            window.addEventListener('testPassive', null, opts);
-            window.removeEventListener('testPassive', null, opts);
+            window.addEventListener('testPassive', (/** @type {?} */ (null)), opts);
+            window.removeEventListener('testPassive', (/** @type {?} */ (null)), opts);
         }
         catch (e) { }
     }
@@ -195,12 +195,12 @@ function supportsPassiveEventListeners() {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 const LY_THEME_GLOBAL_VARIABLES = new InjectionToken('ly.theme.global.variables');
@@ -211,7 +211,7 @@ const LY_THEME_NAME = new InjectionToken('ly.theme.name');
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class LyStyleUtils {
     /**
@@ -273,7 +273,7 @@ const DirPosition = {
  * get color of object
  * @param {?} obj object
  * @param {?} path path
- * @param {?} optional get optional value, if not exist return default if not is string
+ * @param {?=} optional get optional value, if not exist return default if not is string
  * @return {?}
  */
 function get(obj, path, optional) {
@@ -319,16 +319,16 @@ function eachMedia(str, fn) {
             const len = valItem.length;
             if (len) {
                 for (let j = 0; j < len; j++) {
-                    fn.call(undefined, value, valItem[j], len);
+                    fn.call(undefined, value, valItem[j], index);
                 }
             }
             else {
-                fn.call(undefined, value, undefined, len);
+                fn.call(undefined, value, null, index);
             }
         }
     }
     else {
-        fn.call(undefined, str, undefined, 0);
+        fn.call(undefined, str, null, 0);
     }
 }
 /**
@@ -369,7 +369,7 @@ function mergeDeep(target, ...sources) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class CoreTheme {
     /**
@@ -398,7 +398,7 @@ class CoreTheme {
             if (nodes.length) {
                 for (let index = 0; index < nodes.length; index++) {
                     /** @type {?} */
-                    const element = nodes.item(index);
+                    const element = (/** @type {?} */ (nodes.item(index)));
                     ((/** @type {?} */ (_document.body))).removeChild(element);
                 }
             }
@@ -474,7 +474,7 @@ CoreTheme.ctorParameters = () => [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @enum {string} */
 const YPosition = {
@@ -488,106 +488,8 @@ const XPosition = {
     left: 'left',
     right: 'right',
 };
-/**
- * @deprecated in favor of `Positioning`
- * @param {?} placement
- * @param {?} xPosition
- * @param {?} yPosition
- * @param {?} origin
- * @param {?} overlayElement
- * @param {?} themeVariables
- * @param {?=} offset
- * @return {?}
- */
-function getPosition(placement, xPosition, yPosition, origin, overlayElement, themeVariables, offset = 0) {
-    return createPosition(placement, xPosition, yPosition, origin, overlayElement, themeVariables, offset);
-}
-/**
- * @param {?} placement
- * @param {?} xPosition
- * @param {?} yPosition
- * @param {?} origin
- * @param {?} overlayElement
- * @param {?} themeVariables
- * @param {?=} offset
- * @return {?}
- */
-function createPosition(placement, xPosition, yPosition, origin, overlayElement, themeVariables, offset = 0) {
-    /** @type {?} */
-    const originRect = (/** @type {?} */ (origin.getBoundingClientRect()));
-    /** @type {?} */
-    const overlayElementRect = (/** @type {?} */ (overlayElement.getBoundingClientRect()));
-    if (xPosition && yPosition) {
-        throw new Error(`You can not use \`xPosition\` and \`yPosition\` together, use only one of them.`);
-    }
-    if ((xPosition || yPosition) && !placement) {
-        throw new Error(`\`placement\` is required.`);
-    }
-    /** @type {?} */
-    let x = 0;
-    /** @type {?} */
-    let y = 0;
-    /** @type {?} */
-    let ox = 'center';
-    /** @type {?} */
-    let oy = 'center';
-    if (placement || xPosition || yPosition) {
-        if (placement) {
-            if (placement === YPosition.above) {
-                x = (originRect.width - overlayElementRect.width) / 2;
-                y = -overlayElementRect.height - offset;
-                oy = 'bottom';
-            }
-            else if (placement === YPosition.below) {
-                x = (originRect.width - overlayElementRect.width) / 2;
-                y = originRect.height + offset;
-                oy = 'top';
-            }
-            else {
-                /** @type {?} */
-                const dir = themeVariables.getDirection((/** @type {?} */ (placement)));
-                if (dir === DirPosition.left) {
-                    ox = '100%';
-                    x = -overlayElementRect.width - offset;
-                    y = (originRect.height - overlayElementRect.height) / 2;
-                }
-                else if (dir === DirPosition.right) {
-                    ox = '0%';
-                    x = originRect.width + offset;
-                    y = (originRect.height - overlayElementRect.height) / 2;
-                }
-            }
-        }
-        if (xPosition) {
-            /** @type {?} */
-            const dir = themeVariables.getDirection((/** @type {?} */ (xPosition)));
-            if (dir === DirPosition.right) {
-                ox = '0%';
-                x = 0;
-            }
-            else if (dir === DirPosition.left) {
-                ox = '100%';
-                x = originRect.width - overlayElementRect.width;
-            }
-        }
-        else if (yPosition) {
-            if (yPosition === YPosition.above) {
-                y = 0;
-                oy = '0%';
-            }
-            else if (yPosition === YPosition.below) {
-                y = originRect.height - overlayElementRect.height;
-                oy = '100%';
-            }
-        }
-    }
-    return {
-        x: Math.round(x),
-        y: Math.round(y),
-        ox,
-        oy
-    };
-}
+/** @type {?} */
+const INITIAL_WH = 'initial';
 class Positioning {
     /**
      * @param {?} placement
@@ -595,54 +497,62 @@ class Positioning {
      * @param {?} yPosition
      * @param {?} origin
      * @param {?} overlayElement
-     * @param {?} themeVariables
+     * @param {?} _themeVariables
      * @param {?=} offset
      */
-    constructor(placement, xPosition, yPosition, origin, overlayElement, themeVariables, offset = 0) {
+    constructor(placement, xPosition, yPosition, origin, overlayElement, _themeVariables, offset = 0) {
         this.placement = placement;
         this.xPosition = xPosition;
         this.yPosition = yPosition;
         this.origin = origin;
         this.overlayElement = overlayElement;
-        this.themeVariables = themeVariables;
+        this._themeVariables = _themeVariables;
         this.offset = offset;
-        this.offsetCheck = 16;
-        this.originRect = (/** @type {?} */ (this.origin.getBoundingClientRect()));
-        this.overlayElementRect = (/** @type {?} */ (this.overlayElement.getBoundingClientRect()));
+        this._offsetCheck = 16;
+        this._originRect = (/** @type {?} */ (this.origin.getBoundingClientRect()));
+        this._overlayElementRect = (/** @type {?} */ (this.overlayElement.getBoundingClientRect()));
+        this.width = INITIAL_WH;
+        this.height = INITIAL_WH;
+        /** @type {?} */
+        const offsetCheckx2 = this._offsetCheck * 2;
         this.createPosition();
         for (let index = 0; index < 2; index++) {
             if (this.checkAll()) {
                 this.createPosition();
             }
         }
-        // Where there is not enough space
+        // when there is not enough space
         if (this.checkAll()) {
             /** @type {?} */
-            const _max_width = this.overlayElementRect.width + this.offsetCheck * 2 > window.innerWidth;
+            const _max_width = this._overlayElementRect.width + offsetCheckx2 > window.innerWidth;
             /** @type {?} */
-            const _max_height = this.overlayElementRect.height + this.offsetCheck * 2 > window.innerHeight;
+            const _max_height = this._overlayElementRect.height + offsetCheckx2 > window.innerHeight;
             if (_max_width || _max_height) {
                 if (_max_height) {
-                    this.y = this.originRect.y - this.offsetCheck;
-                    this.y *= -1;
+                    this.y = this._offsetCheck;
+                    this.height = `${window.innerHeight - offsetCheckx2}px`;
                 }
                 if (_max_width) {
-                    this.x = this.originRect.x - this.offsetCheck;
-                    this.x *= -1;
+                    this.x = this._offsetCheck;
+                    this.width = `${window.innerWidth - offsetCheckx2}px`;
                 }
             }
-            else if (this.checkBottom()) {
-                this.y += (/** @type {?} */ (this.checkBottom(true)));
+            else {
+                if (this.checkBottom()) {
+                    this.y += (/** @type {?} */ (this.checkBottom(true)));
+                }
+                else if (this.checkTop()) {
+                    this.y -= (/** @type {?} */ (this.checkTop(true)));
+                }
+                if (this.checkRight()) {
+                    this.x += (/** @type {?} */ (this.checkRight(true)));
+                }
+                else if (this.checkLeft()) {
+                    this.x -= (/** @type {?} */ (this.checkLeft(true)));
+                }
             }
-            else if (this.checkTop()) {
-                this.y -= (/** @type {?} */ (this.checkTop(true)));
-            }
-            if (this.checkRight()) {
-                this.x += (/** @type {?} */ (this.checkRight(true)));
-            }
-            else if (this.checkLeft()) {
-                this.x -= (/** @type {?} */ (this.checkLeft(true)));
-            }
+            // update origin
+            this.updateOrigin();
         }
         // round result
         this.x = Math.round(this.x);
@@ -651,6 +561,7 @@ class Positioning {
         this.ay = Math.round(this.ay);
     }
     /**
+     * @private
      * @return {?}
      */
     createPosition() {
@@ -661,67 +572,67 @@ class Positioning {
             throw new Error(`\`placement\` is required.`);
         }
         /** @type {?} */
-        let x = 0;
+        let x = this._originRect.x;
         /** @type {?} */
-        let y = 0;
+        let y = this._originRect.y;
         /** @type {?} */
         let ox = 'center';
         /** @type {?} */
         let oy = 'center';
-        if (this.placement || this.xPosition || this.yPosition) {
+        if (this.placement) {
             if (this.placement) {
                 if (this.placement === YPosition.above) {
-                    x = (this.originRect.width - this.overlayElementRect.width) / 2;
-                    y = -this.overlayElementRect.height - this.offset;
+                    x += (this._originRect.width - this._overlayElementRect.width) / 2;
+                    y += -this._overlayElementRect.height - this.offset;
                     oy = 'bottom';
                 }
                 else if (this.placement === YPosition.below) {
-                    x = (this.originRect.width - this.overlayElementRect.width) / 2;
-                    y = this.originRect.height + this.offset;
+                    x += (this._originRect.width - this._overlayElementRect.width) / 2;
+                    y += this._originRect.height + this.offset;
                     oy = 'top';
                 }
                 else {
                     /** @type {?} */
-                    const dir = this.themeVariables.getDirection((/** @type {?} */ (this.placement)));
+                    const dir = this._themeVariables.getDirection((/** @type {?} */ (this.placement)));
                     if (dir === DirPosition.left) {
                         ox = '100%';
-                        x = -this.overlayElementRect.width - this.offset;
-                        y = (this.originRect.height - this.overlayElementRect.height) / 2;
+                        x += -this._overlayElementRect.width - this.offset;
+                        y += (this._originRect.height - this._overlayElementRect.height) / 2;
                     }
                     else if (dir === DirPosition.right) {
                         ox = '0%';
-                        x = this.originRect.width + this.offset;
-                        y = (this.originRect.height - this.overlayElementRect.height) / 2;
+                        x += this._originRect.width + this.offset;
+                        y += (this._originRect.height - this._overlayElementRect.height) / 2;
                     }
                 }
             }
             if (this.xPosition) {
                 /** @type {?} */
-                const dir = this.themeVariables.getDirection((/** @type {?} */ (this.xPosition)));
+                const dir = this._themeVariables.getDirection((/** @type {?} */ (this.xPosition)));
                 if (dir === DirPosition.right) {
                     ox = '0%';
-                    x = 0;
+                    x = this._originRect.x;
                 }
                 else if (dir === DirPosition.left) {
                     ox = '100%';
-                    x = this.originRect.width - this.overlayElementRect.width;
+                    x = this._originRect.x + this._originRect.width - this._overlayElementRect.width;
                 }
             }
             else if (this.yPosition) {
                 if (this.yPosition === YPosition.above) {
-                    y = 0;
+                    y = this._originRect.y;
                     oy = '0%';
                 }
                 else if (this.yPosition === YPosition.below) {
-                    y = this.originRect.height - this.overlayElementRect.height;
+                    y = this._originRect.y + this._originRect.height - this._overlayElementRect.height;
                     oy = '100%';
                 }
             }
         }
         this.x = x;
         this.y = y;
-        this.ax = x + this.overlayElementRect.x;
-        this.ay = y + this.overlayElementRect.y;
+        this.ax = x;
+        this.ay = y;
         this.ox = ox;
         this.oy = oy;
         return {
@@ -732,12 +643,13 @@ class Positioning {
         };
     }
     /**
+     * @private
      * @param {?=} returnVal
      * @return {?}
      */
     checkLeft(returnVal) {
         /** @type {?} */
-        const rest = this.ax - this.offsetCheck;
+        const rest = this.ax - this._offsetCheck;
         if (returnVal) {
             return rest;
         }
@@ -753,12 +665,13 @@ class Positioning {
         return false;
     }
     /**
+     * @private
      * @param {?=} returnVal
      * @return {?}
      */
     checkRight(returnVal) {
         /** @type {?} */
-        const rest = window.innerWidth - (this.ax + this.overlayElementRect.width + this.offsetCheck);
+        const rest = window.innerWidth - (this.ax + this._overlayElementRect.width + this._offsetCheck);
         if (returnVal) {
             return rest;
         }
@@ -774,12 +687,13 @@ class Positioning {
         return false;
     }
     /**
+     * @private
      * @param {?=} returnVal
      * @return {?}
      */
     checkTop(returnVal) {
         /** @type {?} */
-        const rest = this.ay - this.offsetCheck;
+        const rest = this.ay - this._offsetCheck;
         if (returnVal) {
             return rest;
         }
@@ -795,12 +709,13 @@ class Positioning {
         return false;
     }
     /**
+     * @private
      * @param {?=} returnVal
      * @return {?}
      */
     checkBottom(returnVal) {
         /** @type {?} */
-        const rest = window.innerHeight - (this.ay + this.overlayElementRect.height + this.offsetCheck);
+        const rest = window.innerHeight - (this.ay + this._overlayElementRect.height + this._offsetCheck);
         if (returnVal) {
             return rest;
         }
@@ -816,6 +731,7 @@ class Positioning {
         return false;
     }
     /**
+     * @private
      * @return {?}
      */
     checkAll() {
@@ -823,6 +739,22 @@ class Positioning {
             this.checkRight() ||
             this.checkTop() ||
             this.checkBottom();
+    }
+    /**
+     * @private
+     * @return {?}
+     */
+    updateOrigin() {
+        /** @type {?} */
+        const oax = this._originRect.x + this._originRect.width / 2;
+        /** @type {?} */
+        const oay = this._originRect.y + this._originRect.height / 2;
+        /** @type {?} */
+        const vax = this.x + this._overlayElementRect.width / 2;
+        /** @type {?} */
+        const vay = this.y + this._overlayElementRect.height / 2;
+        this.ox = `${oax - vax + this._overlayElementRect.width / 2}px`;
+        this.oy = `${oay - vay + this._overlayElementRect.height / 2}px`;
     }
 }
 /**
@@ -848,11 +780,12 @@ function invertPlacement(placement) {
     else if (placement === XPosition.left) {
         return XPosition.right;
     }
+    return placement;
 }
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 const defaultStyles = {
@@ -918,12 +851,24 @@ class LyTheme2 {
         }
     }
     /**
+     * Get Theme Variables
+     * @return {?}
+     */
+    get variables() {
+        return this.config;
+    }
+    /**
      * @param {?} themeName
      * @return {?}
      */
     setUpTheme(themeName) {
         if (!this.config) {
-            this.config = this.core.get(themeName);
+            /** @type {?} */
+            const theme = this.core.get(themeName);
+            if (theme === undefined) {
+                throw new Error(`Theme ${themeName} not found in CoreTheme`);
+            }
+            this.config = theme;
             this._styleMap = new Map();
             this.elements = themeName in this.stylesInDocument.styles
                 ? this.stylesInDocument.styles[themeName]
@@ -943,7 +888,7 @@ class LyTheme2 {
     /**
      * Add a new dynamic style, use only within \@Input()
      * @param {?} id Unique id
-     * @param {?} style Styles
+     * @param {?=} style Styles
      * @param {?=} el Element
      * @param {?=} instance The instance of this, this replaces the existing style with a new one when it changes
      * @param {?=} priority
@@ -952,7 +897,7 @@ class LyTheme2 {
      */
     addStyle(id, style, el, instance, priority, parentStyle) {
         /** @type {?} */
-        const newClass = (/** @type {?} */ (this._createStyleContent2((/** @type {?} */ (style)), id, priority, TypeStyle.OnlyOne, false, parentStyle)));
+        const newClass = (/** @type {?} */ (this._createStyleContent2(style, id, priority, TypeStyle.OnlyOne, false, parentStyle)));
         if (newClass === instance) {
             return newClass;
         }
@@ -965,6 +910,7 @@ class LyTheme2 {
         return newClass;
     }
     /**
+     * @private
      * @param {?} element
      * @param {?} renderer
      * @param {?} newClassname
@@ -997,8 +943,13 @@ class LyTheme2 {
             throw new Error(`\`theme.setTheme('theme-name')\` is only available in browser platform`);
         }
         if (nam !== this.config.name) {
-            this.themeMap.get(this.initialTheme).change = nam;
-            this.config = this.core.get(nam);
+            /** @type {?} */
+            const theme = this.themeMap.get(this.initialTheme);
+            if (theme == null) {
+                throw new Error(`Theme ${nam} not found in themeMap`);
+            }
+            theme.change = nam;
+            this.config = (/** @type {?} */ (this.core.get(nam)));
             this._updateAllStyles();
         }
     }
@@ -1013,12 +964,13 @@ class LyTheme2 {
         this._updateAllStyles();
     }
     /**
+     * @private
      * @return {?}
      */
     _updateAllStyles() {
         this.elements.forEach((_, key) => {
             /** @type {?} */
-            const styleData = STYLE_MAP5.get(key);
+            const styleData = (/** @type {?} */ (STYLE_MAP5.get(key)));
             if (styleData.requireUpdate) {
                 this._createStyleContent2(styleData.styles, styleData.id, styleData.priority, styleData.type, true, styleData.parentStyle);
             }
@@ -1037,6 +989,7 @@ class LyTheme2 {
         return (/** @type {?} */ (this._createStyleContent2((/** @type {?} */ (css)), id, priority, TypeStyle.OnlyOne, false, parentStyle)));
     }
     /**
+     * @private
      * @return {?}
      */
     _addDefaultStyles() {
@@ -1053,6 +1006,7 @@ class LyTheme2 {
         return this._createStyleContent2(styles, null, priority, TypeStyle.Multiple);
     }
     /**
+     * @private
      * @param {?} styles
      * @param {?} id
      * @param {?} priority
@@ -1063,14 +1017,14 @@ class LyTheme2 {
      */
     _createStyleContent2(styles, id, priority, type, forChangeTheme, parentStyle) {
         /** @type {?} */
-        const newId = (/** @type {?} */ (id)) || styles;
+        const newId = id || (/** @type {?} */ (styles));
         /** @type {?} */
-        let isNewStyle;
+        let isNewStyle = null;
         if (!STYLE_MAP5.has(newId)) {
             isNewStyle = true;
             STYLE_MAP5.set(newId, {
                 priority,
-                styles,
+                styles: (/** @type {?} */ (styles)),
                 type,
                 css: {},
                 id,
@@ -1078,7 +1032,7 @@ class LyTheme2 {
             });
         }
         /** @type {?} */
-        const styleMap = STYLE_MAP5.get(newId);
+        const styleMap = (/** @type {?} */ (STYLE_MAP5.get(newId)));
         /** @type {?} */
         const themeName = this.initialTheme;
         /** @type {?} */
@@ -1090,19 +1044,19 @@ class LyTheme2 {
              */
             let css;
             /** @type {?} */
-            const themeMap = this.themeMap.get(this.initialTheme);
+            const themeMap = (/** @type {?} */ (this.themeMap.get(this.initialTheme)));
             /** @type {?} */
-            const config = this.core.get(themeMap.change || themeName);
+            const config = (/** @type {?} */ (this.core.get(themeMap.change || themeName)));
             if (typeof styles === 'function') {
                 styleMap.requireUpdate = true;
-                css = groupStyleToString(styleMap, styles(config), themeName, id, type, config);
+                css = groupStyleToString(styleMap, (/** @type {?} */ (styles(config))), themeName, id, type, config);
                 if (!forChangeTheme) {
                     styleMap.css[themeName] = css;
                 }
             }
             else {
                 /** create a new id for style that does not <-<require>-> changes */
-                css = groupStyleToString(styleMap, styles, themeName, (/** @type {?} */ (newId)), type, config);
+                css = groupStyleToString(styleMap, (/** @type {?} */ (styles)), themeName, (/** @type {?} */ (newId)), type, config);
                 styleMap.css = css;
             }
             if (!this.elements.has(newId)) {
@@ -1121,7 +1075,7 @@ class LyTheme2 {
             }
             if (forChangeTheme) {
                 /** @type {?} */
-                const el = this.elements.get(newId);
+                const el = (/** @type {?} */ (this.elements.get(newId)));
                 el.innerText = css;
             }
         }
@@ -1148,10 +1102,12 @@ class LyTheme2 {
         return styleMap.classes || styleMap[themeName];
     }
     /**
-     * @param {?=} priority
+     * @private
+     * @param {?} priority
      * @return {?}
      */
-    _createStyleContainer(priority = 0) {
+    _createStyleContainer(priority) {
+        priority = priority || 0;
         const { styleContainers } = this.stylesInDocument;
         if (!styleContainers.has(priority)) {
             /** @type {?} */
@@ -1174,6 +1130,7 @@ class LyTheme2 {
         return styleContainers.get(priority);
     }
     /**
+     * @private
      * @param {?} index
      * @return {?}
      */
@@ -1186,6 +1143,7 @@ class LyTheme2 {
         return (key !== undefined && styleContainers.get(key)) || this.core.firstElement;
     }
     /**
+     * @private
      * @param {?} css
      * @return {?}
      */
@@ -1250,11 +1208,14 @@ function groupStyleToString(styleMap, styles, themeName, id, typeStyle, themeVar
             rules = `.${className}{${styles}}`;
         }
         else {
-            rules = styleToString(id, null, styles, themeVariables, (/** @type {?} */ (className)));
+            rules = styleToString(id, null, (/** @type {?} */ (styles)), themeVariables, (/** @type {?} */ (className)));
         }
         if (styleMap.parentStyle) {
             /** @type {?} */
             const styleMapOfParentStyle = STYLE_MAP5.get(styleMap.parentStyle);
+            if (!styleMapOfParentStyle) {
+                throw new Error(`The parentStyle not exist or is called before being created.`);
+            }
             return replaceRefs(rules, styleMapOfParentStyle[themeName]);
         }
         return rules;
@@ -1351,7 +1312,7 @@ function styleToString(key, $name, ob, themeVariables, currentKey, parentKey) {
                     subContent += styleToString(key, $name, (/** @type {?} */ (element)), themeVariables, styleKey, newKey);
                 }
                 else {
-                    keyAndValue += convertToStyleValue(styleKey, element, themeVariables);
+                    keyAndValue += convertToStyleValue(styleKey, (/** @type {?} */ (element)), themeVariables);
                 }
             }
         }
@@ -1562,7 +1523,7 @@ function createNextKeyframeId() {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class NgTranscludeDirective {
     /**
@@ -1588,7 +1549,7 @@ class NgTranscludeDirective {
     /**
      * @return {?}
      */
-    get ngTransclude() {
+    get getNgTransclude() {
         return this._ngTransclude;
     }
     /**
@@ -1629,7 +1590,7 @@ function getNativeElement(element) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 const DEFAULT_VALUE = '';
@@ -1722,7 +1683,7 @@ function mixinStyleUpdater(base) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @param {?} value
@@ -1734,7 +1695,7 @@ function toBoolean(value) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class RippleRef {
     constructor() {
@@ -1793,12 +1754,14 @@ class Ripple {
         this.config = config;
     }
     /**
+     * @private
      * @return {?}
      */
     get _rectContainer() {
         return this._containerElement.getBoundingClientRect();
     }
     /**
+     * @private
      * @param {?} element
      * @return {?}
      */
@@ -1811,6 +1774,7 @@ class Ripple {
         this._triggerElement = element;
     }
     /**
+     * @private
      * @param {?} styles
      * @return {?}
      */
@@ -1836,6 +1800,7 @@ class Ripple {
         container.style.transform = `scale(1)`;
     }
     /**
+     * @private
      * @param {?} event
      * @return {?}
      */
@@ -1847,6 +1812,7 @@ class Ripple {
         }
     }
     /**
+     * @private
      * @param {?} _event
      * @return {?}
      */
@@ -1889,6 +1855,7 @@ class Ripple {
         });
     }
     /**
+     * @private
      * @param {?} fn
      * @param {?=} delay
      * @return {?}
@@ -1901,7 +1868,7 @@ class Ripple {
      */
     endRipple() {
         /** @type {?} */
-        const rippleRef = this._rippleRef || null;
+        const rippleRef = this._rippleRef;
         /** @type {?} */
         const duration = this._transitionDuration;
         if (rippleRef && rippleRef.state) {
@@ -1913,11 +1880,11 @@ class Ripple {
                 // }, rippleRef.timestamp < duration ? duration / (duration * .001 + 1) : 0);
             }, rippleRef.timestamp < duration ? duration * .15 : 0);
             this.runTimeoutOutsideZone(() => {
-                rippleRef.container.parentNode.removeChild(rippleRef.container);
+                (/** @type {?} */ (rippleRef.container.parentNode)).removeChild(rippleRef.container);
                 // }, rippleRef.timestamp < duration ? duration * 2 : duration);
                 // }, rippleRef.timestamp < duration ? duration / (duration * .001 + 1) * 2 : duration);
             }, rippleRef.timestamp < duration ? duration * 2 : duration);
-            this._rippleRef = null;
+            this._rippleRef = undefined;
         }
     }
     /**
@@ -1926,7 +1893,7 @@ class Ripple {
     removeEvents() {
         if (this._triggerElement) {
             this._eventHandlers.forEach((fn, type) => {
-                this._triggerElement.removeEventListener(type, fn, this._eventOptions);
+                (/** @type {?} */ (this._triggerElement)).removeEventListener(type, fn, this._eventOptions);
             });
         }
     }
@@ -1954,7 +1921,7 @@ function maxSize(rect) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 const LY_COMMON_STYLES = {
@@ -2015,7 +1982,7 @@ LyCoreStyles.ctorParameters = () => [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 const styles = (theme) => ({
@@ -2054,7 +2021,7 @@ LyRippleService.ctorParameters = () => [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @template T
@@ -2091,7 +2058,7 @@ function mixinDisableRipple(base) {
                         const triggerElement = this._triggerElement.nativeElement;
                         /** @type {?} */
                         const rippleContainer = (this._rippleContainer && this._rippleContainer.nativeElement) || triggerElement;
-                        this._ripple = new Ripple(this._theme.config, this._ngZone, this._theme.addStyleSheet(styles), rippleContainer, triggerElement);
+                        this._ripple = new Ripple(this._theme.variables, this._ngZone, this._theme.addStyleSheet(styles), rippleContainer, triggerElement);
                         this._ripple.setConfig(this._rippleConfig);
                     });
                 }
@@ -2113,7 +2080,7 @@ function mixinDisableRipple(base) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @template T
@@ -2143,7 +2110,7 @@ function mixinDisabled(base) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 const DEFAULT_COLOR = 'primary';
@@ -2180,7 +2147,7 @@ function mixinColor(base) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 const DEFAULT_BG = 'primary';
@@ -2217,7 +2184,7 @@ function mixinBg(base) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @template T
@@ -2244,7 +2211,7 @@ function mixinRaised(base) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @template T
@@ -2271,7 +2238,7 @@ function mixinOutlined(base) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @template T
@@ -2298,7 +2265,7 @@ function mixinElevation(base) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @template T
@@ -2325,12 +2292,12 @@ function mixinShadowColor(base) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 const DEFAULT_BG$1 = 'paper';
@@ -2426,7 +2393,7 @@ LyPaper.propDecorators = {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class LyWithClass {
     /**
@@ -2461,7 +2428,7 @@ LyWithClass.propDecorators = {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class LyCommonModule {
 }
@@ -2474,49 +2441,7 @@ LyCommonModule.decorators = [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
- */
-/**
- * @param {?} obj
- * @return {?}
- */
-function isWindow(obj) {
-    return obj !== null && obj === obj.window;
-}
-/**
- * @param {?} elem
- * @return {?}
- */
-function getWindow(elem) {
-    return isWindow(elem) ? elem : elem.nodeType === 9 && elem.defaultView;
-}
-/**
- * @param {?} elem
- * @return {?}
- */
-function exactPosition(elem) {
-    /** @type {?} */
-    let docElem;
-    /** @type {?} */
-    let win;
-    /** @type {?} */
-    let box = { top: 0, left: 0 };
-    /** @type {?} */
-    const doc = elem && elem.ownerDocument;
-    docElem = doc.documentElement;
-    if (typeof elem.getBoundingClientRect !== typeof undefined) {
-        box = elem.getBoundingClientRect();
-    }
-    win = getWindow(doc);
-    return {
-        top: box.top + win.pageYOffset - docElem.clientTop,
-        left: box.left + win.pageXOffset - docElem.clientLeft
-    };
-}
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @param {?} value
@@ -2529,7 +2454,7 @@ function defaultEntry(value, defaultValue) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 // Element to move, time in ms to animate
 /**
@@ -2635,12 +2560,12 @@ function easeOutCuaic(t) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @enum {string} */
 const FocusStatus = {
@@ -2673,11 +2598,11 @@ class LyFocusState {
         /** @type {?} */
         const key = keyElement && getNativeElement(keyElement) || nativeElement;
         if (this._elementMap.has(key)) {
-            return this._elementMap.get(key).subject.asObservable();
+            return (/** @type {?} */ (this._elementMap.get(key))).subject.asObservable();
         }
         /** @type {?} */
         const focusState = {
-            unlisten: null,
+            unlisten: (/** @type {?} */ (null)),
             subject: new Subject()
         };
         this._incrementCount();
@@ -2715,6 +2640,7 @@ class LyFocusState {
         }
     }
     /**
+     * @private
      * @param {?} event
      * @param {?} subject
      * @return {?}
@@ -2728,6 +2654,7 @@ class LyFocusState {
         this._ngZone.run(() => subject.next(by));
     }
     /**
+     * @private
      * @return {?}
      */
     _addGlobalListeners() {
@@ -2754,6 +2681,7 @@ class LyFocusState {
         };
     }
     /**
+     * @private
      * @return {?}
      */
     _incrementCount() {
@@ -2762,6 +2690,7 @@ class LyFocusState {
         }
     }
     /**
+     * @private
      * @return {?}
      */
     _decrementCount() {
@@ -2789,16 +2718,16 @@ LyFocusState.ctorParameters = () => [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
-const AUI_VERSION = '2.0.4-nightly.20190109-jqox18df';
+const AUI_VERSION = '2.0.6';
 /** @type {?} */
-const AUI_LAST_UPDATE = '2019-01-09T08:22:11.617Z';
+const AUI_LAST_UPDATE = '2019-01-22T01:42:03.013Z';
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 const LY_HAMMER_OPTIONS = new InjectionToken('LY_HAMMER_OPTIONS');
@@ -2842,6 +2771,7 @@ class LyHammerGestureConfig extends HammerGestureConfig {
     }
     /**
      * Creates a new recognizer, without affecting the default recognizers of HammerJS
+     * @private
      * @param {?} base
      * @param {?} options
      * @param {...?} inheritances
@@ -2865,7 +2795,7 @@ LyHammerGestureConfig.ctorParameters = () => [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class LyThemeModule {
     /**
@@ -2888,7 +2818,7 @@ LyThemeModule.decorators = [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class Undefined {
     constructor() { }
@@ -2898,32 +2828,7 @@ const UndefinedValue = new Undefined();
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
- */
-/** @enum {number} */
-const InvertMediaQuery = {
-    No: 0,
-    Yes: 1,
-};
-InvertMediaQuery[InvertMediaQuery.No] = 'No';
-InvertMediaQuery[InvertMediaQuery.Yes] = 'Yes';
-/**
- * @param {?} media
- * @param {?=} invertMediaQuery
- * @return {?}
- */
-function transformMediaQuery(media, invertMediaQuery = InvertMediaQuery.No) {
-    if (media && invertMediaQuery === InvertMediaQuery.Yes) {
-        /** @type {?} */
-        const newVal = media.split(',').map(_ => `not ${_}`);
-        return newVal;
-    }
-    return media;
-}
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 const styles$1 = (theme) => ({
@@ -2983,6 +2888,7 @@ class LyOverlayContainer {
     /**
      * Update styles for overlay container
      * @ignore
+     * @private
      * @return {?}
      */
     _update() {
@@ -3026,7 +2932,7 @@ class LyOverlayBackdrop {
         this._theme = _theme;
         this._overlayConfig = _overlayConfig;
         /**
-         * @ignore
+         * \@docs-private
          */
         this.classes = this._theme.addStyleSheet(BACKDROP_STYLES);
         el.nativeElement.classList.add(commonStyles.classes.fill);
@@ -3060,7 +2966,7 @@ LyOverlayBackdrop.propDecorators = {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class WinResize {
     /**
@@ -3095,7 +3001,7 @@ WinResize.ctorParameters = () => [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class WinScroll {
     /**
@@ -3130,7 +3036,7 @@ WinScroll.ctorParameters = () => [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class CreateFromTemplateRef {
     /**
@@ -3155,7 +3061,16 @@ class CreateFromTemplateRef {
         this._el = document.createElement('div');
         // this._viewRef.rootNodes.forEach(rootNode => container.appendChild(rootNode));
         /** @type {?} */
-        const __styles = Object.assign({ position: 'absolute', display: 'flex', top: 0, left: 0, right: 0, bottom: 0, justifyContent: 'center', alignItems: 'center', pointerEvents: 'all' }, config.styles);
+        const __styles = {
+            position: 'absolute',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            pointerEvents: 'all'
+        };
+        if (config) {
+            Object.assign(__styles, config.styles);
+        }
         /** @type {?} */
         const newInjector = Injector.create([
             {
@@ -3164,22 +3079,33 @@ class CreateFromTemplateRef {
             }
         ], this._injector);
         this.updateStyles(__styles);
-        if (config.host) {
-            this.windowSRSub = merge(windowScroll.scroll$, resizeService.resize$).subscribe(() => {
+        if (config) {
+            if (config.onResizeScroll) {
+                this.onResizeScroll = config.onResizeScroll;
+                // this.onResizeScroll();
+            }
+            if (config.host) {
+                this.windowSRSub = merge(windowScroll.scroll$, resizeService.resize$).subscribe(() => {
+                    if (this.onResizeScroll) {
+                        this.onResizeScroll();
+                    }
+                    else {
+                        /** @type {?} */
+                        const rect = config.host.getBoundingClientRect();
+                        /** @type {?} */
+                        const newStyles = {
+                            top: rect.top,
+                            left: rect.left
+                        };
+                        this.updateStyles(newStyles);
+                    }
+                });
+            }
+            if (config.classes) {
                 /** @type {?} */
-                const rect = config.host.getBoundingClientRect();
-                /** @type {?} */
-                const newStyles = {
-                    top: rect.top,
-                    left: rect.left
-                };
-                this.updateStyles(newStyles);
-            });
-        }
-        /** @type {?} */
-        const classes = config.classes;
-        if (classes && classes.length) {
-            classes.forEach((className) => ((/** @type {?} */ (this._el))).classList.add(className));
+                const classes = config.classes;
+                classes.forEach((className) => ((/** @type {?} */ (this._el))).classList.add(className));
+            }
         }
         this._compRefOverlayBackdrop = this.generateComponent(LyOverlayBackdrop, newInjector);
         this._appRef.attachView(this._compRefOverlayBackdrop.hostView);
@@ -3192,7 +3118,7 @@ class CreateFromTemplateRef {
      * @return {?}
      */
     get containerElement() {
-        return this._el;
+        return (/** @type {?} */ (this._el));
     }
     /**
      * @param {?} __styles
@@ -3205,13 +3131,14 @@ class CreateFromTemplateRef {
             if (__styles.hasOwnProperty(key)) {
                 /** @type {?} */
                 const styleVal = __styles[key];
-                if (styleVal) {
-                    this._el.style[key] = typeof __styles[key] === 'number' ? `${styleVal}px` : styleVal;
+                if (styleVal != null) {
+                    (/** @type {?} */ (this._el)).style[key] = typeof __styles[key] === 'number' ? `${styleVal}px` : styleVal;
                 }
             }
         }
     }
     /**
+     * @private
      * @param {?} type
      * @param {?} context
      * @param {?} injector
@@ -3224,12 +3151,12 @@ class CreateFromTemplateRef {
             const viewRef = this._viewRef = type.createEmbeddedView(context || {});
             this._appRef.attachView(viewRef);
             // Get DOM element from component
-            viewRef.rootNodes.forEach(_ => this._el.appendChild(_));
+            viewRef.rootNodes.forEach(_ => (/** @type {?} */ (this._el)).appendChild(_));
             // Append DOM element to the body
             this._overlayContainer._add(this._el);
         }
         else if (typeof type === 'string') {
-            this._el.innerText = type;
+            (/** @type {?} */ (this._el)).innerText = type;
             this._overlayContainer._add(this._el);
         }
         else {
@@ -3263,17 +3190,17 @@ class CreateFromTemplateRef {
         if (this._viewRef) {
             this._viewRef.destroy();
             this._overlayContainer._remove(this._el);
-            this._el = null;
+            this._el = undefined;
         }
         else if (this._compRef) {
             this._compRef.destroy();
             this._overlayContainer._remove(this._el);
-            this._el = null;
+            this._el = undefined;
         }
         else if (this._el) {
-            // remove if content is string
+            // remove if template is string
             this._overlayContainer._remove(this._el);
-            this._el = null;
+            this._el = undefined;
         }
         if (this._compRefOverlayBackdrop) {
             this._appRef.detachView(this._compRefOverlayBackdrop.hostView);
@@ -3337,7 +3264,7 @@ LyOverlay.ctorParameters = () => [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class LyOverlayModule {
 }
@@ -3350,7 +3277,7 @@ LyOverlayModule.decorators = [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 const MUTATION_OBSERVER_INIT = {
@@ -3413,7 +3340,11 @@ class ElementObserver {
         /** @type {?} */
         const element = elementOrRef instanceof ElementRef ? elementOrRef.nativeElement : elementOrRef;
         if (this._observedElements.has(element)) {
-            this._observedElements.get(element).disconnect();
+            /** @type {?} */
+            const observer = this._observedElements.get(element);
+            if (observer) {
+                (/** @type {?} */ (this._observedElements.get(element))).disconnect();
+            }
             this._observedElements.delete(element);
         }
     }
@@ -3429,12 +3360,12 @@ ElementObserver.ctorParameters = () => [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @enum {string} */
 const AlignAlias = {
@@ -3450,19 +3381,19 @@ const AlignAlias = {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { getContrastYIQ, shadowBuilderDeprecated, shadowBuilder, Shadows, THEME_VARIABLES, IS_CORE_THEME, Platform, supportsPassiveEventListeners, LyCommonModule, getNativeElement, NgTranscludeDirective, NgTranscludeModule, exactPosition, toBoolean, defaultEntry, scrollTo, scrollToC, scrollWithAnimation, FocusStatus, LyFocusState, AUI_VERSION, AUI_LAST_UPDATE, LY_HAMMER_OPTIONS, LyHammerGestureConfig, LyPaperBase, LyPaperMixinBase, LyPaper, CoreTheme, LY_THEME_GLOBAL_VARIABLES, LY_THEME, LY_THEME_NAME, converterToCssKeyAndStyle, capitalizeFirstLetter, StylesInDocument, LyTheme2, LyThemeModule, LY_COMMON_STYLES, LyCoreStyles, Undefined, UndefinedValue, transformMediaQuery, InvertMediaQuery, eachMedia, isObject, mergeDeep, LyStyleUtils, Dir, DirAlias, DirPosition, LyOverlayContainer, LyOverlayBackdrop, LyOverlay, LyOverlayModule, MutationObserverFactory, ElementObserver, WinResize, WinScroll, mixinStyleUpdater, mixinDisableRipple, mixinDisabled, mixinColor, mixinBg, mixinRaised, mixinOutlined, mixinElevation, mixinShadowColor, Ripple, LyRippleService, getPosition, invertPlacement, YPosition, XPosition, Positioning, AlignAlias, LyWithClass as ɵa };
+export { getContrastYIQ, shadowBuilderDeprecated, shadowBuilder, Shadows, THEME_VARIABLES, IS_CORE_THEME, Platform, supportsPassiveEventListeners, LyCommonModule, getNativeElement, NgTranscludeDirective, NgTranscludeModule, toBoolean, defaultEntry, scrollTo, scrollToC, scrollWithAnimation, FocusStatus, LyFocusState, AUI_VERSION, AUI_LAST_UPDATE, LY_HAMMER_OPTIONS, LyHammerGestureConfig, LyPaperBase, LyPaperMixinBase, LyPaper, CoreTheme, LY_THEME_GLOBAL_VARIABLES, LY_THEME, LY_THEME_NAME, converterToCssKeyAndStyle, capitalizeFirstLetter, StylesInDocument, LyTheme2, LyThemeModule, LY_COMMON_STYLES, LyCoreStyles, Undefined, UndefinedValue, eachMedia, isObject, mergeDeep, LyStyleUtils, Dir, DirAlias, DirPosition, LyOverlayContainer, LyOverlayBackdrop, LyOverlay, LyOverlayModule, MutationObserverFactory, ElementObserver, WinResize, WinScroll, mixinStyleUpdater, mixinDisableRipple, mixinDisabled, mixinColor, mixinBg, mixinRaised, mixinOutlined, mixinElevation, mixinShadowColor, Ripple, LyRippleService, invertPlacement, YPosition, XPosition, Positioning, AlignAlias, LyWithClass as ɵa };
 
 //# sourceMappingURL=alyle-ui.js.map

@@ -5,7 +5,7 @@ import { Subject } from 'rxjs';
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var LySnackBarService = /** @class */ (function () {
     function LySnackBarService() {
@@ -21,7 +21,7 @@ var LySnackBarService = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 var DEFAULT_DURATION = 6e3;
@@ -37,9 +37,11 @@ var LySnackBarRef = /** @class */ (function () {
          * Subject for notifying the user that the snack bar has been dismissed.
          */
         this._afterDismissed = new Subject();
-        this._timer = setTimeout(function () {
-            _this.dismiss();
-        }, duration || DEFAULT_DURATION);
+        if (duration !== 'Infinity') {
+            this._timer = setTimeout(function () {
+                _this.dismiss();
+            }, duration || DEFAULT_DURATION);
+        }
     }
     /** Gets an observable that is notified when the snack bar is finished closing. */
     /**
@@ -99,7 +101,7 @@ var LySnackBarRef = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 var STYLE_PRIORITY = -2;
@@ -232,7 +234,7 @@ var LySnackBar = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var LySnackBarModule = /** @class */ (function () {
     function LySnackBarModule() {
@@ -249,17 +251,17 @@ var LySnackBarModule = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 export { LySnackBarModule, LySnackBar, LySnackBarService as ɵa };

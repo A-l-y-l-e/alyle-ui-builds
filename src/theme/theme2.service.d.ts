@@ -7,9 +7,9 @@ declare enum TypeStyle {
     OnlyOne = 1
 }
 export interface StyleMap5 {
-    styles: StylesFn2 | Styles2;
+    styles: Styles;
     type: TypeStyle;
-    priority: number;
+    priority?: number | null;
     css: {
         [themeName: string]: string;
     } | string;
@@ -26,25 +26,30 @@ export interface StyleMap5 {
     /** Only for styles of TypeStyle.one */
     parentStyle?: Styles;
     requireUpdate?: boolean;
-    id: string;
+    id: string | null;
 }
 export declare class StylesInDocument {
     styles: {
-        [themeName: string]: Map<string | object, HTMLStyleElement>;
+        [themeName: string]: Map<string | Styles, HTMLStyleElement>;
     };
     styleContainers: Map<number, HTMLElement>;
-    styleElementGlobalMap: Map<string | object, HTMLStyleElement>;
+    styleElementGlobalMap: Map<string | ((T: any) => StyleGroup) | StyleGroup, HTMLStyleElement>;
 }
 export declare class LyTheme2 {
     private stylesInDocument;
     core: CoreTheme;
     private _document;
     private _ngZone;
+    /**
+     * @deprecated use `themeVariables` instead
+     */
     config: ThemeVariables;
     _styleMap: Map<string, DataStyle>;
     initialTheme: string;
-    elements: Map<string | object, HTMLStyleElement>;
+    elements: Map<string | Styles, HTMLStyleElement>;
     _elementsMap: Map<any, HTMLStyleElement>;
+    /** Get Theme Variables */
+    readonly variables: ThemeVariables;
     private themeMap;
     /** ssr or hmr */
     private isDevOrServer;
@@ -58,7 +63,7 @@ export declare class LyTheme2 {
      * @param instance The instance of this, this replaces the existing style with a new one when it changes
      * @param parentStyle
      */
-    addStyle(id: string, style: StyleContainer | ((theme: any) => StyleContainer) | ((theme: any) => string) | string, el?: any, instance?: string, priority?: number, parentStyle?: Styles): string;
+    addStyle(id: string, style?: StyleContainerFn, el?: any, instance?: string | null, priority?: number | null, parentStyle?: Styles): string;
     private updateClassName;
     updateClass(element: any, renderer: Renderer2, newClass: string, oldClass?: string): string;
     setTheme(nam: string): void;
@@ -86,16 +91,23 @@ export declare class LyTheme2 {
     private _createElementStyle;
     requestAnimationFrame(fn: (...args: any[]) => void): void;
 }
+/**
+ * Style Object
+ */
 export interface StyleContainer {
-    [key: string]: StyleContainer | string | number | string[];
+    [key: string]: StyleContainer | string | number | string[] | null | undefined;
 }
-export interface Styles2 {
+export interface StyleGroup {
     /** Prefix name */
     $name?: string;
-    [key: string]: StyleContainer | string;
+    $keyframes?: Keyframes;
+    [key: string]: StyleContainer | string | undefined | null;
 }
-export declare type StylesFn2 = (T: any) => Styles2;
-export declare type Styles = StylesFn2 | Styles2;
+/**
+ * StyleContainer or fn that return StyleContainer
+ */
+export declare type StyleContainerFn = ((T: any) => StyleContainer | string) | StyleContainer | string | null | undefined;
+export declare type Styles = ((T: any) => StyleGroup) | StyleGroup | undefined | null;
 export interface Keyframes {
     [name: string]: {
         [percent: number]: StyleContainer;
@@ -103,5 +115,5 @@ export interface Keyframes {
 }
 export declare function converterToCssKeyAndStyle(str: string, themeVariables: ThemeVariables): string;
 export declare function capitalizeFirstLetter(str: string): string;
-declare type OnlyClasses<T> = Record<(Exclude<(T extends ((...args: any[]) => any) ? (keyof ReturnType<T>) : keyof T), '$name' | '$sheet' | '$keyframes'>), string>;
+declare type OnlyClasses<T> = Record<(Exclude<(T extends ((...args: any[]) => any) ? (keyof ReturnType<T>) : keyof T), '$name' | '$keyframes'>), string>;
 export {};

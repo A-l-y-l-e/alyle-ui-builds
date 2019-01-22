@@ -62,7 +62,7 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /** @type {?} */
     var STYLE_PRIORITY = -1;
@@ -73,7 +73,7 @@
     /** @type {?} */
     var STYLES = function (theme) {
         return ({
-            container: __assign({ background: theme.background.primary.default, borderRadius: '2px', boxShadow: ui.shadowBuilder(4), display: 'inline-block', paddingTop: '8px', paddingBottom: '8px', transformOrigin: 'inherit', pointerEvents: 'all' }, theme.menu.root)
+            container: __assign({ background: theme.background.primary.default, borderRadius: '2px', boxShadow: ui.shadowBuilder(4), display: 'block', paddingTop: '8px', paddingBottom: '8px', transformOrigin: 'inherit', pointerEvents: 'all', overflow: 'auto', maxHeight: 'inherit', maxWidth: 'inherit' }, theme.menu.root)
         });
     };
     /** @type {?} */
@@ -130,6 +130,9 @@
          * @return {?}
          */
             function () {
+                if (!this.ref) {
+                    throw new Error('LyMenu: require @Input() ref');
+                }
                 if (!this.placement && !this.xPosition && !this.yPosition) {
                     this.xPosition = DEFAULT_XPOSITION;
                     this.placement = DEFAULT_PLACEMENT;
@@ -142,27 +145,41 @@
          * @return {?}
          */
             function () {
+                if (this.ref._menuRef) {
+                    this.ref._menuRef.onResizeScroll = this._updatePlacement.bind(this);
+                }
                 this._updatePlacement();
             };
         /**
+         * @private
          * @return {?}
          */
         LyMenu.prototype._updatePlacement = /**
+         * @private
          * @return {?}
          */
             function () {
                 /** @type {?} */
-                var el = ( /** @type {?} */(this._el.nativeElement));
+                var el = ( /** @type {?} */(( /** @type {?} */(this.ref._menuRef)).containerElement));
                 /** @type {?} */
-                var position = new ui.Positioning(this.placement, this.xPosition, this.yPosition, this.ref._getHostElement(), el, this._theme.config);
+                var container = this._container.nativeElement;
+                // reset height & width
+                this._renderer.setStyle(container, 'height', 'initial');
+                this._renderer.setStyle(container, 'width', 'initial');
+                /** @type {?} */
+                var position = new ui.Positioning(this.placement, this.xPosition, this.yPosition, this.ref._getHostElement(), el, this._theme.variables);
+                // set position
                 this._renderer.setStyle(el, 'transform', "translate3d(" + position.x + "px, " + position.y + "px, 0)");
-                this._renderer.setStyle(el, 'transform-origin', position.ox + " " + position.oy + " 0");
+                this._renderer.setStyle(this._el.nativeElement, 'transform-origin', position.ox + " " + position.oy + " 0");
+                // set height & width
+                this._renderer.setStyle(container, 'height', position.height);
+                this._renderer.setStyle(container, 'width', position.width);
             };
         LyMenu.decorators = [
             { type: core.Component, args: [{
                         selector: 'ly-menu',
                         animations: __spread(ANIMATIONS),
-                        template: "<div [class]=\"classes.container\" [@menuEnter]=\"'in'\">\n  <ng-content></ng-content>\n</div>",
+                        template: "<div #container\n  [class]=\"classes.container\"\n  [@menuEnter]=\"'in'\">\n  <ng-content></ng-content>\n</div>",
                         exportAs: 'lyMenu'
                     }] }
         ];
@@ -175,6 +192,7 @@
             ];
         };
         LyMenu.propDecorators = {
+            _container: [{ type: core.ViewChild, args: ['container',] }],
             ref: [{ type: core.Input }],
             placement: [{ type: core.Input }],
             xPosition: [{ type: core.Input }],
@@ -206,7 +224,7 @@
          * @return {?}
          */
             function () {
-                if (this._menu.ref) {
+                if (this._menu.ref && this._menu.ref._menuRef) {
                     this._menu.ref._menuRef.detach();
                 }
             };
@@ -260,16 +278,12 @@
                     this._menuRef.detach();
                 }
                 else {
-                    /** @type {?} */
-                    var rect = this._targetPosition();
                     this._menuRef = this.overlay.create(this.lyMenuTriggerFor, {
                         $implicit: this
                     }, {
                         styles: {
-                            top: rect.top,
-                            left: rect.left,
-                            right: null,
-                            bottom: null,
+                            top: 0,
+                            left: 0,
                             pointerEvents: null
                         },
                         fnDestroy: this.detach.bind(this),
@@ -285,7 +299,9 @@
          * @return {?}
          */
             function () {
-                this._menuRef.detach();
+                if (this._menuRef) {
+                    this._menuRef.detach();
+                }
             };
         /**
          * @return {?}
@@ -296,7 +312,7 @@
             function () {
                 if (this._menuRef) {
                     this._menuRef.remove();
-                    this._menuRef = null;
+                    this._menuRef = undefined;
                 }
             };
         /**
@@ -342,7 +358,7 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     var LyMenuModule = /** @class */ (function () {
         function LyMenuModule() {
@@ -359,17 +375,17 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
 
     exports.LyMenu = LyMenu;

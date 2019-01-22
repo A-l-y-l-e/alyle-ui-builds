@@ -7,7 +7,7 @@ import { LY_COMMON_STYLES, LyTheme2, mergeDeep, ElementObserver, Platform, toBoo
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var LyLabel = /** @class */ (function () {
     function LyLabel() {
@@ -22,7 +22,7 @@ var LyLabel = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var LyPlaceholder = /** @class */ (function () {
     function LyPlaceholder() {
@@ -37,7 +37,7 @@ var LyPlaceholder = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 var STYLES = function (theme) {
@@ -187,7 +187,7 @@ var STYLES = function (theme) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * LyHint
@@ -229,7 +229,7 @@ var LyHint = /** @class */ (function () {
             }
             else if (this._alignClass) {
                 this._renderer.removeClass(this._el.nativeElement, this._alignClass);
-                this._alignClass = null;
+                this._alignClass = undefined;
             }
             this._align = val;
         },
@@ -255,7 +255,7 @@ var LyHint = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * Prefix to be placed the before of the field.
@@ -273,7 +273,7 @@ var LyPrefix = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * Suffix to be placed the after of the field.
@@ -291,7 +291,7 @@ var LySuffix = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * LyError
@@ -322,7 +322,7 @@ var LyError = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * LyField
@@ -375,6 +375,15 @@ var DEFAULT_APPEARANCE_THEME = {
 };
 /** @type {?} */
 var DEFAULT_WITH_COLOR = 'primary';
+/** @type {?} */
+var inputText = [
+    'text',
+    'number',
+    'password',
+    'search',
+    'tel',
+    'url'
+];
 var LyField = /** @class */ (function () {
     function LyField(_renderer, _el, _elementObserver, _theme, _cd, _ngZone) {
         this._renderer = _renderer;
@@ -419,7 +428,7 @@ var LyField = /** @class */ (function () {
             }
             else if (this._fullWidthClass) {
                 this._renderer.removeClass(this._getHostElement(), this._fullWidthClass);
-                this._fullWidthClass = null;
+                this._fullWidthClass = undefined;
             }
             this._fullWidth = newVal;
         },
@@ -504,7 +513,7 @@ var LyField = /** @class */ (function () {
             var _this = this;
             if (val !== this.appearance) {
                 this._appearance = val;
-                if (!(this._theme.config.field.appearance[val] || DEFAULT_APPEARANCE_THEME[val])) {
+                if (!(this._theme.variables.field.appearance[val] || DEFAULT_APPEARANCE_THEME[val])) {
                     throw new Error(val + " not found in theme.field.appearance");
                 }
                 this._appearanceClass = this._theme.addStyle("ly-field.appearance:" + val, function (theme) {
@@ -537,6 +546,15 @@ var LyField = /** @class */ (function () {
     /**
      * @return {?}
      */
+    LyField.prototype.onFocus = /**
+     * @return {?}
+     */
+    function () {
+        this._el.nativeElement.focus();
+    };
+    /**
+     * @return {?}
+     */
     LyField.prototype.ngOnInit = /**
      * @return {?}
      */
@@ -556,7 +574,7 @@ var LyField = /** @class */ (function () {
      */
     function () {
         var _this = this;
-        this._renderer.addClass(this._input._hostElement, this.classes.inputNative);
+        this._renderer.addClass(this._input._getHostElement(), this.classes.inputNative);
         this._input.stateChanges.subscribe(function () {
             _this._updateFloatingLabel();
             _this._markForCheck();
@@ -607,16 +625,51 @@ var LyField = /** @class */ (function () {
                     });
                 }
             });
+            /** @type {?} */
+            var nativeElement_1 = this._input._getHostElement();
+            if (nativeElement_1 instanceof HTMLTextAreaElement ||
+                inputText.some(function (type) { return type === nativeElement_1.type; })) {
+                this._theme.addStyle('field.text', {
+                    '& {container}': {
+                        cursor: 'text'
+                    }
+                }, this._el.nativeElement, null, null, STYLES);
+            }
         }
         // this fix with of label
         this._renderer.addClass(this._el.nativeElement, this.classes.animations);
     };
     /**
+     * @return {?}
+     */
+    LyField.prototype.ngOnDestroy = /**
+     * @return {?}
+     */
+    function () {
+        if (this._prefixContainer) {
+            /** @type {?} */
+            var el = this._prefixContainer;
+            this._elementObserver.destroy(el);
+        }
+        if (this._suffixContainer) {
+            /** @type {?} */
+            var el = this._suffixContainer;
+            this._elementObserver.destroy(el);
+        }
+        if (this._labelSpan) {
+            /** @type {?} */
+            var el = this._labelSpan;
+            this._elementObserver.destroy(el);
+        }
+    };
+    /**
+     * @private
      * @param {?} el
      * @param {?} dir
      * @return {?}
      */
     LyField.prototype._updateFielset = /**
+     * @private
      * @param {?} el
      * @param {?} dir
      * @return {?}
@@ -632,7 +685,7 @@ var LyField = /** @class */ (function () {
                     _b["margin-" + dir] = width + "px",
                     _b),
                 _a);
-        }, null, null, STYLE_PRIORITY$2);
+        }, undefined, undefined, STYLE_PRIORITY$2);
         if (dir === DirAlias.before) {
             this._marginStartClass = this._theme.updateClass(this._el.nativeElement, this._renderer, newClass, this._marginStartClass);
         }
@@ -641,9 +694,11 @@ var LyField = /** @class */ (function () {
         }
     };
     /**
+     * @private
      * @return {?}
      */
     LyField.prototype._updateFielsetSpan = /**
+     * @private
      * @return {?}
      */
     function () {
@@ -706,9 +761,11 @@ var LyField = /** @class */ (function () {
         return val === '' || val === null || val === undefined;
     };
     /**
+     * @private
      * @return {?}
      */
     LyField.prototype._updateFloatingLabel = /**
+     * @private
      * @return {?}
      */
     function () {
@@ -735,9 +792,11 @@ var LyField = /** @class */ (function () {
         }
     };
     /**
+     * @private
      * @return {?}
      */
     LyField.prototype._markForCheck = /**
+     * @private
      * @return {?}
      */
     function () {
@@ -788,7 +847,8 @@ var LyField = /** @class */ (function () {
         fullWidth: [{ type: Input }],
         floatingLabel: [{ type: Input }],
         color: [{ type: Input }],
-        appearance: [{ type: Input }]
+        appearance: [{ type: Input }],
+        onFocus: [{ type: HostListener, args: ['focus',] }]
     };
     return LyField;
 }());
@@ -806,7 +866,6 @@ var LyNativeControl = /** @class */ (function () {
         this._form = this._parentForm || this._parentFormGroup;
         this._focused = false;
         this.errorState = false;
-        this._hostElement = this._el.nativeElement;
     }
     /**
      * @return {?}
@@ -846,7 +905,7 @@ var LyNativeControl = /** @class */ (function () {
          * @return {?}
          */
         function () {
-            return this._hostElement.value;
+            return this._getHostElement().value;
         },
         /** @ignore */
         set: /**
@@ -856,7 +915,7 @@ var LyNativeControl = /** @class */ (function () {
          */
         function (val) {
             if (val !== this.value) {
-                this._hostElement.value = val;
+                this._getHostElement().value = val;
                 this.stateChanges.next();
             }
         },
@@ -885,7 +944,7 @@ var LyNativeControl = /** @class */ (function () {
                 if (this._field) {
                     if (!val && this._hasDisabledClass) {
                         this._renderer.removeClass(this._field._getHostElement(), this._field.classes.disabled);
-                        this._hasDisabledClass = null;
+                        this._hasDisabledClass = undefined;
                     }
                     else if (val) {
                         this._renderer.addClass(this._field._getHostElement(), this._field.classes.disabled);
@@ -935,13 +994,13 @@ var LyNativeControl = /** @class */ (function () {
      */
     function () {
         var _this = this;
-        this._renderer.setAttribute(this._hostElement, 'placeholder', '­');
+        this._renderer.setAttribute(this._getHostElement(), 'placeholder', '­');
         /** @type {?} */
         var ngControl = this.ngControl;
         // update styles on disabled
-        if (ngControl) {
+        if (ngControl && ngControl.statusChanges) {
             ngControl.statusChanges.subscribe(function () {
-                _this.disabled = ngControl.disabled;
+                _this.disabled = !!ngControl.disabled;
             });
         }
     };
@@ -967,7 +1026,7 @@ var LyNativeControl = /** @class */ (function () {
                 }
                 else if (this._errorClass) {
                     this._renderer.removeClass(this._field._getHostElement(), errorClass);
-                    this._errorClass = null;
+                    this._errorClass = undefined;
                 }
             }
         }
@@ -990,7 +1049,16 @@ var LyNativeControl = /** @class */ (function () {
      * Focuses the input.
      * @return {?}
      */
-    function () { this._hostElement.focus(); };
+    function () { this._getHostElement().focus(); };
+    /**
+     * @return {?}
+     */
+    LyNativeControl.prototype._getHostElement = /**
+     * @return {?}
+     */
+    function () {
+        return this._el.nativeElement;
+    };
     LyNativeControl.decorators = [
         { type: Directive, args: [{
                     selector: 'input[lyInput], textarea[lyInput], input[lyNativeControl], textarea[lyNativeControl]',
@@ -1020,7 +1088,7 @@ var LyNativeControl = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var LyFieldModule = /** @class */ (function () {
     function LyFieldModule() {
@@ -1050,17 +1118,17 @@ var LyFieldModule = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 export { LyField, LyNativeControl, LyFieldModule, LyError as ɵf, LyHint as ɵc, LyLabel as ɵb, LyPlaceholder as ɵa, LyPrefix as ɵd, LySuffix as ɵe };

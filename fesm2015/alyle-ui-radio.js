@@ -5,7 +5,7 @@ import { LyCommonModule, LyTheme2, LyCoreStyles, toBoolean, mixinDisableRipple, 
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 const STYLE_PRIORITY = -2;
@@ -115,7 +115,6 @@ class LyRadioGroup {
          * \@docs-private
          */
         this.classes = this._theme.addStyleSheet(STYLES, STYLE_PRIORITY);
-        this._value = new UndefinedValue;
         /**
          * \@docs-private
          */
@@ -218,10 +217,10 @@ class LyRadioGroup {
                 radioButton.checked = false;
             }
         });
-        if (!newChecked) {
+        if (!(/** @type {?} */ (newChecked))) {
             /** when val not exist in radio button !==  */
             this._controlValueAccessorChangeFn(null);
-            if (this._value !== null) {
+            if (this._value != null) {
                 this._value = null;
             }
         }
@@ -420,7 +419,7 @@ class LyRadio extends LyRadioMixinBase {
         }
         else if (this._disabledClass) {
             this._renderer.removeClass(this._elementRef.nativeElement, this.classes.disabled);
-            this._disabledClass = null;
+            this._disabledClass = undefined;
         }
         this._disabled = toBoolean(value);
         this._markForCheck();
@@ -469,6 +468,7 @@ class LyRadio extends LyRadioMixinBase {
      * @return {?}
      */
     ngOnDestroy() {
+        this._focusState.unlisten(this._elementRef);
         this._removeRippleEvents();
     }
     /**
@@ -482,6 +482,7 @@ class LyRadio extends LyRadioMixinBase {
         this._addAnim();
     }
     /**
+     * @private
      * @return {?}
      */
     _addAnim() {
@@ -546,17 +547,17 @@ LyRadioModule.decorators = [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 export { LY_RADIO_CONTROL_VALUE_ACCESSOR, UndefinedValue, STYLES, LyRadioGroup, LyRadioBase, LyRadioMixinBase, LyRadio, LyRadioModule };

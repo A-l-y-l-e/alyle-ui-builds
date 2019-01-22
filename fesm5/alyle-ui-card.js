@@ -5,7 +5,7 @@ import { LyTheme2, mixinBg, mixinColor, mixinDisabled, mixinDisableRipple, mixin
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 var STYLES = function (theme) {
@@ -260,11 +260,13 @@ var LyCardMedia = /** @class */ (function () {
         }
     };
     /**
+     * @private
      * @param {?} val
      * @param {?} instance
      * @return {?}
      */
     LyCardMedia.prototype._createBgImgClass = /**
+     * @private
      * @param {?} val
      * @param {?} instance
      * @return {?}
@@ -278,10 +280,12 @@ var LyCardMedia = /** @class */ (function () {
             "background-position: center;"), this.el.nativeElement, instance, STYLE_PRIORITY);
     };
     /**
+     * @private
      * @param {?} val
      * @return {?}
      */
     LyCardMedia.prototype._createAspectRatioClass = /**
+     * @private
      * @param {?} val
      * @return {?}
      */
@@ -317,7 +321,7 @@ var LyCardMedia = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var LyCardModule = /** @class */ (function () {
     function LyCardModule() {
@@ -336,17 +340,17 @@ var LyCardModule = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 export { LyCardModule, STYLES, LyCardBase, LyCardMixinBase, LyCard, LyCardContent, LyCardActions, LyCardMedia };

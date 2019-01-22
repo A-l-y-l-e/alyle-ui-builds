@@ -6,7 +6,7 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     var ThemeMinimaLight = /** @class */ (function () {
         function ThemeMinimaLight() {
@@ -73,7 +73,7 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /** @type {?} */
     var iconButton = {
@@ -214,7 +214,7 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     var MinimaBase = /** @class */ (function (_super) {
         __extends(MinimaBase, _super);
@@ -226,7 +226,7 @@
                 fontSize: 14,
                 gutterTop: 1,
                 gutterBottom: .35,
-                lyTyp: null
+                lyTyp: {}
             };
             _this.iconButton = iconButton;
             _this.icon = icon;
@@ -354,7 +354,7 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /** @type {?} */
     var contrast = '#fff';
@@ -455,7 +455,7 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /** @type {?} */
     var contrast$1 = '#fff';
@@ -556,17 +556,17 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
 
     exports.ThemeMinimaLight = ThemeMinimaLight;

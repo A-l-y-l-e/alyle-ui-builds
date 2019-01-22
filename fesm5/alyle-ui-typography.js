@@ -4,7 +4,7 @@ import { LyTheme2, toBoolean, LyCommonModule } from '@alyle/ui';
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 var STYLE_PRIORITY = -1;
@@ -50,7 +50,7 @@ var LyTypography = /** @class */ (function () {
                 }
                 else if (this._lyTypClass) {
                     this.renderer.removeClass(this.elementRef.nativeElement, this._lyTypClass);
-                    this._lyTypClass = null;
+                    this._lyTypClass = undefined;
                 }
             }
         },
@@ -83,7 +83,7 @@ var LyTypography = /** @class */ (function () {
             }
             else if (this._noWrapClass) {
                 this.renderer.removeClass(this.elementRef.nativeElement, this._noWrapClass);
-                this._noWrapClass = null;
+                this._noWrapClass = undefined;
             }
         },
         enumerable: true,
@@ -168,13 +168,15 @@ var LyTypography = /** @class */ (function () {
         }
     };
     /**
+     * @private
      * @param {?} key
-     * @param {?} instance
+     * @param {?=} instance
      * @return {?}
      */
     LyTypography.prototype._createTypClass = /**
+     * @private
      * @param {?} key
-     * @param {?} instance
+     * @param {?=} instance
      * @return {?}
      */
     function (key, instance) {
@@ -196,12 +198,14 @@ var LyTypography = /** @class */ (function () {
         }, this.elementRef.nativeElement, instance, STYLE_PRIORITY);
     };
     /**
+     * @private
      * @param {?} name
      * @param {?} val
      * @param {?} instance
      * @return {?}
      */
     LyTypography.prototype._createGutterClass = /**
+     * @private
      * @param {?} name
      * @param {?} val
      * @param {?} instance
@@ -238,7 +242,7 @@ var LyTypography = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var LyTypographyModule = /** @class */ (function () {
     function LyTypographyModule() {
@@ -254,17 +258,17 @@ var LyTypographyModule = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 export { LyTypographyModule, LyTypography };

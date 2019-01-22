@@ -33,7 +33,7 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /** @type {?} */
     var DEFAULT_PLACEMENT = ui.YPosition.below;
@@ -44,13 +44,14 @@
         root: __assign({}, ui.LY_COMMON_STYLES.fill)
     });
     var LyTooltip = /** @class */ (function () {
-        function LyTooltip(_theme, _overlay, _el, _renderer, _cd, focusState, ngZone, scroll) {
+        function LyTooltip(_theme, _overlay, _el, _renderer, _cd, _focusState, ngZone, scroll) {
             var _this = this;
             this._theme = _theme;
             this._overlay = _overlay;
             this._el = _el;
             this._renderer = _renderer;
             this._cd = _cd;
+            this._focusState = _focusState;
             /**
              * \@docs-private
              */
@@ -80,7 +81,7 @@
                         }
                     }
                 });
-                focusState.listen(element_1).subscribe(function (ev) {
+                ( /** @type {?} */(_focusState.listen(element_1))).subscribe(function (ev) {
                     if (ev === 'keyboard') {
                         ngZone.run(function () { return _this.show(); });
                     }
@@ -132,6 +133,7 @@
                 if (this._scrollSub) {
                     this._scrollSub.unsubscribe();
                 }
+                this._focusState.unlisten(this._el);
             };
         /**
          * @param {?=} delay
@@ -149,15 +151,17 @@
                     this._hideTimeoutId = null;
                 }
                 if (!this._tooltipOverlay && this.tooltip && !this._showTimeoutId) {
+                    /** @type {?} */
+                    var tooltipRef_1 = this.tooltip;
                     this._showTimeoutId = ( /** @type {?} */(setTimeout(function () {
+                        // const rect = this._el.nativeElement.getBoundingClientRect();
                         /** @type {?} */
-                        var rect = _this._el.nativeElement.getBoundingClientRect();
-                        /** @type {?} */
-                        var tooltip = _this._tooltipOverlay = _this._overlay.create(_this.tooltip, undefined, {
+                        var tooltip = _this._tooltipOverlay = _this._overlay.create(tooltipRef_1, undefined, {
                             styles: {
-                                top: rect.y,
-                                left: rect.x
+                            // top: rect.y,
+                            // left: rect.x
                             },
+                            onResizeScroll: _this._updatePosition.bind(_this),
                             classes: [
                                 _this._theme.addStyle('LyTooltip', function (theme) {
                                     var _a;
@@ -165,17 +169,17 @@
                                         padding: '8px 16px',
                                         fontSize: '14px',
                                     }, _a)));
-                                }, null, null, STYLE_PRIORITY)
+                                }, undefined, undefined, STYLE_PRIORITY)
                             ],
                             host: _this._el.nativeElement,
                         });
-                        /** @type {?} */
-                        var position = ui.getPosition(_this.placement, _this.xPosition, _this.yPosition, _this._el.nativeElement, tooltip.containerElement, _this._theme.config, 13);
-                        tooltip.containerElement.style.transform = "translate3d(" + position.x + "px," + position.y + "px,0)";
+                        _this._updatePosition();
+                        // const position = new Positioning(this.placement, this.xPosition, this.yPosition, this._el.nativeElement, tooltip.containerElement, this._theme.variables, 13);
+                        // tooltip.containerElement.style.transform = `translate3d(${position.x}px,${position.y}px,0)`;
                         _this._theme.requestAnimationFrame(function () {
                             _this._theme.addStyle('lyTooltip:open', ({
                                 opacity: 1,
-                            }), tooltip.containerElement, null, STYLE_PRIORITY);
+                            }), tooltip.containerElement, undefined, STYLE_PRIORITY);
                         });
                         _this._showTimeoutId = null;
                         _this._markForCheck();
@@ -224,13 +228,32 @@
                 }
             };
         /**
+         * @private
          * @return {?}
          */
         LyTooltip.prototype._markForCheck = /**
+         * @private
          * @return {?}
          */
             function () {
                 this._cd.markForCheck();
+            };
+        /**
+         * @private
+         * @return {?}
+         */
+        LyTooltip.prototype._updatePosition = /**
+         * @private
+         * @return {?}
+         */
+            function () {
+                /** @type {?} */
+                var tooltip = this._tooltipOverlay;
+                if (tooltip) {
+                    /** @type {?} */
+                    var position = new ui.Positioning(this.placement, this.xPosition, this.yPosition, this._el.nativeElement, tooltip.containerElement, this._theme.variables, 13);
+                    tooltip.containerElement.style.transform = "translate3d(" + position.x + "px," + position.y + "px,0)";
+                }
             };
         LyTooltip.decorators = [
             { type: core.Directive, args: [{
@@ -264,7 +287,7 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     var LyTooltipModule = /** @class */ (function () {
         function LyTooltipModule() {
@@ -281,17 +304,17 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
 
     exports.LyTooltip = LyTooltip;

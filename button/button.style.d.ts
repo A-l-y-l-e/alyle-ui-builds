@@ -19,13 +19,7 @@ export declare const styles: (theme: ThemeVariables) => {
             opacity: number;
             borderRadius: string;
         };
-        fontSize?: string;
         fontFamily: string;
-        fontWeight: number;
-        letterSpacing?: string;
-        textTransform?: string;
-        gutterTop?: number;
-        gutterBottom?: number;
         color: string;
         '-webkit-tap-highlight-color': string;
         backgroundColor: string;
@@ -35,6 +29,7 @@ export declare const styles: (theme: ThemeVariables) => {
         margin: number;
         borderRadius: string;
         outline: string;
+        fontWeight: number;
         boxSizing: string;
         position: string;
         justifyContent: string;
@@ -48,7 +43,8 @@ export declare const styles: (theme: ThemeVariables) => {
         userSelect: string;
         textDecorationLine: string;
         '-webkit-text-decoration-line': string;
-        '&::-moz-focus-inner, &::-moz-focus-inner': {
+        fontSize: string;
+        '&::-moz-focus-inner': {
             border: number;
         };
     };
@@ -62,7 +58,7 @@ export declare const styles: (theme: ThemeVariables) => {
         height: string;
         boxSizing: string;
     };
-    onFocusByKeyboard: {};
+    onFocusByKeyboard: any;
     animations: {
         '&,&::after': {
             transition: string;

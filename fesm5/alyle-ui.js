@@ -8,7 +8,7 @@ import { InjectionToken, Injectable, Optional, Inject, RendererFactory2, ViewEnc
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @param {?} hexcolor
@@ -28,12 +28,12 @@ function getContrastYIQ(hexcolor) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 var chroma = _chroma;
@@ -120,7 +120,7 @@ function shadowBuilder(elevation, color) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 var THEME_VARIABLES = new InjectionToken('ly.theme.variables');
@@ -129,7 +129,7 @@ var IS_CORE_THEME = new InjectionToken('ly.is.root');
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 // Whether the current platform supports the V8 Break Iterator. The V8 check
 // is necessary to detect all Blink based browsers.
@@ -175,7 +175,7 @@ var Platform = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 var supportsPassive;
@@ -191,8 +191,8 @@ function supportsPassiveEventListeners() {
                     supportsPassive = true;
                 }
             });
-            window.addEventListener('testPassive', null, opts);
-            window.removeEventListener('testPassive', null, opts);
+            window.addEventListener('testPassive', (/** @type {?} */ (null)), opts);
+            window.removeEventListener('testPassive', (/** @type {?} */ (null)), opts);
         }
         catch (e) { }
     }
@@ -201,12 +201,12 @@ function supportsPassiveEventListeners() {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 var LY_THEME_GLOBAL_VARIABLES = new InjectionToken('ly.theme.global.variables');
@@ -217,7 +217,7 @@ var LY_THEME_NAME = new InjectionToken('ly.theme.name');
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var LyStyleUtils = /** @class */ (function () {
     function LyStyleUtils() {
@@ -299,7 +299,7 @@ var DirPosition = {
  * get color of object
  * @param {?} obj object
  * @param {?} path path
- * @param {?} optional get optional value, if not exist return default if not is string
+ * @param {?=} optional get optional value, if not exist return default if not is string
  * @return {?}
  */
 function get(obj, path, optional) {
@@ -345,16 +345,16 @@ function eachMedia(str, fn) {
             var len = valItem.length;
             if (len) {
                 for (var j = 0; j < len; j++) {
-                    fn.call(undefined, value, valItem[j], len);
+                    fn.call(undefined, value, valItem[j], index);
                 }
             }
             else {
-                fn.call(undefined, value, undefined, len);
+                fn.call(undefined, value, null, index);
             }
         }
     }
     else {
-        fn.call(undefined, str, undefined, 0);
+        fn.call(undefined, str, null, 0);
     }
 }
 /**
@@ -400,7 +400,7 @@ function mergeDeep(target) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var CoreTheme = /** @class */ (function () {
     function CoreTheme(themeConfig, globalVariables, rendererFactory, _document) {
@@ -424,7 +424,7 @@ var CoreTheme = /** @class */ (function () {
             if (nodes.length) {
                 for (var index = 0; index < nodes.length; index++) {
                     /** @type {?} */
-                    var element = nodes.item(index);
+                    var element = (/** @type {?} */ (nodes.item(index)));
                     ((/** @type {?} */ (_document.body))).removeChild(element);
                 }
             }
@@ -525,7 +525,7 @@ var CoreTheme = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @enum {string} */
 var YPosition = {
@@ -539,155 +539,63 @@ var XPosition = {
     left: 'left',
     right: 'right',
 };
-/**
- * @deprecated in favor of `Positioning`
- * @param {?} placement
- * @param {?} xPosition
- * @param {?} yPosition
- * @param {?} origin
- * @param {?} overlayElement
- * @param {?} themeVariables
- * @param {?=} offset
- * @return {?}
- */
-function getPosition(placement, xPosition, yPosition, origin, overlayElement, themeVariables, offset) {
-    if (offset === void 0) { offset = 0; }
-    return createPosition(placement, xPosition, yPosition, origin, overlayElement, themeVariables, offset);
-}
-/**
- * @param {?} placement
- * @param {?} xPosition
- * @param {?} yPosition
- * @param {?} origin
- * @param {?} overlayElement
- * @param {?} themeVariables
- * @param {?=} offset
- * @return {?}
- */
-function createPosition(placement, xPosition, yPosition, origin, overlayElement, themeVariables, offset) {
-    if (offset === void 0) { offset = 0; }
-    /** @type {?} */
-    var originRect = (/** @type {?} */ (origin.getBoundingClientRect()));
-    /** @type {?} */
-    var overlayElementRect = (/** @type {?} */ (overlayElement.getBoundingClientRect()));
-    if (xPosition && yPosition) {
-        throw new Error("You can not use `xPosition` and `yPosition` together, use only one of them.");
-    }
-    if ((xPosition || yPosition) && !placement) {
-        throw new Error("`placement` is required.");
-    }
-    /** @type {?} */
-    var x = 0;
-    /** @type {?} */
-    var y = 0;
-    /** @type {?} */
-    var ox = 'center';
-    /** @type {?} */
-    var oy = 'center';
-    if (placement || xPosition || yPosition) {
-        if (placement) {
-            if (placement === YPosition.above) {
-                x = (originRect.width - overlayElementRect.width) / 2;
-                y = -overlayElementRect.height - offset;
-                oy = 'bottom';
-            }
-            else if (placement === YPosition.below) {
-                x = (originRect.width - overlayElementRect.width) / 2;
-                y = originRect.height + offset;
-                oy = 'top';
-            }
-            else {
-                /** @type {?} */
-                var dir = themeVariables.getDirection((/** @type {?} */ (placement)));
-                if (dir === DirPosition.left) {
-                    ox = '100%';
-                    x = -overlayElementRect.width - offset;
-                    y = (originRect.height - overlayElementRect.height) / 2;
-                }
-                else if (dir === DirPosition.right) {
-                    ox = '0%';
-                    x = originRect.width + offset;
-                    y = (originRect.height - overlayElementRect.height) / 2;
-                }
-            }
-        }
-        if (xPosition) {
-            /** @type {?} */
-            var dir = themeVariables.getDirection((/** @type {?} */ (xPosition)));
-            if (dir === DirPosition.right) {
-                ox = '0%';
-                x = 0;
-            }
-            else if (dir === DirPosition.left) {
-                ox = '100%';
-                x = originRect.width - overlayElementRect.width;
-            }
-        }
-        else if (yPosition) {
-            if (yPosition === YPosition.above) {
-                y = 0;
-                oy = '0%';
-            }
-            else if (yPosition === YPosition.below) {
-                y = originRect.height - overlayElementRect.height;
-                oy = '100%';
-            }
-        }
-    }
-    return {
-        x: Math.round(x),
-        y: Math.round(y),
-        ox: ox,
-        oy: oy
-    };
-}
+/** @type {?} */
+var INITIAL_WH = 'initial';
 var Positioning = /** @class */ (function () {
-    function Positioning(placement, xPosition, yPosition, origin, overlayElement, themeVariables, offset) {
+    function Positioning(placement, xPosition, yPosition, origin, overlayElement, _themeVariables, offset) {
         if (offset === void 0) { offset = 0; }
         this.placement = placement;
         this.xPosition = xPosition;
         this.yPosition = yPosition;
         this.origin = origin;
         this.overlayElement = overlayElement;
-        this.themeVariables = themeVariables;
+        this._themeVariables = _themeVariables;
         this.offset = offset;
-        this.offsetCheck = 16;
-        this.originRect = (/** @type {?} */ (this.origin.getBoundingClientRect()));
-        this.overlayElementRect = (/** @type {?} */ (this.overlayElement.getBoundingClientRect()));
+        this._offsetCheck = 16;
+        this._originRect = (/** @type {?} */ (this.origin.getBoundingClientRect()));
+        this._overlayElementRect = (/** @type {?} */ (this.overlayElement.getBoundingClientRect()));
+        this.width = INITIAL_WH;
+        this.height = INITIAL_WH;
+        /** @type {?} */
+        var offsetCheckx2 = this._offsetCheck * 2;
         this.createPosition();
         for (var index = 0; index < 2; index++) {
             if (this.checkAll()) {
                 this.createPosition();
             }
         }
-        // Where there is not enough space
+        // when there is not enough space
         if (this.checkAll()) {
             /** @type {?} */
-            var _max_width = this.overlayElementRect.width + this.offsetCheck * 2 > window.innerWidth;
+            var _max_width = this._overlayElementRect.width + offsetCheckx2 > window.innerWidth;
             /** @type {?} */
-            var _max_height = this.overlayElementRect.height + this.offsetCheck * 2 > window.innerHeight;
+            var _max_height = this._overlayElementRect.height + offsetCheckx2 > window.innerHeight;
             if (_max_width || _max_height) {
                 if (_max_height) {
-                    this.y = this.originRect.y - this.offsetCheck;
-                    this.y *= -1;
+                    this.y = this._offsetCheck;
+                    this.height = window.innerHeight - offsetCheckx2 + "px";
                 }
                 if (_max_width) {
-                    this.x = this.originRect.x - this.offsetCheck;
-                    this.x *= -1;
+                    this.x = this._offsetCheck;
+                    this.width = window.innerWidth - offsetCheckx2 + "px";
                 }
             }
-            else if (this.checkBottom()) {
-                this.y += (/** @type {?} */ (this.checkBottom(true)));
+            else {
+                if (this.checkBottom()) {
+                    this.y += (/** @type {?} */ (this.checkBottom(true)));
+                }
+                else if (this.checkTop()) {
+                    this.y -= (/** @type {?} */ (this.checkTop(true)));
+                }
+                if (this.checkRight()) {
+                    this.x += (/** @type {?} */ (this.checkRight(true)));
+                }
+                else if (this.checkLeft()) {
+                    this.x -= (/** @type {?} */ (this.checkLeft(true)));
+                }
             }
-            else if (this.checkTop()) {
-                this.y -= (/** @type {?} */ (this.checkTop(true)));
-            }
-            if (this.checkRight()) {
-                this.x += (/** @type {?} */ (this.checkRight(true)));
-            }
-            else if (this.checkLeft()) {
-                this.x -= (/** @type {?} */ (this.checkLeft(true)));
-            }
+            // update origin
+            this.updateOrigin();
         }
         // round result
         this.x = Math.round(this.x);
@@ -696,9 +604,11 @@ var Positioning = /** @class */ (function () {
         this.ay = Math.round(this.ay);
     }
     /**
+     * @private
      * @return {?}
      */
     Positioning.prototype.createPosition = /**
+     * @private
      * @return {?}
      */
     function () {
@@ -709,67 +619,67 @@ var Positioning = /** @class */ (function () {
             throw new Error("`placement` is required.");
         }
         /** @type {?} */
-        var x = 0;
+        var x = this._originRect.x;
         /** @type {?} */
-        var y = 0;
+        var y = this._originRect.y;
         /** @type {?} */
         var ox = 'center';
         /** @type {?} */
         var oy = 'center';
-        if (this.placement || this.xPosition || this.yPosition) {
+        if (this.placement) {
             if (this.placement) {
                 if (this.placement === YPosition.above) {
-                    x = (this.originRect.width - this.overlayElementRect.width) / 2;
-                    y = -this.overlayElementRect.height - this.offset;
+                    x += (this._originRect.width - this._overlayElementRect.width) / 2;
+                    y += -this._overlayElementRect.height - this.offset;
                     oy = 'bottom';
                 }
                 else if (this.placement === YPosition.below) {
-                    x = (this.originRect.width - this.overlayElementRect.width) / 2;
-                    y = this.originRect.height + this.offset;
+                    x += (this._originRect.width - this._overlayElementRect.width) / 2;
+                    y += this._originRect.height + this.offset;
                     oy = 'top';
                 }
                 else {
                     /** @type {?} */
-                    var dir = this.themeVariables.getDirection((/** @type {?} */ (this.placement)));
+                    var dir = this._themeVariables.getDirection((/** @type {?} */ (this.placement)));
                     if (dir === DirPosition.left) {
                         ox = '100%';
-                        x = -this.overlayElementRect.width - this.offset;
-                        y = (this.originRect.height - this.overlayElementRect.height) / 2;
+                        x += -this._overlayElementRect.width - this.offset;
+                        y += (this._originRect.height - this._overlayElementRect.height) / 2;
                     }
                     else if (dir === DirPosition.right) {
                         ox = '0%';
-                        x = this.originRect.width + this.offset;
-                        y = (this.originRect.height - this.overlayElementRect.height) / 2;
+                        x += this._originRect.width + this.offset;
+                        y += (this._originRect.height - this._overlayElementRect.height) / 2;
                     }
                 }
             }
             if (this.xPosition) {
                 /** @type {?} */
-                var dir = this.themeVariables.getDirection((/** @type {?} */ (this.xPosition)));
+                var dir = this._themeVariables.getDirection((/** @type {?} */ (this.xPosition)));
                 if (dir === DirPosition.right) {
                     ox = '0%';
-                    x = 0;
+                    x = this._originRect.x;
                 }
                 else if (dir === DirPosition.left) {
                     ox = '100%';
-                    x = this.originRect.width - this.overlayElementRect.width;
+                    x = this._originRect.x + this._originRect.width - this._overlayElementRect.width;
                 }
             }
             else if (this.yPosition) {
                 if (this.yPosition === YPosition.above) {
-                    y = 0;
+                    y = this._originRect.y;
                     oy = '0%';
                 }
                 else if (this.yPosition === YPosition.below) {
-                    y = this.originRect.height - this.overlayElementRect.height;
+                    y = this._originRect.y + this._originRect.height - this._overlayElementRect.height;
                     oy = '100%';
                 }
             }
         }
         this.x = x;
         this.y = y;
-        this.ax = x + this.overlayElementRect.x;
-        this.ay = y + this.overlayElementRect.y;
+        this.ax = x;
+        this.ay = y;
         this.ox = ox;
         this.oy = oy;
         return {
@@ -780,16 +690,18 @@ var Positioning = /** @class */ (function () {
         };
     };
     /**
+     * @private
      * @param {?=} returnVal
      * @return {?}
      */
     Positioning.prototype.checkLeft = /**
+     * @private
      * @param {?=} returnVal
      * @return {?}
      */
     function (returnVal) {
         /** @type {?} */
-        var rest = this.ax - this.offsetCheck;
+        var rest = this.ax - this._offsetCheck;
         if (returnVal) {
             return rest;
         }
@@ -805,16 +717,18 @@ var Positioning = /** @class */ (function () {
         return false;
     };
     /**
+     * @private
      * @param {?=} returnVal
      * @return {?}
      */
     Positioning.prototype.checkRight = /**
+     * @private
      * @param {?=} returnVal
      * @return {?}
      */
     function (returnVal) {
         /** @type {?} */
-        var rest = window.innerWidth - (this.ax + this.overlayElementRect.width + this.offsetCheck);
+        var rest = window.innerWidth - (this.ax + this._overlayElementRect.width + this._offsetCheck);
         if (returnVal) {
             return rest;
         }
@@ -830,16 +744,18 @@ var Positioning = /** @class */ (function () {
         return false;
     };
     /**
+     * @private
      * @param {?=} returnVal
      * @return {?}
      */
     Positioning.prototype.checkTop = /**
+     * @private
      * @param {?=} returnVal
      * @return {?}
      */
     function (returnVal) {
         /** @type {?} */
-        var rest = this.ay - this.offsetCheck;
+        var rest = this.ay - this._offsetCheck;
         if (returnVal) {
             return rest;
         }
@@ -855,16 +771,18 @@ var Positioning = /** @class */ (function () {
         return false;
     };
     /**
+     * @private
      * @param {?=} returnVal
      * @return {?}
      */
     Positioning.prototype.checkBottom = /**
+     * @private
      * @param {?=} returnVal
      * @return {?}
      */
     function (returnVal) {
         /** @type {?} */
-        var rest = window.innerHeight - (this.ay + this.overlayElementRect.height + this.offsetCheck);
+        var rest = window.innerHeight - (this.ay + this._overlayElementRect.height + this._offsetCheck);
         if (returnVal) {
             return rest;
         }
@@ -880,9 +798,11 @@ var Positioning = /** @class */ (function () {
         return false;
     };
     /**
+     * @private
      * @return {?}
      */
     Positioning.prototype.checkAll = /**
+     * @private
      * @return {?}
      */
     function () {
@@ -890,6 +810,26 @@ var Positioning = /** @class */ (function () {
             this.checkRight() ||
             this.checkTop() ||
             this.checkBottom();
+    };
+    /**
+     * @private
+     * @return {?}
+     */
+    Positioning.prototype.updateOrigin = /**
+     * @private
+     * @return {?}
+     */
+    function () {
+        /** @type {?} */
+        var oax = this._originRect.x + this._originRect.width / 2;
+        /** @type {?} */
+        var oay = this._originRect.y + this._originRect.height / 2;
+        /** @type {?} */
+        var vax = this.x + this._overlayElementRect.width / 2;
+        /** @type {?} */
+        var vay = this.y + this._overlayElementRect.height / 2;
+        this.ox = oax - vax + this._overlayElementRect.width / 2 + "px";
+        this.oy = oay - vay + this._overlayElementRect.height / 2 + "px";
     };
     return Positioning;
 }());
@@ -916,11 +856,12 @@ function invertPlacement(placement) {
     else if (placement === XPosition.left) {
         return XPosition.right;
     }
+    return placement;
 }
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 var defaultStyles = {
@@ -979,6 +920,18 @@ var LyTheme2 = /** @class */ (function () {
             this.setUpTheme(themeName);
         }
     }
+    Object.defineProperty(LyTheme2.prototype, "variables", {
+        /** Get Theme Variables */
+        get: /**
+         * Get Theme Variables
+         * @return {?}
+         */
+        function () {
+            return this.config;
+        },
+        enumerable: true,
+        configurable: true
+    });
     /**
      * @param {?} themeName
      * @return {?}
@@ -989,7 +942,12 @@ var LyTheme2 = /** @class */ (function () {
      */
     function (themeName) {
         if (!this.config) {
-            this.config = this.core.get(themeName);
+            /** @type {?} */
+            var theme = this.core.get(themeName);
+            if (theme === undefined) {
+                throw new Error("Theme " + themeName + " not found in CoreTheme");
+            }
+            this.config = theme;
             this._styleMap = new Map();
             this.elements = themeName in this.stylesInDocument.styles
                 ? this.stylesInDocument.styles[themeName]
@@ -1017,7 +975,7 @@ var LyTheme2 = /** @class */ (function () {
     /**
      * Add a new dynamic style, use only within \@Input()
      * @param {?} id Unique id
-     * @param {?} style Styles
+     * @param {?=} style Styles
      * @param {?=} el Element
      * @param {?=} instance The instance of this, this replaces the existing style with a new one when it changes
      * @param {?=} priority
@@ -1027,7 +985,7 @@ var LyTheme2 = /** @class */ (function () {
     LyTheme2.prototype.addStyle = /**
      * Add a new dynamic style, use only within \@Input()
      * @param {?} id Unique id
-     * @param {?} style Styles
+     * @param {?=} style Styles
      * @param {?=} el Element
      * @param {?=} instance The instance of this, this replaces the existing style with a new one when it changes
      * @param {?=} priority
@@ -1036,7 +994,7 @@ var LyTheme2 = /** @class */ (function () {
      */
     function (id, style, el, instance, priority, parentStyle) {
         /** @type {?} */
-        var newClass = (/** @type {?} */ (this._createStyleContent2((/** @type {?} */ (style)), id, priority, TypeStyle.OnlyOne, false, parentStyle)));
+        var newClass = (/** @type {?} */ (this._createStyleContent2(style, id, priority, TypeStyle.OnlyOne, false, parentStyle)));
         if (newClass === instance) {
             return newClass;
         }
@@ -1049,6 +1007,7 @@ var LyTheme2 = /** @class */ (function () {
         return newClass;
     };
     /**
+     * @private
      * @param {?} element
      * @param {?} renderer
      * @param {?} newClassname
@@ -1056,6 +1015,7 @@ var LyTheme2 = /** @class */ (function () {
      * @return {?}
      */
     LyTheme2.prototype.updateClassName = /**
+     * @private
      * @param {?} element
      * @param {?} renderer
      * @param {?} newClassname
@@ -1099,8 +1059,13 @@ var LyTheme2 = /** @class */ (function () {
             throw new Error("`theme.setTheme('theme-name')` is only available in browser platform");
         }
         if (nam !== this.config.name) {
-            this.themeMap.get(this.initialTheme).change = nam;
-            this.config = this.core.get(nam);
+            /** @type {?} */
+            var theme = this.themeMap.get(this.initialTheme);
+            if (theme == null) {
+                throw new Error("Theme " + nam + " not found in themeMap");
+            }
+            theme.change = nam;
+            this.config = (/** @type {?} */ (this.core.get(nam)));
             this._updateAllStyles();
         }
     };
@@ -1120,16 +1085,18 @@ var LyTheme2 = /** @class */ (function () {
         this._updateAllStyles();
     };
     /**
+     * @private
      * @return {?}
      */
     LyTheme2.prototype._updateAllStyles = /**
+     * @private
      * @return {?}
      */
     function () {
         var _this = this;
         this.elements.forEach(function (_, key) {
             /** @type {?} */
-            var styleData = STYLE_MAP5.get(key);
+            var styleData = (/** @type {?} */ (STYLE_MAP5.get(key)));
             if (styleData.requireUpdate) {
                 _this._createStyleContent2(styleData.styles, styleData.id, styleData.priority, styleData.type, true, styleData.parentStyle);
             }
@@ -1164,9 +1131,11 @@ var LyTheme2 = /** @class */ (function () {
         return (/** @type {?} */ (this._createStyleContent2((/** @type {?} */ (css)), id, priority, TypeStyle.OnlyOne, false, parentStyle)));
     };
     /**
+     * @private
      * @return {?}
      */
     LyTheme2.prototype._addDefaultStyles = /**
+     * @private
      * @return {?}
      */
     function () {
@@ -1195,6 +1164,7 @@ var LyTheme2 = /** @class */ (function () {
         return this._createStyleContent2(styles, null, priority, TypeStyle.Multiple);
     };
     /**
+     * @private
      * @param {?} styles
      * @param {?} id
      * @param {?} priority
@@ -1204,6 +1174,7 @@ var LyTheme2 = /** @class */ (function () {
      * @return {?}
      */
     LyTheme2.prototype._createStyleContent2 = /**
+     * @private
      * @param {?} styles
      * @param {?} id
      * @param {?} priority
@@ -1214,14 +1185,14 @@ var LyTheme2 = /** @class */ (function () {
      */
     function (styles, id, priority, type, forChangeTheme, parentStyle) {
         /** @type {?} */
-        var newId = (/** @type {?} */ (id)) || styles;
+        var newId = id || (/** @type {?} */ (styles));
         /** @type {?} */
-        var isNewStyle;
+        var isNewStyle = null;
         if (!STYLE_MAP5.has(newId)) {
             isNewStyle = true;
             STYLE_MAP5.set(newId, {
                 priority: priority,
-                styles: styles,
+                styles: (/** @type {?} */ (styles)),
                 type: type,
                 css: {},
                 id: id,
@@ -1229,7 +1200,7 @@ var LyTheme2 = /** @class */ (function () {
             });
         }
         /** @type {?} */
-        var styleMap = STYLE_MAP5.get(newId);
+        var styleMap = (/** @type {?} */ (STYLE_MAP5.get(newId)));
         /** @type {?} */
         var themeName = this.initialTheme;
         /** @type {?} */
@@ -1241,19 +1212,19 @@ var LyTheme2 = /** @class */ (function () {
              */
             var css = void 0;
             /** @type {?} */
-            var themeMap = this.themeMap.get(this.initialTheme);
+            var themeMap = (/** @type {?} */ (this.themeMap.get(this.initialTheme)));
             /** @type {?} */
-            var config = this.core.get(themeMap.change || themeName);
+            var config = (/** @type {?} */ (this.core.get(themeMap.change || themeName)));
             if (typeof styles === 'function') {
                 styleMap.requireUpdate = true;
-                css = groupStyleToString(styleMap, styles(config), themeName, id, type, config);
+                css = groupStyleToString(styleMap, (/** @type {?} */ (styles(config))), themeName, id, type, config);
                 if (!forChangeTheme) {
                     styleMap.css[themeName] = css;
                 }
             }
             else {
                 /** create a new id for style that does not <-<require>-> changes */
-                css = groupStyleToString(styleMap, styles, themeName, (/** @type {?} */ (newId)), type, config);
+                css = groupStyleToString(styleMap, (/** @type {?} */ (styles)), themeName, (/** @type {?} */ (newId)), type, config);
                 styleMap.css = css;
             }
             if (!this.elements.has(newId)) {
@@ -1272,7 +1243,7 @@ var LyTheme2 = /** @class */ (function () {
             }
             if (forChangeTheme) {
                 /** @type {?} */
-                var el = this.elements.get(newId);
+                var el = (/** @type {?} */ (this.elements.get(newId)));
                 el.innerText = css;
             }
         }
@@ -1299,15 +1270,17 @@ var LyTheme2 = /** @class */ (function () {
         return styleMap.classes || styleMap[themeName];
     };
     /**
-     * @param {?=} priority
+     * @private
+     * @param {?} priority
      * @return {?}
      */
     LyTheme2.prototype._createStyleContainer = /**
-     * @param {?=} priority
+     * @private
+     * @param {?} priority
      * @return {?}
      */
     function (priority) {
-        if (priority === void 0) { priority = 0; }
+        priority = priority || 0;
         var styleContainers = this.stylesInDocument.styleContainers;
         if (!styleContainers.has(priority)) {
             /** @type {?} */
@@ -1330,10 +1303,12 @@ var LyTheme2 = /** @class */ (function () {
         return styleContainers.get(priority);
     };
     /**
+     * @private
      * @param {?} index
      * @return {?}
      */
     LyTheme2.prototype.findNode = /**
+     * @private
      * @param {?} index
      * @return {?}
      */
@@ -1346,10 +1321,12 @@ var LyTheme2 = /** @class */ (function () {
         return (key !== undefined && styleContainers.get(key)) || this.core.firstElement;
     };
     /**
+     * @private
      * @param {?} css
      * @return {?}
      */
     LyTheme2.prototype._createElementStyle = /**
+     * @private
      * @param {?} css
      * @return {?}
      */
@@ -1419,11 +1396,14 @@ function groupStyleToString(styleMap, styles, themeName, id, typeStyle, themeVar
             rules = "." + className + "{" + styles + "}";
         }
         else {
-            rules = styleToString(id, null, styles, themeVariables, (/** @type {?} */ (className)));
+            rules = styleToString(id, null, (/** @type {?} */ (styles)), themeVariables, (/** @type {?} */ (className)));
         }
         if (styleMap.parentStyle) {
             /** @type {?} */
             var styleMapOfParentStyle = STYLE_MAP5.get(styleMap.parentStyle);
+            if (!styleMapOfParentStyle) {
+                throw new Error("The parentStyle not exist or is called before being created.");
+            }
             return replaceRefs(rules, styleMapOfParentStyle[themeName]);
         }
         return rules;
@@ -1520,7 +1500,7 @@ function styleToString(key, $name, ob, themeVariables, currentKey, parentKey) {
                     subContent += styleToString(key, $name, (/** @type {?} */ (element)), themeVariables, styleKey, newKey);
                 }
                 else {
-                    keyAndValue += convertToStyleValue(styleKey, element, themeVariables);
+                    keyAndValue += convertToStyleValue(styleKey, (/** @type {?} */ (element)), themeVariables);
                 }
             }
         }
@@ -1731,19 +1711,13 @@ function createNextKeyframeId() {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var NgTranscludeDirective = /** @class */ (function () {
     function NgTranscludeDirective(_viewRef) {
         this._viewRef = _viewRef;
     }
     Object.defineProperty(NgTranscludeDirective.prototype, "ngTransclude", {
-        get: /**
-         * @return {?}
-         */
-        function () {
-            return this._ngTransclude;
-        },
         set: /**
          * @param {?} templateRef
          * @return {?}
@@ -1757,6 +1731,16 @@ var NgTranscludeDirective = /** @class */ (function () {
                 this._ngTransclude = null;
                 this._viewRef.clear();
             }
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(NgTranscludeDirective.prototype, "getNgTransclude", {
+        get: /**
+         * @return {?}
+         */
+        function () {
+            return this._ngTransclude;
         },
         enumerable: true,
         configurable: true
@@ -1806,7 +1790,7 @@ function getNativeElement(element) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 var DEFAULT_VALUE = '';
@@ -1911,7 +1895,7 @@ function mixinStyleUpdater(base) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @param {?} value
@@ -1923,7 +1907,7 @@ function toBoolean(value) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var RippleRef = /** @class */ (function () {
     function RippleRef() {
@@ -1984,6 +1968,7 @@ var Ripple = /** @class */ (function () {
     };
     Object.defineProperty(Ripple.prototype, "_rectContainer", {
         get: /**
+         * @private
          * @return {?}
          */
         function () {
@@ -1993,10 +1978,12 @@ var Ripple = /** @class */ (function () {
         configurable: true
     });
     /**
+     * @private
      * @param {?} element
      * @return {?}
      */
     Ripple.prototype.setTriggerElement = /**
+     * @private
      * @param {?} element
      * @return {?}
      */
@@ -2010,10 +1997,12 @@ var Ripple = /** @class */ (function () {
         this._triggerElement = element;
     };
     /**
+     * @private
      * @param {?} styles
      * @return {?}
      */
     Ripple.prototype.createRipple = /**
+     * @private
      * @param {?} styles
      * @return {?}
      */
@@ -2039,10 +2028,12 @@ var Ripple = /** @class */ (function () {
         container.style.transform = "scale(1)";
     };
     /**
+     * @private
      * @param {?} event
      * @return {?}
      */
     Ripple.prototype.onPointerDown = /**
+     * @private
      * @param {?} event
      * @return {?}
      */
@@ -2054,10 +2045,12 @@ var Ripple = /** @class */ (function () {
         }
     };
     /**
+     * @private
      * @param {?} _event
      * @return {?}
      */
     Ripple.prototype.onPointerLeave = /**
+     * @private
      * @param {?} _event
      * @return {?}
      */
@@ -2105,11 +2098,13 @@ var Ripple = /** @class */ (function () {
         });
     };
     /**
+     * @private
      * @param {?} fn
      * @param {?=} delay
      * @return {?}
      */
     Ripple.prototype.runTimeoutOutsideZone = /**
+     * @private
      * @param {?} fn
      * @param {?=} delay
      * @return {?}
@@ -2127,7 +2122,7 @@ var Ripple = /** @class */ (function () {
     function () {
         var _this = this;
         /** @type {?} */
-        var rippleRef = this._rippleRef || null;
+        var rippleRef = this._rippleRef;
         /** @type {?} */
         var duration = this._transitionDuration;
         if (rippleRef && rippleRef.state) {
@@ -2139,11 +2134,11 @@ var Ripple = /** @class */ (function () {
                 // }, rippleRef.timestamp < duration ? duration / (duration * .001 + 1) : 0);
             }, rippleRef.timestamp < duration ? duration * .15 : 0);
             this.runTimeoutOutsideZone(function () {
-                rippleRef.container.parentNode.removeChild(rippleRef.container);
+                (/** @type {?} */ (rippleRef.container.parentNode)).removeChild(rippleRef.container);
                 // }, rippleRef.timestamp < duration ? duration * 2 : duration);
                 // }, rippleRef.timestamp < duration ? duration / (duration * .001 + 1) * 2 : duration);
             }, rippleRef.timestamp < duration ? duration * 2 : duration);
-            this._rippleRef = null;
+            this._rippleRef = undefined;
         }
     };
     /**
@@ -2156,7 +2151,7 @@ var Ripple = /** @class */ (function () {
         var _this = this;
         if (this._triggerElement) {
             this._eventHandlers.forEach(function (fn, type) {
-                _this._triggerElement.removeEventListener(type, fn, _this._eventOptions);
+                (/** @type {?} */ (_this._triggerElement)).removeEventListener(type, fn, _this._eventOptions);
             });
         }
     };
@@ -2185,7 +2180,7 @@ function maxSize(rect) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 var LY_COMMON_STYLES = {
@@ -2244,7 +2239,7 @@ var LyCoreStyles = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 var styles = function (theme) { return ({
@@ -2281,7 +2276,7 @@ var LyRippleService = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @template T
@@ -2323,7 +2318,7 @@ function mixinDisableRipple(base) {
                             var triggerElement = _this._triggerElement.nativeElement;
                             /** @type {?} */
                             var rippleContainer = (_this._rippleContainer && _this._rippleContainer.nativeElement) || triggerElement;
-                            _this._ripple = new Ripple(_this._theme.config, _this._ngZone, _this._theme.addStyleSheet(styles), rippleContainer, triggerElement);
+                            _this._ripple = new Ripple(_this._theme.variables, _this._ngZone, _this._theme.addStyleSheet(styles), rippleContainer, triggerElement);
                             _this._ripple.setConfig(_this._rippleConfig);
                         });
                     }
@@ -2352,7 +2347,7 @@ function mixinDisableRipple(base) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @template T
@@ -2390,7 +2385,7 @@ function mixinDisabled(base) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 var DEFAULT_COLOR = 'primary';
@@ -2434,7 +2429,7 @@ function mixinColor(base) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 var DEFAULT_BG = 'primary';
@@ -2478,7 +2473,7 @@ function mixinBg(base) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @template T
@@ -2514,7 +2509,7 @@ function mixinRaised(base) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @template T
@@ -2550,7 +2545,7 @@ function mixinOutlined(base) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @template T
@@ -2586,7 +2581,7 @@ function mixinElevation(base) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @template T
@@ -2622,12 +2617,12 @@ function mixinShadowColor(base) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 var DEFAULT_BG$1 = 'paper';
@@ -2730,7 +2725,7 @@ var LyPaper = /** @class */ (function (_super) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var LyWithClass = /** @class */ (function () {
     function LyWithClass(el) {
@@ -2767,7 +2762,7 @@ var LyWithClass = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var LyCommonModule = /** @class */ (function () {
     function LyCommonModule() {
@@ -2783,49 +2778,7 @@ var LyCommonModule = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
- */
-/**
- * @param {?} obj
- * @return {?}
- */
-function isWindow(obj) {
-    return obj !== null && obj === obj.window;
-}
-/**
- * @param {?} elem
- * @return {?}
- */
-function getWindow(elem) {
-    return isWindow(elem) ? elem : elem.nodeType === 9 && elem.defaultView;
-}
-/**
- * @param {?} elem
- * @return {?}
- */
-function exactPosition(elem) {
-    /** @type {?} */
-    var docElem;
-    /** @type {?} */
-    var win;
-    /** @type {?} */
-    var box = { top: 0, left: 0 };
-    /** @type {?} */
-    var doc = elem && elem.ownerDocument;
-    docElem = doc.documentElement;
-    if (typeof elem.getBoundingClientRect !== typeof undefined) {
-        box = elem.getBoundingClientRect();
-    }
-    win = getWindow(doc);
-    return {
-        top: box.top + win.pageYOffset - docElem.clientTop,
-        left: box.left + win.pageXOffset - docElem.clientLeft
-    };
-}
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @param {?} value
@@ -2838,7 +2791,7 @@ function defaultEntry(value, defaultValue) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 // Element to move, time in ms to animate
 /**
@@ -2944,12 +2897,12 @@ function easeOutCuaic(t) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @enum {string} */
 var FocusStatus = {
@@ -2985,11 +2938,11 @@ var LyFocusState = /** @class */ (function () {
         /** @type {?} */
         var key = keyElement && getNativeElement(keyElement) || nativeElement;
         if (this._elementMap.has(key)) {
-            return this._elementMap.get(key).subject.asObservable();
+            return (/** @type {?} */ (this._elementMap.get(key))).subject.asObservable();
         }
         /** @type {?} */
         var focusState = {
-            unlisten: null,
+            unlisten: (/** @type {?} */ (null)),
             subject: new Subject()
         };
         this._incrementCount();
@@ -3031,11 +2984,13 @@ var LyFocusState = /** @class */ (function () {
         }
     };
     /**
+     * @private
      * @param {?} event
      * @param {?} subject
      * @return {?}
      */
     LyFocusState.prototype._on = /**
+     * @private
      * @param {?} event
      * @param {?} subject
      * @return {?}
@@ -3049,9 +3004,11 @@ var LyFocusState = /** @class */ (function () {
         this._ngZone.run(function () { return subject.next(by); });
     };
     /**
+     * @private
      * @return {?}
      */
     LyFocusState.prototype._addGlobalListeners = /**
+     * @private
      * @return {?}
      */
     function () {
@@ -3079,9 +3036,11 @@ var LyFocusState = /** @class */ (function () {
         };
     };
     /**
+     * @private
      * @return {?}
      */
     LyFocusState.prototype._incrementCount = /**
+     * @private
      * @return {?}
      */
     function () {
@@ -3090,9 +3049,11 @@ var LyFocusState = /** @class */ (function () {
         }
     };
     /**
+     * @private
      * @return {?}
      */
     LyFocusState.prototype._decrementCount = /**
+     * @private
      * @return {?}
      */
     function () {
@@ -3125,16 +3086,16 @@ var LyFocusState = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
-var AUI_VERSION = '2.0.4-nightly.20190109-jqox18df';
+var AUI_VERSION = '2.0.6';
 /** @type {?} */
-var AUI_LAST_UPDATE = '2019-01-09T08:22:11.617Z';
+var AUI_LAST_UPDATE = '2019-01-22T01:42:03.013Z';
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 var LY_HAMMER_OPTIONS = new InjectionToken('LY_HAMMER_OPTIONS');
@@ -3182,6 +3143,7 @@ var LyHammerGestureConfig = /** @class */ (function (_super) {
     /** Creates a new recognizer, without affecting the default recognizers of HammerJS */
     /**
      * Creates a new recognizer, without affecting the default recognizers of HammerJS
+     * @private
      * @param {?} base
      * @param {?} options
      * @param {...?} inheritances
@@ -3189,6 +3151,7 @@ var LyHammerGestureConfig = /** @class */ (function (_super) {
      */
     LyHammerGestureConfig.prototype._createRecognizer = /**
      * Creates a new recognizer, without affecting the default recognizers of HammerJS
+     * @private
      * @param {?} base
      * @param {?} options
      * @param {...?} inheritances
@@ -3217,7 +3180,7 @@ var LyHammerGestureConfig = /** @class */ (function (_super) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var LyThemeModule = /** @class */ (function () {
     function LyThemeModule() {
@@ -3247,7 +3210,7 @@ var LyThemeModule = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var Undefined = /** @class */ (function () {
     function Undefined() {
@@ -3259,33 +3222,7 @@ var UndefinedValue = new Undefined();
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
- */
-/** @enum {number} */
-var InvertMediaQuery = {
-    No: 0,
-    Yes: 1,
-};
-InvertMediaQuery[InvertMediaQuery.No] = 'No';
-InvertMediaQuery[InvertMediaQuery.Yes] = 'Yes';
-/**
- * @param {?} media
- * @param {?=} invertMediaQuery
- * @return {?}
- */
-function transformMediaQuery(media, invertMediaQuery) {
-    if (invertMediaQuery === void 0) { invertMediaQuery = InvertMediaQuery.No; }
-    if (media && invertMediaQuery === InvertMediaQuery.Yes) {
-        /** @type {?} */
-        var newVal = media.split(',').map(function (_) { return "not " + _; });
-        return newVal;
-    }
-    return media;
-}
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 var styles$1 = function (theme) { return ({
@@ -3370,11 +3307,13 @@ var LyOverlayContainer = /** @class */ (function () {
     /**
      * Update styles for overlay container
      * @ignore
+     * @private
      * @return {?}
      */
     LyOverlayContainer.prototype._update = /**
      * Update styles for overlay container
      * @ignore
+     * @private
      * @return {?}
      */
     function () {
@@ -3413,7 +3352,7 @@ var LyOverlayBackdrop = /** @class */ (function () {
         this._theme = _theme;
         this._overlayConfig = _overlayConfig;
         /**
-         * @ignore
+         * \@docs-private
          */
         this.classes = this._theme.addStyleSheet(BACKDROP_STYLES);
         el.nativeElement.classList.add(commonStyles.classes.fill);
@@ -3451,7 +3390,7 @@ var LyOverlayBackdrop = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var WinResize = /** @class */ (function () {
     function WinResize(document, ngZone) {
@@ -3484,7 +3423,7 @@ var WinResize = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var WinScroll = /** @class */ (function () {
     function WinScroll(_document, ngZone) {
@@ -3517,7 +3456,7 @@ var WinScroll = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var CreateFromTemplateRef = /** @class */ (function () {
     function CreateFromTemplateRef(_componentFactoryResolver, _appRef, _templateRef, _overlayContainer, _context, _injector, windowScroll, resizeService, config) {
@@ -3532,7 +3471,16 @@ var CreateFromTemplateRef = /** @class */ (function () {
         this._el = document.createElement('div');
         // this._viewRef.rootNodes.forEach(rootNode => container.appendChild(rootNode));
         /** @type {?} */
-        var __styles = __assign({ position: 'absolute', display: 'flex', top: 0, left: 0, right: 0, bottom: 0, justifyContent: 'center', alignItems: 'center', pointerEvents: 'all' }, config.styles);
+        var __styles = {
+            position: 'absolute',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            pointerEvents: 'all'
+        };
+        if (config) {
+            Object.assign(__styles, config.styles);
+        }
         /** @type {?} */
         var newInjector = Injector.create([
             {
@@ -3541,22 +3489,33 @@ var CreateFromTemplateRef = /** @class */ (function () {
             }
         ], this._injector);
         this.updateStyles(__styles);
-        if (config.host) {
-            this.windowSRSub = merge(windowScroll.scroll$, resizeService.resize$).subscribe(function () {
+        if (config) {
+            if (config.onResizeScroll) {
+                this.onResizeScroll = config.onResizeScroll;
+                // this.onResizeScroll();
+            }
+            if (config.host) {
+                this.windowSRSub = merge(windowScroll.scroll$, resizeService.resize$).subscribe(function () {
+                    if (_this.onResizeScroll) {
+                        _this.onResizeScroll();
+                    }
+                    else {
+                        /** @type {?} */
+                        var rect = config.host.getBoundingClientRect();
+                        /** @type {?} */
+                        var newStyles = {
+                            top: rect.top,
+                            left: rect.left
+                        };
+                        _this.updateStyles(newStyles);
+                    }
+                });
+            }
+            if (config.classes) {
                 /** @type {?} */
-                var rect = config.host.getBoundingClientRect();
-                /** @type {?} */
-                var newStyles = {
-                    top: rect.top,
-                    left: rect.left
-                };
-                _this.updateStyles(newStyles);
-            });
-        }
-        /** @type {?} */
-        var classes = config.classes;
-        if (classes && classes.length) {
-            classes.forEach(function (className) { return ((/** @type {?} */ (_this._el))).classList.add(className); });
+                var classes = config.classes;
+                classes.forEach(function (className) { return ((/** @type {?} */ (_this._el))).classList.add(className); });
+            }
         }
         this._compRefOverlayBackdrop = this.generateComponent(LyOverlayBackdrop, newInjector);
         this._appRef.attachView(this._compRefOverlayBackdrop.hostView);
@@ -3570,7 +3529,7 @@ var CreateFromTemplateRef = /** @class */ (function () {
          * @return {?}
          */
         function () {
-            return this._el;
+            return (/** @type {?} */ (this._el));
         },
         enumerable: true,
         configurable: true
@@ -3590,19 +3549,21 @@ var CreateFromTemplateRef = /** @class */ (function () {
             if (__styles.hasOwnProperty(key)) {
                 /** @type {?} */
                 var styleVal = __styles[key];
-                if (styleVal) {
-                    this._el.style[key] = typeof __styles[key] === 'number' ? styleVal + "px" : styleVal;
+                if (styleVal != null) {
+                    (/** @type {?} */ (this._el)).style[key] = typeof __styles[key] === 'number' ? styleVal + "px" : styleVal;
                 }
             }
         }
     };
     /**
+     * @private
      * @param {?} type
      * @param {?} context
      * @param {?} injector
      * @return {?}
      */
     CreateFromTemplateRef.prototype._appendComponentToBody = /**
+     * @private
      * @param {?} type
      * @param {?} context
      * @param {?} injector
@@ -3616,12 +3577,12 @@ var CreateFromTemplateRef = /** @class */ (function () {
             var viewRef = this._viewRef = type.createEmbeddedView(context || {});
             this._appRef.attachView(viewRef);
             // Get DOM element from component
-            viewRef.rootNodes.forEach(function (_) { return _this._el.appendChild(_); });
+            viewRef.rootNodes.forEach(function (_) { return (/** @type {?} */ (_this._el)).appendChild(_); });
             // Append DOM element to the body
             this._overlayContainer._add(this._el);
         }
         else if (typeof type === 'string') {
-            this._el.innerText = type;
+            (/** @type {?} */ (this._el)).innerText = type;
             this._overlayContainer._add(this._el);
         }
         else {
@@ -3666,17 +3627,17 @@ var CreateFromTemplateRef = /** @class */ (function () {
         if (this._viewRef) {
             this._viewRef.destroy();
             this._overlayContainer._remove(this._el);
-            this._el = null;
+            this._el = undefined;
         }
         else if (this._compRef) {
             this._compRef.destroy();
             this._overlayContainer._remove(this._el);
-            this._el = null;
+            this._el = undefined;
         }
         else if (this._el) {
-            // remove if content is string
+            // remove if template is string
             this._overlayContainer._remove(this._el);
-            this._el = null;
+            this._el = undefined;
         }
         if (this._compRefOverlayBackdrop) {
             this._appRef.detachView(this._compRefOverlayBackdrop.hostView);
@@ -3743,7 +3704,7 @@ var LyOverlay = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var LyOverlayModule = /** @class */ (function () {
     function LyOverlayModule() {
@@ -3759,7 +3720,7 @@ var LyOverlayModule = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 var MUTATION_OBSERVER_INIT = {
@@ -3844,7 +3805,11 @@ var ElementObserver = /** @class */ (function () {
         /** @type {?} */
         var element = elementOrRef instanceof ElementRef ? elementOrRef.nativeElement : elementOrRef;
         if (this._observedElements.has(element)) {
-            this._observedElements.get(element).disconnect();
+            /** @type {?} */
+            var observer = this._observedElements.get(element);
+            if (observer) {
+                (/** @type {?} */ (this._observedElements.get(element))).disconnect();
+            }
             this._observedElements.delete(element);
         }
     };
@@ -3861,12 +3826,12 @@ var ElementObserver = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @enum {string} */
 var AlignAlias = {
@@ -3882,19 +3847,19 @@ var AlignAlias = {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { getContrastYIQ, shadowBuilderDeprecated, shadowBuilder, Shadows, THEME_VARIABLES, IS_CORE_THEME, Platform, supportsPassiveEventListeners, LyCommonModule, getNativeElement, NgTranscludeDirective, NgTranscludeModule, exactPosition, toBoolean, defaultEntry, scrollTo, scrollToC, scrollWithAnimation, FocusStatus, LyFocusState, AUI_VERSION, AUI_LAST_UPDATE, LY_HAMMER_OPTIONS, LyHammerGestureConfig, LyPaperBase, LyPaperMixinBase, LyPaper, CoreTheme, LY_THEME_GLOBAL_VARIABLES, LY_THEME, LY_THEME_NAME, converterToCssKeyAndStyle, capitalizeFirstLetter, StylesInDocument, LyTheme2, LyThemeModule, LY_COMMON_STYLES, LyCoreStyles, Undefined, UndefinedValue, transformMediaQuery, InvertMediaQuery, eachMedia, isObject, mergeDeep, LyStyleUtils, Dir, DirAlias, DirPosition, LyOverlayContainer, LyOverlayBackdrop, LyOverlay, LyOverlayModule, MutationObserverFactory, ElementObserver, WinResize, WinScroll, mixinStyleUpdater, mixinDisableRipple, mixinDisabled, mixinColor, mixinBg, mixinRaised, mixinOutlined, mixinElevation, mixinShadowColor, Ripple, LyRippleService, getPosition, invertPlacement, YPosition, XPosition, Positioning, AlignAlias, LyWithClass as ɵa };
+export { getContrastYIQ, shadowBuilderDeprecated, shadowBuilder, Shadows, THEME_VARIABLES, IS_CORE_THEME, Platform, supportsPassiveEventListeners, LyCommonModule, getNativeElement, NgTranscludeDirective, NgTranscludeModule, toBoolean, defaultEntry, scrollTo, scrollToC, scrollWithAnimation, FocusStatus, LyFocusState, AUI_VERSION, AUI_LAST_UPDATE, LY_HAMMER_OPTIONS, LyHammerGestureConfig, LyPaperBase, LyPaperMixinBase, LyPaper, CoreTheme, LY_THEME_GLOBAL_VARIABLES, LY_THEME, LY_THEME_NAME, converterToCssKeyAndStyle, capitalizeFirstLetter, StylesInDocument, LyTheme2, LyThemeModule, LY_COMMON_STYLES, LyCoreStyles, Undefined, UndefinedValue, eachMedia, isObject, mergeDeep, LyStyleUtils, Dir, DirAlias, DirPosition, LyOverlayContainer, LyOverlayBackdrop, LyOverlay, LyOverlayModule, MutationObserverFactory, ElementObserver, WinResize, WinScroll, mixinStyleUpdater, mixinDisableRipple, mixinDisabled, mixinColor, mixinBg, mixinRaised, mixinOutlined, mixinElevation, mixinShadowColor, Ripple, LyRippleService, invertPlacement, YPosition, XPosition, Positioning, AlignAlias, LyWithClass as ɵa };
 
 //# sourceMappingURL=alyle-ui.js.map

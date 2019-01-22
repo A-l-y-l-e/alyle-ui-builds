@@ -2,11 +2,11 @@ import { trigger, style, animate, transition, keyframes } from '@angular/animati
 import { LyOverlay, LyTheme2, Positioning, shadowBuilder, XPosition, YPosition, LyCommonModule, LyOverlayModule } from '@alyle/ui';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { Component, Directive, ElementRef, HostBinding, HostListener, Input, Optional, Renderer2, NgModule } from '@angular/core';
+import { Component, Directive, ElementRef, HostBinding, HostListener, Input, Optional, Renderer2, ViewChild, NgModule } from '@angular/core';
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 const STYLE_PRIORITY = -1;
@@ -16,7 +16,7 @@ const DEFAULT_PLACEMENT = YPosition.below;
 const DEFAULT_XPOSITION = XPosition.after;
 /** @type {?} */
 const STYLES = (theme) => ({
-    container: Object.assign({ background: theme.background.primary.default, borderRadius: '2px', boxShadow: shadowBuilder(4), display: 'inline-block', paddingTop: '8px', paddingBottom: '8px', transformOrigin: 'inherit', pointerEvents: 'all' }, theme.menu.root)
+    container: Object.assign({ background: theme.background.primary.default, borderRadius: '2px', boxShadow: shadowBuilder(4), display: 'block', paddingTop: '8px', paddingBottom: '8px', transformOrigin: 'inherit', pointerEvents: 'all', overflow: 'auto', maxHeight: 'inherit', maxWidth: 'inherit' }, theme.menu.root)
 });
 /** @type {?} */
 const ANIMATIONS = [
@@ -70,6 +70,9 @@ class LyMenu {
      * @return {?}
      */
     ngOnInit() {
+        if (!this.ref) {
+            throw new Error('LyMenu: require @Input() ref');
+        }
         if (!this.placement && !this.xPosition && !this.yPosition) {
             this.xPosition = DEFAULT_XPOSITION;
             this.placement = DEFAULT_PLACEMENT;
@@ -79,25 +82,38 @@ class LyMenu {
      * @return {?}
      */
     ngAfterViewInit() {
+        if (this.ref._menuRef) {
+            this.ref._menuRef.onResizeScroll = this._updatePlacement.bind(this);
+        }
         this._updatePlacement();
     }
     /**
+     * @private
      * @return {?}
      */
     _updatePlacement() {
         /** @type {?} */
-        const el = (/** @type {?} */ (this._el.nativeElement));
+        const el = (/** @type {?} */ ((/** @type {?} */ (this.ref._menuRef)).containerElement));
         /** @type {?} */
-        const position = new Positioning(this.placement, this.xPosition, this.yPosition, this.ref._getHostElement(), el, this._theme.config);
+        const container = this._container.nativeElement;
+        // reset height & width
+        this._renderer.setStyle(container, 'height', 'initial');
+        this._renderer.setStyle(container, 'width', 'initial');
+        /** @type {?} */
+        const position = new Positioning(this.placement, this.xPosition, this.yPosition, this.ref._getHostElement(), el, this._theme.variables);
+        // set position
         this._renderer.setStyle(el, 'transform', `translate3d(${position.x}px, ${position.y}px, 0)`);
-        this._renderer.setStyle(el, 'transform-origin', `${position.ox} ${position.oy} 0`);
+        this._renderer.setStyle(this._el.nativeElement, 'transform-origin', `${position.ox} ${position.oy} 0`);
+        // set height & width
+        this._renderer.setStyle(container, 'height', position.height);
+        this._renderer.setStyle(container, 'width', position.width);
     }
 }
 LyMenu.decorators = [
     { type: Component, args: [{
                 selector: 'ly-menu',
                 animations: [...ANIMATIONS],
-                template: "<div [class]=\"classes.container\" [@menuEnter]=\"'in'\">\n  <ng-content></ng-content>\n</div>",
+                template: "<div #container\n  [class]=\"classes.container\"\n  [@menuEnter]=\"'in'\">\n  <ng-content></ng-content>\n</div>",
                 exportAs: 'lyMenu'
             }] }
 ];
@@ -108,6 +124,7 @@ LyMenu.ctorParameters = () => [
     { type: Renderer2 }
 ];
 LyMenu.propDecorators = {
+    _container: [{ type: ViewChild, args: ['container',] }],
     ref: [{ type: Input }],
     placement: [{ type: Input }],
     xPosition: [{ type: Input }],
@@ -139,7 +156,7 @@ class LyMenuItem {
      * @return {?}
      */
     _click() {
-        if (this._menu.ref) {
+        if (this._menu.ref && this._menu.ref._menuRef) {
             this._menu.ref._menuRef.detach();
         }
     }
@@ -186,16 +203,12 @@ class LyMenuTriggerFor {
             this._menuRef.detach();
         }
         else {
-            /** @type {?} */
-            const rect = this._targetPosition();
             this._menuRef = this.overlay.create(this.lyMenuTriggerFor, {
                 $implicit: this
             }, {
                 styles: {
-                    top: rect.top,
-                    left: rect.left,
-                    right: null,
-                    bottom: null,
+                    top: 0,
+                    left: 0,
                     pointerEvents: null
                 },
                 fnDestroy: this.detach.bind(this),
@@ -208,7 +221,9 @@ class LyMenuTriggerFor {
      * @return {?}
      */
     detach() {
-        this._menuRef.detach();
+        if (this._menuRef) {
+            this._menuRef.detach();
+        }
     }
     /**
      * @return {?}
@@ -216,7 +231,7 @@ class LyMenuTriggerFor {
     destroy() {
         if (this._menuRef) {
             this._menuRef.remove();
-            this._menuRef = null;
+            this._menuRef = undefined;
         }
     }
     /**
@@ -253,7 +268,7 @@ LyMenuTriggerFor.propDecorators = {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class LyMenuModule {
 }
@@ -267,17 +282,17 @@ LyMenuModule.decorators = [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 export { LyMenu, LyMenuItem, LyMenuTriggerFor, LyMenuModule };

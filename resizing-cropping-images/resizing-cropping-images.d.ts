@@ -28,18 +28,18 @@ export declare enum ImgResolution {
 }
 export interface ImgCropperEvent {
     /** Cropped image data URL */
-    dataURL: string;
+    dataURL?: string;
     name: string;
     /** Filetype */
-    type: string;
-    width: number;
-    height: number;
+    type?: string;
+    width?: number;
+    height?: number;
     /** Original Image data URL */
-    originalDataURL: string;
-    scale: number;
+    originalDataURL?: string;
+    scale?: number;
     /** Current rotation in degrees */
-    rotation: number;
-    position: {
+    rotation?: number;
+    position?: {
         x: number;
         y: number;
     };
@@ -55,14 +55,14 @@ export declare class LyResizingCroppingImages implements OnDestroy {
      * @docs-private
      */
     readonly classes: Record<"root" | "imgContainer" | "croppingContainer" | "croppContent", string>;
-    _originalImgBase64: string;
+    _originalImgBase64?: string;
     private _fileName;
     /** Original image */
     private _img;
-    private offset;
-    private _scale;
-    private _scal3Fix;
-    private _minScale;
+    private offset?;
+    private _scale?;
+    private _scal3Fix?;
+    private _minScale?;
     private _config;
     private _imgRect;
     private _rotation;
@@ -73,9 +73,9 @@ export declare class LyResizingCroppingImages implements OnDestroy {
     readonly scaleChange: EventEmitter<number>;
     config: ImgCropperConfig;
     /** Set scale */
-    scale: number;
+    scale: number | undefined;
     /** Get min scale */
-    readonly minScale: number;
+    readonly minScale: number | undefined;
     /** When is loaded image */
     _isLoadedImg: boolean;
     /** When is loaded image & ready for crop */
@@ -87,7 +87,7 @@ export declare class LyResizingCroppingImages implements OnDestroy {
     readonly cropped: EventEmitter<ImgCropperEvent>;
     /** Emit an error when the loaded image is not valid */
     readonly error: EventEmitter<ImgCropperEvent>;
-    private _defaultType;
+    private _defaultType?;
     constructor(_renderer: Renderer2, theme: LyTheme2, elementRef: ElementRef<HTMLElement>, cd: ChangeDetectorRef, _ngZone: NgZone);
     ngOnDestroy(): void;
     private _imgLoaded;
@@ -95,7 +95,7 @@ export declare class LyResizingCroppingImages implements OnDestroy {
     _resize$(): void;
     selectInputEvent(img: Event): void;
     /** Set the size of the image, the values can be 0 between 1, where 1 is the original size */
-    setScale(size: number, noAutoCrop?: boolean): void;
+    setScale(size?: number, noAutoCrop?: boolean): void;
     private _getCenterPoints;
     /**
      * Ajustar a la pantalla
@@ -132,9 +132,9 @@ export declare class LyResizingCroppingImages implements OnDestroy {
      */
     crop(config?: ImgCropperConfig): ImgCropperEvent;
     /**
-     * @ignore
+     * @docs-private
      */
-    _imgCrop(myConfig: ImgCropperConfig): ImgCropperEvent;
+    private _imgCrop;
     private _rootRect;
     private _areaCropperRect;
 }

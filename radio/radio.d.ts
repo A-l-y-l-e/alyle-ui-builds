@@ -172,7 +172,7 @@ export declare class LyRadio extends LyRadioMixinBase implements OnInit, AfterVi
     private _colorClass;
     private _animClass;
     private _disabled;
-    private _disabledClass;
+    private _disabledClass?;
     _input: ElementRef;
     private _radioContainer;
     _labelContainer: ElementRef;

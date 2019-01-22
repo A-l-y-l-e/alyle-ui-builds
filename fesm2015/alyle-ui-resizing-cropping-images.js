@@ -7,7 +7,7 @@ import { LyTheme2, mergeDeep, LY_COMMON_STYLES, LyHammerGestureConfig } from '@a
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 const STYLE_PRIORITY = -2;
@@ -162,6 +162,7 @@ class LyResizingCroppingImages {
         this._listeners.clear();
     }
     /**
+     * @private
      * @param {?} imgElement
      * @return {?}
      */
@@ -173,7 +174,7 @@ class LyResizingCroppingImages {
             canvas.width = imgElement.width;
             canvas.height = imgElement.height;
             /** @type {?} */
-            const ctx = canvas.getContext('2d');
+            const ctx = (/** @type {?} */ (canvas.getContext('2d')));
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             ctx.drawImage(imgElement, 0, 0);
             /** set min scale */
@@ -181,6 +182,7 @@ class LyResizingCroppingImages {
         }
     }
     /**
+     * @private
      * @param {?} values
      * @return {?}
      */
@@ -223,7 +225,7 @@ class LyResizingCroppingImages {
     selectInputEvent(img) {
         /** @type {?} */
         const _img = (/** @type {?} */ (img.target));
-        if (_img.files.length !== 1) {
+        if (_img.files && _img.files.length !== 1) {
             return;
         }
         /** @type {?} */
@@ -238,24 +240,24 @@ class LyResizingCroppingImages {
             this.setImageUrl(originalImageUrl);
             /** Set type */
             if (!this.config.type) {
-                this._defaultType = _img.files[0].type;
+                this._defaultType = (/** @type {?} */ (_img.files))[0].type;
             }
             this.cd.markForCheck();
             this._listeners.delete(listener);
         });
         this._listeners.add(listener);
-        fileReader.readAsDataURL(_img.files[0]);
+        fileReader.readAsDataURL((/** @type {?} */ (_img.files))[0]);
     }
     /**
      * Set the size of the image, the values can be 0 between 1, where 1 is the original size
-     * @param {?} size
+     * @param {?=} size
      * @param {?=} noAutoCrop
      * @return {?}
      */
     setScale(size, noAutoCrop) {
         // fix min scale
         /** @type {?} */
-        const newSize = size >= this.minScale && size <= 1 ? size : this.minScale;
+        const newSize = (/** @type {?} */ (size)) >= (/** @type {?} */ (this.minScale)) && (/** @type {?} */ (size)) <= 1 ? size : this.minScale;
         // check
         /** @type {?} */
         const changed = size != null && size !== this.scale && newSize !== this.scale;
@@ -297,6 +299,7 @@ class LyResizingCroppingImages {
         }
     }
     /**
+     * @private
      * @return {?}
      */
     _getCenterPoints() {
@@ -369,6 +372,9 @@ class LyResizingCroppingImages {
         const config = this.config;
         /** @type {?} */
         const startP = this.offset;
+        if (!scaleFix || !startP) {
+            return;
+        }
         // Limit for left
         if ((config.width / 2 / scaleFix) >= startP.left - (event.deltaX / scaleFix)) {
             x = startP.x + (startP.left) - (config.width / 2 / scaleFix);
@@ -394,10 +400,10 @@ class LyResizingCroppingImages {
         //   }
         // }
         if (x === void 0) {
-            x = (event.deltaX / scaleFix) + (this.offset.x);
+            x = (event.deltaX / scaleFix) + (startP.x);
         }
         if (y === void 0) {
-            y = (event.deltaY / scaleFix) + (this.offset.y);
+            y = (event.deltaY / scaleFix) + (startP.y);
         }
         this._setStylesForContImg({
             x, y
@@ -413,12 +419,12 @@ class LyResizingCroppingImages {
         const hostRect = this._rootRect();
         /** @type {?} */
         const croppingContainerRect = this._areaCropperRect();
-        if (x === void 0 && y === void 0) {
+        if (x === undefined && y === undefined) {
             x = this._imgRect.xc;
             y = this._imgRect.yc;
         }
-        x = (croppingContainerRect.x - hostRect.x) - (x - (this.config.width / 2));
-        y = (croppingContainerRect.y - hostRect.y) - (y - (this.config.height / 2));
+        x = (croppingContainerRect.x - hostRect.x) - ((/** @type {?} */ (x)) - (this.config.width / 2));
+        y = (croppingContainerRect.y - hostRect.y) - ((/** @type {?} */ (y)) - (this.config.height / 2));
         this._setStylesForContImg({
             x, y
         });
@@ -430,6 +436,7 @@ class LyResizingCroppingImages {
         this._cropIfAutoCrop();
     }
     /**
+     * @private
      * @return {?}
      */
     _cropIfAutoCrop() {
@@ -443,7 +450,7 @@ class LyResizingCroppingImages {
      */
     zoomIn() {
         /** @type {?} */
-        const scale = this._scal3Fix + .05;
+        const scale = (/** @type {?} */ (this._scal3Fix)) + .05;
         if (scale > 0 && scale <= 1) {
             this.setScale(scale);
         }
@@ -458,15 +465,15 @@ class LyResizingCroppingImages {
     clean() {
         if (this.isLoaded) {
             this._imgRect = (/** @type {?} */ ({}));
-            this.offset = null;
-            this.scale = null;
-            this._scal3Fix = null;
+            this.offset = undefined;
+            this.scale = (/** @type {?} */ (undefined));
+            this._scal3Fix = undefined;
             this._rotation = 0;
-            this._minScale = null;
-            this._defaultType = null;
-            this._isLoadedImg = undefined;
-            this.isLoaded = null;
-            this.isCropped = undefined;
+            this._minScale = undefined;
+            this._defaultType = undefined;
+            this._isLoadedImg = false;
+            this.isLoaded = false;
+            this.isCropped = false;
             this._originalImgBase64 = undefined;
             /** @type {?} */
             const canvas = this._imgCanvas.nativeElement;
@@ -481,8 +488,8 @@ class LyResizingCroppingImages {
      */
     zoomOut() {
         /** @type {?} */
-        const scale = this._scal3Fix - .05;
-        if (scale > this.minScale && scale <= 1) {
+        const scale = (/** @type {?} */ (this._scal3Fix)) - .05;
+        if (scale > (/** @type {?} */ (this.minScale)) && scale <= 1) {
             this.setScale(scale);
         }
         else {
@@ -514,13 +521,7 @@ class LyResizingCroppingImages {
         const cropEvent = {
             name: this._fileName,
             type: this._defaultType,
-            dataURL: null,
-            width: null,
-            height: null,
-            scale: null,
             originalDataURL: src,
-            rotation: null,
-            position: null
         };
         img.src = src;
         /** @type {?} */
@@ -541,7 +542,7 @@ class LyResizingCroppingImages {
                 .onStable
                 .pipe(take(1))
                 .subscribe(() => this._ngZone.run(() => {
-                this.isLoaded = null;
+                this.isLoaded = false;
                 if (fn) {
                     fn();
                 }
@@ -571,11 +572,11 @@ class LyResizingCroppingImages {
         /** @type {?} */
         const canvasClon = createCanvasImg(canvas);
         /** @type {?} */
-        const ctx = canvas.getContext('2d');
+        const ctx = (/** @type {?} */ (canvas.getContext('2d')));
         // clear
         ctx.clearRect(0, 0, canvasClon.width, canvasClon.height);
         // rotate canvas image
-        this._renderer.setStyle(canvas, 'transform', `rotate(${validDegrees}deg) scale(${1 / this._scal3Fix})`);
+        this._renderer.setStyle(canvas, 'transform', `rotate(${validDegrees}deg) scale(${1 / (/** @type {?} */ (this._scal3Fix))})`);
         this._renderer.setStyle(canvas, 'transformOrigin', `${this._imgRect.xc}px ${this._imgRect.yc}px 0`);
         const { x, y } = (/** @type {?} */ (canvas.getBoundingClientRect()));
         // save rect
@@ -600,7 +601,7 @@ class LyResizingCroppingImages {
         // Update min scale
         this._minScale = getMinScale(this.config.width, this.config.height, canvas.width, canvas.height);
         // set the minimum scale, only if necessary
-        if (this.scale < this.minScale) {
+        if ((/** @type {?} */ (this.scale)) < (/** @type {?} */ (this.minScale))) {
             this.setScale(0, true);
         } //                ↑ no AutoCrop
         //                ↑ no AutoCrop
@@ -628,6 +629,7 @@ class LyResizingCroppingImages {
         this._cropIfAutoCrop();
     }
     /**
+     * @private
      * @param {?} img
      * @param {?} config
      * @param {?} quality
@@ -649,7 +651,7 @@ class LyResizingCroppingImages {
          * Context
          * @type {?}
          */
-        const octx = img.getContext('2d');
+        const octx = (/** @type {?} */ (img.getContext('2d')));
         /** @type {?} */
         const q = (Math.pow((quality * 10), numSteps)) / (Math.pow(10, numSteps));
         /** @type {?} */
@@ -679,7 +681,7 @@ class LyResizingCroppingImages {
          */
         const oc = document.createElement('canvas');
         /** @type {?} */
-        const ctx = oc.getContext('2d');
+        const ctx = (/** @type {?} */ (oc.getContext('2d')));
         oc.width = config.width;
         oc.height = config.height;
         ctx.drawImage(img, 0, 0, img.width * q, img.height * q, 0, 0, oc.width, oc.height);
@@ -700,7 +702,8 @@ class LyResizingCroppingImages {
         return cropEvent;
     }
     /**
-     * @ignore
+     * \@docs-private
+     * @private
      * @param {?} myConfig
      * @return {?}
      */
@@ -708,9 +711,9 @@ class LyResizingCroppingImages {
         /** @type {?} */
         const canvasElement = document.createElement('canvas');
         /** @type {?} */
-        const imgRect = this._imgRect;
+        const imgRect = (/** @type {?} */ (this._imgRect));
         /** @type {?} */
-        const scaleFix = this._scal3Fix;
+        const scaleFix = (/** @type {?} */ (this._scal3Fix));
         /** @type {?} */
         const left = imgRect.xc - (myConfig.width / 2 / scaleFix);
         /** @type {?} */
@@ -723,7 +726,7 @@ class LyResizingCroppingImages {
         canvasElement.width = config.width / scaleFix;
         canvasElement.height = config.height / scaleFix;
         /** @type {?} */
-        const ctx = canvasElement.getContext('2d');
+        const ctx = (/** @type {?} */ (canvasElement.getContext('2d')));
         if (myConfig.fill) {
             ctx.fillStyle = myConfig.fill;
             ctx.fillRect(0, 0, canvasElement.width, canvasElement.height);
@@ -767,12 +770,14 @@ class LyResizingCroppingImages {
         return cropEvent;
     }
     /**
+     * @private
      * @return {?}
      */
     _rootRect() {
         return (/** @type {?} */ (this.elementRef.nativeElement.getBoundingClientRect()));
     }
     /**
+     * @private
      * @return {?}
      */
     _areaCropperRect() {
@@ -868,7 +873,7 @@ function createCanvasImg(img) {
     /** @type {?} */
     const newCanvas = document.createElement('canvas');
     /** @type {?} */
-    const context = newCanvas.getContext('2d');
+    const context = (/** @type {?} */ (newCanvas.getContext('2d')));
     // set dimensions
     newCanvas.width = img.width;
     newCanvas.height = img.height;
@@ -891,7 +896,7 @@ function getMinScale(mw, mh, w, h) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class LyResizingCroppingImageModule {
 }
@@ -908,17 +913,17 @@ LyResizingCroppingImageModule.decorators = [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 export { ImgResolution, LyResizingCroppingImages, LyResizingCroppingImageModule };

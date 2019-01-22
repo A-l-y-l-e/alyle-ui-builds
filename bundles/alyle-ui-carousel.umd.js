@@ -6,7 +6,7 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /**
      * \@docs-private
@@ -227,7 +227,7 @@
                 var _this = this;
                 this.stop();
                 this._renderer.removeClass(this.slideContainer.nativeElement, this.classes.slideAnim);
-                this._selectedElement = this.lyItems.find(function (_item, index) { return index === _this.selectedIndex; })._nativeElement;
+                this._selectedElement = ( /** @type {?} */(this.lyItems.find(function (_item, index) { return index === _this.selectedIndex; })))._nativeElement;
             };
         /**
          * @param {?} e
@@ -259,7 +259,7 @@
                 /** @type {?} */
                 var rect = this._selectedElement.getBoundingClientRect();
                 /** @type {?} */
-                var dir = this._theme.config.getDirection(ui.DirAlias.before);
+                var dir = this._theme.variables.getDirection(ui.DirAlias.before);
                 this._renderer.addClass(this.slideContainer.nativeElement, this.classes.slideAnim);
                 this._select(this.selectedIndex);
                 if (Math.abs(e.deltaX) > rect.width / 2) {
@@ -372,36 +372,42 @@
                 }
             };
         /**
+         * @private
          * @return {?}
          */
         LyCarousel.prototype._resetInterval = /**
+         * @private
          * @return {?}
          */
             function () {
                 var _this = this;
                 this.stop();
-                this._intervalFn = setInterval(function () {
+                this._intervalFn = ( /** @type {?} */(setInterval(function () {
                     _this.next(true);
                     _this._markForCheck();
-                }, this.interval);
+                }, this.interval)));
             };
         /**
+         * @private
          * @param {?} x
          * @return {?}
          */
         LyCarousel.prototype._onPan = /**
+         * @private
          * @param {?} x
          * @return {?}
          */
             function (x) {
                 /** @type {?} */
-                var sign = this._theme.config.getDirection(ui.DirAlias.before) === 'left' ? -1 : 1;
+                var sign = this._theme.variables.getDirection(ui.DirAlias.before) === 'left' ? -1 : 1;
                 this._renderer.setStyle(this._slide.nativeElement, 'transform', "translateX(calc(" + sign * 100 * this.selectedIndex + "% + " + x + "px))");
             };
         /**
+         * @private
          * @return {?}
          */
         LyCarousel.prototype._markForCheck = /**
+         * @private
          * @return {?}
          */
             function () {
@@ -471,7 +477,7 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     var LyCarouselModule = /** @class */ (function () {
         function LyCarouselModule() {
@@ -488,17 +494,17 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
 
     exports.STYLES = STYLES;

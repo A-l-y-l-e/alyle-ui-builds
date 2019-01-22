@@ -5,7 +5,7 @@ import { Platform, LyTheme2, toBoolean, DirAlias, LyCommonModule } from '@alyle/
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * \@docs-private
@@ -215,7 +215,7 @@ class LyCarousel {
     _onDragStart() {
         this.stop();
         this._renderer.removeClass(this.slideContainer.nativeElement, this.classes.slideAnim);
-        this._selectedElement = this.lyItems.find((_item, index) => index === this.selectedIndex)._nativeElement;
+        this._selectedElement = (/** @type {?} */ (this.lyItems.find((_item, index) => index === this.selectedIndex)))._nativeElement;
     }
     /**
      * @param {?} e
@@ -239,7 +239,7 @@ class LyCarousel {
         /** @type {?} */
         const rect = this._selectedElement.getBoundingClientRect();
         /** @type {?} */
-        const dir = this._theme.config.getDirection(DirAlias.before);
+        const dir = this._theme.variables.getDirection(DirAlias.before);
         this._renderer.addClass(this.slideContainer.nativeElement, this.classes.slideAnim);
         this._select(this.selectedIndex);
         if (Math.abs(e.deltaX) > rect.width / 2) {
@@ -334,25 +334,28 @@ class LyCarousel {
         }
     }
     /**
+     * @private
      * @return {?}
      */
     _resetInterval() {
         this.stop();
-        this._intervalFn = setInterval(() => {
+        this._intervalFn = (/** @type {?} */ (setInterval(() => {
             this.next(true);
             this._markForCheck();
-        }, this.interval);
+        }, this.interval)));
     }
     /**
+     * @private
      * @param {?} x
      * @return {?}
      */
     _onPan(x) {
         /** @type {?} */
-        const sign = this._theme.config.getDirection(DirAlias.before) === 'left' ? -1 : 1;
+        const sign = this._theme.variables.getDirection(DirAlias.before) === 'left' ? -1 : 1;
         this._renderer.setStyle(this._slide.nativeElement, 'transform', `translateX(calc(${sign * 100 * this.selectedIndex}% + ${x}px))`);
     }
     /**
+     * @private
      * @return {?}
      */
     _markForCheck() {
@@ -417,7 +420,7 @@ LyCarouselItem.propDecorators = {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class LyCarouselModule {
 }
@@ -431,17 +434,17 @@ LyCarouselModule.decorators = [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 export { STYLES, CarouselMode, LyCarousel, LyCarouselItem, LyCarouselModule };

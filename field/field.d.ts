@@ -8,7 +8,7 @@ import { LySuffix } from './suffix';
 import { Subject } from 'rxjs';
 import { NgControl, NgForm, FormGroupDirective } from '@angular/forms';
 import { LyError } from './error';
-export declare class LyField implements OnInit, AfterContentInit, AfterViewInit {
+export declare class LyField implements OnInit, AfterContentInit, AfterViewInit, OnDestroy {
     private _renderer;
     private _el;
     private _elementObserver;
@@ -30,7 +30,7 @@ export declare class LyField implements OnInit, AfterContentInit, AfterViewInit 
     private _marginStartClass;
     private _marginEndClass;
     private _fullWidth;
-    private _fullWidthClass;
+    private _fullWidthClass?;
     _labelContainer: ElementRef<HTMLDivElement>;
     _labelContainer2: ElementRef<HTMLDivElement>;
     _labelSpan: ElementRef<HTMLDivElement>;
@@ -53,10 +53,12 @@ export declare class LyField implements OnInit, AfterContentInit, AfterViewInit 
     color: string;
     /** The field appearance style. */
     appearance: string;
+    onFocus(): void;
     constructor(_renderer: Renderer2, _el: ElementRef, _elementObserver: ElementObserver, _theme: LyTheme2, _cd: ChangeDetectorRef, _ngZone: NgZone);
     ngOnInit(): void;
     ngAfterContentInit(): void;
     ngAfterViewInit(): void;
+    ngOnDestroy(): void;
     private _updateFielset;
     private _updateFielsetSpan;
     /** @ignore */
@@ -82,8 +84,8 @@ export declare class LyNativeControl implements OnInit, DoCheck, OnDestroy {
     protected _required: boolean;
     protected _placeholder: string;
     readonly stateChanges: Subject<void>;
-    private _hasDisabledClass;
-    private _errorClass;
+    private _hasDisabledClass?;
+    private _errorClass?;
     private _form;
     _focused: boolean;
     errorState: boolean;
@@ -104,4 +106,5 @@ export declare class LyNativeControl implements OnInit, DoCheck, OnDestroy {
     ngOnDestroy(): void;
     /** Focuses the input. */
     focus(): void;
+    _getHostElement(): HTMLInputElement | HTMLTextAreaElement;
 }

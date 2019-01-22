@@ -6,7 +6,7 @@ export declare class MinimaBase extends LyStyleUtils {
         fontSize: number;
         gutterTop: number;
         gutterBottom: number;
-        lyTyp: any;
+        lyTyp: {};
     };
     iconButton: {
         size: string;

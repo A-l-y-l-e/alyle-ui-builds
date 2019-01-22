@@ -4,7 +4,7 @@ import { Subject } from 'rxjs';
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class LySnackBarService {
 }
@@ -17,7 +17,7 @@ LySnackBarService.decorators = [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 const DEFAULT_DURATION = 6e3;
@@ -39,9 +39,11 @@ class LySnackBarRef {
          * Subject for notifying the user that the snack bar has been dismissed.
          */
         this._afterDismissed = new Subject();
-        this._timer = setTimeout(() => {
-            this.dismiss();
-        }, duration || DEFAULT_DURATION);
+        if (duration !== 'Infinity') {
+            this._timer = setTimeout(() => {
+                this.dismiss();
+            }, duration || DEFAULT_DURATION);
+        }
     }
     /**
      * Gets an observable that is notified when the snack bar is finished closing.
@@ -89,7 +91,7 @@ class LySnackBarRef {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 const STYLE_PRIORITY = -2;
@@ -212,7 +214,7 @@ LySnackBar.propDecorators = {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class LySnackBarModule {
 }
@@ -226,17 +228,17 @@ LySnackBarModule.decorators = [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 export { LySnackBarModule, LySnackBar, LySnackBarService as ɵa };

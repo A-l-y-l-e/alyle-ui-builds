@@ -3,7 +3,7 @@ import { Directive, ElementRef, Input, NgModule } from '@angular/core';
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 var STYLE_PRIORITY = -1;
@@ -69,7 +69,7 @@ var LyGrid = /** @class */ (function () {
         function (val) {
             if (val !== this.spacingX) {
                 this._spacingX = val;
-                this._createSpacingClass(null, val);
+                this._createSpacingClass(undefined, val);
             }
         },
         enumerable: true,
@@ -89,7 +89,7 @@ var LyGrid = /** @class */ (function () {
         function (val) {
             if (val !== this.spacingY) {
                 this._spacingY = val;
-                this._createSpacingClass(null, null, val);
+                this._createSpacingClass(undefined, undefined, val);
             }
         },
         enumerable: true,
@@ -126,6 +126,7 @@ var LyGrid = /** @class */ (function () {
      */
     /**
      * Only one param must be defined
+     * @private
      * @param {?=} xy
      * @param {?=} x
      * @param {?=} y
@@ -133,6 +134,7 @@ var LyGrid = /** @class */ (function () {
      */
     LyGrid.prototype._createSpacingClass = /**
      * Only one param must be defined
+     * @private
      * @param {?=} xy
      * @param {?=} x
      * @param {?=} y
@@ -181,7 +183,7 @@ var LyGrid = /** @class */ (function () {
             var val = xy || x || y;
             /** @type {?} */
             var negativeMarginStyles;
-            eachMedia(val, function (value, media, len) {
+            eachMedia(val, function (value, media) {
                 /** @type {?} */
                 var valueMargin = (-value) / 2 + "px";
                 /** @type {?} */
@@ -195,7 +197,7 @@ var LyGrid = /** @class */ (function () {
                 if (xy != null || x != null) {
                     negativeMarginstyles.width = "calc(100% + " + value + "px)";
                 }
-                if (len) {
+                if (media) {
                     if (!negativeMarginStyles) {
                         negativeMarginStyles = {};
                     }
@@ -205,7 +207,7 @@ var LyGrid = /** @class */ (function () {
                     negativeMarginStyles = negativeMarginstyles;
                 }
             });
-            return negativeMarginStyles;
+            return (/** @type {?} */ (negativeMarginStyles));
         }, this.el.nativeElement, this._negativeMarginClass, STYLE_PRIORITY);
     };
     Object.defineProperty(LyGrid.prototype, "justify", {
@@ -231,14 +233,14 @@ var LyGrid = /** @class */ (function () {
                 this._justifyClass = this.theme.addStyle("lyGrid-justify:" + val, function (theme) {
                     /** @type {?} */
                     var justifyStyles;
-                    eachMedia(val, function (value, media, isMedia) {
+                    eachMedia(val, function (value, media) {
                         /** @type {?} */
                         var newJustifyStyles = {
                             justifyContent: value in ALIGN_ALIAS
                                 ? ALIGN_ALIAS[value]
                                 : value
                         };
-                        if (isMedia) {
+                        if (media) {
                             if (!justifyStyles) {
                                 justifyStyles = {};
                             }
@@ -248,7 +250,7 @@ var LyGrid = /** @class */ (function () {
                             justifyStyles = newJustifyStyles;
                         }
                     });
-                    return justifyStyles;
+                    return (/** @type {?} */ (justifyStyles));
                 }, this.el.nativeElement, this._justifyClass, STYLE_PRIORITY);
             }
         },
@@ -278,14 +280,14 @@ var LyGrid = /** @class */ (function () {
                 this._directionClass = this.theme.addStyle("lyGrid-direction:" + val, function (theme) {
                     /** @type {?} */
                     var directionStyles;
-                    eachMedia(val, function (value, media, isMedia) {
+                    eachMedia(val, function (value, media) {
                         /** @type {?} */
                         var newDirectionStyles = {
                             flexDirection: value in ALIGN_ALIAS
                                 ? ALIGN_ALIAS[value]
                                 : value
                         };
-                        if (isMedia) {
+                        if (media) {
                             if (!directionStyles) {
                                 directionStyles = {};
                             }
@@ -295,7 +297,7 @@ var LyGrid = /** @class */ (function () {
                             directionStyles = newDirectionStyles;
                         }
                     });
-                    return directionStyles;
+                    return (/** @type {?} */ (directionStyles));
                 }, this.el.nativeElement, this._directionClass, STYLE_PRIORITY);
             }
         },
@@ -324,14 +326,14 @@ var LyGrid = /** @class */ (function () {
             this._alignItemsClass = this.theme.addStyle("lyGrid.align:" + val, function (theme) {
                 /** @type {?} */
                 var alignItemsStyles;
-                eachMedia(val, function (value, media, isMedia) {
+                eachMedia(val, function (value, media) {
                     /** @type {?} */
                     var newAlignItemsStyles = {
                         alignItems: value in ALIGN_ALIAS
                             ? ALIGN_ALIAS[value]
                             : value
                     };
-                    if (isMedia) {
+                    if (media) {
                         if (!alignItemsStyles) {
                             alignItemsStyles = {};
                         }
@@ -341,7 +343,7 @@ var LyGrid = /** @class */ (function () {
                         alignItemsStyles = newAlignItemsStyles;
                     }
                 });
-                return alignItemsStyles;
+                return (/** @type {?} */ (alignItemsStyles));
             }, this.el.nativeElement, this._alignItemsClass, STYLE_PRIORITY);
         },
         enumerable: true,
@@ -403,10 +405,10 @@ var LyGridItem = /** @class */ (function () {
                     else {
                         /** @type {?} */
                         var colStyles_1;
-                        eachMedia(val, function (value, media, len) {
+                        eachMedia(val, function (value, media) {
                             /** @type {?} */
                             var newColStyles = getColStyle(+value);
-                            if (len) {
+                            if (media) {
                                 if (!colStyles_1) {
                                     colStyles_1 = {};
                                 }
@@ -416,7 +418,7 @@ var LyGridItem = /** @class */ (function () {
                                 colStyles_1 = newColStyles;
                             }
                         });
-                        return colStyles_1;
+                        return (/** @type {?} */ (colStyles_1));
                     }
                 }, this.el.nativeElement, this._colClass, STYLE_PRIORITY);
             }
@@ -447,12 +449,12 @@ var LyGridItem = /** @class */ (function () {
                 this._orderClass = this.theme.addStyle("lyGrid-order:" + val, function (theme) {
                     /** @type {?} */
                     var orderStyles;
-                    eachMedia("" + val, function (value, media, isMedia) {
+                    eachMedia("" + val, function (value, media) {
                         /** @type {?} */
                         var newOrderStyles = {
                             order: value
                         };
-                        if (isMedia) {
+                        if (media) {
                             if (!orderStyles) {
                                 orderStyles = {};
                             }
@@ -462,7 +464,7 @@ var LyGridItem = /** @class */ (function () {
                             orderStyles = newOrderStyles;
                         }
                     });
-                    return orderStyles;
+                    return (/** @type {?} */ (orderStyles));
                 }, this.el.nativeElement, this._orderClass, STYLE_PRIORITY);
             }
         },
@@ -479,9 +481,11 @@ var LyGridItem = /** @class */ (function () {
         this._updateSpacing();
     };
     /**
+     * @private
      * @return {?}
      */
     LyGridItem.prototype._updateSpacing = /**
+     * @private
      * @return {?}
      */
     function () {
@@ -537,7 +541,7 @@ function getColVal(val) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var LyGridModule = /** @class */ (function () {
     function LyGridModule() {
@@ -553,17 +557,17 @@ var LyGridModule = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 export { LyGrid, LyGridItem, LyGridModule };

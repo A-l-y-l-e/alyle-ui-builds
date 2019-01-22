@@ -6,7 +6,7 @@ import { LY_COMMON_STYLES, LyFocusState, LyRippleService, LyTheme2, mixinBg, mix
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 var STYLE_PRIORITY = 2;
@@ -225,6 +225,15 @@ var LyListItem = /** @class */ (function (_super) {
         var _this = this;
         this._lines.changes.subscribe(function () { return _this._cd.markForCheck(); });
     };
+    /**
+     * @return {?}
+     */
+    LyListItem.prototype.ngOnDestroy = /**
+     * @return {?}
+     */
+    function () {
+        this._focusState.unlisten(this._el);
+    };
     LyListItem.decorators = [
         { type: Component, args: [{
                     selector: 'ly-list-item, a[ly-list-item], button[ly-list-item]',
@@ -364,7 +373,7 @@ var LyLine = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var LyListModule = /** @class */ (function () {
     function LyListModule() {
@@ -383,17 +392,17 @@ var LyListModule = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 export { LyList, LyListItemBase, LyListItemMixinBase, LyListItem, LyListIcon, LyLine, LyListModule };

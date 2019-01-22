@@ -1,9 +1,9 @@
 import { ChangeDetectorRef, Directive, ElementRef, Input, NgZone, Renderer2, NgModule } from '@angular/core';
-import { LY_COMMON_STYLES, LyFocusState, LyOverlay, LyTheme2, Platform, WinScroll, YPosition, getPosition, LyOverlayModule } from '@alyle/ui';
+import { LY_COMMON_STYLES, LyFocusState, LyOverlay, LyTheme2, Platform, WinScroll, YPosition, Positioning, LyOverlayModule } from '@alyle/ui';
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 const DEFAULT_PLACEMENT = YPosition.below;
@@ -20,16 +20,17 @@ class LyTooltip {
      * @param {?} _el
      * @param {?} _renderer
      * @param {?} _cd
-     * @param {?} focusState
+     * @param {?} _focusState
      * @param {?} ngZone
      * @param {?} scroll
      */
-    constructor(_theme, _overlay, _el, _renderer, _cd, focusState, ngZone, scroll) {
+    constructor(_theme, _overlay, _el, _renderer, _cd, _focusState, ngZone, scroll) {
         this._theme = _theme;
         this._overlay = _overlay;
         this._el = _el;
         this._renderer = _renderer;
         this._cd = _cd;
+        this._focusState = _focusState;
         /**
          * \@docs-private
          */
@@ -59,7 +60,7 @@ class LyTooltip {
                     }
                 }
             });
-            focusState.listen(element).subscribe(ev => {
+            (/** @type {?} */ (_focusState.listen(element))).subscribe(ev => {
                 if (ev === 'keyboard') {
                     ngZone.run(() => this.show());
                 }
@@ -102,6 +103,7 @@ class LyTooltip {
         if (this._scrollSub) {
             this._scrollSub.unsubscribe();
         }
+        this._focusState.unlisten(this._el);
     }
     /**
      * @param {?=} delay
@@ -114,30 +116,32 @@ class LyTooltip {
             this._hideTimeoutId = null;
         }
         if (!this._tooltipOverlay && this.tooltip && !this._showTimeoutId) {
+            /** @type {?} */
+            const tooltipRef = this.tooltip;
             this._showTimeoutId = (/** @type {?} */ (setTimeout(() => {
+                // const rect = this._el.nativeElement.getBoundingClientRect();
                 /** @type {?} */
-                const rect = this._el.nativeElement.getBoundingClientRect();
-                /** @type {?} */
-                const tooltip = this._tooltipOverlay = this._overlay.create(this.tooltip, undefined, {
+                const tooltip = this._tooltipOverlay = this._overlay.create(tooltipRef, undefined, {
                     styles: {
-                        top: rect.y,
-                        left: rect.x
+                    // top: rect.y,
+                    // left: rect.x
                     },
+                    onResizeScroll: this._updatePosition.bind(this),
                     classes: [
                         this._theme.addStyle('LyTooltip', (theme) => (Object.assign({ borderRadius: '4px' }, theme.tooltip.root, { fontSize: '10px', padding: '6px 8px', opacity: 0, transition: `opacity ${theme.animations.curves.standard} 300ms`, [theme.getBreakpoint('XSmall')]: {
                                 padding: '8px 16px',
                                 fontSize: '14px',
-                            } })), null, null, STYLE_PRIORITY)
+                            } })), undefined, undefined, STYLE_PRIORITY)
                     ],
                     host: this._el.nativeElement,
                 });
-                /** @type {?} */
-                const position = getPosition(this.placement, this.xPosition, this.yPosition, this._el.nativeElement, tooltip.containerElement, this._theme.config, 13);
-                tooltip.containerElement.style.transform = `translate3d(${position.x}px,${position.y}px,0)`;
+                this._updatePosition();
+                // const position = new Positioning(this.placement, this.xPosition, this.yPosition, this._el.nativeElement, tooltip.containerElement, this._theme.variables, 13);
+                // tooltip.containerElement.style.transform = `translate3d(${position.x}px,${position.y}px,0)`;
                 this._theme.requestAnimationFrame(() => {
                     this._theme.addStyle('lyTooltip:open', ({
                         opacity: 1,
-                    }), tooltip.containerElement, null, STYLE_PRIORITY);
+                    }), tooltip.containerElement, undefined, STYLE_PRIORITY);
                 });
                 this._showTimeoutId = null;
                 this._markForCheck();
@@ -178,10 +182,24 @@ class LyTooltip {
         }
     }
     /**
+     * @private
      * @return {?}
      */
     _markForCheck() {
         this._cd.markForCheck();
+    }
+    /**
+     * @private
+     * @return {?}
+     */
+    _updatePosition() {
+        /** @type {?} */
+        const tooltip = this._tooltipOverlay;
+        if (tooltip) {
+            /** @type {?} */
+            const position = new Positioning(this.placement, this.xPosition, this.yPosition, this._el.nativeElement, tooltip.containerElement, this._theme.variables, 13);
+            tooltip.containerElement.style.transform = `translate3d(${position.x}px,${position.y}px,0)`;
+        }
     }
 }
 LyTooltip.decorators = [
@@ -212,7 +230,7 @@ LyTooltip.propDecorators = {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class LyTooltipModule {
 }
@@ -226,17 +244,17 @@ LyTooltipModule.decorators = [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 export { LyTooltip, LyTooltipModule };

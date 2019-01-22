@@ -47,7 +47,7 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     var LyTabContent = /** @class */ (function () {
         function LyTabContent(template) {
@@ -67,7 +67,7 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /** @type {?} */
     var DEFAULT_DISABLE_RIPPLE = false;
@@ -506,11 +506,13 @@
                 }
             };
         /**
+         * @private
          * @param {?} selectedIndex
          * @param {?} index
          * @return {?}
          */
         LyTabs.prototype._findIndex = /**
+         * @private
          * @param {?} selectedIndex
          * @param {?} index
          * @return {?}
@@ -559,9 +561,11 @@
                 }
             };
         /**
+         * @private
          * @return {?}
          */
         LyTabs.prototype._updateStylesOfSelectedTab = /**
+         * @private
          * @return {?}
          */
             function () {
@@ -629,10 +633,12 @@
                 }
             };
         /**
+         * @private
          * @param {?} val
          * @return {?}
          */
         LyTabs.prototype._getFlexDirection = /**
+         * @private
          * @param {?} val
          * @return {?}
          */
@@ -792,7 +798,7 @@
                     var tabContainer = ( /** @type {?} */(this._tabs.tabsRef.nativeElement));
                     if (tabContainer.scrollWidth !== tabContainer.offsetWidth) {
                         /** @type {?} */
-                        var dir = this._theme.config.direction;
+                        var dir = this._theme.variables.direction;
                         /** @type {?} */
                         var max = tabContainer.scrollWidth - tabContainer.offsetWidth;
                         /** @type {?} */
@@ -855,7 +861,7 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     var LyTabsModule = /** @class */ (function () {
         function LyTabsModule() {
@@ -872,17 +878,17 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
 
     exports.LyTabsBase = LyTabsBase;

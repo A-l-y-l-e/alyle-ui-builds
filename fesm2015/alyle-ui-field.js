@@ -6,7 +6,7 @@ import { LY_COMMON_STYLES, LyTheme2, mergeDeep, ElementObserver, Platform, toBoo
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class LyLabel {
 }
@@ -18,7 +18,7 @@ LyLabel.decorators = [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class LyPlaceholder {
 }
@@ -30,7 +30,7 @@ LyPlaceholder.decorators = [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 const STYLES = (theme) => {
@@ -180,7 +180,7 @@ const STYLES = (theme) => {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * LyHint
@@ -220,7 +220,7 @@ class LyHint {
         }
         else if (this._alignClass) {
             this._renderer.removeClass(this._el.nativeElement, this._alignClass);
-            this._alignClass = null;
+            this._alignClass = undefined;
         }
         this._align = val;
     }
@@ -248,7 +248,7 @@ LyHint.propDecorators = {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * Prefix to be placed the before of the field.
@@ -263,7 +263,7 @@ LyPrefix.decorators = [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * Suffix to be placed the after of the field.
@@ -278,7 +278,7 @@ LySuffix.decorators = [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * LyError
@@ -313,7 +313,7 @@ LyError.ctorParameters = () => [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * LyField
@@ -366,6 +366,15 @@ const DEFAULT_APPEARANCE_THEME = {
 };
 /** @type {?} */
 const DEFAULT_WITH_COLOR = 'primary';
+/** @type {?} */
+const inputText = [
+    'text',
+    'number',
+    'password',
+    'search',
+    'tel',
+    'url'
+];
 class LyField {
     /**
      * @param {?} _renderer
@@ -407,7 +416,7 @@ class LyField {
         }
         else if (this._fullWidthClass) {
             this._renderer.removeClass(this._getHostElement(), this._fullWidthClass);
-            this._fullWidthClass = null;
+            this._fullWidthClass = undefined;
         }
         this._fullWidth = newVal;
     }
@@ -474,7 +483,7 @@ class LyField {
     set appearance(val) {
         if (val !== this.appearance) {
             this._appearance = val;
-            if (!(this._theme.config.field.appearance[val] || DEFAULT_APPEARANCE_THEME[val])) {
+            if (!(this._theme.variables.field.appearance[val] || DEFAULT_APPEARANCE_THEME[val])) {
                 throw new Error(`${val} not found in theme.field.appearance`);
             }
             this._appearanceClass = this._theme.addStyle(`ly-field.appearance:${val}`, (theme) => {
@@ -508,6 +517,12 @@ class LyField {
     /**
      * @return {?}
      */
+    onFocus() {
+        this._el.nativeElement.focus();
+    }
+    /**
+     * @return {?}
+     */
     ngOnInit() {
         if (!this.color) {
             this.color = DEFAULT_WITH_COLOR;
@@ -520,7 +535,7 @@ class LyField {
      * @return {?}
      */
     ngAfterContentInit() {
-        this._renderer.addClass(this._input._hostElement, this.classes.inputNative);
+        this._renderer.addClass(this._input._getHostElement(), this.classes.inputNative);
         this._input.stateChanges.subscribe(() => {
             this._updateFloatingLabel();
             this._markForCheck();
@@ -567,11 +582,42 @@ class LyField {
                     });
                 }
             });
+            /** @type {?} */
+            const nativeElement = this._input._getHostElement();
+            if (nativeElement instanceof HTMLTextAreaElement ||
+                inputText.some(type => type === nativeElement.type)) {
+                this._theme.addStyle('field.text', {
+                    '& {container}': {
+                        cursor: 'text'
+                    }
+                }, this._el.nativeElement, null, null, STYLES);
+            }
         }
         // this fix with of label
         this._renderer.addClass(this._el.nativeElement, this.classes.animations);
     }
     /**
+     * @return {?}
+     */
+    ngOnDestroy() {
+        if (this._prefixContainer) {
+            /** @type {?} */
+            const el = this._prefixContainer;
+            this._elementObserver.destroy(el);
+        }
+        if (this._suffixContainer) {
+            /** @type {?} */
+            const el = this._suffixContainer;
+            this._elementObserver.destroy(el);
+        }
+        if (this._labelSpan) {
+            /** @type {?} */
+            const el = this._labelSpan;
+            this._elementObserver.destroy(el);
+        }
+    }
+    /**
+     * @private
      * @param {?} el
      * @param {?} dir
      * @return {?}
@@ -583,7 +629,7 @@ class LyField {
             [`& .${this.classes.fieldsetSpan}`]: {
                 [`margin-${dir}`]: `${width}px`
             }
-        }), null, null, STYLE_PRIORITY$2);
+        }), undefined, undefined, STYLE_PRIORITY$2);
         if (dir === DirAlias.before) {
             this._marginStartClass = this._theme.updateClass(this._el.nativeElement, this._renderer, newClass, this._marginStartClass);
         }
@@ -592,6 +638,7 @@ class LyField {
         }
     }
     /**
+     * @private
      * @return {?}
      */
     _updateFielsetSpan() {
@@ -638,6 +685,7 @@ class LyField {
         return val === '' || val === null || val === undefined;
     }
     /**
+     * @private
      * @return {?}
      */
     _updateFloatingLabel() {
@@ -664,6 +712,7 @@ class LyField {
         }
     }
     /**
+     * @private
      * @return {?}
      */
     _markForCheck() {
@@ -712,7 +761,8 @@ LyField.propDecorators = {
     fullWidth: [{ type: Input }],
     floatingLabel: [{ type: Input }],
     color: [{ type: Input }],
-    appearance: [{ type: Input }]
+    appearance: [{ type: Input }],
+    onFocus: [{ type: HostListener, args: ['focus',] }]
 };
 class LyNativeControl {
     /**
@@ -736,7 +786,6 @@ class LyNativeControl {
         this._form = this._parentForm || this._parentFormGroup;
         this._focused = false;
         this.errorState = false;
-        this._hostElement = this._el.nativeElement;
     }
     /**
      * @return {?}
@@ -769,7 +818,7 @@ class LyNativeControl {
      */
     set value(val) {
         if (val !== this.value) {
-            this._hostElement.value = val;
+            this._getHostElement().value = val;
             this.stateChanges.next();
         }
     }
@@ -777,7 +826,7 @@ class LyNativeControl {
      * @return {?}
      */
     get value() {
-        return this._hostElement.value;
+        return this._getHostElement().value;
     }
     /**
      * Whether the input is disabled.
@@ -790,7 +839,7 @@ class LyNativeControl {
             if (this._field) {
                 if (!val && this._hasDisabledClass) {
                     this._renderer.removeClass(this._field._getHostElement(), this._field.classes.disabled);
-                    this._hasDisabledClass = null;
+                    this._hasDisabledClass = undefined;
                 }
                 else if (val) {
                     this._renderer.addClass(this._field._getHostElement(), this._field.classes.disabled);
@@ -834,13 +883,13 @@ class LyNativeControl {
      * @return {?}
      */
     ngOnInit() {
-        this._renderer.setAttribute(this._hostElement, 'placeholder', '­');
+        this._renderer.setAttribute(this._getHostElement(), 'placeholder', '­');
         /** @type {?} */
         const ngControl = this.ngControl;
         // update styles on disabled
-        if (ngControl) {
+        if (ngControl && ngControl.statusChanges) {
             ngControl.statusChanges.subscribe(() => {
-                this.disabled = ngControl.disabled;
+                this.disabled = !!ngControl.disabled;
             });
         }
     }
@@ -863,7 +912,7 @@ class LyNativeControl {
                 }
                 else if (this._errorClass) {
                     this._renderer.removeClass(this._field._getHostElement(), errorClass);
-                    this._errorClass = null;
+                    this._errorClass = undefined;
                 }
             }
         }
@@ -878,7 +927,13 @@ class LyNativeControl {
      * Focuses the input.
      * @return {?}
      */
-    focus() { this._hostElement.focus(); }
+    focus() { this._getHostElement().focus(); }
+    /**
+     * @return {?}
+     */
+    _getHostElement() {
+        return this._el.nativeElement;
+    }
 }
 LyNativeControl.decorators = [
     { type: Directive, args: [{
@@ -907,7 +962,7 @@ LyNativeControl.propDecorators = {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class LyFieldModule {
 }
@@ -934,17 +989,17 @@ LyFieldModule.decorators = [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 export { LyField, LyNativeControl, LyFieldModule, LyError as ɵf, LyHint as ɵc, LyLabel as ɵb, LyPlaceholder as ɵa, LyPrefix as ɵd, LySuffix as ɵe };

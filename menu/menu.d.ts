@@ -15,6 +15,7 @@ export declare class LyMenu implements OnInit, AfterViewInit {
      * @docs-private
      */
     destroy: () => void;
+    _container: ElementRef<HTMLDivElement>;
     ref: LyMenuTriggerFor;
     /** Position where the menu will be placed. */
     placement: Placement;
@@ -38,7 +39,7 @@ export declare class LyMenuTriggerFor implements OnDestroy {
     private elementRef;
     private overlay;
     /** Current menuRef */
-    _menuRef: OverlayFromTemplateRef;
+    _menuRef?: OverlayFromTemplateRef;
     lyMenuTriggerFor: TemplateRef<any>;
     constructor(elementRef: ElementRef, overlay: LyOverlay);
     /** @docs-private */

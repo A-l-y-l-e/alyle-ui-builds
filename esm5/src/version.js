@@ -1,9 +1,9 @@
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
-export var AUI_VERSION = '2.0.4-nightly.20190109-jqox18df';
+export var AUI_VERSION = '2.0.6';
 /** @type {?} */
-export var AUI_LAST_UPDATE = '2019-01-09T08:22:11.617Z';
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoidmVyc2lvbi5qcyIsInNvdXJjZVJvb3QiOiJuZzovL0BhbHlsZS91aS8iLCJzb3VyY2VzIjpbInNyYy92ZXJzaW9uLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7Ozs7O0FBQUEsTUFBTSxLQUFPLFdBQVcsR0FBRyxpQ0FBaUM7O0FBQzVELE1BQU0sS0FBTyxlQUFlLEdBQUcsMEJBQTBCIiwic291cmNlc0NvbnRlbnQiOlsiZXhwb3J0IGNvbnN0IEFVSV9WRVJTSU9OID0gJzIuMC40LW5pZ2h0bHkuMjAxOTAxMDktanFveDE4ZGYnO1xuZXhwb3J0IGNvbnN0IEFVSV9MQVNUX1VQREFURSA9ICcyMDE5LTAxLTA5VDA4OjIyOjExLjYxN1onO1xuIl19
+export var AUI_LAST_UPDATE = '2019-01-22T01:42:03.013Z';
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoidmVyc2lvbi5qcyIsInNvdXJjZVJvb3QiOiJuZzovL0BhbHlsZS91aS8iLCJzb3VyY2VzIjpbInNyYy92ZXJzaW9uLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7Ozs7O0FBQUEsTUFBTSxLQUFPLFdBQVcsR0FBRyxPQUFPOztBQUNsQyxNQUFNLEtBQU8sZUFBZSxHQUFHLDBCQUEwQiIsInNvdXJjZXNDb250ZW50IjpbImV4cG9ydCBjb25zdCBBVUlfVkVSU0lPTiA9ICcyLjAuNic7XG5leHBvcnQgY29uc3QgQVVJX0xBU1RfVVBEQVRFID0gJzIwMTktMDEtMjJUMDE6NDI6MDMuMDEzWic7XG4iXX0=

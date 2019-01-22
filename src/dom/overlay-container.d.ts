@@ -28,8 +28,8 @@ export declare class LyOverlayContainer {
 export declare class LyOverlayBackdrop {
     private _theme;
     private _overlayConfig;
-    /** @ignore */
-    classes: Record<"backdrop", string>;
+    /** @docs-private */
+    readonly classes: Record<"backdrop", string>;
     onclick(): void;
     constructor(el: ElementRef, _theme: LyTheme2, _overlayConfig: any, commonStyles: LyCoreStyles);
 }

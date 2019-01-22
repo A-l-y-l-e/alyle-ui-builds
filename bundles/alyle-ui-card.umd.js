@@ -35,7 +35,7 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /** @type {?} */
     var STYLES = function (theme) {
@@ -291,11 +291,13 @@
                 }
             };
         /**
+         * @private
          * @param {?} val
          * @param {?} instance
          * @return {?}
          */
         LyCardMedia.prototype._createBgImgClass = /**
+         * @private
          * @param {?} val
          * @param {?} instance
          * @return {?}
@@ -309,10 +311,12 @@
                     "background-position: center;"), this.el.nativeElement, instance, STYLE_PRIORITY);
             };
         /**
+         * @private
          * @param {?} val
          * @return {?}
          */
         LyCardMedia.prototype._createAspectRatioClass = /**
+         * @private
          * @param {?} val
          * @return {?}
          */
@@ -350,7 +354,7 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     var LyCardModule = /** @class */ (function () {
         function LyCardModule() {
@@ -369,17 +373,17 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
 
     exports.LyCardModule = LyCardModule;

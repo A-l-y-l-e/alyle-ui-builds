@@ -39,7 +39,7 @@ export declare enum DirPosition {
     left = "left",
     right = "right"
 }
-export declare function eachMedia(str: string | number, fn: ((val: string, media: string, isMedia: number) => void)): void;
+export declare function eachMedia(str: string | number | undefined, fn: ((val: string, media: string | null, index: number) => void)): void;
 /**
  * Simple object check.
  * @param item

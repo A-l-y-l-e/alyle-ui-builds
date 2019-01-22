@@ -47,7 +47,7 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /** @type {?} */
     var STYLE_PRIORITY = 2;
@@ -266,6 +266,15 @@
                 var _this = this;
                 this._lines.changes.subscribe(function () { return _this._cd.markForCheck(); });
             };
+        /**
+         * @return {?}
+         */
+        LyListItem.prototype.ngOnDestroy = /**
+         * @return {?}
+         */
+            function () {
+                this._focusState.unlisten(this._el);
+            };
         LyListItem.decorators = [
             { type: core.Component, args: [{
                         selector: 'ly-list-item, a[ly-list-item], button[ly-list-item]',
@@ -415,7 +424,7 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     var LyListModule = /** @class */ (function () {
         function LyListModule() {
@@ -434,17 +443,17 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
 
     exports.LyList = LyList;

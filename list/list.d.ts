@@ -1,4 +1,4 @@
-import { ElementRef, NgZone, OnInit, Renderer2, QueryList, AfterContentInit, ChangeDetectorRef } from '@angular/core';
+import { ElementRef, NgZone, OnInit, Renderer2, QueryList, AfterContentInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { LyFocusState, LyRippleService, LyTheme2 } from '@alyle/ui';
 import { LyAvatar } from '@alyle/ui/avatar';
 /** List container */
@@ -17,7 +17,7 @@ export declare class LyListItemBase {
 /** @docs-private */
 export declare const LyListItemMixinBase: import("@alyle/ui/src/common/constructor").Constructor<import("@alyle/ui/src/common/build-common-behaviors").CanStyleUpdater> & import("@alyle/ui/src/common/constructor").Constructor<import("@alyle/ui/src/common/bg").CanBg> & import("@alyle/ui/src/common/constructor").Constructor<import("@alyle/ui/src/common/color").CanColor> & import("@alyle/ui/src/common/constructor").Constructor<import("@alyle/ui/src/common/raised").CanRaised> & import("@alyle/ui/src/common/constructor").Constructor<import("@alyle/ui/src/common/disabled").CanDisable> & import("@alyle/ui/src/common/constructor").Constructor<import("@alyle/ui/src/common/outlined").CanOutlined> & import("@alyle/ui/src/common/constructor").Constructor<import("@alyle/ui/src/common/elevation").CanElevation> & import("@alyle/ui/src/common/constructor").Constructor<import("@alyle/ui/src/common/shadow-color").CanShadowColor> & import("@alyle/ui/src/common/constructor").Constructor<import("@alyle/ui/src/common/disable-ripple").CanDisableRipple> & typeof LyListItemBase;
 /** List Item */
-export declare class LyListItem extends LyListItemMixinBase implements OnInit, AfterContentInit {
+export declare class LyListItem extends LyListItemMixinBase implements OnInit, AfterContentInit, OnDestroy {
     private _el;
     private _renderer;
     _rippleService: LyRippleService;
@@ -39,6 +39,7 @@ export declare class LyListItem extends LyListItemMixinBase implements OnInit, A
     constructor(_el: ElementRef, _renderer: Renderer2, theme: LyTheme2, ngZone: NgZone, _rippleService: LyRippleService, _focusState: LyFocusState, _list: LyList, _cd: ChangeDetectorRef);
     ngOnInit(): void;
     ngAfterContentInit(): void;
+    ngOnDestroy(): void;
 }
 export declare class LyListIcon implements OnInit {
     private _theme;

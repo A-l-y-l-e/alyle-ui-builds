@@ -12,7 +12,7 @@ export declare class LySnackBar implements OnDestroy {
     private _theme;
     private _overlay;
     private _snackBarService;
-    duration: number;
+    duration: number | 'Infinity';
     horizontalPosition: 'center' | XPosition;
     verticalPosition: YPosition;
     afterDismissed: EventEmitter<LySnackBarDismiss>;

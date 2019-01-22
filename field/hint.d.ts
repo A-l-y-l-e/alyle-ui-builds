@@ -8,7 +8,7 @@ export declare class LyHint {
     private _theme;
     readonly classes: Record<"root" | "animations" | "container" | "fieldset" | "fieldsetSpan" | "labelSpan" | "prefix" | "infix" | "suffix" | "labelContainer" | "labelSpacingStart" | "labelCenter" | "labelSpacingEnd" | "label" | "isFloatingLabel" | "floatingLabel" | "placeholder" | "focused" | "inputNative" | "hintContainer" | "disabled" | "hint" | "error" | "errorState" | "hintAfter" | "hintBefore", string>;
     private _align;
-    private _alignClass;
+    private _alignClass?;
     align: LyHintAlign;
     constructor(_renderer: Renderer2, _el: ElementRef, _theme: LyTheme2);
 }

@@ -6,17 +6,22 @@ interface OverlayConfig {
     styles: Object;
     classes?: string[];
     backdrop?: boolean;
-    fnDestroy?: (...arg: any[]) => void;
+    fnDestroy?: (...arg: any) => void;
+    /** Function that will be called on scroll or resize event */
+    onResizeScroll?: (() => void);
+    /** @deprecated */
     host?: any;
 }
 export interface OverlayFromTemplateRef {
-    /** Detaches a view from dirty checking again of ApplicationRef.  */
-    detach: () => void;
+    /** Detaches a view from dirty checking again of ApplicationRef. */
+    readonly detach: () => void;
     /** Remove element of DOM */
-    remove: () => void;
+    readonly remove: () => void;
     /** Detach & remove */
-    destroy: () => void;
-    containerElement: HTMLDivElement;
+    readonly destroy: () => void;
+    /** Function that will be called on scroll or resize event */
+    onResizeScroll: (() => void) | null;
+    readonly containerElement: HTMLDivElement;
 }
 export declare class LyOverlay {
     private _overlayContainer;

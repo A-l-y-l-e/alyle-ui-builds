@@ -19,7 +19,7 @@ export declare class Ripple {
     private classes;
     private _containerElement;
     private _triggerElement?;
-    private _rippleRef;
+    private _rippleRef?;
     private _eventHandlers;
     config: RippleConfig;
     private _transitionDuration;

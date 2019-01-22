@@ -7,7 +7,7 @@ export declare class LyTypography implements OnInit {
     /** @docs-private */
     readonly classes: Record<"root", string>;
     private _lyTyp;
-    private _lyTypClass;
+    private _lyTypClass?;
     private _gutter;
     private _gutterClass;
     private _gutterTop;
@@ -15,7 +15,7 @@ export declare class LyTypography implements OnInit {
     private _gutterBottom;
     private _gutterBottomClass;
     private _noWrap;
-    private _noWrapClass;
+    private _noWrapClass?;
     lyTyp: string;
     /** The text will truncate with an ellipsis. */
     noWrap: boolean;

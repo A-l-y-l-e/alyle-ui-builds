@@ -18,8 +18,8 @@ export declare class LyIconService {
     private _sanitizer;
     private _document;
     private theme;
-    private _defaultClass;
-    private _defaultClassPrefix;
+    private _defaultClass?;
+    private _defaultClassPrefix?;
     private svgMap;
     private _fontClasses;
     /**
@@ -44,7 +44,7 @@ export declare class LyIconService {
      * then in the template it is no longer necessary to use the prefix
      * Example: `<ly-icon fontIcon="alarm">`
      */
-    setDefaultClass(className: string | null, prefix?: string): void;
+    setDefaultClass(className?: string, prefix?: string): void;
     /**
      * Register new font class alias
      * demo:
