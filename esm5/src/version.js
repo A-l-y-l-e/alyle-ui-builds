@@ -3,7 +3,7 @@
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
-export var AUI_VERSION = '2.0.6';
+export var AUI_VERSION = '2.0.7';
 /** @type {?} */
-export var AUI_LAST_UPDATE = '2019-01-22T01:42:03.013Z';
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoidmVyc2lvbi5qcyIsInNvdXJjZVJvb3QiOiJuZzovL0BhbHlsZS91aS8iLCJzb3VyY2VzIjpbInNyYy92ZXJzaW9uLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7Ozs7O0FBQUEsTUFBTSxLQUFPLFdBQVcsR0FBRyxPQUFPOztBQUNsQyxNQUFNLEtBQU8sZUFBZSxHQUFHLDBCQUEwQiIsInNvdXJjZXNDb250ZW50IjpbImV4cG9ydCBjb25zdCBBVUlfVkVSU0lPTiA9ICcyLjAuNic7XG5leHBvcnQgY29uc3QgQVVJX0xBU1RfVVBEQVRFID0gJzIwMTktMDEtMjJUMDE6NDI6MDMuMDEzWic7XG4iXX0=
+export var AUI_LAST_UPDATE = '2019-01-22T01:54:48.908Z';
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoidmVyc2lvbi5qcyIsInNvdXJjZVJvb3QiOiJuZzovL0BhbHlsZS91aS8iLCJzb3VyY2VzIjpbInNyYy92ZXJzaW9uLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7Ozs7O0FBQUEsTUFBTSxLQUFPLFdBQVcsR0FBRyxPQUFPOztBQUNsQyxNQUFNLEtBQU8sZUFBZSxHQUFHLDBCQUEwQiIsInNvdXJjZXNDb250ZW50IjpbImV4cG9ydCBjb25zdCBBVUlfVkVSU0lPTiA9ICcyLjAuNyc7XG5leHBvcnQgY29uc3QgQVVJX0xBU1RfVVBEQVRFID0gJzIwMTktMDEtMjJUMDE6NTQ6NDguOTA4Wic7XG4iXX0=
