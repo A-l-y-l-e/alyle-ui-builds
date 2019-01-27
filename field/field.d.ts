@@ -8,6 +8,7 @@ import { LySuffix } from './suffix';
 import { Subject } from 'rxjs';
 import { NgControl, NgForm, FormGroupDirective } from '@angular/forms';
 import { LyError } from './error';
+import { LyFieldControlBase } from './field-control-base';
 export declare class LyField implements OnInit, AfterContentInit, AfterViewInit, OnDestroy {
     private _renderer;
     private _el;
@@ -19,7 +20,7 @@ export declare class LyField implements OnInit, AfterContentInit, AfterViewInit,
      * styles
      * @docs-private
      */
-    readonly classes: Record<"root" | "animations" | "container" | "fieldset" | "fieldsetSpan" | "labelSpan" | "prefix" | "infix" | "suffix" | "labelContainer" | "labelSpacingStart" | "labelCenter" | "labelSpacingEnd" | "label" | "isFloatingLabel" | "floatingLabel" | "placeholder" | "focused" | "inputNative" | "hintContainer" | "disabled" | "hint" | "error" | "errorState" | "hintAfter" | "hintBefore", string>;
+    readonly classes: Record<"root" | "animations" | "container" | "fieldset" | "fieldsetSpan" | "labelSpan" | "prefix" | "infix" | "suffix" | "labelContainer" | "labelSpacingStart" | "labelCenter" | "labelSpacingEnd" | "label" | "isFloatingLabel" | "floatingLabel" | "placeholder" | "focused" | "inputNative" | "hintContainer" | "disabled" | "hint" | "error" | "errorState" | "hintAfter" | "hintBefore" | "selectArrow", string>;
     protected _appearance: string;
     protected _appearanceClass: string;
     protected _color: string;
@@ -37,7 +38,7 @@ export declare class LyField implements OnInit, AfterContentInit, AfterViewInit,
     _prefixContainer: ElementRef<HTMLDivElement>;
     _suffixContainer: ElementRef<HTMLDivElement>;
     _fieldsetLegend: ElementRef<HTMLDivElement>;
-    _input: LyNativeControl;
+    _control: LyFieldControlBase;
     _placeholderChild: LyPlaceholder;
     _labelChild: LyLabel;
     _hintChildren: QueryList<LyHint>;
@@ -71,7 +72,8 @@ export declare class LyField implements OnInit, AfterContentInit, AfterViewInit,
     private _markForCheck;
     _getHostElement(): any;
 }
-export declare class LyNativeControl implements OnInit, DoCheck, OnDestroy {
+export declare class LyNativeControl implements LyFieldControlBase, OnInit, DoCheck, OnDestroy {
+    private _theme;
     private _el;
     private _renderer;
     private _field;
@@ -79,13 +81,14 @@ export declare class LyNativeControl implements OnInit, DoCheck, OnDestroy {
     ngControl: NgControl;
     private _parentForm;
     private _parentFormGroup;
-    _hostElement: HTMLInputElement | HTMLTextAreaElement;
     protected _disabled: boolean;
     protected _required: boolean;
     protected _placeholder: string;
     readonly stateChanges: Subject<void>;
     private _hasDisabledClass?;
     private _errorClass?;
+    private _cursorClass;
+    private _isSelectInput;
     private _form;
     _focused: boolean;
     errorState: boolean;
@@ -98,13 +101,19 @@ export declare class LyNativeControl implements OnInit, DoCheck, OnDestroy {
     disabled: boolean;
     required: boolean;
     placeholder: string;
-    constructor(_el: ElementRef<HTMLInputElement | HTMLTextAreaElement>, _renderer: Renderer2, _field: LyField, 
+    readonly focused: boolean;
+    readonly empty: boolean;
+    readonly floatingLabel: boolean;
+    constructor(_theme: LyTheme2, _el: ElementRef<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>, _renderer: Renderer2, _field: LyField, 
     /** @docs-private */
     ngControl: NgControl, _parentForm: NgForm, _parentFormGroup: FormGroupDirective);
     ngOnInit(): void;
     ngDoCheck(): void;
     ngOnDestroy(): void;
+    /** @docs-private */
+    onContainerClick(_e: MouseEvent): void;
     /** Focuses the input. */
     focus(): void;
-    _getHostElement(): HTMLInputElement | HTMLTextAreaElement;
+    _getHostElement(): HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement;
+    private _hasLabelSelectionOption;
 }

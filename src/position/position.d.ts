@@ -17,7 +17,7 @@ export declare class Positioning {
     private origin;
     private overlayElement;
     private _themeVariables;
-    private offset;
+    private _offset;
     private _offsetCheck;
     private readonly _originRect;
     private readonly _overlayElementRect;
@@ -29,7 +29,13 @@ export declare class Positioning {
     oy: string;
     width: string;
     height: string;
-    constructor(placement: Placement, xPosition: XPosition, yPosition: YPosition, origin: Element, overlayElement: Element, _themeVariables: ThemeVariables, offset?: number);
+    private _origin;
+    readonly offsetX: number;
+    readonly offsetY: number;
+    constructor(placement: Placement, xPosition: XPosition, yPosition: YPosition, origin: Element, overlayElement: Element, _themeVariables: ThemeVariables, _offset?: number | {
+        x?: number;
+        y?: number;
+    }, _flip?: boolean);
     private createPosition;
     private checkLeft;
     private checkRight;

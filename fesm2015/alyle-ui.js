@@ -498,16 +498,17 @@ class Positioning {
      * @param {?} origin
      * @param {?} overlayElement
      * @param {?} _themeVariables
-     * @param {?=} offset
+     * @param {?=} _offset
+     * @param {?=} _flip
      */
-    constructor(placement, xPosition, yPosition, origin, overlayElement, _themeVariables, offset = 0) {
+    constructor(placement, xPosition, yPosition, origin, overlayElement, _themeVariables, _offset = 0, _flip = true) {
         this.placement = placement;
         this.xPosition = xPosition;
         this.yPosition = yPosition;
         this.origin = origin;
         this.overlayElement = overlayElement;
         this._themeVariables = _themeVariables;
-        this.offset = offset;
+        this._offset = _offset;
         this._offsetCheck = 16;
         this._originRect = (/** @type {?} */ (this.origin.getBoundingClientRect()));
         this._overlayElementRect = (/** @type {?} */ (this.overlayElement.getBoundingClientRect()));
@@ -516,9 +517,11 @@ class Positioning {
         /** @type {?} */
         const offsetCheckx2 = this._offsetCheck * 2;
         this.createPosition();
-        for (let index = 0; index < 2; index++) {
-            if (this.checkAll()) {
-                this.createPosition();
+        if (_flip) {
+            for (let index = 0; index < 2; index++) {
+                if (this.checkAll()) {
+                    this.createPosition();
+                }
             }
         }
         // when there is not enough space
@@ -551,7 +554,9 @@ class Positioning {
                     this.x -= (/** @type {?} */ (this.checkLeft(true)));
                 }
             }
-            // update origin
+            this.updateOrigin();
+        }
+        if (this._offset) {
             this.updateOrigin();
         }
         // round result
@@ -559,6 +564,22 @@ class Positioning {
         this.y = Math.round(this.y);
         this.ax = Math.round(this.ax);
         this.ay = Math.round(this.ay);
+    }
+    /**
+     * @return {?}
+     */
+    get offsetX() {
+        return typeof this._offset === 'number'
+            ? this._offset
+            : this._offset.x || 0;
+    }
+    /**
+     * @return {?}
+     */
+    get offsetY() {
+        return typeof this._offset === 'number'
+            ? this._offset
+            : this._offset.y || 0;
     }
     /**
      * @private
@@ -580,30 +601,36 @@ class Positioning {
         /** @type {?} */
         let oy = 'center';
         if (this.placement) {
-            if (this.placement) {
-                if (this.placement === YPosition.above) {
-                    x += (this._originRect.width - this._overlayElementRect.width) / 2;
-                    y += -this._overlayElementRect.height - this.offset;
-                    oy = 'bottom';
+            if (this.placement === YPosition.above) {
+                x += (this._originRect.width - this._overlayElementRect.width) / 2;
+                y += -this._overlayElementRect.height;
+                oy = 'bottom';
+                // set offset
+                y -= this.offsetY;
+            }
+            else if (this.placement === YPosition.below) {
+                x += (this._originRect.width - this._overlayElementRect.width) / 2;
+                y += this._originRect.height;
+                oy = 'top';
+                // set offset
+                y += this.offsetY;
+            }
+            else {
+                /** @type {?} */
+                const dir = this._themeVariables.getDirection((/** @type {?} */ (this.placement)));
+                if (dir === DirPosition.left) {
+                    ox = '100%';
+                    x += -this._overlayElementRect.width;
+                    y += (this._originRect.height - this._overlayElementRect.height) / 2;
+                    // set offset
+                    x -= this.offsetX;
                 }
-                else if (this.placement === YPosition.below) {
-                    x += (this._originRect.width - this._overlayElementRect.width) / 2;
-                    y += this._originRect.height + this.offset;
-                    oy = 'top';
-                }
-                else {
-                    /** @type {?} */
-                    const dir = this._themeVariables.getDirection((/** @type {?} */ (this.placement)));
-                    if (dir === DirPosition.left) {
-                        ox = '100%';
-                        x += -this._overlayElementRect.width - this.offset;
-                        y += (this._originRect.height - this._overlayElementRect.height) / 2;
-                    }
-                    else if (dir === DirPosition.right) {
-                        ox = '0%';
-                        x += this._originRect.width + this.offset;
-                        y += (this._originRect.height - this._overlayElementRect.height) / 2;
-                    }
+                else if (dir === DirPosition.right) {
+                    ox = '0%';
+                    x += this._originRect.width;
+                    y += (this._originRect.height - this._overlayElementRect.height) / 2;
+                    // set offset
+                    x += this.offsetX;
                 }
             }
             if (this.xPosition) {
@@ -612,20 +639,28 @@ class Positioning {
                 if (dir === DirPosition.right) {
                     ox = '0%';
                     x = this._originRect.x;
+                    // set offset
+                    x += this.offsetX;
                 }
                 else if (dir === DirPosition.left) {
                     ox = '100%';
                     x = this._originRect.x + this._originRect.width - this._overlayElementRect.width;
+                    // set offset
+                    x -= this.offsetX;
                 }
             }
             else if (this.yPosition) {
                 if (this.yPosition === YPosition.above) {
                     y = this._originRect.y;
                     oy = '0%';
+                    // set offset
+                    y -= this.offsetY;
                 }
                 else if (this.yPosition === YPosition.below) {
                     y = this._originRect.y + this._originRect.height - this._overlayElementRect.height;
                     oy = '100%';
+                    // set offset
+                    y += this.offsetY;
                 }
             }
         }
@@ -745,6 +780,11 @@ class Positioning {
      * @return {?}
      */
     updateOrigin() {
+        // do not update if it is defined
+        if (this._origin) {
+            return;
+        }
+        this._origin = true;
         /** @type {?} */
         const oax = this._originRect.x + this._originRect.width / 2;
         /** @type {?} */
@@ -2294,6 +2334,42 @@ function mixinShadowColor(base) {
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
+/** @type {?} */
+const DEFAULT_TAB_INDEX = 0;
+/**
+ * @template T
+ * @param {?} base
+ * @return {?}
+ */
+function mixinTabIndex(base) {
+    return class extends base {
+        /**
+         * @param {...?} args
+         */
+        constructor(...args) {
+            super(...args);
+            this._tabIndex = DEFAULT_TAB_INDEX;
+        }
+        /**
+         * @return {?}
+         */
+        get tabIndex() {
+            return this.disabled ? -1 : this._tabIndex;
+        }
+        /**
+         * @param {?} value
+         * @return {?}
+         */
+        set tabIndex(value) {
+            this._tabIndex = value != null ? value : DEFAULT_TAB_INDEX;
+        }
+    };
+}
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
 
 /**
  * @fileoverview added by tsickle
@@ -2623,6 +2699,20 @@ class LyFocusState {
     }
     /**
      * @param {?} element
+     * @param {?} origin
+     * @param {?} options
+     * @return {?}
+     */
+    focusElement(element, origin, options) {
+        /** @type {?} */
+        const nativeElement = getNativeElement(element);
+        this._currentEvent = origin;
+        if (typeof nativeElement.focus === 'function') {
+            nativeElement.focus(options);
+        }
+    }
+    /**
+     * @param {?} element
      * @return {?}
      */
     unlisten(element) {
@@ -2721,9 +2811,9 @@ LyFocusState.ctorParameters = () => [
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
-const AUI_VERSION = '2.0.8-nightly.20190126-jrd7j14k';
+const AUI_VERSION = '2.0.8-nightly.20190127-jremz0er';
 /** @type {?} */
-const AUI_LAST_UPDATE = '2019-01-26T08:22:26.419Z';
+const AUI_LAST_UPDATE = '2019-01-27T08:22:32.401Z';
 
 /**
  * @fileoverview added by tsickle
@@ -3082,25 +3172,22 @@ class CreateFromTemplateRef {
         if (config) {
             if (config.onResizeScroll) {
                 this.onResizeScroll = config.onResizeScroll;
-                // this.onResizeScroll();
             }
-            if (config.host) {
-                this.windowSRSub = merge(windowScroll.scroll$, resizeService.resize$).subscribe(() => {
-                    if (this.onResizeScroll) {
-                        this.onResizeScroll();
-                    }
-                    else {
-                        /** @type {?} */
-                        const rect = config.host.getBoundingClientRect();
-                        /** @type {?} */
-                        const newStyles = {
-                            top: rect.top,
-                            left: rect.left
-                        };
-                        this.updateStyles(newStyles);
-                    }
-                });
-            }
+            this.windowSRSub = merge(windowScroll.scroll$, resizeService.resize$).subscribe(() => {
+                if (this.onResizeScroll) {
+                    this.onResizeScroll();
+                }
+                else {
+                    /** @type {?} */
+                    const rect = config.host.getBoundingClientRect();
+                    /** @type {?} */
+                    const newStyles = {
+                        top: rect.top,
+                        left: rect.left
+                    };
+                    this.updateStyles(newStyles);
+                }
+            });
             if (config.classes) {
                 /** @type {?} */
                 const classes = config.classes;
@@ -3383,6 +3470,167 @@ const AlignAlias = {
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
+/**
+ * @param {?} o
+ * @return {?}
+ */
+function same(o) {
+    return o;
+}
+/**
+ * @template T
+ */
+class LySelectionModel {
+    /**
+     * @param {?=} opts
+     */
+    constructor(opts) {
+        this._selectionMap = new Map();
+        this._getKeyFn = same;
+        if (!opts) {
+            return;
+        }
+        const { multiple, getKey } = opts;
+        if (getKey) {
+            this._getKeyFn = getKey;
+        }
+        if (multiple === true) {
+            this._multiple = true;
+            const { selecteds } = opts;
+            if (Array.isArray(selecteds) && selecteds.length) {
+                this.select(...selecteds);
+            }
+        }
+        else {
+            const { selecteds } = (/** @type {?} */ (opts));
+            if (selecteds) {
+                this._markSelected(selecteds);
+            }
+        }
+    }
+    /**
+     * Selected values.
+     * @return {?}
+     */
+    get selected() {
+        if (!this._selected) {
+            this._selected = Array.from(this._selectionMap.values());
+        }
+        return this._selected;
+    }
+    /**
+     * Toggles a value between selected and deselected.
+     * @param {?} value
+     * @return {?}
+     */
+    toggle(value) {
+        this.isSelected(value) ? this.deselect(value) : this.select(value);
+    }
+    /**
+     * Selects one or several values.
+     * @param {...?} values
+     * @return {?}
+     */
+    select(...values) {
+        values.forEach(value => this._markSelected(value));
+        this._clearSelectedValues();
+    }
+    /**
+     * Deselects a value or an array of values.
+     * @param {...?} values
+     * @return {?}
+     */
+    deselect(...values) {
+        values.forEach(value => this._unmarkSelected(value));
+        this._clearSelectedValues();
+    }
+    /**
+     * Determines whether a value is selected.
+     * @param {?} value
+     * @return {?}
+     */
+    isSelected(value) {
+        /** @type {?} */
+        const key = this._getKeyFn(value);
+        return this._selectionMap.has(key);
+    }
+    /**
+     * Determines whether the model does not have a value.
+     * @return {?}
+     */
+    isEmpty() {
+        return this._selectionMap.size === 0;
+    }
+    /**
+     * Determines whether the model has a value.
+     * @return {?}
+     */
+    hasValue() {
+        return this._selectionMap.size !== 0;
+    }
+    /**
+     * Gets whether multiple values can be selected.
+     * @return {?}
+     */
+    isMultipleSelection() {
+        return this._multiple;
+    }
+    /**
+     * Clears all of the selected values.
+     * @return {?}
+     */
+    clear() {
+        this._unmarkAll();
+        this._clearSelectedValues();
+    }
+    /**
+     * Selects a value.
+     * @private
+     * @param {?} value
+     * @return {?}
+     */
+    _markSelected(value) {
+        if (!this.isSelected(value)) {
+            if (!this._multiple) {
+                this._unmarkAll();
+            }
+            /** @type {?} */
+            const key = this._getKeyFn(value);
+            this._selectionMap.set(key, value);
+        }
+    }
+    /**
+     * Deselects a value.
+     * @private
+     * @param {?} value
+     * @return {?}
+     */
+    _unmarkSelected(value) {
+        if (this.isSelected(value)) {
+            /** @type {?} */
+            const key = this._getKeyFn(value);
+            this._selectionMap.delete(key);
+        }
+    }
+    /**
+     * Clears out the selected values.
+     * @private
+     * @return {?}
+     */
+    _unmarkAll() {
+        if (!this.isEmpty()) {
+            this._selectionMap.clear();
+        }
+    }
+    /**
+     * Clear the selected values so they can be re-cached.
+     * @private
+     * @return {?}
+     */
+    _clearSelectedValues() {
+        this._selected = null;
+    }
+}
 
 /**
  * @fileoverview added by tsickle
@@ -3394,6 +3642,11 @@ const AlignAlias = {
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { getContrastYIQ, shadowBuilderDeprecated, shadowBuilder, Shadows, THEME_VARIABLES, IS_CORE_THEME, Platform, supportsPassiveEventListeners, LyCommonModule, getNativeElement, NgTranscludeDirective, NgTranscludeModule, toBoolean, defaultEntry, scrollTo, scrollToC, scrollWithAnimation, FocusStatus, LyFocusState, AUI_VERSION, AUI_LAST_UPDATE, LY_HAMMER_OPTIONS, LyHammerGestureConfig, LyPaperBase, LyPaperMixinBase, LyPaper, CoreTheme, LY_THEME_GLOBAL_VARIABLES, LY_THEME, LY_THEME_NAME, converterToCssKeyAndStyle, capitalizeFirstLetter, StylesInDocument, LyTheme2, LyThemeModule, LY_COMMON_STYLES, LyCoreStyles, Undefined, UndefinedValue, eachMedia, isObject, mergeDeep, LyStyleUtils, Dir, DirAlias, DirPosition, LyOverlayContainer, LyOverlayBackdrop, LyOverlay, LyOverlayModule, MutationObserverFactory, ElementObserver, WinResize, WinScroll, mixinStyleUpdater, mixinDisableRipple, mixinDisabled, mixinColor, mixinBg, mixinRaised, mixinOutlined, mixinElevation, mixinShadowColor, Ripple, LyRippleService, invertPlacement, YPosition, XPosition, Positioning, AlignAlias, LyWithClass as ɵa };
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+
+export { getContrastYIQ, shadowBuilderDeprecated, shadowBuilder, Shadows, THEME_VARIABLES, IS_CORE_THEME, Platform, supportsPassiveEventListeners, LyCommonModule, getNativeElement, NgTranscludeDirective, NgTranscludeModule, toBoolean, defaultEntry, scrollTo, scrollToC, scrollWithAnimation, FocusStatus, LyFocusState, AUI_VERSION, AUI_LAST_UPDATE, LY_HAMMER_OPTIONS, LyHammerGestureConfig, LyPaperBase, LyPaperMixinBase, LyPaper, CoreTheme, LY_THEME_GLOBAL_VARIABLES, LY_THEME, LY_THEME_NAME, converterToCssKeyAndStyle, capitalizeFirstLetter, StylesInDocument, LyTheme2, LyThemeModule, LY_COMMON_STYLES, LyCoreStyles, Undefined, UndefinedValue, eachMedia, isObject, mergeDeep, LyStyleUtils, Dir, DirAlias, DirPosition, LyOverlayContainer, LyOverlayBackdrop, LyOverlay, LyOverlayModule, MutationObserverFactory, ElementObserver, WinResize, WinScroll, mixinStyleUpdater, mixinDisableRipple, mixinColor, mixinBg, mixinRaised, mixinOutlined, mixinElevation, mixinShadowColor, mixinDisabled, mixinTabIndex, Ripple, LyRippleService, invertPlacement, YPosition, XPosition, Positioning, AlignAlias, LySelectionModel, LyWithClass as ɵa };
 
 //# sourceMappingURL=alyle-ui.js.map

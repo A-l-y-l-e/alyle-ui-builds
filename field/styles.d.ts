@@ -63,7 +63,9 @@ export declare const STYLES: (theme: ThemeVariables) => {
         display: string;
         position: string;
         alignItems: string;
+        minWidth: number;
         width: string;
+        flex: string;
     };
     suffix: {
         maxHeight: string;
@@ -129,6 +131,34 @@ export declare const STYLES: (theme: ThemeVariables) => {
         color: string;
         font: string;
         width: string;
+        'select&': {
+            '-moz-appearance': string;
+            '-webkit-appearance': string;
+            position: string;
+            backgroundColor: string;
+            display: string;
+            boxSizing: string;
+            paddingAfter: string;
+            'option:not([disabled])': {
+                color: string;
+            };
+            'optgroup:not([disabled])': {
+                color: string;
+            };
+        };
+        'select&::-ms-expand': {
+            display: string;
+        };
+        'select&::-moz-focus-inner': {
+            border: number;
+        };
+        'select&:not(:disabled)': {
+            cursor: string;
+        };
+        'select&::-ms-value': {
+            color: string;
+            background: string;
+        };
     };
     hintContainer: {
         minHeight: string;
@@ -149,7 +179,7 @@ export declare const STYLES: (theme: ThemeVariables) => {
     hint: any;
     error: any;
     errorState: {
-        '& {label}, & {hintContainer}': {
+        '& {label}, & {hintContainer}, &{selectArrow} {infix}:after': {
             color: string;
         };
         '& {fieldset}, & {container}:after': {
@@ -164,12 +194,37 @@ export declare const STYLES: (theme: ThemeVariables) => {
         '& {labelSpan}': {
             animation: string;
         };
+        '& {inputNative}::selection': {
+            backgroundColor: string;
+            color: string;
+        };
+        '& {inputNative}::-moz-selection': {
+            backgroundColor: string;
+            color: string;
+        };
     };
     hintAfter: {
         marginBefore: string;
     };
     hintBefore: {
         marginAfter: string;
+    };
+    selectArrow: {
+        '{infix}': {
+            '&:after': {
+                position: string;
+                content: string;
+                width: number;
+                height: number;
+                borderLeft: string;
+                borderRight: string;
+                borderTop: string;
+                top: string;
+                after: number;
+                marginTop: string;
+                pointerEvents: string;
+            };
+        };
     };
     $keyframes: {
         shake: {

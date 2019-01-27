@@ -19,6 +19,7 @@ export declare class LyFocusState implements OnDestroy {
     private _count;
     constructor(_ngZone: NgZone);
     listen(element: HTMLElement | ElementRef<HTMLElement>, keyElement?: HTMLElement | ElementRef<HTMLElement>): Observable<FocusState> | null;
+    focusElement(element: HTMLElement | ElementRef<HTMLElement>, origin: FocusState, options: FocusOptions): void;
     unlisten(element: HTMLElement | ElementRef<HTMLElement>): void;
     private _on;
     private _addGlobalListeners;

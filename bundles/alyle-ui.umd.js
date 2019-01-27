@@ -611,9 +611,12 @@
     /** @type {?} */
     var INITIAL_WH = 'initial';
     var Positioning = /** @class */ (function () {
-        function Positioning(placement, xPosition, yPosition, origin, overlayElement, _themeVariables, offset) {
-            if (offset === void 0) {
-                offset = 0;
+        function Positioning(placement, xPosition, yPosition, origin, overlayElement, _themeVariables, _offset, _flip) {
+            if (_offset === void 0) {
+                _offset = 0;
+            }
+            if (_flip === void 0) {
+                _flip = true;
             }
             this.placement = placement;
             this.xPosition = xPosition;
@@ -621,7 +624,7 @@
             this.origin = origin;
             this.overlayElement = overlayElement;
             this._themeVariables = _themeVariables;
-            this.offset = offset;
+            this._offset = _offset;
             this._offsetCheck = 16;
             this._originRect = ( /** @type {?} */(this.origin.getBoundingClientRect()));
             this._overlayElementRect = ( /** @type {?} */(this.overlayElement.getBoundingClientRect()));
@@ -630,9 +633,11 @@
             /** @type {?} */
             var offsetCheckx2 = this._offsetCheck * 2;
             this.createPosition();
-            for (var index = 0; index < 2; index++) {
-                if (this.checkAll()) {
-                    this.createPosition();
+            if (_flip) {
+                for (var index = 0; index < 2; index++) {
+                    if (this.checkAll()) {
+                        this.createPosition();
+                    }
                 }
             }
             // when there is not enough space
@@ -665,7 +670,9 @@
                         this.x -= ( /** @type {?} */(this.checkLeft(true)));
                     }
                 }
-                // update origin
+                this.updateOrigin();
+            }
+            if (this._offset) {
                 this.updateOrigin();
             }
             // round result
@@ -674,6 +681,28 @@
             this.ax = Math.round(this.ax);
             this.ay = Math.round(this.ay);
         }
+        Object.defineProperty(Positioning.prototype, "offsetX", {
+            get: /**
+             * @return {?}
+             */ function () {
+                return typeof this._offset === 'number'
+                    ? this._offset
+                    : this._offset.x || 0;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(Positioning.prototype, "offsetY", {
+            get: /**
+             * @return {?}
+             */ function () {
+                return typeof this._offset === 'number'
+                    ? this._offset
+                    : this._offset.y || 0;
+            },
+            enumerable: true,
+            configurable: true
+        });
         /**
          * @private
          * @return {?}
@@ -698,30 +727,36 @@
                 /** @type {?} */
                 var oy = 'center';
                 if (this.placement) {
-                    if (this.placement) {
-                        if (this.placement === YPosition.above) {
-                            x += (this._originRect.width - this._overlayElementRect.width) / 2;
-                            y += -this._overlayElementRect.height - this.offset;
-                            oy = 'bottom';
+                    if (this.placement === YPosition.above) {
+                        x += (this._originRect.width - this._overlayElementRect.width) / 2;
+                        y += -this._overlayElementRect.height;
+                        oy = 'bottom';
+                        // set offset
+                        y -= this.offsetY;
+                    }
+                    else if (this.placement === YPosition.below) {
+                        x += (this._originRect.width - this._overlayElementRect.width) / 2;
+                        y += this._originRect.height;
+                        oy = 'top';
+                        // set offset
+                        y += this.offsetY;
+                    }
+                    else {
+                        /** @type {?} */
+                        var dir = this._themeVariables.getDirection(( /** @type {?} */(this.placement)));
+                        if (dir === DirPosition.left) {
+                            ox = '100%';
+                            x += -this._overlayElementRect.width;
+                            y += (this._originRect.height - this._overlayElementRect.height) / 2;
+                            // set offset
+                            x -= this.offsetX;
                         }
-                        else if (this.placement === YPosition.below) {
-                            x += (this._originRect.width - this._overlayElementRect.width) / 2;
-                            y += this._originRect.height + this.offset;
-                            oy = 'top';
-                        }
-                        else {
-                            /** @type {?} */
-                            var dir = this._themeVariables.getDirection(( /** @type {?} */(this.placement)));
-                            if (dir === DirPosition.left) {
-                                ox = '100%';
-                                x += -this._overlayElementRect.width - this.offset;
-                                y += (this._originRect.height - this._overlayElementRect.height) / 2;
-                            }
-                            else if (dir === DirPosition.right) {
-                                ox = '0%';
-                                x += this._originRect.width + this.offset;
-                                y += (this._originRect.height - this._overlayElementRect.height) / 2;
-                            }
+                        else if (dir === DirPosition.right) {
+                            ox = '0%';
+                            x += this._originRect.width;
+                            y += (this._originRect.height - this._overlayElementRect.height) / 2;
+                            // set offset
+                            x += this.offsetX;
                         }
                     }
                     if (this.xPosition) {
@@ -730,20 +765,28 @@
                         if (dir === DirPosition.right) {
                             ox = '0%';
                             x = this._originRect.x;
+                            // set offset
+                            x += this.offsetX;
                         }
                         else if (dir === DirPosition.left) {
                             ox = '100%';
                             x = this._originRect.x + this._originRect.width - this._overlayElementRect.width;
+                            // set offset
+                            x -= this.offsetX;
                         }
                     }
                     else if (this.yPosition) {
                         if (this.yPosition === YPosition.above) {
                             y = this._originRect.y;
                             oy = '0%';
+                            // set offset
+                            y -= this.offsetY;
                         }
                         else if (this.yPosition === YPosition.below) {
                             y = this._originRect.y + this._originRect.height - this._overlayElementRect.height;
                             oy = '100%';
+                            // set offset
+                            y += this.offsetY;
                         }
                     }
                 }
@@ -891,6 +934,11 @@
          * @return {?}
          */
             function () {
+                // do not update if it is defined
+                if (this._origin) {
+                    return;
+                }
+                this._origin = true;
                 /** @type {?} */
                 var oax = this._originRect.x + this._originRect.width / 2;
                 /** @type {?} */
@@ -2682,6 +2730,48 @@
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
+    /** @type {?} */
+    var DEFAULT_TAB_INDEX = 0;
+    /**
+     * @template T
+     * @param {?} base
+     * @return {?}
+     */
+    function mixinTabIndex(base) {
+        return /** @class */ (function (_super) {
+            __extends(class_1, _super);
+            function class_1() {
+                var args = [];
+                for (var _i = 0; _i < arguments.length; _i++) {
+                    args[_i] = arguments[_i];
+                }
+                var _this = _super.apply(this, __spread(args)) || this;
+                _this._tabIndex = DEFAULT_TAB_INDEX;
+                return _this;
+            }
+            Object.defineProperty(class_1.prototype, "tabIndex", {
+                get: /**
+                 * @return {?}
+                 */ function () {
+                    return this.disabled ? -1 : this._tabIndex;
+                },
+                set: /**
+                 * @param {?} value
+                 * @return {?}
+                 */ function (value) {
+                    this._tabIndex = value != null ? value : DEFAULT_TAB_INDEX;
+                },
+                enumerable: true,
+                configurable: true
+            });
+            return class_1;
+        }(base));
+    }
+
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
 
     /**
      * @fileoverview added by tsickle
@@ -3027,6 +3117,26 @@
             };
         /**
          * @param {?} element
+         * @param {?} origin
+         * @param {?} options
+         * @return {?}
+         */
+        LyFocusState.prototype.focusElement = /**
+         * @param {?} element
+         * @param {?} origin
+         * @param {?} options
+         * @return {?}
+         */
+            function (element, origin, options) {
+                /** @type {?} */
+                var nativeElement = getNativeElement(element);
+                this._currentEvent = origin;
+                if (typeof nativeElement.focus === 'function') {
+                    nativeElement.focus(options);
+                }
+            };
+        /**
+         * @param {?} element
          * @return {?}
          */
         LyFocusState.prototype.unlisten = /**
@@ -3155,9 +3265,9 @@
      * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /** @type {?} */
-    var AUI_VERSION = '2.0.8-nightly.20190126-jrd7j14k';
+    var AUI_VERSION = '2.0.8-nightly.20190127-jremz0er';
     /** @type {?} */
-    var AUI_LAST_UPDATE = '2019-01-26T08:22:26.419Z';
+    var AUI_LAST_UPDATE = '2019-01-27T08:22:32.401Z';
 
     /**
      * @fileoverview added by tsickle
@@ -3569,25 +3679,22 @@
             if (config) {
                 if (config.onResizeScroll) {
                     this.onResizeScroll = config.onResizeScroll;
-                    // this.onResizeScroll();
                 }
-                if (config.host) {
-                    this.windowSRSub = rxjs.merge(windowScroll.scroll$, resizeService.resize$).subscribe(function () {
-                        if (_this.onResizeScroll) {
-                            _this.onResizeScroll();
-                        }
-                        else {
-                            /** @type {?} */
-                            var rect = config.host.getBoundingClientRect();
-                            /** @type {?} */
-                            var newStyles = {
-                                top: rect.top,
-                                left: rect.left
-                            };
-                            _this.updateStyles(newStyles);
-                        }
-                    });
-                }
+                this.windowSRSub = rxjs.merge(windowScroll.scroll$, resizeService.resize$).subscribe(function () {
+                    if (_this.onResizeScroll) {
+                        _this.onResizeScroll();
+                    }
+                    else {
+                        /** @type {?} */
+                        var rect = config.host.getBoundingClientRect();
+                        /** @type {?} */
+                        var newStyles = {
+                            top: rect.top,
+                            left: rect.left
+                        };
+                        _this.updateStyles(newStyles);
+                    }
+                });
                 if (config.classes) {
                     /** @type {?} */
                     var classes = config.classes;
@@ -3929,6 +4036,272 @@
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
+    /**
+     * @param {?} o
+     * @return {?}
+     */
+    function same(o) {
+        return o;
+    }
+    /**
+     * @template T
+     */
+    var /**
+     * @template T
+     */ LySelectionModel = /** @class */ (function () {
+        function LySelectionModel(opts) {
+            this._selectionMap = new Map();
+            this._getKeyFn = same;
+            if (!opts) {
+                return;
+            }
+            var multiple = opts.multiple, getKey = opts.getKey;
+            if (getKey) {
+                this._getKeyFn = getKey;
+            }
+            if (multiple === true) {
+                this._multiple = true;
+                var selecteds = opts.selecteds;
+                if (Array.isArray(selecteds) && selecteds.length) {
+                    this.select.apply(this, __spread(selecteds));
+                }
+            }
+            else {
+                var selecteds = ( /** @type {?} */(opts)).selecteds;
+                if (selecteds) {
+                    this._markSelected(selecteds);
+                }
+            }
+        }
+        Object.defineProperty(LySelectionModel.prototype, "selected", {
+            /** Selected values. */
+            get: /**
+             * Selected values.
+             * @return {?}
+             */ function () {
+                if (!this._selected) {
+                    this._selected = Array.from(this._selectionMap.values());
+                }
+                return this._selected;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        /**
+         * Toggles a value between selected and deselected.
+         */
+        /**
+         * Toggles a value between selected and deselected.
+         * @param {?} value
+         * @return {?}
+         */
+        LySelectionModel.prototype.toggle = /**
+         * Toggles a value between selected and deselected.
+         * @param {?} value
+         * @return {?}
+         */
+            function (value) {
+                this.isSelected(value) ? this.deselect(value) : this.select(value);
+            };
+        /**
+         * Selects one or several values.
+         */
+        /**
+         * Selects one or several values.
+         * @param {...?} values
+         * @return {?}
+         */
+        LySelectionModel.prototype.select = /**
+         * Selects one or several values.
+         * @param {...?} values
+         * @return {?}
+         */
+            function () {
+                var _this = this;
+                var values = [];
+                for (var _i = 0; _i < arguments.length; _i++) {
+                    values[_i] = arguments[_i];
+                }
+                values.forEach(function (value) { return _this._markSelected(value); });
+                this._clearSelectedValues();
+            };
+        /**
+         * Deselects a value or an array of values.
+         */
+        /**
+         * Deselects a value or an array of values.
+         * @param {...?} values
+         * @return {?}
+         */
+        LySelectionModel.prototype.deselect = /**
+         * Deselects a value or an array of values.
+         * @param {...?} values
+         * @return {?}
+         */
+            function () {
+                var _this = this;
+                var values = [];
+                for (var _i = 0; _i < arguments.length; _i++) {
+                    values[_i] = arguments[_i];
+                }
+                values.forEach(function (value) { return _this._unmarkSelected(value); });
+                this._clearSelectedValues();
+            };
+        /**
+         * Determines whether a value is selected.
+         */
+        /**
+         * Determines whether a value is selected.
+         * @param {?} value
+         * @return {?}
+         */
+        LySelectionModel.prototype.isSelected = /**
+         * Determines whether a value is selected.
+         * @param {?} value
+         * @return {?}
+         */
+            function (value) {
+                /** @type {?} */
+                var key = this._getKeyFn(value);
+                return this._selectionMap.has(key);
+            };
+        /**
+         * Determines whether the model does not have a value.
+         */
+        /**
+         * Determines whether the model does not have a value.
+         * @return {?}
+         */
+        LySelectionModel.prototype.isEmpty = /**
+         * Determines whether the model does not have a value.
+         * @return {?}
+         */
+            function () {
+                return this._selectionMap.size === 0;
+            };
+        /**
+         * Determines whether the model has a value.
+         */
+        /**
+         * Determines whether the model has a value.
+         * @return {?}
+         */
+        LySelectionModel.prototype.hasValue = /**
+         * Determines whether the model has a value.
+         * @return {?}
+         */
+            function () {
+                return this._selectionMap.size !== 0;
+            };
+        /**
+         * Gets whether multiple values can be selected.
+         */
+        /**
+         * Gets whether multiple values can be selected.
+         * @return {?}
+         */
+        LySelectionModel.prototype.isMultipleSelection = /**
+         * Gets whether multiple values can be selected.
+         * @return {?}
+         */
+            function () {
+                return this._multiple;
+            };
+        /**
+         * Clears all of the selected values.
+         */
+        /**
+         * Clears all of the selected values.
+         * @return {?}
+         */
+        LySelectionModel.prototype.clear = /**
+         * Clears all of the selected values.
+         * @return {?}
+         */
+            function () {
+                this._unmarkAll();
+                this._clearSelectedValues();
+            };
+        /** Selects a value. */
+        /**
+         * Selects a value.
+         * @private
+         * @param {?} value
+         * @return {?}
+         */
+        LySelectionModel.prototype._markSelected = /**
+         * Selects a value.
+         * @private
+         * @param {?} value
+         * @return {?}
+         */
+            function (value) {
+                if (!this.isSelected(value)) {
+                    if (!this._multiple) {
+                        this._unmarkAll();
+                    }
+                    /** @type {?} */
+                    var key = this._getKeyFn(value);
+                    this._selectionMap.set(key, value);
+                }
+            };
+        /** Deselects a value. */
+        /**
+         * Deselects a value.
+         * @private
+         * @param {?} value
+         * @return {?}
+         */
+        LySelectionModel.prototype._unmarkSelected = /**
+         * Deselects a value.
+         * @private
+         * @param {?} value
+         * @return {?}
+         */
+            function (value) {
+                if (this.isSelected(value)) {
+                    /** @type {?} */
+                    var key = this._getKeyFn(value);
+                    this._selectionMap.delete(key);
+                }
+            };
+        /** Clears out the selected values. */
+        /**
+         * Clears out the selected values.
+         * @private
+         * @return {?}
+         */
+        LySelectionModel.prototype._unmarkAll = /**
+         * Clears out the selected values.
+         * @private
+         * @return {?}
+         */
+            function () {
+                if (!this.isEmpty()) {
+                    this._selectionMap.clear();
+                }
+            };
+        /** Clear the selected values so they can be re-cached. */
+        /**
+         * Clear the selected values so they can be re-cached.
+         * @private
+         * @return {?}
+         */
+        LySelectionModel.prototype._clearSelectedValues = /**
+         * Clear the selected values so they can be re-cached.
+         * @private
+         * @return {?}
+         */
+            function () {
+                this._selected = null;
+            };
+        return LySelectionModel;
+    }());
+
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
 
     /**
      * @fileoverview added by tsickle
@@ -3996,13 +4369,14 @@
     exports.WinScroll = WinScroll;
     exports.mixinStyleUpdater = mixinStyleUpdater;
     exports.mixinDisableRipple = mixinDisableRipple;
-    exports.mixinDisabled = mixinDisabled;
     exports.mixinColor = mixinColor;
     exports.mixinBg = mixinBg;
     exports.mixinRaised = mixinRaised;
     exports.mixinOutlined = mixinOutlined;
     exports.mixinElevation = mixinElevation;
     exports.mixinShadowColor = mixinShadowColor;
+    exports.mixinDisabled = mixinDisabled;
+    exports.mixinTabIndex = mixinTabIndex;
     exports.Ripple = Ripple;
     exports.LyRippleService = LyRippleService;
     exports.invertPlacement = invertPlacement;
@@ -4010,6 +4384,7 @@
     exports.XPosition = XPosition;
     exports.Positioning = Positioning;
     exports.AlignAlias = AlignAlias;
+    exports.LySelectionModel = LySelectionModel;
     exports.ɵa = LyWithClass;
 
     Object.defineProperty(exports, '__esModule', { value: true });

@@ -67,6 +67,11 @@
      */
     /** @type {?} */
     var STYLES = function (theme) {
+        /** @type {?} */
+        var selectionStyle = {
+            backgroundColor: theme.warn.default + " !important",
+            color: theme.warn.contrast + " !important"
+        };
         return {
             root: {
                 display: 'inline-block',
@@ -112,7 +117,9 @@
                 display: 'inline-flex',
                 position: 'relative',
                 alignItems: 'baseline',
-                width: '100%'
+                minWidth: 0,
+                width: '180px',
+                flex: '1 0'
             },
             suffix: {
                 maxHeight: '2em',
@@ -145,7 +152,35 @@
                 backgroundColor: 'transparent',
                 color: 'inherit',
                 font: 'inherit',
-                width: '100%'
+                width: '100%',
+                'select&': {
+                    '-moz-appearance': 'none',
+                    '-webkit-appearance': 'none',
+                    position: 'relative',
+                    backgroundColor: 'transparent',
+                    display: 'inline-flex',
+                    boxSizing: 'border-box',
+                    paddingAfter: '1em',
+                    'option:not([disabled])': {
+                        color: 'initial'
+                    },
+                    'optgroup:not([disabled])': {
+                        color: 'initial'
+                    }
+                },
+                'select&::-ms-expand': {
+                    display: 'none'
+                },
+                'select&::-moz-focus-inner': {
+                    border: 0
+                },
+                'select&:not(:disabled)': {
+                    cursor: 'pointer'
+                },
+                'select&::-ms-value': {
+                    color: 'inherit',
+                    background: '0 0'
+                }
             },
             hintContainer: {
                 minHeight: '1.25em',
@@ -166,7 +201,7 @@
             hint: null,
             error: null,
             errorState: {
-                '& {label}, & {hintContainer}': {
+                '& {label}, & {hintContainer}, &{selectArrow} {infix}:after': {
                     color: theme.warn.default + "!important"
                 },
                 '& {fieldset}, & {container}:after': {
@@ -181,13 +216,32 @@
                 },
                 '& {labelSpan}': {
                     animation: "{shake} " + theme.animations.durations.complex + "ms " + theme.animations.curves.deceleration
-                }
+                },
+                '& {inputNative}::selection': selectionStyle,
+                '& {inputNative}::-moz-selection': selectionStyle
             },
             hintAfter: {
                 marginBefore: 'auto'
             },
             hintBefore: {
                 marginAfter: 'auto'
+            },
+            selectArrow: {
+                '{infix}': {
+                    '&:after': {
+                        position: 'absolute',
+                        content: "''",
+                        width: 0,
+                        height: 0,
+                        borderLeft: '0.3125em solid transparent',
+                        borderRight: '0.3125em solid transparent',
+                        borderTop: '0.3125em solid',
+                        top: '50%',
+                        after: 0,
+                        marginTop: '-0.15625em',
+                        pointerEvents: 'none'
+                    }
+                }
             },
             $keyframes: {
                 shake: {
@@ -353,6 +407,25 @@
      * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /**
+     * An interface which allows a control to work inside of a `LyField`.
+     * @abstract
+     * @template T
+     */
+    var /**
+     * An interface which allows a control to work inside of a `LyField`.
+     * @abstract
+     * @template T
+     */ LyFieldControlBase = /** @class */ (function () {
+        function LyFieldControlBase() {
+        }
+        return LyFieldControlBase;
+    }());
+
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
+    /**
      * LyField
      * @type {?}
      */
@@ -431,7 +504,7 @@
             get: /**
              * @return {?}
              */ function () {
-                return this._input.errorState;
+                return this._control.errorState;
             },
             enumerable: true,
             configurable: true
@@ -497,8 +570,10 @@
                         var _a;
                         /** @type {?} */
                         var color = theme.colorOf(val);
+                        /** @type {?} */
+                        var contrast = theme.colorOf(val + ":contrast");
                         return _a = {},
-                            _a["&." + _this.classes.focused + " ." + _this.classes.container + ":after"] = {
+                            _a["&." + _this.classes.focused + " ." + _this.classes.container + ":after, &{focused}{selectArrow} {infix}:after"] = {
                                 color: color
                             },
                             _a["&." + _this.classes.focused + " ." + _this.classes.fieldset] = {
@@ -510,8 +585,16 @@
                             _a["& ." + _this.classes.inputNative] = {
                                 caretColor: color
                             },
+                            _a['& {inputNative}::selection'] = {
+                                backgroundColor: color,
+                                color: contrast
+                            },
+                            _a['& {inputNative}::-moz-selection'] = {
+                                backgroundColor: color,
+                                color: contrast
+                            },
                             _a;
-                    }, this._el.nativeElement, this._colorClass, STYLE_PRIORITY$2 + 1);
+                    }, this._el.nativeElement, this._colorClass, STYLE_PRIORITY$2 + 1, STYLES);
                 }
             },
             enumerable: true,
@@ -593,13 +676,12 @@
          */
             function () {
                 var _this = this;
-                this._renderer.addClass(this._input._getHostElement(), this.classes.inputNative);
-                this._input.stateChanges.subscribe(function () {
+                this._control.stateChanges.subscribe(function () {
                     _this._updateFloatingLabel();
                     _this._markForCheck();
                 });
                 /** @type {?} */
-                var ngControl = this._input.ngControl;
+                var ngControl = this._control.ngControl;
                 // Run change detection if the value changes.
                 if (ngControl && ngControl.valueChanges) {
                     ngControl.valueChanges.subscribe(function () {
@@ -644,16 +726,6 @@
                             });
                         }
                     });
-                    /** @type {?} */
-                    var nativeElement_1 = this._input._getHostElement();
-                    if (nativeElement_1 instanceof HTMLTextAreaElement ||
-                        inputText.some(function (type) { return type === nativeElement_1.type; })) {
-                        this._theme.addStyle('field.text', {
-                            '& {container}': {
-                                cursor: 'text'
-                            }
-                        }, this._el.nativeElement, null, null, STYLES);
-                    }
                 }
                 // this fix with of label
                 this._renderer.addClass(this._el.nativeElement, this.classes.animations);
@@ -742,7 +814,7 @@
          * @return {?}
          */
             function () {
-                if (this._input.placeholder && !this._labelChild) {
+                if (this._control.placeholder && !this._labelChild) {
                     return true;
                 }
                 else if (this._labelChild || this._placeholderChild) {
@@ -760,7 +832,7 @@
          * @return {?}
          */
             function () {
-                if ((this._labelChild && this._input.placeholder) || (this._labelChild && this._placeholderChild)) {
+                if ((this._labelChild && this._control.placeholder) || (this._labelChild && this._placeholderChild)) {
                     return true;
                 }
                 return false;
@@ -776,7 +848,7 @@
          */
             function () {
                 /** @type {?} */
-                var val = this._input.value;
+                var val = this._control.value;
                 return val === '' || val === null || val === undefined;
             };
         /**
@@ -790,7 +862,7 @@
             function () {
                 if (this._labelContainer2) {
                     /** @type {?} */
-                    var isFloating = this._input._focused || !this._isEmpty() || this.floatingLabel;
+                    var isFloating = this._control.floatingLabel || this.floatingLabel;
                     if (this._isFloating !== isFloating) {
                         this._isFloating = isFloating;
                         if (isFloating) {
@@ -803,7 +875,7 @@
                         }
                     }
                 }
-                if (this._input._focused) {
+                if (this._control.focused) {
                     this._renderer.addClass(this._el.nativeElement, this.classes.focused);
                 }
                 else {
@@ -834,7 +906,7 @@
             { type: core.Component, args: [{
                         selector: 'ly-field',
                         exportAs: 'lyFormField',
-                        template: "<div [className]=\"classes.container\" (click)=\"_input.focus()\">\n  <fieldset [className]=\"classes.fieldset\"><legend #_fieldsetLegend [className]=\"classes.fieldsetSpan\"></legend></fieldset>\n  <div [className]=\"classes.prefix\" *ngIf=\"_prefixChildren.length\" #_prefixContainer>\n    <ng-content select=\"[lyPrefix]\"></ng-content>\n  </div>\n  <div [className]=\"classes.infix\">\n    <ng-content></ng-content>\n    <div [className]=\"classes.label\" *ngIf=\"_isLabel()\" #_labelContainer2>\n      <span #_labelSpan [className]=\"classes.labelSpan\">\n        <ng-container *ngTemplateOutlet=\"_labelTemplate\"></ng-container>\n      </span>\n    </div>\n    <div [className]=\"classes.placeholder\" *ngIf=\"_isPlaceholder() && _isEmpty() && (_input._focused || floatingLabel)\">\n      <ng-container *ngTemplateOutlet=\"_placeholderTemplate\"></ng-container>\n    </div>\n  </div>\n  <div [className]=\"classes.suffix\" *ngIf=\"_suffixChildren.length\" #_suffixContainer>\n    <ng-content select=\"[lySuffix]\"></ng-content>\n  </div>\n</div>\n\n<div [className]=\"classes.hintContainer\">\n  <div *ngIf=\"_hintChildren.length && (persistentHint || errorState || _input._focused)\">\n    <span *ngIf=\"_input.errorState\">\n      <ng-content select=\"ly-error\"></ng-content>\n    </span>\n    <ng-content select=\"ly-hint\"></ng-content>\n  </div>\n</div>\n\n<ng-template #_labelTemplate>\n  <ng-content select=\"ly-label\"></ng-content>\n  <ng-container *ngIf=\"!_labelChild\">\n    <ng-template *ngTemplateOutlet=\"_placeholderTemplate\"></ng-template>\n  </ng-container>\n</ng-template>\n\n<ng-template #_placeholderTemplate>\n  <ng-content select=\"ly-placeholder\"></ng-content>\n  <ng-container *ngIf=\"_input.placeholder\">{{ _input.placeholder }}</ng-container>\n</ng-template>\n",
+                        template: "<div [className]=\"classes.container\" (click)=\"_control.onContainerClick && _control.onContainerClick($event)\">\n  <fieldset [className]=\"classes.fieldset\"><legend #_fieldsetLegend [className]=\"classes.fieldsetSpan\"></legend></fieldset>\n  <div [className]=\"classes.prefix\" *ngIf=\"_prefixChildren.length\" #_prefixContainer>\n    <ng-content select=\"[lyPrefix]\"></ng-content>\n  </div>\n  <div [className]=\"classes.infix\">\n    <ng-content></ng-content>\n    <div [className]=\"classes.label\" *ngIf=\"_isLabel()\" #_labelContainer2>\n      <span #_labelSpan [className]=\"classes.labelSpan\">\n        <ng-container *ngTemplateOutlet=\"_labelTemplate\"></ng-container>\n      </span>\n    </div>\n    <div [className]=\"classes.placeholder\" *ngIf=\"_isPlaceholder() && _control.empty && (_control.floatingLabel || floatingLabel)\">\n      <ng-container *ngTemplateOutlet=\"_placeholderTemplate\"></ng-container>\n    </div>\n  </div>\n  <div [className]=\"classes.suffix\" *ngIf=\"_suffixChildren.length\" #_suffixContainer>\n    <ng-content select=\"[lySuffix]\"></ng-content>\n  </div>\n</div>\n\n<div [className]=\"classes.hintContainer\">\n  <div *ngIf=\"_hintChildren.length && (persistentHint || _control.errorState || _control.focused)\">\n    <span *ngIf=\"_control.errorState\">\n      <ng-content select=\"ly-error\"></ng-content>\n    </span>\n    <ng-content select=\"ly-hint\"></ng-content>\n  </div>\n</div>\n\n<ng-template #_labelTemplate>\n  <ng-content select=\"ly-label\"></ng-content>\n  <ng-container *ngIf=\"!_labelChild\">\n    <ng-template *ngTemplateOutlet=\"_placeholderTemplate\"></ng-template>\n  </ng-container>\n</ng-template>\n\n<ng-template #_placeholderTemplate>\n  <ng-content select=\"ly-placeholder\"></ng-content>\n  <ng-container *ngIf=\"_control.placeholder\">{{ _control.placeholder }}</ng-container>\n</ng-template>\n",
                         changeDetection: core.ChangeDetectionStrategy.OnPush,
                         encapsulation: core.ViewEncapsulation.None
                     }] }
@@ -857,7 +929,7 @@
             _prefixContainer: [{ type: core.ViewChild, args: ['_prefixContainer',] }],
             _suffixContainer: [{ type: core.ViewChild, args: ['_suffixContainer',] }],
             _fieldsetLegend: [{ type: core.ViewChild, args: ['_fieldsetLegend',] }],
-            _input: [{ type: core.ContentChild, args: [core.forwardRef(function () { return LyNativeControl; }),] }],
+            _control: [{ type: core.ContentChild, args: [core.forwardRef(function () { return LyFieldControlBase; }),] }],
             _placeholderChild: [{ type: core.ContentChild, args: [LyPlaceholder,] }],
             _labelChild: [{ type: core.ContentChild, args: [LyLabel,] }],
             _hintChildren: [{ type: core.ContentChildren, args: [LyHint,] }],
@@ -874,7 +946,8 @@
         return LyField;
     }());
     var LyNativeControl = /** @class */ (function () {
-        function LyNativeControl(_el, _renderer, _field, ngControl, _parentForm, _parentFormGroup) {
+        function LyNativeControl(_theme, _el, _renderer, _field, ngControl, _parentForm, _parentFormGroup) {
+            this._theme = _theme;
             this._el = _el;
             this._renderer = _renderer;
             this._field = _field;
@@ -961,10 +1034,16 @@
                     if (this._field) {
                         if (!val && this._hasDisabledClass) {
                             this._renderer.removeClass(this._field._getHostElement(), this._field.classes.disabled);
+                            if (this._cursorClass) {
+                                this._renderer.addClass(this._field._getHostElement(), this._cursorClass);
+                            }
                             this._hasDisabledClass = undefined;
                         }
                         else if (val) {
                             this._renderer.addClass(this._field._getHostElement(), this._field.classes.disabled);
+                            if (this._cursorClass) {
+                                this._renderer.removeClass(this._field._getHostElement(), this._cursorClass);
+                            }
                             this._hasDisabledClass = true;
                         }
                     }
@@ -999,6 +1078,35 @@
             enumerable: true,
             configurable: true
         });
+        Object.defineProperty(LyNativeControl.prototype, "focused", {
+            get: /**
+             * @return {?}
+             */ function () {
+                return this._focused;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(LyNativeControl.prototype, "empty", {
+            get: /**
+             * @return {?}
+             */ function () {
+                /** @type {?} */
+                var val = this.value;
+                return val === '' || val == null;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(LyNativeControl.prototype, "floatingLabel", {
+            get: /**
+             * @return {?}
+             */ function () {
+                return this.focused || !this.empty || (this._isSelectInput ? this._hasLabelSelectionOption() : false);
+            },
+            enumerable: true,
+            configurable: true
+        });
         /**
          * @return {?}
          */
@@ -1008,6 +1116,35 @@
             function () {
                 var _this = this;
                 this._renderer.setAttribute(this._getHostElement(), 'placeholder', '­');
+                var nativeElement = this._el.nativeElement;
+                if (nativeElement.nodeName.toLowerCase() === 'select') {
+                    this._isSelectInput = true;
+                }
+                // apply class {selectArrow} to `<select> not multiple`
+                if (this._field && nativeElement.type === 'select-one') {
+                    this._renderer.addClass(this._field._getHostElement(), this._field.classes.selectArrow);
+                }
+                // apply style cursor only for input of type text
+                if (nativeElement instanceof HTMLTextAreaElement ||
+                    inputText.some(function (type) { return type === nativeElement.type; })) {
+                    this._cursorClass = this._theme.addSimpleStyle('lyField.text', {
+                        '& {infix}': {
+                            cursor: 'text'
+                        }
+                    }, STYLE_PRIORITY$2, STYLES);
+                }
+                if (this._isSelectInput) {
+                    this._cursorClass = this._theme.addSimpleStyle('lyField.select', {
+                        '& {infix}': {
+                            cursor: 'pointer'
+                        }
+                    }, STYLE_PRIORITY$2, STYLES);
+                }
+                if (this._cursorClass) {
+                    this._renderer.addClass(this._field._getHostElement(), this._cursorClass);
+                }
+                // apply default styles
+                this._renderer.addClass(nativeElement, this._field.classes.inputNative);
                 /** @type {?} */
                 var ngControl = this.ngControl;
                 // update styles on disabled
@@ -1053,6 +1190,20 @@
             function () {
                 this.stateChanges.complete();
             };
+        /** @docs-private */
+        /**
+         * \@docs-private
+         * @param {?} _e
+         * @return {?}
+         */
+        LyNativeControl.prototype.onContainerClick = /**
+         * \@docs-private
+         * @param {?} _e
+         * @return {?}
+         */
+            function (_e) {
+                this._getHostElement().focus();
+            };
         /** Focuses the input. */
         /**
          * Focuses the input.
@@ -1072,15 +1223,34 @@
             function () {
                 return this._el.nativeElement;
             };
+        /**
+         * @private
+         * @return {?}
+         */
+        LyNativeControl.prototype._hasLabelSelectionOption = /**
+         * @private
+         * @return {?}
+         */
+            function () {
+                /** @type {?} */
+                var el = ( /** @type {?} */(this._getHostElement()));
+                /** @type {?} */
+                var option = el.selectedOptions ? el.selectedOptions.item(0) : null;
+                return option ? !!option.label : false;
+            };
         LyNativeControl.decorators = [
             { type: core.Directive, args: [{
-                        selector: 'input[lyInput], textarea[lyInput], input[lyNativeControl], textarea[lyNativeControl]',
-                        exportAs: 'LyNativeControl'
+                        selector: 'input[lyInput], textarea[lyInput], input[lyNativeControl], textarea[lyNativeControl], select[lyNativeControl]',
+                        exportAs: 'LyNativeControl',
+                        providers: [
+                            { provide: LyFieldControlBase, useExisting: LyNativeControl }
+                        ]
                     },] }
         ];
         /** @nocollapse */
         LyNativeControl.ctorParameters = function () {
             return [
+                { type: ui.LyTheme2 },
                 { type: core.ElementRef },
                 { type: core.Renderer2 },
                 { type: LyField, decorators: [{ type: core.Optional }] },
@@ -1148,7 +1318,9 @@
 
     exports.LyField = LyField;
     exports.LyNativeControl = LyNativeControl;
+    exports.LyFieldControlBase = LyFieldControlBase;
     exports.LyFieldModule = LyFieldModule;
+    exports.STYLES = STYLES;
     exports.ɵf = LyError;
     exports.ɵc = LyHint;
     exports.ɵb = LyLabel;

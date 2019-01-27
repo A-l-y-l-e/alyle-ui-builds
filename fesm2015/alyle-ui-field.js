@@ -34,6 +34,11 @@ LyPlaceholder.decorators = [
  */
 /** @type {?} */
 const STYLES = (theme) => {
+    /** @type {?} */
+    const selectionStyle = {
+        backgroundColor: `${theme.warn.default} !important`,
+        color: `${theme.warn.contrast} !important`
+    };
     return {
         root: {
             display: 'inline-block',
@@ -79,7 +84,9 @@ const STYLES = (theme) => {
             display: 'inline-flex',
             position: 'relative',
             alignItems: 'baseline',
-            width: '100%'
+            minWidth: 0,
+            width: '180px',
+            flex: '1 0'
         },
         suffix: {
             maxHeight: '2em',
@@ -112,7 +119,35 @@ const STYLES = (theme) => {
             backgroundColor: 'transparent',
             color: 'inherit',
             font: 'inherit',
-            width: '100%'
+            width: '100%',
+            'select&': {
+                '-moz-appearance': 'none',
+                '-webkit-appearance': 'none',
+                position: 'relative',
+                backgroundColor: 'transparent',
+                display: 'inline-flex',
+                boxSizing: 'border-box',
+                paddingAfter: '1em',
+                'option:not([disabled])': {
+                    color: 'initial'
+                },
+                'optgroup:not([disabled])': {
+                    color: 'initial'
+                }
+            },
+            'select&::-ms-expand': {
+                display: 'none'
+            },
+            'select&::-moz-focus-inner': {
+                border: 0
+            },
+            'select&:not(:disabled)': {
+                cursor: 'pointer'
+            },
+            'select&::-ms-value': {
+                color: 'inherit',
+                background: '0 0'
+            }
         },
         hintContainer: {
             minHeight: '1.25em',
@@ -133,7 +168,7 @@ const STYLES = (theme) => {
         hint: null,
         error: null,
         errorState: {
-            '& {label}, & {hintContainer}': {
+            '& {label}, & {hintContainer}, &{selectArrow} {infix}:after': {
                 color: `${theme.warn.default}!important`
             },
             '& {fieldset}, & {container}:after': {
@@ -148,13 +183,32 @@ const STYLES = (theme) => {
             },
             '& {labelSpan}': {
                 animation: `{shake} ${theme.animations.durations.complex}ms ${theme.animations.curves.deceleration}`
-            }
+            },
+            '& {inputNative}::selection': selectionStyle,
+            '& {inputNative}::-moz-selection': selectionStyle
         },
         hintAfter: {
             marginBefore: 'auto'
         },
         hintBefore: {
             marginAfter: 'auto'
+        },
+        selectArrow: {
+            '{infix}': {
+                '&:after': {
+                    position: 'absolute',
+                    content: `\'\'`,
+                    width: 0,
+                    height: 0,
+                    borderLeft: '0.3125em solid transparent',
+                    borderRight: '0.3125em solid transparent',
+                    borderTop: '0.3125em solid',
+                    top: '50%',
+                    after: 0,
+                    marginTop: '-0.15625em',
+                    pointerEvents: 'none'
+                }
+            }
         },
         $keyframes: {
             shake: {
@@ -316,6 +370,18 @@ LyError.ctorParameters = () => [
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
+ * An interface which allows a control to work inside of a `LyField`.
+ * @abstract
+ * @template T
+ */
+class LyFieldControlBase {
+}
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/**
  * LyField
  * @type {?}
  */
@@ -402,7 +468,7 @@ class LyField {
      * @return {?}
      */
     get errorState() {
-        return this._input.errorState;
+        return this._control.errorState;
     }
     /**
      * @param {?} val
@@ -452,8 +518,10 @@ class LyField {
             this._colorClass = this._theme.addStyle(`ly-field.color:${val}`, (theme) => {
                 /** @type {?} */
                 const color = theme.colorOf(val);
+                /** @type {?} */
+                const contrast = theme.colorOf(`${val}:contrast`);
                 return {
-                    [`&.${this.classes.focused} .${this.classes.container}:after`]: {
+                    [`&.${this.classes.focused} .${this.classes.container}:after, &{focused}{selectArrow} {infix}:after`]: {
                         color
                     },
                     [`&.${this.classes.focused} .${this.classes.fieldset}`]: {
@@ -464,9 +532,17 @@ class LyField {
                     },
                     [`& .${this.classes.inputNative}`]: {
                         caretColor: color
+                    },
+                    '& {inputNative}::selection': {
+                        backgroundColor: color,
+                        color: contrast
+                    },
+                    '& {inputNative}::-moz-selection': {
+                        backgroundColor: color,
+                        color: contrast
                     }
                 };
-            }, this._el.nativeElement, this._colorClass, STYLE_PRIORITY$2 + 1);
+            }, this._el.nativeElement, this._colorClass, STYLE_PRIORITY$2 + 1, STYLES);
         }
     }
     /**
@@ -535,13 +611,12 @@ class LyField {
      * @return {?}
      */
     ngAfterContentInit() {
-        this._renderer.addClass(this._input._getHostElement(), this.classes.inputNative);
-        this._input.stateChanges.subscribe(() => {
+        this._control.stateChanges.subscribe(() => {
             this._updateFloatingLabel();
             this._markForCheck();
         });
         /** @type {?} */
-        const ngControl = this._input.ngControl;
+        const ngControl = this._control.ngControl;
         // Run change detection if the value changes.
         if (ngControl && ngControl.valueChanges) {
             ngControl.valueChanges.subscribe(() => {
@@ -582,16 +657,6 @@ class LyField {
                     });
                 }
             });
-            /** @type {?} */
-            const nativeElement = this._input._getHostElement();
-            if (nativeElement instanceof HTMLTextAreaElement ||
-                inputText.some(type => type === nativeElement.type)) {
-                this._theme.addStyle('field.text', {
-                    '& {container}': {
-                        cursor: 'text'
-                    }
-                }, this._el.nativeElement, null, null, STYLES);
-            }
         }
         // this fix with of label
         this._renderer.addClass(this._el.nativeElement, this.classes.animations);
@@ -657,7 +722,7 @@ class LyField {
      * @return {?}
      */
     _isLabel() {
-        if (this._input.placeholder && !this._labelChild) {
+        if (this._control.placeholder && !this._labelChild) {
             return true;
         }
         else if (this._labelChild || this._placeholderChild) {
@@ -670,7 +735,7 @@ class LyField {
      * @return {?}
      */
     _isPlaceholder() {
-        if ((this._labelChild && this._input.placeholder) || (this._labelChild && this._placeholderChild)) {
+        if ((this._labelChild && this._control.placeholder) || (this._labelChild && this._placeholderChild)) {
             return true;
         }
         return false;
@@ -681,7 +746,7 @@ class LyField {
      */
     _isEmpty() {
         /** @type {?} */
-        const val = this._input.value;
+        const val = this._control.value;
         return val === '' || val === null || val === undefined;
     }
     /**
@@ -691,7 +756,7 @@ class LyField {
     _updateFloatingLabel() {
         if (this._labelContainer2) {
             /** @type {?} */
-            const isFloating = this._input._focused || !this._isEmpty() || this.floatingLabel;
+            const isFloating = this._control.floatingLabel || this.floatingLabel;
             if (this._isFloating !== isFloating) {
                 this._isFloating = isFloating;
                 if (isFloating) {
@@ -704,7 +769,7 @@ class LyField {
                 }
             }
         }
-        if (this._input._focused) {
+        if (this._control.focused) {
             this._renderer.addClass(this._el.nativeElement, this.classes.focused);
         }
         else {
@@ -729,7 +794,7 @@ LyField.decorators = [
     { type: Component, args: [{
                 selector: 'ly-field',
                 exportAs: 'lyFormField',
-                template: "<div [className]=\"classes.container\" (click)=\"_input.focus()\">\n  <fieldset [className]=\"classes.fieldset\"><legend #_fieldsetLegend [className]=\"classes.fieldsetSpan\"></legend></fieldset>\n  <div [className]=\"classes.prefix\" *ngIf=\"_prefixChildren.length\" #_prefixContainer>\n    <ng-content select=\"[lyPrefix]\"></ng-content>\n  </div>\n  <div [className]=\"classes.infix\">\n    <ng-content></ng-content>\n    <div [className]=\"classes.label\" *ngIf=\"_isLabel()\" #_labelContainer2>\n      <span #_labelSpan [className]=\"classes.labelSpan\">\n        <ng-container *ngTemplateOutlet=\"_labelTemplate\"></ng-container>\n      </span>\n    </div>\n    <div [className]=\"classes.placeholder\" *ngIf=\"_isPlaceholder() && _isEmpty() && (_input._focused || floatingLabel)\">\n      <ng-container *ngTemplateOutlet=\"_placeholderTemplate\"></ng-container>\n    </div>\n  </div>\n  <div [className]=\"classes.suffix\" *ngIf=\"_suffixChildren.length\" #_suffixContainer>\n    <ng-content select=\"[lySuffix]\"></ng-content>\n  </div>\n</div>\n\n<div [className]=\"classes.hintContainer\">\n  <div *ngIf=\"_hintChildren.length && (persistentHint || errorState || _input._focused)\">\n    <span *ngIf=\"_input.errorState\">\n      <ng-content select=\"ly-error\"></ng-content>\n    </span>\n    <ng-content select=\"ly-hint\"></ng-content>\n  </div>\n</div>\n\n<ng-template #_labelTemplate>\n  <ng-content select=\"ly-label\"></ng-content>\n  <ng-container *ngIf=\"!_labelChild\">\n    <ng-template *ngTemplateOutlet=\"_placeholderTemplate\"></ng-template>\n  </ng-container>\n</ng-template>\n\n<ng-template #_placeholderTemplate>\n  <ng-content select=\"ly-placeholder\"></ng-content>\n  <ng-container *ngIf=\"_input.placeholder\">{{ _input.placeholder }}</ng-container>\n</ng-template>\n",
+                template: "<div [className]=\"classes.container\" (click)=\"_control.onContainerClick && _control.onContainerClick($event)\">\n  <fieldset [className]=\"classes.fieldset\"><legend #_fieldsetLegend [className]=\"classes.fieldsetSpan\"></legend></fieldset>\n  <div [className]=\"classes.prefix\" *ngIf=\"_prefixChildren.length\" #_prefixContainer>\n    <ng-content select=\"[lyPrefix]\"></ng-content>\n  </div>\n  <div [className]=\"classes.infix\">\n    <ng-content></ng-content>\n    <div [className]=\"classes.label\" *ngIf=\"_isLabel()\" #_labelContainer2>\n      <span #_labelSpan [className]=\"classes.labelSpan\">\n        <ng-container *ngTemplateOutlet=\"_labelTemplate\"></ng-container>\n      </span>\n    </div>\n    <div [className]=\"classes.placeholder\" *ngIf=\"_isPlaceholder() && _control.empty && (_control.floatingLabel || floatingLabel)\">\n      <ng-container *ngTemplateOutlet=\"_placeholderTemplate\"></ng-container>\n    </div>\n  </div>\n  <div [className]=\"classes.suffix\" *ngIf=\"_suffixChildren.length\" #_suffixContainer>\n    <ng-content select=\"[lySuffix]\"></ng-content>\n  </div>\n</div>\n\n<div [className]=\"classes.hintContainer\">\n  <div *ngIf=\"_hintChildren.length && (persistentHint || _control.errorState || _control.focused)\">\n    <span *ngIf=\"_control.errorState\">\n      <ng-content select=\"ly-error\"></ng-content>\n    </span>\n    <ng-content select=\"ly-hint\"></ng-content>\n  </div>\n</div>\n\n<ng-template #_labelTemplate>\n  <ng-content select=\"ly-label\"></ng-content>\n  <ng-container *ngIf=\"!_labelChild\">\n    <ng-template *ngTemplateOutlet=\"_placeholderTemplate\"></ng-template>\n  </ng-container>\n</ng-template>\n\n<ng-template #_placeholderTemplate>\n  <ng-content select=\"ly-placeholder\"></ng-content>\n  <ng-container *ngIf=\"_control.placeholder\">{{ _control.placeholder }}</ng-container>\n</ng-template>\n",
                 changeDetection: ChangeDetectionStrategy.OnPush,
                 encapsulation: ViewEncapsulation.None
             }] }
@@ -750,7 +815,7 @@ LyField.propDecorators = {
     _prefixContainer: [{ type: ViewChild, args: ['_prefixContainer',] }],
     _suffixContainer: [{ type: ViewChild, args: ['_suffixContainer',] }],
     _fieldsetLegend: [{ type: ViewChild, args: ['_fieldsetLegend',] }],
-    _input: [{ type: ContentChild, args: [forwardRef(() => LyNativeControl),] }],
+    _control: [{ type: ContentChild, args: [forwardRef(() => LyFieldControlBase),] }],
     _placeholderChild: [{ type: ContentChild, args: [LyPlaceholder,] }],
     _labelChild: [{ type: ContentChild, args: [LyLabel,] }],
     _hintChildren: [{ type: ContentChildren, args: [LyHint,] }],
@@ -766,6 +831,7 @@ LyField.propDecorators = {
 };
 class LyNativeControl {
     /**
+     * @param {?} _theme
      * @param {?} _el
      * @param {?} _renderer
      * @param {?} _field
@@ -773,7 +839,8 @@ class LyNativeControl {
      * @param {?} _parentForm
      * @param {?} _parentFormGroup
      */
-    constructor(_el, _renderer, _field, ngControl, _parentForm, _parentFormGroup) {
+    constructor(_theme, _el, _renderer, _field, ngControl, _parentForm, _parentFormGroup) {
+        this._theme = _theme;
         this._el = _el;
         this._renderer = _renderer;
         this._field = _field;
@@ -839,10 +906,16 @@ class LyNativeControl {
             if (this._field) {
                 if (!val && this._hasDisabledClass) {
                     this._renderer.removeClass(this._field._getHostElement(), this._field.classes.disabled);
+                    if (this._cursorClass) {
+                        this._renderer.addClass(this._field._getHostElement(), this._cursorClass);
+                    }
                     this._hasDisabledClass = undefined;
                 }
                 else if (val) {
                     this._renderer.addClass(this._field._getHostElement(), this._field.classes.disabled);
+                    if (this._cursorClass) {
+                        this._renderer.removeClass(this._field._getHostElement(), this._cursorClass);
+                    }
                     this._hasDisabledClass = true;
                 }
             }
@@ -882,8 +955,57 @@ class LyNativeControl {
     /**
      * @return {?}
      */
+    get focused() {
+        return this._focused;
+    }
+    /**
+     * @return {?}
+     */
+    get empty() {
+        /** @type {?} */
+        const val = this.value;
+        return val === '' || val == null;
+    }
+    /**
+     * @return {?}
+     */
+    get floatingLabel() {
+        return this.focused || !this.empty || (this._isSelectInput ? this._hasLabelSelectionOption() : false);
+    }
+    /**
+     * @return {?}
+     */
     ngOnInit() {
         this._renderer.setAttribute(this._getHostElement(), 'placeholder', '­');
+        const { nativeElement } = this._el;
+        if (nativeElement.nodeName.toLowerCase() === 'select') {
+            this._isSelectInput = true;
+        }
+        // apply class {selectArrow} to `<select> not multiple`
+        if (this._field && nativeElement.type === 'select-one') {
+            this._renderer.addClass(this._field._getHostElement(), this._field.classes.selectArrow);
+        }
+        // apply style cursor only for input of type text
+        if (nativeElement instanceof HTMLTextAreaElement ||
+            inputText.some(type => type === nativeElement.type)) {
+            this._cursorClass = this._theme.addSimpleStyle('lyField.text', {
+                '& {infix}': {
+                    cursor: 'text'
+                }
+            }, STYLE_PRIORITY$2, STYLES);
+        }
+        if (this._isSelectInput) {
+            this._cursorClass = this._theme.addSimpleStyle('lyField.select', {
+                '& {infix}': {
+                    cursor: 'pointer'
+                }
+            }, STYLE_PRIORITY$2, STYLES);
+        }
+        if (this._cursorClass) {
+            this._renderer.addClass(this._field._getHostElement(), this._cursorClass);
+        }
+        // apply default styles
+        this._renderer.addClass(nativeElement, this._field.classes.inputNative);
         /** @type {?} */
         const ngControl = this.ngControl;
         // update styles on disabled
@@ -924,6 +1046,14 @@ class LyNativeControl {
         this.stateChanges.complete();
     }
     /**
+     * \@docs-private
+     * @param {?} _e
+     * @return {?}
+     */
+    onContainerClick(_e) {
+        this._getHostElement().focus();
+    }
+    /**
      * Focuses the input.
      * @return {?}
      */
@@ -934,15 +1064,30 @@ class LyNativeControl {
     _getHostElement() {
         return this._el.nativeElement;
     }
+    /**
+     * @private
+     * @return {?}
+     */
+    _hasLabelSelectionOption() {
+        /** @type {?} */
+        const el = (/** @type {?} */ (this._getHostElement()));
+        /** @type {?} */
+        const option = el.selectedOptions ? el.selectedOptions.item(0) : null;
+        return option ? !!option.label : false;
+    }
 }
 LyNativeControl.decorators = [
     { type: Directive, args: [{
-                selector: 'input[lyInput], textarea[lyInput], input[lyNativeControl], textarea[lyNativeControl]',
-                exportAs: 'LyNativeControl'
+                selector: 'input[lyInput], textarea[lyInput], input[lyNativeControl], textarea[lyNativeControl], select[lyNativeControl]',
+                exportAs: 'LyNativeControl',
+                providers: [
+                    { provide: LyFieldControlBase, useExisting: LyNativeControl }
+                ]
             },] }
 ];
 /** @nocollapse */
 LyNativeControl.ctorParameters = () => [
+    { type: LyTheme2 },
     { type: ElementRef },
     { type: Renderer2 },
     { type: LyField, decorators: [{ type: Optional }] },
@@ -1002,6 +1147,6 @@ LyFieldModule.decorators = [
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { LyField, LyNativeControl, LyFieldModule, LyError as ɵf, LyHint as ɵc, LyLabel as ɵb, LyPlaceholder as ɵa, LyPrefix as ɵd, LySuffix as ɵe };
+export { LyField, LyNativeControl, LyFieldControlBase, LyFieldModule, STYLES, LyError as ɵf, LyHint as ɵc, LyLabel as ɵb, LyPlaceholder as ɵa, LyPrefix as ɵd, LySuffix as ɵe };
 
 //# sourceMappingURL=alyle-ui-field.js.map
