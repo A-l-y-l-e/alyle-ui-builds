@@ -2,7 +2,7 @@ import { animate, keyframes, style, transition, trigger } from '@angular/animati
 import { FormGroupDirective, NgControl, NgForm } from '@angular/forms';
 import { LyField, LyFieldControlBase, STYLES } from '@alyle/ui/field';
 import { Subject } from 'rxjs';
-import { take } from 'rxjs/operators';
+import { take, takeUntil } from 'rxjs/operators';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, forwardRef, Host, HostListener, Input, Optional, Renderer2, Self, TemplateRef, ViewChild, NgZone, ContentChildren, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LyOverlay, LySelectionModel, LyTheme2, shadowBuilder, toBoolean, Positioning, mixinStyleUpdater, mixinBg, mixinColor, mixinRaised, mixinDisabled, mixinOutlined, mixinElevation, mixinShadowColor, mixinDisableRipple, mixinTabIndex, LyRippleService, XPosition, YPosition, Dir, LyCommonModule } from '@alyle/ui';
@@ -22,7 +22,7 @@ const STYLES$1 = (theme) => ({
         display: 'block',
         paddingAfter: '1em',
         minWidth: '3em',
-        height: '1.125em',
+        minHeight: '1.5em',
         '-webkit-tap-highlight-color': 'transparent'
     },
     container: {
@@ -84,17 +84,17 @@ const ANIMATIONS = [
             animate('125ms cubic-bezier(0, 0, 0.2, 1)', keyframes([
                 style({
                     opacity: 0,
-                    transform: 'scale(0.8)'
+                    transform: 'scaleY(0.8)'
                 }),
                 style({
                     opacity: 1,
-                    transform: 'scale(1)'
+                    transform: 'scaleY(1)'
                 })
             ]))
         ]),
     ]),
     trigger('selectLeave', [
-        transition('* => void', animate('150ms linear', style({ opacity: 0 })))
+        transition('* => void', animate('100ms linear', style({ opacity: 0 })))
     ])
 ];
 /**
@@ -144,6 +144,10 @@ class LySelect extends LySelectMixinBase {
         this._valueKeyFn = getValue;
         this._focused = false;
         this.errorState = false;
+        /**
+         * Emits whenever the component is destroyed.
+         */
+        this._destroy = new Subject();
         /**
          * The registered callback function called when a change event occurs on the input element.
          */
@@ -395,7 +399,7 @@ class LySelect extends LySelectMixinBase {
         const ngControl = this.ngControl;
         // update styles on disabled
         if (ngControl && ngControl.statusChanges) {
-            ngControl.statusChanges.subscribe(() => {
+            ngControl.statusChanges.pipe(takeUntil(this._destroy)).subscribe(() => {
                 this.disabled = !!ngControl.disabled;
             });
         }
@@ -444,7 +448,7 @@ class LySelect extends LySelectMixinBase {
      */
     ngAfterViewInit() {
         if (this.options) {
-            this.options.changes.subscribe(() => {
+            this.options.changes.pipe(takeUntil(this._destroy)).subscribe(() => {
                 /** @type {?} */
                 const selecteds = [];
                 this.options.forEach(option => {
@@ -464,6 +468,8 @@ class LySelect extends LySelectMixinBase {
      * @return {?}
      */
     ngOnDestroy() {
+        this._destroy.next();
+        this._destroy.complete();
         this.stateChanges.complete();
         if (this._overlayRef) {
             this._overlayRef.destroy();

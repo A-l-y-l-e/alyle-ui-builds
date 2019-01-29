@@ -8,7 +8,7 @@ export declare const STYLES: (theme: ThemeVariables) => {
         display: string;
         paddingAfter: string;
         minWidth: string;
-        height: string;
+        minHeight: string;
         '-webkit-tap-highlight-color': string;
     };
     container: {
@@ -100,6 +100,8 @@ export declare class LySelect extends LySelectMixinBase implements ControlValueA
     _focused: boolean;
     errorState: boolean;
     private _cursorClass;
+    /** Emits whenever the component is destroyed. */
+    private readonly _destroy;
     templateRef: TemplateRef<any>;
     /** @internal */
     _options: QueryList<LyOption>;

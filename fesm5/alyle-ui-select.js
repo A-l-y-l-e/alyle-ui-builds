@@ -3,7 +3,7 @@ import { animate, keyframes, style, transition, trigger } from '@angular/animati
 import { FormGroupDirective, NgControl, NgForm } from '@angular/forms';
 import { LyField, LyFieldControlBase, STYLES } from '@alyle/ui/field';
 import { Subject } from 'rxjs';
-import { take } from 'rxjs/operators';
+import { take, takeUntil } from 'rxjs/operators';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, forwardRef, Host, HostListener, Input, Optional, Renderer2, Self, TemplateRef, ViewChild, NgZone, ContentChildren, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LyOverlay, LySelectionModel, LyTheme2, shadowBuilder, toBoolean, Positioning, mixinStyleUpdater, mixinBg, mixinColor, mixinRaised, mixinDisabled, mixinOutlined, mixinElevation, mixinShadowColor, mixinDisableRipple, mixinTabIndex, LyRippleService, XPosition, YPosition, Dir, LyCommonModule } from '@alyle/ui';
@@ -23,7 +23,7 @@ var STYLES$1 = function (theme) { return ({
         display: 'block',
         paddingAfter: '1em',
         minWidth: '3em',
-        height: '1.125em',
+        minHeight: '1.5em',
         '-webkit-tap-highlight-color': 'transparent'
     },
     container: {
@@ -85,17 +85,17 @@ var ANIMATIONS = [
             animate('125ms cubic-bezier(0, 0, 0.2, 1)', keyframes([
                 style({
                     opacity: 0,
-                    transform: 'scale(0.8)'
+                    transform: 'scaleY(0.8)'
                 }),
                 style({
                     opacity: 1,
-                    transform: 'scale(1)'
+                    transform: 'scaleY(1)'
                 })
             ]))
         ]),
     ]),
     trigger('selectLeave', [
-        transition('* => void', animate('150ms linear', style({ opacity: 0 })))
+        transition('* => void', animate('100ms linear', style({ opacity: 0 })))
     ])
 ];
 /**
@@ -140,6 +140,10 @@ var LySelect = /** @class */ (function (_super) {
         _this._valueKeyFn = getValue;
         _this._focused = false;
         _this.errorState = false;
+        /**
+         * Emits whenever the component is destroyed.
+         */
+        _this._destroy = new Subject();
         /**
          * The registered callback function called when a change event occurs on the input element.
          */
@@ -457,7 +461,7 @@ var LySelect = /** @class */ (function (_super) {
         var ngControl = this.ngControl;
         // update styles on disabled
         if (ngControl && ngControl.statusChanges) {
-            ngControl.statusChanges.subscribe(function () {
+            ngControl.statusChanges.pipe(takeUntil(this._destroy)).subscribe(function () {
                 _this.disabled = !!ngControl.disabled;
             });
         }
@@ -517,7 +521,7 @@ var LySelect = /** @class */ (function (_super) {
     function () {
         var _this = this;
         if (this.options) {
-            this.options.changes.subscribe(function () {
+            this.options.changes.pipe(takeUntil(this._destroy)).subscribe(function () {
                 /** @type {?} */
                 var selecteds = [];
                 _this.options.forEach(function (option) {
@@ -540,6 +544,8 @@ var LySelect = /** @class */ (function (_super) {
      * @return {?}
      */
     function () {
+        this._destroy.next();
+        this._destroy.complete();
         this.stateChanges.complete();
         if (this._overlayRef) {
             this._overlayRef.destroy();

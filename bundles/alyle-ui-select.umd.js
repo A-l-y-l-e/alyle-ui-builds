@@ -77,7 +77,7 @@
                 display: 'block',
                 paddingAfter: '1em',
                 minWidth: '3em',
-                height: '1.125em',
+                minHeight: '1.5em',
                 '-webkit-tap-highlight-color': 'transparent'
             },
             container: {
@@ -140,17 +140,17 @@
                 animations.animate('125ms cubic-bezier(0, 0, 0.2, 1)', animations.keyframes([
                     animations.style({
                         opacity: 0,
-                        transform: 'scale(0.8)'
+                        transform: 'scaleY(0.8)'
                     }),
                     animations.style({
                         opacity: 1,
-                        transform: 'scale(1)'
+                        transform: 'scaleY(1)'
                     })
                 ]))
             ]),
         ]),
         animations.trigger('selectLeave', [
-            animations.transition('* => void', animations.animate('150ms linear', animations.style({ opacity: 0 })))
+            animations.transition('* => void', animations.animate('100ms linear', animations.style({ opacity: 0 })))
         ])
     ];
     /**
@@ -194,6 +194,10 @@
             _this._valueKeyFn = getValue;
             _this._focused = false;
             _this.errorState = false;
+            /**
+             * Emits whenever the component is destroyed.
+             */
+            _this._destroy = new rxjs.Subject();
             /**
              * The registered callback function called when a change event occurs on the input element.
              */
@@ -494,7 +498,7 @@
                 var ngControl = this.ngControl;
                 // update styles on disabled
                 if (ngControl && ngControl.statusChanges) {
-                    ngControl.statusChanges.subscribe(function () {
+                    ngControl.statusChanges.pipe(operators.takeUntil(this._destroy)).subscribe(function () {
                         _this.disabled = !!ngControl.disabled;
                     });
                 }
@@ -554,7 +558,7 @@
             function () {
                 var _this = this;
                 if (this.options) {
-                    this.options.changes.subscribe(function () {
+                    this.options.changes.pipe(operators.takeUntil(this._destroy)).subscribe(function () {
                         /** @type {?} */
                         var selecteds = [];
                         _this.options.forEach(function (option) {
@@ -577,6 +581,8 @@
          * @return {?}
          */
             function () {
+                this._destroy.next();
+                this._destroy.complete();
                 this.stateChanges.complete();
                 if (this._overlayRef) {
                     this._overlayRef.destroy();

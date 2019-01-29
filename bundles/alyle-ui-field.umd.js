@@ -77,11 +77,11 @@
                 display: 'inline-block',
                 position: 'relative',
                 marginTop: '1em',
-                lineHeight: 1.125,
+                lineHeight: 1.5,
                 '& {hint}, & {error}': {
                     display: 'block',
                     fontSize: '.75em',
-                    marginTop: '.5em'
+                    marginTop: '.25em'
                 },
             },
             animations: {
@@ -184,6 +184,7 @@
             },
             hintContainer: {
                 minHeight: '1.25em',
+                lineHeight: '1.25',
                 '>div': {
                     display: 'flex',
                     flex: '1 0 auto',
@@ -442,6 +443,12 @@
                 '&{disabled} {container}:after': {
                     borderBottomStyle: 'dotted',
                     borderColor: 'inherit'
+                },
+                'textarea{inputNative}': {
+                    margin: '0.25em 0'
+                },
+                '{inputNative}:not(textarea)': {
+                    padding: '0.25em 0'
                 }
             },
             container: {
@@ -461,13 +468,10 @@
                 color: 'currentColor'
             },
             label: {
-                margin: '0.4375em 0'
+                margin: '0.25em 0'
             },
             placeholder: {
-                margin: '0.4375em 0'
-            },
-            input: {
-                margin: '0.4375em 0'
+                margin: '0.25em 0'
             },
             floatingLabel: {
                 transform: 'translateY(-1.25em)'

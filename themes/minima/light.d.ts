@@ -65,6 +65,12 @@ export declare class MinimaLight extends MinimaBase implements ThemeConfig {
                         borderWidth: string;
                         borderColor: string;
                     };
+                    'textarea{inputNative}': {
+                        margin: string;
+                    };
+                    '{inputNative}:not(textarea)': {
+                        padding: string;
+                    };
                 };
                 container: {
                     padding: string;
@@ -91,9 +97,6 @@ export declare class MinimaLight extends MinimaBase implements ThemeConfig {
                         padding: string;
                     };
                 };
-                input: {
-                    margin: string;
-                };
                 label: {
                     margin: string;
                 };
@@ -111,6 +114,12 @@ export declare class MinimaLight extends MinimaBase implements ThemeConfig {
                 root: {
                     '&:not({focused}):not({disabled}) {container}:hover:after': {
                         borderBottomWidth: string;
+                    };
+                    'textarea{inputNative}': {
+                        margin: string;
+                    };
+                    '{inputNative}:not(textarea)': {
+                        padding: string;
                     };
                 };
                 container: {
@@ -134,9 +143,6 @@ export declare class MinimaLight extends MinimaBase implements ThemeConfig {
                 };
                 containerLabelHover: {
                     color: string;
-                };
-                input: {
-                    margin: string;
                 };
                 placeholder: {
                     margin: string;

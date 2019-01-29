@@ -162,6 +162,7 @@ export declare const STYLES: (theme: ThemeVariables) => {
     };
     hintContainer: {
         minHeight: string;
+        lineHeight: string;
         '>div': {
             display: string;
             flex: string;

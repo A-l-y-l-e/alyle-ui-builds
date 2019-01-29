@@ -15,6 +15,12 @@ export declare const field: {
                     borderWidth: string;
                     borderColor: string;
                 };
+                'textarea{inputNative}': {
+                    margin: string;
+                };
+                '{inputNative}:not(textarea)': {
+                    padding: string;
+                };
             };
             container: {
                 padding: string;
@@ -41,9 +47,6 @@ export declare const field: {
                     padding: string;
                 };
             };
-            input: {
-                margin: string;
-            };
             label: {
                 margin: string;
             };
@@ -61,6 +64,12 @@ export declare const field: {
             root: {
                 '&:not({focused}):not({disabled}) {container}:hover:after': {
                     borderBottomWidth: string;
+                };
+                'textarea{inputNative}': {
+                    margin: string;
+                };
+                '{inputNative}:not(textarea)': {
+                    padding: string;
                 };
             };
             container: {
@@ -84,9 +93,6 @@ export declare const field: {
             };
             containerLabelHover: {
                 color: string;
-            };
-            input: {
-                margin: string;
             };
             placeholder: {
                 margin: string;
