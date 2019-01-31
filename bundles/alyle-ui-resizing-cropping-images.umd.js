@@ -96,6 +96,15 @@
     };
     ImgResolution[ImgResolution.Default] = 'Default';
     ImgResolution[ImgResolution.OriginalImage] = 'OriginalImage';
+    /** @enum {number} */
+    var ImgCropperError = {
+        /** The loaded image exceeds the size limit set. */
+        Size: 0,
+        /** The file loaded is not image. */
+        Type: 1,
+    };
+    ImgCropperError[ImgCropperError.Size] = 'Size';
+    ImgCropperError[ImgCropperError.Type] = 'Type';
     /** @type {?} */
     var CONFIG_DEFAULT = ( /** @type {?} */({
         width: 250,
@@ -143,6 +152,11 @@
              * @return {?}
              */ function (val) {
                 this._config = ui.mergeDeep({}, CONFIG_DEFAULT, val);
+                /** @type {?} */
+                var maxFileSize = this._config.maxFileSize;
+                if (maxFileSize) {
+                    this.maxFileSize = maxFileSize;
+                }
             },
             enumerable: true,
             configurable: true
@@ -271,19 +285,38 @@
                     return;
                 }
                 /** @type {?} */
+                var fileSize = ( /** @type {?} */(_img.files))[0].size;
+                /** @type {?} */
+                var fileName = _img.value.replace(/.*(\/|\\)/, '');
+                if (this.maxFileSize && fileSize > this.maxFileSize) {
+                    /** @type {?} */
+                    var cropEvent = {
+                        name: fileName,
+                        type: ( /** @type {?} */(_img.files))[0].type,
+                        size: fileSize,
+                        error: ImgCropperError.Size
+                    };
+                    this.clean();
+                    this.error.emit(( /** @type {?} */(cropEvent)));
+                    return;
+                }
+                /** @type {?} */
                 var fileReader = new FileReader();
-                this._fileName = _img.value.replace(/.*(\/|\\)/, '');
                 /** @type {?} */
                 var listener = rxjs.fromEvent(fileReader, 'load')
                     .pipe(operators.take(1))
                     .subscribe(function (loadEvent) {
                     /** @type {?} */
                     var originalImageUrl = ( /** @type {?} */((( /** @type {?} */(loadEvent.target))).result));
-                    _this.setImageUrl(originalImageUrl);
-                    /** Set type */
+                    // Set type
                     if (!_this.config.type) {
                         _this._defaultType = ( /** @type {?} */(_img.files))[0].type;
                     }
+                    // set name
+                    _this._fileName = fileName;
+                    // set file size
+                    _this._sizeInBytes = ( /** @type {?} */(_img.files))[0].size;
+                    _this.setImageUrl(originalImageUrl);
                     _this.cd.markForCheck();
                     _this._listeners.delete(listener);
                 });
@@ -562,7 +595,6 @@
                     this._scal3Fix = undefined;
                     this._rotation = 0;
                     this._minScale = undefined;
-                    this._defaultType = undefined;
                     this._isLoadedImg = false;
                     this.isLoaded = false;
                     this.isCropped = false;
@@ -628,20 +660,23 @@
                 this._originalImgBase64 = src;
                 /** @type {?} */
                 var img = new Image;
+                /** @type {?} */
+                var fileSize = this._sizeInBytes;
+                /** @type {?} */
+                var fileName = this._fileName;
+                /** @type {?} */
+                var defaultType = this._defaultType;
                 img.crossOrigin = 'anonymous';
                 /** @type {?} */
                 var cropEvent = {
-                    name: this._fileName,
-                    type: this._defaultType,
-                    originalDataURL: src,
+                    name: fileName,
+                    type: defaultType,
+                    originalDataURL: src
                 };
                 img.src = src;
-                /** @type {?} */
-                var errorListen = rxjs.fromEvent(img, 'error').pipe(operators.take(1)).subscribe(function () {
-                    _this.error.emit(cropEvent);
-                    _this._listeners.delete(errorListen);
-                });
-                this._listeners.add(errorListen);
+                if (fileSize) {
+                    cropEvent.size = fileSize;
+                }
                 /** @type {?} */
                 var loadListen = rxjs.fromEvent(img, 'load')
                     .pipe(operators.take(1)).subscribe(function () {
@@ -669,8 +704,21 @@
                         });
                     });
                     _this._listeners.delete(loadListen);
+                    _this.ngOnDestroy();
                 });
                 this._listeners.add(loadListen);
+                /** @type {?} */
+                var errorListen = rxjs.fromEvent(img, 'error').pipe(operators.take(1)).subscribe(function () {
+                    (( /** @type {?} */(cropEvent))).error = ImgCropperError.Type;
+                    _this.error.emit(( /** @type {?} */(cropEvent)));
+                    _this._listeners.delete(errorListen);
+                    _this.ngOnDestroy();
+                });
+                this._listeners.add(errorListen);
+                // clear
+                this._sizeInBytes = null;
+                this._fileName = null;
+                this._defaultType = undefined;
             };
         /**
          * @param {?} degrees
@@ -957,9 +1005,10 @@
             _imgContainer: [{ type: core.ViewChild, args: ['_imgContainer',] }],
             _croppingContainer: [{ type: core.ViewChild, args: ['_croppingContainer',] }],
             _imgCanvas: [{ type: core.ViewChild, args: ['_imgCanvas',] }],
-            scaleChange: [{ type: core.Output }],
             config: [{ type: core.Input }],
             scale: [{ type: core.Input }],
+            maxFileSize: [{ type: core.Input }],
+            scaleChange: [{ type: core.Output }],
             loaded: [{ type: core.Output }],
             cropped: [{ type: core.Output }],
             error: [{ type: core.Output }],
@@ -1085,6 +1134,7 @@
      */
 
     exports.ImgResolution = ImgResolution;
+    exports.ImgCropperError = ImgCropperError;
     exports.LyResizingCroppingImages = LyResizingCroppingImages;
     exports.LyResizingCroppingImageModule = LyResizingCroppingImageModule;
 

@@ -2,18 +2,23 @@ import { ElementRef, ChangeDetectorRef, EventEmitter, Renderer2, NgZone, OnDestr
 import { LyTheme2 } from '@alyle/ui';
 /** Image Cropper Config */
 export interface ImgCropperConfig {
-    /** Cropper area width*/
+    /** Cropper area width */
     width: number;
-    /** Cropper area height*/
+    /** Cropper area height */
     height: number;
-    /** If this is not defined, the new image will be automatically defined */
+    /** If this is not defined, the new image will be automatically defined. */
     type?: string;
-    /** Background color( default: null), if is null in png is transparent but not in jpg */
+    /** Background color( default: null), if is null in png is transparent but not in jpg. */
     fill?: string | null;
     /** Set anti-aliased( default: true) */
     antiAliased?: boolean;
     autoCrop?: boolean;
     output?: ImgOutput | ImgResolution;
+    /**
+     * Emit event `error` if the file size for the limit.
+     * Note: It only works when the image is received from the `<input>` event.
+     */
+    maxFileSize?: number | null;
 }
 export interface ImgOutput {
     width: number;
@@ -26,10 +31,17 @@ export declare enum ImgResolution {
     /** Only cropping */
     OriginalImage = 1
 }
+/** Image output */
+export declare enum ImgCropperError {
+    /** The loaded image exceeds the size limit set. */
+    Size = 0,
+    /** The file loaded is not image. */
+    Type = 1
+}
 export interface ImgCropperEvent {
     /** Cropped image data URL */
     dataURL?: string;
-    name: string;
+    name: string | null;
     /** Filetype */
     type?: string;
     width?: number;
@@ -39,10 +51,16 @@ export interface ImgCropperEvent {
     scale?: number;
     /** Current rotation in degrees */
     rotation?: number;
+    /** Size of the image in bytes */
+    size?: number;
     position?: {
         x: number;
         y: number;
     };
+}
+export interface ImgCropperErrorEvent extends ImgCropperEvent {
+    /** Type of error */
+    error: ImgCropperError;
 }
 export declare class LyResizingCroppingImages implements OnDestroy {
     private _renderer;
@@ -67,26 +85,35 @@ export declare class LyResizingCroppingImages implements OnDestroy {
     private _imgRect;
     private _rotation;
     private _listeners;
-    _imgContainer: ElementRef;
-    _croppingContainer: ElementRef;
-    _imgCanvas: ElementRef<HTMLCanvasElement>;
-    readonly scaleChange: EventEmitter<number>;
-    config: ImgCropperConfig;
-    /** Set scale */
-    scale: number | undefined;
-    /** Get min scale */
-    readonly minScale: number | undefined;
-    /** When is loaded image */
+    private _sizeInBytes;
+    /**
+     * When is loaded image
+     * @internal
+     */
     _isLoadedImg: boolean;
     /** When is loaded image & ready for crop */
     isLoaded: boolean;
     isCropped: boolean;
+    _imgContainer: ElementRef;
+    _croppingContainer: ElementRef;
+    _imgCanvas: ElementRef<HTMLCanvasElement>;
+    config: ImgCropperConfig;
+    /** Set scale */
+    scale: number | undefined;
+    /**
+     * Emit event `error` if the file size for the limit.
+     * Note: It only works when the image is received from the `<input>` event.
+     */
+    maxFileSize: number;
+    /** Get min scale */
+    readonly minScale: number | undefined;
+    readonly scaleChange: EventEmitter<number>;
     /** On loaded new image */
     readonly loaded: EventEmitter<ImgCropperEvent>;
     /** On crop new image */
     readonly cropped: EventEmitter<ImgCropperEvent>;
     /** Emit an error when the loaded image is not valid */
-    readonly error: EventEmitter<ImgCropperEvent>;
+    readonly error: EventEmitter<ImgCropperErrorEvent>;
     private _defaultType?;
     constructor(_renderer: Renderer2, theme: LyTheme2, elementRef: ElementRef<HTMLElement>, cd: ChangeDetectorRef, _ngZone: NgZone);
     ngOnDestroy(): void;

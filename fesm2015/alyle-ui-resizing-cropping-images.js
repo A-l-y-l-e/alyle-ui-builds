@@ -70,6 +70,15 @@ const ImgResolution = {
 };
 ImgResolution[ImgResolution.Default] = 'Default';
 ImgResolution[ImgResolution.OriginalImage] = 'OriginalImage';
+/** @enum {number} */
+const ImgCropperError = {
+    /** The loaded image exceeds the size limit set. */
+    Size: 0,
+    /** The file loaded is not image. */
+    Type: 1,
+};
+ImgCropperError[ImgCropperError.Size] = 'Size';
+ImgCropperError[ImgCropperError.Type] = 'Type';
 /** @type {?} */
 const CONFIG_DEFAULT = (/** @type {?} */ ({
     width: 250,
@@ -125,6 +134,11 @@ class LyResizingCroppingImages {
      */
     set config(val) {
         this._config = mergeDeep({}, CONFIG_DEFAULT, val);
+        /** @type {?} */
+        const maxFileSize = this._config.maxFileSize;
+        if (maxFileSize) {
+            this.maxFileSize = maxFileSize;
+        }
     }
     /**
      * Set scale
@@ -222,19 +236,38 @@ class LyResizingCroppingImages {
             return;
         }
         /** @type {?} */
+        const fileSize = (/** @type {?} */ (_img.files))[0].size;
+        /** @type {?} */
+        const fileName = _img.value.replace(/.*(\/|\\)/, '');
+        if (this.maxFileSize && fileSize > this.maxFileSize) {
+            /** @type {?} */
+            const cropEvent = {
+                name: fileName,
+                type: (/** @type {?} */ (_img.files))[0].type,
+                size: fileSize,
+                error: ImgCropperError.Size
+            };
+            this.clean();
+            this.error.emit((/** @type {?} */ (cropEvent)));
+            return;
+        }
+        /** @type {?} */
         const fileReader = new FileReader();
-        this._fileName = _img.value.replace(/.*(\/|\\)/, '');
         /** @type {?} */
         const listener = fromEvent(fileReader, 'load')
             .pipe(take(1))
             .subscribe(loadEvent => {
             /** @type {?} */
             const originalImageUrl = (/** @type {?} */ (((/** @type {?} */ (loadEvent.target))).result));
-            this.setImageUrl(originalImageUrl);
-            /** Set type */
+            // Set type
             if (!this.config.type) {
                 this._defaultType = (/** @type {?} */ (_img.files))[0].type;
             }
+            // set name
+            this._fileName = fileName;
+            // set file size
+            this._sizeInBytes = (/** @type {?} */ (_img.files))[0].size;
+            this.setImageUrl(originalImageUrl);
             this.cd.markForCheck();
             this._listeners.delete(listener);
         });
@@ -463,7 +496,6 @@ class LyResizingCroppingImages {
             this._scal3Fix = undefined;
             this._rotation = 0;
             this._minScale = undefined;
-            this._defaultType = undefined;
             this._isLoadedImg = false;
             this.isLoaded = false;
             this.isCropped = false;
@@ -509,20 +541,23 @@ class LyResizingCroppingImages {
         this._originalImgBase64 = src;
         /** @type {?} */
         const img = new Image;
+        /** @type {?} */
+        const fileSize = this._sizeInBytes;
+        /** @type {?} */
+        const fileName = this._fileName;
+        /** @type {?} */
+        const defaultType = this._defaultType;
         img.crossOrigin = 'anonymous';
         /** @type {?} */
         const cropEvent = {
-            name: this._fileName,
-            type: this._defaultType,
-            originalDataURL: src,
+            name: fileName,
+            type: defaultType,
+            originalDataURL: src
         };
         img.src = src;
-        /** @type {?} */
-        const errorListen = fromEvent(img, 'error').pipe(take(1)).subscribe(() => {
-            this.error.emit(cropEvent);
-            this._listeners.delete(errorListen);
-        });
-        this._listeners.add(errorListen);
+        if (fileSize) {
+            cropEvent.size = fileSize;
+        }
         /** @type {?} */
         const loadListen = fromEvent(img, 'load')
             .pipe(take(1)).subscribe(() => {
@@ -548,8 +583,21 @@ class LyResizingCroppingImages {
                 this.cd.markForCheck();
             }));
             this._listeners.delete(loadListen);
+            this.ngOnDestroy();
         });
         this._listeners.add(loadListen);
+        /** @type {?} */
+        const errorListen = fromEvent(img, 'error').pipe(take(1)).subscribe(() => {
+            ((/** @type {?} */ (cropEvent))).error = ImgCropperError.Type;
+            this.error.emit((/** @type {?} */ (cropEvent)));
+            this._listeners.delete(errorListen);
+            this.ngOnDestroy();
+        });
+        this._listeners.add(errorListen);
+        // clear
+        this._sizeInBytes = null;
+        this._fileName = null;
+        this._defaultType = undefined;
     }
     /**
      * @param {?} degrees
@@ -797,9 +845,10 @@ LyResizingCroppingImages.propDecorators = {
     _imgContainer: [{ type: ViewChild, args: ['_imgContainer',] }],
     _croppingContainer: [{ type: ViewChild, args: ['_croppingContainer',] }],
     _imgCanvas: [{ type: ViewChild, args: ['_imgCanvas',] }],
-    scaleChange: [{ type: Output }],
     config: [{ type: Input }],
     scale: [{ type: Input }],
+    maxFileSize: [{ type: Input }],
+    scaleChange: [{ type: Output }],
     loaded: [{ type: Output }],
     cropped: [{ type: Output }],
     error: [{ type: Output }],
@@ -919,6 +968,6 @@ LyResizingCroppingImageModule.decorators = [
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { ImgResolution, LyResizingCroppingImages, LyResizingCroppingImageModule };
+export { ImgResolution, ImgCropperError, LyResizingCroppingImages, LyResizingCroppingImageModule };
 
 //# sourceMappingURL=alyle-ui-resizing-cropping-images.js.map
