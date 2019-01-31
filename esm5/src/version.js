@@ -3,7 +3,7 @@
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
-export var AUI_VERSION = '2.1.2-nightly.20190131-jrkcqmdj';
+export var AUI_VERSION = '2.1.2-nightly.20190131-jrkxgif3';
 /** @type {?} */
-export var AUI_LAST_UPDATE = '2019-01-31T08:22:41.861Z';
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoidmVyc2lvbi5qcyIsInNvdXJjZVJvb3QiOiJuZzovL0BhbHlsZS91aS8iLCJzb3VyY2VzIjpbInNyYy92ZXJzaW9uLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7Ozs7O0FBQUEsTUFBTSxLQUFPLFdBQVcsR0FBRyxpQ0FBaUM7O0FBQzVELE1BQU0sS0FBTyxlQUFlLEdBQUcsMEJBQTBCIiwic291cmNlc0NvbnRlbnQiOlsiZXhwb3J0IGNvbnN0IEFVSV9WRVJTSU9OID0gJzIuMS4yLW5pZ2h0bHkuMjAxOTAxMzEtanJrY3FtZGonO1xuZXhwb3J0IGNvbnN0IEFVSV9MQVNUX1VQREFURSA9ICcyMDE5LTAxLTMxVDA4OjIyOjQxLjg2MVonO1xuIl19
+export var AUI_LAST_UPDATE = '2019-01-31T18:02:42.110Z';
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoidmVyc2lvbi5qcyIsInNvdXJjZVJvb3QiOiJuZzovL0BhbHlsZS91aS8iLCJzb3VyY2VzIjpbInNyYy92ZXJzaW9uLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7Ozs7O0FBQUEsTUFBTSxLQUFPLFdBQVcsR0FBRyxpQ0FBaUM7O0FBQzVELE1BQU0sS0FBTyxlQUFlLEdBQUcsMEJBQTBCIiwic291cmNlc0NvbnRlbnQiOlsiZXhwb3J0IGNvbnN0IEFVSV9WRVJTSU9OID0gJzIuMS4yLW5pZ2h0bHkuMjAxOTAxMzEtanJreGdpZjMnO1xuZXhwb3J0IGNvbnN0IEFVSV9MQVNUX1VQREFURSA9ICcyMDE5LTAxLTMxVDE4OjAyOjQyLjExMFonO1xuIl19

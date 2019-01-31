@@ -36,23 +36,16 @@ var styles = ({
             pointerEvents: 'none',
         }
     },
-    croppingContainer: {
-        position: 'absolute',
-        pointerEvents: 'none',
-        boxShadow: '0 0 0 20000px rgba(0, 0, 0, 0.4)',
-        '&:before, &:after': __assign({}, LY_COMMON_STYLES.fill, { content: "''" }),
-        '&:before': {
+    croppingContainer: __assign({ pointerEvents: 'none', boxShadow: '0 0 0 20000px rgba(0, 0, 0, 0.4)' }, LY_COMMON_STYLES.fill, { margin: 'auto', '&:before, &:after': __assign({}, LY_COMMON_STYLES.fill, { content: "''" }), '&:before': {
             width: 0,
             height: 0,
             margin: 'auto',
             borderRadius: '50%',
             background: '#fff',
             border: 'solid 2px rgb(255, 255, 255)'
-        },
-        '&:after': {
+        }, '&:after': {
             border: 'solid 2px rgb(255, 255, 255)'
-        }
-    },
+        } }),
     croppContent: {
         display: 'flex',
         alignItems: 'center',
@@ -261,7 +254,7 @@ var LyResizingCroppingImages = /** @class */ (function () {
         var fileReader = new FileReader();
         this._fileName = _img.value.replace(/.*(\/|\\)/, '');
         /** @type {?} */
-        var listener = fromEvent(fileReader, 'loadend')
+        var listener = fromEvent(fileReader, 'load')
             .pipe(take(1))
             .subscribe(function (loadEvent) {
             /** @type {?} */
