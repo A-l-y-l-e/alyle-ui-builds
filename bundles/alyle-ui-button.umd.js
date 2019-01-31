@@ -212,6 +212,9 @@
          */
             function () {
                 this.updateStyle(this._el);
+                /** @type {?} */
+                var isDisabled = this.disabled;
+                this._renderer.setProperty(this._el.nativeElement, 'disabled', isDisabled);
             };
         /**
          * @return {?}
@@ -274,7 +277,7 @@
             };
         LyButton.decorators = [
             { type: core.Component, args: [{
-                        selector: 'button[ly-button]',
+                        selector: 'button[ly-button], a[ly-button]',
                         changeDetection: core.ChangeDetectionStrategy.OnPush,
                         template: "<span [className]=\"classes.content\">\n  <ng-content></ng-content>\n</span>\n<div #rippleContainer [className]=\"_rippleService.classes.container\"></div>",
                         inputs: [
@@ -286,10 +289,7 @@
                             'elevation',
                             'shadowColor',
                             'disableRipple'
-                        ],
-                        host: {
-                            '[disabled]': 'disabled'
-                        }
+                        ]
                     }] }
         ];
         /** @nocollapse */
@@ -311,41 +311,6 @@
         };
         return LyButton;
     }(LyButtonMixinBase));
-    var LyAnchor = /** @class */ (function (_super) {
-        __extends(LyAnchor, _super);
-        function LyAnchor(_el, _renderer, _theme, _ngZone, _rippleService, _focusState) {
-            return _super.call(this, _el, _renderer, _theme, _ngZone, _rippleService, _focusState) || this;
-        }
-        LyAnchor.decorators = [
-            { type: core.Component, args: [{
-                        selector: 'a[ly-button]',
-                        changeDetection: core.ChangeDetectionStrategy.OnPush,
-                        template: "<span [className]=\"classes.content\">\n  <ng-content></ng-content>\n</span>\n<div #rippleContainer [className]=\"_rippleService.classes.container\"></div>",
-                        inputs: [
-                            'bg',
-                            'color',
-                            'raised',
-                            'disabled',
-                            'outlined',
-                            'elevation',
-                            'shadowColor',
-                            'disableRipple'
-                        ]
-                    }] }
-        ];
-        /** @nocollapse */
-        LyAnchor.ctorParameters = function () {
-            return [
-                { type: core.ElementRef },
-                { type: core.Renderer2 },
-                { type: ui.LyTheme2 },
-                { type: core.NgZone },
-                { type: ui.LyRippleService },
-                { type: ui.LyFocusState }
-            ];
-        };
-        return LyAnchor;
-    }(LyButton));
 
     /**
      * @fileoverview added by tsickle
@@ -356,8 +321,8 @@
         }
         LyButtonModule.decorators = [
             { type: core.NgModule, args: [{
-                        exports: [ui.LyCommonModule, LyButton, LyAnchor],
-                        declarations: [LyButton, LyAnchor]
+                        exports: [ui.LyCommonModule, LyButton],
+                        declarations: [LyButton]
                     },] }
         ];
         return LyButtonModule;
@@ -381,7 +346,6 @@
     exports.LyButtonBase = LyButtonBase;
     exports.LyButtonMixinBase = LyButtonMixinBase;
     exports.LyButton = LyButton;
-    exports.LyAnchor = LyAnchor;
     exports.LyButtonModule = LyButtonModule;
 
     Object.defineProperty(exports, '__esModule', { value: true });

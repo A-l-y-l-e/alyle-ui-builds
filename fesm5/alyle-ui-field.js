@@ -1173,6 +1173,7 @@ var LyNativeControl = /** @class */ (function () {
                     this._renderer.removeClass(this._field._getHostElement(), errorClass);
                     this._errorClass = undefined;
                 }
+                this.stateChanges.next();
             }
         }
     };

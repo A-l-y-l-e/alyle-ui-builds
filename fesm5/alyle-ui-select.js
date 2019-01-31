@@ -495,6 +495,7 @@ var LySelect = /** @class */ (function (_super) {
                     this._renderer.removeClass(this._field._getHostElement(), errorClass);
                     this._errorClass = undefined;
                 }
+                this.stateChanges.next();
             }
         }
     };

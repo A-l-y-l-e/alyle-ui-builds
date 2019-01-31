@@ -39,6 +39,3 @@ export declare class LyButton extends LyButtonMixinBase implements OnChanges, On
     focus(): void;
     ngOnDestroy(): void;
 }
-export declare class LyAnchor extends LyButton {
-    constructor(_el: ElementRef, _renderer: Renderer2, _theme: LyTheme2, _ngZone: NgZone, _rippleService: LyRippleService, _focusState: LyFocusState);
-}
