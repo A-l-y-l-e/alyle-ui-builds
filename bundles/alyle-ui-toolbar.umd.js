@@ -61,7 +61,10 @@
                 _a[theme.getBreakpoint('XSmall')] = {
                     height: '56px'
                 },
-                _a)
+                _a),
+            dense: {
+                height: '56px'
+            }
         });
     };
     /**
@@ -82,8 +85,9 @@
     var LyToolbarMixinBase = ui.mixinStyleUpdater(ui.mixinBg(ui.mixinColor(ui.mixinRaised(ui.mixinDisabled(ui.mixinOutlined(ui.mixinElevation(ui.mixinShadowColor(LyToolbarBase))))))));
     var LyToolbar = /** @class */ (function (_super) {
         __extends(LyToolbar, _super);
-        function LyToolbar(renderer, _el, theme) {
+        function LyToolbar(_renderer, _el, theme) {
             var _this = _super.call(this, theme) || this;
+            _this._renderer = _renderer;
             _this._el = _el;
             _this.theme = theme;
             /**
@@ -92,7 +96,7 @@
              */
             _this.classes = _this.theme.addStyleSheet(styles, STYLE_PRIORITY);
             _this.setAutoContrast();
-            renderer.addClass(_this._el.nativeElement, _this.classes.root);
+            _renderer.addClass(_this._el.nativeElement, _this.classes.root);
             return _this;
         }
         Object.defineProperty(LyToolbar.prototype, "position", {
@@ -106,7 +110,31 @@
              * @return {?}
              */ function (val) {
                 this._position = val;
-                this._positionClass = this.theme.addStyle("ly-toolbar-position:" + val, "position:" + val, this._el.nativeElement, this._positionClass, STYLE_PRIORITY);
+                this._positionClass = this.theme.addStyle("lyToolbar.position:" + val, "position:" + val, this._el.nativeElement, this._positionClass, STYLE_PRIORITY);
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(LyToolbar.prototype, "dense", {
+            get: /**
+             * @return {?}
+             */ function () {
+                return this._dense;
+            },
+            set: /**
+             * @param {?} val
+             * @return {?}
+             */ function (val) {
+                /** @type {?} */
+                var newVal = ui.toBoolean(val);
+                if (newVal !== this.dense) {
+                    if (newVal) {
+                        this._renderer.addClass(this._el.nativeElement, this.classes.dense);
+                    }
+                    else {
+                        this._renderer.removeClass(this._el.nativeElement, this.classes.dense);
+                    }
+                }
             },
             enumerable: true,
             configurable: true
@@ -157,7 +185,8 @@
             ];
         };
         LyToolbar.propDecorators = {
-            position: [{ type: core.Input }]
+            position: [{ type: core.Input }],
+            dense: [{ type: core.Input }]
         };
         return LyToolbar;
     }(LyToolbarMixinBase));

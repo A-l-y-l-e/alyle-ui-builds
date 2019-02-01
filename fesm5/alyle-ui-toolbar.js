@@ -1,7 +1,7 @@
 import { __extends } from 'tslib';
 import { Directive, Renderer2, ElementRef, Input, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LyTheme2, mixinBg, mixinColor, mixinDisabled, mixinElevation, mixinOutlined, mixinRaised, mixinShadowColor, mixinStyleUpdater, LyCommonModule } from '@alyle/ui';
+import { LyTheme2, mixinBg, mixinColor, mixinDisabled, mixinElevation, mixinOutlined, mixinRaised, mixinShadowColor, mixinStyleUpdater, toBoolean, LyCommonModule } from '@alyle/ui';
 
 /**
  * @fileoverview added by tsickle
@@ -31,7 +31,10 @@ var styles = function (theme) {
             _a[theme.getBreakpoint('XSmall')] = {
                 height: '56px'
             },
-            _a)
+            _a),
+        dense: {
+            height: '56px'
+        }
     });
 };
 /**
@@ -53,8 +56,9 @@ LyToolbarBase = /** @class */ (function () {
 var LyToolbarMixinBase = mixinStyleUpdater(mixinBg(mixinColor(mixinRaised(mixinDisabled(mixinOutlined(mixinElevation(mixinShadowColor(LyToolbarBase))))))));
 var LyToolbar = /** @class */ (function (_super) {
     __extends(LyToolbar, _super);
-    function LyToolbar(renderer, _el, theme) {
+    function LyToolbar(_renderer, _el, theme) {
         var _this = _super.call(this, theme) || this;
+        _this._renderer = _renderer;
         _this._el = _el;
         _this.theme = theme;
         /**
@@ -63,7 +67,7 @@ var LyToolbar = /** @class */ (function (_super) {
          */
         _this.classes = _this.theme.addStyleSheet(styles, STYLE_PRIORITY);
         _this.setAutoContrast();
-        renderer.addClass(_this._el.nativeElement, _this.classes.root);
+        _renderer.addClass(_this._el.nativeElement, _this.classes.root);
         return _this;
     }
     Object.defineProperty(LyToolbar.prototype, "position", {
@@ -79,7 +83,33 @@ var LyToolbar = /** @class */ (function (_super) {
          */
         function (val) {
             this._position = val;
-            this._positionClass = this.theme.addStyle("ly-toolbar-position:" + val, "position:" + val, this._el.nativeElement, this._positionClass, STYLE_PRIORITY);
+            this._positionClass = this.theme.addStyle("lyToolbar.position:" + val, "position:" + val, this._el.nativeElement, this._positionClass, STYLE_PRIORITY);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(LyToolbar.prototype, "dense", {
+        get: /**
+         * @return {?}
+         */
+        function () {
+            return this._dense;
+        },
+        set: /**
+         * @param {?} val
+         * @return {?}
+         */
+        function (val) {
+            /** @type {?} */
+            var newVal = toBoolean(val);
+            if (newVal !== this.dense) {
+                if (newVal) {
+                    this._renderer.addClass(this._el.nativeElement, this.classes.dense);
+                }
+                else {
+                    this._renderer.removeClass(this._el.nativeElement, this.classes.dense);
+                }
+            }
         },
         enumerable: true,
         configurable: true
@@ -128,7 +158,8 @@ var LyToolbar = /** @class */ (function (_super) {
         { type: LyTheme2 }
     ]; };
     LyToolbar.propDecorators = {
-        position: [{ type: Input }]
+        position: [{ type: Input }],
+        dense: [{ type: Input }]
     };
     return LyToolbar;
 }(LyToolbarMixinBase));
