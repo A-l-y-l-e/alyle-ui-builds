@@ -88,7 +88,7 @@
                 transformOrigin: 'inherit',
                 pointerEvents: 'all',
                 overflow: 'auto',
-                maxHeight: '250px'
+                maxHeight: '256px'
             },
             valueText: {
                 overflow: 'hidden',
@@ -118,6 +118,11 @@
                 height: '3em',
                 cursor: 'pointer'
             },
+            optionText: {
+                'ly-checkbox ~ &': {
+                    marginBefore: '-16px'
+                }
+            },
             content: {
                 padding: 0,
                 display: 'flex',
@@ -140,7 +145,7 @@
                 animations.animate('125ms cubic-bezier(0, 0, 0.2, 1)', animations.keyframes([
                     animations.style({
                         opacity: 0,
-                        transform: 'scaleY(0.8)'
+                        transform: 'scaleY(0.9)'
                     }),
                     animations.style({
                         opacity: 1,
@@ -150,7 +155,7 @@
             ]),
         ]),
         animations.trigger('selectLeave', [
-            animations.transition('* => void', animations.animate('100ms linear', animations.style({ opacity: 0 })))
+            animations.transition('* => void', animations.animate('100ms 25ms linear', animations.style({ opacity: 0 })))
         ])
     ];
     /**
@@ -762,10 +767,18 @@
                 var el = ( /** @type {?} */(( /** @type {?} */(this._overlayRef)).containerElement));
                 /** @type {?} */
                 var container = ( /** @type {?} */(el.querySelector('div')));
-                var nativeElement = this._el.nativeElement;
+                var nativeElement = this.valueTextDivRef.nativeElement;
+                /** @type {?} */
+                var panelWidth;
+                if (this.multiple) {
+                    panelWidth = nativeElement.offsetWidth + 32 * 2;
+                }
+                else {
+                    panelWidth = nativeElement.offsetWidth + 32;
+                }
                 // reset height & width
                 this._renderer.setStyle(container, 'height', 'initial');
-                this._renderer.setStyle(container, 'width', nativeElement.offsetWidth + 32 + "px");
+                this._renderer.setStyle(container, 'width', panelWidth + "px");
                 /** @type {?} */
                 var selectedElement = this._selectionModel.isEmpty()
                     ? ( /** @type {?} */(el.querySelector('ly-option')))
@@ -786,8 +799,11 @@
                     }
                     offset.y = container.scrollTop + offset.y;
                 }
+                if (this.multiple) {
+                    offset.x -= 24;
+                }
                 /** @type {?} */
-                var position = new ui.Positioning(ui.YPosition.below, ui.XPosition.after, ( /** @type {?} */(null)), this._getHostElement(), el, this._theme.variables, offset, false);
+                var position = new ui.Positioning(ui.YPosition.below, ui.XPosition.after, ( /** @type {?} */(null)), nativeElement, el, this._theme.variables, offset, false);
                 // set position
                 this._renderer.setStyle(el, 'transform', "translate3d(" + position.x + "px, " + position.y + "px, 0)");
                 this._renderer.setStyle(el, 'transform-origin', position.ox + " " + position.oy + " 0");
@@ -795,14 +811,14 @@
                 this._renderer.setStyle(container, 'height', position.height);
                 /** @type {?} */
                 var width = position.width === 'initial'
-                    ? nativeElement.offsetWidth + 32 + "px"
+                    ? panelWidth + "px"
                     : position.width;
                 this._renderer.setStyle(container, 'width', width);
             };
         LySelect.decorators = [
             { type: core.Component, args: [{
                         selector: 'ly-select',
-                        template: "<div [className]=\"classes.valueText\">{{ empty ? '\\u00A0' : triggerValue }}</div>\n<ng-template>\n  <div #container [className]=\"classes.container\" [@selectEnter]=\"'in'\" (@selectLeave.done)=\"_endAnimation($event)\">\n    <ng-content></ng-content>\n  </div>\n</ng-template>",
+                        template: "<div [className]=\"classes.valueText\" #valueText>{{ empty ? '\\u00A0' : triggerValue }}</div>\n<ng-template>\n  <div #container [className]=\"classes.container\" [@selectEnter]=\"'in'\" (@selectLeave.done)=\"_endAnimation($event)\">\n    <ng-content></ng-content>\n  </div>\n</ng-template>",
                         changeDetection: core.ChangeDetectionStrategy.OnPush,
                         exportAs: 'lySelect',
                         host: {
@@ -833,6 +849,7 @@
         };
         LySelect.propDecorators = {
             templateRef: [{ type: core.ViewChild, args: [core.TemplateRef,] }],
+            valueTextDivRef: [{ type: core.ViewChild, args: ['valueText',] }],
             _options: [{ type: core.ViewChild, args: [core.forwardRef(function () { return LyOption; }),] }],
             options: [{ type: core.ContentChildren, args: [core.forwardRef(function () { return LyOption; }), { descendants: true },] }],
             _onBlur: [{ type: core.HostListener, args: ['blur',] }],
@@ -1054,7 +1071,7 @@
         LyOption.decorators = [
             { type: core.Component, args: [{
                         selector: 'ly-option',
-                        template: "<span [className]=\"classes.content\">\n  <ly-checkbox [disabled]=\"disabled\"\n    [color]=\"_color\"\n    [checked]=\"isSelected\"\n    *ngIf=\"_select.multiple\"\n    (click)=\"$event.preventDefault()\"></ly-checkbox>\n  <ng-content></ng-content>\n</span>\n<div #rippleContainer [className]=\"_rippleService.classes.container\"></div>",
+                        template: "<span [className]=\"classes.content\">\n  <ly-checkbox [disabled]=\"disabled\"\n    [color]=\"_color\"\n    [checked]=\"isSelected\"\n    *ngIf=\"_select.multiple\"\n    (click)=\"$event.preventDefault()\"\n  ></ly-checkbox>\n  <span [className]=\"classes.optionText\"><ng-content></ng-content></span>\n</span>\n<div #rippleContainer [className]=\"_rippleService.classes.container\"></div>",
                         changeDetection: core.ChangeDetectionStrategy.OnPush,
                         inputs: [
                             'bg',

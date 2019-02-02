@@ -24,6 +24,7 @@ export declare const STYLES: (theme: ThemeVariables) => {
         display: string;
         alignItems: string;
         position: string;
+        '-webkit-tap-highlight-color': string;
         '&:after': {
             content: string;
             pointerEvents: string;

@@ -49,6 +49,11 @@ export declare const STYLES: (theme: ThemeVariables) => {
         height: string;
         cursor: string;
     };
+    optionText: {
+        'ly-checkbox ~ &': {
+            marginBefore: string;
+        };
+    };
     content: {
         padding: number;
         display: string;
@@ -80,7 +85,7 @@ export declare class LySelect extends LySelectMixinBase implements ControlValueA
     private _parentForm;
     private _parentFormGroup;
     /** @docs-private */
-    readonly classes: Record<"root" | "container" | "valueText" | "option" | "content", string>;
+    readonly classes: Record<"root" | "container" | "valueText" | "option" | "optionText" | "content", string>;
     /** @internal */
     _selectionModel: LySelectionModel<LyOption>;
     /** @internal */
@@ -103,6 +108,7 @@ export declare class LySelect extends LySelectMixinBase implements ControlValueA
     /** Emits whenever the component is destroyed. */
     private readonly _destroy;
     templateRef: TemplateRef<any>;
+    valueTextDivRef: ElementRef<HTMLDivElement>;
     /** @internal */
     _options: QueryList<LyOption>;
     options: QueryList<LyOption>;
@@ -195,7 +201,7 @@ export declare class LyOption extends LyOptionMixinBase implements OnInit, OnCha
     /** @internal */
     _cd: ChangeDetectorRef;
     /** @docs-private */
-    readonly classes: Record<"root" | "container" | "valueText" | "option" | "content", string>;
+    readonly classes: Record<"root" | "container" | "valueText" | "option" | "optionText" | "content", string>;
     private _value;
     _rippleContainer: ElementRef;
     _onClick(): void;

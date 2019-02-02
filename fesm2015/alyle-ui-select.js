@@ -33,7 +33,7 @@ const STYLES$1 = (theme) => ({
         transformOrigin: 'inherit',
         pointerEvents: 'all',
         overflow: 'auto',
-        maxHeight: '250px'
+        maxHeight: '256px'
     },
     valueText: {
         overflow: 'hidden',
@@ -63,6 +63,11 @@ const STYLES$1 = (theme) => ({
         height: '3em',
         cursor: 'pointer'
     },
+    optionText: {
+        'ly-checkbox ~ &': {
+            marginBefore: '-16px'
+        }
+    },
     content: {
         padding: 0,
         display: 'flex',
@@ -84,7 +89,7 @@ const ANIMATIONS = [
             animate('125ms cubic-bezier(0, 0, 0.2, 1)', keyframes([
                 style({
                     opacity: 0,
-                    transform: 'scaleY(0.8)'
+                    transform: 'scaleY(0.9)'
                 }),
                 style({
                     opacity: 1,
@@ -94,7 +99,7 @@ const ANIMATIONS = [
         ]),
     ]),
     trigger('selectLeave', [
-        transition('* => void', animate('100ms linear', style({ opacity: 0 })))
+        transition('* => void', animate('100ms 25ms linear', style({ opacity: 0 })))
     ])
 ];
 /**
@@ -578,10 +583,18 @@ class LySelect extends LySelectMixinBase {
         const el = (/** @type {?} */ ((/** @type {?} */ (this._overlayRef)).containerElement));
         /** @type {?} */
         const container = (/** @type {?} */ (el.querySelector('div')));
-        const { nativeElement } = this._el;
+        const { nativeElement } = this.valueTextDivRef;
+        /** @type {?} */
+        let panelWidth;
+        if (this.multiple) {
+            panelWidth = nativeElement.offsetWidth + 32 * 2;
+        }
+        else {
+            panelWidth = nativeElement.offsetWidth + 32;
+        }
         // reset height & width
         this._renderer.setStyle(container, 'height', 'initial');
-        this._renderer.setStyle(container, 'width', `${nativeElement.offsetWidth + 32}px`);
+        this._renderer.setStyle(container, 'width', `${panelWidth}px`);
         /** @type {?} */
         const selectedElement = this._selectionModel.isEmpty()
             ? (/** @type {?} */ (el.querySelector('ly-option')))
@@ -602,8 +615,11 @@ class LySelect extends LySelectMixinBase {
             }
             offset.y = container.scrollTop + offset.y;
         }
+        if (this.multiple) {
+            offset.x -= 24;
+        }
         /** @type {?} */
-        const position = new Positioning(YPosition.below, XPosition.after, (/** @type {?} */ (null)), this._getHostElement(), el, this._theme.variables, offset, false);
+        const position = new Positioning(YPosition.below, XPosition.after, (/** @type {?} */ (null)), nativeElement, el, this._theme.variables, offset, false);
         // set position
         this._renderer.setStyle(el, 'transform', `translate3d(${position.x}px, ${position.y}px, 0)`);
         this._renderer.setStyle(el, 'transform-origin', `${position.ox} ${position.oy} 0`);
@@ -611,7 +627,7 @@ class LySelect extends LySelectMixinBase {
         this._renderer.setStyle(container, 'height', position.height);
         /** @type {?} */
         const width = position.width === 'initial'
-            ? `${nativeElement.offsetWidth + 32}px`
+            ? `${panelWidth}px`
             : position.width;
         this._renderer.setStyle(container, 'width', width);
     }
@@ -619,7 +635,7 @@ class LySelect extends LySelectMixinBase {
 LySelect.decorators = [
     { type: Component, args: [{
                 selector: 'ly-select',
-                template: "<div [className]=\"classes.valueText\">{{ empty ? '\\u00A0' : triggerValue }}</div>\n<ng-template>\n  <div #container [className]=\"classes.container\" [@selectEnter]=\"'in'\" (@selectLeave.done)=\"_endAnimation($event)\">\n    <ng-content></ng-content>\n  </div>\n</ng-template>",
+                template: "<div [className]=\"classes.valueText\" #valueText>{{ empty ? '\\u00A0' : triggerValue }}</div>\n<ng-template>\n  <div #container [className]=\"classes.container\" [@selectEnter]=\"'in'\" (@selectLeave.done)=\"_endAnimation($event)\">\n    <ng-content></ng-content>\n  </div>\n</ng-template>",
                 changeDetection: ChangeDetectionStrategy.OnPush,
                 exportAs: 'lySelect',
                 host: {
@@ -648,6 +664,7 @@ LySelect.ctorParameters = () => [
 ];
 LySelect.propDecorators = {
     templateRef: [{ type: ViewChild, args: [TemplateRef,] }],
+    valueTextDivRef: [{ type: ViewChild, args: ['valueText',] }],
     _options: [{ type: ViewChild, args: [forwardRef(() => LyOption),] }],
     options: [{ type: ContentChildren, args: [forwardRef(() => LyOption), { descendants: true },] }],
     _onBlur: [{ type: HostListener, args: ['blur',] }],
@@ -840,7 +857,7 @@ class LyOption extends LyOptionMixinBase {
 LyOption.decorators = [
     { type: Component, args: [{
                 selector: 'ly-option',
-                template: "<span [className]=\"classes.content\">\n  <ly-checkbox [disabled]=\"disabled\"\n    [color]=\"_color\"\n    [checked]=\"isSelected\"\n    *ngIf=\"_select.multiple\"\n    (click)=\"$event.preventDefault()\"></ly-checkbox>\n  <ng-content></ng-content>\n</span>\n<div #rippleContainer [className]=\"_rippleService.classes.container\"></div>",
+                template: "<span [className]=\"classes.content\">\n  <ly-checkbox [disabled]=\"disabled\"\n    [color]=\"_color\"\n    [checked]=\"isSelected\"\n    *ngIf=\"_select.multiple\"\n    (click)=\"$event.preventDefault()\"\n  ></ly-checkbox>\n  <span [className]=\"classes.optionText\"><ng-content></ng-content></span>\n</span>\n<div #rippleContainer [className]=\"_rippleService.classes.container\"></div>",
                 changeDetection: ChangeDetectionStrategy.OnPush,
                 inputs: [
                     'bg',

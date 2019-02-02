@@ -64,6 +64,7 @@ const STYLES = (theme) => {
             display: 'flex',
             alignItems: 'center',
             position: 'relative',
+            '-webkit-tap-highlight-color': 'transparent',
             '&:after': Object.assign({}, LY_COMMON_STYLES.fill, { content: `\'\'`, pointerEvents: 'none', borderColor: theme.field.borderColor })
         },
         fieldset: Object.assign({}, LY_COMMON_STYLES.fill, { margin: 0, borderStyle: 'solid', borderColor: theme.field.borderColor, borderWidth: 0 }),

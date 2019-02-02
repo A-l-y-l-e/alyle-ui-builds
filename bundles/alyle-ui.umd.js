@@ -477,7 +477,8 @@
             this._themeMap = new Map();
             this._styleMap = new Map();
             if (!themeConfig) {
-                throw new Error('LY_THEME undefined');
+                throw new Error("LY_THEME undefined: no theme has been added, please add at least one theme\n\n" +
+                    "Follow the steps of the documentation https://goo.gl/8V486A");
             }
             this.renderer = this.rendererFactory.createRenderer(null, {
                 id: 'ly',
@@ -3265,9 +3266,9 @@
      * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /** @type {?} */
-    var AUI_VERSION = '2.1.3-nightly.20190201-jrls6niv';
+    var AUI_VERSION = '2.1.3-nightly.20190202-jrn7lo49';
     /** @type {?} */
-    var AUI_LAST_UPDATE = '2019-02-01T08:22:50.261Z';
+    var AUI_LAST_UPDATE = '2019-02-02T08:22:11.288Z';
 
     /**
      * @fileoverview added by tsickle
@@ -3684,7 +3685,7 @@
                     if (_this.onResizeScroll) {
                         _this.onResizeScroll();
                     }
-                    else {
+                    else if (config.host) {
                         /** @type {?} */
                         var rect = config.host.getBoundingClientRect();
                         /** @type {?} */

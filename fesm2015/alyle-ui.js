@@ -384,7 +384,8 @@ class CoreTheme {
         this._themeMap = new Map();
         this._styleMap = new Map();
         if (!themeConfig) {
-            throw new Error('LY_THEME undefined');
+            throw new Error(`LY_THEME undefined: no theme has been added, please add at least one theme\n\n` +
+                `Follow the steps of the documentation https://goo.gl/8V486A`);
         }
         this.renderer = this.rendererFactory.createRenderer(null, {
             id: 'ly',
@@ -2811,9 +2812,9 @@ LyFocusState.ctorParameters = () => [
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
-const AUI_VERSION = '2.1.3-nightly.20190201-jrls6niv';
+const AUI_VERSION = '2.1.3-nightly.20190202-jrn7lo49';
 /** @type {?} */
-const AUI_LAST_UPDATE = '2019-02-01T08:22:50.261Z';
+const AUI_LAST_UPDATE = '2019-02-02T08:22:11.288Z';
 
 /**
  * @fileoverview added by tsickle
@@ -3177,7 +3178,7 @@ class CreateFromTemplateRef {
                 if (this.onResizeScroll) {
                     this.onResizeScroll();
                 }
-                else {
+                else if (config.host) {
                     /** @type {?} */
                     const rect = config.host.getBoundingClientRect();
                     /** @type {?} */
