@@ -2812,9 +2812,9 @@ LyFocusState.ctorParameters = () => [
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
-const AUI_VERSION = '2.1.3-nightly.20190202-jrn7lo49';
+const AUI_VERSION = '2.1.3-nightly.20190203-jron281w';
 /** @type {?} */
-const AUI_LAST_UPDATE = '2019-02-02T08:22:11.288Z';
+const AUI_LAST_UPDATE = '2019-02-03T08:22:44.034Z';
 
 /**
  * @fileoverview added by tsickle
@@ -3133,7 +3133,7 @@ class CreateFromTemplateRef {
     /**
      * @param {?} _componentFactoryResolver
      * @param {?} _appRef
-     * @param {?} _templateRef
+     * @param {?} _templateRefOrComponent
      * @param {?} _overlayContainer
      * @param {?} _context
      * @param {?} _injector
@@ -3141,7 +3141,7 @@ class CreateFromTemplateRef {
      * @param {?} resizeService
      * @param {?=} config
      */
-    constructor(_componentFactoryResolver, _appRef, _templateRef, _overlayContainer, _context, _injector, windowScroll, resizeService, config) {
+    constructor(_componentFactoryResolver, _appRef, _templateRefOrComponent, _overlayContainer, _context, _injector, windowScroll, resizeService, config) {
         this._componentFactoryResolver = _componentFactoryResolver;
         this._appRef = _appRef;
         this._overlayContainer = _overlayContainer;
@@ -3200,7 +3200,7 @@ class CreateFromTemplateRef {
         /** @type {?} */
         const backdropEl = this._compRefOverlayBackdrop.location.nativeElement;
         this._overlayContainer._add(backdropEl);
-        this._appendComponentToBody(_templateRef, _context, this._injector);
+        this._appendComponentToBody(_templateRefOrComponent, _context, this._injector);
     }
     /**
      * @return {?}
@@ -3325,13 +3325,13 @@ class LyOverlay {
         this._resizeService = _resizeService;
     }
     /**
-     * @param {?} template
+     * @param {?} templateOrComponent
      * @param {?=} context
      * @param {?=} config
      * @return {?}
      */
-    create(template, context, config) {
-        return new CreateFromTemplateRef(this._componentFactoryResolver, this._appRef, template, this._overlayContainer, context, this._injector, this._windowScroll, this._resizeService, config);
+    create(templateOrComponent, context, config) {
+        return new CreateFromTemplateRef(this._componentFactoryResolver, this._appRef, templateOrComponent, this._overlayContainer, context, this._injector, this._windowScroll, this._resizeService, config);
     }
 }
 LyOverlay.decorators = [

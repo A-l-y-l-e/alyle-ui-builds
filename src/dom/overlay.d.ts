@@ -1,4 +1,4 @@
-import { TemplateRef, ApplicationRef, ComponentFactoryResolver, Injector } from '@angular/core';
+import { TemplateRef, ApplicationRef, ComponentFactoryResolver, Injector, Type } from '@angular/core';
 import { LyOverlayContainer } from './overlay-container';
 import { WinResize } from './resize';
 import { WinScroll } from './scroll';
@@ -31,6 +31,6 @@ export declare class LyOverlay {
     private _windowScroll;
     private _resizeService;
     constructor(_overlayContainer: LyOverlayContainer, _componentFactoryResolver: ComponentFactoryResolver, _appRef: ApplicationRef, _injector: Injector, _windowScroll: WinScroll, _resizeService: WinResize);
-    create(template: TemplateRef<any> | string, context?: any, config?: OverlayConfig): OverlayFromTemplateRef;
+    create(templateOrComponent: Type<any> | TemplateRef<any> | string, context?: any, config?: OverlayConfig): OverlayFromTemplateRef;
 }
 export {};
