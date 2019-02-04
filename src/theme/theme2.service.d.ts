@@ -64,6 +64,14 @@ export declare class LyTheme2 {
      * @param parentStyle
      */
     addStyle(id: string, style?: StyleContainerFn, el?: any, instance?: string | null, priority?: number | null, parentStyle?: Styles): string;
+    /**
+     * Create basic style
+     * @param style Styles.
+     * Note: Use only with inmutable variable.
+     * @param priority Priority of style
+     * @param parentStyle
+     */
+    style(style: StyleContainerFn, priority?: number | null, parentStyle?: Styles): string;
     private updateClassName;
     updateClass(element: any, renderer: Renderer2, newClass: string, oldClass?: string): string;
     setTheme(nam: string): void;
@@ -115,5 +123,5 @@ export interface Keyframes {
 }
 export declare function converterToCssKeyAndStyle(str: string, themeVariables: ThemeVariables): string;
 export declare function capitalizeFirstLetter(str: string): string;
-declare type OnlyClasses<T> = Record<(Exclude<(T extends ((...args: any[]) => any) ? (keyof ReturnType<T>) : keyof T), '$name' | '$keyframes'>), string>;
+declare type OnlyClasses<T> = Record<(Exclude<(T extends ((...args: any[]) => any) ? (keyof ReturnType<T>) : keyof T), '$name' | '$keyframes' | '@global'>), string>;
 export {};

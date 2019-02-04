@@ -1056,6 +1056,32 @@ var LyTheme2 = /** @class */ (function () {
         return newClass;
     };
     /**
+     * Create basic style
+     * @param style Styles.
+     * Note: Use only with inmutable variable.
+     * @param priority Priority of style
+     * @param parentStyle
+     */
+    /**
+     * Create basic style
+     * @param {?} style Styles.
+     * Note: Use only with inmutable variable.
+     * @param {?=} priority Priority of style
+     * @param {?=} parentStyle
+     * @return {?}
+     */
+    LyTheme2.prototype.style = /**
+     * Create basic style
+     * @param {?} style Styles.
+     * Note: Use only with inmutable variable.
+     * @param {?=} priority Priority of style
+     * @param {?=} parentStyle
+     * @return {?}
+     */
+    function (style, priority, parentStyle) {
+        return (/** @type {?} */ (this._createStyleContent2(style, null, priority, TypeStyle.OnlyOne, false, parentStyle)));
+    };
+    /**
      * @private
      * @param {?} element
      * @param {?} renderer
@@ -3202,9 +3228,9 @@ var LyFocusState = /** @class */ (function () {
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
-var AUI_VERSION = '2.1.3-nightly.20190203-jron281w';
+var AUI_VERSION = '2.1.3-nightly.20190204-jrq2hnzc';
 /** @type {?} */
-var AUI_LAST_UPDATE = '2019-02-03T08:22:44.034Z';
+var AUI_LAST_UPDATE = '2019-02-04T08:22:24.934Z';
 
 /**
  * @fileoverview added by tsickle
