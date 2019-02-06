@@ -34,15 +34,6 @@ const styles = ({
 });
 /**
  * Grid container
- * example:
- * <ly-grid container [spacing]="'16 8\@XSmall'">
- *   <ly-grid item [col]="'6 12\@XSmall'">
- *     <div>6 12\@XSmall</div>
- *   </ly-grid>
- *   <ly-grid item [col]="'6 12\@XSmall'">
- *     <div>6 12\@XSmall</div>
- *   </ly-grid>
- * </ly-grid>
  */
 class LyGrid {
     /**
@@ -376,6 +367,13 @@ class LyGridItem {
         }
     }
     /**
+     * @param {?} val
+     * @return {?}
+     */
+    set gridItemCol(val) {
+        this.col = val;
+    }
+    /**
      * Defines the order style property.
      * Support breakpoints
      * @return {?}
@@ -438,7 +436,7 @@ class LyGridItem {
 }
 LyGridItem.decorators = [
     { type: Directive, args: [{
-                selector: 'ly-grid[item]'
+                selector: 'ly-grid[item], [ly-grid-item], [lyGridItem]'
             },] }
 ];
 /** @nocollapse */
@@ -449,6 +447,7 @@ LyGridItem.ctorParameters = () => [
 ];
 LyGridItem.propDecorators = {
     col: [{ type: Input }],
+    gridItemCol: [{ type: Input, args: ['lyGridItem',] }],
     order: [{ type: Input }]
 };
 /**

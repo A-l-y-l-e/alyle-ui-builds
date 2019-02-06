@@ -1,8 +1,14 @@
-import { ElementRef, Renderer2, OnInit } from '@angular/core';
+import { ElementRef, Renderer2, OnInit, OnChanges } from '@angular/core';
 import { LyTheme2 } from '@alyle/ui';
-export declare class LyTypography implements OnInit {
-    private style;
-    private elementRef;
+/** @docs-private */
+export declare class LyTypographyBase {
+    _theme: LyTheme2;
+    constructor(_theme: LyTheme2);
+}
+/** @docs-private */
+export declare const LyTypographyMixinBase: import("@alyle/ui/src/common/constructor").Constructor<import("@alyle/ui/src/common/build-common-behaviors").CanStyleUpdater> & import("@alyle/ui/src/common/constructor").Constructor<import("@alyle/ui/src/common/color").CanColor> & typeof LyTypographyBase;
+export declare class LyTypography extends LyTypographyMixinBase implements OnInit, OnChanges {
+    private _el;
     private renderer;
     /** @docs-private */
     readonly classes: Record<"root", string>;
@@ -22,8 +28,9 @@ export declare class LyTypography implements OnInit {
     gutter: boolean;
     gutterTop: boolean;
     gutterBottom: boolean;
-    constructor(style: LyTheme2, elementRef: ElementRef, renderer: Renderer2);
+    constructor(_theme: LyTheme2, _el: ElementRef, renderer: Renderer2);
     ngOnInit(): void;
+    ngOnChanges(): void;
     private _createTypClass;
     private _createGutterClass;
 }

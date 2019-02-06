@@ -1,5 +1,5 @@
 import { Directive, ElementRef, Renderer2, Input, NgModule } from '@angular/core';
-import { LyTheme2, toBoolean, LyCommonModule } from '@alyle/ui';
+import { LyTheme2, toBoolean, mixinStyleUpdater, mixinColor, LyCommonModule } from '@alyle/ui';
 
 /**
  * @fileoverview added by tsickle
@@ -20,21 +20,37 @@ const Gutter = {
 Gutter[Gutter.default] = 'default';
 Gutter[Gutter.top] = 'top';
 Gutter[Gutter.bottom] = 'bottom';
-class LyTypography {
+/**
+ * \@docs-private
+ */
+class LyTypographyBase {
     /**
-     * @param {?} style
-     * @param {?} elementRef
+     * @param {?} _theme
+     */
+    constructor(_theme) {
+        this._theme = _theme;
+    }
+}
+/**
+ * \@docs-private
+ * @type {?}
+ */
+const LyTypographyMixinBase = mixinStyleUpdater(mixinColor((LyTypographyBase)));
+class LyTypography extends LyTypographyMixinBase {
+    /**
+     * @param {?} _theme
+     * @param {?} _el
      * @param {?} renderer
      */
-    constructor(style, elementRef, renderer) {
-        this.style = style;
-        this.elementRef = elementRef;
+    constructor(_theme, _el, renderer) {
+        super(_theme);
+        this._el = _el;
         this.renderer = renderer;
         /**
          * \@docs-private
          */
-        this.classes = this.style.addStyleSheet(styles, STYLE_PRIORITY);
-        this.renderer.addClass(this.elementRef.nativeElement, this.classes.root);
+        this.classes = this._theme.addStyleSheet(styles, STYLE_PRIORITY);
+        this.renderer.addClass(this._el.nativeElement, this.classes.root);
     }
     /**
      * @param {?} val
@@ -46,7 +62,7 @@ class LyTypography {
                 this._lyTypClass = this._createTypClass(val, this._lyTypClass);
             }
             else if (this._lyTypClass) {
-                this.renderer.removeClass(this.elementRef.nativeElement, this._lyTypClass);
+                this.renderer.removeClass(this._el.nativeElement, this._lyTypClass);
                 this._lyTypClass = undefined;
             }
         }
@@ -66,15 +82,15 @@ class LyTypography {
         /** @type {?} */
         const newValue = toBoolean(val);
         if (newValue) {
-            this._noWrapClass = this.style.addSimpleStyle('lyTyp.noWrap', {
+            this._noWrapClass = this._theme.addSimpleStyle('lyTyp.noWrap', {
                 overflow: 'hidden',
                 whiteSpace: 'nowrap',
                 textOverflow: 'ellipsis'
             });
-            this.renderer.addClass(this.elementRef.nativeElement, this._noWrapClass);
+            this.renderer.addClass(this._el.nativeElement, this._noWrapClass);
         }
         else if (this._noWrapClass) {
-            this.renderer.removeClass(this.elementRef.nativeElement, this._noWrapClass);
+            this.renderer.removeClass(this._el.nativeElement, this._noWrapClass);
             this._noWrapClass = undefined;
         }
     }
@@ -148,6 +164,12 @@ class LyTypography {
         }
     }
     /**
+     * @return {?}
+     */
+    ngOnChanges() {
+        this.updateStyle(this._el.nativeElement);
+    }
+    /**
      * @private
      * @param {?} key
      * @param {?=} instance
@@ -156,7 +178,7 @@ class LyTypography {
     _createTypClass(key, instance) {
         /** @type {?} */
         const newKey = `k-typ:${key}`;
-        return this.style.addStyle(newKey, (theme) => {
+        return this._theme.addStyle(newKey, (theme) => {
             const { typography } = theme;
             /** @type {?} */
             const styl = Object.assign({}, typography.lyTyp[key || 'body1']);
@@ -169,7 +191,7 @@ class LyTypography {
             // set default fontFamily
             styl.fontFamily = styl.fontFamily || typography.fontFamily;
             return styl;
-        }, this.elementRef.nativeElement, instance, STYLE_PRIORITY);
+        }, this._el.nativeElement, instance, STYLE_PRIORITY);
     }
     /**
      * @private
@@ -179,17 +201,20 @@ class LyTypography {
      * @return {?}
      */
     _createGutterClass(name, val, instance) {
-        return this.style.addStyle(`k-typ-gutter:${name}:${val}`, (theme) => {
+        return this._theme.addStyle(`k-typ-gutter:${name}:${val}`, (theme) => {
             /** @type {?} */
             const gutter = name === Gutter.default;
             return (`margin-top:${val && (gutter || name === Gutter.top) ? theme.typography.gutterTop : 0}em;` +
                 `margin-bottom:${val && (gutter || name === Gutter.bottom) ? theme.typography.gutterBottom : 0}em;`);
-        }, this.elementRef.nativeElement, instance, STYLE_PRIORITY);
+        }, this._el.nativeElement, instance, STYLE_PRIORITY);
     }
 }
 LyTypography.decorators = [
     { type: Directive, args: [{
-                selector: `[lyTyp]`
+                selector: `[lyTyp]`,
+                inputs: [
+                    'color'
+                ]
             },] }
 ];
 /** @nocollapse */
@@ -234,6 +259,6 @@ LyTypographyModule.decorators = [
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { LyTypographyModule, LyTypography };
+export { LyTypographyModule, LyTypographyBase, LyTypographyMixinBase, LyTypography };
 
 //# sourceMappingURL=alyle-ui-typography.js.map

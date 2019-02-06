@@ -37,15 +37,6 @@
     });
     /**
      * Grid container
-     * example:
-     * <ly-grid container [spacing]="'16 8\@XSmall'">
-     *   <ly-grid item [col]="'6 12\@XSmall'">
-     *     <div>6 12\@XSmall</div>
-     *   </ly-grid>
-     *   <ly-grid item [col]="'6 12\@XSmall'">
-     *     <div>6 12\@XSmall</div>
-     *   </ly-grid>
-     * </ly-grid>
      */
     var LyGrid = /** @class */ (function () {
         function LyGrid(theme, el) {
@@ -417,6 +408,16 @@
             enumerable: true,
             configurable: true
         });
+        Object.defineProperty(LyGridItem.prototype, "gridItemCol", {
+            set: /**
+             * @param {?} val
+             * @return {?}
+             */ function (val) {
+                this.col = val;
+            },
+            enumerable: true,
+            configurable: true
+        });
         Object.defineProperty(LyGridItem.prototype, "order", {
             /**
              * Defines the order style property.
@@ -492,7 +493,7 @@
             };
         LyGridItem.decorators = [
             { type: core.Directive, args: [{
-                        selector: 'ly-grid[item]'
+                        selector: 'ly-grid[item], [ly-grid-item], [lyGridItem]'
                     },] }
         ];
         /** @nocollapse */
@@ -505,6 +506,7 @@
         };
         LyGridItem.propDecorators = {
             col: [{ type: core.Input }],
+            gridItemCol: [{ type: core.Input, args: ['lyGridItem',] }],
             order: [{ type: core.Input }]
         };
         return LyGridItem;
