@@ -3,7 +3,7 @@ import { HammerGestureConfig } from '@angular/platform-browser';
 import { DOCUMENT } from '@angular/common';
 import { map, share, auditTime } from 'rxjs/operators';
 import { Subject, fromEvent, empty, Subscription, merge } from 'rxjs';
-import { InjectionToken, Injectable, Optional, Inject, RendererFactory2, ViewEncapsulation, Directive, ElementRef, Input, NgModule, NgZone, Renderer2, Component, HostListener, TemplateRef, ApplicationRef, ComponentFactoryResolver, Injector, isDevMode, ViewContainerRef, defineInjectable, inject, INJECTOR } from '@angular/core';
+import { InjectionToken, Injectable, Optional, Inject, RendererFactory2, ViewEncapsulation, Component, HostListener, ElementRef, Directive, Input, NgModule, NgZone, isDevMode, Renderer2, ApplicationRef, ComponentFactoryResolver, Injector, TemplateRef, ViewContainerRef, defineInjectable, inject, INJECTOR } from '@angular/core';
 
 /**
  * @fileoverview added by tsickle
@@ -2823,9 +2823,9 @@ LyFocusState.ctorParameters = () => [
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
-const AUI_VERSION = '2.1.3-nightly.20190206-jrsxdiwt';
+const AUI_VERSION = '2.3.0';
 /** @type {?} */
-const AUI_LAST_UPDATE = '2019-02-06T08:22:32.188Z';
+const AUI_LAST_UPDATE = '2019-02-07T06:21:45.408Z';
 
 /**
  * @fileoverview added by tsickle
@@ -2932,9 +2932,20 @@ const UndefinedValue = new Undefined();
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
+// @Injectable()
+/**
+ * @template T
+ */
+class LyOverlayRef {
+}
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
 /** @type {?} */
 const styles$1 = (theme) => ({
-    overlayBackdrop: {
+    overlay: {
         position: 'fixed',
         top: 0,
         left: 0,
@@ -2958,6 +2969,12 @@ class LyOverlayContainer {
             document.body.appendChild(container);
             this._containerElement = container;
         }
+    }
+    /**
+     * @return {?}
+     */
+    get overlayLen() {
+        return this._items.size;
     }
     /**
      * @return {?}
@@ -2997,11 +3014,11 @@ class LyOverlayContainer {
         if (this._items.size) {
             if (!this._isActiveOverlayContainer) {
                 this._isActiveOverlayContainer = true;
-                this._containerElement.classList.add(this._classes.overlayBackdrop);
+                this._containerElement.classList.add(this._classes.overlay);
             }
         }
         else if (this._isActiveOverlayContainer) {
-            this._containerElement.classList.remove(this._classes.overlayBackdrop);
+            this._containerElement.classList.remove(this._classes.overlay);
             this._isActiveOverlayContainer = false;
         }
     }
@@ -3016,55 +3033,6 @@ LyOverlayContainer.ctorParameters = () => [
     { type: LyTheme2 }
 ];
 /** @nocollapse */ LyOverlayContainer.ngInjectableDef = defineInjectable({ factory: function LyOverlayContainer_Factory() { return new LyOverlayContainer(inject(LyTheme2)); }, token: LyOverlayContainer, providedIn: "root" });
-/** @type {?} */
-const BACKDROP_STYLES = ({
-    backdrop: {
-        pointerEvents: 'all',
-        userSelect: 'none'
-    }
-});
-class LyOverlayBackdrop {
-    /**
-     * @param {?} el
-     * @param {?} _theme
-     * @param {?} _overlayConfig
-     * @param {?} commonStyles
-     */
-    constructor(el, _theme, _overlayConfig, commonStyles) {
-        this._theme = _theme;
-        this._overlayConfig = _overlayConfig;
-        /**
-         * \@docs-private
-         */
-        this.classes = this._theme.addStyleSheet(BACKDROP_STYLES);
-        el.nativeElement.classList.add(commonStyles.classes.fill);
-        if (_overlayConfig.backdrop) {
-            el.nativeElement.classList.add(this.classes.backdrop);
-        }
-    }
-    /**
-     * @return {?}
-     */
-    onclick() {
-        this._overlayConfig.fnDestroy();
-    }
-}
-LyOverlayBackdrop.decorators = [
-    { type: Component, args: [{
-                selector: 'ly-overlay-backdrop',
-                template: ``
-            }] }
-];
-/** @nocollapse */
-LyOverlayBackdrop.ctorParameters = () => [
-    { type: ElementRef },
-    { type: LyTheme2 },
-    { type: undefined, decorators: [{ type: Inject, args: ['overlayConfig',] }] },
-    { type: LyCoreStyles }
-];
-LyOverlayBackdrop.propDecorators = {
-    onclick: [{ type: HostListener, args: ['click',] }]
-};
 
 /**
  * @fileoverview added by tsickle
@@ -3140,7 +3108,95 @@ WinScroll.ctorParameters = () => [
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
-class CreateFromTemplateRef {
+class LyOverlayConfig {
+    constructor() {
+        this.hasBackdrop = true;
+    }
+}
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/** @type {?} */
+const STYLE_PRIORITY$1 = -2;
+/** @type {?} */
+const STYLES_BACKDROP_ROOT = (Object.assign({}, LY_COMMON_STYLES.fill, { width: '100vw', height: '100vh', pointerEvents: 'all', userSelect: 'none' }));
+class LyOverlayBackdrop {
+    /**
+     * @param {?} _el
+     * @param {?} _theme
+     * @param {?} _config
+     */
+    constructor(_el, _theme, _config) {
+        this._el = _el;
+        this._config = _config;
+        _el.nativeElement.classList.add(_theme.style(STYLES_BACKDROP_ROOT, STYLE_PRIORITY$1));
+        // this applies custom class for backdrop,
+        // if one is not defined, do nothing.
+        /** @type {?} */
+        const backdropClass = _config.backdropClass;
+        if (backdropClass) {
+            this._el.nativeElement.classList.add(backdropClass);
+        }
+    }
+    /**
+     * @return {?}
+     */
+    onclick() {
+        (/** @type {?} */ (this._config.fnDestroy))();
+    }
+}
+LyOverlayBackdrop.decorators = [
+    { type: Component, args: [{
+                selector: 'ly-overlay-backdrop',
+                template: ``
+            }] }
+];
+/** @nocollapse */
+LyOverlayBackdrop.ctorParameters = () => [
+    { type: ElementRef },
+    { type: LyTheme2 },
+    { type: LyOverlayConfig }
+];
+LyOverlayBackdrop.propDecorators = {
+    onclick: [{ type: HostListener, args: ['click',] }]
+};
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/**
+ * @param {?} parent
+ * @param {?} config
+ * @param {?} overlayFactory
+ * @return {?}
+ */
+function createOverlayInjector(parent, config, overlayFactory) {
+    return Injector.create({
+        providers: [
+            {
+                provide: LyOverlayConfig,
+                useValue: config
+            },
+            {
+                provide: LyOverlayRef,
+                useValue: overlayFactory
+            }
+        ],
+        parent
+    });
+}
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/**
+ * @template T
+ */
+class OverlayFactory {
     /**
      * @param {?} _componentFactoryResolver
      * @param {?} _appRef
@@ -3157,11 +3213,9 @@ class CreateFromTemplateRef {
         this._appRef = _appRef;
         this._overlayContainer = _overlayContainer;
         this._injector = _injector;
-        this.windowSRSub = Subscription.EMPTY;
-        // this._viewRef = _templateRef.createEmbeddedView(_context);
-        // this._viewRef.detectChanges();
+        this._windowSRSub = Subscription.EMPTY;
+        this._config = config = Object.assign({}, new LyOverlayConfig(), config);
         this._el = document.createElement('div');
-        // this._viewRef.rootNodes.forEach(rootNode => container.appendChild(rootNode));
         /** @type {?} */
         const __styles = {
             position: 'absolute',
@@ -3174,30 +3228,15 @@ class CreateFromTemplateRef {
             Object.assign(__styles, config.styles);
         }
         /** @type {?} */
-        const newInjector = Injector.create([
-            {
-                provide: 'overlayConfig',
-                useValue: (/** @type {?} */ (Object.assign({ fnDestroy: this.destroy.bind(this) }, config, { styles: __styles })))
-            }
-        ], this._injector);
-        this.updateStyles(__styles);
+        const newInjector = createOverlayInjector(this._injector, Object.assign({ fnDestroy: this.destroy.bind(this) }, config, { styles: __styles }), this);
+        this._updateStyles(__styles);
         if (config) {
             if (config.onResizeScroll) {
                 this.onResizeScroll = config.onResizeScroll;
             }
-            this.windowSRSub = merge(windowScroll.scroll$, resizeService.resize$).subscribe(() => {
+            this._windowSRSub = merge(windowScroll.scroll$, resizeService.resize$).subscribe(() => {
                 if (this.onResizeScroll) {
                     this.onResizeScroll();
-                }
-                else if (config.host) {
-                    /** @type {?} */
-                    const rect = config.host.getBoundingClientRect();
-                    /** @type {?} */
-                    const newStyles = {
-                        top: rect.top,
-                        left: rect.left
-                    };
-                    this.updateStyles(newStyles);
                 }
             });
             if (config.classes) {
@@ -3206,12 +3245,15 @@ class CreateFromTemplateRef {
                 classes.forEach((className) => ((/** @type {?} */ (this._el))).classList.add(className));
             }
         }
-        this._compRefOverlayBackdrop = this.generateComponent(LyOverlayBackdrop, newInjector);
-        this._appRef.attachView(this._compRefOverlayBackdrop.hostView);
-        /** @type {?} */
-        const backdropEl = this._compRefOverlayBackdrop.location.nativeElement;
-        this._overlayContainer._add(backdropEl);
-        this._appendComponentToBody(_templateRefOrComponent, _context, this._injector);
+        if (config.hasBackdrop) {
+            this._compRefOverlayBackdrop = this._generateComponent(LyOverlayBackdrop, newInjector);
+            this._appRef.attachView(this._compRefOverlayBackdrop.hostView);
+            /** @type {?} */
+            const backdropEl = this._compRefOverlayBackdrop.location.nativeElement;
+            this._overlayContainer._add(backdropEl);
+        }
+        this._appendComponentToBody(_templateRefOrComponent, _context, newInjector);
+        this._hiddeScroll();
     }
     /**
      * @return {?}
@@ -3220,10 +3262,17 @@ class CreateFromTemplateRef {
         return (/** @type {?} */ (this._el));
     }
     /**
+     * @return {?}
+     */
+    get componentRef() {
+        return this._compRef;
+    }
+    /**
+     * @private
      * @param {?} __styles
      * @return {?}
      */
-    updateStyles(__styles) {
+    _updateStyles(__styles) {
         /** Apply styles */
         /** set styles */
         for (const key in __styles) {
@@ -3259,30 +3308,37 @@ class CreateFromTemplateRef {
             this._overlayContainer._add(this._el);
         }
         else {
-            this._compRef = this.generateComponent((/** @type {?} */ (type)), injector);
-            this._el = this._compRef.location.nativeElement;
+            this._compRef = this._generateComponent(type, injector);
+            this._appRef.attachView(this._compRef.hostView);
+            (/** @type {?} */ (this._el)).appendChild(this._compRef.location.nativeElement);
             this._overlayContainer._add(this._el);
         }
     }
     /**
+     * @private
      * @param {?} type
      * @param {?} injector
      * @return {?}
      */
-    generateComponent(type, injector) {
+    _generateComponent(type, injector) {
         /** @type {?} */
         const factory = this._componentFactoryResolver.resolveComponentFactory(type);
         return factory.create(injector);
     }
     /**
+     * Detaches a view from dirty checking again of ApplicationRef.
      * @return {?}
      */
     detach() {
         if (this._viewRef) {
             this._appRef.detachView(this._viewRef);
         }
+        if (this._compRef) {
+            this._appRef.detachView(this._compRef.hostView);
+        }
     }
     /**
+     * Remove element of DOM
      * @return {?}
      */
     remove() {
@@ -3295,6 +3351,7 @@ class CreateFromTemplateRef {
             this._compRef.destroy();
             this._overlayContainer._remove(this._el);
             this._el = undefined;
+            this._compRef = null;
         }
         else if (this._el) {
             // remove if template is string
@@ -3308,16 +3365,53 @@ class CreateFromTemplateRef {
             const backdropEl = this._compRefOverlayBackdrop.location.nativeElement;
             this._overlayContainer._remove(backdropEl);
         }
-        this.windowSRSub.unsubscribe();
+        this._windowSRSub.unsubscribe();
+        this._resetScroll();
     }
     /**
+     * Detach & remove
      * @return {?}
      */
     destroy() {
         this.detach();
         this.remove();
     }
+    /**
+     * @private
+     * @return {?}
+     */
+    _hiddeScroll() {
+        if (Platform.isBrowser && this._config.hasBackdrop && this._overlayContainer.overlayLen) {
+            /** @type {?} */
+            const scrollWidth = window.innerWidth - window.document.body.clientWidth;
+            if (scrollWidth) {
+                /** @type {?} */
+                const computedStyle = getComputedStyle(window.document.body);
+                this._paddingRight = computedStyle.getPropertyValue('padding-right');
+                window.document.body.style.paddingRight = `calc(${scrollWidth}px + ${this._paddingRight})`;
+                window.document.body.style.overflow = 'hidden';
+            }
+        }
+    }
+    /**
+     * @private
+     * @return {?}
+     */
+    _resetScroll() {
+        if (Platform.isBrowser && this._config.hasBackdrop && !this._overlayContainer.overlayLen) {
+            if (this._paddingRight) {
+                window.document.body.style.paddingRight = this._paddingRight;
+                this._paddingRight = null;
+            }
+            window.document.body.style.overflow = null;
+        }
+    }
 }
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
 class LyOverlay {
     /**
      * @param {?} _overlayContainer
@@ -3336,13 +3430,14 @@ class LyOverlay {
         this._resizeService = _resizeService;
     }
     /**
+     * @template T
      * @param {?} templateOrComponent
      * @param {?=} context
      * @param {?=} config
      * @return {?}
      */
     create(templateOrComponent, context, config) {
-        return new CreateFromTemplateRef(this._componentFactoryResolver, this._appRef, templateOrComponent, this._overlayContainer, context, this._injector, this._windowScroll, this._resizeService, config);
+        return new OverlayFactory(this._componentFactoryResolver, this._appRef, templateOrComponent, this._overlayContainer, context, this._injector, this._windowScroll, this._resizeService, config);
     }
 }
 LyOverlay.decorators = [
@@ -3373,6 +3468,20 @@ LyOverlayModule.decorators = [
                 entryComponents: [LyOverlayBackdrop]
             },] }
 ];
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/** @type {?} */
+const STYLES_BACKDROP_DARK = ({
+    backgroundColor: 'rgba(0,0,0,.32)'
+});
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
 
 /**
  * @fileoverview added by tsickle
@@ -3659,6 +3768,6 @@ class LySelectionModel {
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { getContrastYIQ, shadowBuilderDeprecated, shadowBuilder, Shadows, THEME_VARIABLES, IS_CORE_THEME, Platform, supportsPassiveEventListeners, LyCommonModule, getNativeElement, NgTranscludeDirective, NgTranscludeModule, toBoolean, defaultEntry, scrollTo, scrollToC, scrollWithAnimation, FocusStatus, LyFocusState, AUI_VERSION, AUI_LAST_UPDATE, LY_HAMMER_OPTIONS, LyHammerGestureConfig, LyPaperBase, LyPaperMixinBase, LyPaper, CoreTheme, LY_THEME_GLOBAL_VARIABLES, LY_THEME, LY_THEME_NAME, converterToCssKeyAndStyle, capitalizeFirstLetter, StylesInDocument, LyTheme2, LyThemeModule, LY_COMMON_STYLES, LyCoreStyles, Undefined, UndefinedValue, eachMedia, isObject, mergeDeep, LyStyleUtils, Dir, DirAlias, DirPosition, LyOverlayContainer, LyOverlayBackdrop, LyOverlay, LyOverlayModule, MutationObserverFactory, ElementObserver, WinResize, WinScroll, mixinStyleUpdater, mixinDisableRipple, mixinColor, mixinBg, mixinRaised, mixinOutlined, mixinElevation, mixinShadowColor, mixinDisabled, mixinTabIndex, Ripple, LyRippleService, invertPlacement, YPosition, XPosition, Positioning, AlignAlias, LySelectionModel, LyWithClass as ɵa };
+export { getContrastYIQ, shadowBuilderDeprecated, shadowBuilder, Shadows, THEME_VARIABLES, IS_CORE_THEME, Platform, supportsPassiveEventListeners, LyCommonModule, getNativeElement, NgTranscludeDirective, NgTranscludeModule, toBoolean, defaultEntry, scrollTo, scrollToC, scrollWithAnimation, FocusStatus, LyFocusState, AUI_VERSION, AUI_LAST_UPDATE, LY_HAMMER_OPTIONS, LyHammerGestureConfig, LyPaperBase, LyPaperMixinBase, LyPaper, CoreTheme, LY_THEME_GLOBAL_VARIABLES, LY_THEME, LY_THEME_NAME, converterToCssKeyAndStyle, capitalizeFirstLetter, StylesInDocument, LyTheme2, LyThemeModule, LY_COMMON_STYLES, LyCoreStyles, Undefined, UndefinedValue, eachMedia, isObject, mergeDeep, LyStyleUtils, Dir, DirAlias, DirPosition, LyOverlayRef, LyOverlayContainer, LyOverlay, LyOverlayModule, LyOverlayConfig, OverlayFactory, createOverlayInjector, STYLES_BACKDROP_DARK, MutationObserverFactory, ElementObserver, WinResize, WinScroll, mixinStyleUpdater, mixinDisableRipple, mixinColor, mixinBg, mixinRaised, mixinOutlined, mixinElevation, mixinShadowColor, mixinDisabled, mixinTabIndex, Ripple, LyRippleService, invertPlacement, YPosition, XPosition, Positioning, AlignAlias, LySelectionModel, LyOverlayBackdrop as ɵc, LyWithClass as ɵa };
 
 //# sourceMappingURL=alyle-ui.js.map

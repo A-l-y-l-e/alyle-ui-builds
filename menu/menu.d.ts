@@ -1,5 +1,5 @@
 import { AfterViewInit, ElementRef, OnDestroy, OnInit, Renderer2, TemplateRef } from '@angular/core';
-import { LyOverlay, LyTheme2, OverlayFromTemplateRef, Placement, XPosition, YPosition } from '@alyle/ui';
+import { LyOverlay, LyTheme2, OverlayFactory, Placement, XPosition, YPosition } from '@alyle/ui';
 /** Menu container */
 export declare class LyMenu implements OnInit, AfterViewInit {
     private _theme;
@@ -39,7 +39,7 @@ export declare class LyMenuTriggerFor implements OnDestroy {
     private elementRef;
     private overlay;
     /** Current menuRef */
-    _menuRef?: OverlayFromTemplateRef;
+    _menuRef?: OverlayFactory;
     lyMenuTriggerFor: TemplateRef<any>;
     constructor(elementRef: ElementRef, overlay: LyOverlay);
     /** @docs-private */

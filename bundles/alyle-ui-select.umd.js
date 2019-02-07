@@ -615,8 +615,7 @@
                         pointerEvents: null
                     },
                     fnDestroy: this.close.bind(this),
-                    onResizeScroll: this._updatePlacement.bind(this),
-                    backdrop: true
+                    onResizeScroll: this._updatePlacement.bind(this)
                 });
                 this._ngZone.onStable.pipe(operators.take(1)).subscribe(function () { return _this._updatePlacement(); });
             };
@@ -1132,7 +1131,8 @@
                         imports: [
                             common.CommonModule,
                             ui.LyCommonModule,
-                            checkbox.LyCheckboxModule
+                            checkbox.LyCheckboxModule,
+                            ui.LyOverlayModule
                         ],
                         exports: [LySelect, LyOption, ui.LyCommonModule]
                     },] }

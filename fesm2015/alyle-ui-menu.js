@@ -137,10 +137,11 @@ LyMenu.propDecorators = {
  * @type {?}
  */
 const menuItemStyles = ({
-    display: 'block',
+    display: 'flex',
     minHeight: '48px',
     borderRadius: 0,
-    width: '100%'
+    width: '100%',
+    justifyContent: 'flex-start'
 });
 class LyMenuItem {
     /**
@@ -211,9 +212,7 @@ class LyMenuTriggerFor {
                     left: 0,
                     pointerEvents: null
                 },
-                fnDestroy: this.detach.bind(this),
-                host: this.elementRef.nativeElement,
-                backdrop: true
+                fnDestroy: this.detach.bind(this)
             });
         }
     }

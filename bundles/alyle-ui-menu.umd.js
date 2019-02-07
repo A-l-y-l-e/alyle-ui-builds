@@ -207,10 +207,11 @@
      * @type {?}
      */
     var menuItemStyles = ({
-        display: 'block',
+        display: 'flex',
         minHeight: '48px',
         borderRadius: 0,
-        width: '100%'
+        width: '100%',
+        justifyContent: 'flex-start'
     });
     var LyMenuItem = /** @class */ (function () {
         function LyMenuItem(_menu, el, theme) {
@@ -286,9 +287,7 @@
                             left: 0,
                             pointerEvents: null
                         },
-                        fnDestroy: this.detach.bind(this),
-                        host: this.elementRef.nativeElement,
-                        backdrop: true
+                        fnDestroy: this.detach.bind(this)
                     });
                 }
             };

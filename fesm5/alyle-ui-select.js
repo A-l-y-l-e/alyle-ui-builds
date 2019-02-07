@@ -6,7 +6,7 @@ import { Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, forwardRef, Host, HostListener, Input, Optional, Renderer2, Self, TemplateRef, ViewChild, NgZone, ContentChildren, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LyOverlay, LySelectionModel, LyTheme2, shadowBuilder, toBoolean, Positioning, mixinStyleUpdater, mixinBg, mixinColor, mixinRaised, mixinDisabled, mixinOutlined, mixinElevation, mixinShadowColor, mixinDisableRipple, mixinTabIndex, LyRippleService, XPosition, YPosition, Dir, LyCommonModule } from '@alyle/ui';
+import { LyOverlay, LySelectionModel, LyTheme2, shadowBuilder, toBoolean, Positioning, mixinStyleUpdater, mixinBg, mixinColor, mixinRaised, mixinDisabled, mixinOutlined, mixinElevation, mixinShadowColor, mixinDisableRipple, mixinTabIndex, LyRippleService, XPosition, YPosition, Dir, LyCommonModule, LyOverlayModule } from '@alyle/ui';
 import { LyCheckboxModule } from '@alyle/ui/checkbox';
 
 /**
@@ -578,8 +578,7 @@ var LySelect = /** @class */ (function (_super) {
                 pointerEvents: null
             },
             fnDestroy: this.close.bind(this),
-            onResizeScroll: this._updatePlacement.bind(this),
-            backdrop: true
+            onResizeScroll: this._updatePlacement.bind(this)
         });
         this._ngZone.onStable.pipe(take(1)).subscribe(function () { return _this._updatePlacement(); });
     };
@@ -1097,7 +1096,8 @@ var LySelectModule = /** @class */ (function () {
                     imports: [
                         CommonModule,
                         LyCommonModule,
-                        LyCheckboxModule
+                        LyCheckboxModule,
+                        LyOverlayModule
                     ],
                     exports: [LySelect, LyOption, LyCommonModule]
                 },] }

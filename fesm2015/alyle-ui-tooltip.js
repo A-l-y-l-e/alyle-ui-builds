@@ -133,7 +133,7 @@ class LyTooltip {
                                 fontSize: '14px',
                             } })), undefined, undefined, STYLE_PRIORITY)
                     ],
-                    host: this._el.nativeElement,
+                    hasBackdrop: false
                 });
                 this._updatePosition();
                 // const position = new Positioning(this.placement, this.xPosition, this.yPosition, this._el.nativeElement, tooltip.containerElement, this._theme.variables, 13);

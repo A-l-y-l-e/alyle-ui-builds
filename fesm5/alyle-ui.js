@@ -3,8 +3,8 @@ import { HammerGestureConfig } from '@angular/platform-browser';
 import { DOCUMENT } from '@angular/common';
 import { map, share, auditTime } from 'rxjs/operators';
 import { Subject, fromEvent, empty, Subscription, merge } from 'rxjs';
-import { InjectionToken, Injectable, Optional, Inject, RendererFactory2, ViewEncapsulation, Directive, ElementRef, Input, NgModule, NgZone, Component, HostListener, TemplateRef, ViewContainerRef, defineInjectable, inject, Renderer2, Injector, ComponentFactoryResolver, ApplicationRef, INJECTOR, isDevMode } from '@angular/core';
-import { __extends, __spread, __assign } from 'tslib';
+import { InjectionToken, Injectable, Optional, Inject, RendererFactory2, ViewEncapsulation, Directive, ElementRef, Input, NgModule, NgZone, ApplicationRef, ComponentFactoryResolver, Injector, TemplateRef, ViewContainerRef, Component, HostListener, defineInjectable, inject, Renderer2, isDevMode, INJECTOR } from '@angular/core';
+import { __assign, __extends, __spread } from 'tslib';
 
 /**
  * @fileoverview added by tsickle
@@ -3228,9 +3228,9 @@ var LyFocusState = /** @class */ (function () {
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
-var AUI_VERSION = '2.1.3-nightly.20190206-jrsxdiwt';
+var AUI_VERSION = '2.3.0';
 /** @type {?} */
-var AUI_LAST_UPDATE = '2019-02-06T08:22:32.188Z';
+var AUI_LAST_UPDATE = '2019-02-07T06:21:45.408Z';
 
 /**
  * @fileoverview added by tsickle
@@ -3363,9 +3363,28 @@ var UndefinedValue = new Undefined();
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
+// @Injectable()
+/**
+ * @template T
+ */
+var  
+// @Injectable()
+/**
+ * @template T
+ */
+LyOverlayRef = /** @class */ (function () {
+    function LyOverlayRef() {
+    }
+    return LyOverlayRef;
+}());
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
 /** @type {?} */
 var styles$1 = function (theme) { return ({
-    overlayBackdrop: {
+    overlay: {
         position: 'fixed',
         top: 0,
         left: 0,
@@ -3387,6 +3406,16 @@ var LyOverlayContainer = /** @class */ (function () {
             this._containerElement = container;
         }
     }
+    Object.defineProperty(LyOverlayContainer.prototype, "overlayLen", {
+        get: /**
+         * @return {?}
+         */
+        function () {
+            return this._items.size;
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(LyOverlayContainer.prototype, "containerElement", {
         get: /**
          * @return {?}
@@ -3459,11 +3488,11 @@ var LyOverlayContainer = /** @class */ (function () {
         if (this._items.size) {
             if (!this._isActiveOverlayContainer) {
                 this._isActiveOverlayContainer = true;
-                this._containerElement.classList.add(this._classes.overlayBackdrop);
+                this._containerElement.classList.add(this._classes.overlay);
             }
         }
         else if (this._isActiveOverlayContainer) {
-            this._containerElement.classList.remove(this._classes.overlayBackdrop);
+            this._containerElement.classList.remove(this._classes.overlay);
             this._isActiveOverlayContainer = false;
         }
     };
@@ -3478,53 +3507,6 @@ var LyOverlayContainer = /** @class */ (function () {
     ]; };
     /** @nocollapse */ LyOverlayContainer.ngInjectableDef = defineInjectable({ factory: function LyOverlayContainer_Factory() { return new LyOverlayContainer(inject(LyTheme2)); }, token: LyOverlayContainer, providedIn: "root" });
     return LyOverlayContainer;
-}());
-/** @type {?} */
-var BACKDROP_STYLES = ({
-    backdrop: {
-        pointerEvents: 'all',
-        userSelect: 'none'
-    }
-});
-var LyOverlayBackdrop = /** @class */ (function () {
-    function LyOverlayBackdrop(el, _theme, _overlayConfig, commonStyles) {
-        this._theme = _theme;
-        this._overlayConfig = _overlayConfig;
-        /**
-         * \@docs-private
-         */
-        this.classes = this._theme.addStyleSheet(BACKDROP_STYLES);
-        el.nativeElement.classList.add(commonStyles.classes.fill);
-        if (_overlayConfig.backdrop) {
-            el.nativeElement.classList.add(this.classes.backdrop);
-        }
-    }
-    /**
-     * @return {?}
-     */
-    LyOverlayBackdrop.prototype.onclick = /**
-     * @return {?}
-     */
-    function () {
-        this._overlayConfig.fnDestroy();
-    };
-    LyOverlayBackdrop.decorators = [
-        { type: Component, args: [{
-                    selector: 'ly-overlay-backdrop',
-                    template: ""
-                }] }
-    ];
-    /** @nocollapse */
-    LyOverlayBackdrop.ctorParameters = function () { return [
-        { type: ElementRef },
-        { type: LyTheme2 },
-        { type: undefined, decorators: [{ type: Inject, args: ['overlayConfig',] }] },
-        { type: LyCoreStyles }
-    ]; };
-    LyOverlayBackdrop.propDecorators = {
-        onclick: [{ type: HostListener, args: ['click',] }]
-    };
-    return LyOverlayBackdrop;
 }());
 
 /**
@@ -3597,18 +3579,107 @@ var WinScroll = /** @class */ (function () {
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
-var CreateFromTemplateRef = /** @class */ (function () {
-    function CreateFromTemplateRef(_componentFactoryResolver, _appRef, _templateRefOrComponent, _overlayContainer, _context, _injector, windowScroll, resizeService, config) {
+var LyOverlayConfig = /** @class */ (function () {
+    function LyOverlayConfig() {
+        this.hasBackdrop = true;
+    }
+    return LyOverlayConfig;
+}());
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/** @type {?} */
+var STYLE_PRIORITY$1 = -2;
+/** @type {?} */
+var STYLES_BACKDROP_ROOT = (__assign({}, LY_COMMON_STYLES.fill, { width: '100vw', height: '100vh', pointerEvents: 'all', userSelect: 'none' }));
+var LyOverlayBackdrop = /** @class */ (function () {
+    function LyOverlayBackdrop(_el, _theme, _config) {
+        this._el = _el;
+        this._config = _config;
+        _el.nativeElement.classList.add(_theme.style(STYLES_BACKDROP_ROOT, STYLE_PRIORITY$1));
+        // this applies custom class for backdrop,
+        // if one is not defined, do nothing.
+        /** @type {?} */
+        var backdropClass = _config.backdropClass;
+        if (backdropClass) {
+            this._el.nativeElement.classList.add(backdropClass);
+        }
+    }
+    /**
+     * @return {?}
+     */
+    LyOverlayBackdrop.prototype.onclick = /**
+     * @return {?}
+     */
+    function () {
+        (/** @type {?} */ (this._config.fnDestroy))();
+    };
+    LyOverlayBackdrop.decorators = [
+        { type: Component, args: [{
+                    selector: 'ly-overlay-backdrop',
+                    template: ""
+                }] }
+    ];
+    /** @nocollapse */
+    LyOverlayBackdrop.ctorParameters = function () { return [
+        { type: ElementRef },
+        { type: LyTheme2 },
+        { type: LyOverlayConfig }
+    ]; };
+    LyOverlayBackdrop.propDecorators = {
+        onclick: [{ type: HostListener, args: ['click',] }]
+    };
+    return LyOverlayBackdrop;
+}());
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/**
+ * @param {?} parent
+ * @param {?} config
+ * @param {?} overlayFactory
+ * @return {?}
+ */
+function createOverlayInjector(parent, config, overlayFactory) {
+    return Injector.create({
+        providers: [
+            {
+                provide: LyOverlayConfig,
+                useValue: config
+            },
+            {
+                provide: LyOverlayRef,
+                useValue: overlayFactory
+            }
+        ],
+        parent: parent
+    });
+}
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/**
+ * @template T
+ */
+var  /**
+ * @template T
+ */
+OverlayFactory = /** @class */ (function () {
+    function OverlayFactory(_componentFactoryResolver, _appRef, _templateRefOrComponent, _overlayContainer, _context, _injector, windowScroll, resizeService, config) {
         var _this = this;
         this._componentFactoryResolver = _componentFactoryResolver;
         this._appRef = _appRef;
         this._overlayContainer = _overlayContainer;
         this._injector = _injector;
-        this.windowSRSub = Subscription.EMPTY;
-        // this._viewRef = _templateRef.createEmbeddedView(_context);
-        // this._viewRef.detectChanges();
+        this._windowSRSub = Subscription.EMPTY;
+        this._config = config = __assign({}, new LyOverlayConfig(), config);
         this._el = document.createElement('div');
-        // this._viewRef.rootNodes.forEach(rootNode => container.appendChild(rootNode));
         /** @type {?} */
         var __styles = {
             position: 'absolute',
@@ -3621,30 +3692,15 @@ var CreateFromTemplateRef = /** @class */ (function () {
             Object.assign(__styles, config.styles);
         }
         /** @type {?} */
-        var newInjector = Injector.create([
-            {
-                provide: 'overlayConfig',
-                useValue: (/** @type {?} */ (__assign({ fnDestroy: this.destroy.bind(this) }, config, { styles: __styles })))
-            }
-        ], this._injector);
-        this.updateStyles(__styles);
+        var newInjector = createOverlayInjector(this._injector, __assign({ fnDestroy: this.destroy.bind(this) }, config, { styles: __styles }), this);
+        this._updateStyles(__styles);
         if (config) {
             if (config.onResizeScroll) {
                 this.onResizeScroll = config.onResizeScroll;
             }
-            this.windowSRSub = merge(windowScroll.scroll$, resizeService.resize$).subscribe(function () {
+            this._windowSRSub = merge(windowScroll.scroll$, resizeService.resize$).subscribe(function () {
                 if (_this.onResizeScroll) {
                     _this.onResizeScroll();
-                }
-                else if (config.host) {
-                    /** @type {?} */
-                    var rect = config.host.getBoundingClientRect();
-                    /** @type {?} */
-                    var newStyles = {
-                        top: rect.top,
-                        left: rect.left
-                    };
-                    _this.updateStyles(newStyles);
                 }
             });
             if (config.classes) {
@@ -3653,14 +3709,17 @@ var CreateFromTemplateRef = /** @class */ (function () {
                 classes.forEach(function (className) { return ((/** @type {?} */ (_this._el))).classList.add(className); });
             }
         }
-        this._compRefOverlayBackdrop = this.generateComponent(LyOverlayBackdrop, newInjector);
-        this._appRef.attachView(this._compRefOverlayBackdrop.hostView);
-        /** @type {?} */
-        var backdropEl = this._compRefOverlayBackdrop.location.nativeElement;
-        this._overlayContainer._add(backdropEl);
-        this._appendComponentToBody(_templateRefOrComponent, _context, this._injector);
+        if (config.hasBackdrop) {
+            this._compRefOverlayBackdrop = this._generateComponent(LyOverlayBackdrop, newInjector);
+            this._appRef.attachView(this._compRefOverlayBackdrop.hostView);
+            /** @type {?} */
+            var backdropEl = this._compRefOverlayBackdrop.location.nativeElement;
+            this._overlayContainer._add(backdropEl);
+        }
+        this._appendComponentToBody(_templateRefOrComponent, _context, newInjector);
+        this._hiddeScroll();
     }
-    Object.defineProperty(CreateFromTemplateRef.prototype, "containerElement", {
+    Object.defineProperty(OverlayFactory.prototype, "containerElement", {
         get: /**
          * @return {?}
          */
@@ -3670,11 +3729,23 @@ var CreateFromTemplateRef = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(OverlayFactory.prototype, "componentRef", {
+        get: /**
+         * @return {?}
+         */
+        function () {
+            return this._compRef;
+        },
+        enumerable: true,
+        configurable: true
+    });
     /**
+     * @private
      * @param {?} __styles
      * @return {?}
      */
-    CreateFromTemplateRef.prototype.updateStyles = /**
+    OverlayFactory.prototype._updateStyles = /**
+     * @private
      * @param {?} __styles
      * @return {?}
      */
@@ -3698,7 +3769,7 @@ var CreateFromTemplateRef = /** @class */ (function () {
      * @param {?} injector
      * @return {?}
      */
-    CreateFromTemplateRef.prototype._appendComponentToBody = /**
+    OverlayFactory.prototype._appendComponentToBody = /**
      * @private
      * @param {?} type
      * @param {?} context
@@ -3722,17 +3793,20 @@ var CreateFromTemplateRef = /** @class */ (function () {
             this._overlayContainer._add(this._el);
         }
         else {
-            this._compRef = this.generateComponent((/** @type {?} */ (type)), injector);
-            this._el = this._compRef.location.nativeElement;
+            this._compRef = this._generateComponent(type, injector);
+            this._appRef.attachView(this._compRef.hostView);
+            (/** @type {?} */ (this._el)).appendChild(this._compRef.location.nativeElement);
             this._overlayContainer._add(this._el);
         }
     };
     /**
+     * @private
      * @param {?} type
      * @param {?} injector
      * @return {?}
      */
-    CreateFromTemplateRef.prototype.generateComponent = /**
+    OverlayFactory.prototype._generateComponent = /**
+     * @private
      * @param {?} type
      * @param {?} injector
      * @return {?}
@@ -3742,21 +3816,30 @@ var CreateFromTemplateRef = /** @class */ (function () {
         var factory = this._componentFactoryResolver.resolveComponentFactory(type);
         return factory.create(injector);
     };
+    /** Detaches a view from dirty checking again of ApplicationRef. */
     /**
+     * Detaches a view from dirty checking again of ApplicationRef.
      * @return {?}
      */
-    CreateFromTemplateRef.prototype.detach = /**
+    OverlayFactory.prototype.detach = /**
+     * Detaches a view from dirty checking again of ApplicationRef.
      * @return {?}
      */
     function () {
         if (this._viewRef) {
             this._appRef.detachView(this._viewRef);
         }
+        if (this._compRef) {
+            this._appRef.detachView(this._compRef.hostView);
+        }
     };
+    /** Remove element of DOM */
     /**
+     * Remove element of DOM
      * @return {?}
      */
-    CreateFromTemplateRef.prototype.remove = /**
+    OverlayFactory.prototype.remove = /**
+     * Remove element of DOM
      * @return {?}
      */
     function () {
@@ -3769,6 +3852,7 @@ var CreateFromTemplateRef = /** @class */ (function () {
             this._compRef.destroy();
             this._overlayContainer._remove(this._el);
             this._el = undefined;
+            this._compRef = null;
         }
         else if (this._el) {
             // remove if template is string
@@ -3782,20 +3866,67 @@ var CreateFromTemplateRef = /** @class */ (function () {
             var backdropEl = this._compRefOverlayBackdrop.location.nativeElement;
             this._overlayContainer._remove(backdropEl);
         }
-        this.windowSRSub.unsubscribe();
+        this._windowSRSub.unsubscribe();
+        this._resetScroll();
     };
+    /** Detach & remove */
     /**
+     * Detach & remove
      * @return {?}
      */
-    CreateFromTemplateRef.prototype.destroy = /**
+    OverlayFactory.prototype.destroy = /**
+     * Detach & remove
      * @return {?}
      */
     function () {
         this.detach();
         this.remove();
     };
-    return CreateFromTemplateRef;
+    /**
+     * @private
+     * @return {?}
+     */
+    OverlayFactory.prototype._hiddeScroll = /**
+     * @private
+     * @return {?}
+     */
+    function () {
+        if (Platform.isBrowser && this._config.hasBackdrop && this._overlayContainer.overlayLen) {
+            /** @type {?} */
+            var scrollWidth = window.innerWidth - window.document.body.clientWidth;
+            if (scrollWidth) {
+                /** @type {?} */
+                var computedStyle = getComputedStyle(window.document.body);
+                this._paddingRight = computedStyle.getPropertyValue('padding-right');
+                window.document.body.style.paddingRight = "calc(" + scrollWidth + "px + " + this._paddingRight + ")";
+                window.document.body.style.overflow = 'hidden';
+            }
+        }
+    };
+    /**
+     * @private
+     * @return {?}
+     */
+    OverlayFactory.prototype._resetScroll = /**
+     * @private
+     * @return {?}
+     */
+    function () {
+        if (Platform.isBrowser && this._config.hasBackdrop && !this._overlayContainer.overlayLen) {
+            if (this._paddingRight) {
+                window.document.body.style.paddingRight = this._paddingRight;
+                this._paddingRight = null;
+            }
+            window.document.body.style.overflow = null;
+        }
+    };
+    return OverlayFactory;
 }());
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
 var LyOverlay = /** @class */ (function () {
     function LyOverlay(_overlayContainer, _componentFactoryResolver, _appRef, _injector, _windowScroll, _resizeService) {
         this._overlayContainer = _overlayContainer;
@@ -3806,19 +3937,21 @@ var LyOverlay = /** @class */ (function () {
         this._resizeService = _resizeService;
     }
     /**
+     * @template T
      * @param {?} templateOrComponent
      * @param {?=} context
      * @param {?=} config
      * @return {?}
      */
     LyOverlay.prototype.create = /**
+     * @template T
      * @param {?} templateOrComponent
      * @param {?=} context
      * @param {?=} config
      * @return {?}
      */
     function (templateOrComponent, context, config) {
-        return new CreateFromTemplateRef(this._componentFactoryResolver, this._appRef, templateOrComponent, this._overlayContainer, context, this._injector, this._windowScroll, this._resizeService, config);
+        return new OverlayFactory(this._componentFactoryResolver, this._appRef, templateOrComponent, this._overlayContainer, context, this._injector, this._windowScroll, this._resizeService, config);
     };
     LyOverlay.decorators = [
         { type: Injectable, args: [{
@@ -3853,6 +3986,20 @@ var LyOverlayModule = /** @class */ (function () {
     ];
     return LyOverlayModule;
 }());
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/** @type {?} */
+var STYLES_BACKDROP_DARK = ({
+    backgroundColor: 'rgba(0,0,0,.32)'
+});
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
 
 /**
  * @fileoverview added by tsickle
@@ -4264,6 +4411,6 @@ LySelectionModel = /** @class */ (function () {
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { getContrastYIQ, shadowBuilderDeprecated, shadowBuilder, Shadows, THEME_VARIABLES, IS_CORE_THEME, Platform, supportsPassiveEventListeners, LyCommonModule, getNativeElement, NgTranscludeDirective, NgTranscludeModule, toBoolean, defaultEntry, scrollTo, scrollToC, scrollWithAnimation, FocusStatus, LyFocusState, AUI_VERSION, AUI_LAST_UPDATE, LY_HAMMER_OPTIONS, LyHammerGestureConfig, LyPaperBase, LyPaperMixinBase, LyPaper, CoreTheme, LY_THEME_GLOBAL_VARIABLES, LY_THEME, LY_THEME_NAME, converterToCssKeyAndStyle, capitalizeFirstLetter, StylesInDocument, LyTheme2, LyThemeModule, LY_COMMON_STYLES, LyCoreStyles, Undefined, UndefinedValue, eachMedia, isObject, mergeDeep, LyStyleUtils, Dir, DirAlias, DirPosition, LyOverlayContainer, LyOverlayBackdrop, LyOverlay, LyOverlayModule, MutationObserverFactory, ElementObserver, WinResize, WinScroll, mixinStyleUpdater, mixinDisableRipple, mixinColor, mixinBg, mixinRaised, mixinOutlined, mixinElevation, mixinShadowColor, mixinDisabled, mixinTabIndex, Ripple, LyRippleService, invertPlacement, YPosition, XPosition, Positioning, AlignAlias, LySelectionModel, LyWithClass as ɵa };
+export { getContrastYIQ, shadowBuilderDeprecated, shadowBuilder, Shadows, THEME_VARIABLES, IS_CORE_THEME, Platform, supportsPassiveEventListeners, LyCommonModule, getNativeElement, NgTranscludeDirective, NgTranscludeModule, toBoolean, defaultEntry, scrollTo, scrollToC, scrollWithAnimation, FocusStatus, LyFocusState, AUI_VERSION, AUI_LAST_UPDATE, LY_HAMMER_OPTIONS, LyHammerGestureConfig, LyPaperBase, LyPaperMixinBase, LyPaper, CoreTheme, LY_THEME_GLOBAL_VARIABLES, LY_THEME, LY_THEME_NAME, converterToCssKeyAndStyle, capitalizeFirstLetter, StylesInDocument, LyTheme2, LyThemeModule, LY_COMMON_STYLES, LyCoreStyles, Undefined, UndefinedValue, eachMedia, isObject, mergeDeep, LyStyleUtils, Dir, DirAlias, DirPosition, LyOverlayRef, LyOverlayContainer, LyOverlay, LyOverlayModule, LyOverlayConfig, OverlayFactory, createOverlayInjector, STYLES_BACKDROP_DARK, MutationObserverFactory, ElementObserver, WinResize, WinScroll, mixinStyleUpdater, mixinDisableRipple, mixinColor, mixinBg, mixinRaised, mixinOutlined, mixinElevation, mixinShadowColor, mixinDisabled, mixinTabIndex, Ripple, LyRippleService, invertPlacement, YPosition, XPosition, Positioning, AlignAlias, LySelectionModel, LyOverlayBackdrop as ɵc, LyWithClass as ɵa };
 
 //# sourceMappingURL=alyle-ui.js.map

@@ -1,11 +1,10 @@
-import { ElementRef } from '@angular/core';
 import { LyTheme2 } from '../theme/theme2.service';
-import { LyCoreStyles } from '../styles/core-styles';
 export declare class LyOverlayContainer {
     private theme;
     private _classes;
     protected readonly _containerElement: HTMLElement;
     private _items;
+    readonly overlayLen: number;
     private _isActiveOverlayContainer;
     constructor(theme: LyTheme2);
     readonly containerElement: HTMLElement;
@@ -24,12 +23,4 @@ export declare class LyOverlayContainer {
      * @ignore
      */
     private _update;
-}
-export declare class LyOverlayBackdrop {
-    private _theme;
-    private _overlayConfig;
-    /** @docs-private */
-    readonly classes: Record<"backdrop", string>;
-    onclick(): void;
-    constructor(el: ElementRef, _theme: LyTheme2, _overlayConfig: any, commonStyles: LyCoreStyles);
 }

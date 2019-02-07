@@ -1,6 +1,6 @@
 import { EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs';
-import { OverlayFromTemplateRef, LyTheme2 } from '@alyle/ui';
+import { OverlayFactory, LyTheme2 } from '@alyle/ui';
 import { LySnackBarService } from './snack-bar.service';
 import { LySnackBarDismiss } from './snack-bar';
 export declare class LySnackBarRef {
@@ -14,7 +14,7 @@ export declare class LySnackBarRef {
     private readonly _afterDismissed;
     /** Gets an observable that is notified when the snack bar is finished closing. */
     afterDismissed(): Observable<void>;
-    constructor(_snackBarService: LySnackBarService, _overlay: OverlayFromTemplateRef | null, _afterDismissedEventEmitter: EventEmitter<LySnackBarDismiss>, duration: number | 'Infinity', _theme: LyTheme2);
+    constructor(_snackBarService: LySnackBarService, _overlay: OverlayFactory | null, _afterDismissedEventEmitter: EventEmitter<LySnackBarDismiss>, duration: number | 'Infinity', _theme: LyTheme2);
     dismiss(): void;
     dismissWithAction(): void;
 }

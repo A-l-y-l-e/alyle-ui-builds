@@ -63,7 +63,7 @@ export declare class LyTheme2 {
      * @param instance The instance of this, this replaces the existing style with a new one when it changes
      * @param parentStyle
      */
-    addStyle(id: string, style?: StyleContainerFn, el?: any, instance?: string | null, priority?: number | null, parentStyle?: Styles): string;
+    addStyle(id: string, style?: StyleDeclarationsBlock, el?: any, instance?: string | null, priority?: number | null, parentStyle?: Styles): string;
     /**
      * Create basic style
      * @param style Styles.
@@ -71,7 +71,7 @@ export declare class LyTheme2 {
      * @param priority Priority of style
      * @param parentStyle
      */
-    style(style: StyleContainerFn, priority?: number | null, parentStyle?: Styles): string;
+    style(style: StyleDeclarationsBlock, priority?: number | null, parentStyle?: Styles): string;
     private updateClassName;
     updateClass(element: any, renderer: Renderer2, newClass: string, oldClass?: string): string;
     setTheme(nam: string): void;
@@ -112,9 +112,9 @@ export interface StyleGroup {
     [key: string]: StyleContainer | string | undefined | null;
 }
 /**
- * StyleContainer or fn that return StyleContainer
+ * CSS declarations block
  */
-export declare type StyleContainerFn = ((T: any) => StyleContainer | string) | StyleContainer | string | null | undefined;
+export declare type StyleDeclarationsBlock = ((T: any) => StyleContainer | string) | StyleContainer | string | null | undefined;
 export declare type Styles = ((T: any) => StyleGroup) | StyleGroup | undefined | null;
 export interface Keyframes {
     [name: string]: {

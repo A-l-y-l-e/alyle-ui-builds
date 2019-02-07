@@ -144,7 +144,7 @@ var LyTooltip = /** @class */ (function () {
                             }, _a)));
                         }, undefined, undefined, STYLE_PRIORITY)
                     ],
-                    host: _this._el.nativeElement,
+                    hasBackdrop: false
                 });
                 _this._updatePosition();
                 // const position = new Positioning(this.placement, this.xPosition, this.yPosition, this._el.nativeElement, tooltip.containerElement, this._theme.variables, 13);

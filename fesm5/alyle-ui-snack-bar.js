@@ -152,6 +152,7 @@ var LySnackBar = /** @class */ (function () {
                 // this remove previous style
                 justifyContent: null
             },
+            hasBackdrop: false,
             classes: [
                 this._theme.addStyle('SnackBar', function (theme) {
                     var _a;

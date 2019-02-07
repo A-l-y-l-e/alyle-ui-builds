@@ -28,6 +28,7 @@
 |card|✔️|✔️|[Docs](https://alyle-ui.firebaseapp.com/components/card)|
 |carousel|✔️|✔️|[Docs](https://alyle-ui.firebaseapp.com/components/carousel)|
 |checkbox|✔️|✔️|[Docs](https://alyle-ui.firebaseapp.com/components/checkbox)|
+|dialog|✔️|✔️|[Docs](https://alyle-ui.firebaseapp.com/components/dialog)|
 |divider|✔️|✔️|[Docs](https://alyle-ui.firebaseapp.com/components/divider)|
 |drawer|✔️|✔️|[Docs](https://alyle-ui.firebaseapp.com/components/drawer)|
 |field|✔️|✔️|[Docs](https://alyle-ui.firebaseapp.com/components/field)|
@@ -45,6 +46,10 @@
 |tooltip|✔️|✔️|[Docs](https://alyle-ui.firebaseapp.com/components/tooltip)|
 |typography|✔️|✔️|[Docs](https://alyle-ui.firebaseapp.com/components/typography)|
 
-## Questions?
+### Questions?
 
 If you have any questions, ideas or you want to discuss with Alyle UI community, join the chat at [Discord](https://discord.gg/65hMpAJ)
+
+### Did you find an bug?
+
+Please create a report to help us improve, you can do in [Github](https://github.com/A-l-y-l-e/Alyle-UI/issues/new/choose) or [Discord](https://discord.gg/65hMpAJ)</a>.
