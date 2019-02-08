@@ -3228,9 +3228,9 @@ var LyFocusState = /** @class */ (function () {
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
-var AUI_VERSION = '2.3.1-nightly.20190207-jruct5x6';
+var AUI_VERSION = '2.3.1-nightly.20190208-jrvs8od5';
 /** @type {?} */
-var AUI_LAST_UPDATE = '2019-02-07T08:22:22.264Z';
+var AUI_LAST_UPDATE = '2019-02-08T08:22:06.424Z';
 
 /**
  * @fileoverview added by tsickle

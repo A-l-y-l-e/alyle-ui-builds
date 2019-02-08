@@ -219,7 +219,7 @@ class LySelect extends LySelectMixinBase {
                         /** @type {?} */
                         const values = [];
                         this.options.forEach(opt => {
-                            if (this.value.some(_ => !this._selectionModel._selectionMap.has(this.valueKey(_)) && this._valueKey(_) === this._valueKeyFn(opt))) {
+                            if (this.value.some(_ => this._valueKey(_) === this._valueKeyFn(opt))) {
                                 values.push(opt);
                             }
                         });

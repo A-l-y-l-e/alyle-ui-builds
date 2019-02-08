@@ -237,7 +237,7 @@ var LySelect = /** @class */ (function (_super) {
                             /** @type {?} */
                             var values_1 = [];
                             this.options.forEach(function (opt) {
-                                if (_this.value.some(function (_) { return !_this._selectionModel._selectionMap.has(_this.valueKey(_)) && _this._valueKey(_) === _this._valueKeyFn(opt); })) {
+                                if (_this.value.some(function (_) { return _this._valueKey(_) === _this._valueKeyFn(opt); })) {
                                     values_1.push(opt);
                                 }
                             });
