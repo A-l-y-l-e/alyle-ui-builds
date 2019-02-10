@@ -3,7 +3,7 @@ import { HammerGestureConfig } from '@angular/platform-browser';
 import { DOCUMENT } from '@angular/common';
 import { map, share, auditTime } from 'rxjs/operators';
 import { Subject, fromEvent, empty, Subscription, merge } from 'rxjs';
-import { InjectionToken, Injectable, Optional, Inject, RendererFactory2, ViewEncapsulation, Directive, ElementRef, Input, NgModule, NgZone, ApplicationRef, ComponentFactoryResolver, Injector, TemplateRef, ViewContainerRef, Component, HostListener, defineInjectable, inject, Renderer2, isDevMode, INJECTOR } from '@angular/core';
+import { InjectionToken, Injectable, Optional, Inject, RendererFactory2, ViewEncapsulation, Directive, ElementRef, Input, NgModule, NgZone, Injector, ApplicationRef, ComponentFactoryResolver, TemplateRef, ViewContainerRef, Component, HostListener, defineInjectable, inject, Renderer2, isDevMode, INJECTOR } from '@angular/core';
 import { __assign, __extends, __spread } from 'tslib';
 
 /**
@@ -3228,9 +3228,9 @@ var LyFocusState = /** @class */ (function () {
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
-var AUI_VERSION = '2.3.1-nightly.20190210-jryn4gca';
+var AUI_VERSION = '2.3.1';
 /** @type {?} */
-var AUI_LAST_UPDATE = '2019-02-10T08:22:09.848Z';
+var AUI_LAST_UPDATE = '2019-02-10T19:10:53.399Z';
 
 /**
  * @fileoverview added by tsickle

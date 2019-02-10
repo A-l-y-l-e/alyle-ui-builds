@@ -3292,9 +3292,9 @@
      * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /** @type {?} */
-    var AUI_VERSION = '2.3.1-nightly.20190210-jryn4gca';
+    var AUI_VERSION = '2.3.1';
     /** @type {?} */
-    var AUI_LAST_UPDATE = '2019-02-10T08:22:09.848Z';
+    var AUI_LAST_UPDATE = '2019-02-10T19:10:53.399Z';
 
     /**
      * @fileoverview added by tsickle
