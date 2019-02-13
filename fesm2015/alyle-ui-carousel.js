@@ -1,4 +1,6 @@
 import * as _chroma from 'chroma-js';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { Component, Directive, ContentChildren, Input, ElementRef, ChangeDetectionStrategy, ChangeDetectorRef, forwardRef, Renderer2, ViewChild, ViewEncapsulation, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Platform, LyTheme2, toBoolean, DirAlias, LyCommonModule } from '@alyle/ui';
@@ -157,6 +159,10 @@ class LyCarousel {
         this.mode = CarouselMode.default;
         this.interval = 7000;
         this.selectedIndex = 0;
+        /**
+         * Emits whenever the component is destroyed.
+         */
+        this._destroy = new Subject();
         this._renderer.addClass(_el.nativeElement, this.classes.root);
     }
     /**
@@ -190,6 +196,7 @@ class LyCarousel {
         if (Platform.isBrowser) {
             this._resetInterval();
         }
+        this.lyItems.changes.pipe(takeUntil(this._destroy)).subscribe(() => this._markForCheck());
     }
     /**
      * @return {?}
@@ -204,6 +211,8 @@ class LyCarousel {
      * @return {?}
      */
     ngOnDestroy() {
+        this._destroy.next();
+        this._destroy.complete();
         if (Platform.isBrowser) {
             this.stop();
         }

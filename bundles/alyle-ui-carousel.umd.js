@@ -1,8 +1,8 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('chroma-js'), require('@angular/core'), require('@angular/common'), require('@alyle/ui')) :
-    typeof define === 'function' && define.amd ? define('@alyle/ui/carousel', ['exports', 'chroma-js', '@angular/core', '@angular/common', '@alyle/ui'], factory) :
-    (factory((global.ly = global.ly || {}, global.ly.carousel = {}),global.chroma,global.ng.core,global.ng.common,global.ly.core));
-}(this, (function (exports,_chroma,core,common,ui) { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('chroma-js'), require('rxjs'), require('rxjs/operators'), require('@angular/core'), require('@angular/common'), require('@alyle/ui')) :
+    typeof define === 'function' && define.amd ? define('@alyle/ui/carousel', ['exports', 'chroma-js', 'rxjs', 'rxjs/operators', '@angular/core', '@angular/common', '@alyle/ui'], factory) :
+    (factory((global.ly = global.ly || {}, global.ly.carousel = {}),global.chroma,global.rxjs,global.rxjs.operators,global.ng.core,global.ng.common,global.ly.core));
+}(this, (function (exports,_chroma,rxjs,operators,core,common,ui) { 'use strict';
 
     /**
      * @fileoverview added by tsickle
@@ -152,6 +152,10 @@
             this.mode = CarouselMode.default;
             this.interval = 7000;
             this.selectedIndex = 0;
+            /**
+             * Emits whenever the component is destroyed.
+             */
+            this._destroy = new rxjs.Subject();
             this._renderer.addClass(_el.nativeElement, this.classes.root);
         }
         Object.defineProperty(LyCarousel.prototype, "touch", {
@@ -184,12 +188,14 @@
          * @return {?}
          */
             function () {
+                var _this = this;
                 if (!this.touch) {
                     this.touch = false;
                 }
                 if (ui.Platform.isBrowser) {
                     this._resetInterval();
                 }
+                this.lyItems.changes.pipe(operators.takeUntil(this._destroy)).subscribe(function () { return _this._markForCheck(); });
             };
         /**
          * @return {?}
@@ -210,6 +216,8 @@
          * @return {?}
          */
             function () {
+                this._destroy.next();
+                this._destroy.complete();
                 if (ui.Platform.isBrowser) {
                     this.stop();
                 }

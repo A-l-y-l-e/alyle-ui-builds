@@ -127,6 +127,8 @@ export declare class LyCarousel implements OnInit, AfterViewInit, OnDestroy {
     _selectedElement: HTMLElement;
     private _touch;
     private _slideClass;
+    /** Emits whenever the component is destroyed. */
+    private readonly _destroy;
     touch: boolean;
     constructor(_el: ElementRef, _cd: ChangeDetectorRef, _theme: LyTheme2, _renderer: Renderer2);
     ngOnInit(): void;
