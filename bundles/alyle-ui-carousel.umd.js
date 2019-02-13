@@ -188,14 +188,12 @@
          * @return {?}
          */
             function () {
-                var _this = this;
                 if (!this.touch) {
                     this.touch = false;
                 }
                 if (ui.Platform.isBrowser) {
                     this._resetInterval();
                 }
-                this.lyItems.changes.pipe(operators.takeUntil(this._destroy)).subscribe(function () { return _this._markForCheck(); });
             };
         /**
          * @return {?}
@@ -204,10 +202,12 @@
          * @return {?}
          */
             function () {
+                var _this = this;
                 this._renderer.addClass(this.slideContainer.nativeElement, this.classes.slideContainer);
                 if (ui.Platform.isBrowser) {
                     this._renderer.addClass(this.slideContainer.nativeElement, this.classes.slideAnim);
                 }
+                this.lyItems.changes.pipe(operators.takeUntil(this._destroy)).subscribe(function () { return _this._markForCheck(); });
             };
         /**
          * @return {?}

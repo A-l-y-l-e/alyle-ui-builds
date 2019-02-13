@@ -191,14 +191,12 @@ var LyCarousel = /** @class */ (function () {
      * @return {?}
      */
     function () {
-        var _this = this;
         if (!this.touch) {
             this.touch = false;
         }
         if (Platform.isBrowser) {
             this._resetInterval();
         }
-        this.lyItems.changes.pipe(takeUntil(this._destroy)).subscribe(function () { return _this._markForCheck(); });
     };
     /**
      * @return {?}
@@ -207,10 +205,12 @@ var LyCarousel = /** @class */ (function () {
      * @return {?}
      */
     function () {
+        var _this = this;
         this._renderer.addClass(this.slideContainer.nativeElement, this.classes.slideContainer);
         if (Platform.isBrowser) {
             this._renderer.addClass(this.slideContainer.nativeElement, this.classes.slideAnim);
         }
+        this.lyItems.changes.pipe(takeUntil(this._destroy)).subscribe(function () { return _this._markForCheck(); });
     };
     /**
      * @return {?}
