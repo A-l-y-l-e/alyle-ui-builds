@@ -17,7 +17,10 @@ var STYLES = function (theme) { return ({
     root: __assign({ display: 'inline-flex', position: 'relative', fontSize: '1.25em', flexShrink: 0, alignItems: 'center', userSelect: 'none', borderRadius: '50%', textAlign: 'center', justifyContent: 'center' }, theme.avatar.root, { '&>img': {
             width: '100%',
             height: '100%',
-            borderRadius: '50%'
+            borderRadius: '50%',
+            display: 'block',
+            objectFit: 'cover',
+            '-webkit-background-clip': 'padding-box'
         } })
 }); };
 /**

@@ -13,6 +13,15 @@
      * @type {?}
      */
     var chroma = _chroma;
+    /**
+     * Default interval in ms
+     * @type {?}
+     */
+    var DEFAULT_INTERVAL = 7000;
+    /** @type {?} */
+    var DEFAULT_AUTOPLAY = true;
+    /** @type {?} */
+    var DEFAULT_HAS_PROGRESS_BAR = false;
     /** @type {?} */
     var STYLE_PRIORITY = -2;
     /** @type {?} */
@@ -124,6 +133,33 @@
                     transform: 'scale(1)',
                     opacity: 1
                 }
+            },
+            barContainer: {
+                background: chroma(theme.background.primary.default).alpha(.25).css(),
+                height: '4px',
+                position: 'absolute',
+                bottom: 0,
+                width: '100%',
+            },
+            bar: {
+                height: '4px',
+                position: 'absolute',
+                bottom: 0,
+                width: '100%',
+                animationName: '{interval}',
+                animationTimingFunction: 'linear',
+                animationIterationCount: 'infinite',
+                background: theme.text.primary
+            },
+            $keyframes: {
+                interval: {
+                    0: {
+                        transform: 'translateX(0%)'
+                    },
+                    100: {
+                        transform: "translateX(" + (dir === 'left' ? '-' : '') + "100%)"
+                    }
+                }
             }
         };
     };
@@ -150,7 +186,7 @@
              * \@docs-private
              */
             this.mode = CarouselMode.default;
-            this.interval = 7000;
+            this.interval = DEFAULT_INTERVAL;
             this.selectedIndex = 0;
             /**
              * Emits whenever the component is destroyed.
@@ -158,6 +194,17 @@
             this._destroy = new rxjs.Subject();
             this._renderer.addClass(_el.nativeElement, this.classes.root);
         }
+        Object.defineProperty(LyCarousel.prototype, "_isIntervalFn", {
+            /** @internal */
+            get: /**
+             * \@internal
+             * @return {?}
+             */ function () {
+                return !!this._intervalFn;
+            },
+            enumerable: true,
+            configurable: true
+        });
         Object.defineProperty(LyCarousel.prototype, "touch", {
             get: /**
              * @return {?}
@@ -181,6 +228,46 @@
             enumerable: true,
             configurable: true
         });
+        Object.defineProperty(LyCarousel.prototype, "autoplay", {
+            get: /**
+             * @return {?}
+             */ function () {
+                return this._autoplay;
+            },
+            set: /**
+             * @param {?} val
+             * @return {?}
+             */ function (val) {
+                /** @type {?} */
+                var newVal = ui.toBoolean(val);
+                this._autoplay = newVal;
+                if (newVal) {
+                    this._resetInterval();
+                }
+                else {
+                    this.stop();
+                }
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(LyCarousel.prototype, "hasProgressBar", {
+            get: /**
+             * @return {?}
+             */ function () {
+                return this._hasProgressBar;
+            },
+            set: /**
+             * @param {?} val
+             * @return {?}
+             */ function (val) {
+                /** @type {?} */
+                var newVal = ui.toBoolean(val);
+                this._hasProgressBar = newVal;
+            },
+            enumerable: true,
+            configurable: true
+        });
         /**
          * @return {?}
          */
@@ -191,8 +278,11 @@
                 if (!this.touch) {
                     this.touch = false;
                 }
-                if (ui.Platform.isBrowser) {
-                    this._resetInterval();
+                if (this.autoplay == null) {
+                    this.autoplay = DEFAULT_AUTOPLAY;
+                }
+                if (this.hasProgressBar == null) {
+                    this.hasProgressBar = DEFAULT_HAS_PROGRESS_BAR;
                 }
             };
         /**
@@ -336,7 +426,9 @@
                     }, this._slide.nativeElement, this._slideClass, STYLE_PRIORITY);
                 }
                 if (!notResetInterval) {
-                    this._resetInterval();
+                    if (this.autoplay) {
+                        this._resetInterval();
+                    }
                 }
             };
         /**
@@ -389,11 +481,34 @@
          */
             function () {
                 var _this = this;
-                this.stop();
-                this._intervalFn = ( /** @type {?} */(setInterval(function () {
-                    _this.next(true);
-                    _this._markForCheck();
-                }, this.interval)));
+                if (ui.Platform.isBrowser) {
+                    this.stop();
+                    this._restartProgressBarAnimation();
+                    this._markForCheck();
+                    this._intervalFn = ( /** @type {?} */(setInterval(function () {
+                        _this.next(true);
+                        _this._restartProgressBarAnimation();
+                        _this._markForCheck();
+                    }, this.interval)));
+                }
+            };
+        /**
+         * @private
+         * @return {?}
+         */
+        LyCarousel.prototype._restartProgressBarAnimation = /**
+         * @private
+         * @return {?}
+         */
+            function () {
+                if (this.hasProgressBar && this._progressBar) {
+                    /** @type {?} */
+                    var el = this._progressBar.nativeElement;
+                    // Hack for restart animation
+                    el.style.animationName = 'øfakeName';
+                    window.getComputedStyle(el).getPropertyValue('opacity');
+                    el.style.animationName = '';
+                }
             };
         /**
          * @private
@@ -424,7 +539,7 @@
         LyCarousel.decorators = [
             { type: core.Component, args: [{
                         selector: 'ly-carousel',
-                        template: "<div\n(slidestart)=\"touch && _onDragStart()\"\n(slideleft)=\"touch && _onDrag($event)\"\n(slideright)=\"touch && _onDrag($event)\"\n(slidecancel)=\"touch && _onDragCancel()\"\n(slideend)=\"touch && _onDragEnd($event)\"\n#slideContainer\n>\n  <div #_slide [className]=\"classes.slide\">\n    <ng-content></ng-content>\n  </div>\n  <div [className]=\"classes.carouselIndicators\" *ngIf=\"lyItems.length !== 1\">\n      <div tabindex=\"0\"\n      (click)=\"_select(i)\"\n      role=\"button\"\n      *ngFor=\"let item of lyItems; let i = index\">\n      <span ly-paper\n      color=\"#000\"\n      bg=\"background:primary\"\n      [class.active]=\"selectedIndex==i\"\n      [elevation]=\"8\"\n      [shadowColor]=\"'text'\"\n      ></span>\n      </div>\n  </div>\n  <div [ngClass]=\"[classes.actions, 'left']\" (click)=\"prev()\">\n    <svg viewBox=\"0 0 24 24\"><path d=\"M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z\"></path></svg>\n  </div>\n  <div [ngClass]=\"[classes.actions, 'right']\" (click)=\"next()\">\n    <svg viewBox=\"0 0 24 24\"><path d=\"M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z\"></path></svg>\n  </div>\n</div>",
+                        template: "<div\n(slidestart)=\"touch && _onDragStart()\"\n(slideleft)=\"touch && _onDrag($event)\"\n(slideright)=\"touch && _onDrag($event)\"\n(slidecancel)=\"touch && _onDragCancel()\"\n(slideend)=\"touch && _onDragEnd($event)\"\n#slideContainer\n>\n  <div #_slide [className]=\"classes.slide\">\n    <ng-content></ng-content>\n  </div>\n  <div [className]=\"classes.carouselIndicators\" *ngIf=\"lyItems.length !== 1\">\n    <div tabindex=\"0\"\n      (click)=\"_select(i)\"\n      role=\"button\"\n      *ngFor=\"let item of lyItems; index as i\"\n    >\n      <span ly-paper\n      color=\"#000\"\n      bg=\"background:primary\"\n      [class.active]=\"selectedIndex==i\"\n      [elevation]=\"8\"\n      [shadowColor]=\"'text'\"></span>\n    </div>\n  </div>\n  <div [ngClass]=\"[classes.actions, 'left']\" (click)=\"prev()\">\n    <svg viewBox=\"0 0 24 24\"><path d=\"M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z\"></path></svg>\n  </div>\n  <div [ngClass]=\"[classes.actions, 'right']\" (click)=\"next()\">\n    <svg viewBox=\"0 0 24 24\"><path d=\"M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z\"></path></svg>\n  </div>\n  <div\n    [className]=\"classes.barContainer\"\n    *ngIf=\"hasProgressBar && _isIntervalFn && interval && autoplay\"\n  >\n    <div\n      [className]=\"classes.bar\"\n      #_progressBar\n      [style.animation-duration]=\"interval + 'ms'\"\n    ></div>\n  </div>\n</div>",
                         changeDetection: core.ChangeDetectionStrategy.OnPush,
                         preserveWhitespaces: false,
                         encapsulation: core.ViewEncapsulation.None
@@ -442,11 +557,14 @@
         LyCarousel.propDecorators = {
             slideContainer: [{ type: core.ViewChild, args: ['slideContainer',] }],
             _slide: [{ type: core.ViewChild, args: ['_slide',] }],
+            _progressBar: [{ type: core.ViewChild, args: ['_progressBar',] }],
             lyItems: [{ type: core.ContentChildren, args: [core.forwardRef(function () { return LyCarouselItem; }),] }],
             mode: [{ type: core.Input }],
             interval: [{ type: core.Input }],
             selectedIndex: [{ type: core.Input }],
-            touch: [{ type: core.Input }]
+            touch: [{ type: core.Input }],
+            autoplay: [{ type: core.Input }],
+            hasProgressBar: [{ type: core.Input }]
         };
         return LyCarousel;
     }());

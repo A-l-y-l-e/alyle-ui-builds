@@ -2,6 +2,7 @@ import { OnInit, ComponentFactory, TemplateRef, Injector, ApplicationRef, Render
 import { AnimationEvent } from '@angular/animations';
 import { LyOverlayRef, LyTheme2 } from '@alyle/ui';
 import { Subject } from 'rxjs';
+import { LyDialogRef } from './dialog-ref';
 /** @docs-private */
 export declare class LyDialogContainer implements OnInit {
     private _appRef;
@@ -45,4 +46,11 @@ export declare class LyDialogContainer implements OnInit {
     private _destroy;
     /** @internal */
     _getHostElement(): HTMLElement;
+}
+export declare class LyDialogContext {
+    private _injector;
+    $implicit: any;
+    dialogRef: LyDialogRef;
+    readonly data: {};
+    constructor(_injector: Injector);
 }

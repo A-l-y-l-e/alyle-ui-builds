@@ -14,6 +14,15 @@ import { Platform, LyTheme2, toBoolean, DirAlias, LyCommonModule } from '@alyle/
  * @type {?}
  */
 const chroma = _chroma;
+/**
+ * Default interval in ms
+ * @type {?}
+ */
+const DEFAULT_INTERVAL = 7000;
+/** @type {?} */
+const DEFAULT_AUTOPLAY = true;
+/** @type {?} */
+const DEFAULT_HAS_PROGRESS_BAR = false;
 /** @type {?} */
 const STYLE_PRIORITY = -2;
 /** @type {?} */
@@ -125,6 +134,33 @@ const STYLES = (theme) => {
                 transform: 'scale(1)',
                 opacity: 1
             }
+        },
+        barContainer: {
+            background: chroma(theme.background.primary.default).alpha(.25).css(),
+            height: '4px',
+            position: 'absolute',
+            bottom: 0,
+            width: '100%',
+        },
+        bar: {
+            height: '4px',
+            position: 'absolute',
+            bottom: 0,
+            width: '100%',
+            animationName: '{interval}',
+            animationTimingFunction: 'linear',
+            animationIterationCount: 'infinite',
+            background: theme.text.primary
+        },
+        $keyframes: {
+            interval: {
+                0: {
+                    transform: 'translateX(0%)'
+                },
+                100: {
+                    transform: `translateX(${dir === 'left' ? '-' : ''}100%)`
+                }
+            }
         }
     };
 };
@@ -157,13 +193,20 @@ class LyCarousel {
          * \@docs-private
          */
         this.mode = CarouselMode.default;
-        this.interval = 7000;
+        this.interval = DEFAULT_INTERVAL;
         this.selectedIndex = 0;
         /**
          * Emits whenever the component is destroyed.
          */
         this._destroy = new Subject();
         this._renderer.addClass(_el.nativeElement, this.classes.root);
+    }
+    /**
+     * \@internal
+     * @return {?}
+     */
+    get _isIntervalFn() {
+        return !!this._intervalFn;
     }
     /**
      * @param {?} val
@@ -187,14 +230,53 @@ class LyCarousel {
         return this._touch;
     }
     /**
+     * @param {?} val
+     * @return {?}
+     */
+    set autoplay(val) {
+        /** @type {?} */
+        const newVal = toBoolean(val);
+        this._autoplay = newVal;
+        if (newVal) {
+            this._resetInterval();
+        }
+        else {
+            this.stop();
+        }
+    }
+    /**
+     * @return {?}
+     */
+    get autoplay() {
+        return this._autoplay;
+    }
+    /**
+     * @param {?} val
+     * @return {?}
+     */
+    set hasProgressBar(val) {
+        /** @type {?} */
+        const newVal = toBoolean(val);
+        this._hasProgressBar = newVal;
+    }
+    /**
+     * @return {?}
+     */
+    get hasProgressBar() {
+        return this._hasProgressBar;
+    }
+    /**
      * @return {?}
      */
     ngOnInit() {
         if (!this.touch) {
             this.touch = false;
         }
-        if (Platform.isBrowser) {
-            this._resetInterval();
+        if (this.autoplay == null) {
+            this.autoplay = DEFAULT_AUTOPLAY;
+        }
+        if (this.hasProgressBar == null) {
+            this.hasProgressBar = DEFAULT_HAS_PROGRESS_BAR;
         }
     }
     /**
@@ -309,7 +391,9 @@ class LyCarousel {
             }, this._slide.nativeElement, this._slideClass, STYLE_PRIORITY);
         }
         if (!notResetInterval) {
-            this._resetInterval();
+            if (this.autoplay) {
+                this._resetInterval();
+            }
         }
     }
     /**
@@ -347,11 +431,30 @@ class LyCarousel {
      * @return {?}
      */
     _resetInterval() {
-        this.stop();
-        this._intervalFn = (/** @type {?} */ (setInterval(() => {
-            this.next(true);
+        if (Platform.isBrowser) {
+            this.stop();
+            this._restartProgressBarAnimation();
             this._markForCheck();
-        }, this.interval)));
+            this._intervalFn = (/** @type {?} */ (setInterval(() => {
+                this.next(true);
+                this._restartProgressBarAnimation();
+                this._markForCheck();
+            }, this.interval)));
+        }
+    }
+    /**
+     * @private
+     * @return {?}
+     */
+    _restartProgressBarAnimation() {
+        if (this.hasProgressBar && this._progressBar) {
+            /** @type {?} */
+            const el = this._progressBar.nativeElement;
+            // Hack for restart animation
+            el.style.animationName = 'øfakeName';
+            window.getComputedStyle(el).getPropertyValue('opacity');
+            el.style.animationName = '';
+        }
     }
     /**
      * @private
@@ -374,7 +477,7 @@ class LyCarousel {
 LyCarousel.decorators = [
     { type: Component, args: [{
                 selector: 'ly-carousel',
-                template: "<div\n(slidestart)=\"touch && _onDragStart()\"\n(slideleft)=\"touch && _onDrag($event)\"\n(slideright)=\"touch && _onDrag($event)\"\n(slidecancel)=\"touch && _onDragCancel()\"\n(slideend)=\"touch && _onDragEnd($event)\"\n#slideContainer\n>\n  <div #_slide [className]=\"classes.slide\">\n    <ng-content></ng-content>\n  </div>\n  <div [className]=\"classes.carouselIndicators\" *ngIf=\"lyItems.length !== 1\">\n      <div tabindex=\"0\"\n      (click)=\"_select(i)\"\n      role=\"button\"\n      *ngFor=\"let item of lyItems; let i = index\">\n      <span ly-paper\n      color=\"#000\"\n      bg=\"background:primary\"\n      [class.active]=\"selectedIndex==i\"\n      [elevation]=\"8\"\n      [shadowColor]=\"'text'\"\n      ></span>\n      </div>\n  </div>\n  <div [ngClass]=\"[classes.actions, 'left']\" (click)=\"prev()\">\n    <svg viewBox=\"0 0 24 24\"><path d=\"M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z\"></path></svg>\n  </div>\n  <div [ngClass]=\"[classes.actions, 'right']\" (click)=\"next()\">\n    <svg viewBox=\"0 0 24 24\"><path d=\"M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z\"></path></svg>\n  </div>\n</div>",
+                template: "<div\n(slidestart)=\"touch && _onDragStart()\"\n(slideleft)=\"touch && _onDrag($event)\"\n(slideright)=\"touch && _onDrag($event)\"\n(slidecancel)=\"touch && _onDragCancel()\"\n(slideend)=\"touch && _onDragEnd($event)\"\n#slideContainer\n>\n  <div #_slide [className]=\"classes.slide\">\n    <ng-content></ng-content>\n  </div>\n  <div [className]=\"classes.carouselIndicators\" *ngIf=\"lyItems.length !== 1\">\n    <div tabindex=\"0\"\n      (click)=\"_select(i)\"\n      role=\"button\"\n      *ngFor=\"let item of lyItems; index as i\"\n    >\n      <span ly-paper\n      color=\"#000\"\n      bg=\"background:primary\"\n      [class.active]=\"selectedIndex==i\"\n      [elevation]=\"8\"\n      [shadowColor]=\"'text'\"></span>\n    </div>\n  </div>\n  <div [ngClass]=\"[classes.actions, 'left']\" (click)=\"prev()\">\n    <svg viewBox=\"0 0 24 24\"><path d=\"M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z\"></path></svg>\n  </div>\n  <div [ngClass]=\"[classes.actions, 'right']\" (click)=\"next()\">\n    <svg viewBox=\"0 0 24 24\"><path d=\"M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z\"></path></svg>\n  </div>\n  <div\n    [className]=\"classes.barContainer\"\n    *ngIf=\"hasProgressBar && _isIntervalFn && interval && autoplay\"\n  >\n    <div\n      [className]=\"classes.bar\"\n      #_progressBar\n      [style.animation-duration]=\"interval + 'ms'\"\n    ></div>\n  </div>\n</div>",
                 changeDetection: ChangeDetectionStrategy.OnPush,
                 preserveWhitespaces: false,
                 encapsulation: ViewEncapsulation.None
@@ -390,11 +493,14 @@ LyCarousel.ctorParameters = () => [
 LyCarousel.propDecorators = {
     slideContainer: [{ type: ViewChild, args: ['slideContainer',] }],
     _slide: [{ type: ViewChild, args: ['_slide',] }],
+    _progressBar: [{ type: ViewChild, args: ['_progressBar',] }],
     lyItems: [{ type: ContentChildren, args: [forwardRef(() => LyCarouselItem),] }],
     mode: [{ type: Input }],
     interval: [{ type: Input }],
     selectedIndex: [{ type: Input }],
-    touch: [{ type: Input }]
+    touch: [{ type: Input }],
+    autoplay: [{ type: Input }],
+    hasProgressBar: [{ type: Input }]
 };
 class LyCarouselItem {
     /**

@@ -145,6 +145,13 @@
      * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /** @type {?} */
+    var LY_DIALOG_DATA = new core.InjectionToken('LyDialogData');
+
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
+    /** @type {?} */
     var STYLE_PRIORITY = -2;
     /**
      * \@docs-private
@@ -209,11 +216,14 @@
          */
             function () {
                 if (this._componentFactoryOrTemplate instanceof core.TemplateRef) {
-                    this._embeddedViewRef = this.viewContainerRef.createEmbeddedView(this._componentFactoryOrTemplate);
-                    this._appRef.attachView(this._embeddedViewRef);
+                    /** @type {?} */
+                    var context = new LyDialogContext(this._newInjector);
+                    this._embeddedViewRef = this.viewContainerRef
+                        .createEmbeddedView(this._componentFactoryOrTemplate, context);
                 }
                 else {
-                    this._componentRef = this.viewContainerRef.createComponent(this._componentFactoryOrTemplate, undefined, this._newInjector);
+                    this._componentRef = this.viewContainerRef
+                        .createComponent(this._componentFactoryOrTemplate, undefined, this._newInjector);
                 }
                 // If exist dialogStyleBlock apply for this component, else do nothing.
                 var containerClass = this._newInjector.get(LyDialogConfig).containerClass;
@@ -361,6 +371,23 @@
         };
         return LyDialogContainer;
     }());
+    var LyDialogContext = /** @class */ (function () {
+        function LyDialogContext(_injector) {
+            this._injector = _injector;
+            this.$implicit = this._injector.get(LyDialogRef);
+            this.dialogRef = this._injector.get(LyDialogRef);
+        }
+        Object.defineProperty(LyDialogContext.prototype, "data", {
+            get: /**
+             * @return {?}
+             */ function () {
+                return this._injector.get(LY_DIALOG_DATA);
+            },
+            enumerable: true,
+            configurable: true
+        });
+        return LyDialogContext;
+    }());
 
     /**
      * @fileoverview added by tsickle
@@ -393,13 +420,6 @@
             };
         return DynamicInjector;
     }());
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    /** @type {?} */
-    var LY_DIALOG_DATA = new core.InjectionToken('LyDialogData');
 
     /**
      * @fileoverview added by tsickle

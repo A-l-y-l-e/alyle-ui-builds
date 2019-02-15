@@ -2,7 +2,7 @@ import { __assign } from 'tslib';
 import { state, style, transition, animate, trigger } from '@angular/animations';
 import { Subject } from 'rxjs';
 import { CommonModule } from '@angular/common';
-import { Injectable, Component, TemplateRef, ViewChild, ViewContainerRef, ApplicationRef, ChangeDetectionStrategy, Renderer2, ElementRef, ChangeDetectorRef, InjectionToken, ComponentFactoryResolver, Injector, Directive, NgModule } from '@angular/core';
+import { Injectable, InjectionToken, Component, TemplateRef, ViewChild, ViewContainerRef, ApplicationRef, ChangeDetectionStrategy, Renderer2, ElementRef, ChangeDetectorRef, ComponentFactoryResolver, Injector, Directive, NgModule } from '@angular/core';
 import { LyOverlayRef, LyTheme2, shadowBuilder, LyOverlay, STYLES_BACKDROP_DARK, LyCommonModule, LyOverlayModule } from '@alyle/ui';
 
 /**
@@ -122,6 +122,13 @@ LyDialogConfig = /** @class */ (function () {
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
+var LY_DIALOG_DATA = new InjectionToken('LyDialogData');
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/** @type {?} */
 var STYLE_PRIORITY = -2;
 /**
  * \@docs-private
@@ -184,11 +191,14 @@ var LyDialogContainer = /** @class */ (function () {
      */
     function () {
         if (this._componentFactoryOrTemplate instanceof TemplateRef) {
-            this._embeddedViewRef = this.viewContainerRef.createEmbeddedView(this._componentFactoryOrTemplate);
-            this._appRef.attachView(this._embeddedViewRef);
+            /** @type {?} */
+            var context = new LyDialogContext(this._newInjector);
+            this._embeddedViewRef = this.viewContainerRef
+                .createEmbeddedView(this._componentFactoryOrTemplate, context);
         }
         else {
-            this._componentRef = this.viewContainerRef.createComponent(this._componentFactoryOrTemplate, undefined, this._newInjector);
+            this._componentRef = this.viewContainerRef
+                .createComponent(this._componentFactoryOrTemplate, undefined, this._newInjector);
         }
         // If exist dialogStyleBlock apply for this component, else do nothing.
         var containerClass = this._newInjector.get(LyDialogConfig).containerClass;
@@ -334,6 +344,24 @@ var LyDialogContainer = /** @class */ (function () {
     };
     return LyDialogContainer;
 }());
+var LyDialogContext = /** @class */ (function () {
+    function LyDialogContext(_injector) {
+        this._injector = _injector;
+        this.$implicit = this._injector.get(LyDialogRef);
+        this.dialogRef = this._injector.get(LyDialogRef);
+    }
+    Object.defineProperty(LyDialogContext.prototype, "data", {
+        get: /**
+         * @return {?}
+         */
+        function () {
+            return this._injector.get(LY_DIALOG_DATA);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return LyDialogContext;
+}());
 
 /**
  * @fileoverview added by tsickle
@@ -366,13 +394,6 @@ var DynamicInjector = /** @class */ (function () {
     };
     return DynamicInjector;
 }());
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
-var LY_DIALOG_DATA = new InjectionToken('LyDialogData');
 
 /**
  * @fileoverview added by tsickle

@@ -1,7 +1,7 @@
 import { state, style, transition, animate, trigger } from '@angular/animations';
 import { Subject } from 'rxjs';
 import { CommonModule } from '@angular/common';
-import { Injectable, Component, TemplateRef, ViewChild, ViewContainerRef, ApplicationRef, ChangeDetectionStrategy, Renderer2, ElementRef, ChangeDetectorRef, InjectionToken, ComponentFactoryResolver, Injector, Directive, NgModule } from '@angular/core';
+import { Injectable, InjectionToken, Component, TemplateRef, ViewChild, ViewContainerRef, ApplicationRef, ChangeDetectionStrategy, Renderer2, ElementRef, ChangeDetectorRef, ComponentFactoryResolver, Injector, Directive, NgModule } from '@angular/core';
 import { LyOverlayRef, LyTheme2, shadowBuilder, LyOverlay, STYLES_BACKDROP_DARK, LyCommonModule, LyOverlayModule } from '@alyle/ui';
 
 /**
@@ -94,6 +94,13 @@ class LyDialogConfig {
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
+const LY_DIALOG_DATA = new InjectionToken('LyDialogData');
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/** @type {?} */
 const STYLE_PRIORITY = -2;
 /**
  * \@docs-private
@@ -161,11 +168,14 @@ class LyDialogContainer {
      */
     ngOnInit() {
         if (this._componentFactoryOrTemplate instanceof TemplateRef) {
-            this._embeddedViewRef = this.viewContainerRef.createEmbeddedView(this._componentFactoryOrTemplate);
-            this._appRef.attachView(this._embeddedViewRef);
+            /** @type {?} */
+            const context = new LyDialogContext(this._newInjector);
+            this._embeddedViewRef = this.viewContainerRef
+                .createEmbeddedView(this._componentFactoryOrTemplate, context);
         }
         else {
-            this._componentRef = this.viewContainerRef.createComponent(this._componentFactoryOrTemplate, undefined, this._newInjector);
+            this._componentRef = this.viewContainerRef
+                .createComponent(this._componentFactoryOrTemplate, undefined, this._newInjector);
         }
         // If exist dialogStyleBlock apply for this component, else do nothing.
         const { containerClass } = this._newInjector.get(LyDialogConfig);
@@ -275,6 +285,22 @@ LyDialogContainer.ctorParameters = () => [
 LyDialogContainer.propDecorators = {
     viewContainerRef: [{ type: ViewChild, args: [TemplateRef, { read: ViewContainerRef },] }]
 };
+class LyDialogContext {
+    /**
+     * @param {?} _injector
+     */
+    constructor(_injector) {
+        this._injector = _injector;
+        this.$implicit = this._injector.get(LyDialogRef);
+        this.dialogRef = this._injector.get(LyDialogRef);
+    }
+    /**
+     * @return {?}
+     */
+    get data() {
+        return this._injector.get(LY_DIALOG_DATA);
+    }
+}
 
 /**
  * @fileoverview added by tsickle
@@ -304,13 +330,6 @@ class DynamicInjector {
         return this._parentInjector.get(token, notFoundValue);
     }
 }
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
-const LY_DIALOG_DATA = new InjectionToken('LyDialogData');
 
 /**
  * @fileoverview added by tsickle

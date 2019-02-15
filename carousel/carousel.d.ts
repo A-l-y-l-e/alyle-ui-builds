@@ -102,6 +102,33 @@ export declare const STYLES: (theme: ThemeVariables) => {
             opacity: number;
         };
     };
+    barContainer: {
+        background: string;
+        height: string;
+        position: string;
+        bottom: number;
+        width: string;
+    };
+    bar: {
+        height: string;
+        position: string;
+        bottom: number;
+        width: string;
+        animationName: string;
+        animationTimingFunction: string;
+        animationIterationCount: string;
+        background: string;
+    };
+    $keyframes: {
+        interval: {
+            0: {
+                transform: string;
+            };
+            100: {
+                transform: string;
+            };
+        };
+    };
 };
 /** @docs-private */
 export declare enum CarouselMode {
@@ -115,10 +142,11 @@ export declare class LyCarousel implements OnInit, AfterViewInit, OnDestroy {
     private _theme;
     private _renderer;
     /** @docs-private */
-    readonly classes: Record<"root" | "actions" | "slideContainer" | "slide" | "slideContent" | "slideAnim" | "slideNoEvent" | "carouselIndicators", string>;
+    readonly classes: Record<"root" | "actions" | "slideContainer" | "slide" | "slideContent" | "slideAnim" | "slideNoEvent" | "carouselIndicators" | "barContainer" | "bar", string>;
     private _intervalFn;
     slideContainer: ElementRef;
     _slide: ElementRef;
+    _progressBar: ElementRef<HTMLDivElement>;
     lyItems: QueryList<LyCarouselItem>;
     /** @docs-private */
     mode: CarouselMode;
@@ -126,10 +154,16 @@ export declare class LyCarousel implements OnInit, AfterViewInit, OnDestroy {
     selectedIndex: number;
     _selectedElement: HTMLElement;
     private _touch;
+    private _autoplay;
+    private _hasProgressBar;
     private _slideClass;
     /** Emits whenever the component is destroyed. */
     private readonly _destroy;
+    /** @internal */
+    readonly _isIntervalFn: boolean;
     touch: boolean;
+    autoplay: boolean;
+    hasProgressBar: boolean;
     constructor(_el: ElementRef, _cd: ChangeDetectorRef, _theme: LyTheme2, _renderer: Renderer2);
     ngOnInit(): void;
     ngAfterViewInit(): void;
@@ -144,6 +178,7 @@ export declare class LyCarousel implements OnInit, AfterViewInit, OnDestroy {
     next(notResetInterval?: boolean): void;
     stop(): void;
     private _resetInterval;
+    private _restartProgressBarAnimation;
     private _onPan;
     private _markForCheck;
 }
