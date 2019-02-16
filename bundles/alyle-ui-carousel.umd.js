@@ -186,8 +186,8 @@
              * \@docs-private
              */
             this.mode = CarouselMode.default;
-            this.interval = DEFAULT_INTERVAL;
             this.selectedIndex = 0;
+            this._interval = DEFAULT_INTERVAL;
             /**
              * Emits whenever the component is destroyed.
              */
@@ -264,6 +264,22 @@
                 /** @type {?} */
                 var newVal = ui.toBoolean(val);
                 this._hasProgressBar = newVal;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(LyCarousel.prototype, "interval", {
+            get: /**
+             * @return {?}
+             */ function () {
+                return this._interval;
+            },
+            set: /**
+             * @param {?} val
+             * @return {?}
+             */ function (val) {
+                this._interval = val;
+                this._resetInterval();
             },
             enumerable: true,
             configurable: true
@@ -560,11 +576,11 @@
             _progressBar: [{ type: core.ViewChild, args: ['_progressBar',] }],
             lyItems: [{ type: core.ContentChildren, args: [core.forwardRef(function () { return LyCarouselItem; }),] }],
             mode: [{ type: core.Input }],
-            interval: [{ type: core.Input }],
             selectedIndex: [{ type: core.Input }],
             touch: [{ type: core.Input }],
             autoplay: [{ type: core.Input }],
-            hasProgressBar: [{ type: core.Input }]
+            hasProgressBar: [{ type: core.Input }],
+            interval: [{ type: core.Input }]
         };
         return LyCarousel;
     }());

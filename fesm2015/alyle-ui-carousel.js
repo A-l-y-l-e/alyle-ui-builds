@@ -193,8 +193,8 @@ class LyCarousel {
          * \@docs-private
          */
         this.mode = CarouselMode.default;
-        this.interval = DEFAULT_INTERVAL;
         this.selectedIndex = 0;
+        this._interval = DEFAULT_INTERVAL;
         /**
          * Emits whenever the component is destroyed.
          */
@@ -264,6 +264,20 @@ class LyCarousel {
      */
     get hasProgressBar() {
         return this._hasProgressBar;
+    }
+    /**
+     * @param {?} val
+     * @return {?}
+     */
+    set interval(val) {
+        this._interval = val;
+        this._resetInterval();
+    }
+    /**
+     * @return {?}
+     */
+    get interval() {
+        return this._interval;
     }
     /**
      * @return {?}
@@ -496,11 +510,11 @@ LyCarousel.propDecorators = {
     _progressBar: [{ type: ViewChild, args: ['_progressBar',] }],
     lyItems: [{ type: ContentChildren, args: [forwardRef(() => LyCarouselItem),] }],
     mode: [{ type: Input }],
-    interval: [{ type: Input }],
     selectedIndex: [{ type: Input }],
     touch: [{ type: Input }],
     autoplay: [{ type: Input }],
-    hasProgressBar: [{ type: Input }]
+    hasProgressBar: [{ type: Input }],
+    interval: [{ type: Input }]
 };
 class LyCarouselItem {
     /**
