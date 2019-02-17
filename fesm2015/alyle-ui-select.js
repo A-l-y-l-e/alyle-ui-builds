@@ -212,7 +212,6 @@ class LySelect extends LySelectMixinBase {
         if (val !== this.value && this._selectionModel) {
             this._value = val;
             this.writeValue(val);
-            this.onChange(val);
             if (this.options) {
                 if (this.multiple) {
                     if (Array.isArray(this.value)) {
@@ -728,6 +727,7 @@ class LyOption extends LyOptionMixinBase {
         else {
             this.toggle();
         }
+        this._select.onChange(this._select._value);
     }
     /**
      * Tracks simple string values bound to the option element.
@@ -806,7 +806,6 @@ class LyOption extends LyOptionMixinBase {
                 }
             }
         }
-        this._select.onChange(this._select._value);
         this._select._cd.markForCheck();
         this._select.stateChanges.next();
         this._cd.markForCheck();
@@ -840,7 +839,6 @@ class LyOption extends LyOptionMixinBase {
                 }
             }
         }
-        this._select.onChange(this._select._value);
         this._select._cd.markForCheck();
         this._select.stateChanges.next();
         this._cd.markForCheck();

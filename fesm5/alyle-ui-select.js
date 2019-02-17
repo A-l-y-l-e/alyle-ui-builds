@@ -230,7 +230,6 @@ var LySelect = /** @class */ (function (_super) {
             if (val !== this.value && this._selectionModel) {
                 this._value = val;
                 this.writeValue(val);
-                this.onChange(val);
                 if (this.options) {
                     if (this.multiple) {
                         if (Array.isArray(this.value)) {
@@ -872,6 +871,7 @@ var LyOption = /** @class */ (function (_super) {
         else {
             this.toggle();
         }
+        this._select.onChange(this._select._value);
     };
     Object.defineProperty(LyOption.prototype, "value", {
         get: /**
@@ -980,7 +980,6 @@ var LyOption = /** @class */ (function (_super) {
                 }
             }
         }
-        this._select.onChange(this._select._value);
         this._select._cd.markForCheck();
         this._select.stateChanges.next();
         this._cd.markForCheck();
@@ -1017,7 +1016,6 @@ var LyOption = /** @class */ (function (_super) {
                 }
             }
         }
-        this._select.onChange(this._select._value);
         this._select._cd.markForCheck();
         this._select.stateChanges.next();
         this._cd.markForCheck();
