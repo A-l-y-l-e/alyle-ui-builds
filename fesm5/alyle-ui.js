@@ -3,7 +3,7 @@ import { HammerGestureConfig } from '@angular/platform-browser';
 import { DOCUMENT } from '@angular/common';
 import { map, share, auditTime } from 'rxjs/operators';
 import { Subject, fromEvent, empty, Subscription, merge } from 'rxjs';
-import { InjectionToken, Injectable, Optional, Inject, RendererFactory2, ViewEncapsulation, Directive, ElementRef, Input, NgModule, NgZone, ApplicationRef, ComponentFactoryResolver, Injector, TemplateRef, ViewContainerRef, Component, HostListener, defineInjectable, inject, Renderer2, isDevMode, INJECTOR } from '@angular/core';
+import { InjectionToken, Injectable, Optional, Inject, RendererFactory2, ViewEncapsulation, Directive, ElementRef, Input, NgModule, NgZone, Injector, ApplicationRef, ComponentFactoryResolver, TemplateRef, ViewContainerRef, Component, HostListener, defineInjectable, inject, Renderer2, isDevMode, INJECTOR } from '@angular/core';
 import { __assign, __extends, __spread } from 'tslib';
 
 /**
@@ -3228,9 +3228,9 @@ var LyFocusState = /** @class */ (function () {
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
-var AUI_VERSION = '2.3.3-nightly.20190227-jsmxmiqn';
+var AUI_VERSION = '2.3.3-nightly.20190228-jsod2wrx';
 /** @type {?} */
-var AUI_LAST_UPDATE = '2019-02-27T08:22:37.149Z';
+var AUI_LAST_UPDATE = '2019-02-28T08:23:02.251Z';
 
 /**
  * @fileoverview added by tsickle
