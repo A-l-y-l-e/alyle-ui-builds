@@ -431,13 +431,26 @@ var CoreTheme = /** @class */ (function () {
             }
         }
         this.firstElement = _document.body.firstChild;
+        /** @type {?} */
+        var themes = new Map();
         if (Array.isArray(themeConfig)) {
             themeConfig.forEach(function (item) {
-                if (globalVariables) {
-                    mergeDeep(item, globalVariables);
+                if (themes.has(item.name)) {
+                    (/** @type {?} */ (themes.get(item.name))).push(item);
                 }
-                _this.add((/** @type {?} */ (item)));
-                _this.themes.add(item.name);
+                else {
+                    themes.set(item.name, [item]);
+                }
+            });
+            themes.forEach(function (items) {
+                if (globalVariables) {
+                    items.push(globalVariables);
+                }
+                if (items.length > 1) {
+                    mergeDeep.apply(void 0, __spread([items[0]], items.slice(1)));
+                }
+                _this.add((/** @type {?} */ (items[0])));
+                _this.themes.add(items[0].name);
             });
         }
         else {
@@ -465,6 +478,19 @@ var CoreTheme = /** @class */ (function () {
     function (theme) {
         this._themeMap.set(theme.name, theme);
         this._styleMap.set(theme.name, new Map());
+    };
+    /**
+     * @param {?} theme
+     * @return {?}
+     */
+    CoreTheme.prototype.hasTheme = /**
+     * @param {?} theme
+     * @return {?}
+     */
+    function (theme) {
+        /** @type {?} */
+        var name = typeof theme === 'string' ? theme : theme.name;
+        this._themeMap.has(name);
     };
     /**
      * @param {?} name
@@ -3228,9 +3254,9 @@ var LyFocusState = /** @class */ (function () {
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
-var AUI_VERSION = '2.3.3-nightly.20190304-jsu2th00';
+var AUI_VERSION = '2.3.3-nightly.20190305-jsvi9atn';
 /** @type {?} */
-var AUI_LAST_UPDATE = '2019-03-04T08:22:22.798Z';
+var AUI_LAST_UPDATE = '2019-03-05T08:22:21.705Z';
 
 /**
  * @fileoverview added by tsickle

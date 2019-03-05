@@ -1,4 +1,19 @@
 import { ThemeVariables } from '@alyle/ui';
+export declare const STYLE_SELECT_ARROW: {
+    '&:after': {
+        position: string;
+        content: string;
+        width: number;
+        height: number;
+        borderLeft: string;
+        borderRight: string;
+        borderTop: string;
+        top: string;
+        after: number;
+        marginTop: string;
+        pointerEvents: string;
+    };
+};
 export declare const STYLES: (theme: ThemeVariables) => {
     root: {
         display: string;

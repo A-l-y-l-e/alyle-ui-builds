@@ -33,6 +33,22 @@ LyPlaceholder.decorators = [
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
+const STYLE_SELECT_ARROW = ({
+    '&:after': {
+        position: 'absolute',
+        content: `\'\'`,
+        width: 0,
+        height: 0,
+        borderLeft: '0.3125em solid transparent',
+        borderRight: '0.3125em solid transparent',
+        borderTop: '0.3125em solid',
+        top: '50%',
+        after: 0,
+        marginTop: '-0.15625em',
+        pointerEvents: 'none'
+    }
+});
+/** @type {?} */
 const STYLES = (theme) => {
     /** @type {?} */
     const selectionStyle = {
@@ -196,21 +212,7 @@ const STYLES = (theme) => {
             marginAfter: 'auto'
         },
         selectArrow: {
-            '{infix}': {
-                '&:after': {
-                    position: 'absolute',
-                    content: `\'\'`,
-                    width: 0,
-                    height: 0,
-                    borderLeft: '0.3125em solid transparent',
-                    borderRight: '0.3125em solid transparent',
-                    borderTop: '0.3125em solid',
-                    top: '50%',
-                    after: 0,
-                    marginTop: '-0.15625em',
-                    pointerEvents: 'none'
-                }
-            }
+            '{infix}': STYLE_SELECT_ARROW
         },
         $keyframes: {
             shake: {
@@ -1153,6 +1155,6 @@ LyFieldModule.decorators = [
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { LyField, LyNativeControl, LyFieldControlBase, LyFieldModule, STYLES, LyError as ɵf, LyHint as ɵc, LyLabel as ɵb, LyPlaceholder as ɵa, LyPrefix as ɵd, LySuffix as ɵe };
+export { LyField, LyNativeControl, LyFieldControlBase, LyFieldModule, STYLE_SELECT_ARROW, STYLES, LyError as ɵf, LyHint as ɵc, LyLabel as ɵb, LyPlaceholder as ɵa, LyPrefix as ɵd, LySuffix as ɵe };
 
 //# sourceMappingURL=alyle-ui-field.js.map

@@ -17,6 +17,7 @@ export declare class CoreTheme {
      * @param theme: ThemeVariables
      */
     add(theme: ThemeVariables): void;
+    hasTheme(theme: ThemeVariables | string): void;
     get(name: string): ThemeVariables;
     getStyleMap(name: string): Map<string, DataStyle>;
     updateClassName(element: any, renderer: Renderer2, newClassname: string, oldClassname?: string): void;

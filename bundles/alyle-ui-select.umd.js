@@ -643,6 +643,7 @@
          * @return {?}
          */
             function () {
+                this.open();
                 this._getHostElement().focus();
             };
         /** Focuses the input. */
@@ -820,7 +821,6 @@
                         changeDetection: core.ChangeDetectionStrategy.OnPush,
                         exportAs: 'lySelect',
                         host: {
-                            '(click)': 'open()',
                             '[attr.tabindex]': 'tabIndex'
                         },
                         animations: __spread(ANIMATIONS),

@@ -66,6 +66,22 @@
      * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /** @type {?} */
+    var STYLE_SELECT_ARROW = ({
+        '&:after': {
+            position: 'absolute',
+            content: "''",
+            width: 0,
+            height: 0,
+            borderLeft: '0.3125em solid transparent',
+            borderRight: '0.3125em solid transparent',
+            borderTop: '0.3125em solid',
+            top: '50%',
+            after: 0,
+            marginTop: '-0.15625em',
+            pointerEvents: 'none'
+        }
+    });
+    /** @type {?} */
     var STYLES = function (theme) {
         /** @type {?} */
         var selectionStyle = {
@@ -229,21 +245,7 @@
                 marginAfter: 'auto'
             },
             selectArrow: {
-                '{infix}': {
-                    '&:after': {
-                        position: 'absolute',
-                        content: "''",
-                        width: 0,
-                        height: 0,
-                        borderLeft: '0.3125em solid transparent',
-                        borderRight: '0.3125em solid transparent',
-                        borderTop: '0.3125em solid',
-                        top: '50%',
-                        after: 0,
-                        marginTop: '-0.15625em',
-                        pointerEvents: 'none'
-                    }
-                }
+                '{infix}': STYLE_SELECT_ARROW
             },
             $keyframes: {
                 shake: {
@@ -1326,6 +1328,7 @@
     exports.LyNativeControl = LyNativeControl;
     exports.LyFieldControlBase = LyFieldControlBase;
     exports.LyFieldModule = LyFieldModule;
+    exports.STYLE_SELECT_ARROW = STYLE_SELECT_ARROW;
     exports.STYLES = STYLES;
     exports.ɵf = LyError;
     exports.ɵc = LyHint;

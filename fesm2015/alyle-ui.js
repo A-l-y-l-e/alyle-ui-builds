@@ -405,13 +405,26 @@ class CoreTheme {
             }
         }
         this.firstElement = _document.body.firstChild;
+        /** @type {?} */
+        const themes = new Map();
         if (Array.isArray(themeConfig)) {
             themeConfig.forEach(item => {
-                if (globalVariables) {
-                    mergeDeep(item, globalVariables);
+                if (themes.has(item.name)) {
+                    (/** @type {?} */ (themes.get(item.name))).push(item);
                 }
-                this.add((/** @type {?} */ (item)));
-                this.themes.add(item.name);
+                else {
+                    themes.set(item.name, [item]);
+                }
+            });
+            themes.forEach((items) => {
+                if (globalVariables) {
+                    items.push(globalVariables);
+                }
+                if (items.length > 1) {
+                    mergeDeep(items[0], ...items.slice(1));
+                }
+                this.add((/** @type {?} */ (items[0])));
+                this.themes.add(items[0].name);
             });
         }
         else {
@@ -430,6 +443,15 @@ class CoreTheme {
     add(theme) {
         this._themeMap.set(theme.name, theme);
         this._styleMap.set(theme.name, new Map());
+    }
+    /**
+     * @param {?} theme
+     * @return {?}
+     */
+    hasTheme(theme) {
+        /** @type {?} */
+        const name = typeof theme === 'string' ? theme : theme.name;
+        this._themeMap.has(name);
     }
     /**
      * @param {?} name
@@ -2823,9 +2845,9 @@ LyFocusState.ctorParameters = () => [
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
-const AUI_VERSION = '2.3.3-nightly.20190304-jsu2th00';
+const AUI_VERSION = '2.3.3-nightly.20190305-jsvi9atn';
 /** @type {?} */
-const AUI_LAST_UPDATE = '2019-03-04T08:22:22.798Z';
+const AUI_LAST_UPDATE = '2019-03-05T08:22:21.705Z';
 
 /**
  * @fileoverview added by tsickle

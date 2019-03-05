@@ -40,6 +40,22 @@ var LyPlaceholder = /** @class */ (function () {
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
+var STYLE_SELECT_ARROW = ({
+    '&:after': {
+        position: 'absolute',
+        content: "''",
+        width: 0,
+        height: 0,
+        borderLeft: '0.3125em solid transparent',
+        borderRight: '0.3125em solid transparent',
+        borderTop: '0.3125em solid',
+        top: '50%',
+        after: 0,
+        marginTop: '-0.15625em',
+        pointerEvents: 'none'
+    }
+});
+/** @type {?} */
 var STYLES = function (theme) {
     /** @type {?} */
     var selectionStyle = {
@@ -203,21 +219,7 @@ var STYLES = function (theme) {
             marginAfter: 'auto'
         },
         selectArrow: {
-            '{infix}': {
-                '&:after': {
-                    position: 'absolute',
-                    content: "''",
-                    width: 0,
-                    height: 0,
-                    borderLeft: '0.3125em solid transparent',
-                    borderRight: '0.3125em solid transparent',
-                    borderTop: '0.3125em solid',
-                    top: '50%',
-                    after: 0,
-                    marginTop: '-0.15625em',
-                    pointerEvents: 'none'
-                }
-            }
+            '{infix}': STYLE_SELECT_ARROW
         },
         $keyframes: {
             shake: {
@@ -1311,6 +1313,6 @@ var LyFieldModule = /** @class */ (function () {
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { LyField, LyNativeControl, LyFieldControlBase, LyFieldModule, STYLES, LyError as ɵf, LyHint as ɵc, LyLabel as ɵb, LyPlaceholder as ɵa, LyPrefix as ɵd, LySuffix as ɵe };
+export { LyField, LyNativeControl, LyFieldControlBase, LyFieldModule, STYLE_SELECT_ARROW, STYLES, LyError as ɵf, LyHint as ɵc, LyLabel as ɵb, LyPlaceholder as ɵa, LyPrefix as ɵd, LySuffix as ɵe };
 
 //# sourceMappingURL=alyle-ui-field.js.map

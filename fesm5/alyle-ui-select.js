@@ -606,6 +606,7 @@ var LySelect = /** @class */ (function (_super) {
      * @return {?}
      */
     function () {
+        this.open();
         this._getHostElement().focus();
     };
     /** Focuses the input. */
@@ -783,7 +784,6 @@ var LySelect = /** @class */ (function (_super) {
                     changeDetection: ChangeDetectionStrategy.OnPush,
                     exportAs: 'lySelect',
                     host: {
-                        '(click)': 'open()',
                         '[attr.tabindex]': 'tabIndex'
                     },
                     animations: __spread(ANIMATIONS),

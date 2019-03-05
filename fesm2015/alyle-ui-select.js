@@ -518,6 +518,7 @@ class LySelect extends LySelectMixinBase {
      * @return {?}
      */
     onContainerClick() {
+        this.open();
         this._getHostElement().focus();
     }
     /**
@@ -637,7 +638,6 @@ LySelect.decorators = [
                 changeDetection: ChangeDetectionStrategy.OnPush,
                 exportAs: 'lySelect',
                 host: {
-                    '(click)': 'open()',
                     '[attr.tabindex]': 'tabIndex'
                 },
                 animations: [...ANIMATIONS],
