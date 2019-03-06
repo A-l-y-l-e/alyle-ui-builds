@@ -374,6 +374,12 @@ class LyGridItem {
         this.col = val;
     }
     /**
+     * @return {?}
+     */
+    get gridItemCol() {
+        return this.col;
+    }
+    /**
      * Defines the order style property.
      * Support breakpoints
      * @return {?}

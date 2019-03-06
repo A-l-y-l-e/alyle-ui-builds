@@ -409,6 +409,11 @@
             configurable: true
         });
         Object.defineProperty(LyGridItem.prototype, "gridItemCol", {
+            get: /**
+             * @return {?}
+             */ function () {
+                return this.col;
+            },
             set: /**
              * @param {?} val
              * @return {?}

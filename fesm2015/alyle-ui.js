@@ -2845,9 +2845,9 @@ LyFocusState.ctorParameters = () => [
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
-const AUI_VERSION = '2.5.0';
+const AUI_VERSION = '2.5.1-nightly.20190306-jswxprtk';
 /** @type {?} */
-const AUI_LAST_UPDATE = '2019-03-06T01:56:31.722Z';
+const AUI_LAST_UPDATE = '2019-03-06T08:22:50.646Z';
 
 /**
  * @fileoverview added by tsickle
@@ -3411,8 +3411,8 @@ class OverlayFactory {
                 const computedStyle = getComputedStyle(window.document.body);
                 this._paddingRight = computedStyle.getPropertyValue('padding-right');
                 window.document.body.style.paddingRight = `calc(${scrollWidth}px + ${this._paddingRight})`;
-                window.document.body.style.overflow = 'hidden';
             }
+            window.document.body.style.overflow = 'hidden';
         }
     }
     /**
