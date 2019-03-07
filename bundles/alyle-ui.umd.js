@@ -3318,9 +3318,9 @@
      * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /** @type {?} */
-    var AUI_VERSION = '2.5.1-nightly.20190306-jswxprtk';
+    var AUI_VERSION = '2.5.1';
     /** @type {?} */
-    var AUI_LAST_UPDATE = '2019-03-06T08:22:50.646Z';
+    var AUI_LAST_UPDATE = '2019-03-07T07:56:28.142Z';
 
     /**
      * @fileoverview added by tsickle
