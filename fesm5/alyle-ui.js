@@ -3254,9 +3254,9 @@ var LyFocusState = /** @class */ (function () {
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
-var AUI_VERSION = '2.5.2-nightly.20190311-jt42zo22';
+var AUI_VERSION = '2.5.2';
 /** @type {?} */
-var AUI_LAST_UPDATE = '2019-03-11T08:24:53.640Z';
+var AUI_LAST_UPDATE = '2019-03-11T23:57:04.645Z';
 
 /**
  * @fileoverview added by tsickle
@@ -3869,6 +3869,7 @@ OverlayFactory = /** @class */ (function () {
      * @return {?}
      */
     function () {
+        this._resetScroll();
         if (this._viewRef) {
             this._viewRef.destroy();
             this._overlayContainer._remove(this._el);
@@ -3893,7 +3894,6 @@ OverlayFactory = /** @class */ (function () {
             this._overlayContainer._remove(backdropEl);
         }
         this._windowSRSub.unsubscribe();
-        this._resetScroll();
     };
     /** Detach & remove */
     /**
@@ -3938,7 +3938,7 @@ OverlayFactory = /** @class */ (function () {
      * @return {?}
      */
     function () {
-        if (Platform.isBrowser && this._config.hasBackdrop && !this._overlayContainer.overlayLen) {
+        if (Platform.isBrowser && this._config.hasBackdrop && this._overlayContainer.overlayLen) {
             if (this._paddingRight) {
                 window.document.body.style.paddingRight = this._paddingRight;
                 this._paddingRight = null;
