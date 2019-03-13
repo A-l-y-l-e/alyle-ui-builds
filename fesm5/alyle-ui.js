@@ -1931,19 +1931,19 @@ function mixinStyleUpdater(base) {
          */
         function (element) {
             /** @type {?} */
-            var __bg = this.bg;
+            var __bg = this._superHyperInternalPropertyBg;
             /** @type {?} */
-            var __color = this.color;
+            var __color = this._superHyperInternalPropertyColor;
             /** @type {?} */
-            var __raised = this.raised;
+            var __raised = this._superHyperInternalPropertyRaised;
             /** @type {?} */
-            var __elevation = this.elevation;
+            var __elevation = this._superHyperInternalPropertyElevation;
             /** @type {?} */
-            var __disabled = this.disabled;
+            var __disabled = this._superHyperInternalPropertyDisabled;
             /** @type {?} */
-            var __outlined = this.outlined;
+            var __outlined = this._superHyperInternalPropertyOutlined;
             /** @type {?} */
-            var __shadowColor = this.shadowColor;
+            var __shadowColor = this._superHyperInternalPropertyShadowColor;
             /** @type {?} */
             var __isContrast = this._autoContrast && !__color || __color === 'auto';
             /** @type {?} */
@@ -1955,7 +1955,7 @@ function mixinStyleUpdater(base) {
                     style.border = '1px solid currentColor';
                 }
                 if (__disabled) {
-                    style.color = theme.text.disabled;
+                    style.color = theme.disabled.contrast;
                     style.pointerEvents = 'none';
                     if (__bg) {
                         style.background = theme.disabled.default;
@@ -2464,19 +2464,19 @@ function mixinDisabled(base) {
                 args[_i] = arguments[_i];
             }
             var _this = _super.apply(this, __spread(args)) || this;
-            _this._disabled = false;
+            _this._superHyperInternalPropertyDisabled = false;
             return _this;
         }
         Object.defineProperty(class_1.prototype, "disabled", {
             get: /**
              * @return {?}
              */
-            function () { return this._disabled; },
+            function () { return this._superHyperInternalPropertyDisabled; },
             set: /**
              * @param {?} value
              * @return {?}
              */
-            function (value) { this._disabled = toBoolean(value); },
+            function (value) { this._superHyperInternalPropertyDisabled = toBoolean(value); },
             enumerable: true,
             configurable: true
         });
@@ -2509,7 +2509,7 @@ function mixinColor(base) {
             get: /**
              * @return {?}
              */
-            function () { return this._color; },
+            function () { return this._superHyperInternalPropertyColor; },
             set: /**
              * @param {?} val
              * @return {?}
@@ -2518,7 +2518,7 @@ function mixinColor(base) {
                 /** @type {?} */
                 var defaultColor = val || DEFAULT_COLOR;
                 if (defaultColor !== this.color) {
-                    this._color = defaultColor;
+                    this._superHyperInternalPropertyColor = defaultColor;
                 }
             },
             enumerable: true,
@@ -2553,7 +2553,7 @@ function mixinBg(base) {
             get: /**
              * @return {?}
              */
-            function () { return this._bg; },
+            function () { return this._superHyperInternalPropertyBg; },
             set: /**
              * @param {?} val
              * @return {?}
@@ -2562,7 +2562,7 @@ function mixinBg(base) {
                 /** @type {?} */
                 var defaultColor = val || DEFAULT_BG;
                 if (defaultColor !== this.bg) {
-                    this._bg = defaultColor;
+                    this._superHyperInternalPropertyBg = defaultColor;
                 }
             },
             enumerable: true,
@@ -2595,12 +2595,12 @@ function mixinRaised(base) {
             get: /**
              * @return {?}
              */
-            function () { return this._raised; },
+            function () { return this._superHyperInternalPropertyRaised; },
             set: /**
              * @param {?} value
              * @return {?}
              */
-            function (value) { this._raised = toBoolean(value); },
+            function (value) { this._superHyperInternalPropertyRaised = toBoolean(value); },
             enumerable: true,
             configurable: true
         });
@@ -2631,12 +2631,12 @@ function mixinOutlined(base) {
             get: /**
              * @return {?}
              */
-            function () { return this._outlined; },
+            function () { return this._superHyperInternalPropertyOutlined; },
             set: /**
              * @param {?} value
              * @return {?}
              */
-            function (value) { this._outlined = toBoolean(value); },
+            function (value) { this._superHyperInternalPropertyOutlined = toBoolean(value); },
             enumerable: true,
             configurable: true
         });
@@ -2667,12 +2667,12 @@ function mixinElevation(base) {
             get: /**
              * @return {?}
              */
-            function () { return this._elevation; },
+            function () { return this._superHyperInternalPropertyElevation; },
             set: /**
              * @param {?} value
              * @return {?}
              */
-            function (value) { this._elevation = value; },
+            function (value) { this._superHyperInternalPropertyElevation = value; },
             enumerable: true,
             configurable: true
         });
@@ -2703,12 +2703,12 @@ function mixinShadowColor(base) {
             get: /**
              * @return {?}
              */
-            function () { return this._shadowColor; },
+            function () { return this._superHyperInternalPropertyShadowColor; },
             set: /**
              * @param {?} value
              * @return {?}
              */
-            function (value) { this._shadowColor = value; },
+            function (value) { this._superHyperInternalPropertyShadowColor = value; },
             enumerable: true,
             configurable: true
         });
@@ -3254,9 +3254,9 @@ var LyFocusState = /** @class */ (function () {
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
-var AUI_VERSION = '2.5.3-nightly.20190312-jt5idcw8';
+var AUI_VERSION = '2.5.3-nightly.20190313-jt6xtgam';
 /** @type {?} */
-var AUI_LAST_UPDATE = '2019-03-12T08:23:12.774Z';
+var AUI_LAST_UPDATE = '2019-03-13T08:23:24.089Z';
 
 /**
  * @fileoverview added by tsickle

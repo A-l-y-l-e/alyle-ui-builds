@@ -347,7 +347,7 @@ var MinimaLight = /** @class */ (function (_super) {
         };
         _this.accent = {
             default: '#FF2997',
-            contrast: contrast
+            contrast: contrast,
         };
         _this.warn = {
             default: '#f5414e',
@@ -374,13 +374,13 @@ var MinimaLight = /** @class */ (function (_super) {
         };
         _this.disabled = {
             default: 'rgba(0, 0, 0, 0.12)',
-            contrast: 'rgba(0, 0, 0, 0.38)'
+            contrast: 'rgba(0, 0, 0, 0.26)'
         };
         _this.text = {
             default: 'rgba(0, 0, 0, 0.87)',
             primary: 'rgba(0, 0, 0, 0.87)',
             secondary: 'rgba(0, 0, 0, 0.54)',
-            disabled: 'rgba(0, 0, 0, 0.38)',
+            disabled: 'rgba(0, 0, 0, 0.26)',
             hint: 'rgba(0, 0, 0, 0.38)'
         };
         _this.divider = 'rgba(0, 0, 0, 0.12)';
@@ -455,8 +455,8 @@ var MinimaDark = /** @class */ (function (_super) {
             contrast: contrast$1
         };
         _this.disabled = {
-            default: 'rgba(255, 255, 255, 0.30)',
-            contrast: 'rgba(255, 255, 255, 0.50)'
+            default: 'rgba(255, 255, 255, 0.3)',
+            contrast: 'rgba(255, 255, 255, 0.5)'
         };
         _this.action = {
             default: 'rgba(255, 255, 255, 0.70)',

@@ -68,7 +68,7 @@
                 '&{disabled}': {
                     pointerEvents: 'none',
                     '{layout}': {
-                        color: theme.disabled.contrast
+                        color: theme.text.secondary
                     }
                 },
                 '&{disabled}{checked} {icon}:before': {

@@ -333,7 +333,7 @@ class MinimaLight extends MinimaBase {
         };
         this.accent = {
             default: '#FF2997',
-            contrast
+            contrast,
         };
         this.warn = {
             default: '#f5414e',
@@ -360,13 +360,13 @@ class MinimaLight extends MinimaBase {
         };
         this.disabled = {
             default: 'rgba(0, 0, 0, 0.12)',
-            contrast: 'rgba(0, 0, 0, 0.38)'
+            contrast: 'rgba(0, 0, 0, 0.26)'
         };
         this.text = {
             default: 'rgba(0, 0, 0, 0.87)',
             primary: 'rgba(0, 0, 0, 0.87)',
             secondary: 'rgba(0, 0, 0, 0.54)',
-            disabled: 'rgba(0, 0, 0, 0.38)',
+            disabled: 'rgba(0, 0, 0, 0.26)',
             hint: 'rgba(0, 0, 0, 0.38)'
         };
         this.divider = 'rgba(0, 0, 0, 0.12)';
@@ -438,8 +438,8 @@ class MinimaDark extends MinimaBase {
             contrast: contrast$1
         };
         this.disabled = {
-            default: 'rgba(255, 255, 255, 0.30)',
-            contrast: 'rgba(255, 255, 255, 0.50)'
+            default: 'rgba(255, 255, 255, 0.3)',
+            contrast: 'rgba(255, 255, 255, 0.5)'
         };
         this.action = {
             default: 'rgba(255, 255, 255, 0.70)',

@@ -1689,19 +1689,19 @@ function mixinStyleUpdater(base) {
          */
         updateStyle(element) {
             /** @type {?} */
-            const __bg = this.bg;
+            const __bg = this._superHyperInternalPropertyBg;
             /** @type {?} */
-            const __color = this.color;
+            const __color = this._superHyperInternalPropertyColor;
             /** @type {?} */
-            const __raised = this.raised;
+            const __raised = this._superHyperInternalPropertyRaised;
             /** @type {?} */
-            const __elevation = this.elevation;
+            const __elevation = this._superHyperInternalPropertyElevation;
             /** @type {?} */
-            const __disabled = this.disabled;
+            const __disabled = this._superHyperInternalPropertyDisabled;
             /** @type {?} */
-            const __outlined = this.outlined;
+            const __outlined = this._superHyperInternalPropertyOutlined;
             /** @type {?} */
-            const __shadowColor = this.shadowColor;
+            const __shadowColor = this._superHyperInternalPropertyShadowColor;
             /** @type {?} */
             const __isContrast = this._autoContrast && !__color || __color === 'auto';
             /** @type {?} */
@@ -1713,7 +1713,7 @@ function mixinStyleUpdater(base) {
                     style.border = '1px solid currentColor';
                 }
                 if (__disabled) {
-                    style.color = theme.text.disabled;
+                    style.color = theme.disabled.contrast;
                     style.pointerEvents = 'none';
                     if (__bg) {
                         style.background = theme.disabled.default;
@@ -2168,17 +2168,17 @@ function mixinDisabled(base) {
          */
         constructor(...args) {
             super(...args);
-            this._disabled = false;
+            this._superHyperInternalPropertyDisabled = false;
         }
         /**
          * @return {?}
          */
-        get disabled() { return this._disabled; }
+        get disabled() { return this._superHyperInternalPropertyDisabled; }
         /**
          * @param {?} value
          * @return {?}
          */
-        set disabled(value) { this._disabled = toBoolean(value); }
+        set disabled(value) { this._superHyperInternalPropertyDisabled = toBoolean(value); }
     };
 }
 
@@ -2198,7 +2198,7 @@ function mixinColor(base) {
         /**
          * @return {?}
          */
-        get color() { return this._color; }
+        get color() { return this._superHyperInternalPropertyColor; }
         /**
          * @param {?} val
          * @return {?}
@@ -2207,7 +2207,7 @@ function mixinColor(base) {
             /** @type {?} */
             const defaultColor = val || DEFAULT_COLOR;
             if (defaultColor !== this.color) {
-                this._color = defaultColor;
+                this._superHyperInternalPropertyColor = defaultColor;
             }
         }
         /**
@@ -2235,7 +2235,7 @@ function mixinBg(base) {
         /**
          * @return {?}
          */
-        get bg() { return this._bg; }
+        get bg() { return this._superHyperInternalPropertyBg; }
         /**
          * @param {?} val
          * @return {?}
@@ -2244,7 +2244,7 @@ function mixinBg(base) {
             /** @type {?} */
             const defaultColor = val || DEFAULT_BG;
             if (defaultColor !== this.bg) {
-                this._bg = defaultColor;
+                this._superHyperInternalPropertyBg = defaultColor;
             }
         }
         /**
@@ -2270,12 +2270,12 @@ function mixinRaised(base) {
         /**
          * @return {?}
          */
-        get raised() { return this._raised; }
+        get raised() { return this._superHyperInternalPropertyRaised; }
         /**
          * @param {?} value
          * @return {?}
          */
-        set raised(value) { this._raised = toBoolean(value); }
+        set raised(value) { this._superHyperInternalPropertyRaised = toBoolean(value); }
         /**
          * @param {...?} args
          */
@@ -2297,12 +2297,12 @@ function mixinOutlined(base) {
         /**
          * @return {?}
          */
-        get outlined() { return this._outlined; }
+        get outlined() { return this._superHyperInternalPropertyOutlined; }
         /**
          * @param {?} value
          * @return {?}
          */
-        set outlined(value) { this._outlined = toBoolean(value); }
+        set outlined(value) { this._superHyperInternalPropertyOutlined = toBoolean(value); }
         /**
          * @param {...?} args
          */
@@ -2324,12 +2324,12 @@ function mixinElevation(base) {
         /**
          * @return {?}
          */
-        get elevation() { return this._elevation; }
+        get elevation() { return this._superHyperInternalPropertyElevation; }
         /**
          * @param {?} value
          * @return {?}
          */
-        set elevation(value) { this._elevation = value; }
+        set elevation(value) { this._superHyperInternalPropertyElevation = value; }
         /**
          * @param {...?} args
          */
@@ -2351,12 +2351,12 @@ function mixinShadowColor(base) {
         /**
          * @return {?}
          */
-        get shadowColor() { return this._shadowColor; }
+        get shadowColor() { return this._superHyperInternalPropertyShadowColor; }
         /**
          * @param {?} value
          * @return {?}
          */
-        set shadowColor(value) { this._shadowColor = value; }
+        set shadowColor(value) { this._superHyperInternalPropertyShadowColor = value; }
         /**
          * @param {...?} args
          */
@@ -2845,9 +2845,9 @@ LyFocusState.ctorParameters = () => [
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
-const AUI_VERSION = '2.5.3-nightly.20190312-jt5idcw8';
+const AUI_VERSION = '2.5.3-nightly.20190313-jt6xtgam';
 /** @type {?} */
-const AUI_LAST_UPDATE = '2019-03-12T08:23:12.774Z';
+const AUI_LAST_UPDATE = '2019-03-13T08:23:24.089Z';
 
 /**
  * @fileoverview added by tsickle
