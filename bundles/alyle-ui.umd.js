@@ -1652,6 +1652,9 @@
             else if (currentKey.indexOf('@media') === 0) {
                 newKey = "" + currentKey;
             }
+            else if (currentKey === '@global') {
+                newKey = currentKey;
+            }
             else {
                 newKey = parentKey + " " + currentKey;
             }
@@ -3318,9 +3321,9 @@
      * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /** @type {?} */
-    var AUI_VERSION = '2.5.3-nightly.20190314-jt8dc5wi';
+    var AUI_VERSION = '2.5.3-nightly.20190315-jt9sp37v';
     /** @type {?} */
-    var AUI_LAST_UPDATE = '2019-03-14T08:25:37.505Z';
+    var AUI_LAST_UPDATE = '2019-03-15T08:23:20.969Z';
 
     /**
      * @fileoverview added by tsickle

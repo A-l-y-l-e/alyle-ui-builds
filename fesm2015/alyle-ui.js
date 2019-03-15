@@ -1365,6 +1365,9 @@ function styleToString(key, $name, ob, themeVariables, currentKey, parentKey) {
         else if (currentKey.indexOf('@media') === 0) {
             newKey = `${currentKey}`;
         }
+        else if (currentKey === '@global') {
+            newKey = currentKey;
+        }
         else {
             newKey = `${parentKey} ${currentKey}`;
         }
@@ -2845,9 +2848,9 @@ LyFocusState.ctorParameters = () => [
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
-const AUI_VERSION = '2.5.3-nightly.20190314-jt8dc5wi';
+const AUI_VERSION = '2.5.3-nightly.20190315-jt9sp37v';
 /** @type {?} */
-const AUI_LAST_UPDATE = '2019-03-14T08:25:37.505Z';
+const AUI_LAST_UPDATE = '2019-03-15T08:23:20.969Z';
 
 /**
  * @fileoverview added by tsickle
