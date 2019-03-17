@@ -32,6 +32,7 @@ export declare class MinimaDark extends MinimaBase implements ThemeConfig {
         tertiary: string;
         base: string;
     };
+    hover: string;
     paper: {
         default: string;
         shadow: string;

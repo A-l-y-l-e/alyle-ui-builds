@@ -1,6 +1,6 @@
 import { InjectionToken } from '@angular/core';
 import { LyStyleUtils, Dir } from '../style-utils';
-import { StyleContainer } from './theme2.service';
+import { StyleContainer } from './style';
 import { RippleVariables } from './variables/ripple';
 import { TypographyVariables } from './variables/typography';
 import { CheckboxVariables } from './variables/checkbox';
@@ -8,6 +8,7 @@ import { SnackBarVariables } from './variables/snack-bar';
 import { ButtonVariables } from './variables/button';
 import { TooltipVariables } from './variables/tooltip';
 import { AvatarVariables } from './variables/avatar';
+import { ExpansionVariables } from './variables/expansion';
 export declare const LY_THEME_GLOBAL_VARIABLES: InjectionToken<RecursivePartial<ThemeVariables>>;
 export declare const LY_THEME: InjectionToken<ThemeConfig | ThemeConfig[]>;
 export declare const LY_THEME_NAME: InjectionToken<string>;
@@ -29,6 +30,7 @@ export interface ThemeConfig {
         tertiary: string;
         base: string;
     };
+    hover: string;
     text: {
         default: string;
         primary: string;
@@ -125,6 +127,7 @@ export interface ThemeConfig {
     button: ButtonVariables;
     tooltip: TooltipVariables;
     avatar: AvatarVariables;
+    expansion?: ExpansionVariables;
 }
 export declare type ThemeVariables = LyStyleUtils & ThemeConfig;
 export declare type PartialThemeVariables = RecursivePartial<ThemeVariables>;

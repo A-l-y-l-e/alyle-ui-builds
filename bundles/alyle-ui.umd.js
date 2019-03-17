@@ -286,6 +286,23 @@
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
+    /**
+     * Only for internal use
+     * @type {?}
+     */
+    var _STYLE_MAP = new Map();
+    /** @enum {number} */
+    var TypeStyle = {
+        Multiple: 0,
+        OnlyOne: 1,
+    };
+    TypeStyle[TypeStyle.Multiple] = 'Multiple';
+    TypeStyle[TypeStyle.OnlyOne] = 'OnlyOne';
+
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
     var LyStyleUtils = /** @class */ (function () {
         function LyStyleUtils() {
         }
@@ -325,6 +342,26 @@
          */
             function (key) {
                 return "@media " + (this.breakpoints[key] || key);
+            };
+        /**
+         * @template T
+         * @param {?} styles
+         * @return {?}
+         */
+        LyStyleUtils.prototype.getClasses = /**
+         * @template T
+         * @param {?} styles
+         * @return {?}
+         */
+            function (styles) {
+                /** @type {?} */
+                var styleMap = _STYLE_MAP.get(styles);
+                if (styleMap) {
+                    return styleMap.classes || styleMap[this.name];
+                }
+                else {
+                    throw Error('Classes not found');
+                }
             };
         /**
          * @param {?} val
@@ -1021,15 +1058,6 @@
     };
     /** @type {?} */
     var REF_REG_EXP = /\{([\w-]+)\}/g;
-    /** @enum {number} */
-    var TypeStyle = {
-        Multiple: 0,
-        OnlyOne: 1,
-    };
-    TypeStyle[TypeStyle.Multiple] = 'Multiple';
-    TypeStyle[TypeStyle.OnlyOne] = 'OnlyOne';
-    /** @type {?} */
-    var STYLE_MAP5 = new Map();
     /** @type {?} */
     var nextClassId = 0;
     /** @type {?} */
@@ -1267,7 +1295,7 @@
                 var _this = this;
                 this.elements.forEach(function (_, key) {
                     /** @type {?} */
-                    var styleData = ( /** @type {?} */(STYLE_MAP5.get(key)));
+                    var styleData = ( /** @type {?} */(_STYLE_MAP.get(key)));
                     if (styleData.requireUpdate) {
                         _this._createStyleContent2(styleData.styles, styleData.id, styleData.priority, styleData.type, true, styleData.parentStyle);
                     }
@@ -1359,9 +1387,9 @@
                 var newId = id || ( /** @type {?} */(styles));
                 /** @type {?} */
                 var isNewStyle = null;
-                if (!STYLE_MAP5.has(newId)) {
+                if (!_STYLE_MAP.has(newId)) {
                     isNewStyle = true;
-                    STYLE_MAP5.set(newId, {
+                    _STYLE_MAP.set(newId, {
                         priority: priority,
                         styles: ( /** @type {?} */(styles)),
                         type: type,
@@ -1371,7 +1399,7 @@
                     });
                 }
                 /** @type {?} */
-                var styleMap = ( /** @type {?} */(STYLE_MAP5.get(newId)));
+                var styleMap = ( /** @type {?} */(_STYLE_MAP.get(newId)));
                 /** @type {?} */
                 var themeName = this.initialTheme;
                 /** @type {?} */
@@ -1388,7 +1416,7 @@
                     var config = ( /** @type {?} */(this.core.get(themeMap.change || themeName)));
                     if (typeof styles === 'function') {
                         styleMap.requireUpdate = true;
-                        css = groupStyleToString(styleMap, ( /** @type {?} */(styles(config))), themeName, id, type, config);
+                        css = groupStyleToString(styleMap, ( /** @type {?} */(styles(config, this))), themeName, id, type, config);
                         if (!forChangeTheme) {
                             styleMap.css[themeName] = css;
                         }
@@ -1529,6 +1557,26 @@
                     fn();
                 }
             };
+        /**
+         * @template T
+         * @param {?} classes
+         * @return {?}
+         */
+        LyTheme2.prototype.toClassSelector = /**
+         * @template T
+         * @param {?} classes
+         * @return {?}
+         */
+            function (classes) {
+                /** @type {?} */
+                var newClasses = {};
+                for (var key in ( /** @type {?} */(( /** @type {?} */(classes))))) {
+                    if (classes.hasOwnProperty(key)) {
+                        newClasses[key] = "." + classes[key];
+                    }
+                }
+                return ( /** @type {?} */(( /** @type {?} */(newClasses))));
+            };
         LyTheme2.decorators = [
             { type: i0.Injectable }
         ];
@@ -1573,7 +1621,7 @@
             }
             if (styleMap.parentStyle) {
                 /** @type {?} */
-                var styleMapOfParentStyle = STYLE_MAP5.get(styleMap.parentStyle);
+                var styleMapOfParentStyle = _STYLE_MAP.get(styleMap.parentStyle);
                 if (!styleMapOfParentStyle) {
                     throw new Error("The parentStyle not exist or is called before being created.");
                 }
@@ -1588,6 +1636,10 @@
         var content = '';
         /** @type {?} */
         var name = styles.$name ? styles.$name + "-" : '';
+        // set priority
+        if (styles.$priority != null) {
+            styleMap.priority = styles.$priority;
+        }
         for (var key in styles) {
             if (styles.hasOwnProperty(key)) {
                 /** @type {?} */
@@ -1652,7 +1704,7 @@
             else if (currentKey.indexOf('@media') === 0) {
                 newKey = "" + currentKey;
             }
-            else if (currentKey === '@global') {
+            else if (currentKey === '@global' || parentKey === '@global') {
                 newKey = currentKey;
             }
             else {
@@ -2566,8 +2618,6 @@
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
-    /** @type {?} */
-    var DEFAULT_COLOR = 'primary';
     /**
      * @template T
      * @param {?} base
@@ -2592,7 +2642,7 @@
                  * @return {?}
                  */ function (val) {
                     /** @type {?} */
-                    var defaultColor = val || DEFAULT_COLOR;
+                    var defaultColor = val;
                     if (defaultColor !== this.color) {
                         this._superHyperInternalPropertyColor = defaultColor;
                     }
@@ -2608,8 +2658,6 @@
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
-    /** @type {?} */
-    var DEFAULT_BG = 'primary';
     /**
      * @template T
      * @param {?} base
@@ -2634,7 +2682,7 @@
                  * @return {?}
                  */ function (val) {
                     /** @type {?} */
-                    var defaultColor = val || DEFAULT_BG;
+                    var defaultColor = val;
                     if (defaultColor !== this.bg) {
                         this._superHyperInternalPropertyBg = defaultColor;
                     }
@@ -2834,7 +2882,7 @@
      * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /** @type {?} */
-    var DEFAULT_BG$1 = 'paper';
+    var DEFAULT_BG = 'paper';
     var LyPaperBase = /** @class */ (function () {
         function LyPaperBase(_theme, _ngZone) {
             this._theme = _theme;
@@ -2887,7 +2935,7 @@
          */
             function () {
                 if (!this.bg && !this.hasText) {
-                    this.bg = DEFAULT_BG$1;
+                    this.bg = DEFAULT_BG;
                     this.updateStyle(this._el);
                     this._renderer.addClass(this._el.nativeElement, this._theme.addSimpleStyle('lyPaper', ({
                         display: 'block'
@@ -3321,9 +3369,9 @@
      * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /** @type {?} */
-    var AUI_VERSION = '2.5.3-nightly.20190316-jtb84rj9';
+    var AUI_VERSION = '2.6.0';
     /** @type {?} */
-    var AUI_LAST_UPDATE = '2019-03-16T08:23:12.738Z';
+    var AUI_LAST_UPDATE = '2019-03-17T01:59:10.805Z';
 
     /**
      * @fileoverview added by tsickle
@@ -4502,6 +4550,170 @@
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
+    /**
+     * @param {?} variable
+     * @return {?}
+     */
+    function getLyThemeVariableUndefinedError(variable) {
+        return Error("Variable '" + variable + "' undefined in Theme.");
+    }
+
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
+    /** @type {?} */
+    var STYLES = function (theme) {
+        return ({
+            root: {
+                width: '1em',
+                height: '1em',
+                display: 'inline-block',
+                position: 'relative',
+                fontSize: '24px'
+            },
+            line: {
+                top: 'calc(0.5em - 1px)',
+                position: 'absolute',
+                width: 1 / 3 + "em",
+                height: '2px',
+                backgroundColor: 'currentColor',
+                display: 'inline-block',
+                transition: "all " + theme.animations.durations.entering + "ms " + theme.animations.curves.standard,
+                '&:first-of-type': {
+                    left: '0.25em',
+                    '-webkit-transform': 'rotate(45deg)',
+                    transform: 'rotate(45deg)'
+                },
+                '&:last-of-type': {
+                    right: '0.25em',
+                    '-webkit-transform': 'rotate(-45deg)',
+                    transform: 'rotate(-45deg)'
+                }
+            },
+            up: {
+                '{line}:first-of-type': {
+                    '-webkit-transform': 'rotate(-45deg)',
+                    transform: 'rotate(-45deg)'
+                },
+                '{line}:last-of-type': {
+                    '-webkit-transform': 'rotate(45deg)',
+                    transform: 'rotate(45deg)'
+                }
+            }
+        });
+    };
+    var LyExpansionIcon = /** @class */ (function () {
+        function LyExpansionIcon(_theme, _renderer, _el) {
+            this._theme = _theme;
+            this._renderer = _renderer;
+            this._el = _el;
+            this.classes = this._theme.addStyleSheet(STYLES);
+            this._up = false;
+            _renderer.addClass(_el.nativeElement, this.classes.root);
+        }
+        Object.defineProperty(LyExpansionIcon.prototype, "color", {
+            get: /**
+             * @return {?}
+             */ function () {
+                return this._color;
+            },
+            set: /**
+             * @param {?} val
+             * @return {?}
+             */ function (val) {
+                this._colorClass = this._theme.addStyle('LyExpansionIcon.color', function (theme) {
+                    return ({
+                        '{line}': {
+                            backgroundColor: theme.colorOf(val)
+                        }
+                    });
+                }, this._el.nativeElement, this._colorClass, null, STYLES);
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(LyExpansionIcon.prototype, "up", {
+            get: /**
+             * @return {?}
+             */ function () {
+                return this._up;
+            },
+            set: /**
+             * @param {?} val
+             * @return {?}
+             */ function (val) {
+                /** @type {?} */
+                var newVal = toBoolean(val);
+                if (newVal !== this.up) {
+                    this._up = newVal;
+                    if (newVal) {
+                        this._renderer.addClass(this._el.nativeElement, this.classes.up);
+                    }
+                    else {
+                        this._renderer.removeClass(this._el.nativeElement, this.classes.up);
+                    }
+                }
+            },
+            enumerable: true,
+            configurable: true
+        });
+        /**
+         * @return {?}
+         */
+        LyExpansionIcon.prototype.toggle = /**
+         * @return {?}
+         */
+            function () {
+                this.up = !this.up;
+            };
+        LyExpansionIcon.decorators = [
+            { type: i0.Component, args: [{
+                        selector: 'ly-expansion-icon',
+                        template: "<span [className]=\"classes.line\"></span>\n<span [className]=\"classes.line\"></span>",
+                        changeDetection: i0.ChangeDetectionStrategy.OnPush
+                    }] }
+        ];
+        /** @nocollapse */
+        LyExpansionIcon.ctorParameters = function () {
+            return [
+                { type: LyTheme2 },
+                { type: i0.Renderer2 },
+                { type: i0.ElementRef }
+            ];
+        };
+        LyExpansionIcon.propDecorators = {
+            color: [{ type: i0.Input }],
+            up: [{ type: i0.Input }]
+        };
+        return LyExpansionIcon;
+    }());
+
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
+    var LyExpansionIconModule = /** @class */ (function () {
+        function LyExpansionIconModule() {
+        }
+        LyExpansionIconModule.decorators = [
+            { type: i0.NgModule, args: [{
+                        declarations: [LyExpansionIcon],
+                        exports: [LyExpansionIcon]
+                    },] }
+        ];
+        return LyExpansionIconModule;
+    }());
+
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
+
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
 
     /**
      * @fileoverview added by tsickle
@@ -4547,6 +4759,8 @@
     exports.capitalizeFirstLetter = capitalizeFirstLetter;
     exports.StylesInDocument = StylesInDocument;
     exports.LyTheme2 = LyTheme2;
+    exports._STYLE_MAP = _STYLE_MAP;
+    exports.TypeStyle = TypeStyle;
     exports.LyThemeModule = LyThemeModule;
     exports.LY_COMMON_STYLES = LY_COMMON_STYLES;
     exports.LyCoreStyles = LyCoreStyles;
@@ -4589,6 +4803,9 @@
     exports.Positioning = Positioning;
     exports.AlignAlias = AlignAlias;
     exports.LySelectionModel = LySelectionModel;
+    exports.getLyThemeVariableUndefinedError = getLyThemeVariableUndefinedError;
+    exports.LyExpansionIcon = LyExpansionIcon;
+    exports.LyExpansionIconModule = LyExpansionIconModule;
     exports.ɵc = LyOverlayBackdrop;
     exports.ɵa = LyWithClass;
 

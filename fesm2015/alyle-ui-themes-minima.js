@@ -244,6 +244,32 @@ class MinimaBase extends LyStyleUtils {
                 }
             }
         };
+        this.expansion = {
+            root: {
+                '& {panelHeader}': {
+                    height: '48px'
+                },
+                '& {expanded} {panelHeader}': {
+                    height: '64px'
+                },
+            },
+            appearance: {
+                popOut: {
+                    '& {panel}': {
+                        transition: `margin ${this.animations.durations.entering}ms ${this.animations.curves.standard}`
+                    },
+                    '& {expanded}{panel}': {
+                        margin: '16px 0',
+                        '&:first-child': {
+                            marginTop: 0
+                        },
+                        '&:last-child': {
+                            marginBottom: 0
+                        }
+                    }
+                }
+            }
+        };
         this.typography.lyTyp = {
             display4: {
                 fontSize: this.pxToRem(96),
@@ -354,6 +380,7 @@ class MinimaLight extends MinimaBase {
             tertiary: '#efefef',
             base: '#E0E0E0'
         };
+        this.hover = 'rgba(0, 0, 0, 0.04)';
         this.paper = {
             default: '#fff',
             shadow
@@ -456,6 +483,7 @@ class MinimaDark extends MinimaBase {
             tertiary: '#212121',
             base: '#0E0E0E'
         };
+        this.hover = 'rgba(255, 255, 255, 0.04)';
         this.paper = {
             default: '#2b2b2b',
             shadow: shadow$1

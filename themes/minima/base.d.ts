@@ -100,5 +100,31 @@ export declare class MinimaBase extends LyStyleUtils {
             };
         };
     };
+    expansion: {
+        root: {
+            '& {panelHeader}': {
+                height: string;
+            };
+            '& {expanded} {panelHeader}': {
+                height: string;
+            };
+        };
+        appearance: {
+            popOut: {
+                '& {panel}': {
+                    transition: string;
+                };
+                '& {expanded}{panel}': {
+                    margin: string;
+                    '&:first-child': {
+                        marginTop: number;
+                    };
+                    '&:last-child': {
+                        marginBottom: number;
+                    };
+                };
+            };
+        };
+    };
     constructor();
 }

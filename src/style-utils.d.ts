@@ -1,4 +1,6 @@
+import { Styles, LyClasses } from './theme/style';
 export declare class LyStyleUtils {
+    name: string;
     typography: {
         fontFamily?: string;
         htmlFontSize: number;
@@ -25,6 +27,7 @@ export declare class LyStyleUtils {
     pxToRem(value: number): string;
     colorOf(value: string, optional?: string): string;
     getBreakpoint(key: string): string;
+    getClasses<T>(styles: T & Styles): LyClasses<T>;
     getDirection(val: DirAlias): "right" | "left";
 }
 export declare enum Dir {

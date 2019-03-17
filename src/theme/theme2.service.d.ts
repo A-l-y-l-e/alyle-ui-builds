@@ -2,38 +2,13 @@ import { Renderer2, NgZone } from '@angular/core';
 import { ThemeVariables } from './theme-config';
 import { CoreTheme } from './core-theme.service';
 import { DataStyle } from '../theme.service';
-declare enum TypeStyle {
-    Multiple = 0,
-    OnlyOne = 1
-}
-export interface StyleMap5 {
-    styles: Styles;
-    type: TypeStyle;
-    priority?: number | null;
-    css: {
-        [themeName: string]: string;
-    } | string;
-    /** global theme */
-    classes?: {
-        [key: string]: string;
-    } | string;
-    /** requireUpdate */
-    classesWithTheme?: {
-        [themeName: string]: {
-            [key: string]: string;
-        } | string;
-    };
-    /** Only for styles of TypeStyle.one */
-    parentStyle?: Styles;
-    requireUpdate?: boolean;
-    id: string | null;
-}
+import { StyleGroup, StyleContainer, Styles, StyleDeclarationsBlock, LyClasses } from './style';
 export declare class StylesInDocument {
     styles: {
         [themeName: string]: Map<string | Styles, HTMLStyleElement>;
     };
     styleContainers: Map<number, HTMLElement>;
-    styleElementGlobalMap: Map<string | ((T: any) => StyleGroup) | StyleGroup, HTMLStyleElement>;
+    styleElementGlobalMap: Map<string | ((T: any, theme: any) => StyleGroup) | StyleGroup, HTMLStyleElement>;
 }
 export declare class LyTheme2 {
     private stylesInDocument;
@@ -92,36 +67,16 @@ export declare class LyTheme2 {
      * @param styles styles
      * @param priority priority for style
      */
-    addStyleSheet<T>(styles: T & Styles, priority?: number): OnlyClasses<T>;
+    addStyleSheet<T>(styles: T & Styles, priority?: number): LyClasses<T>;
     private _createStyleContent2;
     private _createStyleContainer;
     private findNode;
     private _createElementStyle;
     requestAnimationFrame(fn: (...args: any[]) => void): void;
-}
-/**
- * Style Object
- */
-export interface StyleContainer {
-    [key: string]: StyleContainer | string | number | string[] | null | undefined;
-}
-export interface StyleGroup {
-    /** Prefix name */
-    $name?: string;
-    $keyframes?: Keyframes;
-    [key: string]: StyleContainer | string | undefined | null;
-}
-/**
- * CSS declarations block
- */
-export declare type StyleDeclarationsBlock = ((T: any) => StyleContainer | string) | StyleContainer | string | null | undefined;
-export declare type Styles = ((T: any) => StyleGroup) | StyleGroup | undefined | null;
-export interface Keyframes {
-    [name: string]: {
-        [percent: number]: StyleContainer;
-    };
+    toClassSelector<T>(classes: T): T;
 }
 export declare function converterToCssKeyAndStyle(str: string, themeVariables: ThemeVariables): string;
 export declare function capitalizeFirstLetter(str: string): string;
-declare type OnlyClasses<T> = Record<(Exclude<(T extends ((...args: any[]) => any) ? (keyof ReturnType<T>) : keyof T), '$name' | '$keyframes' | '@global'>), string>;
-export {};
+export interface ThemeRef extends Pick<LyTheme2, 'toClassSelector'> {
+    addStyleSheet<T>(styles: T & Styles): LyClasses<T>;
+}

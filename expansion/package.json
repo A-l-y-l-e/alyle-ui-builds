@@ -1,0 +1,13 @@
+{
+  "main": "../bundles/alyle-ui-expansion.umd.js",
+  "module": "../fesm5/alyle-ui-expansion.js",
+  "es2015": "../fesm2015/alyle-ui-expansion.js",
+  "esm5": "../esm5/expansion/alyle-ui-expansion.js",
+  "esm2015": "../esm2015/expansion/alyle-ui-expansion.js",
+  "fesm5": "../fesm5/alyle-ui-expansion.js",
+  "fesm2015": "../fesm2015/alyle-ui-expansion.js",
+  "typings": "alyle-ui-expansion.d.ts",
+  "metadata": "alyle-ui-expansion.metadata.json",
+  "sideEffects": false,
+  "name": "@alyle/ui/expansion"
+}

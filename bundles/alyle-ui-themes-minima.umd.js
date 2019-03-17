@@ -285,6 +285,32 @@
                     }
                 }
             };
+            _this.expansion = {
+                root: {
+                    '& {panelHeader}': {
+                        height: '48px'
+                    },
+                    '& {expanded} {panelHeader}': {
+                        height: '64px'
+                    },
+                },
+                appearance: {
+                    popOut: {
+                        '& {panel}': {
+                            transition: "margin " + _this.animations.durations.entering + "ms " + _this.animations.curves.standard
+                        },
+                        '& {expanded}{panel}': {
+                            margin: '16px 0',
+                            '&:first-child': {
+                                marginTop: 0
+                            },
+                            '&:last-child': {
+                                marginBottom: 0
+                            }
+                        }
+                    }
+                }
+            };
             _this.typography.lyTyp = {
                 display4: {
                     fontSize: _this.pxToRem(96),
@@ -398,6 +424,7 @@
                 tertiary: '#efefef',
                 base: '#E0E0E0'
             };
+            _this.hover = 'rgba(0, 0, 0, 0.04)';
             _this.paper = {
                 default: '#fff',
                 shadow: shadow
@@ -503,6 +530,7 @@
                 tertiary: '#212121',
                 base: '#0E0E0E'
             };
+            _this.hover = 'rgba(255, 255, 255, 0.04)';
             _this.paper = {
                 default: '#2b2b2b',
                 shadow: shadow$1

@@ -3,7 +3,7 @@ import { HammerGestureConfig } from '@angular/platform-browser';
 import { DOCUMENT } from '@angular/common';
 import { map, share, auditTime } from 'rxjs/operators';
 import { Subject, fromEvent, empty, Subscription, merge } from 'rxjs';
-import { InjectionToken, Injectable, Optional, Inject, RendererFactory2, ViewEncapsulation, Component, HostListener, ElementRef, Directive, Input, NgModule, NgZone, isDevMode, Renderer2, ApplicationRef, ComponentFactoryResolver, Injector, TemplateRef, ViewContainerRef, defineInjectable, inject, INJECTOR } from '@angular/core';
+import { InjectionToken, Injectable, Optional, Inject, RendererFactory2, ViewEncapsulation, Component, HostListener, ElementRef, Directive, Input, NgModule, NgZone, isDevMode, Renderer2, ApplicationRef, ComponentFactoryResolver, Injector, TemplateRef, ViewContainerRef, ChangeDetectionStrategy, defineInjectable, inject, INJECTOR } from '@angular/core';
 
 /**
  * @fileoverview added by tsickle
@@ -213,6 +213,23 @@ const LY_THEME_NAME = new InjectionToken('ly.theme.name');
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
+/**
+ * Only for internal use
+ * @type {?}
+ */
+const _STYLE_MAP = new Map();
+/** @enum {number} */
+const TypeStyle = {
+    Multiple: 0,
+    OnlyOne: 1,
+};
+TypeStyle[TypeStyle.Multiple] = 'Multiple';
+TypeStyle[TypeStyle.OnlyOne] = 'OnlyOne';
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
 class LyStyleUtils {
     /**
      * @param {?} value
@@ -237,6 +254,21 @@ class LyStyleUtils {
      */
     getBreakpoint(key) {
         return `@media ${this.breakpoints[key] || key}`;
+    }
+    /**
+     * @template T
+     * @param {?} styles
+     * @return {?}
+     */
+    getClasses(styles) {
+        /** @type {?} */
+        const styleMap = _STYLE_MAP.get(styles);
+        if (styleMap) {
+            return styleMap.classes || styleMap[this.name];
+        }
+        else {
+            throw Error('Classes not found');
+        }
     }
     /**
      * @param {?} val
@@ -862,15 +894,6 @@ const defaultStyles = {
 };
 /** @type {?} */
 const REF_REG_EXP = /\{([\w-]+)\}/g;
-/** @enum {number} */
-const TypeStyle = {
-    Multiple: 0,
-    OnlyOne: 1,
-};
-TypeStyle[TypeStyle.Multiple] = 'Multiple';
-TypeStyle[TypeStyle.OnlyOne] = 'OnlyOne';
-/** @type {?} */
-const STYLE_MAP5 = new Map();
 /** @type {?} */
 let nextClassId = 0;
 /** @type {?} */
@@ -1044,7 +1067,7 @@ class LyTheme2 {
     _updateAllStyles() {
         this.elements.forEach((_, key) => {
             /** @type {?} */
-            const styleData = (/** @type {?} */ (STYLE_MAP5.get(key)));
+            const styleData = (/** @type {?} */ (_STYLE_MAP.get(key)));
             if (styleData.requireUpdate) {
                 this._createStyleContent2(styleData.styles, styleData.id, styleData.priority, styleData.type, true, styleData.parentStyle);
             }
@@ -1094,9 +1117,9 @@ class LyTheme2 {
         const newId = id || (/** @type {?} */ (styles));
         /** @type {?} */
         let isNewStyle = null;
-        if (!STYLE_MAP5.has(newId)) {
+        if (!_STYLE_MAP.has(newId)) {
             isNewStyle = true;
-            STYLE_MAP5.set(newId, {
+            _STYLE_MAP.set(newId, {
                 priority,
                 styles: (/** @type {?} */ (styles)),
                 type,
@@ -1106,7 +1129,7 @@ class LyTheme2 {
             });
         }
         /** @type {?} */
-        const styleMap = (/** @type {?} */ (STYLE_MAP5.get(newId)));
+        const styleMap = (/** @type {?} */ (_STYLE_MAP.get(newId)));
         /** @type {?} */
         const themeName = this.initialTheme;
         /** @type {?} */
@@ -1123,7 +1146,7 @@ class LyTheme2 {
             const config = (/** @type {?} */ (this.core.get(themeMap.change || themeName)));
             if (typeof styles === 'function') {
                 styleMap.requireUpdate = true;
-                css = groupStyleToString(styleMap, (/** @type {?} */ (styles(config))), themeName, id, type, config);
+                css = groupStyleToString(styleMap, (/** @type {?} */ (styles(config, this))), themeName, id, type, config);
                 if (!forChangeTheme) {
                     styleMap.css[themeName] = css;
                 }
@@ -1245,6 +1268,21 @@ class LyTheme2 {
             fn();
         }
     }
+    /**
+     * @template T
+     * @param {?} classes
+     * @return {?}
+     */
+    toClassSelector(classes) {
+        /** @type {?} */
+        const newClasses = {};
+        for (const key in (/** @type {?} */ ((/** @type {?} */ (classes))))) {
+            if (classes.hasOwnProperty(key)) {
+                newClasses[key] = `.${classes[key]}`;
+            }
+        }
+        return (/** @type {?} */ ((/** @type {?} */ (newClasses))));
+    }
 }
 LyTheme2.decorators = [
     { type: Injectable }
@@ -1286,7 +1324,7 @@ function groupStyleToString(styleMap, styles, themeName, id, typeStyle, themeVar
         }
         if (styleMap.parentStyle) {
             /** @type {?} */
-            const styleMapOfParentStyle = STYLE_MAP5.get(styleMap.parentStyle);
+            const styleMapOfParentStyle = _STYLE_MAP.get(styleMap.parentStyle);
             if (!styleMapOfParentStyle) {
                 throw new Error(`The parentStyle not exist or is called before being created.`);
             }
@@ -1301,6 +1339,10 @@ function groupStyleToString(styleMap, styles, themeName, id, typeStyle, themeVar
     let content = '';
     /** @type {?} */
     const name = styles.$name ? `${styles.$name}-` : '';
+    // set priority
+    if (styles.$priority != null) {
+        styleMap.priority = styles.$priority;
+    }
     for (const key in styles) {
         if (styles.hasOwnProperty(key)) {
             /** @type {?} */
@@ -1365,7 +1407,7 @@ function styleToString(key, $name, ob, themeVariables, currentKey, parentKey) {
         else if (currentKey.indexOf('@media') === 0) {
             newKey = `${currentKey}`;
         }
-        else if (currentKey === '@global') {
+        else if (currentKey === '@global' || parentKey === '@global') {
             newKey = currentKey;
         }
         else {
@@ -2189,8 +2231,6 @@ function mixinDisabled(base) {
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
-/** @type {?} */
-const DEFAULT_COLOR = 'primary';
 /**
  * @template T
  * @param {?} base
@@ -2208,7 +2248,7 @@ function mixinColor(base) {
          */
         set color(val) {
             /** @type {?} */
-            const defaultColor = val || DEFAULT_COLOR;
+            const defaultColor = val;
             if (defaultColor !== this.color) {
                 this._superHyperInternalPropertyColor = defaultColor;
             }
@@ -2226,8 +2266,6 @@ function mixinColor(base) {
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
-/** @type {?} */
-const DEFAULT_BG = 'primary';
 /**
  * @template T
  * @param {?} base
@@ -2245,7 +2283,7 @@ function mixinBg(base) {
          */
         set bg(val) {
             /** @type {?} */
-            const defaultColor = val || DEFAULT_BG;
+            const defaultColor = val;
             if (defaultColor !== this.bg) {
                 this._superHyperInternalPropertyBg = defaultColor;
             }
@@ -2413,7 +2451,7 @@ function mixinTabIndex(base) {
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
-const DEFAULT_BG$1 = 'paper';
+const DEFAULT_BG = 'paper';
 class LyPaperBase {
     /**
      * @param {?} _theme
@@ -2465,7 +2503,7 @@ class LyPaper extends LyPaperMixinBase {
      */
     ngOnInit() {
         if (!this.bg && !this.hasText) {
-            this.bg = DEFAULT_BG$1;
+            this.bg = DEFAULT_BG;
             this.updateStyle(this._el);
             this._renderer.addClass(this._el.nativeElement, this._theme.addSimpleStyle('lyPaper', ({
                 display: 'block'
@@ -2848,9 +2886,9 @@ LyFocusState.ctorParameters = () => [
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
-const AUI_VERSION = '2.5.3-nightly.20190316-jtb84rj9';
+const AUI_VERSION = '2.6.0';
 /** @type {?} */
-const AUI_LAST_UPDATE = '2019-03-16T08:23:12.738Z';
+const AUI_LAST_UPDATE = '2019-03-17T01:59:10.805Z';
 
 /**
  * @fileoverview added by tsickle
@@ -3782,6 +3820,148 @@ class LySelectionModel {
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
+/**
+ * @param {?} variable
+ * @return {?}
+ */
+function getLyThemeVariableUndefinedError(variable) {
+    return Error(`Variable '${variable}' undefined in Theme.`);
+}
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/** @type {?} */
+const STYLES = (theme) => ({
+    root: {
+        width: '1em',
+        height: '1em',
+        display: 'inline-block',
+        position: 'relative',
+        fontSize: '24px'
+    },
+    line: {
+        top: 'calc(0.5em - 1px)',
+        position: 'absolute',
+        width: `${1 / 3}em`,
+        height: '2px',
+        backgroundColor: 'currentColor',
+        display: 'inline-block',
+        transition: `all ${theme.animations.durations.entering}ms ${theme.animations.curves.standard}`,
+        '&:first-of-type': {
+            left: '0.25em',
+            '-webkit-transform': 'rotate(45deg)',
+            transform: 'rotate(45deg)'
+        },
+        '&:last-of-type': {
+            right: '0.25em',
+            '-webkit-transform': 'rotate(-45deg)',
+            transform: 'rotate(-45deg)'
+        }
+    },
+    up: {
+        '{line}:first-of-type': {
+            '-webkit-transform': 'rotate(-45deg)',
+            transform: 'rotate(-45deg)'
+        },
+        '{line}:last-of-type': {
+            '-webkit-transform': 'rotate(45deg)',
+            transform: 'rotate(45deg)'
+        }
+    }
+});
+class LyExpansionIcon {
+    /**
+     * @param {?} _theme
+     * @param {?} _renderer
+     * @param {?} _el
+     */
+    constructor(_theme, _renderer, _el) {
+        this._theme = _theme;
+        this._renderer = _renderer;
+        this._el = _el;
+        this.classes = this._theme.addStyleSheet(STYLES);
+        this._up = false;
+        _renderer.addClass(_el.nativeElement, this.classes.root);
+    }
+    /**
+     * @param {?} val
+     * @return {?}
+     */
+    set color(val) {
+        this._colorClass = this._theme.addStyle('LyExpansionIcon.color', (theme) => ({
+            '{line}': {
+                backgroundColor: theme.colorOf(val)
+            }
+        }), this._el.nativeElement, this._colorClass, null, STYLES);
+    }
+    /**
+     * @return {?}
+     */
+    get color() {
+        return this._color;
+    }
+    /**
+     * @param {?} val
+     * @return {?}
+     */
+    set up(val) {
+        /** @type {?} */
+        const newVal = toBoolean(val);
+        if (newVal !== this.up) {
+            this._up = newVal;
+            if (newVal) {
+                this._renderer.addClass(this._el.nativeElement, this.classes.up);
+            }
+            else {
+                this._renderer.removeClass(this._el.nativeElement, this.classes.up);
+            }
+        }
+    }
+    /**
+     * @return {?}
+     */
+    get up() {
+        return this._up;
+    }
+    /**
+     * @return {?}
+     */
+    toggle() {
+        this.up = !this.up;
+    }
+}
+LyExpansionIcon.decorators = [
+    { type: Component, args: [{
+                selector: 'ly-expansion-icon',
+                template: "<span [className]=\"classes.line\"></span>\n<span [className]=\"classes.line\"></span>",
+                changeDetection: ChangeDetectionStrategy.OnPush
+            }] }
+];
+/** @nocollapse */
+LyExpansionIcon.ctorParameters = () => [
+    { type: LyTheme2 },
+    { type: Renderer2 },
+    { type: ElementRef }
+];
+LyExpansionIcon.propDecorators = {
+    color: [{ type: Input }],
+    up: [{ type: Input }]
+};
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+class LyExpansionIconModule {
+}
+LyExpansionIconModule.decorators = [
+    { type: NgModule, args: [{
+                declarations: [LyExpansionIcon],
+                exports: [LyExpansionIcon]
+            },] }
+];
 
 /**
  * @fileoverview added by tsickle
@@ -3793,6 +3973,16 @@ class LySelectionModel {
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { getContrastYIQ, shadowBuilderDeprecated, shadowBuilder, Shadows, THEME_VARIABLES, IS_CORE_THEME, Platform, supportsPassiveEventListeners, LyCommonModule, getNativeElement, NgTranscludeDirective, NgTranscludeModule, toBoolean, defaultEntry, scrollTo, scrollToC, scrollWithAnimation, FocusStatus, LyFocusState, AUI_VERSION, AUI_LAST_UPDATE, LY_HAMMER_OPTIONS, LyHammerGestureConfig, LyPaperBase, LyPaperMixinBase, LyPaper, CoreTheme, LY_THEME_GLOBAL_VARIABLES, LY_THEME, LY_THEME_NAME, converterToCssKeyAndStyle, capitalizeFirstLetter, StylesInDocument, LyTheme2, LyThemeModule, LY_COMMON_STYLES, LyCoreStyles, Undefined, UndefinedValue, eachMedia, isObject, mergeDeep, LyStyleUtils, Dir, DirAlias, DirPosition, LyOverlayRef, LyOverlayContainer, LyOverlay, LyOverlayModule, LyOverlayConfig, OverlayFactory, createOverlayInjector, STYLES_BACKDROP_DARK, MutationObserverFactory, ElementObserver, WinResize, WinScroll, mixinStyleUpdater, mixinDisableRipple, mixinColor, mixinBg, mixinRaised, mixinOutlined, mixinElevation, mixinShadowColor, mixinDisabled, mixinTabIndex, Ripple, LyRippleService, invertPlacement, YPosition, XPosition, Positioning, AlignAlias, LySelectionModel, LyOverlayBackdrop as ɵc, LyWithClass as ɵa };
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+
+export { getContrastYIQ, shadowBuilderDeprecated, shadowBuilder, Shadows, THEME_VARIABLES, IS_CORE_THEME, Platform, supportsPassiveEventListeners, LyCommonModule, getNativeElement, NgTranscludeDirective, NgTranscludeModule, toBoolean, defaultEntry, scrollTo, scrollToC, scrollWithAnimation, FocusStatus, LyFocusState, AUI_VERSION, AUI_LAST_UPDATE, LY_HAMMER_OPTIONS, LyHammerGestureConfig, LyPaperBase, LyPaperMixinBase, LyPaper, CoreTheme, LY_THEME_GLOBAL_VARIABLES, LY_THEME, LY_THEME_NAME, converterToCssKeyAndStyle, capitalizeFirstLetter, StylesInDocument, LyTheme2, _STYLE_MAP, TypeStyle, LyThemeModule, LY_COMMON_STYLES, LyCoreStyles, Undefined, UndefinedValue, eachMedia, isObject, mergeDeep, LyStyleUtils, Dir, DirAlias, DirPosition, LyOverlayRef, LyOverlayContainer, LyOverlay, LyOverlayModule, LyOverlayConfig, OverlayFactory, createOverlayInjector, STYLES_BACKDROP_DARK, MutationObserverFactory, ElementObserver, WinResize, WinScroll, mixinStyleUpdater, mixinDisableRipple, mixinColor, mixinBg, mixinRaised, mixinOutlined, mixinElevation, mixinShadowColor, mixinDisabled, mixinTabIndex, Ripple, LyRippleService, invertPlacement, YPosition, XPosition, Positioning, AlignAlias, LySelectionModel, getLyThemeVariableUndefinedError, LyExpansionIcon, LyExpansionIconModule, LyOverlayBackdrop as ɵc, LyWithClass as ɵa };
 
 //# sourceMappingURL=alyle-ui.js.map
