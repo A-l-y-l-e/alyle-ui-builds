@@ -1,6 +1,7 @@
 import { ElementRef, NgZone, OnChanges, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { LyTheme2, ThemeVariables } from '@alyle/ui';
 export declare const STYLES: (theme: ThemeVariables) => {
+    $priority: number;
     root: {
         display: string;
         overflow: string;

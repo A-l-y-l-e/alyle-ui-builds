@@ -72,7 +72,7 @@ export declare class LyResizingCroppingImages implements OnDestroy {
      * styles
      * @docs-private
      */
-    readonly classes: Record<"root" | "imgContainer" | "croppingContainer" | "croppContent", string>;
+    readonly classes: Record<"root" | "imgContainer" | "area" | "defaultContent", string>;
     _originalImgBase64?: string;
     private _fileName;
     /** Original image */

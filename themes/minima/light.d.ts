@@ -47,9 +47,6 @@ export declare class MinimaLight extends MinimaBase implements ThemeConfig {
     divider: string;
     colorShadow: string;
     shadow: string;
-    radio: {
-        outerCircle: string;
-    };
     menu: {};
     drawer: {
         backdrop: string;
@@ -171,11 +168,6 @@ export declare class MinimaLight extends MinimaBase implements ThemeConfig {
         };
     };
     badge: {};
-    checkbox: {
-        unchecked: {
-            color: string;
-        };
-    };
     snackBar: {
         root: {
             background: string;

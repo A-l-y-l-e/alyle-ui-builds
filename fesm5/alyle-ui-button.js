@@ -1,24 +1,53 @@
 import { __extends, __assign } from 'tslib';
 import { ChangeDetectionStrategy, Component, ElementRef, Input, Renderer2, NgZone, ViewChild, NgModule } from '@angular/core';
-import { LY_COMMON_STYLES, Platform, toBoolean, LyTheme2, mixinDisabled, mixinColor, mixinBg, mixinShadowColor, mixinOutlined, mixinElevation, mixinRaised, mixinDisableRipple, mixinStyleUpdater, LyRippleService, LyFocusState, LyCommonModule } from '@alyle/ui';
+import { LY_COMMON_STYLES, Platform, toBoolean, LyTheme2, mixinDisabled, mixinColor, mixinBg, mixinShadowColor, mixinOutlined, mixinElevation, mixinRaised, mixinDisableRipple, mixinStyleUpdater, LyRippleService, LyFocusState, getLyThemeVariableUndefinedError, LyCommonModule } from '@alyle/ui';
 
 /**
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
-var styles = function (theme) {
+var STYLES = function (theme) {
     /** @type {?} */
     var typography = theme.typography;
     /** @type {?} */
     var _styles = ({
-        root: __assign({ fontFamily: typography.fontFamily, color: theme.text.default, '-webkit-tap-highlight-color': 'transparent', backgroundColor: "rgba(0, 0, 0, 0)", border: 0, padding: '0 1em', '-moz-appearance': 'none', margin: 0, borderRadius: '3px', outline: 'none', fontWeight: 500, boxSizing: 'border-box', position: 'relative', justifyContent: 'center', alignItems: 'center', alignContent: 'center', display: 'inline-flex', cursor: 'pointer', '-webkit-user-select': 'none', '-moz-user-select': 'none', '-ms-user-select': 'none', userSelect: 'none', textDecorationLine: 'none', '-webkit-text-decoration-line': 'none', fontSize: theme.pxToRem(14), '&::-moz-focus-inner': {
+        root: {
+            fontFamily: typography.fontFamily,
+            color: theme.text.default,
+            '-webkit-tap-highlight-color': 'transparent',
+            backgroundColor: "rgba(0, 0, 0, 0)",
+            border: 0,
+            padding: '0 1em',
+            '-moz-appearance': 'none',
+            margin: 0,
+            borderRadius: '3px',
+            outline: 'none',
+            fontWeight: 500,
+            boxSizing: 'border-box',
+            position: 'relative',
+            justifyContent: 'center',
+            alignItems: 'center',
+            alignContent: 'center',
+            display: 'inline-flex',
+            cursor: 'pointer',
+            '-webkit-user-select': 'none',
+            '-moz-user-select': 'none',
+            '-ms-user-select': 'none',
+            userSelect: 'none',
+            textDecorationLine: 'none',
+            '-webkit-text-decoration-line': 'none',
+            fontSize: theme.pxToRem(14),
+            '&::-moz-focus-inner': {
                 border: 0
-            } }, theme.button.root, { '&::after': __assign({ content: "''" }, LY_COMMON_STYLES.fill, { width: '100%', height: '100%', background: 'transparent', opacity: 0, pointerEvents: 'none' }), '&{onFocusByKeyboard}::after, &:hover::after': {
+            },
+            '&::after': __assign({ content: "''" }, LY_COMMON_STYLES.fill, { width: '100%', height: '100%', background: 'transparent', opacity: 0, pointerEvents: 'none' }),
+            '&{onFocusByKeyboard}::after, &:hover::after': {
                 background: 'currentColor',
                 opacity: .13,
                 borderRadius: 'inherit'
-            } }),
+            }
+        },
         content: {
             padding: 0,
             display: 'flex',
@@ -43,8 +72,6 @@ var styles = function (theme) {
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
-/** @type {?} */
-var DEFAULT_SIZE = 'medium';
 /** @type {?} */
 var DEFAULT_DISABLE_RIPPLE = false;
 /** @type {?} */
@@ -79,7 +106,7 @@ var LyButton = /** @class */ (function (_super) {
          * Style
          * \@docs-private
          */
-        _this.classes = _this._theme.addStyleSheet(styles, STYLE_PRIORITY);
+        _this.classes = _this._theme.addStyleSheet(STYLES, STYLE_PRIORITY);
         _this._rippleSensitive = false;
         _this.setAutoContrast();
         _this._triggerElement = _el;
@@ -89,6 +116,10 @@ var LyButton = /** @class */ (function (_super) {
                     border: 0
                 }
             }, _this._el.nativeElement, undefined, STYLE_PRIORITY);
+        }
+        _this._renderer.addClass(_this._el.nativeElement, _this.classes.animations);
+        if (!_theme.variables.button) {
+            throw getLyThemeVariableUndefinedError('button');
         }
         return _this;
     }
@@ -130,10 +161,10 @@ var LyButton = /** @class */ (function (_super) {
             if (val !== this.size) {
                 this._size = val;
                 this._sizeClass = this._theme.addStyle("lyButton.size:" + val, function (theme) {
-                    if (!(theme.button.size && theme.button.size[val])) {
-                        throw new Error("Value button.size['" + val + "'] not found in ThemeVariables");
+                    if (theme.button && theme.button.size && theme.button.size[val]) {
+                        return (/** @type {?} */ (theme.button.size[val]));
                     }
-                    return (/** @type {?} */ (theme.button.size[val]));
+                    throw new Error("Value button.size['" + val + "'] not found in ThemeVariables");
                 }, this._el.nativeElement, this._sizeClass, STYLE_PRIORITY);
             }
         },
@@ -158,10 +189,10 @@ var LyButton = /** @class */ (function (_super) {
                 }
                 this._appearance = val;
                 this._appearanceClass = this._theme.addStyle("lyButton.appearance:" + val, function (theme) {
-                    if (!(theme.button.appearance && theme.button.appearance[val])) {
+                    if (!((/** @type {?} */ (theme.button)).appearance && (/** @type {?} */ ((/** @type {?} */ (theme.button)).appearance))[val])) {
                         throw new Error("Value button.appearance['" + val + "'] not found in ThemeVariables");
                     }
-                    return (/** @type {?} */ (theme.button.appearance[val]));
+                    return (/** @type {?} */ ((/** @type {?} */ ((/** @type {?} */ (theme.button)).appearance))[val]));
                 }, this._el.nativeElement, this._appearanceClass, STYLE_PRIORITY + 1);
             }
         },
@@ -187,9 +218,23 @@ var LyButton = /** @class */ (function (_super) {
      * @return {?}
      */
     function () {
-        this._renderer.addClass(this._el.nativeElement, this.classes.root);
-        if (!this.size && !this.appearance) {
-            this.size = DEFAULT_SIZE;
+        var button = this._theme.variables.button;
+        if (button) {
+            if (button.root) {
+                this._renderer.addClass(this._el.nativeElement, this._theme.style(button.root, STYLE_PRIORITY, STYLES));
+            }
+            this._renderer.addClass(this._el.nativeElement, this.classes.root);
+            // Apply default config
+            if (this.size == null && this.appearance == null) {
+                this.size = button.defaultConfig.size;
+            }
+            else {
+                if (button.defaultConfig && button.defaultConfig.appearance) {
+                    if (this.appearance == null) {
+                        this.appearance = button.defaultConfig.appearance;
+                    }
+                }
+            }
         }
         // set default disable ripple
         if (this.disableRipple == null) {
@@ -203,8 +248,9 @@ var LyButton = /** @class */ (function (_super) {
      * @return {?}
      */
     function () {
+        // this._renderer.addClass(this._el.nativeElement, this.classes.animations);
         var _this = this;
-        this._renderer.addClass(this._el.nativeElement, this.classes.animations);
+        // this._renderer.addClass(this._el.nativeElement, this.classes.animations);
         /** @type {?} */
         var focusState = this._focusState.listen(this._el);
         if (focusState) {

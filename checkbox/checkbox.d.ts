@@ -1,6 +1,114 @@
 import { AfterViewInit, ChangeDetectorRef, ElementRef, EventEmitter, NgZone, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { ControlValueAccessor } from '@angular/forms';
-import { LyCoreStyles as LyCommonStyles, LyFocusState, LyTheme2 } from '@alyle/ui';
+import { LyCoreStyles as LyCommonStyles, LyFocusState, LyTheme2, ThemeVariables } from '@alyle/ui';
+export declare const STYLES: (theme: ThemeVariables) => {
+    $priority: number;
+    root: {
+        marginAfter: string;
+        marginBefore: string;
+        display: string;
+        '&{disabled}:not({checked}) {icon}:before': {
+            color: string;
+        };
+        '&{disabled}': {
+            pointerEvents: string;
+            '{layout}': {
+                color: string;
+            };
+        };
+        '&{disabled}{checked} {icon}:before': {
+            border: number;
+            background: string;
+        };
+        '&{onFocusByKeyboard} {icon}::after': {
+            boxShadow: string;
+            opacity: number;
+            borderRadius: string;
+        };
+        '&:not({checked}) {icon}': {
+            color: string;
+        };
+    };
+    layout: {
+        display: string;
+        alignItems: string;
+        cursor: string;
+        marginBefore: string;
+        paddingTop: string;
+        paddingBottom: string;
+    };
+    icon: {
+        position: string;
+        marginAfter: string;
+        marginTop: string;
+        marginBottom: string;
+        width: string;
+        height: string;
+        userSelect: string;
+        '&::before, &::after': {
+            width: string;
+            height: string;
+            margin: string;
+            position: string;
+            top: number;
+            bottom: number;
+            left: number;
+            right: number;
+            content: string;
+        };
+        '&::before': {
+            border: string;
+            borderRadius: string;
+        };
+        svg: {
+            position: string;
+            polyline: {
+                fill: string;
+                stroke: string;
+                strokeWidth: number;
+                strokeLinecap: string;
+                strokeLinejoin: string;
+                strokeDasharray: string;
+                strokeDashoffset: string;
+            };
+        };
+    };
+    checked: {
+        '& {icon}::before': {
+            background: string;
+        };
+        '& {icon} polyline': {
+            strokeDashoffset: number;
+        };
+    };
+    input: {
+        border: number;
+        clip: string;
+        height: string;
+        margin: string;
+        overflow: string;
+        padding: number;
+        position: string;
+        width: string;
+        outline: number;
+        '-webkit-appearance': string;
+        '-moz-appearance': string;
+    };
+    onFocusByKeyboard: {};
+    disabled: {
+        '& {input}': {
+            visibility: string;
+        };
+        '& {icon}': {
+            color: string;
+        };
+    };
+    animations: {
+        '& {icon} svg polyline': {
+            transition: string;
+        };
+    };
+};
 /**
  * This allows it to support [(ngModel)].
  * @ignore

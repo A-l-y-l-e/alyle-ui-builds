@@ -16,7 +16,28 @@ const DEFAULT_PLACEMENT = YPosition.below;
 const DEFAULT_XPOSITION = XPosition.after;
 /** @type {?} */
 const STYLES = (theme) => ({
-    container: Object.assign({ background: theme.background.primary.default, borderRadius: '2px', boxShadow: shadowBuilder(4), display: 'block', paddingTop: '8px', paddingBottom: '8px', transformOrigin: 'inherit', pointerEvents: 'all', overflow: 'auto', maxHeight: 'inherit', maxWidth: 'inherit' }, theme.menu.root)
+    $priority: STYLE_PRIORITY,
+    root: null,
+    container: {
+        background: theme.background.primary.default,
+        borderRadius: '2px',
+        boxShadow: shadowBuilder(4),
+        display: 'block',
+        paddingTop: '8px',
+        paddingBottom: '8px',
+        transformOrigin: 'inherit',
+        pointerEvents: 'all',
+        overflow: 'auto',
+        maxHeight: 'inherit',
+        maxWidth: 'inherit',
+    },
+    item: {
+        display: 'flex',
+        minHeight: '48px',
+        borderRadius: 0,
+        width: '100%',
+        justifyContent: 'flex-start'
+    }
 });
 /** @type {?} */
 const ANIMATIONS = [
@@ -55,7 +76,14 @@ class LyMenu {
          * styles
          * \@docs-private
          */
-        this.classes = this._theme.addStyleSheet(STYLES, STYLE_PRIORITY);
+        this.classes = this._theme.addStyleSheet(STYLES);
+        const { menu } = this._theme.variables;
+        if (menu) {
+            if (menu.root) {
+                this._renderer.addClass(this._el.nativeElement, this._theme.style(menu.root, STYLE_PRIORITY, STYLES));
+            }
+            this._renderer.addClass(this._el.nativeElement, this.classes.root);
+        }
     }
     /**
      * @param {?} e
@@ -132,26 +160,15 @@ LyMenu.propDecorators = {
     menuLeave2: [{ type: HostBinding, args: ['@menuLeave',] }],
     endAnimation: [{ type: HostListener, args: ['@menuLeave.done', ['$event'],] }]
 };
-/**
- * \@docs-private
- * @type {?}
- */
-const menuItemStyles = ({
-    display: 'flex',
-    minHeight: '48px',
-    borderRadius: 0,
-    width: '100%',
-    justifyContent: 'flex-start'
-});
 class LyMenuItem {
     /**
      * @param {?} _menu
      * @param {?} el
-     * @param {?} theme
+     * @param {?} renderer
      */
-    constructor(_menu, el, theme) {
+    constructor(_menu, el, renderer) {
         this._menu = _menu;
-        theme.addStyle('lyMenuItem', menuItemStyles, el.nativeElement, undefined, STYLE_PRIORITY);
+        renderer.addClass(el.nativeElement, _menu.classes.item);
     }
     /**
      * @return {?}
@@ -171,7 +188,7 @@ LyMenuItem.decorators = [
 LyMenuItem.ctorParameters = () => [
     { type: LyMenu, decorators: [{ type: Optional }] },
     { type: ElementRef },
-    { type: LyTheme2 }
+    { type: Renderer2 }
 ];
 LyMenuItem.propDecorators = {
     _click: [{ type: HostListener, args: ['click',] }]

@@ -71,7 +71,8 @@
     /** @type {?} */
     var STYLES = function (theme) {
         return ({
-            radioGroup: {
+            $priority: STYLE_PRIORITY,
+            root: {
                 display: 'inline-block'
             },
             radio: {
@@ -128,7 +129,7 @@
                 'div:nth-child(1)': {
                     transform: 'scale(1)',
                     border: 'solid .08em currentColor',
-                    color: theme.radio.outerCircle
+                    color: theme.text.disabled
                 }
             },
             checked: null,
@@ -154,7 +155,7 @@
             /**
              * \@docs-private
              */
-            this.classes = this._theme.addStyleSheet(STYLES, STYLE_PRIORITY);
+            this.classes = this._theme.addStyleSheet(STYLES);
             /**
              * \@docs-private
              */
@@ -170,7 +171,13 @@
              * \@docs-private
              */
             this.onTouched = function () { };
-            renderer.addClass(elementRef.nativeElement, this.classes.radioGroup);
+            renderer.addClass(elementRef.nativeElement, this.classes.root);
+            var radio = this._theme.variables.radio;
+            if (radio) {
+                if (radio.root) {
+                    renderer.addClass(elementRef.nativeElement, this._theme.style(radio.root, STYLE_PRIORITY, STYLES));
+                }
+            }
         }
         Object.defineProperty(LyRadioGroup.prototype, "value", {
             get: /**

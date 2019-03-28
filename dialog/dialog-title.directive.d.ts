@@ -1,16 +1,5 @@
 import { ElementRef, OnInit, Renderer2 } from '@angular/core';
-import { LyTheme2, ThemeVariables } from '@alyle/ui';
-/** @docs-private */
-export declare const STYLES_DIALOG_TITLE: (theme: ThemeVariables) => {
-    display: string;
-    flex: string;
-    margin: string;
-    padding: string;
-    fontSize: string;
-    lineHeight: string;
-    fontWeight: number;
-    fontFamily: string;
-};
+import { LyTheme2 } from '@alyle/ui';
 export declare class LyDialogTitle implements OnInit {
     private _renderer;
     private _el;

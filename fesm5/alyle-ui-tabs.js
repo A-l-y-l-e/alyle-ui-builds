@@ -43,6 +43,7 @@ var DEFAULT_HEADER_PLACEMENT = 'above';
 var STYLES = function (theme) {
     var _a;
     return ({
+        $priority: STYLE_PRIORITY,
         root: {
             display: 'block'
         },
@@ -69,7 +70,7 @@ var STYLES = function (theme) {
         },
         tabsLabelsContainer: {
             overflow: 'hidden',
-            '&{scrollable}': {
+            '{scrollable} &': {
                 '@media (hover: none)': {
                     overflow: 'auto'
                 }
@@ -179,7 +180,7 @@ var LyTabs = /** @class */ (function (_super) {
         /**
          * \@docs-private
          */
-        _this.classes = _this.theme.addStyleSheet(STYLES, STYLE_PRIORITY);
+        _this.classes = _this.theme.addStyleSheet(STYLES);
         _this._selectedIndex = 0;
         _this._tabsSubscription = Subscription.EMPTY;
         _this.selectedIndexOnChange = 'auto';
@@ -419,6 +420,12 @@ var LyTabs = /** @class */ (function (_super) {
      * @return {?}
      */
     function () {
+        var tabs = this._theme.variables.tabs;
+        if (tabs) {
+            if (tabs.root) {
+                this.renderer.addClass(this.el.nativeElement, this.theme.style(tabs.root, STYLE_PRIORITY, STYLES));
+            }
+        }
         this.renderer.addClass(this.el.nativeElement, this.classes.root);
         /** @type {?} */
         var tabsIndicatorEl = this.tabsIndicator.nativeElement;
@@ -857,6 +864,6 @@ var LyTabsModule = /** @class */ (function () {
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { LyTabsBase, LyTabsMixinBase, LyTabLabelBase, LyTabLabelMixinBase, LyTabs, LyTab, LyTabLabel, LyTabsModule, LyTabContent as ɵa };
+export { STYLES, LyTabsBase, LyTabsMixinBase, LyTabLabelBase, LyTabLabelMixinBase, LyTabs, LyTab, LyTabLabel, LyTabsModule, LyTabContent as ɵa };
 
 //# sourceMappingURL=alyle-ui-tabs.js.map

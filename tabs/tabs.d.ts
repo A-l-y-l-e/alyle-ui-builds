@@ -1,9 +1,101 @@
 import { AfterContentInit, AfterViewInit, ChangeDetectorRef, ElementRef, EventEmitter, NgZone, OnChanges, OnDestroy, OnInit, QueryList, Renderer2, TemplateRef } from '@angular/core';
-import { LyTheme2, LyRippleService, LyFocusState, WinResize } from '@alyle/ui';
+import { LyTheme2, ThemeVariables, LyRippleService, LyFocusState, WinResize } from '@alyle/ui';
 import { LyButton } from '@alyle/ui/button';
 import { LyTabContent } from './tab-content.directive';
 export declare type AlignTabs = 'start' | 'center' | 'end' | 'stretch' | 'baseline';
 export declare type LyTabsHeaderPlacement = 'before' | 'after' | 'above' | 'below';
+export declare const STYLES: (theme: ThemeVariables) => {
+    $priority: number;
+    root: {
+        display: string;
+    };
+    container: {
+        display: string;
+    };
+    tab: {
+        position: string;
+        display: string;
+    };
+    /** Tab content */
+    contentContainer: {
+        overflow: string;
+        flexGrow: number;
+    };
+    /** Tab header */
+    tabsLabels: {
+        display: string;
+        position: string;
+    };
+    tabsLabelsContainer: {
+        overflow: string;
+        '{scrollable} &': {
+            '@media (hover: none)': {
+                overflow: string;
+            };
+        };
+    };
+    label: {
+        [x: string]: string | number | {
+            padding: string;
+        };
+        '-webkit-tap-highlight-color': string;
+        '-webkit-appearance': string;
+        backgroundColor: string;
+        userSelect: string;
+        border: number;
+        minWidth: string;
+        padding: string;
+        cursor: string;
+        height: string;
+        display: string;
+        justifyContent: string;
+        alignItems: string;
+        position: string;
+        overflow: string;
+        fontFamily: string;
+        fontSize: string;
+        letterSpacing: string;
+        color: string;
+        outline: string;
+        width: string;
+        fontWeight: number;
+        opacity: number;
+    };
+    tabLabelActive: {
+        opacity: number;
+    };
+    tabContents: {
+        display: string;
+        transition: string;
+        willChange: string;
+        height: string;
+    };
+    tabContent: {
+        width: string;
+        height: string;
+        flexShrink: number;
+        position: string;
+    };
+    tabsIndicator: {
+        position: string;
+        height: string;
+        transition: string;
+        background: string;
+    };
+    tabsIndicatorForServer: {
+        position: string;
+        background: string;
+    };
+    rippleContainer: {
+        overflow: string;
+        position: string;
+        top: number;
+        bottom: number;
+        left: number;
+        right: number;
+    };
+    scrollable: any;
+};
 /** @docs-private */
 export declare class LyTabsBase {
     _theme: LyTheme2;

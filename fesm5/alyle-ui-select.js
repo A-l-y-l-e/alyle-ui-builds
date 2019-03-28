@@ -19,6 +19,7 @@ var DEFAULT_DISABLE_RIPPLE = false;
 var STYLE_PRIORITY = -2;
 /** @type {?} */
 var STYLES$1 = function (theme) { return ({
+    $priority: STYLE_PRIORITY,
     root: {
         display: 'block',
         paddingAfter: '1em',
@@ -136,7 +137,7 @@ var LySelect = /** @class */ (function (_super) {
         /**
          * \@docs-private
          */
-        _this.classes = _this._theme.addStyleSheet(STYLES$1, STYLE_PRIORITY);
+        _this.classes = _this._theme.addStyleSheet(STYLES$1);
         _this._disabled = false;
         _this._required = false;
         _this.stateChanges = new Subject();
@@ -463,6 +464,7 @@ var LySelect = /** @class */ (function (_super) {
         });
         /** @type {?} */
         var ngControl = this.ngControl;
+        var select = this._theme.variables.select;
         // update styles on disabled
         if (ngControl && ngControl.statusChanges) {
             ngControl.statusChanges.pipe(takeUntil(this._destroy)).subscribe(function () {
@@ -474,6 +476,11 @@ var LySelect = /** @class */ (function (_super) {
         // apply default styles
         this._renderer.addClass(this._el.nativeElement, this._field.classes.inputNative);
         this._renderer.addClass(this._el.nativeElement, this.classes.root);
+        if (select) {
+            if (select.root) {
+                this._renderer.addClass(this._el.nativeElement, this._theme.style(select.root, STYLE_PRIORITY, STYLES$1));
+            }
+        }
     };
     /**
      * @return {?}

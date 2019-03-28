@@ -1,4 +1,4 @@
-import { __assign, __spread } from 'tslib';
+import { __spread } from 'tslib';
 import { trigger, style, animate, transition, keyframes } from '@angular/animations';
 import { LyOverlay, LyTheme2, Positioning, shadowBuilder, XPosition, YPosition, LyCommonModule, LyOverlayModule } from '@alyle/ui';
 import { FormsModule } from '@angular/forms';
@@ -17,7 +17,28 @@ var DEFAULT_PLACEMENT = YPosition.below;
 var DEFAULT_XPOSITION = XPosition.after;
 /** @type {?} */
 var STYLES = function (theme) { return ({
-    container: __assign({ background: theme.background.primary.default, borderRadius: '2px', boxShadow: shadowBuilder(4), display: 'block', paddingTop: '8px', paddingBottom: '8px', transformOrigin: 'inherit', pointerEvents: 'all', overflow: 'auto', maxHeight: 'inherit', maxWidth: 'inherit' }, theme.menu.root)
+    $priority: STYLE_PRIORITY,
+    root: null,
+    container: {
+        background: theme.background.primary.default,
+        borderRadius: '2px',
+        boxShadow: shadowBuilder(4),
+        display: 'block',
+        paddingTop: '8px',
+        paddingBottom: '8px',
+        transformOrigin: 'inherit',
+        pointerEvents: 'all',
+        overflow: 'auto',
+        maxHeight: 'inherit',
+        maxWidth: 'inherit',
+    },
+    item: {
+        display: 'flex',
+        minHeight: '48px',
+        borderRadius: 0,
+        width: '100%',
+        justifyContent: 'flex-start'
+    }
 }); };
 /** @type {?} */
 var ANIMATIONS = [
@@ -51,7 +72,14 @@ var LyMenu = /** @class */ (function () {
          * styles
          * \@docs-private
          */
-        this.classes = this._theme.addStyleSheet(STYLES, STYLE_PRIORITY);
+        this.classes = this._theme.addStyleSheet(STYLES);
+        var menu = this._theme.variables.menu;
+        if (menu) {
+            if (menu.root) {
+                this._renderer.addClass(this._el.nativeElement, this._theme.style(menu.root, STYLE_PRIORITY, STYLES));
+            }
+            this._renderer.addClass(this._el.nativeElement, this.classes.root);
+        }
     }
     /**
      * @param {?} e
@@ -143,21 +171,10 @@ var LyMenu = /** @class */ (function () {
     };
     return LyMenu;
 }());
-/**
- * \@docs-private
- * @type {?}
- */
-var menuItemStyles = ({
-    display: 'flex',
-    minHeight: '48px',
-    borderRadius: 0,
-    width: '100%',
-    justifyContent: 'flex-start'
-});
 var LyMenuItem = /** @class */ (function () {
-    function LyMenuItem(_menu, el, theme) {
+    function LyMenuItem(_menu, el, renderer) {
         this._menu = _menu;
-        theme.addStyle('lyMenuItem', menuItemStyles, el.nativeElement, undefined, STYLE_PRIORITY);
+        renderer.addClass(el.nativeElement, _menu.classes.item);
     }
     /**
      * @return {?}
@@ -179,7 +196,7 @@ var LyMenuItem = /** @class */ (function () {
     LyMenuItem.ctorParameters = function () { return [
         { type: LyMenu, decorators: [{ type: Optional }] },
         { type: ElementRef },
-        { type: LyTheme2 }
+        { type: Renderer2 }
     ]; };
     LyMenuItem.propDecorators = {
         _click: [{ type: HostListener, args: ['click',] }]

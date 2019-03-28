@@ -11,6 +11,7 @@ import { LyTheme2, mixinBg, mixinColor, mixinDisabled, mixinDisableRipple, mixin
 var STYLES = function (theme) {
     var _a, _b;
     return ({
+        $priority: STYLE_PRIORITY,
         root: {
             display: 'block',
             overflow: 'hidden',
@@ -70,7 +71,7 @@ var LyCard = /** @class */ (function (_super) {
          * styles
          * \@docs-private
          */
-        _this.classes = _this.theme.addStyleSheet(STYLES, STYLE_PRIORITY);
+        _this.classes = _this.theme.addStyleSheet(STYLES);
         _this.setAutoContrast();
         return _this;
     }
@@ -90,6 +91,10 @@ var LyCard = /** @class */ (function (_super) {
      * @return {?}
      */
     function () {
+        var card = this.theme.variables.card;
+        if (card) {
+            this.renderer.addClass(this._el.nativeElement, this.theme.style(card.root, STYLE_PRIORITY, STYLES));
+        }
         /** @type {?} */
         var requireOnChanges;
         if (!this.bg) {

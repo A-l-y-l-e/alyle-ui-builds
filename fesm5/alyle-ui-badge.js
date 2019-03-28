@@ -19,6 +19,7 @@ var DEFAULT_POSITION_VALUE = {
 };
 /** @type {?} */
 var styles = function (theme) { return ({
+    $priority: STYLE_PRIORITY,
     root: __assign({ position: 'absolute', display: 'flex', width: '22px', height: '22px', borderRadius: '100%', overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis', pointerEvents: 'none', zIndex: 1, fontSize: theme.pxToRem(12), fontFamily: theme.typography.fontFamily, justifyContent: 'center', alignItems: 'center' }, theme.badge.root),
     relative: {
         position: 'relative'
@@ -51,7 +52,7 @@ var LyBadge = /** @class */ (function (_super) {
          * Styles
          * \@docs-private
          */
-        _this.classes = _this._theme.addStyleSheet(styles, STYLE_PRIORITY);
+        _this.classes = _this._theme.addStyleSheet(styles);
         _this.setAutoContrast();
         _this._badgeElementRef = _this._el.nativeElement;
         return _this;

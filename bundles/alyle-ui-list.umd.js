@@ -54,8 +54,9 @@
     /** @type {?} */
     var DISABLE_PADDING = false;
     /** @type {?} */
-    var styles = function (theme) {
+    var STYLES = function (theme) {
         return ({
+            $priority: STYLE_PRIORITY,
             list: {
                 display: 'block',
                 position: 'relative',
@@ -126,7 +127,7 @@
             /**
              * \@docs-private
              */
-            this.classes = this.theme.addStyleSheet(styles, STYLE_PRIORITY);
+            this.classes = this.theme.addStyleSheet(STYLES);
         }
         LyList.decorators = [
             { type: core.Directive, args: [{
@@ -456,6 +457,7 @@
      * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
 
+    exports.STYLES = STYLES;
     exports.LyList = LyList;
     exports.LyListItemBase = LyListItemBase;
     exports.LyListItemMixinBase = LyListItemMixinBase;

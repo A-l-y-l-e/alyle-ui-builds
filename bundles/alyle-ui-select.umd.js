@@ -73,6 +73,7 @@
     /** @type {?} */
     var STYLES = function (theme) {
         return ({
+            $priority: STYLE_PRIORITY,
             root: {
                 display: 'block',
                 paddingAfter: '1em',
@@ -190,7 +191,7 @@
             /**
              * \@docs-private
              */
-            _this.classes = _this._theme.addStyleSheet(STYLES, STYLE_PRIORITY);
+            _this.classes = _this._theme.addStyleSheet(STYLES);
             _this._disabled = false;
             _this._required = false;
             _this.stateChanges = new rxjs.Subject();
@@ -500,6 +501,7 @@
                 });
                 /** @type {?} */
                 var ngControl = this.ngControl;
+                var select = this._theme.variables.select;
                 // update styles on disabled
                 if (ngControl && ngControl.statusChanges) {
                     ngControl.statusChanges.pipe(operators.takeUntil(this._destroy)).subscribe(function () {
@@ -511,6 +513,11 @@
                 // apply default styles
                 this._renderer.addClass(this._el.nativeElement, this._field.classes.inputNative);
                 this._renderer.addClass(this._el.nativeElement, this.classes.root);
+                if (select) {
+                    if (select.root) {
+                        this._renderer.addClass(this._el.nativeElement, this._theme.style(select.root, STYLE_PRIORITY, STYLES));
+                    }
+                }
             };
         /**
          * @return {?}

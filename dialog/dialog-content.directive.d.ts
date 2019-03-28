@@ -1,13 +1,5 @@
 import { ElementRef, OnInit, Renderer2 } from '@angular/core';
 import { LyTheme2 } from '@alyle/ui';
-/** @docs-private */
-export declare const STYLES_DIALOG_CONTENT: {
-    display: string;
-    overflowY: string;
-    flex: string;
-    padding: string;
-    '-webkit-overflow-scrolling': string;
-};
 export declare class LyDialogContent implements OnInit {
     private _renderer;
     private _el;

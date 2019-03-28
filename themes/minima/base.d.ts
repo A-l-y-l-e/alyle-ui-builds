@@ -57,6 +57,9 @@ export declare class MinimaBase extends LyStyleUtils {
     };
     direction: Dir;
     button: {
+        defaultConfig: {
+            size: "medium";
+        };
         size: {
             small: {
                 padding: string;

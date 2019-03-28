@@ -4,6 +4,7 @@ import { LyField, LyFieldControlBase } from '@alyle/ui/field';
 import { LyOverlay, LySelectionModel, LyTheme2, ThemeVariables, LyRippleService } from '@alyle/ui';
 import { Subject } from 'rxjs';
 export declare const STYLES: (theme: ThemeVariables) => {
+    $priority: number;
     root: {
         display: string;
         paddingAfter: string;

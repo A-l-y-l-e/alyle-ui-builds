@@ -1,24 +1,6 @@
 import { ThemeVariables } from '@alyle/ui';
-export declare const styles: (theme: ThemeVariables) => {
+export declare const STYLES: (theme: ThemeVariables) => {
     root: {
-        '&::after': {
-            width: string;
-            height: string;
-            background: string;
-            opacity: number;
-            pointerEvents: string;
-            position: string;
-            top: number;
-            bottom: number;
-            left: number;
-            right: number;
-            content: string;
-        };
-        '&{onFocusByKeyboard}::after, &:hover::after': {
-            background: string;
-            opacity: number;
-            borderRadius: string;
-        };
         fontFamily: string;
         color: string;
         '-webkit-tap-highlight-color': string;
@@ -46,6 +28,24 @@ export declare const styles: (theme: ThemeVariables) => {
         fontSize: string;
         '&::-moz-focus-inner': {
             border: number;
+        };
+        '&::after': {
+            width: string;
+            height: string;
+            background: string;
+            opacity: number;
+            pointerEvents: string;
+            position: string;
+            top: number;
+            bottom: number;
+            left: number;
+            right: number;
+            content: string;
+        };
+        '&{onFocusByKeyboard}::after, &:hover::after': {
+            background: string;
+            opacity: number;
+            borderRadius: string;
         };
     };
     content: {

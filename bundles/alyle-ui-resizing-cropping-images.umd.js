@@ -38,7 +38,8 @@
     /** @type {?} */
     var STYLE_PRIORITY = -2;
     /** @type {?} */
-    var styles = ({
+    var STYLES = ({
+        $priority: STYLE_PRIORITY,
         root: {
             '-webkit-user-select': 'none',
             '-moz-user-select': 'none',
@@ -61,7 +62,7 @@
                 pointerEvents: 'none',
             }
         },
-        croppingContainer: __assign({ pointerEvents: 'none', boxShadow: '0 0 0 20000px rgba(0, 0, 0, 0.4)' }, ui.LY_COMMON_STYLES.fill, { margin: 'auto', '&:before, &:after': __assign({}, ui.LY_COMMON_STYLES.fill, { content: "''" }), '&:before': {
+        area: __assign({ pointerEvents: 'none', boxShadow: '0 0 0 20000px rgba(0, 0, 0, 0.4)' }, ui.LY_COMMON_STYLES.fill, { margin: 'auto', '&:before, &:after': __assign({}, ui.LY_COMMON_STYLES.fill, { content: "''" }), '&:before': {
                 width: 0,
                 height: 0,
                 margin: 'auto',
@@ -71,7 +72,7 @@
             }, '&:after': {
                 border: 'solid 2px rgb(255, 255, 255)'
             } }),
-        croppContent: {
+        defaultContent: {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -123,7 +124,7 @@
              * styles
              * \@docs-private
              */
-            this.classes = this.theme.addStyleSheet(styles, STYLE_PRIORITY);
+            this.classes = this.theme.addStyleSheet(STYLES);
             this._imgRect = ( /** @type {?} */({}));
             this._listeners = new Set();
             this.scaleChange = new core.EventEmitter();
@@ -140,6 +141,12 @@
              */
             this.error = new core.EventEmitter();
             this._renderer.addClass(elementRef.nativeElement, this.classes.root);
+            var imgCropper = this.theme.variables.imgCropper;
+            if (imgCropper) {
+                if (imgCropper.root) {
+                    this._renderer.addClass(this.elementRef.nativeElement, this.theme.style(imgCropper.root, STYLE_PRIORITY, STYLES));
+                }
+            }
         }
         Object.defineProperty(LyResizingCroppingImages.prototype, "config", {
             get: /**
@@ -988,7 +995,7 @@
                         changeDetection: core.ChangeDetectionStrategy.OnPush,
                         preserveWhitespaces: false,
                         selector: 'ly-img-cropper, ly-cropping',
-                        template: "<div #_imgContainer\n[className]=\"classes.imgContainer\"\n(slidestart)=\"_moveStart()\"\n(slide)=\"_move($event)\"\n(slideend)=\"_slideEnd()\">\n  <canvas #_imgCanvas></canvas>\n</div>\n<div #_croppingContainer *ngIf=\"_isLoadedImg; else content\" [className]=\"classes.croppingContainer\" [ngStyle]=\"{\n  width: config.width + 'px',\n  height: config.height + 'px'\n}\"></div>\n<ng-template #content>\n  <div [className]=\"classes.croppContent\">\n    <input #_fileInput type=\"file\" (change)=\"selectInputEvent($event)\" accept=\"image/*\">\n    <ng-content></ng-content>\n  </div>\n</ng-template>\n"
+                        template: "<div #_imgContainer\n[className]=\"classes.imgContainer\"\n(slidestart)=\"_moveStart()\"\n(slide)=\"_move($event)\"\n(slideend)=\"_slideEnd()\">\n  <canvas #_imgCanvas></canvas>\n</div>\n<div #_croppingContainer *ngIf=\"_isLoadedImg; else content\" [className]=\"classes.area\" [ngStyle]=\"{\n  width: config.width + 'px',\n  height: config.height + 'px'\n}\"></div>\n<ng-template #content>\n  <div [className]=\"classes.defaultContent\">\n    <input #_fileInput type=\"file\" (change)=\"selectInputEvent($event)\" accept=\"image/*\">\n    <ng-content></ng-content>\n  </div>\n</ng-template>\n"
                     }] }
         ];
         /** @nocollapse */

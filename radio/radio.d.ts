@@ -6,7 +6,8 @@ export declare class UndefinedValue {
     constructor();
 }
 export declare const STYLES: (theme: ThemeVariables) => {
-    radioGroup: {
+    $priority: number;
+    root: {
         display: string;
     };
     radio: {
@@ -95,7 +96,7 @@ export declare class LyRadioGroup implements ControlValueAccessor {
     private _theme;
     private _cd;
     /** @docs-private */
-    readonly classes: Record<"radioGroup" | "radio" | "label" | "labelContent" | "container" | "checked" | "_animations" | "onFocusByKeyboard" | "disabled", string>;
+    readonly classes: Record<"root" | "radio" | "label" | "labelContent" | "container" | "checked" | "_animations" | "onFocusByKeyboard" | "disabled", string>;
     private _value;
     /** @docs-private */
     name: string;
@@ -161,7 +162,7 @@ export declare class LyRadio extends LyRadioMixinBase implements OnInit, AfterVi
     _coreStyles: LyCoreStyles;
     private _focusState;
     /** @docs-private */
-    readonly classes: Record<"radioGroup" | "radio" | "label" | "labelContent" | "container" | "checked" | "_animations" | "onFocusByKeyboard" | "disabled", string>;
+    readonly classes: Record<"root" | "radio" | "label" | "labelContent" | "container" | "checked" | "_animations" | "onFocusByKeyboard" | "disabled", string>;
     /** @docs-private */
     id: string;
     /** @docs-private */

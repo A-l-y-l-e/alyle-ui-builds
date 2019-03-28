@@ -8,6 +8,7 @@ import { LyTheme2, mixinBg, mixinColor, mixinDisabled, mixinDisableRipple, mixin
  */
 /** @type {?} */
 const STYLES = (theme) => ({
+    $priority: STYLE_PRIORITY,
     root: {
         display: 'block',
         overflow: 'hidden',
@@ -69,7 +70,7 @@ class LyCard extends LyCardMixinBase {
          * styles
          * \@docs-private
          */
-        this.classes = this.theme.addStyleSheet(STYLES, STYLE_PRIORITY);
+        this.classes = this.theme.addStyleSheet(STYLES);
         this.setAutoContrast();
     }
     /**
@@ -82,6 +83,10 @@ class LyCard extends LyCardMixinBase {
      * @return {?}
      */
     ngOnInit() {
+        const { card } = this.theme.variables;
+        if (card) {
+            this.renderer.addClass(this._el.nativeElement, this.theme.style(card.root, STYLE_PRIORITY, STYLES));
+        }
         /** @type {?} */
         let requireOnChanges;
         if (!this.bg) {

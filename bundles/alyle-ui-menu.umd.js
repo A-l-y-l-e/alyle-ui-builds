@@ -18,18 +18,6 @@
     See the Apache Version 2.0 License for specific language governing permissions
     and limitations under the License.
     ***************************************************************************** */
-    var __assign = function () {
-        __assign = Object.assign || function __assign(t) {
-            for (var s, i = 1, n = arguments.length; i < n; i++) {
-                s = arguments[i];
-                for (var p in s)
-                    if (Object.prototype.hasOwnProperty.call(s, p))
-                        t[p] = s[p];
-            }
-            return t;
-        };
-        return __assign.apply(this, arguments);
-    };
     function __read(o, n) {
         var m = typeof Symbol === "function" && o[Symbol.iterator];
         if (!m)
@@ -73,7 +61,28 @@
     /** @type {?} */
     var STYLES = function (theme) {
         return ({
-            container: __assign({ background: theme.background.primary.default, borderRadius: '2px', boxShadow: ui.shadowBuilder(4), display: 'block', paddingTop: '8px', paddingBottom: '8px', transformOrigin: 'inherit', pointerEvents: 'all', overflow: 'auto', maxHeight: 'inherit', maxWidth: 'inherit' }, theme.menu.root)
+            $priority: STYLE_PRIORITY,
+            root: null,
+            container: {
+                background: theme.background.primary.default,
+                borderRadius: '2px',
+                boxShadow: ui.shadowBuilder(4),
+                display: 'block',
+                paddingTop: '8px',
+                paddingBottom: '8px',
+                transformOrigin: 'inherit',
+                pointerEvents: 'all',
+                overflow: 'auto',
+                maxHeight: 'inherit',
+                maxWidth: 'inherit',
+            },
+            item: {
+                display: 'flex',
+                minHeight: '48px',
+                borderRadius: 0,
+                width: '100%',
+                justifyContent: 'flex-start'
+            }
         });
     };
     /** @type {?} */
@@ -108,7 +117,14 @@
              * styles
              * \@docs-private
              */
-            this.classes = this._theme.addStyleSheet(STYLES, STYLE_PRIORITY);
+            this.classes = this._theme.addStyleSheet(STYLES);
+            var menu = this._theme.variables.menu;
+            if (menu) {
+                if (menu.root) {
+                    this._renderer.addClass(this._el.nativeElement, this._theme.style(menu.root, STYLE_PRIORITY, STYLES));
+                }
+                this._renderer.addClass(this._el.nativeElement, this.classes.root);
+            }
         }
         /**
          * @param {?} e
@@ -202,21 +218,10 @@
         };
         return LyMenu;
     }());
-    /**
-     * \@docs-private
-     * @type {?}
-     */
-    var menuItemStyles = ({
-        display: 'flex',
-        minHeight: '48px',
-        borderRadius: 0,
-        width: '100%',
-        justifyContent: 'flex-start'
-    });
     var LyMenuItem = /** @class */ (function () {
-        function LyMenuItem(_menu, el, theme) {
+        function LyMenuItem(_menu, el, renderer) {
             this._menu = _menu;
-            theme.addStyle('lyMenuItem', menuItemStyles, el.nativeElement, undefined, STYLE_PRIORITY);
+            renderer.addClass(el.nativeElement, _menu.classes.item);
         }
         /**
          * @return {?}
@@ -239,7 +244,7 @@
             return [
                 { type: LyMenu, decorators: [{ type: core.Optional }] },
                 { type: core.ElementRef },
-                { type: ui.LyTheme2 }
+                { type: core.Renderer2 }
             ];
         };
         LyMenuItem.propDecorators = {

@@ -13,7 +13,8 @@ var STYLE_PRIORITY = 2;
 /** @type {?} */
 var DISABLE_PADDING = false;
 /** @type {?} */
-var styles = function (theme) { return ({
+var STYLES = function (theme) { return ({
+    $priority: STYLE_PRIORITY,
     list: {
         display: 'block',
         position: 'relative',
@@ -83,7 +84,7 @@ var LyList = /** @class */ (function () {
         /**
          * \@docs-private
          */
-        this.classes = this.theme.addStyleSheet(styles, STYLE_PRIORITY);
+        this.classes = this.theme.addStyleSheet(STYLES);
     }
     LyList.decorators = [
         { type: Directive, args: [{
@@ -405,6 +406,6 @@ var LyListModule = /** @class */ (function () {
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { LyList, LyListItemBase, LyListItemMixinBase, LyListItem, LyListIcon, LyLine, LyListModule };
+export { STYLES, LyList, LyListItemBase, LyListItemMixinBase, LyListItem, LyListIcon, LyLine, LyListModule };
 
 //# sourceMappingURL=alyle-ui-list.js.map

@@ -1,6 +1,109 @@
 import { ElementRef, NgZone, OnInit, Renderer2, QueryList, AfterContentInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
-import { LyFocusState, LyRippleService, LyTheme2 } from '@alyle/ui';
+import { LyFocusState, LyRippleService, LyTheme2, ThemeVariables } from '@alyle/ui';
 import { LyAvatar } from '@alyle/ui/avatar';
+export declare const STYLES: (theme: ThemeVariables) => {
+    $priority: number;
+    list: {
+        display: string;
+        position: string;
+        paddingTop: string;
+        paddingBottom: string;
+    };
+    listItem: {
+        fontFamily: string;
+        fontSize: string;
+        color: string;
+        display: string;
+        width: string;
+        position: string;
+        padding: string;
+        minHeight: string;
+        overflow: string;
+        textAlign: string;
+        alignItems: string;
+        justifyContent: string;
+        borderRadius: number;
+        '&::after': {
+            width: string;
+            height: string;
+            background: string;
+            opacity: number;
+            pointerEvents: string;
+            position: string;
+            top: number;
+            bottom: number;
+            left: number;
+            right: number;
+            content: string;
+        };
+        '&{onFocusByKeyboard}::after, &{actionListItem}:hover::after': {
+            background: string;
+            opacity: number;
+            borderRadius: string;
+        };
+        '-webkit-tap-highlight-color': string;
+        backgroundColor: string;
+        border: number;
+        '-moz-appearance': string;
+        '-webkit-appearance': string;
+        margin: number;
+        outline: string;
+        boxSizing: string;
+        textDecorationLine: string;
+        '-webkit-text-decoration-line': string;
+        '&::-moz-focus-inner': {
+            border: number;
+        };
+    };
+    onFocusByKeyboard: any;
+    listItemContent: {
+        display: string;
+        justifyContent: string;
+        alignItems: string;
+        alignContent: string;
+        fontSize: string;
+        width: string;
+        height: string;
+        boxSizing: string;
+    };
+    oneLine: {
+        paddingTop: string;
+        paddingBottom: string;
+        minHeight: string;
+    };
+    twoLine: {
+        paddingTop: string;
+        paddingBottom: string;
+        minHeight: string;
+        '{lines}': {
+            marginBottom: string;
+        };
+    };
+    actionListItem: {
+        cursor: string;
+        userSelect: string;
+    };
+    lines: {
+        alignSelf: string;
+        minWidth: number;
+        width: string;
+        justifyContent: string;
+        flexDirection: string;
+        display: string;
+    };
+    listItemWithIcon: {
+        '{lines}': {
+            paddingBefore: string;
+        };
+    };
+    twoLineWithIcon: {
+        paddingTop: string;
+        paddingBottom: string;
+        '{lines}': {
+            marginBottom: string;
+        };
+    };
+};
 /** List container */
 export declare class LyList {
     private theme;

@@ -18,6 +18,7 @@ const DEFAULT_POSITION_VALUE = {
 };
 /** @type {?} */
 const styles = (theme) => ({
+    $priority: STYLE_PRIORITY,
     root: Object.assign({ position: 'absolute', display: 'flex', width: '22px', height: '22px', borderRadius: '100%', overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis', pointerEvents: 'none', zIndex: 1, fontSize: theme.pxToRem(12), fontFamily: theme.typography.fontFamily, justifyContent: 'center', alignItems: 'center' }, theme.badge.root),
     relative: {
         position: 'relative'
@@ -53,7 +54,7 @@ class LyBadge extends LyBadgeMixinBase {
          * Styles
          * \@docs-private
          */
-        this.classes = this._theme.addStyleSheet(styles, STYLE_PRIORITY);
+        this.classes = this._theme.addStyleSheet(styles);
         this.setAutoContrast();
         this._badgeElementRef = this._el.nativeElement;
     }

@@ -201,6 +201,9 @@ class MinimaBase extends LyStyleUtils {
         this.animations = animations;
         this.direction = Dir.ltr;
         this.button = {
+            defaultConfig: {
+                size: (/** @type {?} */ ('medium'))
+            },
             size: {
                 small: ({
                     padding: '0 8px',
@@ -399,9 +402,6 @@ class MinimaLight extends MinimaBase {
         this.divider = 'rgba(0, 0, 0, 0.12)';
         this.colorShadow = '#33base3';
         this.shadow = '#333';
-        this.radio = {
-            outerCircle: 'rgba(0, 0, 0, 0.43)'
-        };
         this.menu = {};
         this.drawer = {
             backdrop: 'rgba(0,0,0,.6)'
@@ -419,11 +419,6 @@ class MinimaLight extends MinimaBase {
             }
         });
         this.badge = {};
-        this.checkbox = {
-            unchecked: {
-                color: 'rgba(0, 0, 0, .54)'
-            }
-        };
         this.snackBar = {
             root: {
                 background: '#323232',
@@ -495,9 +490,6 @@ class MinimaDark extends MinimaBase {
             disabled: 'rgba(255, 255, 255, 0.50)',
             hint: 'rgba(255, 255, 255, 0.50)'
         };
-        this.radio = {
-            outerCircle: 'rgba(255, 255, 255, 0.55)'
-        };
         this.menu = {};
         this.drawer = {
             backdrop: 'rgba(49,49,49,.6)'
@@ -518,11 +510,6 @@ class MinimaDark extends MinimaBase {
             }
         });
         this.badge = {};
-        this.checkbox = {
-            unchecked: {
-                color: 'rgba(255, 255, 255, 0.7)'
-            }
-        };
         this.snackBar = {
             root: {
                 background: '#fafafa',

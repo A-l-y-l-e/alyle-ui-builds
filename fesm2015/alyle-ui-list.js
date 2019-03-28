@@ -12,7 +12,8 @@ const STYLE_PRIORITY = 2;
 /** @type {?} */
 const DISABLE_PADDING = false;
 /** @type {?} */
-const styles = (theme) => ({
+const STYLES = (theme) => ({
+    $priority: STYLE_PRIORITY,
     list: {
         display: 'block',
         position: 'relative',
@@ -85,7 +86,7 @@ class LyList {
         /**
          * \@docs-private
          */
-        this.classes = this.theme.addStyleSheet(styles, STYLE_PRIORITY);
+        this.classes = this.theme.addStyleSheet(STYLES);
     }
 }
 LyList.decorators = [
@@ -390,6 +391,6 @@ LyListModule.decorators = [
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { LyList, LyListItemBase, LyListItemMixinBase, LyListItem, LyListIcon, LyLine, LyListModule };
+export { STYLES, LyList, LyListItemBase, LyListItemMixinBase, LyListItem, LyListIcon, LyLine, LyListModule };
 
 //# sourceMappingURL=alyle-ui-list.js.map

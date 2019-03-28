@@ -212,6 +212,9 @@ var MinimaBase = /** @class */ (function (_super) {
         _this.animations = animations;
         _this.direction = Dir.ltr;
         _this.button = {
+            defaultConfig: {
+                size: (/** @type {?} */ ('medium'))
+            },
             size: {
                 small: ({
                     padding: '0 8px',
@@ -413,9 +416,6 @@ var MinimaLight = /** @class */ (function (_super) {
         _this.divider = 'rgba(0, 0, 0, 0.12)';
         _this.colorShadow = '#33base3';
         _this.shadow = '#333';
-        _this.radio = {
-            outerCircle: 'rgba(0, 0, 0, 0.43)'
-        };
         _this.menu = {};
         _this.drawer = {
             backdrop: 'rgba(0,0,0,.6)'
@@ -433,11 +433,6 @@ var MinimaLight = /** @class */ (function (_super) {
             }
         });
         _this.badge = {};
-        _this.checkbox = {
-            unchecked: {
-                color: 'rgba(0, 0, 0, .54)'
-            }
-        };
         _this.snackBar = {
             root: {
                 background: '#323232',
@@ -512,9 +507,6 @@ var MinimaDark = /** @class */ (function (_super) {
             disabled: 'rgba(255, 255, 255, 0.50)',
             hint: 'rgba(255, 255, 255, 0.50)'
         };
-        _this.radio = {
-            outerCircle: 'rgba(255, 255, 255, 0.55)'
-        };
         _this.menu = {};
         _this.drawer = {
             backdrop: 'rgba(49,49,49,.6)'
@@ -535,11 +527,6 @@ var MinimaDark = /** @class */ (function (_super) {
             }
         });
         _this.badge = {};
-        _this.checkbox = {
-            unchecked: {
-                color: 'rgba(255, 255, 255, 0.7)'
-            }
-        };
         _this.snackBar = {
             root: {
                 background: '#fafafa',

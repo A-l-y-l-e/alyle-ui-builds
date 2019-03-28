@@ -26,7 +26,8 @@ class UndefinedValue {
 }
 /** @type {?} */
 const STYLES = (theme) => ({
-    radioGroup: {
+    $priority: STYLE_PRIORITY,
+    root: {
         display: 'inline-block'
     },
     radio: {
@@ -83,7 +84,7 @@ const STYLES = (theme) => ({
         'div:nth-child(1)': {
             transform: 'scale(1)',
             border: 'solid .08em currentColor',
-            color: theme.radio.outerCircle
+            color: theme.text.disabled
         }
     },
     checked: null,
@@ -114,7 +115,7 @@ class LyRadioGroup {
         /**
          * \@docs-private
          */
-        this.classes = this._theme.addStyleSheet(STYLES, STYLE_PRIORITY);
+        this.classes = this._theme.addStyleSheet(STYLES);
         /**
          * \@docs-private
          */
@@ -130,7 +131,13 @@ class LyRadioGroup {
          * \@docs-private
          */
         this.onTouched = () => { };
-        renderer.addClass(elementRef.nativeElement, this.classes.radioGroup);
+        renderer.addClass(elementRef.nativeElement, this.classes.root);
+        const { radio } = this._theme.variables;
+        if (radio) {
+            if (radio.root) {
+                renderer.addClass(elementRef.nativeElement, this._theme.style(radio.root, STYLE_PRIORITY, STYLES));
+            }
+        }
     }
     /**
      * @param {?} val

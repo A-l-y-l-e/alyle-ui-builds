@@ -12,15 +12,27 @@ const DEFAULT_SIZE = 40;
 /** @type {?} */
 const DEFAULT_BG = 'action';
 /** @type {?} */
-const STYLES = (theme) => ({
-    root: Object.assign({ display: 'inline-flex', position: 'relative', fontSize: '1.25em', flexShrink: 0, alignItems: 'center', userSelect: 'none', borderRadius: '50%', textAlign: 'center', justifyContent: 'center' }, theme.avatar.root, { '&>img': {
+const STYLES = ({
+    $priority: STYLE_PRIORITY,
+    root: {
+        display: 'inline-flex',
+        position: 'relative',
+        fontSize: '1.25em',
+        flexShrink: 0,
+        alignItems: 'center',
+        userSelect: 'none',
+        borderRadius: '50%',
+        textAlign: 'center',
+        justifyContent: 'center',
+        '&>img': {
             width: '100%',
             height: '100%',
             borderRadius: '50%',
             display: 'block',
             objectFit: 'cover',
             '-webkit-background-clip': 'padding-box'
-        } })
+        }
+    }
 });
 /**
  * \@docs-private
@@ -51,8 +63,14 @@ class LyAvatar extends LyAvatarMixinBase {
          * \@docs-private
          */
         this.classes = this._theme.addStyleSheet(STYLES, STYLE_PRIORITY);
+        const { avatar } = this._theme.variables;
         this.setAutoContrast();
         renderer.addClass(_elementRef.nativeElement, this.classes.root);
+        if (avatar) {
+            if (avatar.root) {
+                renderer.addClass(this._elementRef.nativeElement, this._theme.style(avatar.root, STYLE_PRIORITY, STYLES));
+            }
+        }
     }
     /**
      * @param {?} val

@@ -9,7 +9,7 @@ export declare class LyMenu implements OnInit, AfterViewInit {
      * styles
      * @docs-private
      */
-    readonly classes: Record<"container", string>;
+    readonly classes: Record<"root" | "container" | "item", string>;
     /**
      * Destroy menu
      * @docs-private
@@ -33,7 +33,7 @@ export declare class LyMenu implements OnInit, AfterViewInit {
 export declare class LyMenuItem {
     private _menu;
     _click(): void;
-    constructor(_menu: LyMenu, el: ElementRef, theme: LyTheme2);
+    constructor(_menu: LyMenu, el: ElementRef, renderer: Renderer2);
 }
 export declare class LyMenuTriggerFor implements OnDestroy {
     private elementRef;

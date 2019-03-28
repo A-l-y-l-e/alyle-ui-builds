@@ -34,6 +34,7 @@ var STYLES = function (theme) {
     /** @type {?} */
     var left = dir === 'left' ? 0 : 180;
     return {
+        $priority: STYLE_PRIORITY,
         root: {
             display: 'block',
             '-webkit-user-select': 'none',
@@ -181,7 +182,7 @@ var LyCarousel = /** @class */ (function () {
         /**
          * \@docs-private
          */
-        this.classes = this._theme.addStyleSheet(STYLES, STYLE_PRIORITY);
+        this.classes = this._theme.addStyleSheet(STYLES);
         this._intervalFn = null;
         /**
          * \@docs-private
@@ -194,6 +195,10 @@ var LyCarousel = /** @class */ (function () {
          */
         this._destroy = new Subject();
         this._renderer.addClass(_el.nativeElement, this.classes.root);
+        var carousel = this._theme.variables.carousel;
+        if (carousel) {
+            this._renderer.addClass(this._el.nativeElement, this._theme.style(carousel.root, STYLE_PRIORITY, STYLES));
+        }
     }
     Object.defineProperty(LyCarousel.prototype, "_isIntervalFn", {
         /** @internal */

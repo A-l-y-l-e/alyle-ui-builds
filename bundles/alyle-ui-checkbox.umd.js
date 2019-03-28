@@ -58,6 +58,7 @@
     /** @type {?} */
     var STYLES = function (theme) {
         return ({
+            $priority: STYLE_PRIORITY,
             root: {
                 marginAfter: '16px',
                 marginBefore: '-16px',
@@ -80,7 +81,9 @@
                     opacity: .13,
                     borderRadius: '50%'
                 },
-                '&:not({checked}) {icon}': __assign({}, theme.checkbox.unchecked)
+                '&:not({checked}) {icon}': {
+                    color: theme.text.secondary
+                }
             },
             layout: {
                 display: 'inline-flex',
@@ -90,10 +93,21 @@
                 paddingTop: '12px',
                 paddingBottom: '12px'
             },
-            icon: __assign({ position: 'relative', marginAfter: '8px', marginTop: 'auto', marginBottom: 'auto', width: '16px', height: '16px', userSelect: 'none' }, theme.checkbox.root, { '&::before, &::after': __assign({ content: "''" }, ui.LY_COMMON_STYLES.fill, { width: '16px', height: '16px', margin: 'auto' }), '&::before': {
+            icon: {
+                position: 'relative',
+                marginAfter: '8px',
+                marginTop: 'auto',
+                marginBottom: 'auto',
+                width: '16px',
+                height: '16px',
+                userSelect: 'none',
+                '&::before, &::after': __assign({ content: "''" }, ui.LY_COMMON_STYLES.fill, { width: '16px', height: '16px', margin: 'auto' }),
+                // border icon
+                '&::before': {
                     border: 'solid 2px',
                     borderRadius: '2px'
-                }, svg: {
+                },
+                svg: {
                     position: 'absolute',
                     polyline: {
                         fill: 'none',
@@ -104,7 +118,8 @@
                         strokeDasharray: '18px',
                         strokeDashoffset: '18px'
                     }
-                } }),
+                },
+            },
             checked: {
                 '& {icon}::before': {
                     background: 'currentColor'
@@ -180,7 +195,7 @@
              * styles
              * @ignore
              */
-            _this.classes = _this._theme.addStyleSheet(STYLES, STYLE_PRIORITY);
+            _this.classes = _this._theme.addStyleSheet(STYLES);
             /**
              * Event emitted when the checkbox's `checked` value changes.
              */
@@ -193,6 +208,12 @@
                 radius: 'containerSize',
                 percentageToIncrease: 150
             };
+            var checkbox = _theme.variables.checkbox;
+            if (checkbox) {
+                if (checkbox.root) {
+                    _this._renderer.addClass(_this._el.nativeElement, _this._theme.style(checkbox.root, STYLE_PRIORITY, STYLES));
+                }
+            }
             return _this;
         }
         Object.defineProperty(LyCheckbox.prototype, "color", {
@@ -545,6 +566,7 @@
      */
 
     exports.LyCheckboxModule = LyCheckboxModule;
+    exports.STYLES = STYLES;
     exports.LY_CHECKBOX_CONTROL_VALUE_ACCESSOR = LY_CHECKBOX_CONTROL_VALUE_ACCESSOR;
     exports.LyCheckboxChange = LyCheckboxChange;
     exports.LyCheckboxBase = LyCheckboxBase;

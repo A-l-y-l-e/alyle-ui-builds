@@ -18,6 +18,7 @@ const DEFAULT_DISABLE_RIPPLE = false;
 const STYLE_PRIORITY = -2;
 /** @type {?} */
 const STYLES$1 = (theme) => ({
+    $priority: STYLE_PRIORITY,
     root: {
         display: 'block',
         paddingAfter: '1em',
@@ -140,7 +141,7 @@ class LySelect extends LySelectMixinBase {
         /**
          * \@docs-private
          */
-        this.classes = this._theme.addStyleSheet(STYLES$1, STYLE_PRIORITY);
+        this.classes = this._theme.addStyleSheet(STYLES$1);
         this._disabled = false;
         this._required = false;
         this.stateChanges = new Subject();
@@ -401,6 +402,7 @@ class LySelect extends LySelectMixinBase {
         });
         /** @type {?} */
         const ngControl = this.ngControl;
+        const { select } = this._theme.variables;
         // update styles on disabled
         if (ngControl && ngControl.statusChanges) {
             ngControl.statusChanges.pipe(takeUntil(this._destroy)).subscribe(() => {
@@ -412,6 +414,11 @@ class LySelect extends LySelectMixinBase {
         // apply default styles
         this._renderer.addClass(this._el.nativeElement, this._field.classes.inputNative);
         this._renderer.addClass(this._el.nativeElement, this.classes.root);
+        if (select) {
+            if (select.root) {
+                this._renderer.addClass(this._el.nativeElement, this._theme.style(select.root, STYLE_PRIORITY, STYLES$1));
+            }
+        }
     }
     /**
      * @return {?}
