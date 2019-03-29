@@ -2886,9 +2886,9 @@ LyFocusState.ctorParameters = () => [
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
-const AUI_VERSION = '2.6.1-nightly.20190328-jtsdf8s7';
+const AUI_VERSION = '2.6.1-nightly.20190329-jttswzcd';
 /** @type {?} */
-const AUI_LAST_UPDATE = '2019-03-28T08:23:24.725Z';
+const AUI_LAST_UPDATE = '2019-03-29T08:24:52.715Z';
 
 /**
  * @fileoverview added by tsickle
