@@ -357,7 +357,7 @@ class LyTabs extends LyTabsMixinBase {
         if (val !== this.selectedIndex) {
             this._selectedBeforeIndex = (/** @type {?} */ (this._selectedIndex));
             this._selectedIndex = this._findIndex(val, 'auto');
-            this._selectedBeforeTab = this._selectedTab;
+            this._selectedBeforeTab = (/** @type {?} */ (this._selectedTab));
             this.selectedIndexChange.emit(this._selectedIndex);
             this._markForCheck();
             Promise.resolve(null).then(() => {
@@ -422,8 +422,10 @@ class LyTabs extends LyTabsMixinBase {
         this._isViewInitLoaded = true;
         if (Platform.isBrowser) {
             this._tabResizeSub = this._resizeService.resize$.subscribe(() => {
-                this._updateIndicator(this._selectedTab);
-                this._selectedTab._tabLabel._updateTabScroll();
+                if (this._selectedTab) {
+                    this._updateIndicator(this._selectedTab);
+                    this._selectedTab._tabLabel._updateTabScroll();
+                }
             });
         }
     }
@@ -525,8 +527,8 @@ class LyTabs extends LyTabsMixinBase {
                 }
                 else {
                     /** for server */
-                    this.renderer.addClass(this._selectedTab._tabIndicator.nativeElement, this.classes.tabsIndicatorForServer);
-                    this.renderer.addClass(this._selectedTab._tabIndicator.nativeElement, this._colorClass);
+                    this.renderer.addClass((/** @type {?} */ (this._selectedTab))._tabIndicator.nativeElement, this.classes.tabsIndicatorForServer);
+                    this.renderer.addClass((/** @type {?} */ (this._selectedTab))._tabIndicator.nativeElement, this._colorClass);
                 }
             });
         }

@@ -121,7 +121,7 @@ export declare class LyTabs extends LyTabsMixinBase implements OnChanges, OnInit
     readonly classes: Record<"root" | "container" | "tab" | "contentContainer" | "tabsLabels" | "tabsLabelsContainer" | "label" | "tabLabelActive" | "tabContents" | "tabContent" | "tabsIndicator" | "tabsIndicatorForServer" | "rippleContainer" | "scrollable", string>;
     _selectedIndex: number;
     _selectedBeforeIndex: number;
-    _selectedTab: LyTab;
+    _selectedTab: LyTab | null;
     _selectedBeforeTab: LyTab;
     _isViewInitLoaded: boolean;
     private _tabsSubscription;

@@ -419,7 +419,7 @@
                 if (val !== this.selectedIndex) {
                     this._selectedBeforeIndex = ( /** @type {?} */(this._selectedIndex));
                     this._selectedIndex = this._findIndex(val, 'auto');
-                    this._selectedBeforeTab = this._selectedTab;
+                    this._selectedBeforeTab = ( /** @type {?} */(this._selectedTab));
                     this.selectedIndexChange.emit(this._selectedIndex);
                     this._markForCheck();
                     Promise.resolve(null).then(function () {
@@ -495,8 +495,10 @@
                 this._isViewInitLoaded = true;
                 if (ui.Platform.isBrowser) {
                     this._tabResizeSub = this._resizeService.resize$.subscribe(function () {
-                        _this._updateIndicator(_this._selectedTab);
-                        _this._selectedTab._tabLabel._updateTabScroll();
+                        if (_this._selectedTab) {
+                            _this._updateIndicator(_this._selectedTab);
+                            _this._selectedTab._tabLabel._updateTabScroll();
+                        }
                     });
                 }
             };
@@ -626,8 +628,8 @@
                         }
                         else {
                             /** for server */
-                            _this.renderer.addClass(_this._selectedTab._tabIndicator.nativeElement, _this.classes.tabsIndicatorForServer);
-                            _this.renderer.addClass(_this._selectedTab._tabIndicator.nativeElement, _this._colorClass);
+                            _this.renderer.addClass(( /** @type {?} */(_this._selectedTab))._tabIndicator.nativeElement, _this.classes.tabsIndicatorForServer);
+                            _this.renderer.addClass(( /** @type {?} */(_this._selectedTab))._tabIndicator.nativeElement, _this._colorClass);
                         }
                     });
                 }
