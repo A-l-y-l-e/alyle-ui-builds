@@ -129,5 +129,91 @@ export declare class MinimaBase extends LyStyleUtils {
             };
         };
     };
+    field: {
+        appearance: {
+            outlined: {
+                '&:not({focused}):not({disabled}):hover {fieldset}': {
+                    borderColor: string;
+                };
+                '&{focused} {fieldset}': {
+                    borderWidth: string;
+                    borderColor: string;
+                };
+                '& textarea{inputNative}': {
+                    margin: string;
+                };
+                '& {inputNative}:not(textarea)': {
+                    padding: string;
+                };
+                '& {container}': {
+                    padding: string;
+                };
+                '& {fieldset}': {
+                    borderWidth: string;
+                    borderRadius: string;
+                    padding: string;
+                };
+                '& {prefix}': {
+                    '&:after': {
+                        padding: string;
+                    };
+                };
+                '& suffix': {
+                    '&:after': {
+                        padding: string;
+                    };
+                };
+                '& {label}': {
+                    margin: string;
+                };
+                '& {placeholder}': {
+                    margin: string;
+                };
+                '& {floatingLabel}{label}': {
+                    transform: string;
+                };
+                '& {hintContainer}': {
+                    padding: string;
+                };
+            };
+            filled: {
+                '&:not({focused}):not({disabled}) {container}:hover:after': {
+                    borderBottomWidth: string;
+                };
+                'textarea{inputNative}': {
+                    margin: string;
+                };
+                '{inputNative}:not(textarea)': {
+                    padding: string;
+                };
+                '& {container}': {
+                    borderRadius: string;
+                    padding: string;
+                    '&:after': {
+                        borderBottomStyle: string;
+                        borderBottomColor: string;
+                        borderBottomWidth: string;
+                    };
+                };
+                '&{focused} {container}': {
+                    '&:after': {
+                        borderBottomWidth: string;
+                    };
+                };
+                '& {placeholder}': {
+                    margin: string;
+                };
+                '& {label}': {
+                    margin: string;
+                };
+                '& {floatingLabel}{label}': {
+                    transform: string;
+                };
+                '& {hintContainer}': {
+                    padding: string;
+                };
+            };
+        };
+    };
     constructor();
 }

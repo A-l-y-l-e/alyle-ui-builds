@@ -54,112 +54,6 @@ var icon = {
     fontSize: '24px'
 };
 /** @type {?} */
-var field = {
-    appearance: {
-        outlined: {
-            root: {
-                '&:not({focused}):not({disabled}):hover {fieldset}': {
-                    borderColor: 'currentColor'
-                },
-                '&{focused} {fieldset}': {
-                    borderWidth: '2px',
-                    borderColor: 'inherit'
-                },
-                'textarea{inputNative}': {
-                    margin: '1em 0'
-                },
-                '{inputNative}:not(textarea)': {
-                    padding: '1em 0'
-                }
-            },
-            container: {
-                padding: '0 0.75em'
-            },
-            fieldset: {
-                borderWidth: '1px',
-                borderRadius: '5px',
-                padding: '0 .5em'
-            },
-            containerLabelFocused: {
-                color: 'currentColor',
-                '&:after': {
-                    borderWidth: '2px',
-                    borderColor: 'currentColor'
-                }
-            },
-            prefix: {
-                '&:after': {
-                    padding: '0.25em'
-                }
-            },
-            suffix: {
-                '&:after': {
-                    padding: '0.25em'
-                }
-            },
-            label: {
-                margin: '1em 0'
-            },
-            placeholder: {
-                margin: '1em 0'
-            },
-            floatingLabel: {
-                transform: 'translateY(-1.75em)'
-            },
-            hint: {
-                padding: '0 0.75em'
-            }
-        },
-        filled: {
-            root: {
-                '&:not({focused}):not({disabled}) {container}:hover:after': {
-                    borderBottomWidth: '1px'
-                },
-                'textarea{inputNative}': {
-                    margin: '1.59375em 0 0.40625em'
-                },
-                '{inputNative}:not(textarea)': {
-                    padding: '1.59375em 0 0.40625em'
-                }
-            },
-            container: {
-                borderRadius: '5px 5px 0 0',
-                padding: '0 0.75em',
-                '&:after': {
-                    borderBottomStyle: 'solid',
-                    borderBottomColor: 'currentColor',
-                    borderBottomWidth: '0'
-                }
-            },
-            containerFocused: {
-                '&:after': {
-                    borderBottomWidth: '2px'
-                }
-            },
-            containerLabelFocused: {
-                color: 'currentColor',
-                borderWidth: '2px',
-                borderColor: 'currentColor'
-            },
-            containerLabelHover: {
-                color: 'currentColor'
-            },
-            placeholder: {
-                margin: '1.59375em 0 0.40625em'
-            },
-            label: {
-                margin: '1em 0'
-            },
-            floatingLabel: {
-                transform: 'translateY(-.75em)'
-            },
-            hint: {
-                padding: '0 0.75em'
-            }
-        }
-    }
-};
-/** @type {?} */
 var zIndex = {
     toolbar: 1000,
     drawer: 1100,
@@ -280,6 +174,92 @@ var MinimaBase = /** @class */ (function (_super) {
                         '&:last-child': {
                             marginBottom: 0
                         }
+                    }
+                }
+            }
+        };
+        _this.field = {
+            appearance: {
+                outlined: {
+                    '&:not({focused}):not({disabled}):hover {fieldset}': {
+                        borderColor: 'currentColor'
+                    },
+                    '&{focused} {fieldset}': {
+                        borderWidth: '2px',
+                        borderColor: 'inherit'
+                    },
+                    '& textarea{inputNative}': {
+                        margin: '1em 0'
+                    },
+                    '& {inputNative}:not(textarea)': {
+                        padding: '1em 0'
+                    },
+                    '& {container}': {
+                        padding: '0 0.75em'
+                    },
+                    '& {fieldset}': {
+                        borderWidth: '1px',
+                        borderRadius: '5px',
+                        padding: '0 .5em'
+                    },
+                    '& {prefix}': {
+                        '&:after': {
+                            padding: '0.25em'
+                        }
+                    },
+                    '& suffix': {
+                        '&:after': {
+                            padding: '0.25em'
+                        }
+                    },
+                    '& {label}': {
+                        margin: '1em 0'
+                    },
+                    '& {placeholder}': {
+                        margin: '1em 0'
+                    },
+                    '& {floatingLabel}{label}': {
+                        transform: 'translateY(-1.75em)'
+                    },
+                    '& {hintContainer}': {
+                        padding: '0 0.75em'
+                    }
+                },
+                filled: {
+                    '&:not({focused}):not({disabled}) {container}:hover:after': {
+                        borderBottomWidth: '1px'
+                    },
+                    'textarea{inputNative}': {
+                        margin: '1.59375em 0 0.40625em'
+                    },
+                    '{inputNative}:not(textarea)': {
+                        padding: '1.59375em 0 0.40625em'
+                    },
+                    '& {container}': {
+                        borderRadius: '5px 5px 0 0',
+                        padding: '0 0.75em',
+                        '&:after': {
+                            borderBottomStyle: 'solid',
+                            borderBottomColor: 'currentColor',
+                            borderBottomWidth: '0'
+                        }
+                    },
+                    '&{focused} {container}': {
+                        '&:after': {
+                            borderBottomWidth: '2px'
+                        }
+                    },
+                    '& {placeholder}': {
+                        margin: '1.59375em 0 0.40625em'
+                    },
+                    '& {label}': {
+                        margin: '1em 0'
+                    },
+                    '& {floatingLabel}{label}': {
+                        transform: 'translateY(-.75em)'
+                    },
+                    '& {hintContainer}': {
+                        padding: '0 0.75em'
                     }
                 }
             }
@@ -421,12 +401,12 @@ var MinimaLight = /** @class */ (function (_super) {
             backdrop: 'rgba(0,0,0,.6)'
         };
         _this.bar = '#f5f5f5';
-        _this.field = mergeDeep({}, field, {
+        _this.field = mergeDeep({}, _this.field, {
             borderColor: 'rgba(0, 0, 0, 0.23)',
             labelColor: 'rgba(0, 0, 0, 0.6)',
             appearance: {
                 filled: {
-                    container: {
+                    '{container}': {
                         backgroundColor: 'rgba(0, 0, 0, 0.04)',
                     }
                 }
@@ -515,12 +495,12 @@ var MinimaDark = /** @class */ (function (_super) {
         _this.divider = 'rgba(255, 255, 255, 0.12)';
         _this.colorShadow = shadow$1;
         _this.shadow = shadow$1;
-        _this.field = mergeDeep({}, field, {
+        _this.field = mergeDeep({}, _this.field, {
             borderColor: 'rgba(255, 255, 255, 0.12)',
             labelColor: 'rgba(255, 255, 255, 0.4)',
             appearance: {
                 filled: {
-                    container: {
+                    '& {container}': {
                         backgroundColor: 'rgba(255, 255, 255, 0.04)',
                     }
                 }

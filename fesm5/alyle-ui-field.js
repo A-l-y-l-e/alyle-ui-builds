@@ -3,7 +3,7 @@ import { Subject } from 'rxjs';
 import { NgControl, NgForm, FormGroupDirective } from '@angular/forms';
 import { Directive, Renderer2, ElementRef, Input, ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChild, ViewChild, ViewEncapsulation, ContentChildren, NgZone, HostListener, HostBinding, Optional, Self, forwardRef, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LY_COMMON_STYLES, LyTheme2, mergeDeep, ElementObserver, Platform, toBoolean, DirAlias, LyCommonModule } from '@alyle/ui';
+import { LY_COMMON_STYLES, LyTheme2, ElementObserver, Platform, toBoolean, DirAlias, LyCommonModule } from '@alyle/ui';
 
 /**
  * @fileoverview added by tsickle
@@ -412,44 +412,39 @@ var DEFAULT_APPEARANCE = 'standard';
 /** @type {?} */
 var DEFAULT_APPEARANCE_THEME = {
     standard: {
-        root: {
-            '&:not({disabled}) {container}:hover:after': {
-                borderBottomColor: 'currentColor'
-            },
-            '&{disabled} {container}:after': {
-                borderBottomStyle: 'dotted',
-                borderColor: 'inherit'
-            },
-            'textarea{inputNative}': {
-                margin: '0.25em 0'
-            },
-            '{inputNative}:not(textarea)': {
-                padding: '0.25em 0'
-            }
+        '&:not({disabled}) {container}:hover:after': {
+            borderBottomColor: 'currentColor'
         },
-        container: {
+        '&{disabled} {container}:after': {
+            borderBottomStyle: 'dotted',
+            borderColor: 'inherit'
+        },
+        'textarea{inputNative}': {
+            margin: '0.25em 0'
+        },
+        '{inputNative}:not(textarea)': {
+            padding: '0.25em 0'
+        },
+        '& {container}': {
             padding: '1em 0 0',
             '&:after': {
                 borderBottomStyle: 'solid',
                 borderBottomWidth: '1px'
             }
         },
-        containerFocused: {
+        '&{focused} {container}': {
             '&:after': {
                 borderWidth: '2px',
                 borderColor: 'currentColor'
             }
         },
-        containerLabelHover: {
-            color: 'currentColor'
-        },
-        label: {
+        '& {label}': {
             margin: '0.25em 0'
         },
-        placeholder: {
+        '& {placeholder}': {
             margin: '0.25em 0'
         },
-        floatingLabel: {
+        '& {floatingLabel}': {
             transform: 'translateY(-1.25em)'
         }
     }
@@ -601,33 +596,15 @@ var LyField = /** @class */ (function () {
          * @return {?}
          */
         function (val) {
-            var _this = this;
             if (val !== this.appearance) {
                 this._appearance = val;
                 if (!(this._theme.variables.field.appearance[val] || DEFAULT_APPEARANCE_THEME[val])) {
                     throw new Error(val + " not found in theme.field.appearance");
                 }
                 this._appearanceClass = this._theme.addStyle("ly-field.appearance:" + val, function (theme) {
-                    var _a;
                     /** @type {?} */
-                    var appearance = mergeDeep({}, theme.field.appearance.base, theme.field.appearance[val] || DEFAULT_APPEARANCE_THEME[val]);
-                    /** @type {?} */
-                    var classes = _this.classes;
-                    return _a = {
-                            '&': __assign({}, appearance.root)
-                        },
-                        _a["& ." + classes.container] = __assign({}, appearance.container),
-                        _a["& ." + classes.prefix] = __assign({}, appearance.prefix),
-                        _a["& ." + classes.infix] = __assign({}, appearance.infix),
-                        _a["& ." + classes.suffix] = __assign({}, appearance.suffix),
-                        _a["& ." + classes.inputNative] = __assign({}, appearance.input),
-                        _a["& ." + classes.fieldset] = __assign({}, appearance.fieldset),
-                        _a["& ." + classes.placeholder] = __assign({}, appearance.placeholder),
-                        _a["& ." + classes.label] = __assign({}, appearance.label),
-                        _a["& ." + classes.hintContainer] = __assign({}, appearance.hint),
-                        _a["& ." + classes.floatingLabel + "." + classes.label] = __assign({}, appearance.floatingLabel),
-                        _a["&." + classes.focused + " ." + classes.container] = __assign({}, appearance.containerFocused),
-                        _a;
+                    var appearance = theme.field.appearance[val] || DEFAULT_APPEARANCE_THEME[val];
+                    return appearance;
                 }, this._el.nativeElement, this._appearanceClass, STYLE_PRIORITY$2, STYLES);
             }
         },

@@ -4,33 +4,6 @@
     (factory((global.ly = global.ly || {}, global.ly.field = {}),global.rxjs,global.ng.forms,global.ng.core,global.ng.common,global.ly.core));
 }(this, (function (exports,rxjs,forms,core,common,ui) { 'use strict';
 
-    /*! *****************************************************************************
-    Copyright (c) Microsoft Corporation. All rights reserved.
-    Licensed under the Apache License, Version 2.0 (the "License"); you may not use
-    this file except in compliance with the License. You may obtain a copy of the
-    License at http://www.apache.org/licenses/LICENSE-2.0
-
-    THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-    KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
-    WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
-    MERCHANTABLITY OR NON-INFRINGEMENT.
-
-    See the Apache Version 2.0 License for specific language governing permissions
-    and limitations under the License.
-    ***************************************************************************** */
-    var __assign = function () {
-        __assign = Object.assign || function __assign(t) {
-            for (var s, i = 1, n = arguments.length; i < n; i++) {
-                s = arguments[i];
-                for (var p in s)
-                    if (Object.prototype.hasOwnProperty.call(s, p))
-                        t[p] = s[p];
-            }
-            return t;
-        };
-        return __assign.apply(this, arguments);
-    };
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
@@ -60,6 +33,33 @@
         ];
         return LyPlaceholder;
     }());
+
+    /*! *****************************************************************************
+    Copyright (c) Microsoft Corporation. All rights reserved.
+    Licensed under the Apache License, Version 2.0 (the "License"); you may not use
+    this file except in compliance with the License. You may obtain a copy of the
+    License at http://www.apache.org/licenses/LICENSE-2.0
+
+    THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
+    WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
+    MERCHANTABLITY OR NON-INFRINGEMENT.
+
+    See the Apache Version 2.0 License for specific language governing permissions
+    and limitations under the License.
+    ***************************************************************************** */
+    var __assign = function () {
+        __assign = Object.assign || function __assign(t) {
+            for (var s, i = 1, n = arguments.length; i < n; i++) {
+                s = arguments[i];
+                for (var p in s)
+                    if (Object.prototype.hasOwnProperty.call(s, p))
+                        t[p] = s[p];
+            }
+            return t;
+        };
+        return __assign.apply(this, arguments);
+    };
 
     /**
      * @fileoverview added by tsickle
@@ -439,44 +439,39 @@
     /** @type {?} */
     var DEFAULT_APPEARANCE_THEME = {
         standard: {
-            root: {
-                '&:not({disabled}) {container}:hover:after': {
-                    borderBottomColor: 'currentColor'
-                },
-                '&{disabled} {container}:after': {
-                    borderBottomStyle: 'dotted',
-                    borderColor: 'inherit'
-                },
-                'textarea{inputNative}': {
-                    margin: '0.25em 0'
-                },
-                '{inputNative}:not(textarea)': {
-                    padding: '0.25em 0'
-                }
+            '&:not({disabled}) {container}:hover:after': {
+                borderBottomColor: 'currentColor'
             },
-            container: {
+            '&{disabled} {container}:after': {
+                borderBottomStyle: 'dotted',
+                borderColor: 'inherit'
+            },
+            'textarea{inputNative}': {
+                margin: '0.25em 0'
+            },
+            '{inputNative}:not(textarea)': {
+                padding: '0.25em 0'
+            },
+            '& {container}': {
                 padding: '1em 0 0',
                 '&:after': {
                     borderBottomStyle: 'solid',
                     borderBottomWidth: '1px'
                 }
             },
-            containerFocused: {
+            '&{focused} {container}': {
                 '&:after': {
                     borderWidth: '2px',
                     borderColor: 'currentColor'
                 }
             },
-            containerLabelHover: {
-                color: 'currentColor'
-            },
-            label: {
+            '& {label}': {
                 margin: '0.25em 0'
             },
-            placeholder: {
+            '& {placeholder}': {
                 margin: '0.25em 0'
             },
-            floatingLabel: {
+            '& {floatingLabel}': {
                 transform: 'translateY(-1.25em)'
             }
         }
@@ -619,33 +614,15 @@
              * @param {?} val
              * @return {?}
              */ function (val) {
-                var _this = this;
                 if (val !== this.appearance) {
                     this._appearance = val;
                     if (!(this._theme.variables.field.appearance[val] || DEFAULT_APPEARANCE_THEME[val])) {
                         throw new Error(val + " not found in theme.field.appearance");
                     }
                     this._appearanceClass = this._theme.addStyle("ly-field.appearance:" + val, function (theme) {
-                        var _a;
                         /** @type {?} */
-                        var appearance = ui.mergeDeep({}, theme.field.appearance.base, theme.field.appearance[val] || DEFAULT_APPEARANCE_THEME[val]);
-                        /** @type {?} */
-                        var classes = _this.classes;
-                        return _a = {
-                            '&': __assign({}, appearance.root)
-                        },
-                            _a["& ." + classes.container] = __assign({}, appearance.container),
-                            _a["& ." + classes.prefix] = __assign({}, appearance.prefix),
-                            _a["& ." + classes.infix] = __assign({}, appearance.infix),
-                            _a["& ." + classes.suffix] = __assign({}, appearance.suffix),
-                            _a["& ." + classes.inputNative] = __assign({}, appearance.input),
-                            _a["& ." + classes.fieldset] = __assign({}, appearance.fieldset),
-                            _a["& ." + classes.placeholder] = __assign({}, appearance.placeholder),
-                            _a["& ." + classes.label] = __assign({}, appearance.label),
-                            _a["& ." + classes.hintContainer] = __assign({}, appearance.hint),
-                            _a["& ." + classes.floatingLabel + "." + classes.label] = __assign({}, appearance.floatingLabel),
-                            _a["&." + classes.focused + " ." + classes.container] = __assign({}, appearance.containerFocused),
-                            _a;
+                        var appearance = theme.field.appearance[val] || DEFAULT_APPEARANCE_THEME[val];
+                        return appearance;
                     }, this._el.nativeElement, this._appearanceClass, STYLE_PRIORITY$2, STYLES);
                 }
             },
