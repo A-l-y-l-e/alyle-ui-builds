@@ -73,7 +73,8 @@
         return ({
             $priority: STYLE_PRIORITY,
             root: {
-                display: 'inline-block'
+                display: 'inline-block',
+                '&': theme.radio ? theme.radio.root : null
             },
             radio: {
                 display: 'inline-block',
@@ -172,12 +173,6 @@
              */
             this.onTouched = function () { };
             renderer.addClass(elementRef.nativeElement, this.classes.root);
-            var radio = this._theme.variables.radio;
-            if (radio) {
-                if (radio.root) {
-                    renderer.addClass(elementRef.nativeElement, this._theme.style(radio.root, STYLE_PRIORITY, STYLES));
-                }
-            }
         }
         Object.defineProperty(LyRadioGroup.prototype, "value", {
             get: /**

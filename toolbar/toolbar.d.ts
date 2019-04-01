@@ -20,8 +20,11 @@ export declare class LyToolbar extends LyToolbarMixinBase implements OnChanges, 
     private _position;
     private _positionClass;
     private _dense;
+    private _appearance;
+    private _appearanceClass;
     position: position;
     dense: boolean;
+    appearance: string;
     constructor(_renderer: Renderer2, _el: ElementRef, theme: LyTheme2);
     ngOnChanges(): void;
     ngOnInit(): void;

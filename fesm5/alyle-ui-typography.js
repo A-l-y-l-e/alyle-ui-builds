@@ -1,4 +1,4 @@
-import { __assign, __extends } from 'tslib';
+import { __extends } from 'tslib';
 import { Directive, ElementRef, Renderer2, Input, NgModule } from '@angular/core';
 import { LyTheme2, toBoolean, mixinStyleUpdater, mixinColor, LyCommonModule } from '@alyle/ui';
 
@@ -10,7 +10,11 @@ import { LyTheme2, toBoolean, mixinStyleUpdater, mixinColor, LyCommonModule } fr
 var STYLE_PRIORITY = -1;
 /** @type {?} */
 var styles = function (theme) { return ({
-    root: __assign({ margin: 0, display: 'block' }, theme.typography.root)
+    root: {
+        margin: 0,
+        display: 'block',
+        '&': theme.typography ? theme.typography.root : null
+    }
 }); };
 /** @enum {number} */
 var Gutter = {

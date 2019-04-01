@@ -12,7 +12,8 @@ const STYLES = (theme) => ({
     root: {
         display: 'block',
         overflow: 'hidden',
-        borderRadius: '2px'
+        borderRadius: '2px',
+        '&': theme.card ? theme.card.root : null
     },
     content: {
         display: 'block',
@@ -83,10 +84,6 @@ class LyCard extends LyCardMixinBase {
      * @return {?}
      */
     ngOnInit() {
-        const { card } = this.theme.variables;
-        if (card) {
-            this.renderer.addClass(this._el.nativeElement, this.theme.style(card.root, STYLE_PRIORITY, STYLES));
-        }
         /** @type {?} */
         let requireOnChanges;
         if (!this.bg) {

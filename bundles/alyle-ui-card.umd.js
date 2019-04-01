@@ -45,7 +45,8 @@
             root: {
                 display: 'block',
                 overflow: 'hidden',
-                borderRadius: '2px'
+                borderRadius: '2px',
+                '&': theme.card ? theme.card.root : null
             },
             content: (_a = {
                 display: 'block',
@@ -120,10 +121,6 @@
          * @return {?}
          */
             function () {
-                var card = this.theme.variables.card;
-                if (card) {
-                    this.renderer.addClass(this._el.nativeElement, this.theme.style(card.root, STYLE_PRIORITY, STYLES));
-                }
                 /** @type {?} */
                 var requireOnChanges;
                 if (!this.bg) {

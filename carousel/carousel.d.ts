@@ -20,6 +20,7 @@ export declare const STYLES: (theme: ThemeVariables) => {
             display: string;
             fill: string;
         };
+        '&': import("@alyle/ui/alyle-ui").StyleContainer;
     };
     actions: {
         position: string;

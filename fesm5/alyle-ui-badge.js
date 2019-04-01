@@ -1,4 +1,4 @@
-import { __assign, __extends } from 'tslib';
+import { __extends } from 'tslib';
 import { Directive, ElementRef, Input, Renderer2, NgModule } from '@angular/core';
 import { LyTheme2, mixinBg, mixinColor, mixinDisabled, mixinElevation, mixinOutlined, mixinRaised, mixinShadowColor, mixinStyleUpdater, LyCommonModule } from '@alyle/ui';
 
@@ -18,9 +18,25 @@ var DEFAULT_POSITION_VALUE = {
     above: '-11px'
 };
 /** @type {?} */
-var styles = function (theme) { return ({
+var STYLES = function (theme) { return ({
     $priority: STYLE_PRIORITY,
-    root: __assign({ position: 'absolute', display: 'flex', width: '22px', height: '22px', borderRadius: '100%', overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis', pointerEvents: 'none', zIndex: 1, fontSize: theme.pxToRem(12), fontFamily: theme.typography.fontFamily, justifyContent: 'center', alignItems: 'center' }, theme.badge.root),
+    root: {
+        position: 'absolute',
+        display: 'flex',
+        width: '22px',
+        height: '22px',
+        borderRadius: '100%',
+        overflow: 'hidden',
+        whiteSpace: 'nowrap',
+        textOverflow: 'ellipsis',
+        pointerEvents: 'none',
+        zIndex: 1,
+        fontSize: theme.pxToRem(12),
+        fontFamily: theme.typography.fontFamily,
+        justifyContent: 'center',
+        alignItems: 'center',
+        '&': theme.badge ? theme.badge.root : null
+    },
     relative: {
         position: 'relative'
     }
@@ -52,7 +68,7 @@ var LyBadge = /** @class */ (function (_super) {
          * Styles
          * \@docs-private
          */
-        _this.classes = _this._theme.addStyleSheet(styles);
+        _this.classes = _this._theme.addStyleSheet(STYLES);
         _this.setAutoContrast();
         _this._badgeElementRef = _this._el.nativeElement;
         return _this;
@@ -97,7 +113,7 @@ var LyBadge = /** @class */ (function (_super) {
                 this._position = val;
                 this._positionClass = this._theme.addStyle("ly-badge.position:" + val, function (theme) {
                     /** @type {?} */
-                    var sty = theme.badge.position && theme.badge.position[val] || val === DEFAULT_POSITION ? DEFAULT_POSITION_VALUE : null;
+                    var sty = (/** @type {?} */ (theme.badge)).position && (/** @type {?} */ ((/** @type {?} */ (theme.badge)).position))[val] || val === DEFAULT_POSITION ? DEFAULT_POSITION_VALUE : null;
                     if (sty) {
                         return sty;
                     }
@@ -253,6 +269,6 @@ var LyBadgeModule = /** @class */ (function () {
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { LyBadgeBase, LyBadgeMixinBase, LyBadge, LyBadgeModule };
+export { STYLES, LyBadgeBase, LyBadgeMixinBase, LyBadge, LyBadgeModule };
 
 //# sourceMappingURL=alyle-ui-badge.js.map

@@ -28,6 +28,7 @@ export declare const STYLES: (theme: ThemeVariables) => {
         '&:not({checked}) {icon}': {
             color: string;
         };
+        '&': import("@alyle/ui/alyle-ui").StyleContainer;
     };
     layout: {
         display: string;

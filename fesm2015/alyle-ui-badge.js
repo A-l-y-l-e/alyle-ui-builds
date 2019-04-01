@@ -17,9 +17,25 @@ const DEFAULT_POSITION_VALUE = {
     above: '-11px'
 };
 /** @type {?} */
-const styles = (theme) => ({
+const STYLES = (theme) => ({
     $priority: STYLE_PRIORITY,
-    root: Object.assign({ position: 'absolute', display: 'flex', width: '22px', height: '22px', borderRadius: '100%', overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis', pointerEvents: 'none', zIndex: 1, fontSize: theme.pxToRem(12), fontFamily: theme.typography.fontFamily, justifyContent: 'center', alignItems: 'center' }, theme.badge.root),
+    root: {
+        position: 'absolute',
+        display: 'flex',
+        width: '22px',
+        height: '22px',
+        borderRadius: '100%',
+        overflow: 'hidden',
+        whiteSpace: 'nowrap',
+        textOverflow: 'ellipsis',
+        pointerEvents: 'none',
+        zIndex: 1,
+        fontSize: theme.pxToRem(12),
+        fontFamily: theme.typography.fontFamily,
+        justifyContent: 'center',
+        alignItems: 'center',
+        '&': theme.badge ? theme.badge.root : null
+    },
     relative: {
         position: 'relative'
     }
@@ -54,7 +70,7 @@ class LyBadge extends LyBadgeMixinBase {
          * Styles
          * \@docs-private
          */
-        this.classes = this._theme.addStyleSheet(styles);
+        this.classes = this._theme.addStyleSheet(STYLES);
         this.setAutoContrast();
         this._badgeElementRef = this._el.nativeElement;
     }
@@ -85,7 +101,7 @@ class LyBadge extends LyBadgeMixinBase {
             this._position = val;
             this._positionClass = this._theme.addStyle(`ly-badge.position:${val}`, (theme) => {
                 /** @type {?} */
-                const sty = theme.badge.position && theme.badge.position[val] || val === DEFAULT_POSITION ? DEFAULT_POSITION_VALUE : null;
+                const sty = (/** @type {?} */ (theme.badge)).position && (/** @type {?} */ ((/** @type {?} */ (theme.badge)).position))[val] || val === DEFAULT_POSITION ? DEFAULT_POSITION_VALUE : null;
                 if (sty) {
                     return sty;
                 }
@@ -222,6 +238,6 @@ LyBadgeModule.decorators = [
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { LyBadgeBase, LyBadgeMixinBase, LyBadge, LyBadgeModule };
+export { STYLES, LyBadgeBase, LyBadgeMixinBase, LyBadge, LyBadgeModule };
 
 //# sourceMappingURL=alyle-ui-badge.js.map

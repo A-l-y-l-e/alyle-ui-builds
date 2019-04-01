@@ -12,7 +12,7 @@ import { LyTheme2, mergeDeep, LY_COMMON_STYLES, LyHammerGestureConfig } from '@a
 /** @type {?} */
 const STYLE_PRIORITY = -2;
 /** @type {?} */
-const STYLES = ({
+const STYLES = (theme) => ({
     $priority: STYLE_PRIORITY,
     root: {
         '-webkit-user-select': 'none',
@@ -23,7 +23,8 @@ const STYLES = ({
         overflow: 'hidden',
         position: 'relative',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        '&': theme.imgCropper ? theme.imgCropper.root : null
     },
     imgContainer: {
         cursor: 'move',
@@ -122,12 +123,6 @@ class LyResizingCroppingImages {
          */
         this.error = new EventEmitter();
         this._renderer.addClass(elementRef.nativeElement, this.classes.root);
-        const { imgCropper } = this.theme.variables;
-        if (imgCropper) {
-            if (imgCropper.root) {
-                this._renderer.addClass(this.elementRef.nativeElement, this.theme.style(imgCropper.root, STYLE_PRIORITY, STYLES));
-            }
-        }
     }
     /**
      * @return {?}

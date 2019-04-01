@@ -12,7 +12,7 @@ const DEFAULT_SIZE = 40;
 /** @type {?} */
 const DEFAULT_BG = 'action';
 /** @type {?} */
-const STYLES = ({
+const STYLES = (theme) => ({
     $priority: STYLE_PRIORITY,
     root: {
         display: 'inline-flex',
@@ -31,7 +31,8 @@ const STYLES = ({
             display: 'block',
             objectFit: 'cover',
             '-webkit-background-clip': 'padding-box'
-        }
+        },
+        '&': theme.avatar ? theme.avatar.root : null
     }
 });
 /**
@@ -63,14 +64,8 @@ class LyAvatar extends LyAvatarMixinBase {
          * \@docs-private
          */
         this.classes = this._theme.addStyleSheet(STYLES, STYLE_PRIORITY);
-        const { avatar } = this._theme.variables;
         this.setAutoContrast();
         renderer.addClass(_elementRef.nativeElement, this.classes.root);
-        if (avatar) {
-            if (avatar.root) {
-                renderer.addClass(this._elementRef.nativeElement, this._theme.style(avatar.root, STYLE_PRIORITY, STYLES));
-            }
-        }
     }
     /**
      * @param {?} val

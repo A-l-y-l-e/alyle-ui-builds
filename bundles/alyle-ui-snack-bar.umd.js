@@ -4,33 +4,6 @@
     (factory((global.ly = global.ly || {}, global.ly.snackBar = {}),global.ly.core,global.ng.core,global.rxjs));
 }(this, (function (exports,ui,i0,rxjs) { 'use strict';
 
-    /*! *****************************************************************************
-    Copyright (c) Microsoft Corporation. All rights reserved.
-    Licensed under the Apache License, Version 2.0 (the "License"); you may not use
-    this file except in compliance with the License. You may obtain a copy of the
-    License at http://www.apache.org/licenses/LICENSE-2.0
-
-    THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-    KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
-    WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
-    MERCHANTABLITY OR NON-INFRINGEMENT.
-
-    See the Apache Version 2.0 License for specific language governing permissions
-    and limitations under the License.
-    ***************************************************************************** */
-    var __assign = function () {
-        __assign = Object.assign || function __assign(t) {
-            for (var s, i = 1, n = arguments.length; i < n; i++) {
-                s = arguments[i];
-                for (var p in s)
-                    if (Object.prototype.hasOwnProperty.call(s, p))
-                        t[p] = s[p];
-            }
-            return t;
-        };
-        return __assign.apply(this, arguments);
-    };
-
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
@@ -137,12 +110,40 @@
     var DEFAULT_HORIZONTAL_POSITION = ui.XPosition.after;
     /** @type {?} */
     var DEFAULT_VERTICAL_POSITION = ui.YPosition.below;
+    /** @type {?} */
+    var STYLES = function (theme) {
+        var _a;
+        return ({
+            $priority: STYLE_PRIORITY,
+            root: (_a = {
+                borderRadius: '4px',
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                margin: '8px',
+                padding: '0 16px',
+                minHeight: '48px',
+                minWidth: '320px',
+                maxWidth: '320px',
+                opacity: 0,
+                transition: "opacity " + theme.animations.curves.standard + " 350ms, transform " + theme.animations.curves.deceleration + " 350ms",
+                fontSize: theme.pxToRem(theme.typography.fontSize)
+            },
+                _a[theme.getBreakpoint('XSmall')] = {
+                    width: 'calc(100% - 16px)',
+                    minWidth: 'calc(100% - 16px)'
+                },
+                _a['&'] = theme.snackBar ? ( /** @type {?} */(theme.snackBar)).root : null,
+                _a)
+        });
+    };
     var LySnackBar = /** @class */ (function () {
         function LySnackBar(_templateRef, _theme, _overlay, _snackBarService) {
             this._templateRef = _templateRef;
             this._theme = _theme;
             this._overlay = _overlay;
             this._snackBarService = _snackBarService;
+            this.classes = this._theme.addStyleSheet(STYLES);
             this.afterDismissed = new i0.EventEmitter();
         }
         /**
@@ -182,13 +183,7 @@
                     },
                     hasBackdrop: false,
                     classes: [
-                        this._theme.addStyle('SnackBar', function (theme) {
-                            var _a;
-                            return (__assign((_a = { borderRadius: '4px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', margin: '8px', padding: '0 16px', minHeight: '48px', minWidth: '320px', maxWidth: '320px', opacity: 0, transition: "opacity " + theme.animations.curves.standard + " 350ms, transform " + theme.animations.curves.deceleration + " 350ms", fontSize: theme.pxToRem(theme.typography.fontSize), boxShadow: ui.shadowBuilder(4, ( /** @type {?} */(theme.snackBar.root.background))) }, _a[theme.getBreakpoint('XSmall')] = {
-                                width: 'calc(100% - 16px)',
-                                minWidth: 'calc(100% - 16px)'
-                            }, _a), theme.snackBar.root));
-                        }, undefined, undefined, STYLE_PRIORITY),
+                        this.classes.root,
                         this._theme.addStyle("SnackBar.hp:" + horizontalPosition + ".vp:" + verticalPosition, function (theme) {
                             /** @type {?} */
                             var __styles = {};
@@ -296,6 +291,7 @@
      */
 
     exports.LySnackBarModule = LySnackBarModule;
+    exports.STYLES = STYLES;
     exports.LySnackBar = LySnackBar;
     exports.ɵa = LySnackBarService;
 

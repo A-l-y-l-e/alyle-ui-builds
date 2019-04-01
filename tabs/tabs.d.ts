@@ -188,27 +188,3 @@ export declare class LyTabLabel extends LyButton implements OnInit, AfterViewIni
     _updateTabScroll(): void;
     ngAfterViewInit(): void;
 }
-/**
- * demo basic
- * <ly-tabs withColor="accent">
- *   <ly-tab>
- *     <button ly-tab-label>HOME</button>
- *     Content
- *   </ly-tab>
- *   <ly-tab>
- *     <button ly-tab-label>HOME</button>
- *     Content
- *   </ly-tab>
- *   ...
- * </ly-tabs>
- *
- * demo lazy loading
- * <ly-tabs withBg="primary">
- *   <ly-tab>
- *     <button ly-tab-label>HOME</button>
- *     <ng-template ly-tab-content></ng-template>
- *   </ly-tab>
- *   ...
- * </ly-tabs>
- * => selectedIndexOnChange, default: auto, opts: number, with auto, the selectedIndex = current o current-1 or latest
- */

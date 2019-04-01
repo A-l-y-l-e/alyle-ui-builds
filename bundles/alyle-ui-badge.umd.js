@@ -32,18 +32,6 @@
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     }
-    var __assign = function () {
-        __assign = Object.assign || function __assign(t) {
-            for (var s, i = 1, n = arguments.length; i < n; i++) {
-                s = arguments[i];
-                for (var p in s)
-                    if (Object.prototype.hasOwnProperty.call(s, p))
-                        t[p] = s[p];
-            }
-            return t;
-        };
-        return __assign.apply(this, arguments);
-    };
 
     /**
      * @fileoverview added by tsickle
@@ -61,10 +49,26 @@
         above: '-11px'
     };
     /** @type {?} */
-    var styles = function (theme) {
+    var STYLES = function (theme) {
         return ({
             $priority: STYLE_PRIORITY,
-            root: __assign({ position: 'absolute', display: 'flex', width: '22px', height: '22px', borderRadius: '100%', overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis', pointerEvents: 'none', zIndex: 1, fontSize: theme.pxToRem(12), fontFamily: theme.typography.fontFamily, justifyContent: 'center', alignItems: 'center' }, theme.badge.root),
+            root: {
+                position: 'absolute',
+                display: 'flex',
+                width: '22px',
+                height: '22px',
+                borderRadius: '100%',
+                overflow: 'hidden',
+                whiteSpace: 'nowrap',
+                textOverflow: 'ellipsis',
+                pointerEvents: 'none',
+                zIndex: 1,
+                fontSize: theme.pxToRem(12),
+                fontFamily: theme.typography.fontFamily,
+                justifyContent: 'center',
+                alignItems: 'center',
+                '&': theme.badge ? theme.badge.root : null
+            },
             relative: {
                 position: 'relative'
             }
@@ -96,7 +100,7 @@
              * Styles
              * \@docs-private
              */
-            _this.classes = _this._theme.addStyleSheet(styles);
+            _this.classes = _this._theme.addStyleSheet(STYLES);
             _this.setAutoContrast();
             _this._badgeElementRef = _this._el.nativeElement;
             return _this;
@@ -137,7 +141,7 @@
                     this._position = val;
                     this._positionClass = this._theme.addStyle("ly-badge.position:" + val, function (theme) {
                         /** @type {?} */
-                        var sty = theme.badge.position && theme.badge.position[val] || val === DEFAULT_POSITION ? DEFAULT_POSITION_VALUE : null;
+                        var sty = ( /** @type {?} */(theme.badge)).position && ( /** @type {?} */(( /** @type {?} */(theme.badge)).position))[val] || val === DEFAULT_POSITION ? DEFAULT_POSITION_VALUE : null;
                         if (sty) {
                             return sty;
                         }
@@ -295,6 +299,7 @@
      * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
 
+    exports.STYLES = STYLES;
     exports.LyBadgeBase = LyBadgeBase;
     exports.LyBadgeMixinBase = LyBadgeMixinBase;
     exports.LyBadge = LyBadge;

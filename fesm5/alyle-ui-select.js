@@ -25,7 +25,8 @@ var STYLES$1 = function (theme) { return ({
         paddingAfter: '1em',
         minWidth: '3em',
         minHeight: '1.5em',
-        '-webkit-tap-highlight-color': 'transparent'
+        '-webkit-tap-highlight-color': 'transparent',
+        '&': theme.select ? theme.select.root : null
     },
     container: {
         background: theme.background.primary.default,
@@ -464,7 +465,6 @@ var LySelect = /** @class */ (function (_super) {
         });
         /** @type {?} */
         var ngControl = this.ngControl;
-        var select = this._theme.variables.select;
         // update styles on disabled
         if (ngControl && ngControl.statusChanges) {
             ngControl.statusChanges.pipe(takeUntil(this._destroy)).subscribe(function () {
@@ -476,11 +476,6 @@ var LySelect = /** @class */ (function (_super) {
         // apply default styles
         this._renderer.addClass(this._el.nativeElement, this._field.classes.inputNative);
         this._renderer.addClass(this._el.nativeElement, this.classes.root);
-        if (select) {
-            if (select.root) {
-                this._renderer.addClass(this._el.nativeElement, this._theme.style(select.root, STYLE_PRIORITY, STYLES$1));
-            }
-        }
     };
     /**
      * @return {?}

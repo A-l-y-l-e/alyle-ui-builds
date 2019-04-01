@@ -79,7 +79,8 @@
                 paddingAfter: '1em',
                 minWidth: '3em',
                 minHeight: '1.5em',
-                '-webkit-tap-highlight-color': 'transparent'
+                '-webkit-tap-highlight-color': 'transparent',
+                '&': theme.select ? theme.select.root : null
             },
             container: {
                 background: theme.background.primary.default,
@@ -501,7 +502,6 @@
                 });
                 /** @type {?} */
                 var ngControl = this.ngControl;
-                var select = this._theme.variables.select;
                 // update styles on disabled
                 if (ngControl && ngControl.statusChanges) {
                     ngControl.statusChanges.pipe(operators.takeUntil(this._destroy)).subscribe(function () {
@@ -513,11 +513,6 @@
                 // apply default styles
                 this._renderer.addClass(this._el.nativeElement, this._field.classes.inputNative);
                 this._renderer.addClass(this._el.nativeElement, this.classes.root);
-                if (select) {
-                    if (select.root) {
-                        this._renderer.addClass(this._el.nativeElement, this._theme.style(select.root, STYLE_PRIORITY, STYLES));
-                    }
-                }
             };
         /**
          * @return {?}

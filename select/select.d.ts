@@ -11,6 +11,7 @@ export declare const STYLES: (theme: ThemeVariables) => {
         minWidth: string;
         minHeight: string;
         '-webkit-tap-highlight-color': string;
+        '&': import("@alyle/ui/alyle-ui").StyleContainer;
     };
     container: {
         background: string;

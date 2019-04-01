@@ -44,28 +44,31 @@
     /** @type {?} */
     var DEFAULT_BG = 'action';
     /** @type {?} */
-    var STYLES = ({
-        $priority: STYLE_PRIORITY,
-        root: {
-            display: 'inline-flex',
-            position: 'relative',
-            fontSize: '1.25em',
-            flexShrink: 0,
-            alignItems: 'center',
-            userSelect: 'none',
-            borderRadius: '50%',
-            textAlign: 'center',
-            justifyContent: 'center',
-            '&>img': {
-                width: '100%',
-                height: '100%',
+    var STYLES = function (theme) {
+        return ({
+            $priority: STYLE_PRIORITY,
+            root: {
+                display: 'inline-flex',
+                position: 'relative',
+                fontSize: '1.25em',
+                flexShrink: 0,
+                alignItems: 'center',
+                userSelect: 'none',
                 borderRadius: '50%',
-                display: 'block',
-                objectFit: 'cover',
-                '-webkit-background-clip': 'padding-box'
+                textAlign: 'center',
+                justifyContent: 'center',
+                '&>img': {
+                    width: '100%',
+                    height: '100%',
+                    borderRadius: '50%',
+                    display: 'block',
+                    objectFit: 'cover',
+                    '-webkit-background-clip': 'padding-box'
+                },
+                '&': theme.avatar ? theme.avatar.root : null
             }
-        }
-    });
+        });
+    };
     /**
      * \@docs-private
      */
@@ -91,14 +94,8 @@
              * \@docs-private
              */
             _this.classes = _this._theme.addStyleSheet(STYLES, STYLE_PRIORITY);
-            var avatar = _this._theme.variables.avatar;
             _this.setAutoContrast();
             renderer.addClass(_elementRef.nativeElement, _this.classes.root);
-            if (avatar) {
-                if (avatar.root) {
-                    renderer.addClass(_this._elementRef.nativeElement, _this._theme.style(avatar.root, STYLE_PRIORITY, STYLES));
-                }
-            }
             return _this;
         }
         Object.defineProperty(LyAvatar.prototype, "size", {

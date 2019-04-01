@@ -47,6 +47,7 @@ export declare const STYLES: (theme: ThemeVariables) => {
             opacity: number;
             borderRadius: string;
         };
+        '&': import("@alyle/ui/alyle-ui").StyleContainer;
     };
     content: {
         padding: number;

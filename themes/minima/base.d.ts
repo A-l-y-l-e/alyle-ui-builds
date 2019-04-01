@@ -215,5 +215,12 @@ export declare class MinimaBase extends LyStyleUtils {
             };
         };
     };
+    toolbar: {
+        appearance: {
+            dense: {
+                height: string;
+            };
+        };
+    };
     constructor();
 }

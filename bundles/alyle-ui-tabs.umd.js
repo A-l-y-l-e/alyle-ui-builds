@@ -448,12 +448,6 @@
          * @return {?}
          */
             function () {
-                var tabs = this._theme.variables.tabs;
-                if (tabs) {
-                    if (tabs.root) {
-                        this.renderer.addClass(this.el.nativeElement, this.theme.style(tabs.root, STYLE_PRIORITY, STYLES));
-                    }
-                }
                 this.renderer.addClass(this.el.nativeElement, this.classes.root);
                 /** @type {?} */
                 var tabsIndicatorEl = this.tabsIndicator.nativeElement;

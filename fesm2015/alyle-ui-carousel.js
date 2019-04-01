@@ -52,7 +52,8 @@ const STYLES = (theme) => {
             '& svg': {
                 display: 'block',
                 fill: 'currentColor'
-            }
+            },
+            '&': theme.carousel ? theme.carousel.root : null
         },
         actions: {
             position: 'absolute',
@@ -201,10 +202,6 @@ class LyCarousel {
          */
         this._destroy = new Subject();
         this._renderer.addClass(_el.nativeElement, this.classes.root);
-        const { carousel } = this._theme.variables;
-        if (carousel) {
-            this._renderer.addClass(this._el.nativeElement, this._theme.style(carousel.root, STYLE_PRIORITY, STYLES));
-        }
     }
     /**
      * \@internal

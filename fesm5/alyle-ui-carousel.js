@@ -52,7 +52,8 @@ var STYLES = function (theme) {
             '& svg': {
                 display: 'block',
                 fill: 'currentColor'
-            }
+            },
+            '&': theme.carousel ? theme.carousel.root : null
         },
         actions: {
             position: 'absolute',
@@ -195,10 +196,6 @@ var LyCarousel = /** @class */ (function () {
          */
         this._destroy = new Subject();
         this._renderer.addClass(_el.nativeElement, this.classes.root);
-        var carousel = this._theme.variables.carousel;
-        if (carousel) {
-            this._renderer.addClass(this._el.nativeElement, this._theme.style(carousel.root, STYLE_PRIORITY, STYLES));
-        }
     }
     Object.defineProperty(LyCarousel.prototype, "_isIntervalFn", {
         /** @internal */

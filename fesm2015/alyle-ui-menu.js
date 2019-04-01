@@ -17,7 +17,9 @@ const DEFAULT_XPOSITION = XPosition.after;
 /** @type {?} */
 const STYLES = (theme) => ({
     $priority: STYLE_PRIORITY,
-    root: null,
+    root: {
+        '&': theme.menu ? theme.menu.root : null
+    },
     container: {
         background: theme.background.primary.default,
         borderRadius: '2px',
@@ -77,13 +79,7 @@ class LyMenu {
          * \@docs-private
          */
         this.classes = this._theme.addStyleSheet(STYLES);
-        const { menu } = this._theme.variables;
-        if (menu) {
-            if (menu.root) {
-                this._renderer.addClass(this._el.nativeElement, this._theme.style(menu.root, STYLE_PRIORITY, STYLES));
-            }
-            this._renderer.addClass(this._el.nativeElement, this.classes.root);
-        }
+        this._renderer.addClass(this._el.nativeElement, this.classes.root);
     }
     /**
      * @param {?} e

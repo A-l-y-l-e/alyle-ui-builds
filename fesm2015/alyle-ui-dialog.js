@@ -118,7 +118,8 @@ const STYLES = (theme) => ({
             display: 'flex',
             flexDirection: 'column',
             width: '100%'
-        }
+        },
+        '&': theme.dialog ? theme.dialog.root : null
     }
 });
 /**

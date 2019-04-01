@@ -28,9 +28,11 @@ var STYLES = function (theme) { return ({
             '{panelDescription}': {
                 color: theme.text.secondary
             }
-        }
+        },
     },
-    root: null,
+    root: {
+        '&': theme.expansion ? theme.expansion.root : null
+    },
     panel: {
         display: 'block',
         overflow: 'hidden',
@@ -180,9 +182,6 @@ var LyAccordion = /** @class */ (function () {
     function () {
         var expansion = this._theme.variables.expansion;
         if (expansion) {
-            if (expansion.root) {
-                this._renderer.addClass(this._el.nativeElement, this._theme.style(expansion.root, STYLE_PRIORITY, STYLES));
-            }
             this._renderer.addClass(this._el.nativeElement, this.classes.root);
             // Apply default config
             if (expansion.defaultConfig && expansion.defaultConfig.appearance) {

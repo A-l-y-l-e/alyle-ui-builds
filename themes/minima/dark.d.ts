@@ -58,6 +58,7 @@ export declare class MinimaDark extends MinimaBase implements ThemeConfig {
         root: {
             background: string;
             color: string;
+            boxShadow: string;
         };
     };
     tooltip: {

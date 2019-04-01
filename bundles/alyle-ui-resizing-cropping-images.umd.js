@@ -38,56 +38,59 @@
     /** @type {?} */
     var STYLE_PRIORITY = -2;
     /** @type {?} */
-    var STYLES = ({
-        $priority: STYLE_PRIORITY,
-        root: {
-            '-webkit-user-select': 'none',
-            '-moz-user-select': 'none',
-            '-ms-user-select': 'none',
-            userSelect: 'none',
-            display: 'flex',
-            overflow: 'hidden',
-            position: 'relative',
-            justifyContent: 'center',
-            alignItems: 'center'
-        },
-        imgContainer: {
-            cursor: 'move',
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            '& > canvas': {
-                // width: '100%',
-                // height: '100%',
-                pointerEvents: 'none',
-            }
-        },
-        area: __assign({ pointerEvents: 'none', boxShadow: '0 0 0 20000px rgba(0, 0, 0, 0.4)' }, ui.LY_COMMON_STYLES.fill, { margin: 'auto', '&:before, &:after': __assign({}, ui.LY_COMMON_STYLES.fill, { content: "''" }), '&:before': {
-                width: 0,
-                height: 0,
-                margin: 'auto',
-                borderRadius: '50%',
-                background: '#fff',
-                border: 'solid 2px rgb(255, 255, 255)'
-            }, '&:after': {
-                border: 'solid 2px rgb(255, 255, 255)'
-            } }),
-        defaultContent: {
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            '&, & > input': ui.LY_COMMON_STYLES.fill,
-            '& *:not(input)': {
-                pointerEvents: 'none'
+    var STYLES = function (theme) {
+        return ({
+            $priority: STYLE_PRIORITY,
+            root: {
+                '-webkit-user-select': 'none',
+                '-moz-user-select': 'none',
+                '-ms-user-select': 'none',
+                userSelect: 'none',
+                display: 'flex',
+                overflow: 'hidden',
+                position: 'relative',
+                justifyContent: 'center',
+                alignItems: 'center',
+                '&': theme.imgCropper ? theme.imgCropper.root : null
             },
-            '& > input': {
-                background: 'transparent',
-                opacity: 0,
-                width: '100%',
-                height: '100%'
+            imgContainer: {
+                cursor: 'move',
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                '& > canvas': {
+                    // width: '100%',
+                    // height: '100%',
+                    pointerEvents: 'none',
+                }
+            },
+            area: __assign({ pointerEvents: 'none', boxShadow: '0 0 0 20000px rgba(0, 0, 0, 0.4)' }, ui.LY_COMMON_STYLES.fill, { margin: 'auto', '&:before, &:after': __assign({}, ui.LY_COMMON_STYLES.fill, { content: "''" }), '&:before': {
+                    width: 0,
+                    height: 0,
+                    margin: 'auto',
+                    borderRadius: '50%',
+                    background: '#fff',
+                    border: 'solid 2px rgb(255, 255, 255)'
+                }, '&:after': {
+                    border: 'solid 2px rgb(255, 255, 255)'
+                } }),
+            defaultContent: {
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                '&, & > input': ui.LY_COMMON_STYLES.fill,
+                '& *:not(input)': {
+                    pointerEvents: 'none'
+                },
+                '& > input': {
+                    background: 'transparent',
+                    opacity: 0,
+                    width: '100%',
+                    height: '100%'
+                }
             }
-        }
-    });
+        });
+    };
     /** @enum {number} */
     var ImgResolution = {
         /** Resizing & cropping */
@@ -141,12 +144,6 @@
              */
             this.error = new core.EventEmitter();
             this._renderer.addClass(elementRef.nativeElement, this.classes.root);
-            var imgCropper = this.theme.variables.imgCropper;
-            if (imgCropper) {
-                if (imgCropper.root) {
-                    this._renderer.addClass(this.elementRef.nativeElement, this.theme.style(imgCropper.root, STYLE_PRIORITY, STYLES));
-                }
-            }
         }
         Object.defineProperty(LyResizingCroppingImages.prototype, "config", {
             get: /**

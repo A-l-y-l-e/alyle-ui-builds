@@ -6,6 +6,7 @@ export declare const STYLES: (theme: ThemeVariables) => {
         display: string;
         overflow: string;
         borderRadius: string;
+        '&': import("@alyle/ui/alyle-ui").StyleContainer;
     };
     content: {
         [x: string]: string | {
@@ -41,7 +42,7 @@ export declare class LyCard extends LyCardMixinBase implements OnChanges, OnInit
      * styles
      * @docs-private
      */
-    classes: Record<"root" | "content" | "actions" | "actionsItem", string>;
+    readonly classes: Record<"root" | "content" | "actions" | "actionsItem", string>;
     constructor(theme: LyTheme2, _el: ElementRef, renderer: Renderer2, ngZone: NgZone);
     ngOnChanges(): void;
     ngOnInit(): void;

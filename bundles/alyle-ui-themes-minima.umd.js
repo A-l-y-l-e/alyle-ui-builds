@@ -294,6 +294,13 @@
                     }
                 }
             };
+            _this.toolbar = {
+                appearance: {
+                    dense: {
+                        height: '56px'
+                    }
+                }
+            };
             _this.typography.lyTyp = {
                 display4: {
                     fontSize: _this.pxToRem(96),
@@ -446,7 +453,8 @@
             _this.snackBar = {
                 root: {
                     background: '#323232',
-                    color: '#fff'
+                    color: '#fff',
+                    boxShadow: ui.shadowBuilder(4, '#323232')
                 }
             };
             _this.tooltip = {
@@ -540,7 +548,8 @@
             _this.snackBar = {
                 root: {
                     background: '#fafafa',
-                    color: 'rgba(0,0,0,.87)'
+                    color: 'rgba(0,0,0,.87)',
+                    boxShadow: ui.shadowBuilder(4, '#fafafa')
                 }
             };
             _this.tooltip = {

@@ -1,7 +1,7 @@
 import { __extends } from 'tslib';
-import { Directive, Renderer2, ElementRef, Input, NgModule } from '@angular/core';
+import { Directive, Renderer2, ElementRef, Input, isDevMode, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LyTheme2, mixinBg, mixinColor, mixinDisabled, mixinElevation, mixinOutlined, mixinRaised, mixinShadowColor, mixinStyleUpdater, toBoolean, LyCommonModule } from '@alyle/ui';
+import { LyTheme2, mixinBg, mixinColor, mixinDisabled, mixinElevation, mixinOutlined, mixinRaised, mixinShadowColor, mixinStyleUpdater, toBoolean, getLyThemeVariableUndefinedError, LyCommonModule } from '@alyle/ui';
 
 /**
  * @fileoverview added by tsickle
@@ -31,6 +31,7 @@ var styles = function (theme) {
             _a[theme.getBreakpoint('XSmall')] = {
                 height: '56px'
             },
+            _a['&'] = theme.toolbar ? theme.toolbar.root : null,
             _a),
         dense: {
             height: '56px'
@@ -102,13 +103,42 @@ var LyToolbar = /** @class */ (function (_super) {
         function (val) {
             /** @type {?} */
             var newVal = toBoolean(val);
-            if (newVal !== this.dense) {
+            if (isDevMode() && newVal !== this.dense) {
+                console.warn(this._el.nativeElement, "LyToolbar.appearance: `dense` is deprecated, instead use `appearance=\"dense\"`");
                 if (newVal) {
                     this._renderer.addClass(this._el.nativeElement, this.classes.dense);
                 }
                 else {
                     this._renderer.removeClass(this._el.nativeElement, this.classes.dense);
                 }
+            }
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(LyToolbar.prototype, "appearance", {
+        get: /**
+         * @return {?}
+         */
+        function () {
+            return this._appearance;
+        },
+        set: /**
+         * @param {?} val
+         * @return {?}
+         */
+        function (val) {
+            if (val !== this.appearance) {
+                this._appearance = val;
+                this._appearanceClass = this._theme.addStyle("LyToolbar.appearance:" + val, function (theme) {
+                    if (!theme.toolbar) {
+                        throw getLyThemeVariableUndefinedError('toolbar');
+                    }
+                    if (!(theme.toolbar.appearance && (/** @type {?} */ (theme.toolbar.appearance))[val])) {
+                        throw new Error("Value toolbar.appearance['" + val + "'] not found in ThemeVariables");
+                    }
+                    return (/** @type {?} */ ((/** @type {?} */ (theme.toolbar.appearance))[val]));
+                }, this._el.nativeElement, this._appearanceClass, STYLE_PRIORITY);
             }
         },
         enumerable: true,
@@ -159,7 +189,8 @@ var LyToolbar = /** @class */ (function (_super) {
     ]; };
     LyToolbar.propDecorators = {
         position: [{ type: Input }],
-        dense: [{ type: Input }]
+        dense: [{ type: Input }],
+        appearance: [{ type: Input }]
     };
     return LyToolbar;
 }(LyToolbarMixinBase));

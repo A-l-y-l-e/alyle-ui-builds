@@ -3,11 +3,12 @@ import { LyFocusState, LyRippleService, LyTheme2, ThemeVariables } from '@alyle/
 import { LyAvatar } from '@alyle/ui/avatar';
 export declare const STYLES: (theme: ThemeVariables) => {
     $priority: number;
-    list: {
+    root: {
         display: string;
         position: string;
         paddingTop: string;
         paddingBottom: string;
+        '&': import("@alyle/ui/alyle-ui").StyleContainer;
     };
     listItem: {
         fontFamily: string;
@@ -108,7 +109,7 @@ export declare const STYLES: (theme: ThemeVariables) => {
 export declare class LyList {
     private theme;
     /** @docs-private */
-    readonly classes: Record<"list" | "listItem" | "onFocusByKeyboard" | "listItemContent" | "oneLine" | "twoLine" | "actionListItem" | "lines" | "listItemWithIcon" | "twoLineWithIcon", string>;
+    readonly classes: Record<"root" | "listItem" | "onFocusByKeyboard" | "listItemContent" | "oneLine" | "twoLine" | "actionListItem" | "lines" | "listItemWithIcon" | "twoLineWithIcon", string>;
     constructor(theme: LyTheme2);
 }
 /** @docs-private */
@@ -128,7 +129,7 @@ export declare class LyListItem extends LyListItemMixinBase implements OnInit, A
     private _list;
     private _cd;
     /** @docs-private */
-    readonly classes: Record<"list" | "listItem" | "onFocusByKeyboard" | "listItemContent" | "oneLine" | "twoLine" | "actionListItem" | "lines" | "listItemWithIcon" | "twoLineWithIcon", string>;
+    readonly classes: Record<"root" | "listItem" | "onFocusByKeyboard" | "listItemContent" | "oneLine" | "twoLine" | "actionListItem" | "lines" | "listItemWithIcon" | "twoLineWithIcon", string>;
     readonly _isBrowser: boolean;
     private _isActionListItem;
     private _onFocusByKeyboardState;

@@ -11,9 +11,10 @@ var DEFAULT_PLACEMENT = YPosition.below;
 /** @type {?} */
 var STYLE_PRIORITY = -2;
 /** @type {?} */
-var styles = ({
-    root: __assign({}, LY_COMMON_STYLES.fill)
-});
+var styles = function (theme) { return ({
+    $priority: STYLE_PRIORITY,
+    root: __assign({}, LY_COMMON_STYLES.fill, { '&': theme.tooltip ? theme.tooltip.root : null })
+}); };
 var LyTooltip = /** @class */ (function () {
     function LyTooltip(_theme, _overlay, _el, _renderer, _cd, _focusState, ngZone, scroll) {
         var _this = this;
@@ -26,7 +27,7 @@ var LyTooltip = /** @class */ (function () {
         /**
          * \@docs-private
          */
-        this.classes = this._theme.addStyleSheet(styles, STYLE_PRIORITY);
+        this.classes = this._theme.addStyleSheet(styles);
         this._listeners = new Map();
         this._scrollVal = 0;
         this.lyTooltipShowDelay = 0;

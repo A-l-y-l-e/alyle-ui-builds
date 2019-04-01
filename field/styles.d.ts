@@ -25,6 +25,7 @@ export declare const STYLES: (theme: ThemeVariables) => {
             fontSize: string;
             marginTop: string;
         };
+        '&': import("@alyle/ui/alyle-ui").StyleContainer;
     };
     animations: {
         '& {labelSpan}': {

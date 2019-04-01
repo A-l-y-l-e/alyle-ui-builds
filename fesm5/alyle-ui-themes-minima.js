@@ -1,7 +1,7 @@
 import { NgModule, Directive } from '@angular/core';
 import { Breakpoints } from '@alyle/ui/responsive';
 import { __extends } from 'tslib';
-import { LY_THEME_NAME, LyTheme2, LyStyleUtils, Dir, mergeDeep } from '@alyle/ui';
+import { LY_THEME_NAME, LyTheme2, LyStyleUtils, Dir, mergeDeep, shadowBuilder } from '@alyle/ui';
 
 /**
  * @fileoverview added by tsickle
@@ -264,6 +264,13 @@ var MinimaBase = /** @class */ (function (_super) {
                 }
             }
         };
+        _this.toolbar = {
+            appearance: {
+                dense: {
+                    height: '56px'
+                }
+            }
+        };
         _this.typography.lyTyp = {
             display4: {
                 fontSize: _this.pxToRem(96),
@@ -416,7 +423,8 @@ var MinimaLight = /** @class */ (function (_super) {
         _this.snackBar = {
             root: {
                 background: '#323232',
-                color: '#fff'
+                color: '#fff',
+                boxShadow: shadowBuilder(4, '#323232')
             }
         };
         _this.tooltip = {
@@ -510,7 +518,8 @@ var MinimaDark = /** @class */ (function (_super) {
         _this.snackBar = {
             root: {
                 background: '#fafafa',
-                color: 'rgba(0,0,0,.87)'
+                color: 'rgba(0,0,0,.87)',
+                boxShadow: shadowBuilder(4, '#fafafa')
             }
         };
         _this.tooltip = {

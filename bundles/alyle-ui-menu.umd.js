@@ -62,7 +62,9 @@
     var STYLES = function (theme) {
         return ({
             $priority: STYLE_PRIORITY,
-            root: null,
+            root: {
+                '&': theme.menu ? theme.menu.root : null
+            },
             container: {
                 background: theme.background.primary.default,
                 borderRadius: '2px',
@@ -118,13 +120,7 @@
              * \@docs-private
              */
             this.classes = this._theme.addStyleSheet(STYLES);
-            var menu = this._theme.variables.menu;
-            if (menu) {
-                if (menu.root) {
-                    this._renderer.addClass(this._el.nativeElement, this._theme.style(menu.root, STYLE_PRIORITY, STYLES));
-                }
-                this._renderer.addClass(this._el.nativeElement, this.classes.root);
-            }
+            this._renderer.addClass(this._el.nativeElement, this.classes.root);
         }
         /**
          * @param {?} e

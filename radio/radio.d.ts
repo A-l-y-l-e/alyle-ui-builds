@@ -9,6 +9,7 @@ export declare const STYLES: (theme: ThemeVariables) => {
     $priority: number;
     root: {
         display: string;
+        '&': import("@alyle/ui/alyle-ui").StyleContainer;
     };
     radio: {
         display: string;

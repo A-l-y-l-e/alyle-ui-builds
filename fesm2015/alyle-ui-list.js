@@ -14,11 +14,12 @@ const DISABLE_PADDING = false;
 /** @type {?} */
 const STYLES = (theme) => ({
     $priority: STYLE_PRIORITY,
-    list: {
+    root: {
         display: 'block',
         position: 'relative',
         paddingTop: '8px',
-        paddingBottom: '8px'
+        paddingBottom: '8px',
+        '&': theme.list ? theme.list.root : null
     },
     listItem: Object.assign({}, LY_COMMON_STYLES.button, { fontFamily: theme.typography.fontFamily, fontSize: theme.pxToRem(16), color: theme.text.default, display: 'flex', width: '100%', position: 'relative', padding: '0 16px', minHeight: '48px', overflow: 'hidden', textAlign: 'left', alignItems: 'flex-start', justifyContent: 'flex-start', borderRadius: 0, '&::after': Object.assign({ content: `''` }, LY_COMMON_STYLES.fill, { width: '100%', height: '100%', background: 'transparent', opacity: 0, pointerEvents: 'none' }), '&{onFocusByKeyboard}::after, &{actionListItem}:hover::after': {
             background: 'currentColor',
@@ -94,7 +95,7 @@ LyList.decorators = [
                 selector: 'ly-list',
                 exportAs: 'lyList',
                 host: {
-                    '[className]': 'classes.list'
+                    '[className]': 'classes.root'
                 }
             },] }
 ];

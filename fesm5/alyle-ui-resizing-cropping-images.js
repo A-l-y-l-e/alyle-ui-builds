@@ -13,7 +13,7 @@ import { LyTheme2, mergeDeep, LY_COMMON_STYLES, LyHammerGestureConfig } from '@a
 /** @type {?} */
 var STYLE_PRIORITY = -2;
 /** @type {?} */
-var STYLES = ({
+var STYLES = function (theme) { return ({
     $priority: STYLE_PRIORITY,
     root: {
         '-webkit-user-select': 'none',
@@ -24,7 +24,8 @@ var STYLES = ({
         overflow: 'hidden',
         position: 'relative',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        '&': theme.imgCropper ? theme.imgCropper.root : null
     },
     imgContainer: {
         cursor: 'move',
@@ -62,7 +63,7 @@ var STYLES = ({
             height: '100%'
         }
     }
-});
+}); };
 /** @enum {number} */
 var ImgResolution = {
     /** Resizing & cropping */
@@ -116,12 +117,6 @@ var LyResizingCroppingImages = /** @class */ (function () {
          */
         this.error = new EventEmitter();
         this._renderer.addClass(elementRef.nativeElement, this.classes.root);
-        var imgCropper = this.theme.variables.imgCropper;
-        if (imgCropper) {
-            if (imgCropper.root) {
-                this._renderer.addClass(this.elementRef.nativeElement, this.theme.style(imgCropper.root, STYLE_PRIORITY, STYLES));
-            }
-        }
     }
     Object.defineProperty(LyResizingCroppingImages.prototype, "config", {
         get: /**

@@ -89,7 +89,8 @@
                     background: 'currentColor',
                     opacity: .13,
                     borderRadius: 'inherit'
-                }
+                },
+                '&': theme.button ? theme.button.root : null
             },
             content: {
                 padding: 0,
@@ -256,9 +257,6 @@
             function () {
                 var button = this._theme.variables.button;
                 if (button) {
-                    if (button.root) {
-                        this._renderer.addClass(this._el.nativeElement, this._theme.style(button.root, STYLE_PRIORITY, STYLES));
-                    }
                     this._renderer.addClass(this._el.nativeElement, this.classes.root);
                     // Apply default config
                     if (this.size == null && this.appearance == null) {

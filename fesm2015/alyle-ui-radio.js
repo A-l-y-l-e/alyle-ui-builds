@@ -28,7 +28,8 @@ class UndefinedValue {
 const STYLES = (theme) => ({
     $priority: STYLE_PRIORITY,
     root: {
-        display: 'inline-block'
+        display: 'inline-block',
+        '&': theme.radio ? theme.radio.root : null
     },
     radio: {
         display: 'inline-block',
@@ -132,12 +133,6 @@ class LyRadioGroup {
          */
         this.onTouched = () => { };
         renderer.addClass(elementRef.nativeElement, this.classes.root);
-        const { radio } = this._theme.variables;
-        if (radio) {
-            if (radio.root) {
-                renderer.addClass(elementRef.nativeElement, this._theme.style(radio.root, STYLE_PRIORITY, STYLES));
-            }
-        }
     }
     /**
      * @param {?} val

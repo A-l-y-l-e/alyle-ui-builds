@@ -18,7 +18,9 @@ export declare const STYLES: (theme: ThemeVariables) => {
             };
         };
     };
-    root: any;
+    root: {
+        '&': import("@alyle/ui/alyle-ui").StyleContainer;
+    };
     panel: {
         display: string;
         overflow: string;

@@ -9,7 +9,11 @@ import { LyTheme2, toBoolean, mixinStyleUpdater, mixinColor, LyCommonModule } fr
 const STYLE_PRIORITY = -1;
 /** @type {?} */
 const styles = (theme) => ({
-    root: Object.assign({ margin: 0, display: 'block' }, theme.typography.root)
+    root: {
+        margin: 0,
+        display: 'block',
+        '&': theme.typography ? theme.typography.root : null
+    }
 });
 /** @enum {number} */
 const Gutter = {

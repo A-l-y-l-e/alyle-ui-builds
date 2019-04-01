@@ -1,6 +1,5 @@
-import { __assign } from 'tslib';
-import { LyTheme2, LyOverlay, shadowBuilder, XPosition, YPosition, LyOverlayModule } from '@alyle/ui';
-import { Injectable, NgModule, defineInjectable, EventEmitter, Directive, TemplateRef, Input, Output } from '@angular/core';
+import { LyTheme2, LyOverlay, XPosition, YPosition, LyOverlayModule } from '@alyle/ui';
+import { Injectable, NgModule, Directive, Input, TemplateRef, Output, EventEmitter, defineInjectable } from '@angular/core';
 import { Subject } from 'rxjs';
 
 /**
@@ -109,12 +108,40 @@ var STYLE_PRIORITY = -2;
 var DEFAULT_HORIZONTAL_POSITION = XPosition.after;
 /** @type {?} */
 var DEFAULT_VERTICAL_POSITION = YPosition.below;
+/** @type {?} */
+var STYLES = function (theme) {
+    var _a;
+    return ({
+        $priority: STYLE_PRIORITY,
+        root: (_a = {
+                borderRadius: '4px',
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                margin: '8px',
+                padding: '0 16px',
+                minHeight: '48px',
+                minWidth: '320px',
+                maxWidth: '320px',
+                opacity: 0,
+                transition: "opacity " + theme.animations.curves.standard + " 350ms, transform " + theme.animations.curves.deceleration + " 350ms",
+                fontSize: theme.pxToRem(theme.typography.fontSize)
+            },
+            _a[theme.getBreakpoint('XSmall')] = {
+                width: 'calc(100% - 16px)',
+                minWidth: 'calc(100% - 16px)'
+            },
+            _a['&'] = theme.snackBar ? (/** @type {?} */ (theme.snackBar)).root : null,
+            _a)
+    });
+};
 var LySnackBar = /** @class */ (function () {
     function LySnackBar(_templateRef, _theme, _overlay, _snackBarService) {
         this._templateRef = _templateRef;
         this._theme = _theme;
         this._overlay = _overlay;
         this._snackBarService = _snackBarService;
+        this.classes = this._theme.addStyleSheet(STYLES);
         this.afterDismissed = new EventEmitter();
     }
     /**
@@ -154,13 +181,7 @@ var LySnackBar = /** @class */ (function () {
             },
             hasBackdrop: false,
             classes: [
-                this._theme.addStyle('SnackBar', function (theme) {
-                    var _a;
-                    return (__assign((_a = { borderRadius: '4px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', margin: '8px', padding: '0 16px', minHeight: '48px', minWidth: '320px', maxWidth: '320px', opacity: 0, transition: "opacity " + theme.animations.curves.standard + " 350ms, transform " + theme.animations.curves.deceleration + " 350ms", fontSize: theme.pxToRem(theme.typography.fontSize), boxShadow: shadowBuilder(4, (/** @type {?} */ (theme.snackBar.root.background))) }, _a[theme.getBreakpoint('XSmall')] = {
-                        width: 'calc(100% - 16px)',
-                        minWidth: 'calc(100% - 16px)'
-                    }, _a), theme.snackBar.root));
-                }, undefined, undefined, STYLE_PRIORITY),
+                this.classes.root,
                 this._theme.addStyle("SnackBar.hp:" + horizontalPosition + ".vp:" + verticalPosition, function (theme) {
                     /** @type {?} */
                     var __styles = {};
@@ -265,6 +286,6 @@ var LySnackBarModule = /** @class */ (function () {
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { LySnackBarModule, LySnackBar, LySnackBarService as ɵa };
+export { LySnackBarModule, STYLES, LySnackBar, LySnackBarService as ɵa };
 
 //# sourceMappingURL=alyle-ui-snack-bar.js.map

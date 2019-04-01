@@ -61,6 +61,7 @@
                 _a[theme.getBreakpoint('XSmall')] = {
                     height: '56px'
                 },
+                _a['&'] = theme.toolbar ? theme.toolbar.root : null,
                 _a),
             dense: {
                 height: '56px'
@@ -127,13 +128,40 @@
              */ function (val) {
                 /** @type {?} */
                 var newVal = ui.toBoolean(val);
-                if (newVal !== this.dense) {
+                if (core.isDevMode() && newVal !== this.dense) {
+                    console.warn(this._el.nativeElement, "LyToolbar.appearance: `dense` is deprecated, instead use `appearance=\"dense\"`");
                     if (newVal) {
                         this._renderer.addClass(this._el.nativeElement, this.classes.dense);
                     }
                     else {
                         this._renderer.removeClass(this._el.nativeElement, this.classes.dense);
                     }
+                }
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(LyToolbar.prototype, "appearance", {
+            get: /**
+             * @return {?}
+             */ function () {
+                return this._appearance;
+            },
+            set: /**
+             * @param {?} val
+             * @return {?}
+             */ function (val) {
+                if (val !== this.appearance) {
+                    this._appearance = val;
+                    this._appearanceClass = this._theme.addStyle("LyToolbar.appearance:" + val, function (theme) {
+                        if (!theme.toolbar) {
+                            throw ui.getLyThemeVariableUndefinedError('toolbar');
+                        }
+                        if (!(theme.toolbar.appearance && ( /** @type {?} */(theme.toolbar.appearance))[val])) {
+                            throw new Error("Value toolbar.appearance['" + val + "'] not found in ThemeVariables");
+                        }
+                        return ( /** @type {?} */(( /** @type {?} */(theme.toolbar.appearance))[val]));
+                    }, this._el.nativeElement, this._appearanceClass, STYLE_PRIORITY);
                 }
             },
             enumerable: true,
@@ -186,7 +214,8 @@
         };
         LyToolbar.propDecorators = {
             position: [{ type: core.Input }],
-            dense: [{ type: core.Input }]
+            dense: [{ type: core.Input }],
+            appearance: [{ type: core.Input }]
         };
         return LyToolbar;
     }(LyToolbarMixinBase));

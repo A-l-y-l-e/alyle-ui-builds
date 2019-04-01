@@ -41,7 +41,8 @@ var STYLES = function (theme) { return ({
         },
         '&:not({checked}) {icon}': {
             color: theme.text.secondary
-        }
+        },
+        '&': theme.checkbox ? theme.checkbox.root : null
     },
     layout: {
         display: 'inline-flex',
@@ -167,12 +168,6 @@ var LyCheckbox = /** @class */ (function (_super) {
             radius: 'containerSize',
             percentageToIncrease: 150
         };
-        var checkbox = _theme.variables.checkbox;
-        if (checkbox) {
-            if (checkbox.root) {
-                _this._renderer.addClass(_this._el.nativeElement, _this._theme.style(checkbox.root, STYLE_PRIORITY, STYLES));
-            }
-        }
         return _this;
     }
     Object.defineProperty(LyCheckbox.prototype, "color", {

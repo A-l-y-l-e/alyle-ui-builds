@@ -1,5 +1,28 @@
 import { ElementRef, OnChanges, OnInit, Renderer2, OnDestroy } from '@angular/core';
-import { LyTheme2 } from '@alyle/ui';
+import { LyTheme2, ThemeVariables } from '@alyle/ui';
+export declare const STYLES: (theme: ThemeVariables) => {
+    $priority: number;
+    root: {
+        position: string;
+        display: string;
+        width: string;
+        height: string;
+        borderRadius: string;
+        overflow: string;
+        whiteSpace: string;
+        textOverflow: string;
+        pointerEvents: string;
+        zIndex: number;
+        fontSize: string;
+        fontFamily: string;
+        justifyContent: string;
+        alignItems: string;
+        '&': import("@alyle/ui/alyle-ui").StyleContainer;
+    };
+    relative: {
+        position: string;
+    };
+};
 /** @docs-private */
 export declare class LyBadgeBase {
     _theme: LyTheme2;

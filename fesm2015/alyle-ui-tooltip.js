@@ -10,8 +10,9 @@ const DEFAULT_PLACEMENT = YPosition.below;
 /** @type {?} */
 const STYLE_PRIORITY = -2;
 /** @type {?} */
-const styles = ({
-    root: Object.assign({}, LY_COMMON_STYLES.fill)
+const styles = (theme) => ({
+    $priority: STYLE_PRIORITY,
+    root: Object.assign({}, LY_COMMON_STYLES.fill, { '&': theme.tooltip ? theme.tooltip.root : null })
 });
 class LyTooltip {
     /**
@@ -34,7 +35,7 @@ class LyTooltip {
         /**
          * \@docs-private
          */
-        this.classes = this._theme.addStyleSheet(styles, STYLE_PRIORITY);
+        this.classes = this._theme.addStyleSheet(styles);
         this._listeners = new Map();
         this._scrollVal = 0;
         this.lyTooltipShowDelay = 0;

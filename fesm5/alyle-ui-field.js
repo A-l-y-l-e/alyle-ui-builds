@@ -3,7 +3,7 @@ import { Subject } from 'rxjs';
 import { NgControl, NgForm, FormGroupDirective } from '@angular/forms';
 import { Directive, Renderer2, ElementRef, Input, ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChild, ViewChild, ViewEncapsulation, ContentChildren, NgZone, HostListener, HostBinding, Optional, Self, forwardRef, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LY_COMMON_STYLES, LyTheme2, ElementObserver, Platform, toBoolean, DirAlias, LyCommonModule } from '@alyle/ui';
+import { LY_COMMON_STYLES, LyTheme2, ElementObserver, Platform, toBoolean, DirAlias, getLyThemeVariableUndefinedError, LyCommonModule } from '@alyle/ui';
 
 /**
  * @fileoverview added by tsickle
@@ -58,6 +58,8 @@ var STYLE_SELECT_ARROW = ({
 /** @type {?} */
 var STYLES = function (theme) {
     /** @type {?} */
+    var field = (/** @type {?} */ (theme.field));
+    /** @type {?} */
     var selectionStyle = {
         backgroundColor: theme.warn.default + " !important",
         color: theme.warn.contrast + " !important"
@@ -73,6 +75,7 @@ var STYLES = function (theme) {
                 fontSize: '.75em',
                 marginTop: '.25em'
             },
+            '&': theme.field ? theme.field.root : null
         },
         animations: {
             '& {labelSpan}': {
@@ -88,9 +91,9 @@ var STYLES = function (theme) {
             alignItems: 'center',
             position: 'relative',
             '-webkit-tap-highlight-color': 'transparent',
-            '&:after': __assign({}, LY_COMMON_STYLES.fill, { content: "''", pointerEvents: 'none', borderColor: theme.field.borderColor })
+            '&:after': __assign({}, LY_COMMON_STYLES.fill, { content: "''", pointerEvents: 'none', borderColor: field.borderColor })
         },
-        fieldset: __assign({}, LY_COMMON_STYLES.fill, { margin: 0, borderStyle: 'solid', borderColor: theme.field.borderColor, borderWidth: 0 }),
+        fieldset: __assign({}, LY_COMMON_STYLES.fill, { margin: 0, borderStyle: 'solid', borderColor: field.borderColor, borderWidth: 0 }),
         fieldsetSpan: {
             padding: 0,
             height: '2px'
@@ -117,7 +120,7 @@ var STYLES = function (theme) {
             display: 'flex',
             alignItems: 'center'
         },
-        labelContainer: __assign({}, LY_COMMON_STYLES.fill, { pointerEvents: 'none', display: 'flex', width: '100%', borderColor: theme.field.borderColor }),
+        labelContainer: __assign({}, LY_COMMON_STYLES.fill, { pointerEvents: 'none', display: 'flex', width: '100%', borderColor: field.borderColor }),
         labelSpacingStart: {},
         labelCenter: {
             display: 'flex',
@@ -126,14 +129,14 @@ var STYLES = function (theme) {
         labelSpacingEnd: {
             flex: 1
         },
-        label: __assign({}, LY_COMMON_STYLES.fill, { margin: 0, border: 'none', pointerEvents: 'none', whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden', color: theme.field.labelColor, width: '100%' }),
+        label: __assign({}, LY_COMMON_STYLES.fill, { margin: 0, border: 'none', pointerEvents: 'none', whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden', color: field.labelColor, width: '100%' }),
         isFloatingLabel: {},
         floatingLabel: {
             '& {labelSpan}': {
                 fontSize: '75%'
             }
         },
-        placeholder: __assign({}, LY_COMMON_STYLES.fill, { pointerEvents: 'none', color: theme.field.labelColor }),
+        placeholder: __assign({}, LY_COMMON_STYLES.fill, { pointerEvents: 'none', color: field.labelColor }),
         focused: {},
         inputNative: {
             resize: 'vertical',
@@ -474,6 +477,9 @@ var LyField = /** @class */ (function () {
          */
         this.classes = this._theme.addStyleSheet(STYLES, STYLE_PRIORITY$2);
         _renderer.addClass(_el.nativeElement, this.classes.root);
+        if (!_theme.variables.field) {
+            throw getLyThemeVariableUndefinedError('field');
+        }
     }
     Object.defineProperty(LyField.prototype, "errorState", {
         get: /**
@@ -598,12 +604,12 @@ var LyField = /** @class */ (function () {
         function (val) {
             if (val !== this.appearance) {
                 this._appearance = val;
-                if (!(this._theme.variables.field.appearance[val] || DEFAULT_APPEARANCE_THEME[val])) {
+                if (!((/** @type {?} */ (this._theme.variables.field)).appearance[val] || DEFAULT_APPEARANCE_THEME[val])) {
                     throw new Error(val + " not found in theme.field.appearance");
                 }
                 this._appearanceClass = this._theme.addStyle("ly-field.appearance:" + val, function (theme) {
                     /** @type {?} */
-                    var appearance = theme.field.appearance[val] || DEFAULT_APPEARANCE_THEME[val];
+                    var appearance = (/** @type {?} */ (theme.field)).appearance[val] || DEFAULT_APPEARANCE_THEME[val];
                     return appearance;
                 }, this._el.nativeElement, this._appearanceClass, STYLE_PRIORITY$2, STYLES);
             }
