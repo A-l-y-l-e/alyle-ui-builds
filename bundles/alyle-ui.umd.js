@@ -3369,9 +3369,9 @@
      * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /** @type {?} */
-    var AUI_VERSION = '2.6.1-nightly.20190401-jty37h9a';
+    var AUI_VERSION = '2.6.1-nightly.20190402-jtzipwkl';
     /** @type {?} */
-    var AUI_LAST_UPDATE = '2019-04-01T08:24:03.355Z';
+    var AUI_LAST_UPDATE = '2019-04-02T08:26:03.427Z';
 
     /**
      * @fileoverview added by tsickle
