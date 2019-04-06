@@ -1,4 +1,4 @@
-import { ElementRef, OnInit } from '@angular/core';
+import { ElementRef, OnInit, Renderer2 } from '@angular/core';
 import { LyTheme2 } from '@alyle/ui';
 export declare type AlignItems = 'start' | 'center' | 'end' | 'stretch' | 'baseline';
 export declare type Justify = 'start' | 'center' | 'end' | 'between' | 'around' | 'evenly';
@@ -13,7 +13,7 @@ export declare class LyGrid {
      * Styles
      * @docs-private
      */
-    readonly classes: Record<"root", string>;
+    readonly classes: Record<"root" | "item", string>;
     private _spacing;
     _spacingClass?: string;
     private _spacingX;
@@ -74,7 +74,7 @@ export declare class LyGridItem implements OnInit {
      * Support breakpoints
      */
     order: string | number;
-    constructor(gridContainer: LyGrid, el: ElementRef, theme: LyTheme2);
+    constructor(gridContainer: LyGrid, el: ElementRef, renderer: Renderer2, theme: LyTheme2);
     ngOnInit(): void;
     private _updateSpacing;
 }

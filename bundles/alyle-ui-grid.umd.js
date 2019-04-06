@@ -33,6 +33,11 @@
             display: 'flex',
             flexWrap: 'wrap',
             boxSizing: 'border-box'
+        },
+        item: {
+            '&, & :first-child': {
+                boxSizing: 'border-box'
+            }
         }
     });
     /**
@@ -354,13 +359,14 @@
         return LyGrid;
     }());
     var LyGridItem = /** @class */ (function () {
-        function LyGridItem(gridContainer, el, theme) {
+        function LyGridItem(gridContainer, el, renderer, theme) {
             this.gridContainer = gridContainer;
             this.el = el;
             this.theme = theme;
             if (!gridContainer) {
                 throw new Error("Require parent <ly-grid container>");
             }
+            renderer.addClass(el.nativeElement, this.gridContainer.classes.item);
         }
         Object.defineProperty(LyGridItem.prototype, "col", {
             /**
@@ -506,6 +512,7 @@
             return [
                 { type: LyGrid },
                 { type: core.ElementRef },
+                { type: core.Renderer2 },
                 { type: ui.LyTheme2 }
             ];
         };

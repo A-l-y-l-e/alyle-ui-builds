@@ -61,7 +61,6 @@ export declare class LyTheme2 {
      * @param priority style priority(default: 0)
      */
     addSimpleStyle(id: string, css: StyleContainer | ((theme: any) => StyleContainer), priority?: number, parentStyle?: Styles): string;
-    private _addDefaultStyles;
     /**
      * Add new add a new style sheet
      * @param styles styles

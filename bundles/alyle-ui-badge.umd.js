@@ -67,6 +67,7 @@
                 fontFamily: theme.typography.fontFamily,
                 justifyContent: 'center',
                 alignItems: 'center',
+                boxSizing: 'border-box',
                 '&': theme.badge ? theme.badge.root : null
             },
             relative: {

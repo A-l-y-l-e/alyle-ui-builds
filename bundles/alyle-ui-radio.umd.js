@@ -120,7 +120,8 @@
                     margin: 'auto',
                     borderRadius: '50%',
                     width: '1em',
-                    height: '1em'
+                    height: '1em',
+                    boxSizing: 'border-box'
                 },
                 '&::after': __assign({ content: "''" }, ui.LY_COMMON_STYLES.fill, { width: '16px', height: '16px', margin: 'auto' }),
                 'div:nth-child(2)': {

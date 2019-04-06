@@ -102,7 +102,7 @@
                 width: '16px',
                 height: '16px',
                 userSelect: 'none',
-                '&::before, &::after': __assign({ content: "''" }, ui.LY_COMMON_STYLES.fill, { width: '16px', height: '16px', margin: 'auto' }),
+                '&::before, &::after': __assign({ content: "''" }, ui.LY_COMMON_STYLES.fill, { width: '16px', height: '16px', margin: 'auto', boxSizing: 'border-box' }),
                 // border icon
                 '&::before': {
                     border: 'solid 2px',

@@ -1,5 +1,5 @@
 import { LyTheme2, eachMedia } from '@alyle/ui';
-import { Directive, ElementRef, Input, NgModule } from '@angular/core';
+import { Directive, ElementRef, Input, Renderer2, NgModule } from '@angular/core';
 
 /**
  * @fileoverview added by tsickle
@@ -30,6 +30,11 @@ const styles = ({
         display: 'flex',
         flexWrap: 'wrap',
         boxSizing: 'border-box'
+    },
+    item: {
+        '&, & :first-child': {
+            boxSizing: 'border-box'
+        }
     }
 });
 /**
@@ -316,15 +321,17 @@ class LyGridItem {
     /**
      * @param {?} gridContainer
      * @param {?} el
+     * @param {?} renderer
      * @param {?} theme
      */
-    constructor(gridContainer, el, theme) {
+    constructor(gridContainer, el, renderer, theme) {
         this.gridContainer = gridContainer;
         this.el = el;
         this.theme = theme;
         if (!gridContainer) {
             throw new Error(`Require parent <ly-grid container>`);
         }
+        renderer.addClass(el.nativeElement, this.gridContainer.classes.item);
     }
     /**
      * Defines the number of grids
@@ -449,6 +456,7 @@ LyGridItem.decorators = [
 LyGridItem.ctorParameters = () => [
     { type: LyGrid },
     { type: ElementRef },
+    { type: Renderer2 },
     { type: LyTheme2 }
 ];
 LyGridItem.propDecorators = {

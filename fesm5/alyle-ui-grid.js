@@ -1,5 +1,5 @@
 import { LyTheme2, eachMedia } from '@alyle/ui';
-import { Directive, ElementRef, Input, NgModule } from '@angular/core';
+import { Directive, ElementRef, Input, Renderer2, NgModule } from '@angular/core';
 
 /**
  * @fileoverview added by tsickle
@@ -30,6 +30,11 @@ var styles = ({
         display: 'flex',
         flexWrap: 'wrap',
         boxSizing: 'border-box'
+    },
+    item: {
+        '&, & :first-child': {
+            boxSizing: 'border-box'
+        }
     }
 });
 /**
@@ -361,13 +366,14 @@ var LyGrid = /** @class */ (function () {
     return LyGrid;
 }());
 var LyGridItem = /** @class */ (function () {
-    function LyGridItem(gridContainer, el, theme) {
+    function LyGridItem(gridContainer, el, renderer, theme) {
         this.gridContainer = gridContainer;
         this.el = el;
         this.theme = theme;
         if (!gridContainer) {
             throw new Error("Require parent <ly-grid container>");
         }
+        renderer.addClass(el.nativeElement, this.gridContainer.classes.item);
     }
     Object.defineProperty(LyGridItem.prototype, "col", {
         /**
@@ -518,6 +524,7 @@ var LyGridItem = /** @class */ (function () {
     LyGridItem.ctorParameters = function () { return [
         { type: LyGrid },
         { type: ElementRef },
+        { type: Renderer2 },
         { type: LyTheme2 }
     ]; };
     LyGridItem.propDecorators = {

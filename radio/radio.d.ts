@@ -56,6 +56,7 @@ export declare const STYLES: (theme: ThemeVariables) => {
             borderRadius: string;
             width: string;
             height: string;
+            boxSizing: string;
         };
         '&::after': {
             width: string;

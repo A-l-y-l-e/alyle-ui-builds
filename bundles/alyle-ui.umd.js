@@ -1047,16 +1047,6 @@
      * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /** @type {?} */
-    var defaultStyles = {
-        '@global': {
-            '*, *:after, *:before': {
-                '-webkit-box-sizing': 'border-box',
-                '-moz-box-sizing': 'border-box',
-                'box-sizing': 'border-box'
-            }
-        }
-    };
-    /** @type {?} */
     var REF_REG_EXP = /\{([\w-]+)\}/g;
     /** @type {?} */
     var nextClassId = 0;
@@ -1134,7 +1124,6 @@
                             change: null
                         });
                     }
-                    this._addDefaultStyles();
                 }
             };
         /**
@@ -1328,17 +1317,6 @@
          */
             function (id, css, priority, parentStyle) {
                 return ( /** @type {?} */(this._createStyleContent2(( /** @type {?} */(css)), id, priority, TypeStyle.OnlyOne, false, parentStyle)));
-            };
-        /**
-         * @private
-         * @return {?}
-         */
-        LyTheme2.prototype._addDefaultStyles = /**
-         * @private
-         * @return {?}
-         */
-            function () {
-                this.addStyleSheet(defaultStyles);
             };
         /**
          * Add new add a new style sheet
@@ -3369,9 +3347,9 @@
      * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /** @type {?} */
-    var AUI_VERSION = '2.6.1-nightly.20190405-ju3symia';
+    var AUI_VERSION = '2.6.1-nightly.20190406-ju58cxuy';
     /** @type {?} */
-    var AUI_LAST_UPDATE = '2019-04-05T08:23:51.152Z';
+    var AUI_LAST_UPDATE = '2019-04-06T08:22:39.464Z';
 
     /**
      * @fileoverview added by tsickle

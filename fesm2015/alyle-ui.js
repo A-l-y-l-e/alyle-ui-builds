@@ -883,16 +883,6 @@ function invertPlacement(placement) {
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
-const defaultStyles = {
-    '@global': {
-        '*, *:after, *:before': {
-            '-webkit-box-sizing': 'border-box',
-            '-moz-box-sizing': 'border-box',
-            'box-sizing': 'border-box'
-        }
-    }
-};
-/** @type {?} */
 const REF_REG_EXP = /\{([\w-]+)\}/g;
 /** @type {?} */
 let nextClassId = 0;
@@ -968,7 +958,6 @@ class LyTheme2 {
                     change: null
                 });
             }
-            this._addDefaultStyles();
         }
     }
     /**
@@ -1084,13 +1073,6 @@ class LyTheme2 {
      */
     addSimpleStyle(id, css, priority, parentStyle) {
         return (/** @type {?} */ (this._createStyleContent2((/** @type {?} */ (css)), id, priority, TypeStyle.OnlyOne, false, parentStyle)));
-    }
-    /**
-     * @private
-     * @return {?}
-     */
-    _addDefaultStyles() {
-        this.addStyleSheet(defaultStyles);
     }
     /**
      * Add new add a new style sheet
@@ -2886,9 +2868,9 @@ LyFocusState.ctorParameters = () => [
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
-const AUI_VERSION = '2.6.1-nightly.20190405-ju3symia';
+const AUI_VERSION = '2.6.1-nightly.20190406-ju58cxuy';
 /** @type {?} */
-const AUI_LAST_UPDATE = '2019-04-05T08:23:51.152Z';
+const AUI_LAST_UPDATE = '2019-04-06T08:22:39.464Z';
 
 /**
  * @fileoverview added by tsickle

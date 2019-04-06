@@ -59,7 +59,7 @@ const STYLES = (theme) => ({
         width: '16px',
         height: '16px',
         userSelect: 'none',
-        '&::before, &::after': Object.assign({ content: `''` }, LY_COMMON_STYLES.fill, { width: '16px', height: '16px', margin: 'auto' }),
+        '&::before, &::after': Object.assign({ content: `''` }, LY_COMMON_STYLES.fill, { width: '16px', height: '16px', margin: 'auto', boxSizing: 'border-box' }),
         // border icon
         '&::before': {
             border: 'solid 2px',

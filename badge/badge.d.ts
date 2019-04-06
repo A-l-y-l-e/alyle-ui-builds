@@ -17,6 +17,7 @@ export declare const STYLES: (theme: ThemeVariables) => {
         fontFamily: string;
         justifyContent: string;
         alignItems: string;
+        boxSizing: string;
         '&': import("@alyle/ui/alyle-ui").StyleContainer;
     };
     relative: {

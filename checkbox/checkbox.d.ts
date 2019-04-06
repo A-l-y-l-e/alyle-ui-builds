@@ -50,6 +50,7 @@ export declare const STYLES: (theme: ThemeVariables) => {
             width: string;
             height: string;
             margin: string;
+            boxSizing: string;
             position: string;
             top: number;
             bottom: number;
