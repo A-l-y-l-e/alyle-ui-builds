@@ -1,20 +1,14 @@
-import { __assign } from 'tslib';
-import { ChangeDetectorRef, Directive, ElementRef, Input, NgZone, Renderer2, NgModule } from '@angular/core';
-import { LY_COMMON_STYLES, LyFocusState, LyOverlay, LyTheme2, Platform, WinScroll, YPosition, Positioning, LyOverlayModule } from '@alyle/ui';
+import { __assign, __decorate, __metadata } from 'tslib';
+import { Input, Directive, ElementRef, Renderer2, ChangeDetectorRef, NgZone, NgModule } from '@angular/core';
+import { YPosition, Positioning, LyTheme2, LyOverlay, LyFocusState, WinScroll, LY_COMMON_STYLES, Platform, LyOverlayModule } from '@alyle/ui';
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
 var DEFAULT_PLACEMENT = YPosition.below;
-/** @type {?} */
 var STYLE_PRIORITY = -2;
-/** @type {?} */
 var styles = function (theme) { return ({
     $priority: STYLE_PRIORITY,
     root: __assign({}, LY_COMMON_STYLES.fill, { '&': theme.tooltip ? theme.tooltip.root : null })
 }); };
+var ɵ0 = styles;
 var LyTooltip = /** @class */ (function () {
     function LyTooltip(_theme, _overlay, _el, _renderer, _cd, _focusState, ngZone, scroll) {
         var _this = this;
@@ -24,16 +18,13 @@ var LyTooltip = /** @class */ (function () {
         this._renderer = _renderer;
         this._cd = _cd;
         this._focusState = _focusState;
-        /**
-         * \@docs-private
-         */
+        /** @docs-private */
         this.classes = this._theme.addStyleSheet(styles);
         this._listeners = new Map();
         this._scrollVal = 0;
         this.lyTooltipShowDelay = 0;
         this.lyTooltipHideDelay = 0;
         if (Platform.isBrowser) {
-            /** @type {?} */
             var element_1 = _el.nativeElement;
             if (!Platform.IOS && !Platform.ANDROID) {
                 this._listeners
@@ -53,7 +44,7 @@ var LyTooltip = /** @class */ (function () {
                     }
                 }
             });
-            (/** @type {?} */ (_focusState.listen(element_1))).subscribe(function (ev) {
+            _focusState.listen(element_1).subscribe(function (ev) {
                 if (ev === 'keyboard') {
                     ngZone.run(function () { return _this.show(); });
                 }
@@ -64,40 +55,21 @@ var LyTooltip = /** @class */ (function () {
         }
     }
     Object.defineProperty(LyTooltip.prototype, "tooltip", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._tooltip;
         },
-        set: /**
-         * @param {?} val
-         * @return {?}
-         */
-        function (val) {
+        set: function (val) {
             this._tooltip = val;
         },
         enumerable: true,
         configurable: true
     });
-    /**
-     * @return {?}
-     */
-    LyTooltip.prototype.ngOnInit = /**
-     * @return {?}
-     */
-    function () {
+    LyTooltip.prototype.ngOnInit = function () {
         if (!this.placement && !this.xPosition && !this.yPosition) {
             this.placement = DEFAULT_PLACEMENT;
         }
     };
-    /**
-     * @return {?}
-     */
-    LyTooltip.prototype.ngOnDestroy = /**
-     * @return {?}
-     */
-    function () {
+    LyTooltip.prototype.ngOnDestroy = function () {
         var _this = this;
         this.hide(0);
         // Clean up the event listeners set in the constructor
@@ -109,15 +81,7 @@ var LyTooltip = /** @class */ (function () {
         }
         this._focusState.unlisten(this._el);
     };
-    /**
-     * @param {?=} delay
-     * @return {?}
-     */
-    LyTooltip.prototype.show = /**
-     * @param {?=} delay
-     * @return {?}
-     */
-    function (delay) {
+    LyTooltip.prototype.show = function (delay) {
         var _this = this;
         delay = typeof delay === 'number' ? delay : this.lyTooltipShowDelay;
         if (this._hideTimeoutId) {
@@ -125,11 +89,9 @@ var LyTooltip = /** @class */ (function () {
             this._hideTimeoutId = null;
         }
         if (!this._tooltipOverlay && this.tooltip && !this._showTimeoutId) {
-            /** @type {?} */
             var tooltipRef_1 = this.tooltip;
-            this._showTimeoutId = (/** @type {?} */ (setTimeout(function () {
+            this._showTimeoutId = setTimeout(function () {
                 // const rect = this._el.nativeElement.getBoundingClientRect();
-                /** @type {?} */
                 var tooltip = _this._tooltipOverlay = _this._overlay.create(tooltipRef_1, undefined, {
                     styles: {
                     // top: rect.y,
@@ -157,20 +119,11 @@ var LyTooltip = /** @class */ (function () {
                 });
                 _this._showTimeoutId = null;
                 _this._markForCheck();
-            }, delay)));
+            }, delay);
         }
     };
-    /**
-     * @param {?=} delay
-     * @return {?}
-     */
-    LyTooltip.prototype.hide = /**
-     * @param {?=} delay
-     * @return {?}
-     */
-    function (delay) {
+    LyTooltip.prototype.hide = function (delay) {
         var _this = this;
-        /** @type {?} */
         var tooltipOverlay = this._tooltipOverlay;
         delay = typeof delay === 'number' ? delay : this.lyTooltipHideDelay;
         if (this._showTimeoutId) {
@@ -178,22 +131,16 @@ var LyTooltip = /** @class */ (function () {
             this._showTimeoutId = null;
         }
         if (tooltipOverlay && !this._hideTimeoutId) {
-            this._hideTimeoutId = (/** @type {?} */ (setTimeout(function () {
+            this._hideTimeoutId = setTimeout(function () {
                 _this._renderer.removeClass(tooltipOverlay.containerElement, _this._theme.addStyle('lyTooltip:open', null));
                 setTimeout(function () { return tooltipOverlay.destroy(); }, 300);
                 _this._tooltipOverlay = null;
                 _this._hideTimeoutId = null;
                 _this._markForCheck();
-            }, delay)));
+            }, delay);
         }
     };
-    /**
-     * @return {?}
-     */
-    LyTooltip.prototype.toggle = /**
-     * @return {?}
-     */
-    function () {
+    LyTooltip.prototype.toggle = function () {
         if (this._tooltipOverlay) {
             this.hide();
         }
@@ -201,94 +148,74 @@ var LyTooltip = /** @class */ (function () {
             this.show();
         }
     };
-    /**
-     * @private
-     * @return {?}
-     */
-    LyTooltip.prototype._markForCheck = /**
-     * @private
-     * @return {?}
-     */
-    function () {
+    LyTooltip.prototype._markForCheck = function () {
         this._cd.markForCheck();
     };
-    /**
-     * @private
-     * @return {?}
-     */
-    LyTooltip.prototype._updatePosition = /**
-     * @private
-     * @return {?}
-     */
-    function () {
-        /** @type {?} */
+    LyTooltip.prototype._updatePosition = function () {
         var tooltip = this._tooltipOverlay;
         if (tooltip) {
-            /** @type {?} */
             var position = new Positioning(this.placement, this.xPosition, this.yPosition, this._el.nativeElement, tooltip.containerElement, this._theme.variables, 13);
             tooltip.containerElement.style.transform = "translate3d(" + position.x + "px," + position.y + "px,0)";
         }
     };
-    LyTooltip.decorators = [
-        { type: Directive, args: [{
-                    selector: '[lyTooltip]',
-                    exportAs: 'lyTooltip'
-                },] }
-    ];
-    /** @nocollapse */
-    LyTooltip.ctorParameters = function () { return [
-        { type: LyTheme2 },
-        { type: LyOverlay },
-        { type: ElementRef },
-        { type: Renderer2 },
-        { type: ChangeDetectorRef },
-        { type: LyFocusState },
-        { type: NgZone },
-        { type: WinScroll }
-    ]; };
-    LyTooltip.propDecorators = {
-        tooltip: [{ type: Input, args: ['lyTooltip',] }],
-        lyTooltipShowDelay: [{ type: Input }],
-        lyTooltipHideDelay: [{ type: Input }],
-        placement: [{ type: Input, args: ['lyTooltipPlacement',] }],
-        xPosition: [{ type: Input, args: ['lyTooltipXPosition',] }],
-        yPosition: [{ type: Input, args: ['lyTooltipYPosition',] }]
-    };
+    __decorate([
+        Input('lyTooltip'),
+        __metadata("design:type", Object),
+        __metadata("design:paramtypes", [Object])
+    ], LyTooltip.prototype, "tooltip", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", Number)
+    ], LyTooltip.prototype, "lyTooltipShowDelay", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", Number)
+    ], LyTooltip.prototype, "lyTooltipHideDelay", void 0);
+    __decorate([
+        Input('lyTooltipPlacement'),
+        __metadata("design:type", String)
+    ], LyTooltip.prototype, "placement", void 0);
+    __decorate([
+        Input('lyTooltipXPosition'),
+        __metadata("design:type", String)
+    ], LyTooltip.prototype, "xPosition", void 0);
+    __decorate([
+        Input('lyTooltipYPosition'),
+        __metadata("design:type", String)
+    ], LyTooltip.prototype, "yPosition", void 0);
+    LyTooltip = __decorate([
+        Directive({
+            selector: '[lyTooltip]',
+            exportAs: 'lyTooltip'
+        }),
+        __metadata("design:paramtypes", [LyTheme2,
+            LyOverlay,
+            ElementRef,
+            Renderer2,
+            ChangeDetectorRef,
+            LyFocusState,
+            NgZone,
+            WinScroll])
+    ], LyTooltip);
     return LyTooltip;
 }());
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 var LyTooltipModule = /** @class */ (function () {
     function LyTooltipModule() {
     }
-    LyTooltipModule.decorators = [
-        { type: NgModule, args: [{
-                    imports: [LyOverlayModule],
-                    declarations: [LyTooltip],
-                    exports: [LyTooltip]
-                },] }
-    ];
+    LyTooltipModule = __decorate([
+        NgModule({
+            imports: [LyOverlayModule],
+            declarations: [LyTooltip],
+            exports: [LyTooltip]
+        })
+    ], LyTooltipModule);
     return LyTooltipModule;
 }());
 
 /**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated bundle index. Do not edit.
  */
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-
-export { LyTooltip, LyTooltipModule };
-
+export { LyTooltip, LyTooltipModule, ɵ0 };
 //# sourceMappingURL=alyle-ui-tooltip.js.map

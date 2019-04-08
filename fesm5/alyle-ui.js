@@ -1,49 +1,23 @@
 import * as _chroma from 'chroma-js';
-import { HammerGestureConfig } from '@angular/platform-browser';
+import { InjectionToken, defineInjectable, inject, RendererFactory2, Injectable, Optional, Inject, ViewEncapsulation, isDevMode, NgZone, Input, TemplateRef, Directive, ViewContainerRef, NgModule, ElementRef, Renderer2, HostListener, Component, Injector, ComponentFactoryResolver, ApplicationRef, INJECTOR, ChangeDetectionStrategy } from '@angular/core';
+import { __spread, __decorate, __param, __metadata, __assign, __extends } from 'tslib';
 import { DOCUMENT } from '@angular/common';
-import { map, share, auditTime } from 'rxjs/operators';
 import { Subject, fromEvent, empty, Subscription, merge } from 'rxjs';
-import { __assign, __extends, __spread } from 'tslib';
-import { InjectionToken, Injectable, Optional, Inject, RendererFactory2, ViewEncapsulation, Directive, ElementRef, Input, NgModule, NgZone, ApplicationRef, ComponentFactoryResolver, Injector, TemplateRef, ViewContainerRef, Component, ChangeDetectionStrategy, Renderer2, HostListener, defineInjectable, inject, isDevMode, INJECTOR } from '@angular/core';
+import { HammerGestureConfig } from '@angular/platform-browser';
+import { auditTime, map, share } from 'rxjs/operators';
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/**
- * @param {?} hexcolor
- * @return {?}
- */
 function getContrastYIQ(hexcolor) {
-    /** @type {?} */
     var r = parseInt(hexcolor.substr(0, 2), 16);
-    /** @type {?} */
     var g = parseInt(hexcolor.substr(2, 2), 16);
-    /** @type {?} */
     var b = parseInt(hexcolor.substr(4, 2), 16);
-    /** @type {?} */
     var yiq = ((r * 299) + (g * 587) + (b * 114)) / 1000;
     return (yiq >= 128) ? 'black' : 'white';
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
 var chroma = _chroma;
-/** @type {?} */
 var shadowKeyUmbraOpacity = 0.2;
-/** @type {?} */
 var shadowKeyPenumbraOpacity = 0.14;
-/** @type {?} */
 var shadowAmbientShadowOpacity = 0.12;
-/** @type {?} */
 var Shadows = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 1, 3, 0, 0, 1, 1, 0, 0, 2, 1, -1],
@@ -71,70 +45,42 @@ var Shadows = [
     [0, 11, 14, -7, 0, 23, 36, 3, 0, 9, 44, 8],
     [0, 11, 15, -7, 0, 24, 38, 3, 0, 9, 46, 8]
 ];
-/**
- * @param {?=} elevation
- * @param {?=} color
- * @return {?}
- */
 function shadowBuilderDeprecated(elevation, color) {
     if (elevation === void 0) { elevation = 2; }
     if (color === void 0) { color = '#000'; }
-    /** @type {?} */
     var Color = chroma(color);
-    /** @type {?} */
     var colors = [
         Color.alpha(shadowKeyUmbraOpacity).css(),
         Color.alpha(shadowKeyPenumbraOpacity).css(),
         Color.alpha(shadowAmbientShadowOpacity).css()
     ];
-    /** @type {?} */
     var e = Shadows[elevation];
     // tslint:disable-next-line:max-line-length
     return "box-shadow:" + e[0] + "px " + e[1] + "px " + e[2] + "px " + e[3] + "px " + colors[0] + "," + e[4] + "px " + e[5] + "px " + e[6] + "px " + e[7] + "px " + colors[1] + "," + e[8] + "px " + e[9] + "px " + e[10] + "px " + e[11] + "px " + colors[2] + ";";
 }
-/**
- * @param {?} elevation
- * @param {?=} color
- * @return {?}
- */
 function shadowBuilder(elevation, color) {
-    /** @type {?} */
     var Color = chroma(color || '#000');
-    /** @type {?} */
-    var rgb = (/** @type {?} */ ((/** @type {?} */ (Color.get('rgb')))));
+    var rgb = Color.get('rgb');
     if (!(rgb[0] === rgb[1] && rgb[0] === rgb[2])) {
         // Darken and saturate if the color is not in the grayscale
         Color = Color.darken().saturate(2);
     }
-    /** @type {?} */
     var colors = [
         Color.alpha(shadowKeyUmbraOpacity).css(),
         Color.alpha(shadowKeyPenumbraOpacity).css(),
         Color.alpha(shadowAmbientShadowOpacity).css()
     ];
-    /** @type {?} */
     var e = Shadows[elevation];
     // tslint:disable-next-line:max-line-length
     return e[0] + "px " + e[1] + "px " + e[2] + "px " + e[3] + "px " + colors[0] + "," + e[4] + "px " + e[5] + "px " + e[6] + "px " + e[7] + "px " + colors[1] + "," + e[8] + "px " + e[9] + "px " + e[10] + "px " + e[11] + "px " + colors[2] + ";";
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
 var THEME_VARIABLES = new InjectionToken('ly.theme.variables');
-/** @type {?} */
 var IS_CORE_THEME = new InjectionToken('ly.is.root');
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 // Whether the current platform supports the V8 Break Iterator. The V8 check
 // is necessary to detect all Blink based browsers.
-/** @type {?} */
-var hasV8BreakIterator = (typeof (Intl) !== 'undefined' && ((/** @type {?} */ (Intl))).v8BreakIterator);
+var hasV8BreakIterator = (typeof (Intl) !== 'undefined' && Intl.v8BreakIterator);
 /**
  * Service to detect the current platform by comparing the userAgent strings and
  * checking browser-specific global properties.
@@ -143,22 +89,18 @@ var Platform = /** @class */ (function () {
     function Platform() {
     }
     Platform.isBrowser = typeof document === 'object' && !!document;
-    /**
-     * Layout Engines
-     */
+    /** Layout Engines */
     Platform.EDGE = Platform.isBrowser && /(edge)/i.test(navigator.userAgent);
     Platform.TRIDENT = Platform.isBrowser && /(msie|trident)/i.test(navigator.userAgent);
     // EdgeHTML and Trident mock Blink specific things and need to be excluded from this check.
     Platform.BLINK = Platform.isBrowser &&
-        (!!(((/** @type {?} */ (window))).chrome || hasV8BreakIterator) && !!CSS && !Platform.EDGE && !Platform.TRIDENT);
+        (!!(window.chrome || hasV8BreakIterator) && !!CSS && !Platform.EDGE && !Platform.TRIDENT);
     // Webkit is part of the userAgent in EdgeHTML, Blink and Trident. Therefore we need to
     // ensure that Webkit runs standalone and is not used as another engine's base.
     Platform.WEBKIT = Platform.isBrowser &&
         /AppleWebKit/i.test(navigator.userAgent) && !Platform.BLINK && !Platform.EDGE && !Platform.TRIDENT;
-    /**
-     * Browsers and Platform Types
-     */
-    Platform.IOS = Platform.isBrowser && /iPad|iPhone|iPod/.test(navigator.userAgent) && !((/** @type {?} */ (window))).MSStream;
+    /** Browsers and Platform Types */
+    Platform.IOS = Platform.isBrowser && /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
     // It's difficult to detect the plain Gecko engine, because most of the browsers identify
     // them self as Gecko-like browsers and modify the userAgent's according to that.
     // Since we only cover one explicit Firefox case, we can simply check for Firefox
@@ -173,121 +115,49 @@ var Platform = /** @class */ (function () {
     return Platform;
 }());
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
 var supportsPassive;
-/**
- * @return {?}
- */
 function supportsPassiveEventListeners() {
     if (supportsPassive === void 0) {
         try {
-            /** @type {?} */
             var opts = Object.defineProperty({}, 'passive', {
                 get: function () {
                     supportsPassive = true;
                 }
             });
-            window.addEventListener('testPassive', (/** @type {?} */ (null)), opts);
-            window.removeEventListener('testPassive', (/** @type {?} */ (null)), opts);
+            window.addEventListener('testPassive', null, opts);
+            window.removeEventListener('testPassive', null, opts);
         }
         catch (e) { }
     }
     return supportsPassive;
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
 var LY_THEME_GLOBAL_VARIABLES = new InjectionToken('ly.theme.global.variables');
-/** @type {?} */
 var LY_THEME = new InjectionToken('ly_theme_config');
-/** @type {?} */
 var LY_THEME_NAME = new InjectionToken('ly.theme.name');
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/**
- * Only for internal use
- * @type {?}
- */
+/** Only for internal use */
 var _STYLE_MAP = new Map();
-/** @enum {number} */
-var TypeStyle = {
-    Multiple: 0,
-    OnlyOne: 1,
-};
-TypeStyle[TypeStyle.Multiple] = 'Multiple';
-TypeStyle[TypeStyle.OnlyOne] = 'OnlyOne';
+var TypeStyle;
+(function (TypeStyle) {
+    TypeStyle[TypeStyle["Multiple"] = 0] = "Multiple";
+    TypeStyle[TypeStyle["OnlyOne"] = 1] = "OnlyOne";
+})(TypeStyle || (TypeStyle = {}));
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 var LyStyleUtils = /** @class */ (function () {
     function LyStyleUtils() {
     }
-    /**
-     * @param {?} value
-     * @return {?}
-     */
-    LyStyleUtils.prototype.pxToRem = /**
-     * @param {?} value
-     * @return {?}
-     */
-    function (value) {
-        /** @type {?} */
+    LyStyleUtils.prototype.pxToRem = function (value) {
         var size = this.typography.fontSize / 14;
         return value / this.typography.htmlFontSize * size + "rem";
     };
-    /**
-     * @param {?} value
-     * @param {?=} optional
-     * @return {?}
-     */
-    LyStyleUtils.prototype.colorOf = /**
-     * @param {?} value
-     * @param {?=} optional
-     * @return {?}
-     */
-    function (value, optional) {
+    LyStyleUtils.prototype.colorOf = function (value, optional) {
         return get(this, value, optional);
     };
-    /**
-     * @param {?} key
-     * @return {?}
-     */
-    LyStyleUtils.prototype.getBreakpoint = /**
-     * @param {?} key
-     * @return {?}
-     */
-    function (key) {
+    LyStyleUtils.prototype.getBreakpoint = function (key) {
         return "@media " + (this.breakpoints[key] || key);
     };
-    /**
-     * @template T
-     * @param {?} styles
-     * @return {?}
-     */
-    LyStyleUtils.prototype.getClasses = /**
-     * @template T
-     * @param {?} styles
-     * @return {?}
-     */
-    function (styles) {
-        /** @type {?} */
+    LyStyleUtils.prototype.getClasses = function (styles) {
         var styleMap = _STYLE_MAP.get(styles);
         if (styleMap) {
             return styleMap.classes || styleMap[this.name];
@@ -296,15 +166,7 @@ var LyStyleUtils = /** @class */ (function () {
             throw Error('Classes not found');
         }
     };
-    /**
-     * @param {?} val
-     * @return {?}
-     */
-    LyStyleUtils.prototype.getDirection = /**
-     * @param {?} val
-     * @return {?}
-     */
-    function (val) {
+    LyStyleUtils.prototype.getDirection = function (val) {
         if (val === DirAlias.before) {
             return this.direction === 'rtl' ? 'right' : 'left';
         }
@@ -317,44 +179,41 @@ var LyStyleUtils = /** @class */ (function () {
     };
     return LyStyleUtils;
 }());
-/** @enum {string} */
-var Dir = {
-    rtl: 'rtl',
-    ltr: 'ltr',
-};
-/** @enum {string} */
-var DirAlias = {
-    before: 'before',
-    after: 'after',
-};
-/** @enum {string} */
-var DirPosition = {
-    left: 'left',
-    right: 'right',
-};
+var Dir;
+(function (Dir) {
+    Dir["rtl"] = "rtl";
+    Dir["ltr"] = "ltr";
+})(Dir || (Dir = {}));
+var DirAlias;
+(function (DirAlias) {
+    DirAlias["before"] = "before";
+    DirAlias["after"] = "after";
+})(DirAlias || (DirAlias = {}));
+var DirPosition;
+(function (DirPosition) {
+    DirPosition["left"] = "left";
+    DirPosition["right"] = "right";
+})(DirPosition || (DirPosition = {}));
 /**
  * get color of object
- * @param {?} obj object
- * @param {?} path path
- * @param {?=} optional get optional value, if not exist return default if not is string
- * @return {?}
+ * @param obj object
+ * @param path path
+ * @param optional get optional value, if not exist return default if not is string
  */
 function get(obj, path, optional) {
-    /** @type {?} */
     var _path = path instanceof Array ? path : path.split(':');
     for (var i = 0; i < _path.length; i++) {
-        /** @type {?} */
         var posibleOb = obj[_path[i]];
         if (posibleOb) {
             obj = posibleOb;
         }
         else {
             /** if not exist */
-            return (/** @type {?} */ (path));
+            return path;
         }
     }
     if (typeof obj === 'string') {
-        return (/** @type {?} */ (obj));
+        return obj;
     }
     else if (optional) {
         return obj[optional] || obj['default'];
@@ -364,21 +223,12 @@ function get(obj, path, optional) {
     }
     // return typeof obj === 'string' ? obj as string : obj['default'] as string;
 }
-/**
- * @param {?} str
- * @param {?} fn
- * @return {?}
- */
 function eachMedia(str, fn) {
     if (typeof str === 'string') {
-        /** @type {?} */
         var values = str.split(/\s/g);
         for (var index = 0; index < values.length; index++) {
-            /** @type {?} */
             var valItem = values[index].split(/\@/g);
-            /** @type {?} */
             var value = valItem.shift();
-            /** @type {?} */
             var len = valItem.length;
             if (len) {
                 for (var j = 0; j < len; j++) {
@@ -396,17 +246,15 @@ function eachMedia(str, fn) {
 }
 /**
  * Simple object check.
- * @param {?} item
- * @return {?}
+ * @param item
  */
 function isObject(item) {
     return (item && typeof item === 'object' && !Array.isArray(item));
 }
 /**
  * Deep merge two objects.
- * @param {?} target
- * @param {...?} sources
- * @return {?}
+ * @param target
+ * @param ...sources
  */
 function mergeDeep(target) {
     var sources = [];
@@ -417,7 +265,6 @@ function mergeDeep(target) {
     if (!sources.length) {
         return target;
     }
-    /** @type {?} */
     var source = sources.shift();
     if (isObject(target) && isObject(source)) {
         for (var key in source) {
@@ -435,10 +282,6 @@ function mergeDeep(target) {
     return mergeDeep.apply(void 0, __spread([target], sources));
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 var CoreTheme = /** @class */ (function () {
     function CoreTheme(themeConfig, globalVariables, rendererFactory, _document) {
         var _this = this;
@@ -457,23 +300,20 @@ var CoreTheme = /** @class */ (function () {
             data: {}
         });
         if (Platform.isBrowser) {
-            /** @type {?} */
             var nodes = _document.body.querySelectorAll('ly-s-c');
             if (nodes.length) {
                 for (var index = 0; index < nodes.length; index++) {
-                    /** @type {?} */
-                    var element = (/** @type {?} */ (nodes.item(index)));
-                    ((/** @type {?} */ (_document.body))).removeChild(element);
+                    var element = nodes.item(index);
+                    _document.body.removeChild(element);
                 }
             }
         }
         this.firstElement = _document.body.firstChild;
-        /** @type {?} */
         var themes = new Map();
         if (Array.isArray(themeConfig)) {
             themeConfig.forEach(function (item) {
                 if (themes.has(item.name)) {
-                    (/** @type {?} */ (themes.get(item.name))).push(item);
+                    themes.get(item.name).push(item);
                 }
                 else {
                     themes.set(item.name, [item]);
@@ -486,7 +326,7 @@ var CoreTheme = /** @class */ (function () {
                 if (items.length > 1) {
                     mergeDeep.apply(void 0, __spread([items[0]], items.slice(1)));
                 }
-                _this.add((/** @type {?} */ (items[0])));
+                _this.add(items[0]);
                 _this.themes.add(items[0].name);
             });
         }
@@ -494,7 +334,7 @@ var CoreTheme = /** @class */ (function () {
             if (globalVariables) {
                 mergeDeep(themeConfig, globalVariables);
             }
-            this.add((/** @type {?} */ (themeConfig)));
+            this.add(themeConfig);
             this.themes.add(themeConfig.name);
         }
     }
@@ -502,108 +342,51 @@ var CoreTheme = /** @class */ (function () {
      * add new theme
      * @param theme: ThemeVariables
      */
-    /**
-     * add new theme
-     * @param {?} theme
-     * @return {?}
-     */
-    CoreTheme.prototype.add = /**
-     * add new theme
-     * @param {?} theme
-     * @return {?}
-     */
-    function (theme) {
+    CoreTheme.prototype.add = function (theme) {
         this._themeMap.set(theme.name, theme);
         this._styleMap.set(theme.name, new Map());
     };
-    /**
-     * @param {?} theme
-     * @return {?}
-     */
-    CoreTheme.prototype.hasTheme = /**
-     * @param {?} theme
-     * @return {?}
-     */
-    function (theme) {
-        /** @type {?} */
+    CoreTheme.prototype.hasTheme = function (theme) {
         var name = typeof theme === 'string' ? theme : theme.name;
         this._themeMap.has(name);
     };
-    /**
-     * @param {?} name
-     * @return {?}
-     */
-    CoreTheme.prototype.get = /**
-     * @param {?} name
-     * @return {?}
-     */
-    function (name) {
+    CoreTheme.prototype.get = function (name) {
         return this._themeMap.get(name);
     };
-    /**
-     * @param {?} name
-     * @return {?}
-     */
-    CoreTheme.prototype.getStyleMap = /**
-     * @param {?} name
-     * @return {?}
-     */
-    function (name) {
+    CoreTheme.prototype.getStyleMap = function (name) {
         return this._styleMap.get(name);
     };
-    /**
-     * @param {?} element
-     * @param {?} renderer
-     * @param {?} newClassname
-     * @param {?=} oldClassname
-     * @return {?}
-     */
-    CoreTheme.prototype.updateClassName = /**
-     * @param {?} element
-     * @param {?} renderer
-     * @param {?} newClassname
-     * @param {?=} oldClassname
-     * @return {?}
-     */
-    function (element, renderer, newClassname, oldClassname) {
+    CoreTheme.prototype.updateClassName = function (element, renderer, newClassname, oldClassname) {
         if (oldClassname) {
             renderer.removeClass(element, oldClassname);
         }
         renderer.addClass(element, newClassname);
     };
-    CoreTheme.decorators = [
-        { type: Injectable, args: [{
-                    providedIn: 'root'
-                },] }
-    ];
-    /** @nocollapse */
-    CoreTheme.ctorParameters = function () { return [
-        { type: undefined, decorators: [{ type: Optional }, { type: Inject, args: [LY_THEME,] }] },
-        { type: undefined, decorators: [{ type: Optional }, { type: Inject, args: [LY_THEME_GLOBAL_VARIABLES,] }] },
-        { type: RendererFactory2 },
-        { type: undefined, decorators: [{ type: Inject, args: [DOCUMENT,] }] }
-    ]; };
-    /** @nocollapse */ CoreTheme.ngInjectableDef = defineInjectable({ factory: function CoreTheme_Factory() { return new CoreTheme(inject(LY_THEME, 8), inject(LY_THEME_GLOBAL_VARIABLES, 8), inject(RendererFactory2), inject(DOCUMENT)); }, token: CoreTheme, providedIn: "root" });
+    CoreTheme.ngInjectableDef = defineInjectable({ factory: function CoreTheme_Factory() { return new CoreTheme(inject(LY_THEME, 8), inject(LY_THEME_GLOBAL_VARIABLES, 8), inject(RendererFactory2), inject(DOCUMENT)); }, token: CoreTheme, providedIn: "root" });
+    CoreTheme = __decorate([
+        Injectable({
+            providedIn: 'root'
+        }),
+        __param(0, Optional()), __param(0, Inject(LY_THEME)),
+        __param(1, Optional()), __param(1, Inject(LY_THEME_GLOBAL_VARIABLES)),
+        __param(3, Inject(DOCUMENT)),
+        __metadata("design:paramtypes", [Object, Object, RendererFactory2, Object])
+    ], CoreTheme);
     return CoreTheme;
 }());
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @enum {string} */
-var YPosition = {
-    above: 'above',
-    below: 'below',
-};
-/** @enum {string} */
-var XPosition = {
-    before: 'before',
-    after: 'after',
-    left: 'left',
-    right: 'right',
-};
-/** @type {?} */
+var YPosition;
+(function (YPosition) {
+    YPosition["above"] = "above";
+    YPosition["below"] = "below";
+})(YPosition || (YPosition = {}));
+var XPosition;
+(function (XPosition) {
+    XPosition["before"] = "before";
+    XPosition["after"] = "after";
+    XPosition["left"] = "left";
+    XPosition["right"] = "right";
+})(XPosition || (XPosition = {}));
 var INITIAL_WH = 'initial';
 var Positioning = /** @class */ (function () {
     function Positioning(placement, xPosition, yPosition, origin, overlayElement, _themeVariables, _offset, _flip) {
@@ -617,11 +400,10 @@ var Positioning = /** @class */ (function () {
         this._themeVariables = _themeVariables;
         this._offset = _offset;
         this._offsetCheck = 16;
-        this._originRect = (/** @type {?} */ (this.origin.getBoundingClientRect()));
-        this._overlayElementRect = (/** @type {?} */ (this.overlayElement.getBoundingClientRect()));
+        this._originRect = this.origin.getBoundingClientRect();
+        this._overlayElementRect = this.overlayElement.getBoundingClientRect();
         this.width = INITIAL_WH;
         this.height = INITIAL_WH;
-        /** @type {?} */
         var offsetCheckx2 = this._offsetCheck * 2;
         this.createPosition();
         if (_flip) {
@@ -633,9 +415,7 @@ var Positioning = /** @class */ (function () {
         }
         // when there is not enough space
         if (this.checkAll()) {
-            /** @type {?} */
             var _max_width = this._overlayElementRect.width + offsetCheckx2 > window.innerWidth;
-            /** @type {?} */
             var _max_height = this._overlayElementRect.height + offsetCheckx2 > window.innerHeight;
             if (_max_width || _max_height) {
                 if (_max_height) {
@@ -649,16 +429,16 @@ var Positioning = /** @class */ (function () {
             }
             else {
                 if (this.checkBottom()) {
-                    this.y += (/** @type {?} */ (this.checkBottom(true)));
+                    this.y += this.checkBottom(true);
                 }
                 else if (this.checkTop()) {
-                    this.y -= (/** @type {?} */ (this.checkTop(true)));
+                    this.y -= this.checkTop(true);
                 }
                 if (this.checkRight()) {
-                    this.x += (/** @type {?} */ (this.checkRight(true)));
+                    this.x += this.checkRight(true);
                 }
                 else if (this.checkLeft()) {
-                    this.x -= (/** @type {?} */ (this.checkLeft(true)));
+                    this.x -= this.checkLeft(true);
                 }
             }
             this.updateOrigin();
@@ -673,10 +453,7 @@ var Positioning = /** @class */ (function () {
         this.ay = Math.round(this.ay);
     }
     Object.defineProperty(Positioning.prototype, "offsetX", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return typeof this._offset === 'number'
                 ? this._offset
                 : this._offset.x || 0;
@@ -685,10 +462,7 @@ var Positioning = /** @class */ (function () {
         configurable: true
     });
     Object.defineProperty(Positioning.prototype, "offsetY", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return typeof this._offset === 'number'
                 ? this._offset
                 : this._offset.y || 0;
@@ -696,29 +470,14 @@ var Positioning = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
-    /**
-     * @private
-     * @return {?}
-     */
-    Positioning.prototype.createPosition = /**
-     * @private
-     * @return {?}
-     */
-    function () {
+    Positioning.prototype.createPosition = function () {
         if (this.xPosition && this.yPosition) {
             throw new Error("You can not use `xPosition` and `yPosition` together, use only one of them.");
         }
         if ((this.xPosition || this.yPosition) && !this.placement) {
             throw new Error("`placement` is required.");
         }
-        /** @type {?} */
-        var x = this._originRect.x;
-        /** @type {?} */
-        var y = this._originRect.y;
-        /** @type {?} */
-        var ox = 'center';
-        /** @type {?} */
-        var oy = 'center';
+        var x = this._originRect.x, y = this._originRect.y, ox = 'center', oy = 'center';
         if (this.placement) {
             if (this.placement === YPosition.above) {
                 x += (this._originRect.width - this._overlayElementRect.width) / 2;
@@ -735,8 +494,7 @@ var Positioning = /** @class */ (function () {
                 y += this.offsetY;
             }
             else {
-                /** @type {?} */
-                var dir = this._themeVariables.getDirection((/** @type {?} */ (this.placement)));
+                var dir = this._themeVariables.getDirection(this.placement);
                 if (dir === DirPosition.left) {
                     ox = '100%';
                     x += -this._overlayElementRect.width;
@@ -753,8 +511,7 @@ var Positioning = /** @class */ (function () {
                 }
             }
             if (this.xPosition) {
-                /** @type {?} */
-                var dir = this._themeVariables.getDirection((/** @type {?} */ (this.xPosition)));
+                var dir = this._themeVariables.getDirection(this.xPosition);
                 if (dir === DirPosition.right) {
                     ox = '0%';
                     x = this._originRect.x;
@@ -796,18 +553,7 @@ var Positioning = /** @class */ (function () {
             oy: oy
         };
     };
-    /**
-     * @private
-     * @param {?=} returnVal
-     * @return {?}
-     */
-    Positioning.prototype.checkLeft = /**
-     * @private
-     * @param {?=} returnVal
-     * @return {?}
-     */
-    function (returnVal) {
-        /** @type {?} */
+    Positioning.prototype.checkLeft = function (returnVal) {
         var rest = this.ax - this._offsetCheck;
         if (returnVal) {
             return rest;
@@ -817,24 +563,13 @@ var Positioning = /** @class */ (function () {
                 this.placement = invertPlacement(this.placement);
             }
             if (this.xPosition) {
-                this.xPosition = (/** @type {?} */ (invertPlacement(this.xPosition)));
+                this.xPosition = invertPlacement(this.xPosition);
             }
             return true;
         }
         return false;
     };
-    /**
-     * @private
-     * @param {?=} returnVal
-     * @return {?}
-     */
-    Positioning.prototype.checkRight = /**
-     * @private
-     * @param {?=} returnVal
-     * @return {?}
-     */
-    function (returnVal) {
-        /** @type {?} */
+    Positioning.prototype.checkRight = function (returnVal) {
         var rest = window.innerWidth - (this.ax + this._overlayElementRect.width + this._offsetCheck);
         if (returnVal) {
             return rest;
@@ -844,24 +579,13 @@ var Positioning = /** @class */ (function () {
                 this.placement = invertPlacement(this.placement);
             }
             if (this.xPosition) {
-                this.xPosition = (/** @type {?} */ (invertPlacement(this.xPosition)));
+                this.xPosition = invertPlacement(this.xPosition);
             }
             return true;
         }
         return false;
     };
-    /**
-     * @private
-     * @param {?=} returnVal
-     * @return {?}
-     */
-    Positioning.prototype.checkTop = /**
-     * @private
-     * @param {?=} returnVal
-     * @return {?}
-     */
-    function (returnVal) {
-        /** @type {?} */
+    Positioning.prototype.checkTop = function (returnVal) {
         var rest = this.ay - this._offsetCheck;
         if (returnVal) {
             return rest;
@@ -871,24 +595,13 @@ var Positioning = /** @class */ (function () {
                 this.placement = invertPlacement(this.placement);
             }
             if (this.yPosition) {
-                this.yPosition = (/** @type {?} */ (invertPlacement(this.yPosition)));
+                this.yPosition = invertPlacement(this.yPosition);
             }
             return true;
         }
         return false;
     };
-    /**
-     * @private
-     * @param {?=} returnVal
-     * @return {?}
-     */
-    Positioning.prototype.checkBottom = /**
-     * @private
-     * @param {?=} returnVal
-     * @return {?}
-     */
-    function (returnVal) {
-        /** @type {?} */
+    Positioning.prototype.checkBottom = function (returnVal) {
         var rest = window.innerHeight - (this.ay + this._overlayElementRect.height + this._offsetCheck);
         if (returnVal) {
             return rest;
@@ -898,57 +611,33 @@ var Positioning = /** @class */ (function () {
                 this.placement = invertPlacement(this.placement);
             }
             if (this.yPosition) {
-                this.yPosition = (/** @type {?} */ (invertPlacement(this.yPosition)));
+                this.yPosition = invertPlacement(this.yPosition);
             }
             return true;
         }
         return false;
     };
-    /**
-     * @private
-     * @return {?}
-     */
-    Positioning.prototype.checkAll = /**
-     * @private
-     * @return {?}
-     */
-    function () {
+    Positioning.prototype.checkAll = function () {
         return this.checkLeft() ||
             this.checkRight() ||
             this.checkTop() ||
             this.checkBottom();
     };
-    /**
-     * @private
-     * @return {?}
-     */
-    Positioning.prototype.updateOrigin = /**
-     * @private
-     * @return {?}
-     */
-    function () {
+    Positioning.prototype.updateOrigin = function () {
         // do not update if it is defined
         if (this._origin) {
             return;
         }
         this._origin = true;
-        /** @type {?} */
         var oax = this._originRect.x + this._originRect.width / 2;
-        /** @type {?} */
         var oay = this._originRect.y + this._originRect.height / 2;
-        /** @type {?} */
         var vax = this.x + this._overlayElementRect.width / 2;
-        /** @type {?} */
         var vay = this.y + this._overlayElementRect.height / 2;
         this.ox = oax - vax + this._overlayElementRect.width / 2 + "px";
         this.oy = oay - vay + this._overlayElementRect.height / 2 + "px";
     };
     return Positioning;
 }());
-/**
- * @param {?} placement
- * @return {?}
- */
 function invertPlacement(placement) {
     if (placement === YPosition.above) {
         return YPosition.below;
@@ -971,15 +660,8 @@ function invertPlacement(placement) {
     return placement;
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
 var REF_REG_EXP = /\{([\w-]+)\}/g;
-/** @type {?} */
 var nextClassId = 0;
-/** @type {?} */
 var nextKeyFrameId = 0;
 var StylesInDocument = /** @class */ (function () {
     function StylesInDocument() {
@@ -987,15 +669,14 @@ var StylesInDocument = /** @class */ (function () {
         this.styleContainers = new Map();
         this.styleElementGlobalMap = new Map();
     }
-    StylesInDocument.decorators = [
-        { type: Injectable, args: [{
-                    providedIn: 'root'
-                },] }
-    ];
-    /** @nocollapse */ StylesInDocument.ngInjectableDef = defineInjectable({ factory: function StylesInDocument_Factory() { return new StylesInDocument(); }, token: StylesInDocument, providedIn: "root" });
+    StylesInDocument.ngInjectableDef = defineInjectable({ factory: function StylesInDocument_Factory() { return new StylesInDocument(); }, token: StylesInDocument, providedIn: "root" });
+    StylesInDocument = __decorate([
+        Injectable({
+            providedIn: 'root'
+        })
+    ], StylesInDocument);
     return StylesInDocument;
 }());
-/** @type {?} */
 var THEME_MAP = new Map();
 var LyTheme2 = /** @class */ (function () {
     function LyTheme2(stylesInDocument, core, themeName, _document, _ngZone) {
@@ -1005,9 +686,7 @@ var LyTheme2 = /** @class */ (function () {
         this._ngZone = _ngZone;
         this._elementsMap = new Map();
         this.themeMap = THEME_MAP;
-        /**
-         * ssr or hmr
-         */
+        /** ssr or hmr */
         this.isDevOrServer = isDevMode() || !Platform.isBrowser;
         if (themeName) {
             this.setUpTheme(themeName);
@@ -1015,27 +694,14 @@ var LyTheme2 = /** @class */ (function () {
     }
     Object.defineProperty(LyTheme2.prototype, "variables", {
         /** Get Theme Variables */
-        get: /**
-         * Get Theme Variables
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this.config;
         },
         enumerable: true,
         configurable: true
     });
-    /**
-     * @param {?} themeName
-     * @return {?}
-     */
-    LyTheme2.prototype.setUpTheme = /**
-     * @param {?} themeName
-     * @return {?}
-     */
-    function (themeName) {
+    LyTheme2.prototype.setUpTheme = function (themeName) {
         if (!this.config) {
-            /** @type {?} */
             var theme = this.core.get(themeName);
             if (theme === undefined) {
                 throw new Error("Theme " + themeName + " not found in CoreTheme");
@@ -1064,29 +730,8 @@ var LyTheme2 = /** @class */ (function () {
      * @param instance The instance of this, this replaces the existing style with a new one when it changes
      * @param parentStyle
      */
-    /**
-     * Add a new dynamic style, use only within \@Input()
-     * @param {?} id Unique id
-     * @param {?=} style Styles
-     * @param {?=} el Element
-     * @param {?=} instance The instance of this, this replaces the existing style with a new one when it changes
-     * @param {?=} priority
-     * @param {?=} parentStyle
-     * @return {?}
-     */
-    LyTheme2.prototype.addStyle = /**
-     * Add a new dynamic style, use only within \@Input()
-     * @param {?} id Unique id
-     * @param {?=} style Styles
-     * @param {?=} el Element
-     * @param {?=} instance The instance of this, this replaces the existing style with a new one when it changes
-     * @param {?=} priority
-     * @param {?=} parentStyle
-     * @return {?}
-     */
-    function (id, style, el, instance, priority, parentStyle) {
-        /** @type {?} */
-        var newClass = (/** @type {?} */ (this._createStyleContent2(style, id, priority, TypeStyle.OnlyOne, false, parentStyle)));
+    LyTheme2.prototype.addStyle = function (id, style, el, instance, priority, parentStyle) {
+        var newClass = this._createStyleContent2(style, id, priority, TypeStyle.OnlyOne, false, parentStyle);
         if (newClass === instance) {
             return newClass;
         }
@@ -1105,116 +750,43 @@ var LyTheme2 = /** @class */ (function () {
      * @param priority Priority of style
      * @param parentStyle
      */
-    /**
-     * Create basic style
-     * @param {?} style Styles.
-     * Note: Use only with inmutable variable.
-     * @param {?=} priority Priority of style
-     * @param {?=} parentStyle
-     * @return {?}
-     */
-    LyTheme2.prototype.style = /**
-     * Create basic style
-     * @param {?} style Styles.
-     * Note: Use only with inmutable variable.
-     * @param {?=} priority Priority of style
-     * @param {?=} parentStyle
-     * @return {?}
-     */
-    function (style, priority, parentStyle) {
-        return (/** @type {?} */ (this._createStyleContent2(style, null, priority, TypeStyle.OnlyOne, false, parentStyle)));
+    LyTheme2.prototype.style = function (style, priority, parentStyle) {
+        return this._createStyleContent2(style, null, priority, TypeStyle.OnlyOne, false, parentStyle);
     };
-    /**
-     * @private
-     * @param {?} element
-     * @param {?} renderer
-     * @param {?} newClassname
-     * @param {?=} oldClassname
-     * @return {?}
-     */
-    LyTheme2.prototype.updateClassName = /**
-     * @private
-     * @param {?} element
-     * @param {?} renderer
-     * @param {?} newClassname
-     * @param {?=} oldClassname
-     * @return {?}
-     */
-    function (element, renderer, newClassname, oldClassname) {
+    LyTheme2.prototype.updateClassName = function (element, renderer, newClassname, oldClassname) {
         this.core.updateClassName(element, renderer, newClassname, oldClassname);
     };
-    /**
-     * @param {?} element
-     * @param {?} renderer
-     * @param {?} newClass
-     * @param {?=} oldClass
-     * @return {?}
-     */
-    LyTheme2.prototype.updateClass = /**
-     * @param {?} element
-     * @param {?} renderer
-     * @param {?} newClass
-     * @param {?=} oldClass
-     * @return {?}
-     */
-    function (element, renderer, newClass, oldClass) {
+    LyTheme2.prototype.updateClass = function (element, renderer, newClass, oldClass) {
         if (newClass === oldClass) {
             return newClass;
         }
         this.updateClassName(element, renderer, newClass, oldClass);
         return newClass;
     };
-    /**
-     * @param {?} nam
-     * @return {?}
-     */
-    LyTheme2.prototype.setTheme = /**
-     * @param {?} nam
-     * @return {?}
-     */
-    function (nam) {
+    LyTheme2.prototype.setTheme = function (nam) {
         if (!Platform.isBrowser) {
             throw new Error("`theme.setTheme('theme-name')` is only available in browser platform");
         }
         if (nam !== this.config.name) {
-            /** @type {?} */
             var theme = this.themeMap.get(this.initialTheme);
             if (theme == null) {
                 throw new Error("Theme " + nam + " not found in themeMap");
             }
             theme.change = nam;
-            this.config = (/** @type {?} */ (this.core.get(nam)));
+            this.config = this.core.get(nam);
             this._updateAllStyles();
         }
     };
     /** Toggle right-to-left/left-to-right */
-    /**
-     * Toggle right-to-left/left-to-right
-     * @return {?}
-     */
-    LyTheme2.prototype.toggleDirection = /**
-     * Toggle right-to-left/left-to-right
-     * @return {?}
-     */
-    function () {
-        /** @type {?} */
+    LyTheme2.prototype.toggleDirection = function () {
         var current = this.config.direction;
         this.config.direction = current === Dir.ltr ? Dir.rtl : Dir.ltr;
         this._updateAllStyles();
     };
-    /**
-     * @private
-     * @return {?}
-     */
-    LyTheme2.prototype._updateAllStyles = /**
-     * @private
-     * @return {?}
-     */
-    function () {
+    LyTheme2.prototype._updateAllStyles = function () {
         var _this = this;
         this.elements.forEach(function (_, key) {
-            /** @type {?} */
-            var styleData = (/** @type {?} */ (_STYLE_MAP.get(key)));
+            var styleData = _STYLE_MAP.get(key);
             if (styleData.requireUpdate) {
                 _this._createStyleContent2(styleData.styles, styleData.id, styleData.priority, styleData.type, true, styleData.parentStyle);
             }
@@ -1227,115 +799,52 @@ var LyTheme2 = /** @class */ (function () {
      * @param css style object or string
      * @param priority style priority(default: 0)
      */
-    /**
-     * Create a simple style
-     * return className
-     * @param {?} id id of style
-     * @param {?} css style object or string
-     * @param {?=} priority style priority(default: 0)
-     * @param {?=} parentStyle
-     * @return {?}
-     */
-    LyTheme2.prototype.addSimpleStyle = /**
-     * Create a simple style
-     * return className
-     * @param {?} id id of style
-     * @param {?} css style object or string
-     * @param {?=} priority style priority(default: 0)
-     * @param {?=} parentStyle
-     * @return {?}
-     */
-    function (id, css, priority, parentStyle) {
-        return (/** @type {?} */ (this._createStyleContent2((/** @type {?} */ (css)), id, priority, TypeStyle.OnlyOne, false, parentStyle)));
+    LyTheme2.prototype.addSimpleStyle = function (id, css, priority, parentStyle) {
+        return this._createStyleContent2(css, id, priority, TypeStyle.OnlyOne, false, parentStyle);
     };
     /**
      * Add new add a new style sheet
      * @param styles styles
      * @param priority priority for style
      */
-    /**
-     * Add new add a new style sheet
-     * @template T
-     * @param {?} styles styles
-     * @param {?=} priority priority for style
-     * @return {?}
-     */
-    LyTheme2.prototype.addStyleSheet = /**
-     * Add new add a new style sheet
-     * @template T
-     * @param {?} styles styles
-     * @param {?=} priority priority for style
-     * @return {?}
-     */
-    function (styles, priority) {
+    LyTheme2.prototype.addStyleSheet = function (styles, priority) {
         return this._createStyleContent2(styles, null, priority, TypeStyle.Multiple);
     };
-    /**
-     * @private
-     * @param {?} styles
-     * @param {?} id
-     * @param {?} priority
-     * @param {?} type
-     * @param {?=} forChangeTheme
-     * @param {?=} parentStyle
-     * @return {?}
-     */
-    LyTheme2.prototype._createStyleContent2 = /**
-     * @private
-     * @param {?} styles
-     * @param {?} id
-     * @param {?} priority
-     * @param {?} type
-     * @param {?=} forChangeTheme
-     * @param {?=} parentStyle
-     * @return {?}
-     */
-    function (styles, id, priority, type, forChangeTheme, parentStyle) {
-        /** @type {?} */
-        var newId = id || (/** @type {?} */ (styles));
-        /** @type {?} */
+    LyTheme2.prototype._createStyleContent2 = function (styles, id, priority, type, forChangeTheme, parentStyle) {
+        var newId = id || styles;
         var isNewStyle = null;
         if (!_STYLE_MAP.has(newId)) {
             isNewStyle = true;
             _STYLE_MAP.set(newId, {
                 priority: priority,
-                styles: (/** @type {?} */ (styles)),
+                styles: styles,
                 type: type,
                 css: {},
                 id: id,
                 parentStyle: parentStyle
             });
         }
-        /** @type {?} */
-        var styleMap = (/** @type {?} */ (_STYLE_MAP.get(newId)));
-        /** @type {?} */
+        var styleMap = _STYLE_MAP.get(newId);
         var themeName = this.initialTheme;
-        /** @type {?} */
         var isCreated = isNewStyle || !(styleMap.classes || styleMap[themeName]);
         if (isCreated || forChangeTheme) {
-            /**
-             * create new style for new theme
-             * @type {?}
-             */
+            /** create new style for new theme */
             var css = void 0;
-            /** @type {?} */
-            var themeMap = (/** @type {?} */ (this.themeMap.get(this.initialTheme)));
-            /** @type {?} */
-            var config = (/** @type {?} */ (this.core.get(themeMap.change || themeName)));
+            var themeMap = this.themeMap.get(this.initialTheme);
+            var config = this.core.get(themeMap.change || themeName);
             if (typeof styles === 'function') {
                 styleMap.requireUpdate = true;
-                css = groupStyleToString(styleMap, (/** @type {?} */ (styles(config, this))), themeName, id, type, config);
+                css = groupStyleToString(styleMap, styles(config, this), themeName, id, type, config);
                 if (!forChangeTheme) {
                     styleMap.css[themeName] = css;
                 }
             }
             else {
                 /** create a new id for style that does not <-<require>-> changes */
-                css = groupStyleToString(styleMap, (/** @type {?} */ (styles)), themeName, (/** @type {?} */ (newId)), type, config);
+                css = groupStyleToString(styleMap, styles, themeName, newId, type, config);
                 styleMap.css = css;
             }
             if (!this.elements.has(newId)) {
-                /** @type {?} */
                 var newEl = this._createElementStyle(css);
                 if (styleMap.requireUpdate) {
                     // This is required for when a theme changes
@@ -1349,8 +858,7 @@ var LyTheme2 = /** @class */ (function () {
                 this.core.renderer.appendChild(this._createStyleContainer(styleMap.priority), newEl);
             }
             if (forChangeTheme) {
-                /** @type {?} */
-                var el = (/** @type {?} */ (this.elements.get(newId)));
+                var el = this.elements.get(newId);
                 el.innerText = css;
             }
         }
@@ -1360,37 +868,24 @@ var LyTheme2 = /** @class */ (function () {
              * for ssr or hmr
              */
             if (!this.elements.has(newId)) {
-                /** @type {?} */
                 var _css = styleMap.css[themeName] || styleMap.css;
-                /** @type {?} */
-                var map$$1 = this.stylesInDocument.styleElementGlobalMap;
+                var map = this.stylesInDocument.styleElementGlobalMap;
                 if (styleMap.requireUpdate) {
                     this.elements.set(newId, this._createElementStyle(_css));
                     this.core.renderer.appendChild(this._createStyleContainer(styleMap.priority), this.elements.get(newId));
                 }
-                else if (!map$$1.has(newId)) {
-                    map$$1.set(newId, this._createElementStyle(_css));
-                    this.core.renderer.appendChild(this._createStyleContainer(styleMap.priority), map$$1.get(newId));
+                else if (!map.has(newId)) {
+                    map.set(newId, this._createElementStyle(_css));
+                    this.core.renderer.appendChild(this._createStyleContainer(styleMap.priority), map.get(newId));
                 }
             }
         }
         return styleMap.classes || styleMap[themeName];
     };
-    /**
-     * @private
-     * @param {?} priority
-     * @return {?}
-     */
-    LyTheme2.prototype._createStyleContainer = /**
-     * @private
-     * @param {?} priority
-     * @return {?}
-     */
-    function (priority) {
+    LyTheme2.prototype._createStyleContainer = function (priority) {
         priority = priority || 0;
         var styleContainers = this.stylesInDocument.styleContainers;
         if (!styleContainers.has(priority)) {
-            /** @type {?} */
             var el = this.core.renderer.createElement("ly-s-c");
             if (isDevMode()) {
                 this.core.renderer.setAttribute(el, 'priority', "" + priority);
@@ -1404,56 +899,23 @@ var LyTheme2 = /** @class */ (function () {
         else {
             return styleContainers.get(priority);
         }
-        /** @type {?} */
         var refChild = this.findNode(priority);
         this.core.renderer.insertBefore(this._document.body, styleContainers.get(priority), refChild);
         return styleContainers.get(priority);
     };
-    /**
-     * @private
-     * @param {?} index
-     * @return {?}
-     */
-    LyTheme2.prototype.findNode = /**
-     * @private
-     * @param {?} index
-     * @return {?}
-     */
-    function (index) {
+    LyTheme2.prototype.findNode = function (index) {
         var styleContainers = this.stylesInDocument.styleContainers;
-        /** @type {?} */
         var keys = (Array.from(styleContainers.keys())).sort();
-        /** @type {?} */
         var key = keys.find(function (_) { return index < _; });
         return (key !== undefined && styleContainers.get(key)) || this.core.firstElement;
     };
-    /**
-     * @private
-     * @param {?} css
-     * @return {?}
-     */
-    LyTheme2.prototype._createElementStyle = /**
-     * @private
-     * @param {?} css
-     * @return {?}
-     */
-    function (css) {
-        /** @type {?} */
+    LyTheme2.prototype._createElementStyle = function (css) {
         var styleElement = this.core.renderer.createElement('style');
-        /** @type {?} */
         var styleText = this.core.renderer.createText(css);
         this.core.renderer.appendChild(styleElement, styleText);
         return styleElement;
     };
-    /**
-     * @param {?} fn
-     * @return {?}
-     */
-    LyTheme2.prototype.requestAnimationFrame = /**
-     * @param {?} fn
-     * @return {?}
-     */
-    function (fn) {
+    LyTheme2.prototype.requestAnimationFrame = function (fn) {
         if (typeof requestAnimationFrame === 'function') {
             this._ngZone.runOutsideAngular(function () {
                 requestAnimationFrame(function () {
@@ -1465,68 +927,41 @@ var LyTheme2 = /** @class */ (function () {
             fn();
         }
     };
-    /**
-     * @template T
-     * @param {?} classes
-     * @return {?}
-     */
-    LyTheme2.prototype.toClassSelector = /**
-     * @template T
-     * @param {?} classes
-     * @return {?}
-     */
-    function (classes) {
-        /** @type {?} */
+    LyTheme2.prototype.toClassSelector = function (classes) {
         var newClasses = {};
-        for (var key in (/** @type {?} */ ((/** @type {?} */ (classes))))) {
+        for (var key in classes) {
             if (classes.hasOwnProperty(key)) {
                 newClasses[key] = "." + classes[key];
             }
         }
-        return (/** @type {?} */ ((/** @type {?} */ (newClasses))));
+        return newClasses;
     };
-    LyTheme2.decorators = [
-        { type: Injectable }
-    ];
-    /** @nocollapse */
-    LyTheme2.ctorParameters = function () { return [
-        { type: StylesInDocument },
-        { type: CoreTheme },
-        { type: undefined, decorators: [{ type: Inject, args: [LY_THEME_NAME,] }] },
-        { type: undefined, decorators: [{ type: Inject, args: [DOCUMENT,] }] },
-        { type: NgZone }
-    ]; };
+    LyTheme2 = __decorate([
+        Injectable(),
+        __param(2, Inject(LY_THEME_NAME)),
+        __param(3, Inject(DOCUMENT)),
+        __metadata("design:paramtypes", [StylesInDocument,
+            CoreTheme, Object, Object, NgZone])
+    ], LyTheme2);
     return LyTheme2;
 }());
-/**
- * @param {?} styleMap
- * @param {?} styles
- * @param {?} themeName
- * @param {?} id
- * @param {?} typeStyle
- * @param {?} themeVariables
- * @return {?}
- */
 function groupStyleToString(styleMap, styles, themeName, id, typeStyle, themeVariables) {
     // for styles type string
     if (typeStyle === TypeStyle.OnlyOne) {
         // use current class or set new
-        /** @type {?} */
         var className = styleMap.requireUpdate
             ? styleMap[themeName] || (styleMap[themeName] = createNextClassId())
             : styleMap.classes
                 ? styleMap.classes
                 : styleMap.classes = createNextClassId();
-        /** @type {?} */
         var rules = void 0;
         if (typeof styles === 'string') {
             rules = "." + className + "{" + styles + "}";
         }
         else {
-            rules = styleToString(id, null, (/** @type {?} */ (styles)), themeVariables, (/** @type {?} */ (className)));
+            rules = styleToString(id, null, styles, themeVariables, className);
         }
         if (styleMap.parentStyle) {
-            /** @type {?} */
             var styleMapOfParentStyle = _STYLE_MAP.get(styleMap.parentStyle);
             if (!styleMapOfParentStyle) {
                 throw new Error("The parentStyle not exist or is called before being created.");
@@ -1536,11 +971,8 @@ function groupStyleToString(styleMap, styles, themeName, id, typeStyle, themeVar
         return rules;
     }
     // for multiples styles
-    /** @type {?} */
     var classesMap = styleMap[themeName] || (styleMap[themeName] = {});
-    /** @type {?} */
     var content = '';
-    /** @type {?} */
     var name = styles.$name ? styles.$name + "-" : '';
     // set priority
     if (styles.$priority != null) {
@@ -1548,33 +980,24 @@ function groupStyleToString(styleMap, styles, themeName, id, typeStyle, themeVar
     }
     for (var key in styles) {
         if (styles.hasOwnProperty(key)) {
-            /** @type {?} */
             var value = styles[key];
             if (key === '$keyframes') {
-                content += keyframesToString(name, classesMap, (/** @type {?} */ (value)), themeVariables);
+                content += keyframesToString(name, classesMap, value, themeVariables);
             }
             else if (typeof value === 'object' || value === null) {
                 // set new id if not exist
-                /** @type {?} */
                 var currentClassName = key in classesMap
                     ? classesMap[key]
                     : classesMap[key] = isDevMode() ? toClassNameValid("y-" + name + key + "-" + createNextClassId()) : createNextClassId();
-                /** @type {?} */
-                var style = styleToString(key, styles.$name, (/** @type {?} */ (value)), themeVariables, currentClassName);
+                var style = styleToString(key, styles.$name, value, themeVariables, currentClassName);
                 content += style;
             }
         }
     }
     return replaceRefs(content, classesMap);
 }
-/**
- * @param {?} str
- * @param {?} data
- * @return {?}
- */
 function replaceRefs(str, data) {
     return str.replace(REF_REG_EXP, function (_match, token) {
-        /** @type {?} */
         var className = data[token];
         if (className) {
             return "." + data[token];
@@ -1586,22 +1009,11 @@ function replaceRefs(str, data) {
 }
 /**
  * {color:'red'} to .className{color: red}
- * @param {?} key
- * @param {?} $name
- * @param {?} ob
- * @param {?} themeVariables
- * @param {?} currentKey
- * @param {?=} parentKey
- * @return {?}
  */
 function styleToString(key, $name, ob, themeVariables, currentKey, parentKey) {
-    /** @type {?} */
     var content = '';
-    /** @type {?} */
     var subContent = '';
-    /** @type {?} */
     var keyAndValue = '';
-    /** @type {?} */
     var newKey;
     if (parentKey) {
         if (currentKey.indexOf('&') !== -1) {
@@ -1625,23 +1037,21 @@ function styleToString(key, $name, ob, themeVariables, currentKey, parentKey) {
     }
     for (var styleKey in ob) {
         if (ob.hasOwnProperty(styleKey)) {
-            /** @type {?} */
             var element = ob[styleKey];
             // Omit style with value null
             if (element != null) {
                 // Check if is Object literal
                 if (element.constructor === Object) {
-                    subContent += styleToString(key, $name, (/** @type {?} */ (element)), themeVariables, styleKey, newKey);
+                    subContent += styleToString(key, $name, element, themeVariables, styleKey, newKey);
                 }
                 else {
-                    keyAndValue += convertToStyleValue(styleKey, (/** @type {?} */ (element)), themeVariables);
+                    keyAndValue += convertToStyleValue(styleKey, element, themeVariables);
                 }
             }
         }
     }
     if (keyAndValue) {
         if (isDevMode()) {
-            /** @type {?} */
             var lin = '\n\n';
             if ($name) {
                 lin += "/** Style Sheet name: " + $name + " */\n";
@@ -1663,17 +1073,9 @@ function styleToString(key, $name, ob, themeVariables, currentKey, parentKey) {
     }
     return content + subContent;
 }
-/**
- * @param {?} key
- * @param {?} value
- * @param {?} themeVariables
- * @return {?}
- */
 function convertToStyleValue(key, value, themeVariables) {
-    /** @type {?} */
     var newStyleKey = converterToCssKeyAndStyleCache(key, themeVariables);
     if (value.constructor === Array) {
-        /** @type {?} */
         var lin = '';
         for (var index = 0; index < value.length; index++) {
             lin += newStyleKey + ":" + value[index] + ";";
@@ -1684,26 +1086,15 @@ function convertToStyleValue(key, value, themeVariables) {
         return newStyleKey + ":" + value + ";";
     }
 }
-/**
- * @param {?} styleName
- * @param {?} keysMap
- * @param {?} keyframes
- * @param {?} themeVariables
- * @return {?}
- */
 function keyframesToString(styleName, keysMap, keyframes, themeVariables) {
-    /** @type {?} */
     var content = '';
     for (var name_1 in keyframes) {
         if (keyframes.hasOwnProperty(name_1)) {
-            /** @type {?} */
             var keyframe = keyframes[name_1];
             // Sometimes the name of a class can be the same as the name of a keyframe,
             // so we add a character to be different
-            /** @type {?} */
             var newUniqueName = "@\u0433.->-" + name_1;
             // set new id if not exist
-            /** @type {?} */
             var newName = newUniqueName in keysMap
                 ? keysMap[newUniqueName]
                 : keysMap[newUniqueName] = isDevMode() ? toClassNameValid("" + styleName + name_1 + "-" + createNextKeyframeId() + "-v") : createNextKeyframeId();
@@ -1711,13 +1102,11 @@ function keyframesToString(styleName, keysMap, keyframes, themeVariables) {
             for (var percent in keyframe) {
                 if (keyframe.hasOwnProperty(percent)) {
                     content += percent + "%{";
-                    /** @type {?} */
                     var styles = keyframe[percent];
                     for (var key in styles) {
                         if (styles.hasOwnProperty(key)) {
-                            /** @type {?} */
                             var val = styles[key];
-                            content += convertToStyleValue(key, (/** @type {?} */ (val)), themeVariables);
+                            content += convertToStyleValue(key, val, themeVariables);
                         }
                     }
                     content += "}";
@@ -1728,13 +1117,7 @@ function keyframesToString(styleName, keysMap, keyframes, themeVariables) {
     }
     return content;
 }
-/**
- * @param {?} str
- * @param {?} themeVariables
- * @return {?}
- */
 function converterToCssKeyAndStyle(str, themeVariables) {
-    /** @type {?} */
     var hyphenCase = toHyphenCase(str);
     if (hyphenCase.indexOf(DirAlias.before) !== -1) {
         return dirCache(str, hyphenCase, themeVariables, DirAlias.before);
@@ -1750,113 +1133,59 @@ function converterToCssKeyAndStyle(str, themeVariables) {
     }
     return hyphenCase;
 }
-/**
- * @param {?} str
- * @return {?}
- */
 function toClassNameValid(str) {
-    /** @type {?} */
     var s = str.replace(/^[0-9]|[^\w\-]/g, function (_) {
         return "_" + _.charCodeAt(0);
     });
     return toHyphenCase(s);
 }
-/**
- * @param {?} str
- * @return {?}
- */
 function toHyphenCase(str) {
     return str.replace(/([A-Z])/g, function (g) { return "-" + g[0].toLowerCase(); });
 }
-/**
- * @param {?} str
- * @param {?} themeVariables
- * @return {?}
- */
 function converterToCssKeyAndStyleCache(str, themeVariables) {
-    /** @type {?} */
-    var map$$1 = STYLE_KEYS_MAP[themeVariables.direction];
-    return str in map$$1
-        ? map$$1[str]
-        : map$$1[str] = converterToCssKeyAndStyle(str, themeVariables);
+    var map = STYLE_KEYS_MAP[themeVariables.direction];
+    return str in map
+        ? map[str]
+        : map[str] = converterToCssKeyAndStyle(str, themeVariables);
 }
-/** @type {?} */
 var ignoreCSSKEY = {
     'break-after': 'break-after',
     'break-before': 'break-before',
     'page-break-after': 'page-break-after',
     'page-break-before': 'page-break-before'
 };
-/** @type {?} */
 var STYLE_KEYS_MAP = {
     rtl: __assign({}, ignoreCSSKEY),
     ltr: __assign({}, ignoreCSSKEY)
 };
-/** @type {?} */
 var BOTTOM = 'bottom';
-/** @type {?} */
 var TOP = 'top';
-/**
- * @param {?} original
- * @param {?} val
- * @param {?} themeVariables
- * @param {?} dirAlias
- * @return {?}
- */
 function dirCache(original, val, themeVariables, dirAlias) {
-    /** @type {?} */
-    var map$$1 = STYLE_KEYS_MAP[themeVariables.direction];
+    var map = STYLE_KEYS_MAP[themeVariables.direction];
     // Replace in original, for do not repeat this again
-    return map$$1[original] = val.replace(dirAlias, themeVariables.getDirection(dirAlias));
+    return map[original] = val.replace(dirAlias, themeVariables.getDirection(dirAlias));
 }
-/**
- * @param {?} original
- * @param {?} val
- * @param {?} themeVariables
- * @param {?} pos
- * @param {?} to
- * @return {?}
- */
 function YPositionCache(original, val, themeVariables, pos, to) {
-    /** @type {?} */
-    var map$$1 = STYLE_KEYS_MAP[themeVariables.direction];
+    var map = STYLE_KEYS_MAP[themeVariables.direction];
     // Replace in original, for do not repeat this again
-    return map$$1[original] = val.replace(pos, to);
+    return map[original] = val.replace(pos, to);
 }
-/**
- * @param {?} str
- * @return {?}
- */
 function capitalizeFirstLetter(str) {
     return str[0].toUpperCase() + str.slice(1);
 }
-/**
- * @return {?}
- */
 function createNextClassId() {
     return "i" + (nextClassId++).toString(36);
 }
-/**
- * @return {?}
- */
 function createNextKeyframeId() {
     return "k" + (nextKeyFrameId++).toString(36);
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 var NgTranscludeDirective = /** @class */ (function () {
     function NgTranscludeDirective(_viewRef) {
         this._viewRef = _viewRef;
     }
     Object.defineProperty(NgTranscludeDirective.prototype, "ngTransclude", {
-        set: /**
-         * @param {?} templateRef
-         * @return {?}
-         */
-        function (templateRef) {
+        set: function (templateRef) {
             if (templateRef) {
                 this._ngTransclude = templateRef;
                 this._viewRef.createEmbeddedView(templateRef);
@@ -1870,71 +1199,48 @@ var NgTranscludeDirective = /** @class */ (function () {
         configurable: true
     });
     Object.defineProperty(NgTranscludeDirective.prototype, "getNgTransclude", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._ngTransclude;
         },
         enumerable: true,
         configurable: true
     });
-    /**
-     * @return {?}
-     */
-    NgTranscludeDirective.prototype.ngOnDestroy = /**
-     * @return {?}
-     */
-    function () {
+    NgTranscludeDirective.prototype.ngOnDestroy = function () {
         this._viewRef.remove();
     };
-    NgTranscludeDirective.decorators = [
-        { type: Directive, args: [{
-                    selector: '[ngTransclude]'
-                },] }
-    ];
-    /** @nocollapse */
-    NgTranscludeDirective.ctorParameters = function () { return [
-        { type: ViewContainerRef }
-    ]; };
-    NgTranscludeDirective.propDecorators = {
-        ngTransclude: [{ type: Input }]
-    };
+    __decorate([
+        Input(),
+        __metadata("design:type", TemplateRef),
+        __metadata("design:paramtypes", [TemplateRef])
+    ], NgTranscludeDirective.prototype, "ngTransclude", null);
+    NgTranscludeDirective = __decorate([
+        Directive({
+            selector: '[ngTransclude]'
+        }),
+        __metadata("design:paramtypes", [ViewContainerRef])
+    ], NgTranscludeDirective);
     return NgTranscludeDirective;
 }());
 var NgTranscludeModule = /** @class */ (function () {
     function NgTranscludeModule() {
     }
-    NgTranscludeModule.decorators = [
-        { type: NgModule, args: [{
-                    exports: [NgTranscludeDirective],
-                    declarations: [NgTranscludeDirective]
-                },] }
-    ];
+    NgTranscludeModule = __decorate([
+        NgModule({
+            exports: [NgTranscludeDirective],
+            declarations: [NgTranscludeDirective]
+        })
+    ], NgTranscludeModule);
     return NgTranscludeModule;
 }());
 /**
  * @ignore
- * @param {?} element
- * @return {?}
  */
 function getNativeElement(element) {
     return element instanceof ElementRef ? element.nativeElement : element;
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
 var DEFAULT_VALUE = '';
-/** @type {?} */
 var STYLE_PRIORITY = -1;
-/**
- * @template T
- * @param {?} base
- * @return {?}
- */
 function mixinStyleUpdater(base) {
     return /** @class */ (function (_super) {
         __extends(class_1, _super);
@@ -1945,44 +1251,20 @@ function mixinStyleUpdater(base) {
             }
             return _super.apply(this, __spread(args)) || this;
         }
-        /**
-         * @return {?}
-         */
-        class_1.prototype.setAutoContrast = /**
-         * @return {?}
-         */
-        function () {
+        class_1.prototype.setAutoContrast = function () {
             this._autoContrast = true;
         };
-        /**
-         * @param {?} element
-         * @return {?}
-         */
-        class_1.prototype.updateStyle = /**
-         * @param {?} element
-         * @return {?}
-         */
-        function (element) {
-            /** @type {?} */
+        class_1.prototype.updateStyle = function (element) {
             var __bg = this._superHyperInternalPropertyBg;
-            /** @type {?} */
             var __color = this._superHyperInternalPropertyColor;
-            /** @type {?} */
             var __raised = this._superHyperInternalPropertyRaised;
-            /** @type {?} */
             var __elevation = this._superHyperInternalPropertyElevation;
-            /** @type {?} */
             var __disabled = this._superHyperInternalPropertyDisabled;
-            /** @type {?} */
             var __outlined = this._superHyperInternalPropertyOutlined;
-            /** @type {?} */
             var __shadowColor = this._superHyperInternalPropertyShadowColor;
-            /** @type {?} */
             var __isContrast = this._autoContrast && !__color || __color === 'auto';
-            /** @type {?} */
             var newKey = "common----:" + (__bg || DEFAULT_VALUE) + "\u00B7" + (__color || DEFAULT_VALUE) + "\u00B7" + (__raised || DEFAULT_VALUE) + "\u00B7" + (__elevation || DEFAULT_VALUE) + "\u00B7" + (__disabled || DEFAULT_VALUE) + "\u00B7" + (__outlined || DEFAULT_VALUE) + "\u00B7" + (__shadowColor || DEFAULT_VALUE) + "\u00B7" + (__isContrast || DEFAULT_VALUE);
             this._classNameAnonymous = this._theme.addStyle(newKey, function (theme) {
-                /** @type {?} */
                 var style = {};
                 if (__outlined) {
                     style.border = '1px solid currentColor';
@@ -2008,9 +1290,7 @@ function mixinStyleUpdater(base) {
                         if (!__bg) {
                             style.background = theme.background.primary.default;
                         }
-                        /** @type {?} */
                         var backgroundColorCss = style.background !== __bg && theme.colorOf(__bg || 'background:primary', 'shadow');
-                        /** @type {?} */
                         var shadowColor = (__shadowColor && theme.colorOf(__shadowColor)) || backgroundColorCss || style.background || style.color || theme.shadow;
                         style.boxShadow = shadowBuilder(__elevation || 3, shadowColor);
                         if (!__elevation) {
@@ -2020,42 +1300,24 @@ function mixinStyleUpdater(base) {
                         }
                     }
                 }
-                return (/** @type {?} */ (style));
+                return style;
             }, getNativeElement(element), this._classNameAnonymous, STYLE_PRIORITY);
         };
         return class_1;
     }(base));
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/**
- * @param {?} value
- * @return {?}
- */
 function toBoolean(value) {
     return value != null && "" + value !== 'false';
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 var RippleRef = /** @class */ (function () {
     function RippleRef() {
         this.state = true;
         this.timestamp = -Date.now();
         this.container = document.createElement('span');
     }
-    /**
-     * @return {?}
-     */
-    RippleRef.prototype.end = /**
-     * @return {?}
-     */
-    function () {
+    RippleRef.prototype.end = function () {
         this.state = false;
         this.timestamp += Date.now();
     };
@@ -2071,7 +1333,7 @@ var Ripple = /** @class */ (function () {
         this._eventHandlers = new Map();
         this.config = {};
         this._transitionDuration = this._themeVariables.ripple.duration;
-        this._eventOptions = (/** @type {?} */ ({ passive: true }));
+        this._eventOptions = { passive: true };
         if (Platform.isBrowser) {
             if (typeof PointerEvent === 'function' && typeof TouchEvent === 'function') {
                 this._eventHandlers.set('pointerdown', this.onPointerDown.bind(this));
@@ -2089,39 +1351,17 @@ var Ripple = /** @class */ (function () {
             this.setTriggerElement(_triggerElement);
         }
     }
-    /**
-     * @param {?} config
-     * @return {?}
-     */
-    Ripple.prototype.setConfig = /**
-     * @param {?} config
-     * @return {?}
-     */
-    function (config) {
+    Ripple.prototype.setConfig = function (config) {
         this.config = config;
     };
     Object.defineProperty(Ripple.prototype, "_rectContainer", {
-        get: /**
-         * @private
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._containerElement.getBoundingClientRect();
         },
         enumerable: true,
         configurable: true
     });
-    /**
-     * @private
-     * @param {?} element
-     * @return {?}
-     */
-    Ripple.prototype.setTriggerElement = /**
-     * @private
-     * @param {?} element
-     * @return {?}
-     */
-    function (element) {
+    Ripple.prototype.setTriggerElement = function (element) {
         var _this = this;
         if (element) {
             this._ngZone.runOutsideAngular(function () {
@@ -2130,24 +1370,12 @@ var Ripple = /** @class */ (function () {
         }
         this._triggerElement = element;
     };
-    /**
-     * @private
-     * @param {?} styles
-     * @return {?}
-     */
-    Ripple.prototype.createRipple = /**
-     * @private
-     * @param {?} styles
-     * @return {?}
-     */
-    function (styles) {
+    Ripple.prototype.createRipple = function (styles) {
         this._rippleRef = new RippleRef();
-        /** @type {?} */
         var container = this._rippleRef.container;
         container.className = this.classes.rippleContainer;
         for (var key in styles) {
             if (styles.hasOwnProperty(key)) {
-                /** @type {?} */
                 var element = styles[key];
                 if (typeof element === 'number') {
                     container.style[key] = element + "px";
@@ -2161,64 +1389,27 @@ var Ripple = /** @class */ (function () {
         window.getComputedStyle(container).getPropertyValue('opacity');
         container.style.transform = "scale(1)";
     };
-    /**
-     * @private
-     * @param {?} event
-     * @return {?}
-     */
-    Ripple.prototype.onPointerDown = /**
-     * @private
-     * @param {?} event
-     * @return {?}
-     */
-    function (event) {
+    Ripple.prototype.onPointerDown = function (event) {
         if (!this.config.disabled) {
             /**Destroy previous ripple if exist */
             this.endRipple();
             this.startRipple(event, this.config);
         }
     };
-    /**
-     * @private
-     * @param {?} _event
-     * @return {?}
-     */
-    Ripple.prototype.onPointerLeave = /**
-     * @private
-     * @param {?} _event
-     * @return {?}
-     */
-    function (_event) {
+    Ripple.prototype.onPointerLeave = function (_event) {
         if (!this.config.disabled) {
             this.endRipple();
         }
     };
-    /**
-     * @param {?} event
-     * @param {?} rippleConfig
-     * @return {?}
-     */
-    Ripple.prototype.startRipple = /**
-     * @param {?} event
-     * @param {?} rippleConfig
-     * @return {?}
-     */
-    function (event, rippleConfig) {
-        /** @type {?} */
+    Ripple.prototype.startRipple = function (event, rippleConfig) {
         var containerRect = this._rectContainer;
-        /** @type {?} */
-        var x = event.clientX;
-        /** @type {?} */
-        var y = event.clientY;
+        var x = event.clientX, y = event.clientY;
         if (rippleConfig.centered) {
             x = containerRect.left + containerRect.width / 2;
             y = containerRect.top + containerRect.height / 2;
         }
-        /** @type {?} */
         var left = x - containerRect.left;
-        /** @type {?} */
         var top = y - containerRect.top;
-        /** @type {?} */
         var radius = rippleConfig.radius === 'containerSize' ? maxSize(containerRect) / 2 : rippleConfig.radius || rippleRadius(x, y, containerRect);
         if (rippleConfig.percentageToIncrease) {
             radius += radius * rippleConfig.percentageToIncrease / 100;
@@ -2231,33 +1422,13 @@ var Ripple = /** @class */ (function () {
             transitionDuration: this._transitionDuration + "ms"
         });
     };
-    /**
-     * @private
-     * @param {?} fn
-     * @param {?=} delay
-     * @return {?}
-     */
-    Ripple.prototype.runTimeoutOutsideZone = /**
-     * @private
-     * @param {?} fn
-     * @param {?=} delay
-     * @return {?}
-     */
-    function (fn, delay) {
+    Ripple.prototype.runTimeoutOutsideZone = function (fn, delay) {
         if (delay === void 0) { delay = 0; }
         this._ngZone.runOutsideAngular(function () { return setTimeout(fn, delay); });
     };
-    /**
-     * @return {?}
-     */
-    Ripple.prototype.endRipple = /**
-     * @return {?}
-     */
-    function () {
+    Ripple.prototype.endRipple = function () {
         var _this = this;
-        /** @type {?} */
         var rippleRef = this._rippleRef;
-        /** @type {?} */
         var duration = this._transitionDuration;
         if (rippleRef && rippleRef.state) {
             rippleRef.end();
@@ -2268,55 +1439,32 @@ var Ripple = /** @class */ (function () {
                 // }, rippleRef.timestamp < duration ? duration / (duration * .001 + 1) : 0);
             }, rippleRef.timestamp < duration ? duration * .15 : 0);
             this.runTimeoutOutsideZone(function () {
-                (/** @type {?} */ (rippleRef.container.parentNode)).removeChild(rippleRef.container);
+                rippleRef.container.parentNode.removeChild(rippleRef.container);
                 // }, rippleRef.timestamp < duration ? duration * 2 : duration);
                 // }, rippleRef.timestamp < duration ? duration / (duration * .001 + 1) * 2 : duration);
             }, rippleRef.timestamp < duration ? duration * 2 : duration);
             this._rippleRef = undefined;
         }
     };
-    /**
-     * @return {?}
-     */
-    Ripple.prototype.removeEvents = /**
-     * @return {?}
-     */
-    function () {
+    Ripple.prototype.removeEvents = function () {
         var _this = this;
         if (this._triggerElement) {
             this._eventHandlers.forEach(function (fn, type) {
-                (/** @type {?} */ (_this._triggerElement)).removeEventListener(type, fn, _this._eventOptions);
+                _this._triggerElement.removeEventListener(type, fn, _this._eventOptions);
             });
         }
     };
     return Ripple;
 }());
-/**
- * @param {?} x
- * @param {?} y
- * @param {?} rect
- * @return {?}
- */
 function rippleRadius(x, y, rect) {
-    /** @type {?} */
     var distX = Math.max(Math.abs(x - rect.left), Math.abs(x - rect.right));
-    /** @type {?} */
     var distY = Math.max(Math.abs(y - rect.top), Math.abs(y - rect.bottom));
     return Math.sqrt(distX * distX + distY * distY);
 }
-/**
- * @param {?} rect
- * @return {?}
- */
 function maxSize(rect) {
     return Math.max(rect.width, rect.height);
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
 var LY_COMMON_STYLES = {
     fill: {
         position: 'absolute',
@@ -2360,22 +1508,14 @@ var LyCoreStyles = /** @class */ (function () {
         this.theme = theme;
         this.classes = this.theme.addStyleSheet(LY_COMMON_STYLES);
     }
-    LyCoreStyles.decorators = [
-        { type: Injectable, args: [{ providedIn: 'root' },] }
-    ];
-    /** @nocollapse */
-    LyCoreStyles.ctorParameters = function () { return [
-        { type: LyTheme2 }
-    ]; };
-    /** @nocollapse */ LyCoreStyles.ngInjectableDef = defineInjectable({ factory: function LyCoreStyles_Factory() { return new LyCoreStyles(inject(LyTheme2)); }, token: LyCoreStyles, providedIn: "root" });
+    LyCoreStyles.ngInjectableDef = defineInjectable({ factory: function LyCoreStyles_Factory() { return new LyCoreStyles(inject(LyTheme2)); }, token: LyCoreStyles, providedIn: "root" });
+    LyCoreStyles = __decorate([
+        Injectable({ providedIn: 'root' }),
+        __metadata("design:paramtypes", [LyTheme2])
+    ], LyCoreStyles);
     return LyCoreStyles;
 }());
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
 var styles = function (theme) { return ({
     rippleContainer: {
         position: 'absolute',
@@ -2395,28 +1535,16 @@ var LyRippleService = /** @class */ (function () {
         this.theme = theme;
         this.classes = this.theme.addStyleSheet(styles);
     }
-    LyRippleService.decorators = [
-        { type: Injectable, args: [{
-                    providedIn: 'root'
-                },] }
-    ];
-    /** @nocollapse */
-    LyRippleService.ctorParameters = function () { return [
-        { type: LyTheme2 }
-    ]; };
-    /** @nocollapse */ LyRippleService.ngInjectableDef = defineInjectable({ factory: function LyRippleService_Factory() { return new LyRippleService(inject(LyTheme2)); }, token: LyRippleService, providedIn: "root" });
+    LyRippleService.ngInjectableDef = defineInjectable({ factory: function LyRippleService_Factory() { return new LyRippleService(inject(LyTheme2)); }, token: LyRippleService, providedIn: "root" });
+    LyRippleService = __decorate([
+        Injectable({
+            providedIn: 'root'
+        }),
+        __metadata("design:paramtypes", [LyTheme2])
+    ], LyRippleService);
     return LyRippleService;
 }());
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/**
- * @template T
- * @param {?} base
- * @return {?}
- */
 function mixinDisableRipple(base) {
     return /** @class */ (function (_super) {
         __extends(class_1, _super);
@@ -2430,27 +1558,17 @@ function mixinDisableRipple(base) {
             return _this;
         }
         Object.defineProperty(class_1.prototype, "disableRipple", {
-            get: /**
-             * @return {?}
-             */
-            function () { return this._disableRipple; },
-            set: /**
-             * @param {?} val
-             * @return {?}
-             */
-            function (val) {
+            get: function () { return this._disableRipple; },
+            set: function (val) {
                 var _this = this;
                 if (Platform.isBrowser && val !== this._disableRipple) {
-                    /** @type {?} */
                     var newVal = this._disableRipple = toBoolean(val);
                     // remove previous ripple if exist
                     this._removeRippleEvents();
                     if (!newVal) {
                         // add ripple
                         Promise.resolve(null).then(function () {
-                            /** @type {?} */
                             var triggerElement = _this._triggerElement.nativeElement;
-                            /** @type {?} */
                             var rippleContainer = (_this._rippleContainer && _this._rippleContainer.nativeElement) || triggerElement;
                             _this._ripple = new Ripple(_this._theme.variables, _this._ngZone, _this._theme.addStyleSheet(styles), rippleContainer, triggerElement);
                             _this._ripple.setConfig(_this._rippleConfig);
@@ -2461,13 +1579,7 @@ function mixinDisableRipple(base) {
             enumerable: true,
             configurable: true
         });
-        /**
-         * @return {?}
-         */
-        class_1.prototype._removeRippleEvents = /**
-         * @return {?}
-         */
-        function () {
+        class_1.prototype._removeRippleEvents = function () {
             if (Platform.isBrowser) {
                 if (this._ripple) {
                     this._ripple.removeEvents();
@@ -2479,15 +1591,6 @@ function mixinDisableRipple(base) {
     }(base));
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/**
- * @template T
- * @param {?} base
- * @return {?}
- */
 function mixinDisabled(base) {
     return /** @class */ (function (_super) {
         __extends(class_1, _super);
@@ -2501,15 +1604,8 @@ function mixinDisabled(base) {
             return _this;
         }
         Object.defineProperty(class_1.prototype, "disabled", {
-            get: /**
-             * @return {?}
-             */
-            function () { return this._superHyperInternalPropertyDisabled; },
-            set: /**
-             * @param {?} value
-             * @return {?}
-             */
-            function (value) { this._superHyperInternalPropertyDisabled = toBoolean(value); },
+            get: function () { return this._superHyperInternalPropertyDisabled; },
+            set: function (value) { this._superHyperInternalPropertyDisabled = toBoolean(value); },
             enumerable: true,
             configurable: true
         });
@@ -2517,15 +1613,6 @@ function mixinDisabled(base) {
     }(base));
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/**
- * @template T
- * @param {?} base
- * @return {?}
- */
 function mixinColor(base) {
     return /** @class */ (function (_super) {
         __extends(class_1, _super);
@@ -2537,16 +1624,8 @@ function mixinColor(base) {
             return _super.apply(this, __spread(args)) || this;
         }
         Object.defineProperty(class_1.prototype, "color", {
-            get: /**
-             * @return {?}
-             */
-            function () { return this._superHyperInternalPropertyColor; },
-            set: /**
-             * @param {?} val
-             * @return {?}
-             */
-            function (val) {
-                /** @type {?} */
+            get: function () { return this._superHyperInternalPropertyColor; },
+            set: function (val) {
                 var defaultColor = val;
                 if (defaultColor !== this.color) {
                     this._superHyperInternalPropertyColor = defaultColor;
@@ -2559,15 +1638,6 @@ function mixinColor(base) {
     }(base));
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/**
- * @template T
- * @param {?} base
- * @return {?}
- */
 function mixinBg(base) {
     return /** @class */ (function (_super) {
         __extends(class_1, _super);
@@ -2579,16 +1649,8 @@ function mixinBg(base) {
             return _super.apply(this, __spread(args)) || this;
         }
         Object.defineProperty(class_1.prototype, "bg", {
-            get: /**
-             * @return {?}
-             */
-            function () { return this._superHyperInternalPropertyBg; },
-            set: /**
-             * @param {?} val
-             * @return {?}
-             */
-            function (val) {
-                /** @type {?} */
+            get: function () { return this._superHyperInternalPropertyBg; },
+            set: function (val) {
                 var defaultColor = val;
                 if (defaultColor !== this.bg) {
                     this._superHyperInternalPropertyBg = defaultColor;
@@ -2601,15 +1663,6 @@ function mixinBg(base) {
     }(base));
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/**
- * @template T
- * @param {?} base
- * @return {?}
- */
 function mixinRaised(base) {
     return /** @class */ (function (_super) {
         __extends(class_1, _super);
@@ -2621,15 +1674,8 @@ function mixinRaised(base) {
             return _super.apply(this, __spread(args)) || this;
         }
         Object.defineProperty(class_1.prototype, "raised", {
-            get: /**
-             * @return {?}
-             */
-            function () { return this._superHyperInternalPropertyRaised; },
-            set: /**
-             * @param {?} value
-             * @return {?}
-             */
-            function (value) { this._superHyperInternalPropertyRaised = toBoolean(value); },
+            get: function () { return this._superHyperInternalPropertyRaised; },
+            set: function (value) { this._superHyperInternalPropertyRaised = toBoolean(value); },
             enumerable: true,
             configurable: true
         });
@@ -2637,15 +1683,6 @@ function mixinRaised(base) {
     }(base));
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/**
- * @template T
- * @param {?} base
- * @return {?}
- */
 function mixinOutlined(base) {
     return /** @class */ (function (_super) {
         __extends(class_1, _super);
@@ -2657,15 +1694,8 @@ function mixinOutlined(base) {
             return _super.apply(this, __spread(args)) || this;
         }
         Object.defineProperty(class_1.prototype, "outlined", {
-            get: /**
-             * @return {?}
-             */
-            function () { return this._superHyperInternalPropertyOutlined; },
-            set: /**
-             * @param {?} value
-             * @return {?}
-             */
-            function (value) { this._superHyperInternalPropertyOutlined = toBoolean(value); },
+            get: function () { return this._superHyperInternalPropertyOutlined; },
+            set: function (value) { this._superHyperInternalPropertyOutlined = toBoolean(value); },
             enumerable: true,
             configurable: true
         });
@@ -2673,15 +1703,6 @@ function mixinOutlined(base) {
     }(base));
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/**
- * @template T
- * @param {?} base
- * @return {?}
- */
 function mixinElevation(base) {
     return /** @class */ (function (_super) {
         __extends(class_1, _super);
@@ -2693,15 +1714,8 @@ function mixinElevation(base) {
             return _super.apply(this, __spread(args)) || this;
         }
         Object.defineProperty(class_1.prototype, "elevation", {
-            get: /**
-             * @return {?}
-             */
-            function () { return this._superHyperInternalPropertyElevation; },
-            set: /**
-             * @param {?} value
-             * @return {?}
-             */
-            function (value) { this._superHyperInternalPropertyElevation = value; },
+            get: function () { return this._superHyperInternalPropertyElevation; },
+            set: function (value) { this._superHyperInternalPropertyElevation = value; },
             enumerable: true,
             configurable: true
         });
@@ -2709,15 +1723,6 @@ function mixinElevation(base) {
     }(base));
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/**
- * @template T
- * @param {?} base
- * @return {?}
- */
 function mixinShadowColor(base) {
     return /** @class */ (function (_super) {
         __extends(class_1, _super);
@@ -2729,15 +1734,8 @@ function mixinShadowColor(base) {
             return _super.apply(this, __spread(args)) || this;
         }
         Object.defineProperty(class_1.prototype, "shadowColor", {
-            get: /**
-             * @return {?}
-             */
-            function () { return this._superHyperInternalPropertyShadowColor; },
-            set: /**
-             * @param {?} value
-             * @return {?}
-             */
-            function (value) { this._superHyperInternalPropertyShadowColor = value; },
+            get: function () { return this._superHyperInternalPropertyShadowColor; },
+            set: function (value) { this._superHyperInternalPropertyShadowColor = value; },
             enumerable: true,
             configurable: true
         });
@@ -2745,17 +1743,7 @@ function mixinShadowColor(base) {
     }(base));
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
 var DEFAULT_TAB_INDEX = 0;
-/**
- * @template T
- * @param {?} base
- * @return {?}
- */
 function mixinTabIndex(base) {
     return /** @class */ (function (_super) {
         __extends(class_1, _super);
@@ -2769,17 +1757,10 @@ function mixinTabIndex(base) {
             return _this;
         }
         Object.defineProperty(class_1.prototype, "tabIndex", {
-            get: /**
-             * @return {?}
-             */
-            function () {
+            get: function () {
                 return this.disabled ? -1 : this._tabIndex;
             },
-            set: /**
-             * @param {?} value
-             * @return {?}
-             */
-            function (value) {
+            set: function (value) {
                 this._tabIndex = value != null ? value : DEFAULT_TAB_INDEX;
             },
             enumerable: true,
@@ -2789,16 +1770,6 @@ function mixinTabIndex(base) {
     }(base));
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
 var DEFAULT_BG = 'paper';
 var LyPaperBase = /** @class */ (function () {
     function LyPaperBase(_theme, _ngZone) {
@@ -2807,7 +1778,6 @@ var LyPaperBase = /** @class */ (function () {
     }
     return LyPaperBase;
 }());
-/** @type {?} */
 var LyPaperMixinBase = mixinStyleUpdater(mixinBg(mixinColor(mixinRaised(mixinOutlined(mixinElevation(mixinShadowColor(mixinDisableRipple(LyPaperBase))))))));
 var LyPaper = /** @class */ (function (_super) {
     __extends(LyPaper, _super);
@@ -2821,38 +1791,19 @@ var LyPaper = /** @class */ (function (_super) {
         return _this;
     }
     Object.defineProperty(LyPaper.prototype, "hasText", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._hasText;
         },
-        set: /**
-         * @param {?} val
-         * @return {?}
-         */
-        function (val) {
+        set: function (val) {
             this._hasText = toBoolean(val);
         },
         enumerable: true,
         configurable: true
     });
-    /**
-     * @return {?}
-     */
-    LyPaper.prototype.ngOnChanges = /**
-     * @return {?}
-     */
-    function () {
+    LyPaper.prototype.ngOnChanges = function () {
         this.updateStyle(this._el);
     };
-    /**
-     * @return {?}
-     */
-    LyPaper.prototype.ngOnInit = /**
-     * @return {?}
-     */
-    function () {
+    LyPaper.prototype.ngOnInit = function () {
         if (!this.bg && !this.hasText) {
             this.bg = DEFAULT_BG;
             this.updateStyle(this._el);
@@ -2861,56 +1812,41 @@ var LyPaper = /** @class */ (function (_super) {
             })));
         }
     };
-    /**
-     * @return {?}
-     */
-    LyPaper.prototype.ngOnDestroy = /**
-     * @return {?}
-     */
-    function () {
+    LyPaper.prototype.ngOnDestroy = function () {
         this._removeRippleEvents();
     };
-    LyPaper.decorators = [
-        { type: Directive, args: [{
-                    selector: "ly-paper, [ly-paper], [ly-text]",
-                    inputs: [
-                        'bg',
-                        'color',
-                        'raised',
-                        'outlined',
-                        'elevation',
-                        'shadowColor',
-                        'disableRipple'
-                    ]
-                },] }
-    ];
-    /** @nocollapse */
-    LyPaper.ctorParameters = function () { return [
-        { type: LyTheme2 },
-        { type: NgZone },
-        { type: ElementRef },
-        { type: Renderer2 }
-    ]; };
-    LyPaper.propDecorators = {
-        hasText: [{ type: Input, args: ['ly-text',] }]
-    };
+    __decorate([
+        Input('ly-text'),
+        __metadata("design:type", Object),
+        __metadata("design:paramtypes", [Object])
+    ], LyPaper.prototype, "hasText", null);
+    LyPaper = __decorate([
+        Directive({
+            selector: "ly-paper, [ly-paper], [ly-text]",
+            inputs: [
+                'bg',
+                'color',
+                'raised',
+                'outlined',
+                'elevation',
+                'shadowColor',
+                'disableRipple'
+            ]
+        }),
+        __metadata("design:paramtypes", [LyTheme2,
+            NgZone,
+            ElementRef,
+            Renderer2])
+    ], LyPaper);
     return LyPaper;
 }(LyPaperMixinBase));
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 var LyWithClass = /** @class */ (function () {
     function LyWithClass(el) {
         this.el = el;
     }
     Object.defineProperty(LyWithClass.prototype, "withClass", {
-        set: /**
-         * @param {?} val
-         * @return {?}
-         */
-        function (val) {
+        set: function (val) {
             if (!val) {
                 throw new Error("'" + val + "' is not valid className");
             }
@@ -2919,65 +1855,40 @@ var LyWithClass = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
-    LyWithClass.decorators = [
-        { type: Directive, args: [{
-                    selector: '[withClass]'
-                },] }
-    ];
-    /** @nocollapse */
-    LyWithClass.ctorParameters = function () { return [
-        { type: ElementRef }
-    ]; };
-    LyWithClass.propDecorators = {
-        withClass: [{ type: Input }]
-    };
+    __decorate([
+        Input(),
+        __metadata("design:type", String),
+        __metadata("design:paramtypes", [String])
+    ], LyWithClass.prototype, "withClass", null);
+    LyWithClass = __decorate([
+        Directive({
+            selector: '[withClass]'
+        }),
+        __metadata("design:paramtypes", [ElementRef])
+    ], LyWithClass);
     return LyWithClass;
 }());
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 var LyCommonModule = /** @class */ (function () {
     function LyCommonModule() {
     }
-    LyCommonModule.decorators = [
-        { type: NgModule, args: [{
-                    declarations: [LyWithClass, LyPaper],
-                    exports: [LyWithClass, LyPaper]
-                },] }
-    ];
+    LyCommonModule = __decorate([
+        NgModule({
+            declarations: [LyWithClass, LyPaper],
+            exports: [LyWithClass, LyPaper]
+        })
+    ], LyCommonModule);
     return LyCommonModule;
 }());
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/**
- * @param {?} value
- * @param {?} defaultValue
- * @return {?}
- */
 function defaultEntry(value, defaultValue) {
     return value !== '' && value !== void 0 ? value : defaultValue;
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 // Element to move, time in ms to animate
-/**
- * @param {?} element
- * @param {?} duration
- * @return {?}
- */
 function scrollTo(element, duration) {
-    /** @type {?} */
     var e = document.documentElement;
     if (e.scrollTop === 0) {
-        /** @type {?} */
         var t = e.scrollTop;
         ++e.scrollTop;
         e = t + 1 === e.scrollTop-- ? e : document.body;
@@ -2985,13 +1896,6 @@ function scrollTo(element, duration) {
     scrollToC(e, e.scrollTop, element, duration);
 }
 // Element to move, element or px from, element or px to, time in ms to animate
-/**
- * @param {?} element
- * @param {?} from
- * @param {?} to
- * @param {?} duration
- * @return {?}
- */
 function scrollToC(element, from, to, duration) {
     if (duration <= 0) {
         return;
@@ -3004,33 +1908,12 @@ function scrollToC(element, from, to, duration) {
     }
     createScrollWithAnimation(element, from, to, 0, 1 / duration, 20, easeOutCuaic);
 }
-/**
- * @param {?} element
- * @param {?} to
- * @param {?} duration
- * @param {?=} p
- * @param {?=} motion
- * @return {?}
- */
 function scrollWithAnimation(element, to, duration, p, motion) {
-    /** @type {?} */
     var _motion = motion || easeOutCuaic;
     var scrollLeft = element.scrollLeft;
     return createScrollWithAnimation(element, scrollLeft, to, 0, 1 / duration, 20, _motion, p);
 }
-/**
- * @param {?} element
- * @param {?} xFrom
- * @param {?} xTo
- * @param {?} t01
- * @param {?} speed
- * @param {?} step
- * @param {?} motion
- * @param {?=} p
- * @return {?}
- */
 function createScrollWithAnimation(element, xFrom, xTo, t01, speed, step, motion, p) {
-    /** @type {?} */
     var scrollT = p === 'y' ? 'scrollTop' : 'scrollLeft';
     if (t01 < 0 || t01 > 1 || speed <= 0) {
         element[scrollT] = xTo;
@@ -3060,69 +1943,107 @@ function createScrollWithAnimation(element, xFrom, xTo, t01, speed, step, motion
 // function easeInCuaic(t: number) {
 //   return t * t * t;
 // }
-/**
- * @param {?} t
- * @return {?}
- */
 function easeOutCuaic(t) {
     t--;
     return t * t * t + 1;
 }
+// function easeInOutCuaic(t: number) {
+//   t /= 0.5;
+//   if (t < 1) {return t * t * t / 2; }
+//   t -= 2;
+//   return (t * t * t + 2) / 2;
+// }
+// function easeInQuart(t: number) {
+//   return t * t * t * t;
+// }
+// function easeOutQuart(t: number) {
+//   t--;
+//   return -(t * t * t * t - 1);
+// }
+// function easeInOutQuart(t: number) {
+//   t /= 0.5;
+//   if (t < 1) {return 0.5 * t * t * t * t; }
+//   t -= 2;
+//   return -(t * t * t * t - 2) / 2;
+// }
+// function easeInQuint(t: number) {
+//   return t * t * t * t * t;
+// }
+// function easeOutQuint(t: number) {
+//   t--;
+//   return t * t * t * t * t + 1;
+// }
+// function easeInOutQuint(t: number) {
+//   t /= 0.5;
+//   if (t < 1) {return t * t * t * t * t / 2; }
+//   t -= 2;
+//   return (t * t * t * t * t + 2) / 2;
+// }
+// function easeInSine(t: number) {
+//   return -Math.cos(t / (Math.PI / 2)) + 1;
+// }
+// function easeOutSine(t: number) {
+//   return Math.sin(t / (Math.PI / 2));
+// }
+// function easeInOutSine(t: number) {
+//   return -(Math.cos(Math.PI * t) - 1) / 2;
+// }
+// function easeInExpo(t: number) {
+//   return Math.pow(2, 10 * (t - 1));
+// }
+// function easeOutExpo(t: number) {
+//   return -Math.pow(2, -10 * t) + 1;
+// }
+// function easeInOutExpo(t: number) {
+//   t /= 0.5;
+//   if (t < 1) {return Math.pow(2, 10 * (t - 1)) / 2; }
+//   t--;
+//   return (-Math.pow(2, -10 * t) + 2) / 2;
+// }
+// function easeInCirc(t: number) {
+//   return -Math.sqrt(1 - t * t) - 1;
+// }
+// function easeOutCirc(t: number) {
+//   t--;
+//   return Math.sqrt(1 - t * t);
+// }
+// function easeInOutCirc(t: number) {
+//   t /= 0.5;
+//   if (t < 1) {return -(Math.sqrt(1 - t * t) - 1) / 2; }
+//   t -= 2;
+//   return (Math.sqrt(1 - t * t) + 1) / 2;
+// }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @enum {string} */
-var FocusStatus = {
+var FocusStatus;
+(function (FocusStatus) {
     /**mouse and/or touch*/
-    DEFAULT: 'default',
+    FocusStatus["DEFAULT"] = "default";
     /** keyboard and/or program*/
-    KEYBOARD: 'keyboard',
-};
+    FocusStatus["KEYBOARD"] = "keyboard";
+})(FocusStatus || (FocusStatus = {}));
 var LyFocusState = /** @class */ (function () {
     function LyFocusState(_ngZone) {
         this._ngZone = _ngZone;
         this._elementMap = new Map();
         this._count = 0;
     }
-    /**
-     * @param {?} element
-     * @param {?=} keyElement
-     * @return {?}
-     */
-    LyFocusState.prototype.listen = /**
-     * @param {?} element
-     * @param {?=} keyElement
-     * @return {?}
-     */
-    function (element, keyElement) {
+    LyFocusState.prototype.listen = function (element, keyElement) {
         var _this = this;
         if (!Platform.isBrowser) {
             // return null if it is not browser platform
             return null;
         }
-        /** @type {?} */
         var nativeElement = getNativeElement(element);
-        /** @type {?} */
         var key = keyElement && getNativeElement(keyElement) || nativeElement;
         if (this._elementMap.has(key)) {
-            return (/** @type {?} */ (this._elementMap.get(key))).subject.asObservable();
+            return this._elementMap.get(key).subject.asObservable();
         }
-        /** @type {?} */
         var focusState = {
-            unlisten: (/** @type {?} */ (null)),
+            unlisten: null,
             subject: new Subject()
         };
         this._incrementCount();
-        /** @type {?} */
         var focusListener = function (event) { return _this._on(event, focusState.subject); };
-        /** @type {?} */
         var blurListener = function (event) { return _this._on(event, focusState.subject); };
         focusState.unlisten = function () {
             nativeElement.removeEventListener('focus', focusListener, true);
@@ -3135,41 +2056,18 @@ var LyFocusState = /** @class */ (function () {
         });
         return focusState.subject.asObservable();
     };
-    /**
-     * @param {?} element
-     * @param {?} origin
-     * @param {?} options
-     * @return {?}
-     */
-    LyFocusState.prototype.focusElement = /**
-     * @param {?} element
-     * @param {?} origin
-     * @param {?} options
-     * @return {?}
-     */
-    function (element, origin, options) {
-        /** @type {?} */
+    LyFocusState.prototype.focusElement = function (element, origin, options) {
         var nativeElement = getNativeElement(element);
         this._currentEvent = origin;
         if (typeof nativeElement.focus === 'function') {
             nativeElement.focus(options);
         }
     };
-    /**
-     * @param {?} element
-     * @return {?}
-     */
-    LyFocusState.prototype.unlisten = /**
-     * @param {?} element
-     * @return {?}
-     */
-    function (element) {
+    LyFocusState.prototype.unlisten = function (element) {
         if (!Platform.isBrowser) {
             return;
         }
-        /** @type {?} */
         var el = getNativeElement(element);
-        /** @type {?} */
         var focusStateInfo = this._elementMap.get(el);
         if (focusStateInfo) {
             focusStateInfo.unlisten();
@@ -3177,48 +2075,24 @@ var LyFocusState = /** @class */ (function () {
             this._decrementCount();
         }
     };
-    /**
-     * @private
-     * @param {?} event
-     * @param {?} subject
-     * @return {?}
-     */
-    LyFocusState.prototype._on = /**
-     * @private
-     * @param {?} event
-     * @param {?} subject
-     * @return {?}
-     */
-    function (event, subject) {
-        /** @type {?} */
+    LyFocusState.prototype._on = function (event, subject) {
         var by = null;
         if (event.type === 'focus') {
             by = this._currentEvent || 'keyboard';
         }
         this._ngZone.run(function () { return subject.next(by); });
     };
-    /**
-     * @private
-     * @return {?}
-     */
-    LyFocusState.prototype._addGlobalListeners = /**
-     * @private
-     * @return {?}
-     */
-    function () {
+    LyFocusState.prototype._addGlobalListeners = function () {
         var _this = this;
         if (!Platform.isBrowser) {
             return;
         }
-        /** @type {?} */
         var eventListenerOptions = supportsPassiveEventListeners
             ? {
                 passive: true,
                 capture: true
             } : false;
-        /** @type {?} */
         var documentKeydownListener = function () { return _this._ngZone.runOutsideAngular(function () { return _this._currentEvent = 'keyboard'; }); };
-        /** @type {?} */
         var documentMousedownListener = function () { return _this._ngZone.runOutsideAngular(function () { return _this._currentEvent = 'mouse'; }); };
         this._ngZone.runOutsideAngular(function () {
             document.addEventListener('keydown', documentKeydownListener, eventListenerOptions);
@@ -3229,71 +2103,34 @@ var LyFocusState = /** @class */ (function () {
             document.removeEventListener('mousedown', documentMousedownListener, eventListenerOptions);
         };
     };
-    /**
-     * @private
-     * @return {?}
-     */
-    LyFocusState.prototype._incrementCount = /**
-     * @private
-     * @return {?}
-     */
-    function () {
+    LyFocusState.prototype._incrementCount = function () {
         if (++this._count === 1) {
             this._addGlobalListeners();
         }
     };
-    /**
-     * @private
-     * @return {?}
-     */
-    LyFocusState.prototype._decrementCount = /**
-     * @private
-     * @return {?}
-     */
-    function () {
+    LyFocusState.prototype._decrementCount = function () {
         if (!--this._count) {
             this._removeGlobalListeners();
         }
     };
-    /**
-     * @return {?}
-     */
-    LyFocusState.prototype.ngOnDestroy = /**
-     * @return {?}
-     */
-    function () {
+    LyFocusState.prototype.ngOnDestroy = function () {
         var _this = this;
         this._elementMap.forEach(function (_, element) { return _this.unlisten(element); });
     };
-    LyFocusState.decorators = [
-        { type: Injectable, args: [{
-                    providedIn: 'root'
-                },] }
-    ];
-    /** @nocollapse */
-    LyFocusState.ctorParameters = function () { return [
-        { type: NgZone }
-    ]; };
-    /** @nocollapse */ LyFocusState.ngInjectableDef = defineInjectable({ factory: function LyFocusState_Factory() { return new LyFocusState(inject(NgZone)); }, token: LyFocusState, providedIn: "root" });
+    LyFocusState.ngInjectableDef = defineInjectable({ factory: function LyFocusState_Factory() { return new LyFocusState(inject(NgZone)); }, token: LyFocusState, providedIn: "root" });
+    LyFocusState = __decorate([
+        Injectable({
+            providedIn: 'root'
+        }),
+        __metadata("design:paramtypes", [NgZone])
+    ], LyFocusState);
     return LyFocusState;
 }());
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
-var AUI_VERSION = '2.6.1-nightly.20190407-ju6ntfxk';
-/** @type {?} */
-var AUI_LAST_UPDATE = '2019-04-07T08:23:09.799Z';
+var AUI_VERSION = '2.6.1-nightly.20190408-ju8391n9';
+var AUI_LAST_UPDATE = '2019-04-08T08:22:58.195Z';
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
 var LY_HAMMER_OPTIONS = new InjectionToken('LY_HAMMER_OPTIONS');
-/** @type {?} */
 var HAMMER_GESTURES_EVENTS = [
     'slide',
     'slidestart',
@@ -3310,24 +2147,11 @@ var LyHammerGestureConfig = /** @class */ (function (_super) {
         _this.events = HAMMER_GESTURES_EVENTS;
         return _this;
     }
-    /**
-     * @param {?} element
-     * @return {?}
-     */
-    LyHammerGestureConfig.prototype.buildHammer = /**
-     * @param {?} element
-     * @return {?}
-     */
-    function (element) {
-        /** @type {?} */
-        var hammer = typeof window !== 'undefined' ? ((/** @type {?} */ (window))).Hammer : null;
-        /** @type {?} */
+    LyHammerGestureConfig.prototype.buildHammer = function (element) {
+        var hammer = typeof window !== 'undefined' ? window.Hammer : null;
         var mc = new hammer(element, this._hammerOptions || {});
-        /** @type {?} */
         var pan = new hammer.Pan();
-        /** @type {?} */
         var swipe = new hammer.Swipe();
-        /** @type {?} */
         var slide = this._createRecognizer(pan, { event: 'slide', threshold: 0 }, swipe);
         pan.recognizeWith(swipe);
         // Add customized gestures to Hammer manager
@@ -3335,109 +2159,58 @@ var LyHammerGestureConfig = /** @class */ (function (_super) {
         return mc;
     };
     /** Creates a new recognizer, without affecting the default recognizers of HammerJS */
-    /**
-     * Creates a new recognizer, without affecting the default recognizers of HammerJS
-     * @private
-     * @param {?} base
-     * @param {?} options
-     * @param {...?} inheritances
-     * @return {?}
-     */
-    LyHammerGestureConfig.prototype._createRecognizer = /**
-     * Creates a new recognizer, without affecting the default recognizers of HammerJS
-     * @private
-     * @param {?} base
-     * @param {?} options
-     * @param {...?} inheritances
-     * @return {?}
-     */
-    function (base, options) {
+    LyHammerGestureConfig.prototype._createRecognizer = function (base, options) {
         var inheritances = [];
         for (var _i = 2; _i < arguments.length; _i++) {
             inheritances[_i - 2] = arguments[_i];
         }
-        /** @type {?} */
         var recognizer = new (base.constructor)(options);
         inheritances.push(base);
         inheritances.forEach(function (item) { return recognizer.recognizeWith(item); });
         return recognizer;
     };
-    LyHammerGestureConfig.decorators = [
-        { type: Injectable }
-    ];
-    /** @nocollapse */
-    LyHammerGestureConfig.ctorParameters = function () { return [
-        { type: undefined, decorators: [{ type: Optional }, { type: Inject, args: [LY_HAMMER_OPTIONS,] }] }
-    ]; };
+    LyHammerGestureConfig = __decorate([
+        Injectable(),
+        __param(0, Optional()), __param(0, Inject(LY_HAMMER_OPTIONS)),
+        __metadata("design:paramtypes", [Object])
+    ], LyHammerGestureConfig);
     return LyHammerGestureConfig;
 }(HammerGestureConfig));
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 var LyThemeModule = /** @class */ (function () {
     function LyThemeModule() {
     }
-    /**
-     * @param {?} themeName
-     * @return {?}
-     */
-    LyThemeModule.setTheme = /**
-     * @param {?} themeName
-     * @return {?}
-     */
-    function (themeName) {
+    LyThemeModule_1 = LyThemeModule;
+    LyThemeModule.setTheme = function (themeName) {
         return {
-            ngModule: LyThemeModule,
+            ngModule: LyThemeModule_1,
             providers: [
                 [LyTheme2],
                 { provide: LY_THEME_NAME, useValue: themeName }
             ]
         };
     };
-    LyThemeModule.decorators = [
-        { type: NgModule }
-    ];
+    var LyThemeModule_1;
+    LyThemeModule = LyThemeModule_1 = __decorate([
+        NgModule()
+    ], LyThemeModule);
     return LyThemeModule;
 }());
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 var Undefined = /** @class */ (function () {
     function Undefined() {
     }
     return Undefined;
 }());
-/** @type {?} */
 var UndefinedValue = new Undefined();
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 // @Injectable()
-/**
- * @template T
- */
-var  
-// @Injectable()
-/**
- * @template T
- */
-LyOverlayRef = /** @class */ (function () {
+var LyOverlayRef = /** @class */ (function () {
     function LyOverlayRef() {
     }
     return LyOverlayRef;
 }());
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
 var styles$1 = function (theme) { return ({
     overlay: {
         position: 'fixed',
@@ -3449,33 +2222,27 @@ var styles$1 = function (theme) { return ({
         pointerEvents: 'none'
     }
 }); };
+var ɵ0 = styles$1;
 var LyOverlayContainer = /** @class */ (function () {
     function LyOverlayContainer(theme) {
         this.theme = theme;
         this._classes = this.theme.addStyleSheet(styles$1);
         this._items = new Set();
         if (Platform.isBrowser) {
-            /** @type {?} */
             var container = document.createElement('ly-overlay-container');
             document.body.appendChild(container);
             this._containerElement = container;
         }
     }
     Object.defineProperty(LyOverlayContainer.prototype, "overlayLen", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._items.size;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(LyOverlayContainer.prototype, "containerElement", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._containerElement;
         },
         enumerable: true,
@@ -3485,19 +2252,7 @@ var LyOverlayContainer = /** @class */ (function () {
      * Add instance
      * @ignore
      */
-    /**
-     * Add instance
-     * @ignore
-     * @param {?} item
-     * @return {?}
-     */
-    LyOverlayContainer.prototype._add = /**
-     * Add instance
-     * @ignore
-     * @param {?} item
-     * @return {?}
-     */
-    function (item) {
+    LyOverlayContainer.prototype._add = function (item) {
         this._items.add(item);
         this.containerElement.appendChild(item);
         this._update();
@@ -3506,19 +2261,7 @@ var LyOverlayContainer = /** @class */ (function () {
    * Remove instance
    * @ignore
    */
-    /**
-     * Remove instance
-     * @ignore
-     * @param {?} item
-     * @return {?}
-     */
-    LyOverlayContainer.prototype._remove = /**
-     * Remove instance
-     * @ignore
-     * @param {?} item
-     * @return {?}
-     */
-    function (item) {
+    LyOverlayContainer.prototype._remove = function (item) {
         this.containerElement.removeChild(item);
         this._items.delete(item);
         this._update();
@@ -3527,19 +2270,7 @@ var LyOverlayContainer = /** @class */ (function () {
      * Update styles for overlay container
      * @ignore
      */
-    /**
-     * Update styles for overlay container
-     * @ignore
-     * @private
-     * @return {?}
-     */
-    LyOverlayContainer.prototype._update = /**
-     * Update styles for overlay container
-     * @ignore
-     * @private
-     * @return {?}
-     */
-    function () {
+    LyOverlayContainer.prototype._update = function () {
         if (this._items.size) {
             if (!this._isActiveOverlayContainer) {
                 this._isActiveOverlayContainer = true;
@@ -3551,23 +2282,16 @@ var LyOverlayContainer = /** @class */ (function () {
             this._isActiveOverlayContainer = false;
         }
     };
-    LyOverlayContainer.decorators = [
-        { type: Injectable, args: [{
-                    providedIn: 'root'
-                },] }
-    ];
-    /** @nocollapse */
-    LyOverlayContainer.ctorParameters = function () { return [
-        { type: LyTheme2 }
-    ]; };
-    /** @nocollapse */ LyOverlayContainer.ngInjectableDef = defineInjectable({ factory: function LyOverlayContainer_Factory() { return new LyOverlayContainer(inject(LyTheme2)); }, token: LyOverlayContainer, providedIn: "root" });
+    LyOverlayContainer.ngInjectableDef = defineInjectable({ factory: function LyOverlayContainer_Factory() { return new LyOverlayContainer(inject(LyTheme2)); }, token: LyOverlayContainer, providedIn: "root" });
+    LyOverlayContainer = __decorate([
+        Injectable({
+            providedIn: 'root'
+        }),
+        __metadata("design:paramtypes", [LyTheme2])
+    ], LyOverlayContainer);
     return LyOverlayContainer;
 }());
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 var WinResize = /** @class */ (function () {
     function WinResize(document, ngZone) {
         var _this = this;
@@ -3583,24 +2307,17 @@ var WinResize = /** @class */ (function () {
             this.resize$ = empty();
         }
     }
-    WinResize.decorators = [
-        { type: Injectable, args: [{
-                    providedIn: 'root'
-                },] }
-    ];
-    /** @nocollapse */
-    WinResize.ctorParameters = function () { return [
-        { type: undefined, decorators: [{ type: Inject, args: [DOCUMENT,] }] },
-        { type: NgZone }
-    ]; };
-    /** @nocollapse */ WinResize.ngInjectableDef = defineInjectable({ factory: function WinResize_Factory() { return new WinResize(inject(DOCUMENT), inject(NgZone)); }, token: WinResize, providedIn: "root" });
+    WinResize.ngInjectableDef = defineInjectable({ factory: function WinResize_Factory() { return new WinResize(inject(DOCUMENT), inject(NgZone)); }, token: WinResize, providedIn: "root" });
+    WinResize = __decorate([
+        Injectable({
+            providedIn: 'root'
+        }),
+        __param(0, Inject(DOCUMENT)),
+        __metadata("design:paramtypes", [Object, NgZone])
+    ], WinResize);
     return WinResize;
 }());
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 var WinScroll = /** @class */ (function () {
     function WinScroll(_document, ngZone) {
         var _this = this;
@@ -3616,24 +2333,17 @@ var WinScroll = /** @class */ (function () {
             this.scroll$ = empty();
         }
     }
-    WinScroll.decorators = [
-        { type: Injectable, args: [{
-                    providedIn: 'root'
-                },] }
-    ];
-    /** @nocollapse */
-    WinScroll.ctorParameters = function () { return [
-        { type: undefined, decorators: [{ type: Inject, args: [DOCUMENT,] }] },
-        { type: NgZone }
-    ]; };
-    /** @nocollapse */ WinScroll.ngInjectableDef = defineInjectable({ factory: function WinScroll_Factory() { return new WinScroll(inject(DOCUMENT), inject(NgZone)); }, token: WinScroll, providedIn: "root" });
+    WinScroll.ngInjectableDef = defineInjectable({ factory: function WinScroll_Factory() { return new WinScroll(inject(DOCUMENT), inject(NgZone)); }, token: WinScroll, providedIn: "root" });
+    WinScroll = __decorate([
+        Injectable({
+            providedIn: 'root'
+        }),
+        __param(0, Inject(DOCUMENT)),
+        __metadata("design:paramtypes", [Object, NgZone])
+    ], WinScroll);
     return WinScroll;
 }());
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 var LyOverlayConfig = /** @class */ (function () {
     function LyOverlayConfig() {
         this.hasBackdrop = true;
@@ -3641,13 +2351,7 @@ var LyOverlayConfig = /** @class */ (function () {
     return LyOverlayConfig;
 }());
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
 var STYLE_PRIORITY$1 = -2;
-/** @type {?} */
 var STYLES_BACKDROP_ROOT = (__assign({}, LY_COMMON_STYLES.fill, { width: '100vw', height: '100vh', pointerEvents: 'all', userSelect: 'none' }));
 var LyOverlayBackdrop = /** @class */ (function () {
     function LyOverlayBackdrop(_el, _theme, _config) {
@@ -3656,49 +2360,32 @@ var LyOverlayBackdrop = /** @class */ (function () {
         _el.nativeElement.classList.add(_theme.style(STYLES_BACKDROP_ROOT, STYLE_PRIORITY$1));
         // this applies custom class for backdrop,
         // if one is not defined, do nothing.
-        /** @type {?} */
         var backdropClass = _config.backdropClass;
         if (backdropClass) {
             this._el.nativeElement.classList.add(backdropClass);
         }
     }
-    /**
-     * @return {?}
-     */
-    LyOverlayBackdrop.prototype.onclick = /**
-     * @return {?}
-     */
-    function () {
-        (/** @type {?} */ (this._config.fnDestroy))();
+    LyOverlayBackdrop.prototype.onclick = function () {
+        this._config.fnDestroy();
     };
-    LyOverlayBackdrop.decorators = [
-        { type: Component, args: [{
-                    selector: 'ly-overlay-backdrop',
-                    template: ""
-                }] }
-    ];
-    /** @nocollapse */
-    LyOverlayBackdrop.ctorParameters = function () { return [
-        { type: ElementRef },
-        { type: LyTheme2 },
-        { type: LyOverlayConfig }
-    ]; };
-    LyOverlayBackdrop.propDecorators = {
-        onclick: [{ type: HostListener, args: ['click',] }]
-    };
+    __decorate([
+        HostListener('click'),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", []),
+        __metadata("design:returntype", void 0)
+    ], LyOverlayBackdrop.prototype, "onclick", null);
+    LyOverlayBackdrop = __decorate([
+        Component({
+            selector: 'ly-overlay-backdrop',
+            template: ""
+        }),
+        __metadata("design:paramtypes", [ElementRef,
+            LyTheme2,
+            LyOverlayConfig])
+    ], LyOverlayBackdrop);
     return LyOverlayBackdrop;
 }());
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/**
- * @param {?} parent
- * @param {?} config
- * @param {?} overlayFactory
- * @return {?}
- */
 function createOverlayInjector(parent, config, overlayFactory) {
     return Injector.create({
         providers: [
@@ -3715,17 +2402,7 @@ function createOverlayInjector(parent, config, overlayFactory) {
     });
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/**
- * @template T
- */
-var  /**
- * @template T
- */
-OverlayFactory = /** @class */ (function () {
+var OverlayFactory = /** @class */ (function () {
     function OverlayFactory(_componentFactoryResolver, _appRef, _templateRefOrComponent, _overlayContainer, _context, _injector, windowScroll, resizeService, config) {
         var _this = this;
         this._componentFactoryResolver = _componentFactoryResolver;
@@ -3735,7 +2412,6 @@ OverlayFactory = /** @class */ (function () {
         this._windowSRSub = Subscription.EMPTY;
         this._config = config = __assign({}, new LyOverlayConfig(), config);
         this._el = document.createElement('div');
-        /** @type {?} */
         var __styles = {
             position: 'absolute',
             display: 'flex',
@@ -3746,7 +2422,6 @@ OverlayFactory = /** @class */ (function () {
         if (config) {
             Object.assign(__styles, config.styles);
         }
-        /** @type {?} */
         var newInjector = createOverlayInjector(this._injector, __assign({ fnDestroy: this.destroy.bind(this) }, config, { styles: __styles }), this);
         this._updateStyles(__styles);
         if (config) {
@@ -3759,15 +2434,13 @@ OverlayFactory = /** @class */ (function () {
                 }
             });
             if (config.classes) {
-                /** @type {?} */
                 var classes = config.classes;
-                classes.forEach(function (className) { return ((/** @type {?} */ (_this._el))).classList.add(className); });
+                classes.forEach(function (className) { return _this._el.classList.add(className); });
             }
         }
         if (config.hasBackdrop) {
             this._compRefOverlayBackdrop = this._generateComponent(LyOverlayBackdrop, newInjector);
             this._appRef.attachView(this._compRefOverlayBackdrop.hostView);
-            /** @type {?} */
             var backdropEl = this._compRefOverlayBackdrop.location.nativeElement;
             this._overlayContainer._add(backdropEl);
         }
@@ -3775,112 +2448,59 @@ OverlayFactory = /** @class */ (function () {
         this._hiddeScroll();
     }
     Object.defineProperty(OverlayFactory.prototype, "containerElement", {
-        get: /**
-         * @return {?}
-         */
-        function () {
-            return (/** @type {?} */ (this._el));
+        get: function () {
+            return this._el;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(OverlayFactory.prototype, "componentRef", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._compRef;
         },
         enumerable: true,
         configurable: true
     });
-    /**
-     * @private
-     * @param {?} __styles
-     * @return {?}
-     */
-    OverlayFactory.prototype._updateStyles = /**
-     * @private
-     * @param {?} __styles
-     * @return {?}
-     */
-    function (__styles) {
+    OverlayFactory.prototype._updateStyles = function (__styles) {
         /** Apply styles */
         /** set styles */
         for (var key in __styles) {
             if (__styles.hasOwnProperty(key)) {
-                /** @type {?} */
                 var styleVal = __styles[key];
                 if (styleVal != null) {
-                    (/** @type {?} */ (this._el)).style[key] = typeof __styles[key] === 'number' ? styleVal + "px" : styleVal;
+                    this._el.style[key] = typeof __styles[key] === 'number' ? styleVal + "px" : styleVal;
                 }
             }
         }
     };
-    /**
-     * @private
-     * @param {?} type
-     * @param {?} context
-     * @param {?} injector
-     * @return {?}
-     */
-    OverlayFactory.prototype._appendComponentToBody = /**
-     * @private
-     * @param {?} type
-     * @param {?} context
-     * @param {?} injector
-     * @return {?}
-     */
-    function (type, context, injector) {
+    OverlayFactory.prototype._appendComponentToBody = function (type, context, injector) {
         var _this = this;
         if (type instanceof TemplateRef) {
             // Create a component reference from the component
-            /** @type {?} */
             var viewRef = this._viewRef = type.createEmbeddedView(context || {});
             this._appRef.attachView(viewRef);
             // Get DOM element from component
-            viewRef.rootNodes.forEach(function (_) { return (/** @type {?} */ (_this._el)).appendChild(_); });
+            viewRef.rootNodes.forEach(function (_) { return _this._el.appendChild(_); });
             // Append DOM element to the body
             this._overlayContainer._add(this._el);
         }
         else if (typeof type === 'string') {
-            (/** @type {?} */ (this._el)).innerText = type;
+            this._el.innerText = type;
             this._overlayContainer._add(this._el);
         }
         else {
             this._compRef = this._generateComponent(type, injector);
             this._appRef.attachView(this._compRef.hostView);
-            (/** @type {?} */ (this._el)).appendChild(this._compRef.location.nativeElement);
+            this._el.appendChild(this._compRef.location.nativeElement);
             this._overlayContainer._add(this._el);
         }
     };
-    /**
-     * @private
-     * @param {?} type
-     * @param {?} injector
-     * @return {?}
-     */
-    OverlayFactory.prototype._generateComponent = /**
-     * @private
-     * @param {?} type
-     * @param {?} injector
-     * @return {?}
-     */
-    function (type, injector) {
-        /** @type {?} */
+    OverlayFactory.prototype._generateComponent = function (type, injector) {
         var factory = this._componentFactoryResolver.resolveComponentFactory(type);
         return factory.create(injector);
     };
     /** Detaches a view from dirty checking again of ApplicationRef. */
-    /**
-     * Detaches a view from dirty checking again of ApplicationRef.
-     * @return {?}
-     */
-    OverlayFactory.prototype.detach = /**
-     * Detaches a view from dirty checking again of ApplicationRef.
-     * @return {?}
-     */
-    function () {
+    OverlayFactory.prototype.detach = function () {
         if (this._viewRef) {
             this._appRef.detachView(this._viewRef);
         }
@@ -3889,15 +2509,7 @@ OverlayFactory = /** @class */ (function () {
         }
     };
     /** Remove element of DOM */
-    /**
-     * Remove element of DOM
-     * @return {?}
-     */
-    OverlayFactory.prototype.remove = /**
-     * Remove element of DOM
-     * @return {?}
-     */
-    function () {
+    OverlayFactory.prototype.remove = function () {
         this._resetScroll();
         if (this._viewRef) {
             this._viewRef.destroy();
@@ -3918,39 +2530,20 @@ OverlayFactory = /** @class */ (function () {
         if (this._compRefOverlayBackdrop) {
             this._appRef.detachView(this._compRefOverlayBackdrop.hostView);
             this._compRefOverlayBackdrop.destroy();
-            /** @type {?} */
             var backdropEl = this._compRefOverlayBackdrop.location.nativeElement;
             this._overlayContainer._remove(backdropEl);
         }
         this._windowSRSub.unsubscribe();
     };
     /** Detach & remove */
-    /**
-     * Detach & remove
-     * @return {?}
-     */
-    OverlayFactory.prototype.destroy = /**
-     * Detach & remove
-     * @return {?}
-     */
-    function () {
+    OverlayFactory.prototype.destroy = function () {
         this.detach();
         this.remove();
     };
-    /**
-     * @private
-     * @return {?}
-     */
-    OverlayFactory.prototype._hiddeScroll = /**
-     * @private
-     * @return {?}
-     */
-    function () {
+    OverlayFactory.prototype._hiddeScroll = function () {
         if (Platform.isBrowser && this._config.hasBackdrop && this._overlayContainer.overlayLen) {
-            /** @type {?} */
             var scrollWidth = window.innerWidth - window.document.body.clientWidth;
             if (scrollWidth) {
-                /** @type {?} */
                 var computedStyle = getComputedStyle(window.document.body);
                 this._paddingRight = computedStyle.getPropertyValue('padding-right');
                 window.document.body.style.paddingRight = "calc(" + scrollWidth + "px + " + this._paddingRight + ")";
@@ -3958,15 +2551,7 @@ OverlayFactory = /** @class */ (function () {
             window.document.body.style.overflow = 'hidden';
         }
     };
-    /**
-     * @private
-     * @return {?}
-     */
-    OverlayFactory.prototype._resetScroll = /**
-     * @private
-     * @return {?}
-     */
-    function () {
+    OverlayFactory.prototype._resetScroll = function () {
         if (Platform.isBrowser && this._config.hasBackdrop && this._overlayContainer.overlayLen) {
             if (this._paddingRight) {
                 window.document.body.style.paddingRight = this._paddingRight;
@@ -3978,10 +2563,6 @@ OverlayFactory = /** @class */ (function () {
     return OverlayFactory;
 }());
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 var LyOverlay = /** @class */ (function () {
     function LyOverlay(_overlayContainer, _componentFactoryResolver, _appRef, _injector, _windowScroll, _resizeService) {
         this._overlayContainer = _overlayContainer;
@@ -3991,76 +2572,40 @@ var LyOverlay = /** @class */ (function () {
         this._windowScroll = _windowScroll;
         this._resizeService = _resizeService;
     }
-    /**
-     * @template T
-     * @param {?} templateOrComponent
-     * @param {?=} context
-     * @param {?=} config
-     * @return {?}
-     */
-    LyOverlay.prototype.create = /**
-     * @template T
-     * @param {?} templateOrComponent
-     * @param {?=} context
-     * @param {?=} config
-     * @return {?}
-     */
-    function (templateOrComponent, context, config) {
+    LyOverlay.prototype.create = function (templateOrComponent, context, config) {
         return new OverlayFactory(this._componentFactoryResolver, this._appRef, templateOrComponent, this._overlayContainer, context, this._injector, this._windowScroll, this._resizeService, config);
     };
-    LyOverlay.decorators = [
-        { type: Injectable, args: [{
-                    providedIn: 'root'
-                },] }
-    ];
-    /** @nocollapse */
-    LyOverlay.ctorParameters = function () { return [
-        { type: LyOverlayContainer },
-        { type: ComponentFactoryResolver },
-        { type: ApplicationRef },
-        { type: Injector },
-        { type: WinScroll },
-        { type: WinResize }
-    ]; };
-    /** @nocollapse */ LyOverlay.ngInjectableDef = defineInjectable({ factory: function LyOverlay_Factory() { return new LyOverlay(inject(LyOverlayContainer), inject(ComponentFactoryResolver), inject(ApplicationRef), inject(INJECTOR), inject(WinScroll), inject(WinResize)); }, token: LyOverlay, providedIn: "root" });
+    LyOverlay.ngInjectableDef = defineInjectable({ factory: function LyOverlay_Factory() { return new LyOverlay(inject(LyOverlayContainer), inject(ComponentFactoryResolver), inject(ApplicationRef), inject(INJECTOR), inject(WinScroll), inject(WinResize)); }, token: LyOverlay, providedIn: "root" });
+    LyOverlay = __decorate([
+        Injectable({
+            providedIn: 'root'
+        }),
+        __metadata("design:paramtypes", [LyOverlayContainer,
+            ComponentFactoryResolver,
+            ApplicationRef,
+            Injector,
+            WinScroll,
+            WinResize])
+    ], LyOverlay);
     return LyOverlay;
 }());
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 var LyOverlayModule = /** @class */ (function () {
     function LyOverlayModule() {
     }
-    LyOverlayModule.decorators = [
-        { type: NgModule, args: [{
-                    declarations: [LyOverlayBackdrop],
-                    entryComponents: [LyOverlayBackdrop]
-                },] }
-    ];
+    LyOverlayModule = __decorate([
+        NgModule({
+            declarations: [LyOverlayBackdrop],
+            entryComponents: [LyOverlayBackdrop]
+        })
+    ], LyOverlayModule);
     return LyOverlayModule;
 }());
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
 var STYLES_BACKDROP_DARK = ({
     backgroundColor: 'rgba(0,0,0,.32)'
 });
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
 var MUTATION_OBSERVER_INIT = {
     characterData: true,
     childList: true,
@@ -4069,21 +2614,13 @@ var MUTATION_OBSERVER_INIT = {
 var MutationObserverFactory = /** @class */ (function () {
     function MutationObserverFactory() {
     }
-    /**
-     * @param {?} callback
-     * @return {?}
-     */
-    MutationObserverFactory.prototype.create = /**
-     * @param {?} callback
-     * @return {?}
-     */
-    function (callback) {
+    MutationObserverFactory.prototype.create = function (callback) {
         return typeof MutationObserver === 'undefined' ? null : new MutationObserver(callback);
     };
-    MutationObserverFactory.decorators = [
-        { type: Injectable, args: [{ providedIn: 'root' },] }
-    ];
-    /** @nocollapse */ MutationObserverFactory.ngInjectableDef = defineInjectable({ factory: function MutationObserverFactory_Factory() { return new MutationObserverFactory(); }, token: MutationObserverFactory, providedIn: "root" });
+    MutationObserverFactory.ngInjectableDef = defineInjectable({ factory: function MutationObserverFactory_Factory() { return new MutationObserverFactory(); }, token: MutationObserverFactory, providedIn: "root" });
+    MutationObserverFactory = __decorate([
+        Injectable({ providedIn: 'root' })
+    ], MutationObserverFactory);
     return MutationObserverFactory;
 }());
 var ElementObserver = /** @class */ (function () {
@@ -4091,33 +2628,13 @@ var ElementObserver = /** @class */ (function () {
         this._mutationObserverFactory = _mutationObserverFactory;
         this._observedElements = new Map();
     }
-    /**
-     * @return {?}
-     */
-    ElementObserver.prototype.ngOnDestroy = /**
-     * @return {?}
-     */
-    function () {
+    ElementObserver.prototype.ngOnDestroy = function () {
         var _this = this;
         this._observedElements.forEach(function (_, element) { return _this.destroy(element); });
     };
-    /**
-     * @param {?} elementOrRef
-     * @param {?} fn
-     * @param {?=} options
-     * @return {?}
-     */
-    ElementObserver.prototype.observe = /**
-     * @param {?} elementOrRef
-     * @param {?} fn
-     * @param {?=} options
-     * @return {?}
-     */
-    function (elementOrRef, fn, options) {
-        /** @type {?} */
+    ElementObserver.prototype.observe = function (elementOrRef, fn, options) {
         var element = elementOrRef instanceof ElementRef ? elementOrRef.nativeElement : elementOrRef;
         if (!this._observedElements.has(element)) {
-            /** @type {?} */
             var observer = this._mutationObserverFactory.create(fn);
             if (observer) {
                 observer.observe(element, options || MUTATION_OBSERVER_INIT);
@@ -4129,78 +2646,40 @@ var ElementObserver = /** @class */ (function () {
     /**
      * Destroy Observer
      */
-    /**
-     * Destroy Observer
-     * @param {?} elementOrRef
-     * @return {?}
-     */
-    ElementObserver.prototype.destroy = /**
-     * Destroy Observer
-     * @param {?} elementOrRef
-     * @return {?}
-     */
-    function (elementOrRef) {
-        /** @type {?} */
+    ElementObserver.prototype.destroy = function (elementOrRef) {
         var element = elementOrRef instanceof ElementRef ? elementOrRef.nativeElement : elementOrRef;
         if (this._observedElements.has(element)) {
-            /** @type {?} */
             var observer = this._observedElements.get(element);
             if (observer) {
-                (/** @type {?} */ (this._observedElements.get(element))).disconnect();
+                this._observedElements.get(element).disconnect();
             }
             this._observedElements.delete(element);
         }
     };
-    ElementObserver.decorators = [
-        { type: Injectable, args: [{ providedIn: 'root' },] }
-    ];
-    /** @nocollapse */
-    ElementObserver.ctorParameters = function () { return [
-        { type: MutationObserverFactory }
-    ]; };
-    /** @nocollapse */ ElementObserver.ngInjectableDef = defineInjectable({ factory: function ElementObserver_Factory() { return new ElementObserver(inject(MutationObserverFactory)); }, token: ElementObserver, providedIn: "root" });
+    ElementObserver.ngInjectableDef = defineInjectable({ factory: function ElementObserver_Factory() { return new ElementObserver(inject(MutationObserverFactory)); }, token: ElementObserver, providedIn: "root" });
+    ElementObserver = __decorate([
+        Injectable({ providedIn: 'root' }),
+        __metadata("design:paramtypes", [MutationObserverFactory])
+    ], ElementObserver);
     return ElementObserver;
 }());
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
+var AlignAlias;
+(function (AlignAlias) {
+    AlignAlias["rowReverse"] = "row-reverse";
+    AlignAlias["columnReverse"] = "column-reverse";
+    AlignAlias["wrapReverse"] = "wrap-reverse";
+    AlignAlias["start"] = "flex-start";
+    AlignAlias["end"] = "flex-end";
+    AlignAlias["between"] = "space-between";
+    AlignAlias["around"] = "space-around";
+    AlignAlias["evenly"] = "space-evenly";
+})(AlignAlias || (AlignAlias = {}));
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @enum {string} */
-var AlignAlias = {
-    rowReverse: 'row-reverse',
-    columnReverse: 'column-reverse',
-    wrapReverse: 'wrap-reverse',
-    start: 'flex-start',
-    end: 'flex-end',
-    between: 'space-between',
-    around: 'space-around',
-    evenly: 'space-evenly',
-};
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/**
- * @param {?} o
- * @return {?}
- */
 function same(o) {
     return o;
 }
-/**
- * @template T
- */
-var  /**
- * @template T
- */
-LySelectionModel = /** @class */ (function () {
+var LySelectionModel = /** @class */ (function () {
     function LySelectionModel(opts) {
         this._selectionMap = new Map();
         this._getKeyFn = same;
@@ -4219,7 +2698,7 @@ LySelectionModel = /** @class */ (function () {
             }
         }
         else {
-            var selecteds = (/** @type {?} */ (opts)).selecteds;
+            var selecteds = opts.selecteds;
             if (selecteds) {
                 this._markSelected(selecteds);
             }
@@ -4227,11 +2706,7 @@ LySelectionModel = /** @class */ (function () {
     }
     Object.defineProperty(LySelectionModel.prototype, "selected", {
         /** Selected values. */
-        get: /**
-         * Selected values.
-         * @return {?}
-         */
-        function () {
+        get: function () {
             if (!this._selected) {
                 this._selected = Array.from(this._selectionMap.values());
             }
@@ -4243,33 +2718,13 @@ LySelectionModel = /** @class */ (function () {
     /**
      * Toggles a value between selected and deselected.
      */
-    /**
-     * Toggles a value between selected and deselected.
-     * @param {?} value
-     * @return {?}
-     */
-    LySelectionModel.prototype.toggle = /**
-     * Toggles a value between selected and deselected.
-     * @param {?} value
-     * @return {?}
-     */
-    function (value) {
+    LySelectionModel.prototype.toggle = function (value) {
         this.isSelected(value) ? this.deselect(value) : this.select(value);
     };
     /**
      * Selects one or several values.
      */
-    /**
-     * Selects one or several values.
-     * @param {...?} values
-     * @return {?}
-     */
-    LySelectionModel.prototype.select = /**
-     * Selects one or several values.
-     * @param {...?} values
-     * @return {?}
-     */
-    function () {
+    LySelectionModel.prototype.select = function () {
         var _this = this;
         var values = [];
         for (var _i = 0; _i < arguments.length; _i++) {
@@ -4281,17 +2736,7 @@ LySelectionModel = /** @class */ (function () {
     /**
      * Deselects a value or an array of values.
      */
-    /**
-     * Deselects a value or an array of values.
-     * @param {...?} values
-     * @return {?}
-     */
-    LySelectionModel.prototype.deselect = /**
-     * Deselects a value or an array of values.
-     * @param {...?} values
-     * @return {?}
-     */
-    function () {
+    LySelectionModel.prototype.deselect = function () {
         var _this = this;
         var values = [];
         for (var _i = 0; _i < arguments.length; _i++) {
@@ -4303,171 +2748,69 @@ LySelectionModel = /** @class */ (function () {
     /**
      * Determines whether a value is selected.
      */
-    /**
-     * Determines whether a value is selected.
-     * @param {?} value
-     * @return {?}
-     */
-    LySelectionModel.prototype.isSelected = /**
-     * Determines whether a value is selected.
-     * @param {?} value
-     * @return {?}
-     */
-    function (value) {
-        /** @type {?} */
+    LySelectionModel.prototype.isSelected = function (value) {
         var key = this._getKeyFn(value);
         return this._selectionMap.has(key);
     };
     /**
      * Determines whether the model does not have a value.
      */
-    /**
-     * Determines whether the model does not have a value.
-     * @return {?}
-     */
-    LySelectionModel.prototype.isEmpty = /**
-     * Determines whether the model does not have a value.
-     * @return {?}
-     */
-    function () {
+    LySelectionModel.prototype.isEmpty = function () {
         return this._selectionMap.size === 0;
     };
     /**
      * Determines whether the model has a value.
      */
-    /**
-     * Determines whether the model has a value.
-     * @return {?}
-     */
-    LySelectionModel.prototype.hasValue = /**
-     * Determines whether the model has a value.
-     * @return {?}
-     */
-    function () {
+    LySelectionModel.prototype.hasValue = function () {
         return this._selectionMap.size !== 0;
     };
     /**
      * Gets whether multiple values can be selected.
      */
-    /**
-     * Gets whether multiple values can be selected.
-     * @return {?}
-     */
-    LySelectionModel.prototype.isMultipleSelection = /**
-     * Gets whether multiple values can be selected.
-     * @return {?}
-     */
-    function () {
+    LySelectionModel.prototype.isMultipleSelection = function () {
         return this._multiple;
     };
     /**
      * Clears all of the selected values.
      */
-    /**
-     * Clears all of the selected values.
-     * @return {?}
-     */
-    LySelectionModel.prototype.clear = /**
-     * Clears all of the selected values.
-     * @return {?}
-     */
-    function () {
+    LySelectionModel.prototype.clear = function () {
         this._unmarkAll();
         this._clearSelectedValues();
     };
     /** Selects a value. */
-    /**
-     * Selects a value.
-     * @private
-     * @param {?} value
-     * @return {?}
-     */
-    LySelectionModel.prototype._markSelected = /**
-     * Selects a value.
-     * @private
-     * @param {?} value
-     * @return {?}
-     */
-    function (value) {
+    LySelectionModel.prototype._markSelected = function (value) {
         if (!this.isSelected(value)) {
             if (!this._multiple) {
                 this._unmarkAll();
             }
-            /** @type {?} */
             var key = this._getKeyFn(value);
             this._selectionMap.set(key, value);
         }
     };
     /** Deselects a value. */
-    /**
-     * Deselects a value.
-     * @private
-     * @param {?} value
-     * @return {?}
-     */
-    LySelectionModel.prototype._unmarkSelected = /**
-     * Deselects a value.
-     * @private
-     * @param {?} value
-     * @return {?}
-     */
-    function (value) {
+    LySelectionModel.prototype._unmarkSelected = function (value) {
         if (this.isSelected(value)) {
-            /** @type {?} */
             var key = this._getKeyFn(value);
             this._selectionMap.delete(key);
         }
     };
     /** Clears out the selected values. */
-    /**
-     * Clears out the selected values.
-     * @private
-     * @return {?}
-     */
-    LySelectionModel.prototype._unmarkAll = /**
-     * Clears out the selected values.
-     * @private
-     * @return {?}
-     */
-    function () {
+    LySelectionModel.prototype._unmarkAll = function () {
         if (!this.isEmpty()) {
             this._selectionMap.clear();
         }
     };
     /** Clear the selected values so they can be re-cached. */
-    /**
-     * Clear the selected values so they can be re-cached.
-     * @private
-     * @return {?}
-     */
-    LySelectionModel.prototype._clearSelectedValues = /**
-     * Clear the selected values so they can be re-cached.
-     * @private
-     * @return {?}
-     */
-    function () {
+    LySelectionModel.prototype._clearSelectedValues = function () {
         this._selected = null;
     };
     return LySelectionModel;
 }());
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/**
- * @param {?} variable
- * @return {?}
- */
 function getLyThemeVariableUndefinedError(variable) {
     return Error("Variable '" + variable + "' undefined in Theme.");
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
 var STYLES = function (theme) { return ({
     root: {
         width: '1em',
@@ -4516,17 +2859,10 @@ var LyExpansionIcon = /** @class */ (function () {
         _renderer.addClass(_el.nativeElement, this.classes.root);
     }
     Object.defineProperty(LyExpansionIcon.prototype, "color", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._color;
         },
-        set: /**
-         * @param {?} val
-         * @return {?}
-         */
-        function (val) {
+        set: function (val) {
             this._colorClass = this._theme.addStyle('LyExpansionIcon.color', function (theme) { return ({
                 '{line}': {
                     backgroundColor: theme.colorOf(val)
@@ -4537,18 +2873,10 @@ var LyExpansionIcon = /** @class */ (function () {
         configurable: true
     });
     Object.defineProperty(LyExpansionIcon.prototype, "up", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._up;
         },
-        set: /**
-         * @param {?} val
-         * @return {?}
-         */
-        function (val) {
-            /** @type {?} */
+        set: function (val) {
             var newVal = toBoolean(val);
             if (newVal !== this.up) {
                 this._up = newVal;
@@ -4563,71 +2891,47 @@ var LyExpansionIcon = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
-    /**
-     * @return {?}
-     */
-    LyExpansionIcon.prototype.toggle = /**
-     * @return {?}
-     */
-    function () {
+    LyExpansionIcon.prototype.toggle = function () {
         this.up = !this.up;
     };
-    LyExpansionIcon.decorators = [
-        { type: Component, args: [{
-                    selector: 'ly-expansion-icon',
-                    template: "<span [className]=\"classes.line\"></span>\n<span [className]=\"classes.line\"></span>",
-                    changeDetection: ChangeDetectionStrategy.OnPush
-                }] }
-    ];
-    /** @nocollapse */
-    LyExpansionIcon.ctorParameters = function () { return [
-        { type: LyTheme2 },
-        { type: Renderer2 },
-        { type: ElementRef }
-    ]; };
-    LyExpansionIcon.propDecorators = {
-        color: [{ type: Input }],
-        up: [{ type: Input }]
-    };
+    __decorate([
+        Input(),
+        __metadata("design:type", String),
+        __metadata("design:paramtypes", [String])
+    ], LyExpansionIcon.prototype, "color", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object),
+        __metadata("design:paramtypes", [Object])
+    ], LyExpansionIcon.prototype, "up", null);
+    LyExpansionIcon = __decorate([
+        Component({
+            selector: 'ly-expansion-icon',
+            template: "<span [className]=\"classes.line\"></span>\n<span [className]=\"classes.line\"></span>",
+            changeDetection: ChangeDetectionStrategy.OnPush
+        }),
+        __metadata("design:paramtypes", [LyTheme2,
+            Renderer2,
+            ElementRef])
+    ], LyExpansionIcon);
     return LyExpansionIcon;
 }());
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 var LyExpansionIconModule = /** @class */ (function () {
     function LyExpansionIconModule() {
     }
-    LyExpansionIconModule.decorators = [
-        { type: NgModule, args: [{
-                    declarations: [LyExpansionIcon],
-                    exports: [LyExpansionIcon]
-                },] }
-    ];
+    LyExpansionIconModule = __decorate([
+        NgModule({
+            declarations: [LyExpansionIcon],
+            exports: [LyExpansionIcon]
+        })
+    ], LyExpansionIconModule);
     return LyExpansionIconModule;
 }());
 
 /**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated bundle index. Do not edit.
  */
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-
-export { getContrastYIQ, shadowBuilderDeprecated, shadowBuilder, Shadows, THEME_VARIABLES, IS_CORE_THEME, Platform, supportsPassiveEventListeners, LyCommonModule, getNativeElement, NgTranscludeDirective, NgTranscludeModule, toBoolean, defaultEntry, scrollTo, scrollToC, scrollWithAnimation, FocusStatus, LyFocusState, AUI_VERSION, AUI_LAST_UPDATE, LY_HAMMER_OPTIONS, LyHammerGestureConfig, LyPaperBase, LyPaperMixinBase, LyPaper, CoreTheme, LY_THEME_GLOBAL_VARIABLES, LY_THEME, LY_THEME_NAME, converterToCssKeyAndStyle, capitalizeFirstLetter, StylesInDocument, LyTheme2, _STYLE_MAP, TypeStyle, LyThemeModule, LY_COMMON_STYLES, LyCoreStyles, Undefined, UndefinedValue, eachMedia, isObject, mergeDeep, LyStyleUtils, Dir, DirAlias, DirPosition, LyOverlayRef, LyOverlayContainer, LyOverlay, LyOverlayModule, LyOverlayConfig, OverlayFactory, createOverlayInjector, STYLES_BACKDROP_DARK, MutationObserverFactory, ElementObserver, WinResize, WinScroll, mixinStyleUpdater, mixinDisableRipple, mixinColor, mixinBg, mixinRaised, mixinOutlined, mixinElevation, mixinShadowColor, mixinDisabled, mixinTabIndex, Ripple, LyRippleService, invertPlacement, YPosition, XPosition, Positioning, AlignAlias, LySelectionModel, getLyThemeVariableUndefinedError, LyExpansionIcon, LyExpansionIconModule, LyOverlayBackdrop as ɵc, LyWithClass as ɵa };
-
+export { AUI_LAST_UPDATE, AUI_VERSION, AlignAlias, CoreTheme, Dir, DirAlias, DirPosition, ElementObserver, FocusStatus, IS_CORE_THEME, LY_COMMON_STYLES, LY_HAMMER_OPTIONS, LY_THEME, LY_THEME_GLOBAL_VARIABLES, LY_THEME_NAME, LyCommonModule, LyCoreStyles, LyExpansionIcon, LyExpansionIconModule, LyFocusState, LyHammerGestureConfig, LyOverlay, LyOverlayConfig, LyOverlayContainer, LyOverlayModule, LyOverlayRef, LyPaper, LyPaperBase, LyPaperMixinBase, LyRippleService, LySelectionModel, LyStyleUtils, LyTheme2, LyThemeModule, MutationObserverFactory, NgTranscludeDirective, NgTranscludeModule, OverlayFactory, Platform, Positioning, Ripple, STYLES_BACKDROP_DARK, Shadows, StylesInDocument, THEME_VARIABLES, TypeStyle, Undefined, UndefinedValue, WinResize, WinScroll, XPosition, YPosition, _STYLE_MAP, capitalizeFirstLetter, converterToCssKeyAndStyle, createOverlayInjector, defaultEntry, eachMedia, getContrastYIQ, getLyThemeVariableUndefinedError, getNativeElement, invertPlacement, isObject, mergeDeep, mixinBg, mixinColor, mixinDisableRipple, mixinDisabled, mixinElevation, mixinOutlined, mixinRaised, mixinShadowColor, mixinStyleUpdater, mixinTabIndex, scrollTo, scrollToC, scrollWithAnimation, shadowBuilder, shadowBuilderDeprecated, supportsPassiveEventListeners, toBoolean, ɵ0, LyWithClass as ɵa, LyOverlayBackdrop as ɵc };
 //# sourceMappingURL=alyle-ui.js.map

@@ -1,44 +1,31 @@
-import { __assign } from 'tslib';
-import { state, style, transition, animate, trigger } from '@angular/animations';
+import { __decorate, __metadata, __assign } from 'tslib';
+import { Injectable, InjectionToken, TemplateRef, ViewChild, ViewContainerRef, Component, ChangeDetectionStrategy, ApplicationRef, ElementRef, ChangeDetectorRef, Renderer2, Injector, ComponentFactoryResolver, Directive, NgModule } from '@angular/core';
+import { LyOverlayRef, LyTheme2, shadowBuilder, STYLES_BACKDROP_DARK, LyOverlay, LyCommonModule, LyOverlayModule } from '@alyle/ui';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Subject } from 'rxjs';
 import { CommonModule } from '@angular/common';
-import { Injectable, InjectionToken, Component, TemplateRef, ViewChild, ViewContainerRef, ApplicationRef, ChangeDetectionStrategy, Renderer2, ElementRef, ChangeDetectorRef, ComponentFactoryResolver, Injector, Directive, NgModule } from '@angular/core';
-import { LyOverlayRef, LyTheme2, shadowBuilder, LyOverlay, STYLES_BACKDROP_DARK, LyCommonModule, LyOverlayModule } from '@alyle/ui';
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 var LyDialogRef = /** @class */ (function () {
     function LyDialogRef(_overlayRef) {
         this._overlayRef = _overlayRef;
     }
     Object.defineProperty(LyDialogRef.prototype, "afterOpened", {
-        get: /**
-         * @return {?}
-         */
-        function () {
-            return ((/** @type {?} */ ((/** @type {?} */ (this._overlayRef.componentRef)).instance)))._afterOpened.asObservable();
+        get: function () {
+            return this._overlayRef.componentRef.instance._afterOpened.asObservable();
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(LyDialogRef.prototype, "beforeClosed", {
-        get: /**
-         * @return {?}
-         */
-        function () {
-            return ((/** @type {?} */ ((/** @type {?} */ (this._overlayRef.componentRef)).instance)))._beforeClosed.asObservable();
+        get: function () {
+            return this._overlayRef.componentRef.instance._beforeClosed.asObservable();
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(LyDialogRef.prototype, "afterClosed", {
-        get: /**
-         * @return {?}
-         */
-        function () {
-            return ((/** @type {?} */ ((/** @type {?} */ (this._overlayRef.componentRef)).instance)))._afterClosed.asObservable();
+        get: function () {
+            return this._overlayRef.componentRef.instance._afterClosed.asObservable();
         },
         enumerable: true,
         configurable: true
@@ -48,56 +35,30 @@ var LyDialogRef = /** @class */ (function () {
          * @internal
          * @docs-private
          */
-        get: /**
-         * \@internal
-         * \@docs-private
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._result;
         },
         enumerable: true,
         configurable: true
     });
-    /**
-     * @param {?=} result
-     * @return {?}
-     */
-    LyDialogRef.prototype.close = /**
-     * @param {?=} result
-     * @return {?}
-     */
-    function (result) {
-        /** @type {?} */
-        var dialogContainer = ((/** @type {?} */ ((/** @type {?} */ (this._overlayRef.componentRef)).instance)));
+    LyDialogRef.prototype.close = function (result) {
+        var dialogContainer = this._overlayRef.componentRef.instance;
         dialogContainer._beforeClosed.next(result);
         dialogContainer._beforeClosed.complete();
         dialogContainer._startClose();
         this._result = result;
     };
-    LyDialogRef.decorators = [
-        { type: Injectable }
-    ];
-    /** @nocollapse */
-    LyDialogRef.ctorParameters = function () { return [
-        { type: LyOverlayRef }
-    ]; };
+    LyDialogRef = __decorate([
+        Injectable(),
+        __metadata("design:paramtypes", [LyOverlayRef])
+    ], LyDialogRef);
     return LyDialogRef;
 }());
 
 /**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/**
  * Configuration for opening a modal dialog with the LyDialog service.
- * @template DATA
  */
-var /**
- * Configuration for opening a modal dialog with the LyDialog service.
- * @template DATA
- */
-LyDialogConfig = /** @class */ (function () {
+var LyDialogConfig = /** @class */ (function () {
     function LyDialogConfig() {
         /**
          * Max-height of the dialog. If a number is provided, pixel units are assumed.
@@ -109,31 +70,16 @@ LyDialogConfig = /** @class */ (function () {
          * Defaults to calc(100vw - 90px)
          */
         this.maxWidth = 'calc(100vw - 64px)';
-        /**
-         * Whether the dialog has a backdrop.
-         */
+        /** Whether the dialog has a backdrop. */
         this.hasBackdrop = true;
     }
     return LyDialogConfig;
 }());
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
 var LY_DIALOG_DATA = new InjectionToken('LyDialogData');
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
 var STYLE_PRIORITY = -2;
-/**
- * \@docs-private
- * @type {?}
- */
+/** @docs-private */
 var STYLES = function (theme) { return ({
     root: {
         display: 'flex',
@@ -150,9 +96,7 @@ var STYLES = function (theme) { return ({
         '&': theme.dialog ? theme.dialog.root : null
     }
 }); };
-/**
- * \@docs-private
- */
+/** @docs-private */
 var LyDialogContainer = /** @class */ (function () {
     function LyDialogContainer(_appRef, _overlayRef, _theme, _el, _cd, _renderer) {
         this._appRef = _appRef;
@@ -161,38 +105,23 @@ var LyDialogContainer = /** @class */ (function () {
         this._el = _el;
         this._cd = _cd;
         this._renderer = _renderer;
-        /**
-         * \@docs-private
-         */
+        /** @docs-private */
         this.classes = this._theme.addStyleSheet(STYLES, STYLE_PRIORITY);
-        /**
-         * \@internal
-         */
+        /** @internal */
         this._afterOpened = new Subject();
-        /**
-         * \@internal
-         */
+        /** @internal */
         this._beforeClosed = new Subject();
-        /**
-         * \@internal
-         */
+        /** @internal */
         this._afterClosed = new Subject();
         /**
          * State of the dialog animation.
-         * \@internal
+         * @internal
          */
         this._state = 'enter';
         _renderer.addClass(_el.nativeElement, this.classes.root);
     }
-    /**
-     * @return {?}
-     */
-    LyDialogContainer.prototype.ngOnInit = /**
-     * @return {?}
-     */
-    function () {
+    LyDialogContainer.prototype.ngOnInit = function () {
         if (this._componentFactoryOrTemplate instanceof TemplateRef) {
-            /** @type {?} */
             var context = new LyDialogContext(this._newInjector);
             this._embeddedViewRef = this.viewContainerRef
                 .createEmbeddedView(this._componentFactoryOrTemplate, context);
@@ -208,19 +137,7 @@ var LyDialogContainer = /** @class */ (function () {
         }
     };
     /** @internal */
-    /**
-     * \@internal
-     * @param {?} componentFactoryOrTemplate
-     * @param {?} newInjector
-     * @return {?}
-     */
-    LyDialogContainer.prototype._init = /**
-     * \@internal
-     * @param {?} componentFactoryOrTemplate
-     * @param {?} newInjector
-     * @return {?}
-     */
-    function (componentFactoryOrTemplate, newInjector) {
+    LyDialogContainer.prototype._init = function (componentFactoryOrTemplate, newInjector) {
         this._componentFactoryOrTemplate = componentFactoryOrTemplate;
         this._newInjector = newInjector;
     };
@@ -228,47 +145,18 @@ var LyDialogContainer = /** @class */ (function () {
      * Start to close, starts the dialog exit animation.
      * @internal
      */
-    /**
-     * Start to close, starts the dialog exit animation.
-     * \@internal
-     * @return {?}
-     */
-    LyDialogContainer.prototype._startClose = /**
-     * Start to close, starts the dialog exit animation.
-     * \@internal
-     * @return {?}
-     */
-    function () {
+    LyDialogContainer.prototype._startClose = function () {
         this._state = 'exit';
         this._cd.markForCheck();
     };
-    /**
-     * @param {?} event
-     * @return {?}
-     */
-    LyDialogContainer.prototype._onAnimationStart = /**
-     * @param {?} event
-     * @return {?}
-     */
-    function (event) {
+    LyDialogContainer.prototype._onAnimationStart = function (event) {
         if (event.toState === 'enter') {
-            (/** @type {?} */ ((/** @type {?} */ (this._overlayRef)).onResizeScroll))();
+            this._overlayRef.onResizeScroll();
         }
     };
     /** @internal */
-    /**
-     * \@internal
-     * @param {?} event
-     * @return {?}
-     */
-    LyDialogContainer.prototype._onAnimationDone = /**
-     * \@internal
-     * @param {?} event
-     * @return {?}
-     */
-    function (event) {
+    LyDialogContainer.prototype._onAnimationDone = function (event) {
         if (event.toState === 'exit') {
-            /** @type {?} */
             var dialogRef = this._newInjector.get(LyDialogRef);
             this._destroy();
             this._overlayRef.destroy();
@@ -280,15 +168,7 @@ var LyDialogContainer = /** @class */ (function () {
             this._afterOpened.complete();
         }
     };
-    /**
-     * @private
-     * @return {?}
-     */
-    LyDialogContainer.prototype._destroy = /**
-     * @private
-     * @return {?}
-     */
-    function () {
+    LyDialogContainer.prototype._destroy = function () {
         if (this._componentRef) {
             this._appRef.detachView(this._componentRef.hostView);
             this._componentRef.destroy();
@@ -300,49 +180,39 @@ var LyDialogContainer = /** @class */ (function () {
         }
     };
     /** @internal */
-    /**
-     * \@internal
-     * @return {?}
-     */
-    LyDialogContainer.prototype._getHostElement = /**
-     * \@internal
-     * @return {?}
-     */
-    function () {
+    LyDialogContainer.prototype._getHostElement = function () {
         return this._el.nativeElement;
     };
-    LyDialogContainer.decorators = [
-        { type: Component, args: [{
-                    selector: 'ly-dialog-container',
-                    template: '<ng-template></ng-template>',
-                    changeDetection: ChangeDetectionStrategy.OnPush,
-                    animations: [
-                        trigger('dialogContainer', [
-                            state('void, exit', style({ opacity: 0, transform: 'scale(0.7)' })),
-                            state('enter', style({ transform: 'none' })),
-                            transition('* => enter', animate('150ms cubic-bezier(0, 0, 0.2, 1)', style({ transform: 'none', opacity: 1 }))),
-                            transition('* => void, * => exit', animate('75ms cubic-bezier(0.4, 0.0, 0.2, 1)', style({ opacity: 0 })))
-                        ])
-                    ],
-                    host: {
-                        '[@dialogContainer]': '_state',
-                        '(@dialogContainer.start)': '_onAnimationStart($event)',
-                        '(@dialogContainer.done)': '_onAnimationDone($event)'
-                    }
-                }] }
-    ];
-    /** @nocollapse */
-    LyDialogContainer.ctorParameters = function () { return [
-        { type: ApplicationRef },
-        { type: LyOverlayRef },
-        { type: LyTheme2 },
-        { type: ElementRef },
-        { type: ChangeDetectorRef },
-        { type: Renderer2 }
-    ]; };
-    LyDialogContainer.propDecorators = {
-        viewContainerRef: [{ type: ViewChild, args: [TemplateRef, { read: ViewContainerRef },] }]
-    };
+    __decorate([
+        ViewChild(TemplateRef, { read: ViewContainerRef }),
+        __metadata("design:type", ViewContainerRef)
+    ], LyDialogContainer.prototype, "viewContainerRef", void 0);
+    LyDialogContainer = __decorate([
+        Component({
+            selector: 'ly-dialog-container',
+            template: '<ng-template></ng-template>',
+            changeDetection: ChangeDetectionStrategy.OnPush,
+            animations: [
+                trigger('dialogContainer', [
+                    state('void, exit', style({ opacity: 0, transform: 'scale(0.7)' })),
+                    state('enter', style({ transform: 'none' })),
+                    transition('* => enter', animate('150ms cubic-bezier(0, 0, 0.2, 1)', style({ transform: 'none', opacity: 1 }))),
+                    transition('* => void, * => exit', animate('75ms cubic-bezier(0.4, 0.0, 0.2, 1)', style({ opacity: 0 })))
+                ])
+            ],
+            host: {
+                '[@dialogContainer]': '_state',
+                '(@dialogContainer.start)': '_onAnimationStart($event)',
+                '(@dialogContainer.done)': '_onAnimationDone($event)'
+            }
+        }),
+        __metadata("design:paramtypes", [ApplicationRef,
+            LyOverlayRef,
+            LyTheme2,
+            ElementRef,
+            ChangeDetectorRef,
+            Renderer2])
+    ], LyDialogContainer);
     return LyDialogContainer;
 }());
 var LyDialogContext = /** @class */ (function () {
@@ -352,10 +222,7 @@ var LyDialogContext = /** @class */ (function () {
         this.dialogRef = this._injector.get(LyDialogRef);
     }
     Object.defineProperty(LyDialogContext.prototype, "data", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._injector.get(LY_DIALOG_DATA);
         },
         enumerable: true,
@@ -364,29 +231,12 @@ var LyDialogContext = /** @class */ (function () {
     return LyDialogContext;
 }());
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 var DynamicInjector = /** @class */ (function () {
     function DynamicInjector(_newInjector, _parentInjector) {
         this._newInjector = _newInjector;
         this._parentInjector = _parentInjector;
     }
-    /**
-     * @param {?} token
-     * @param {?=} notFoundValue
-     * @param {?=} _flags
-     * @return {?}
-     */
-    DynamicInjector.prototype.get = /**
-     * @param {?} token
-     * @param {?=} notFoundValue
-     * @param {?=} _flags
-     * @return {?}
-     */
-    function (token, notFoundValue, _flags) {
-        /** @type {?} */
+    DynamicInjector.prototype.get = function (token, notFoundValue, _flags) {
         var value = this._newInjector.get(token, notFoundValue);
         if (value) {
             return value;
@@ -396,10 +246,6 @@ var DynamicInjector = /** @class */ (function () {
     return DynamicInjector;
 }());
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 var LyDialog = /** @class */ (function () {
     function LyDialog(_overlay, _componentFactoryResolver, _theme, _injector) {
         this._overlay = _overlay;
@@ -407,22 +253,9 @@ var LyDialog = /** @class */ (function () {
         this._theme = _theme;
         this._injector = _injector;
     }
-    /**
-     * @template T, DATA
-     * @param {?} componentOrTemplateRef
-     * @param {?=} config
-     * @return {?}
-     */
-    LyDialog.prototype.open = /**
-     * @template T, DATA
-     * @param {?} componentOrTemplateRef
-     * @param {?=} config
-     * @return {?}
-     */
-    function (componentOrTemplateRef, config) {
+    LyDialog.prototype.open = function (componentOrTemplateRef, config) {
         // merge with default config
         config = __assign({}, new LyDialogConfig(), config);
-        /** @type {?} */
         var componentFactoryOrTemplate;
         if (componentOrTemplateRef instanceof TemplateRef) {
             componentFactoryOrTemplate = componentOrTemplateRef;
@@ -430,20 +263,15 @@ var LyDialog = /** @class */ (function () {
         else {
             componentFactoryOrTemplate = this._componentFactoryResolver.resolveComponentFactory(componentOrTemplateRef);
         }
-        /** @type {?} */
         var onReziseScroll = function () {
             // I would have used FlexBox to position, but not,
             // because it creates a blurring effect in the text
             // when the `dialog` is opened
-            /** @type {?} */
             var dialogContainerElement = overlayRef.containerElement;
-            /** @type {?} */
             var x = window.innerWidth / 2 - dialogContainerElement.offsetWidth / 2;
-            /** @type {?} */
             var y = window.innerHeight / 2 - dialogContainerElement.offsetHeight / 2;
             dialogContainerElement.style.transform = "translate3d(" + Math.round(x) + "px, " + Math.round(y) + "px, 0)";
         };
-        /** @type {?} */
         var overlayRef = this._overlay.create(LyDialogContainer, null, {
             styles: {
                 top: 0,
@@ -456,9 +284,7 @@ var LyDialog = /** @class */ (function () {
                 dialogRef.close();
             }
         });
-        /** @type {?} */
-        var instance = (/** @type {?} */ (overlayRef.componentRef)).instance;
-        /** @type {?} */
+        var instance = overlayRef.componentRef.instance;
         var dialogContainerStyle = instance._getHostElement().style;
         dialogContainerStyle.width = toPx(config.width);
         dialogContainerStyle.maxWidth = toPx(config.maxWidth);
@@ -466,11 +292,10 @@ var LyDialog = /** @class */ (function () {
         dialogContainerStyle.height = toPx(config.height);
         dialogContainerStyle.maxHeight = toPx(config.maxHeight);
         dialogContainerStyle.minHeight = toPx(config.minHeight);
-        /** @type {?} */
         var providers = [
             {
                 provide: LyDialogRef,
-                useValue: new LyDialogRef((/** @type {?} */ (overlayRef.componentRef)).injector.get(LyOverlayRef))
+                useValue: new LyDialogRef(overlayRef.componentRef.injector.get(LyOverlayRef))
             },
             {
                 provide: LyDialogConfig,
@@ -483,29 +308,22 @@ var LyDialog = /** @class */ (function () {
                 useValue: config.data
             });
         }
-        /** @type {?} */
-        var newInjector = new DynamicInjector(Injector.create(providers, (/** @type {?} */ (overlayRef.componentRef)).injector), this._injector);
+        var newInjector = new DynamicInjector(Injector.create(providers, overlayRef.componentRef.injector), this._injector);
         instance._init(componentFactoryOrTemplate, newInjector);
-        /** @type {?} */
         var dialogRef = newInjector.get(LyDialogRef);
         return dialogRef;
     };
-    LyDialog.decorators = [
-        { type: Injectable }
-    ];
-    /** @nocollapse */
-    LyDialog.ctorParameters = function () { return [
-        { type: LyOverlay },
-        { type: ComponentFactoryResolver },
-        { type: LyTheme2 },
-        { type: Injector }
-    ]; };
+    LyDialog = __decorate([
+        Injectable(),
+        __metadata("design:paramtypes", [LyOverlay,
+            ComponentFactoryResolver,
+            LyTheme2,
+            Injector])
+    ], LyDialog);
     return LyDialog;
 }());
 /**
  * convert number to px
- * @param {?} val
- * @return {?}
  */
 function toPx(val) {
     if (typeof val === 'number') {
@@ -517,19 +335,9 @@ function toPx(val) {
     return null;
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/**
- * \@docs-private
- * @type {?}
- */
+/** @docs-private */
 var STYLE_PRIORITY$1 = -2;
-/**
- * \@docs-private
- * @type {?}
- */
+/** @docs-private */
 var STYLES_DIALOG_TITLE = function (theme) { return ({
     display: 'block',
     flex: '0 0 auto',
@@ -546,43 +354,24 @@ var LyDialogTitle = /** @class */ (function () {
         this._el = _el;
         this._theme = _theme;
     }
-    /**
-     * @return {?}
-     */
-    LyDialogTitle.prototype.ngOnInit = /**
-     * @return {?}
-     */
-    function () {
+    LyDialogTitle.prototype.ngOnInit = function () {
         this._renderer.addClass(this._el.nativeElement, this._theme.style(STYLES_DIALOG_TITLE, STYLE_PRIORITY$1));
     };
-    LyDialogTitle.decorators = [
-        { type: Directive, args: [{
-                    selector: '[ly-dialog-title], [lyDialogTitle]',
-                    exportAs: 'lyDialogTitle'
-                },] }
-    ];
-    /** @nocollapse */
-    LyDialogTitle.ctorParameters = function () { return [
-        { type: Renderer2 },
-        { type: ElementRef },
-        { type: LyTheme2 }
-    ]; };
+    LyDialogTitle = __decorate([
+        Directive({
+            selector: '[ly-dialog-title], [lyDialogTitle]',
+            exportAs: 'lyDialogTitle'
+        }),
+        __metadata("design:paramtypes", [Renderer2,
+            ElementRef,
+            LyTheme2])
+    ], LyDialogTitle);
     return LyDialogTitle;
 }());
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/**
- * \@docs-private
- * @type {?}
- */
+/** @docs-private */
 var STYLE_PRIORITY$2 = -2;
-/**
- * \@docs-private
- * @type {?}
- */
+/** @docs-private */
 var STYLES_DIALOG_CONTENT = ({
     display: 'block',
     overflowY: 'auto',
@@ -596,43 +385,24 @@ var LyDialogContent = /** @class */ (function () {
         this._el = _el;
         this._theme = _theme;
     }
-    /**
-     * @return {?}
-     */
-    LyDialogContent.prototype.ngOnInit = /**
-     * @return {?}
-     */
-    function () {
+    LyDialogContent.prototype.ngOnInit = function () {
         this._renderer.addClass(this._el.nativeElement, this._theme.style(STYLES_DIALOG_CONTENT, STYLE_PRIORITY$2));
     };
-    LyDialogContent.decorators = [
-        { type: Directive, args: [{
-                    selector: 'ly-dialog-content, [ly-dialog-content], [lyDialogContent]',
-                    exportAs: 'lyDialogContent'
-                },] }
-    ];
-    /** @nocollapse */
-    LyDialogContent.ctorParameters = function () { return [
-        { type: Renderer2 },
-        { type: ElementRef },
-        { type: LyTheme2 }
-    ]; };
+    LyDialogContent = __decorate([
+        Directive({
+            selector: 'ly-dialog-content, [ly-dialog-content], [lyDialogContent]',
+            exportAs: 'lyDialogContent'
+        }),
+        __metadata("design:paramtypes", [Renderer2,
+            ElementRef,
+            LyTheme2])
+    ], LyDialogContent);
     return LyDialogContent;
 }());
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/**
- * \@docs-private
- * @type {?}
- */
+/** @docs-private */
 var STYLE_PRIORITY$3 = -2;
-/**
- * \@docs-private
- * @type {?}
- */
+/** @docs-private */
 var STYLES_DIALOG_ACTIONS = ({
     display: 'flex',
     flex: '0 0 auto',
@@ -647,83 +417,58 @@ var LyDialogActions = /** @class */ (function () {
         this._el = _el;
         this._theme = _theme;
     }
-    /**
-     * @return {?}
-     */
-    LyDialogActions.prototype.ngOnInit = /**
-     * @return {?}
-     */
-    function () {
+    LyDialogActions.prototype.ngOnInit = function () {
         this._renderer.addClass(this._el.nativeElement, this._theme.style(STYLES_DIALOG_ACTIONS, STYLE_PRIORITY$3));
     };
-    LyDialogActions.decorators = [
-        { type: Directive, args: [{
-                    selector: 'ly-dialog-actions, [ly-dialog-actions], [lyDialogActions]',
-                    exportAs: 'lyDialogActions'
-                },] }
-    ];
-    /** @nocollapse */
-    LyDialogActions.ctorParameters = function () { return [
-        { type: Renderer2 },
-        { type: ElementRef },
-        { type: LyTheme2 }
-    ]; };
+    LyDialogActions = __decorate([
+        Directive({
+            selector: 'ly-dialog-actions, [ly-dialog-actions], [lyDialogActions]',
+            exportAs: 'lyDialogActions'
+        }),
+        __metadata("design:paramtypes", [Renderer2,
+            ElementRef,
+            LyTheme2])
+    ], LyDialogActions);
     return LyDialogActions;
 }());
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 var LyDialogModule = /** @class */ (function () {
     function LyDialogModule() {
     }
-    LyDialogModule.decorators = [
-        { type: NgModule, args: [{
-                    entryComponents: [
-                        LyDialogContainer
-                    ],
-                    declarations: [
-                        LyDialogContainer,
-                        LyDialogTitle,
-                        LyDialogContent,
-                        LyDialogActions
-                    ],
-                    imports: [
-                        CommonModule,
-                        LyCommonModule,
-                        LyOverlayModule
-                    ],
-                    exports: [
-                        LyCommonModule,
-                        LyDialogContainer,
-                        LyDialogTitle,
-                        LyDialogContent,
-                        LyDialogActions
-                    ],
-                    providers: [
-                        LyDialog
-                    ]
-                },] }
-    ];
+    LyDialogModule = __decorate([
+        NgModule({
+            entryComponents: [
+                LyDialogContainer
+            ],
+            declarations: [
+                LyDialogContainer,
+                LyDialogTitle,
+                LyDialogContent,
+                LyDialogActions
+            ],
+            imports: [
+                CommonModule,
+                LyCommonModule,
+                LyOverlayModule
+            ],
+            exports: [
+                LyCommonModule,
+                LyDialogContainer,
+                LyDialogTitle,
+                LyDialogContent,
+                LyDialogActions
+            ],
+            providers: [
+                LyDialog
+            ]
+        })
+    ], LyDialogModule);
     return LyDialogModule;
 }());
 
 /**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated bundle index. Do not edit.
  */
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-
-export { LyDialog, LY_DIALOG_DATA, LyDialogRef, LyDialogModule, LyDialogActions as ɵd, LyDialogContainer as ɵa, LyDialogContent as ɵc, LyDialogTitle as ɵb };
-
+export { LY_DIALOG_DATA, LyDialog, LyDialogModule, LyDialogRef, LyDialogContainer as ɵa, LyDialogTitle as ɵb, LyDialogContent as ɵc, LyDialogActions as ɵd };
 //# sourceMappingURL=alyle-ui-dialog.js.map

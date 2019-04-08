@@ -1,8 +1,8 @@
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@alyle/ui')) :
     typeof define === 'function' && define.amd ? define('@alyle/ui/button', ['exports', '@angular/core', '@alyle/ui'], factory) :
-    (factory((global.ly = global.ly || {}, global.ly.button = {}),global.ng.core,global.ly.core));
-}(this, (function (exports,core,ui) { 'use strict';
+    (global = global || self, factory((global.ly = global.ly || {}, global.ly.button = {}), global.ng.core, global.ly.core));
+}(this, function (exports, core, ui) { 'use strict';
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
@@ -19,41 +19,44 @@
     and limitations under the License.
     ***************************************************************************** */
     /* global Reflect, Promise */
-    var extendStatics = function (d, b) {
+
+    var extendStatics = function(d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b)
-                if (b.hasOwnProperty(p))
-                    d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
+
     function __extends(d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     }
-    var __assign = function () {
+
+    var __assign = function() {
         __assign = Object.assign || function __assign(t) {
             for (var s, i = 1, n = arguments.length; i < n; i++) {
                 s = arguments[i];
-                for (var p in s)
-                    if (Object.prototype.hasOwnProperty.call(s, p))
-                        t[p] = s[p];
+                for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
             }
             return t;
         };
         return __assign.apply(this, arguments);
     };
 
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    /** @type {?} */
+    function __decorate(decorators, target, key, desc) {
+        var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+        else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+        return c > 3 && r && Object.defineProperty(target, key, r), r;
+    }
+
+    function __metadata(metadataKey, metadataValue) {
+        if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(metadataKey, metadataValue);
+    }
+
     var STYLES = function (theme) {
-        /** @type {?} */
         var typography = theme.typography;
-        /** @type {?} */
         var _styles = ({
             root: {
                 fontFamily: typography.fontFamily,
@@ -112,30 +115,17 @@
         return _styles;
     };
 
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    /** @type {?} */
     var DEFAULT_DISABLE_RIPPLE = false;
-    /** @type {?} */
     var STYLE_PRIORITY = -2;
-    /**
-     * \@docs-private
-     */
-    var /**
-     * \@docs-private
-     */ LyButtonBase = /** @class */ (function () {
+    /** @docs-private */
+    var LyButtonBase = /** @class */ (function () {
         function LyButtonBase(_theme, _ngZone) {
             this._theme = _theme;
             this._ngZone = _ngZone;
         }
         return LyButtonBase;
     }());
-    /**
-     * \@docs-private
-     * @type {?}
-     */
+    /** @docs-private */
     var LyButtonMixinBase = ui.mixinStyleUpdater(ui.mixinBg(ui.mixinColor(ui.mixinRaised(ui.mixinDisabled(ui.mixinOutlined(ui.mixinElevation(ui.mixinShadowColor(ui.mixinDisableRipple(LyButtonBase)))))))));
     var LyButton = /** @class */ (function (_super) {
         __extends(LyButton, _super);
@@ -147,7 +137,7 @@
             _this._focusState = _focusState;
             /**
              * Style
-             * \@docs-private
+             * @docs-private
              */
             _this.classes = _this._theme.addStyleSheet(STYLES, STYLE_PRIORITY);
             _this._rippleSensitive = false;
@@ -168,17 +158,10 @@
         }
         Object.defineProperty(LyButton.prototype, "rippleSensitive", {
             /** @docs-private */
-            get: /**
-             * \@docs-private
-             * @return {?}
-             */ function () {
+            get: function () {
                 return this._rippleSensitive;
             },
-            set: /**
-             * @param {?} value
-             * @return {?}
-             */ function (value) {
-                /** @type {?} */
+            set: function (value) {
                 var newVal = this._rippleSensitive = ui.toBoolean(value);
                 this._rippleConfig.sensitive = newVal;
             },
@@ -187,21 +170,15 @@
         });
         Object.defineProperty(LyButton.prototype, "size", {
             /** Button size */
-            get: /**
-             * Button size
-             * @return {?}
-             */ function () {
+            get: function () {
                 return this._size;
             },
-            set: /**
-             * @param {?} val
-             * @return {?}
-             */ function (val) {
+            set: function (val) {
                 if (val !== this.size) {
                     this._size = val;
                     this._sizeClass = this._theme.addStyle("lyButton.size:" + val, function (theme) {
                         if (theme.button && theme.button.size && theme.button.size[val]) {
-                            return ( /** @type {?} */(theme.button.size[val]));
+                            return theme.button.size[val];
                         }
                         throw new Error("Value button.size['" + val + "'] not found in ThemeVariables");
                     }, this._el.nativeElement, this._sizeClass, STYLE_PRIORITY);
@@ -212,188 +189,137 @@
         });
         Object.defineProperty(LyButton.prototype, "appearance", {
             /** Button appearance */
-            get: /**
-             * Button appearance
-             * @return {?}
-             */ function () { return this._appearance; },
-            set: /**
-             * @param {?} val
-             * @return {?}
-             */ function (val) {
+            get: function () { return this._appearance; },
+            set: function (val) {
                 if (val !== this.appearance) {
                     if (val === 'icon' && !this._rippleConfig.centered) {
                         this._rippleConfig.centered = true;
                     }
                     this._appearance = val;
                     this._appearanceClass = this._theme.addStyle("lyButton.appearance:" + val, function (theme) {
-                        if (!(( /** @type {?} */(theme.button)).appearance && ( /** @type {?} */(( /** @type {?} */(theme.button)).appearance))[val])) {
+                        if (!(theme.button.appearance && theme.button.appearance[val])) {
                             throw new Error("Value button.appearance['" + val + "'] not found in ThemeVariables");
                         }
-                        return ( /** @type {?} */(( /** @type {?} */(( /** @type {?} */(theme.button)).appearance))[val]));
+                        return theme.button.appearance[val];
                     }, this._el.nativeElement, this._appearanceClass, STYLE_PRIORITY + 1);
                 }
             },
             enumerable: true,
             configurable: true
         });
-        /**
-         * @return {?}
-         */
-        LyButton.prototype.ngOnChanges = /**
-         * @return {?}
-         */
-            function () {
-                this.updateStyle(this._el);
-                /** @type {?} */
-                var isDisabled = this.disabled;
-                this._renderer.setProperty(this._el.nativeElement, 'disabled', isDisabled);
-            };
-        /**
-         * @return {?}
-         */
-        LyButton.prototype.ngOnInit = /**
-         * @return {?}
-         */
-            function () {
-                var button = this._theme.variables.button;
-                if (button) {
-                    this._renderer.addClass(this._el.nativeElement, this.classes.root);
-                    // Apply default config
-                    if (this.size == null && this.appearance == null) {
-                        this.size = button.defaultConfig.size;
-                    }
-                    else {
-                        if (button.defaultConfig && button.defaultConfig.appearance) {
-                            if (this.appearance == null) {
-                                this.appearance = button.defaultConfig.appearance;
-                            }
+        LyButton.prototype.ngOnChanges = function () {
+            this.updateStyle(this._el);
+            var isDisabled = this.disabled;
+            this._renderer.setProperty(this._el.nativeElement, 'disabled', isDisabled);
+        };
+        LyButton.prototype.ngOnInit = function () {
+            var button = this._theme.variables.button;
+            if (button) {
+                this._renderer.addClass(this._el.nativeElement, this.classes.root);
+                // Apply default config
+                if (this.size == null && this.appearance == null) {
+                    this.size = button.defaultConfig.size;
+                }
+                else {
+                    if (button.defaultConfig && button.defaultConfig.appearance) {
+                        if (this.appearance == null) {
+                            this.appearance = button.defaultConfig.appearance;
                         }
                     }
                 }
-                // set default disable ripple
-                if (this.disableRipple == null) {
-                    this.disableRipple = DEFAULT_DISABLE_RIPPLE;
-                }
-            };
-        /**
-         * @return {?}
-         */
-        LyButton.prototype.ngAfterViewInit = /**
-         * @return {?}
-         */
-            function () {
-                // this._renderer.addClass(this._el.nativeElement, this.classes.animations);
-                var _this = this;
-                // this._renderer.addClass(this._el.nativeElement, this.classes.animations);
-                /** @type {?} */
-                var focusState = this._focusState.listen(this._el);
-                if (focusState) {
-                    focusState.subscribe(function (event) {
-                        if (_this._onFocusByKeyboardState === true) {
-                            _this._renderer.removeClass(_this._el.nativeElement, _this.classes.onFocusByKeyboard);
-                            _this._onFocusByKeyboardState = false;
-                        }
-                        if (event === 'keyboard') {
-                            _this._onFocusByKeyboardState = true;
-                            _this._renderer.addClass(_this._el.nativeElement, _this.classes.onFocusByKeyboard);
-                        }
-                    });
-                }
-            };
-        /**
-         * @return {?}
-         */
-        LyButton.prototype.focus = /**
-         * @return {?}
-         */
-            function () {
-                this._el.nativeElement.focus();
-            };
-        /**
-         * @return {?}
-         */
-        LyButton.prototype.ngOnDestroy = /**
-         * @return {?}
-         */
-            function () {
-                this._focusState.unlisten(this._el);
-                this._removeRippleEvents();
-            };
-        LyButton.decorators = [
-            { type: core.Component, args: [{
-                        selector: 'button[ly-button], a[ly-button]',
-                        changeDetection: core.ChangeDetectionStrategy.OnPush,
-                        template: "<span [className]=\"classes.content\">\n  <ng-content></ng-content>\n</span>\n<div #rippleContainer [className]=\"_rippleService.classes.container\"></div>",
-                        inputs: [
-                            'bg',
-                            'color',
-                            'raised',
-                            'disabled',
-                            'outlined',
-                            'elevation',
-                            'shadowColor',
-                            'disableRipple'
-                        ]
-                    }] }
-        ];
-        /** @nocollapse */
-        LyButton.ctorParameters = function () {
-            return [
-                { type: core.ElementRef },
-                { type: core.Renderer2 },
-                { type: ui.LyTheme2 },
-                { type: core.NgZone },
-                { type: ui.LyRippleService },
-                { type: ui.LyFocusState }
-            ];
+            }
+            // set default disable ripple
+            if (this.disableRipple == null) {
+                this.disableRipple = DEFAULT_DISABLE_RIPPLE;
+            }
         };
-        LyButton.propDecorators = {
-            _rippleContainer: [{ type: core.ViewChild, args: ['rippleContainer',] }],
-            rippleSensitive: [{ type: core.Input, args: ['sensitive',] }],
-            size: [{ type: core.Input }],
-            appearance: [{ type: core.Input }]
+        LyButton.prototype.ngAfterViewInit = function () {
+            // this._renderer.addClass(this._el.nativeElement, this.classes.animations);
+            var _this = this;
+            var focusState = this._focusState.listen(this._el);
+            if (focusState) {
+                focusState.subscribe(function (event) {
+                    if (_this._onFocusByKeyboardState === true) {
+                        _this._renderer.removeClass(_this._el.nativeElement, _this.classes.onFocusByKeyboard);
+                        _this._onFocusByKeyboardState = false;
+                    }
+                    if (event === 'keyboard') {
+                        _this._onFocusByKeyboardState = true;
+                        _this._renderer.addClass(_this._el.nativeElement, _this.classes.onFocusByKeyboard);
+                    }
+                });
+            }
         };
+        LyButton.prototype.focus = function () {
+            this._el.nativeElement.focus();
+        };
+        LyButton.prototype.ngOnDestroy = function () {
+            this._focusState.unlisten(this._el);
+            this._removeRippleEvents();
+        };
+        __decorate([
+            core.ViewChild('rippleContainer'),
+            __metadata("design:type", core.ElementRef)
+        ], LyButton.prototype, "_rippleContainer", void 0);
+        __decorate([
+            core.Input('sensitive'),
+            __metadata("design:type", Boolean),
+            __metadata("design:paramtypes", [Boolean])
+        ], LyButton.prototype, "rippleSensitive", null);
+        __decorate([
+            core.Input(),
+            __metadata("design:type", String),
+            __metadata("design:paramtypes", [String])
+        ], LyButton.prototype, "size", null);
+        __decorate([
+            core.Input(),
+            __metadata("design:type", String),
+            __metadata("design:paramtypes", [String])
+        ], LyButton.prototype, "appearance", null);
+        LyButton = __decorate([
+            core.Component({
+                selector: 'button[ly-button], a[ly-button]',
+                changeDetection: core.ChangeDetectionStrategy.OnPush,
+                template: "<span [className]=\"classes.content\">\n  <ng-content></ng-content>\n</span>\n<div #rippleContainer [className]=\"_rippleService.classes.container\"></div>",
+                inputs: [
+                    'bg',
+                    'color',
+                    'raised',
+                    'disabled',
+                    'outlined',
+                    'elevation',
+                    'shadowColor',
+                    'disableRipple'
+                ]
+            }),
+            __metadata("design:paramtypes", [core.ElementRef,
+                core.Renderer2,
+                ui.LyTheme2,
+                core.NgZone,
+                ui.LyRippleService,
+                ui.LyFocusState])
+        ], LyButton);
         return LyButton;
     }(LyButtonMixinBase));
 
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
     var LyButtonModule = /** @class */ (function () {
         function LyButtonModule() {
         }
-        LyButtonModule.decorators = [
-            { type: core.NgModule, args: [{
-                        exports: [ui.LyCommonModule, LyButton],
-                        declarations: [LyButton]
-                    },] }
-        ];
+        LyButtonModule = __decorate([
+            core.NgModule({
+                exports: [ui.LyCommonModule, LyButton],
+                declarations: [LyButton]
+            })
+        ], LyButtonModule);
         return LyButtonModule;
     }());
 
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-
+    exports.LyButton = LyButton;
     exports.LyButtonBase = LyButtonBase;
     exports.LyButtonMixinBase = LyButtonMixinBase;
-    exports.LyButton = LyButton;
     exports.LyButtonModule = LyButtonModule;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 
-})));
-
+}));
 //# sourceMappingURL=alyle-ui-button.umd.js.map

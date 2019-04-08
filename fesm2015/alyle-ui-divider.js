@@ -1,93 +1,58 @@
+import { __decorate, __metadata } from 'tslib';
+import { Input, Directive, ElementRef, NgModule } from '@angular/core';
 import { LyTheme2 } from '@alyle/ui';
-import { Directive, Input, ElementRef, NgModule } from '@angular/core';
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
 const style = (theme) => ({
     display: 'block',
     backgroundColor: theme.divider,
     height: '1px'
 });
-class LyDivider {
-    /**
-     * @param {?} _el
-     * @param {?} _theme
-     */
+const ɵ0 = style;
+let LyDivider = class LyDivider {
     constructor(_el, _theme) {
         this._el = _el;
         this._theme = _theme;
     }
-    /**
-     * Add indentation (72px)
-     * @param {?} val
-     * @return {?}
-     */
+    /** Add indentation (72px) */
     set inset(val) {
         this._inset = val;
         this._theme.addStyle(`lyDivider.inset`, () => ({
             marginBefore: '74px'
         }), this._el.nativeElement, this._insetClass);
     }
-    /**
-     * @return {?}
-     */
     get inset() {
         return this._inset;
     }
-    /**
-     * @return {?}
-     */
     ngOnInit() {
-        /** @type {?} */
         const className = this._theme.addSimpleStyle('lyDivider', style);
         this._el.nativeElement.classList.add(className);
     }
-}
-LyDivider.decorators = [
-    { type: Directive, args: [{
-                selector: 'ly-divider'
-            },] }
-];
-/** @nocollapse */
-LyDivider.ctorParameters = () => [
-    { type: ElementRef },
-    { type: LyTheme2 }
-];
-LyDivider.propDecorators = {
-    inset: [{ type: Input }]
 };
+__decorate([
+    Input(),
+    __metadata("design:type", Boolean),
+    __metadata("design:paramtypes", [Boolean])
+], LyDivider.prototype, "inset", null);
+LyDivider = __decorate([
+    Directive({
+        selector: 'ly-divider'
+    }),
+    __metadata("design:paramtypes", [ElementRef,
+        LyTheme2])
+], LyDivider);
+
+let LyDividerModule = class LyDividerModule {
+};
+LyDividerModule = __decorate([
+    NgModule({
+        exports: [LyDivider],
+        declarations: [LyDivider]
+    })
+], LyDividerModule);
 
 /**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-class LyDividerModule {
-}
-LyDividerModule.decorators = [
-    { type: NgModule, args: [{
-                exports: [LyDivider],
-                declarations: [LyDivider]
-            },] }
-];
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated bundle index. Do not edit.
  */
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-
-export { LyDivider, LyDividerModule };
-
+export { LyDivider, LyDividerModule, ɵ0 };
 //# sourceMappingURL=alyle-ui-divider.js.map

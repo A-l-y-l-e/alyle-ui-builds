@@ -1,55 +1,44 @@
-import { NgModule, Directive } from '@angular/core';
+import { __decorate } from 'tslib';
+import { Directive, NgModule } from '@angular/core';
+import { LyTheme2, LY_THEME_NAME, LyStyleUtils, Dir, mergeDeep, shadowBuilder } from '@alyle/ui';
 import { Breakpoints } from '@alyle/ui/responsive';
-import { LY_THEME_NAME, LyTheme2, LyStyleUtils, Dir, mergeDeep, shadowBuilder } from '@alyle/ui';
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-class ThemeMinimaLight {
-}
-ThemeMinimaLight.decorators = [
-    { type: Directive, args: [{
-                selector: '[ly-theme-minima-light]',
-                providers: [LyTheme2, { provide: LY_THEME_NAME, useValue: 'minima-light' }]
-            },] }
-];
-class ThemeMinimaDark {
-}
-ThemeMinimaDark.decorators = [
-    { type: Directive, args: [{
-                selector: '[ly-theme-minima-dark]',
-                providers: [LyTheme2, { provide: LY_THEME_NAME, useValue: 'minima-dark' }]
-            },] }
-];
-class ThemeMinimaModule {
-}
-ThemeMinimaModule.decorators = [
-    { type: NgModule, args: [{
-                declarations: [ThemeMinimaDark, ThemeMinimaLight],
-                exports: [ThemeMinimaDark, ThemeMinimaLight]
-            },] }
-];
+let ThemeMinimaLight = class ThemeMinimaLight {
+};
+ThemeMinimaLight = __decorate([
+    Directive({
+        selector: '[ly-theme-minima-light]',
+        providers: [LyTheme2, { provide: LY_THEME_NAME, useValue: 'minima-light' }]
+    })
+], ThemeMinimaLight);
+let ThemeMinimaDark = class ThemeMinimaDark {
+};
+ThemeMinimaDark = __decorate([
+    Directive({
+        selector: '[ly-theme-minima-dark]',
+        providers: [LyTheme2, { provide: LY_THEME_NAME, useValue: 'minima-dark' }]
+    })
+], ThemeMinimaDark);
+let ThemeMinimaModule = class ThemeMinimaModule {
+};
+ThemeMinimaModule = __decorate([
+    NgModule({
+        declarations: [ThemeMinimaDark, ThemeMinimaLight],
+        exports: [ThemeMinimaDark, ThemeMinimaLight]
+    })
+], ThemeMinimaModule);
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
 const iconButton = {
     size: '48px'
 };
-/** @type {?} */
 const icon = {
     fontSize: '24px'
 };
-/** @type {?} */
 const zIndex = {
     toolbar: 1000,
     drawer: 1100,
     overlay: 1200
 };
-/** @type {?} */
 const RippleVariables = {
     transition: {
         opacity: 'cubic-bezier(0.4,0.0,1,1)',
@@ -57,7 +46,6 @@ const RippleVariables = {
     },
     duration: 950
 };
-/** @type {?} */
 const animations = {
     curves: {
         standard: 'cubic-bezier(0.4,0.0,0.2,1)',
@@ -72,10 +60,6 @@ const animations = {
     }
 };
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 class MinimaBase extends LyStyleUtils {
     constructor() {
         super();
@@ -96,7 +80,7 @@ class MinimaBase extends LyStyleUtils {
         this.direction = Dir.ltr;
         this.button = {
             defaultConfig: {
-                size: (/** @type {?} */ ('medium'))
+                size: 'medium'
             },
             size: {
                 small: ({
@@ -331,13 +315,7 @@ class MinimaBase extends LyStyleUtils {
     }
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
 const contrast = '#fff';
-/** @type {?} */
 const shadow = '#333';
 class MinimaLight extends MinimaBase {
     constructor() {
@@ -361,7 +339,6 @@ class MinimaLight extends MinimaBase {
         };
         this.background = {
             default: '#fafafa',
-            // secondary
             primary: {
                 default: '#fff',
                 shadow
@@ -423,13 +400,7 @@ class MinimaLight extends MinimaBase {
     }
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
 const contrast$1 = '#fff';
-/** @type {?} */
 const shadow$1 = 'rgba(0, 0, 0, 1)';
 class MinimaDark extends MinimaBase {
     constructor() {
@@ -457,7 +428,6 @@ class MinimaDark extends MinimaBase {
         };
         this.background = {
             default: '#303030',
-            // secondary
             primary: {
                 default: '#2b2b2b',
                 shadow: shadow$1
@@ -516,20 +486,8 @@ class MinimaDark extends MinimaBase {
 }
 
 /**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated bundle index. Do not edit.
  */
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-
-export { ThemeMinimaLight, ThemeMinimaDark, ThemeMinimaModule, MinimaLight, MinimaDark, MinimaBase as ɵa };
-
+export { MinimaDark, MinimaLight, ThemeMinimaDark, ThemeMinimaLight, ThemeMinimaModule, MinimaBase as ɵa };
 //# sourceMappingURL=alyle-ui-themes-minima.js.map

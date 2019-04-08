@@ -1,17 +1,11 @@
+import { __decorate, __metadata } from 'tslib';
+import { Directive, ViewChild, ElementRef, ContentChildren, forwardRef, QueryList, ContentChild, Input, Component, ChangeDetectionStrategy, Renderer2, NgZone, ChangeDetectorRef, NgModule } from '@angular/core';
+import { LY_COMMON_STYLES, LyTheme2, mixinStyleUpdater, mixinBg, mixinColor, mixinRaised, mixinDisabled, mixinOutlined, mixinElevation, mixinShadowColor, mixinDisableRipple, Platform, toBoolean, LyRippleService, LyFocusState, LyCommonModule } from '@alyle/ui';
 import { LyAvatar } from '@alyle/ui/avatar';
 import { CommonModule } from '@angular/common';
-import { Directive, ElementRef, Input, NgZone, Renderer2, Component, ViewChild, forwardRef, ContentChildren, ContentChild, ChangeDetectionStrategy, ChangeDetectorRef, NgModule } from '@angular/core';
-import { LY_COMMON_STYLES, LyFocusState, LyRippleService, LyTheme2, mixinBg, mixinColor, mixinDisabled, mixinDisableRipple, mixinElevation, mixinOutlined, mixinRaised, mixinShadowColor, mixinStyleUpdater, toBoolean, Platform, LyCommonModule } from '@alyle/ui';
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
 const STYLE_PRIORITY = 2;
-/** @type {?} */
 const DISABLE_PADDING = false;
-/** @type {?} */
 const STYLES = (theme) => ({
     $priority: STYLE_PRIORITY,
     root: {
@@ -75,66 +69,35 @@ const STYLES = (theme) => ({
         }
     }
 });
-/**
- * List container
- */
-class LyList {
-    /**
-     * @param {?} theme
-     */
+/** List container */
+let LyList = class LyList {
     constructor(theme) {
         this.theme = theme;
-        /**
-         * \@docs-private
-         */
+        /** @docs-private */
         this.classes = this.theme.addStyleSheet(STYLES);
     }
-}
-LyList.decorators = [
-    { type: Directive, args: [{
-                selector: 'ly-list',
-                exportAs: 'lyList',
-                host: {
-                    '[className]': 'classes.root'
-                }
-            },] }
-];
-/** @nocollapse */
-LyList.ctorParameters = () => [
-    { type: LyTheme2 }
-];
-/**
- * \@docs-private
- */
+};
+LyList = __decorate([
+    Directive({
+        selector: 'ly-list',
+        exportAs: 'lyList',
+        host: {
+            '[className]': 'classes.root'
+        }
+    }),
+    __metadata("design:paramtypes", [LyTheme2])
+], LyList);
+/** @docs-private */
 class LyListItemBase {
-    /**
-     * @param {?} _theme
-     * @param {?} _ngZone
-     */
     constructor(_theme, _ngZone) {
         this._theme = _theme;
         this._ngZone = _ngZone;
     }
 }
-/**
- * \@docs-private
- * @type {?}
- */
+/** @docs-private */
 const LyListItemMixinBase = mixinStyleUpdater(mixinBg(mixinColor(mixinRaised(mixinDisabled(mixinOutlined(mixinElevation(mixinShadowColor(mixinDisableRipple(LyListItemBase)))))))));
-/**
- * List Item
- */
-class LyListItem extends LyListItemMixinBase {
-    /**
-     * @param {?} _el
-     * @param {?} _renderer
-     * @param {?} theme
-     * @param {?} ngZone
-     * @param {?} _rippleService
-     * @param {?} _focusState
-     * @param {?} _list
-     * @param {?} _cd
-     */
+/** List Item */
+let LyListItem = class LyListItem extends LyListItemMixinBase {
     constructor(_el, _renderer, theme, ngZone, _rippleService, _focusState, _list, _cd) {
         super(theme, ngZone);
         this._el = _el;
@@ -143,22 +106,15 @@ class LyListItem extends LyListItemMixinBase {
         this._focusState = _focusState;
         this._list = _list;
         this._cd = _cd;
-        /**
-         * \@docs-private
-         */
+        /** @docs-private */
         this.classes = this._list.classes;
         this._isBrowser = Platform.isBrowser;
         this.setAutoContrast();
         this._triggerElement = _el;
     }
-    /**
-     * @return {?}
-     */
     get _listItemClasses() {
         const { listItemContent, twoLine, oneLine, listItemWithIcon, twoLineWithIcon } = this.classes;
-        /** @type {?} */
         const classes = [listItemContent];
-        /** @type {?} */
         const hasIcon = this._icon || this._avatar;
         if (hasIcon) {
             classes.push(listItemWithIcon);
@@ -173,30 +129,19 @@ class LyListItem extends LyListItemMixinBase {
         }
         return classes;
     }
-    /**
-     * \@docs-private
-     * @param {?} val
-     * @return {?}
-     */
+    /** @docs-private */
     set isActionListItem(val) {
         this._isActionListItem = toBoolean(val);
     }
-    /**
-     * @return {?}
-     */
     get isActionListItem() {
         return this._isActionListItem;
     }
-    /**
-     * @return {?}
-     */
     ngOnInit() {
         this._renderer.addClass(this._el.nativeElement, this._list.classes.listItem);
         if (this.disableRipple == null) {
             if (this.isActionListItem) {
                 this._renderer.addClass(this._el.nativeElement, this.classes.actionListItem);
                 this.disableRipple = false;
-                /** @type {?} */
                 const focusState = this._focusState.listen(this._el);
                 if (focusState) {
                     focusState.subscribe((event) => {
@@ -213,61 +158,61 @@ class LyListItem extends LyListItemMixinBase {
             }
         }
     }
-    /**
-     * @return {?}
-     */
     ngAfterContentInit() {
         this._lines.changes.subscribe(() => this._cd.markForCheck());
     }
-    /**
-     * @return {?}
-     */
     ngOnDestroy() {
         this._focusState.unlisten(this._el);
     }
-}
-LyListItem.decorators = [
-    { type: Component, args: [{
-                selector: 'ly-list-item, a[ly-list-item], button[ly-list-item]',
-                template: "<span [ngClass]=\"_listItemClasses\">\n  <ng-content></ng-content>\n  <div *ngIf=\"_lines?.length\" [className]=\"classes.lines\">\n    <ng-content select=\"[ly-line]\"></ng-content>\n  </div>\n</span>\n<div *ngIf=\"_isBrowser\" #rippleContainer [className]=\"_rippleService.classes.container\"></div>",
-                changeDetection: ChangeDetectionStrategy.OnPush,
-                inputs: [
-                    'bg',
-                    'color',
-                    'raised',
-                    'disabled',
-                    'outlined',
-                    'elevation',
-                    'shadowColor',
-                    'disableRipple'
-                ],
-                exportAs: 'lyListItem'
-            }] }
-];
-/** @nocollapse */
-LyListItem.ctorParameters = () => [
-    { type: ElementRef },
-    { type: Renderer2 },
-    { type: LyTheme2 },
-    { type: NgZone },
-    { type: LyRippleService },
-    { type: LyFocusState },
-    { type: LyList },
-    { type: ChangeDetectorRef }
-];
-LyListItem.propDecorators = {
-    _rippleContainer: [{ type: ViewChild, args: ['rippleContainer',] }],
-    _lines: [{ type: ContentChildren, args: [forwardRef(() => LyLine),] }],
-    _icon: [{ type: ContentChild, args: [forwardRef(() => LyListIcon),] }],
-    _avatar: [{ type: ContentChild, args: [LyAvatar,] }],
-    isActionListItem: [{ type: Input, args: ['ly-list-item',] }]
 };
-class LyListIcon {
-    /**
-     * @param {?} _theme
-     * @param {?} _el
-     * @param {?} _renderer
-     */
+__decorate([
+    ViewChild('rippleContainer'),
+    __metadata("design:type", ElementRef)
+], LyListItem.prototype, "_rippleContainer", void 0);
+__decorate([
+    ContentChildren(forwardRef(() => LyLine)),
+    __metadata("design:type", QueryList)
+], LyListItem.prototype, "_lines", void 0);
+__decorate([
+    ContentChild(forwardRef(() => LyListIcon)),
+    __metadata("design:type", LyListIcon)
+], LyListItem.prototype, "_icon", void 0);
+__decorate([
+    ContentChild(LyAvatar),
+    __metadata("design:type", LyAvatar)
+], LyListItem.prototype, "_avatar", void 0);
+__decorate([
+    Input('ly-list-item'),
+    __metadata("design:type", Object),
+    __metadata("design:paramtypes", [Object])
+], LyListItem.prototype, "isActionListItem", null);
+LyListItem = __decorate([
+    Component({
+        selector: 'ly-list-item, a[ly-list-item], button[ly-list-item]',
+        template: "<span [ngClass]=\"_listItemClasses\">\n  <ng-content></ng-content>\n  <div *ngIf=\"_lines?.length\" [className]=\"classes.lines\">\n    <ng-content select=\"[ly-line]\"></ng-content>\n  </div>\n</span>\n<div *ngIf=\"_isBrowser\" #rippleContainer [className]=\"_rippleService.classes.container\"></div>",
+        changeDetection: ChangeDetectionStrategy.OnPush,
+        inputs: [
+            'bg',
+            'color',
+            'raised',
+            'disabled',
+            'outlined',
+            'elevation',
+            'shadowColor',
+            'disableRipple'
+        ],
+        exportAs: 'lyListItem'
+    }),
+    __metadata("design:paramtypes", [ElementRef,
+        Renderer2,
+        LyTheme2,
+        NgZone,
+        LyRippleService,
+        LyFocusState,
+        LyList,
+        ChangeDetectorRef])
+], LyListItem);
+let LyListIcon = class LyListIcon {
     constructor(_theme, _el, _renderer) {
         this._theme = _theme;
         this._el = _el;
@@ -277,13 +222,8 @@ class LyListIcon {
             paddingAfter: '16px'
         }), STYLE_PRIORITY));
     }
-    /**
-     * Disable extra padding
-     * @param {?} val
-     * @return {?}
-     */
+    /** Disable extra padding */
     set disablePadding(val) {
-        /** @type {?} */
         const newVal = this._disablePadding = toBoolean(val);
         this._disablePaddingClass = this._theme.addStyle(`lyIconPadding:${newVal.toString()}`, () => ({
             paddingTop: newVal ? '4px' : '8px',
@@ -291,41 +231,29 @@ class LyListIcon {
         }));
         this._renderer.addClass(this._el.nativeElement, this._disablePaddingClass);
     }
-    /**
-     * @return {?}
-     */
     get disablePadding() {
         return this._disablePadding;
     }
-    /**
-     * @return {?}
-     */
     ngOnInit() {
         if (this.disablePadding == null) {
             this.disablePadding = DISABLE_PADDING;
         }
     }
-}
-LyListIcon.decorators = [
-    { type: Directive, args: [{
-                selector: '[ly-list-icon]'
-            },] }
-];
-/** @nocollapse */
-LyListIcon.ctorParameters = () => [
-    { type: LyTheme2 },
-    { type: ElementRef },
-    { type: Renderer2 }
-];
-LyListIcon.propDecorators = {
-    disablePadding: [{ type: Input }]
 };
-class LyLine {
-    /**
-     * @param {?} _theme
-     * @param {?} _el
-     * @param {?} _renderer
-     */
+__decorate([
+    Input(),
+    __metadata("design:type", Object),
+    __metadata("design:paramtypes", [Object])
+], LyListIcon.prototype, "disablePadding", null);
+LyListIcon = __decorate([
+    Directive({
+        selector: '[ly-list-icon]'
+    }),
+    __metadata("design:paramtypes", [LyTheme2,
+        ElementRef,
+        Renderer2])
+], LyListIcon);
+let LyLine = class LyLine {
     constructor(_theme, _el, _renderer) {
         this._theme = _theme;
         this._el = _el;
@@ -348,50 +276,31 @@ class LyLine {
             }
         }), STYLE_PRIORITY));
     }
-}
-LyLine.decorators = [
-    { type: Directive, args: [{
-                selector: '[ly-line]'
-            },] }
-];
-/** @nocollapse */
-LyLine.ctorParameters = () => [
-    { type: LyTheme2 },
-    { type: ElementRef },
-    { type: Renderer2 }
-];
+};
+LyLine = __decorate([
+    Directive({
+        selector: '[ly-line]'
+    }),
+    __metadata("design:paramtypes", [LyTheme2,
+        ElementRef,
+        Renderer2])
+], LyLine);
+
+let LyListModule = class LyListModule {
+};
+LyListModule = __decorate([
+    NgModule({
+        imports: [
+            CommonModule
+        ],
+        declarations: [LyList, LyListItem, LyListIcon, LyLine],
+        exports: [LyCommonModule, LyList, LyListItem, LyListIcon, LyLine]
+    })
+], LyListModule);
 
 /**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-class LyListModule {
-}
-LyListModule.decorators = [
-    { type: NgModule, args: [{
-                imports: [
-                    CommonModule
-                ],
-                declarations: [LyList, LyListItem, LyListIcon, LyLine],
-                exports: [LyCommonModule, LyList, LyListItem, LyListIcon, LyLine]
-            },] }
-];
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated bundle index. Do not edit.
  */
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-
-export { STYLES, LyList, LyListItemBase, LyListItemMixinBase, LyListItem, LyListIcon, LyLine, LyListModule };
-
+export { LyLine, LyList, LyListIcon, LyListItem, LyListItemBase, LyListItemMixinBase, LyListModule, STYLES };
 //# sourceMappingURL=alyle-ui-list.js.map

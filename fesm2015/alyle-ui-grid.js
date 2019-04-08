@@ -1,18 +1,10 @@
-import { LyTheme2, eachMedia } from '@alyle/ui';
-import { Directive, ElementRef, Input, Renderer2, NgModule } from '@angular/core';
+import { __decorate, __metadata } from 'tslib';
+import { Input, Directive, ElementRef, Renderer2, NgModule } from '@angular/core';
+import { eachMedia, LyTheme2 } from '@alyle/ui';
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
 const STYLE_PRIORITY = -1;
-/**
- * \@docs-private
- * @type {?}
- */
+/** @docs-private */
 const COL_VALUES = {};
-/** @type {?} */
 const ALIGN_ALIAS = {
     rowReverse: 'row-reverse',
     columnReverse: 'column-reverse',
@@ -23,7 +15,6 @@ const ALIGN_ALIAS = {
     around: 'space-around',
     evenly: 'space-evenly',
 };
-/** @type {?} */
 const styles = ({
     root: {
         width: '100%',
@@ -40,47 +31,29 @@ const styles = ({
 /**
  * Grid container
  */
-class LyGrid {
-    /**
-     * @param {?} theme
-     * @param {?} el
-     */
+let LyGrid = class LyGrid {
     constructor(theme, el) {
         this.theme = theme;
         this.el = el;
         /**
          * Styles
-         * \@docs-private
+         * @docs-private
          */
         this.classes = this.theme.addStyleSheet(styles, STYLE_PRIORITY);
         this.el.nativeElement.classList.add(this.classes.root);
     }
-    /**
-     * @return {?}
-     */
     get spacingX() {
         return this._spacingX;
     }
-    /**
-     * @param {?} val
-     * @return {?}
-     */
     set spacingX(val) {
         if (val !== this.spacingX) {
             this._spacingX = val;
             this._createSpacingClass(undefined, val);
         }
     }
-    /**
-     * @return {?}
-     */
     get spacingY() {
         return this._spacingY;
     }
-    /**
-     * @param {?} val
-     * @return {?}
-     */
     set spacingY(val) {
         if (val !== this.spacingY) {
             this._spacingY = val;
@@ -90,15 +63,10 @@ class LyGrid {
     /**
      * Defines the space between the component with the `item` attribute.
      * Support breakpoints
-     * @return {?}
      */
     get spacing() {
         return this._spacing;
     }
-    /**
-     * @param {?} val
-     * @return {?}
-     */
     set spacing(val) {
         if (val !== this.spacing) {
             this._spacing = val;
@@ -107,23 +75,13 @@ class LyGrid {
     }
     /**
      * Only one param must be defined
-     * @private
-     * @param {?=} xy
-     * @param {?=} x
-     * @param {?=} y
-     * @return {?}
      */
     _createSpacingClass(xy, x, y) {
-        /** @type {?} */
         const newSpacingClass = this.theme.addStyle(`lyGrid-spacing:${xy}·${x}·${y}`, (theme) => {
-            /** @type {?} */
             const val = xy || x || y;
-            /** @type {?} */
             const spacingStyles = {};
             eachMedia(val, (value, media) => {
-                /** @type {?} */
                 const valuePadding = `${(+value) / 2}px`;
-                /** @type {?} */
                 const padding = xy != null
                     ? valuePadding
                     : x != null
@@ -152,20 +110,15 @@ class LyGrid {
             }
         }
         this._negativeMarginClass = this.theme.addStyle(`lyGrid-negative-margin:${xy}·${x}·${y}`, (theme) => {
-            /** @type {?} */
             const val = xy || x || y;
-            /** @type {?} */
             let negativeMarginStyles;
             eachMedia(val, (value, media) => {
-                /** @type {?} */
                 const valueMargin = `${(-value) / 2}px`;
-                /** @type {?} */
                 const margin = xy != null
                     ? valueMargin
                     : x != null
                         ? `0 ${valueMargin}`
                         : `${valueMargin} 0`;
-                /** @type {?} */
                 const negativeMarginstyles = { margin };
                 if (xy != null || x != null) {
                     negativeMarginstyles.width = `calc(100% + ${value}px)`;
@@ -180,29 +133,22 @@ class LyGrid {
                     negativeMarginStyles = negativeMarginstyles;
                 }
             });
-            return (/** @type {?} */ (negativeMarginStyles));
+            return negativeMarginStyles;
         }, this.el.nativeElement, this._negativeMarginClass, STYLE_PRIORITY);
     }
     /**
      * Defines the justify-content style property.
      * Support breakpoints
-     * @return {?}
      */
     get justify() {
         return this._justify;
     }
-    /**
-     * @param {?} val
-     * @return {?}
-     */
     set justify(val) {
         if (val !== this.justify) {
             this._justify = val;
             this._justifyClass = this.theme.addStyle(`lyGrid-justify:${val}`, (theme) => {
-                /** @type {?} */
                 let justifyStyles;
                 eachMedia(val, (value, media) => {
-                    /** @type {?} */
                     const newJustifyStyles = {
                         justifyContent: value in ALIGN_ALIAS
                             ? ALIGN_ALIAS[value]
@@ -218,30 +164,23 @@ class LyGrid {
                         justifyStyles = newJustifyStyles;
                     }
                 });
-                return (/** @type {?} */ (justifyStyles));
+                return justifyStyles;
             }, this.el.nativeElement, this._justifyClass, STYLE_PRIORITY);
         }
     }
     /**
      * Defines the justify-content style property.
      * Support breakpoints
-     * @return {?}
      */
     get direction() {
         return this._direction;
     }
-    /**
-     * @param {?} val
-     * @return {?}
-     */
     set direction(val) {
         if (val !== this.direction) {
             this._direction = val;
             this._directionClass = this.theme.addStyle(`lyGrid-direction:${val}`, (theme) => {
-                /** @type {?} */
                 let directionStyles;
                 eachMedia(val, (value, media) => {
-                    /** @type {?} */
                     const newDirectionStyles = {
                         flexDirection: value in ALIGN_ALIAS
                             ? ALIGN_ALIAS[value]
@@ -257,23 +196,19 @@ class LyGrid {
                         directionStyles = newDirectionStyles;
                     }
                 });
-                return (/** @type {?} */ (directionStyles));
+                return directionStyles;
             }, this.el.nativeElement, this._directionClass, STYLE_PRIORITY);
         }
     }
     /**
      * Defines the `align-items` style property.
      * Support breakpoints
-     * @param {?} val
-     * @return {?}
      */
     set alignItems(val) {
         this._alignItems = val;
         this._alignItemsClass = this.theme.addStyle(`lyGrid.align:${val}`, (theme) => {
-            /** @type {?} */
             let alignItemsStyles;
             eachMedia(val, (value, media) => {
-                /** @type {?} */
                 const newAlignItemsStyles = {
                     alignItems: value in ALIGN_ALIAS
                         ? ALIGN_ALIAS[value]
@@ -289,41 +224,51 @@ class LyGrid {
                     alignItemsStyles = newAlignItemsStyles;
                 }
             });
-            return (/** @type {?} */ (alignItemsStyles));
+            return alignItemsStyles;
         }, this.el.nativeElement, this._alignItemsClass, STYLE_PRIORITY);
     }
-    /**
-     * @return {?}
-     */
     get alignItems() {
         return this._alignItems;
     }
-}
-LyGrid.decorators = [
-    { type: Directive, args: [{
-                selector: 'ly-grid[container]'
-            },] }
-];
-/** @nocollapse */
-LyGrid.ctorParameters = () => [
-    { type: LyTheme2 },
-    { type: ElementRef }
-];
-LyGrid.propDecorators = {
-    spacingX: [{ type: Input }],
-    spacingY: [{ type: Input }],
-    spacing: [{ type: Input }],
-    justify: [{ type: Input }],
-    direction: [{ type: Input }],
-    alignItems: [{ type: Input }]
 };
-class LyGridItem {
-    /**
-     * @param {?} gridContainer
-     * @param {?} el
-     * @param {?} renderer
-     * @param {?} theme
-     */
+__decorate([
+    Input(),
+    __metadata("design:type", Object),
+    __metadata("design:paramtypes", [Object])
+], LyGrid.prototype, "spacingX", null);
+__decorate([
+    Input(),
+    __metadata("design:type", Object),
+    __metadata("design:paramtypes", [Object])
+], LyGrid.prototype, "spacingY", null);
+__decorate([
+    Input(),
+    __metadata("design:type", Object),
+    __metadata("design:paramtypes", [Object])
+], LyGrid.prototype, "spacing", null);
+__decorate([
+    Input(),
+    __metadata("design:type", String),
+    __metadata("design:paramtypes", [String])
+], LyGrid.prototype, "justify", null);
+__decorate([
+    Input(),
+    __metadata("design:type", String),
+    __metadata("design:paramtypes", [String])
+], LyGrid.prototype, "direction", null);
+__decorate([
+    Input(),
+    __metadata("design:type", String),
+    __metadata("design:paramtypes", [String])
+], LyGrid.prototype, "alignItems", null);
+LyGrid = __decorate([
+    Directive({
+        selector: 'ly-grid[container]'
+    }),
+    __metadata("design:paramtypes", [LyTheme2,
+        ElementRef])
+], LyGrid);
+let LyGridItem = class LyGridItem {
     constructor(gridContainer, el, renderer, theme) {
         this.gridContainer = gridContainer;
         this.el = el;
@@ -336,15 +281,10 @@ class LyGridItem {
     /**
      * Defines the number of grids
      * Support breakpoints
-     * @return {?}
      */
     get col() {
         return this._col;
     }
-    /**
-     * @param {?} val
-     * @return {?}
-     */
     set col(val) {
         if (val !== this.col) {
             this._col = val;
@@ -353,10 +293,8 @@ class LyGridItem {
                     return getColStyle(val);
                 }
                 else {
-                    /** @type {?} */
                     let colStyles;
                     eachMedia(val, (value, media) => {
-                        /** @type {?} */
                         const newColStyles = getColStyle(+value);
                         if (media) {
                             if (!colStyles) {
@@ -368,44 +306,30 @@ class LyGridItem {
                             colStyles = newColStyles;
                         }
                     });
-                    return (/** @type {?} */ (colStyles));
+                    return colStyles;
                 }
             }, this.el.nativeElement, this._colClass, STYLE_PRIORITY);
         }
     }
-    /**
-     * @param {?} val
-     * @return {?}
-     */
     set gridItemCol(val) {
         this.col = val;
     }
-    /**
-     * @return {?}
-     */
     get gridItemCol() {
         return this.col;
     }
     /**
      * Defines the order style property.
      * Support breakpoints
-     * @return {?}
      */
     get order() {
         return this._order;
     }
-    /**
-     * @param {?} val
-     * @return {?}
-     */
     set order(val) {
         if (val !== this.order) {
             this._order = val;
             this._orderClass = this.theme.addStyle(`lyGrid-order:${val}`, (theme) => {
-                /** @type {?} */
                 let orderStyles;
                 eachMedia(`${val}`, (value, media) => {
-                    /** @type {?} */
                     const newOrderStyles = {
                         order: value
                     };
@@ -419,20 +343,13 @@ class LyGridItem {
                         orderStyles = newOrderStyles;
                     }
                 });
-                return (/** @type {?} */ (orderStyles));
+                return orderStyles;
             }, this.el.nativeElement, this._orderClass, STYLE_PRIORITY);
         }
     }
-    /**
-     * @return {?}
-     */
     ngOnInit() {
         this._updateSpacing();
     }
-    /**
-     * @private
-     * @return {?}
-     */
     _updateSpacing() {
         if (this.gridContainer._spacingClass) {
             this.el.nativeElement.classList.add(this.gridContainer._spacingClass);
@@ -446,28 +363,31 @@ class LyGridItem {
             }
         }
     }
-}
-LyGridItem.decorators = [
-    { type: Directive, args: [{
-                selector: 'ly-grid[item], [ly-grid-item], [lyGridItem]'
-            },] }
-];
-/** @nocollapse */
-LyGridItem.ctorParameters = () => [
-    { type: LyGrid },
-    { type: ElementRef },
-    { type: Renderer2 },
-    { type: LyTheme2 }
-];
-LyGridItem.propDecorators = {
-    col: [{ type: Input }],
-    gridItemCol: [{ type: Input, args: ['lyGridItem',] }],
-    order: [{ type: Input }]
 };
-/**
- * @param {?} val
- * @return {?}
- */
+__decorate([
+    Input(),
+    __metadata("design:type", Object),
+    __metadata("design:paramtypes", [Object])
+], LyGridItem.prototype, "col", null);
+__decorate([
+    Input('lyGridItem'),
+    __metadata("design:type", Object),
+    __metadata("design:paramtypes", [Object])
+], LyGridItem.prototype, "gridItemCol", null);
+__decorate([
+    Input(),
+    __metadata("design:type", Object),
+    __metadata("design:paramtypes", [Object])
+], LyGridItem.prototype, "order", null);
+LyGridItem = __decorate([
+    Directive({
+        selector: 'ly-grid[item], [ly-grid-item], [lyGridItem]'
+    }),
+    __metadata("design:paramtypes", [LyGrid,
+        ElementRef,
+        Renderer2,
+        LyTheme2])
+], LyGridItem);
 function getColStyle(val) {
     return {
         maxWidth: val ? getColVal(val) : '100%',
@@ -475,44 +395,24 @@ function getColStyle(val) {
         flexGrow: val ? 0 : 1
     };
 }
-/**
- * @param {?} val
- * @return {?}
- */
 function getColVal(val) {
     return val in COL_VALUES
         ? COL_VALUES[val]
         : COL_VALUES[val] = `${+val * 100 / 12}%`;
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-class LyGridModule {
-}
-LyGridModule.decorators = [
-    { type: NgModule, args: [{
-                exports: [LyGrid, LyGridItem],
-                declarations: [LyGrid, LyGridItem]
-            },] }
-];
+let LyGridModule = class LyGridModule {
+};
+LyGridModule = __decorate([
+    NgModule({
+        exports: [LyGrid, LyGridItem],
+        declarations: [LyGrid, LyGridItem]
+    })
+], LyGridModule);
 
 /**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated bundle index. Do not edit.
  */
 
 export { LyGrid, LyGridItem, LyGridModule };
-
 //# sourceMappingURL=alyle-ui-grid.js.map

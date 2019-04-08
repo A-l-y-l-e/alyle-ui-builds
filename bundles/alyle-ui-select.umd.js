@@ -1,8 +1,8 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/animations'), require('@angular/forms'), require('@alyle/ui/field'), require('rxjs'), require('rxjs/operators'), require('@angular/core'), require('@angular/common'), require('@alyle/ui'), require('@alyle/ui/checkbox')) :
-    typeof define === 'function' && define.amd ? define('@alyle/ui/select', ['exports', '@angular/animations', '@angular/forms', '@alyle/ui/field', 'rxjs', 'rxjs/operators', '@angular/core', '@angular/common', '@alyle/ui', '@alyle/ui/checkbox'], factory) :
-    (factory((global.ly = global.ly || {}, global.ly.select = {}),global.ng.animations,global.ng.forms,global.ly.field,global.rxjs,global.rxjs.operators,global.ng.core,global.ng.common,global.ly.core,global.ly.checkbox));
-}(this, (function (exports,animations,forms,field,rxjs,operators,core,common,ui,checkbox) { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/animations'), require('@angular/core'), require('@angular/forms'), require('@alyle/ui/field'), require('@alyle/ui'), require('rxjs'), require('rxjs/operators'), require('@angular/common'), require('@alyle/ui/checkbox')) :
+    typeof define === 'function' && define.amd ? define('@alyle/ui/select', ['exports', '@angular/animations', '@angular/core', '@angular/forms', '@alyle/ui/field', '@alyle/ui', 'rxjs', 'rxjs/operators', '@angular/common', '@alyle/ui/checkbox'], factory) :
+    (global = global || self, factory((global.ly = global.ly || {}, global.ly.select = {}), global.ng.animations, global.ng.core, global.ng.forms, global.ly.field, global.ly.core, global.rxjs, global.rxjs.operators, global.ng.common, global.ly.checkbox));
+}(this, function (exports, animations, core, forms, field, ui, rxjs, operators, common, checkbox) { 'use strict';
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
@@ -19,128 +19,125 @@
     and limitations under the License.
     ***************************************************************************** */
     /* global Reflect, Promise */
-    var extendStatics = function (d, b) {
+
+    var extendStatics = function(d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b)
-                if (b.hasOwnProperty(p))
-                    d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
+
     function __extends(d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     }
+
+    function __decorate(decorators, target, key, desc) {
+        var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+        else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+        return c > 3 && r && Object.defineProperty(target, key, r), r;
+    }
+
+    function __param(paramIndex, decorator) {
+        return function (target, key) { decorator(target, key, paramIndex); }
+    }
+
+    function __metadata(metadataKey, metadataValue) {
+        if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(metadataKey, metadataValue);
+    }
+
     function __read(o, n) {
         var m = typeof Symbol === "function" && o[Symbol.iterator];
-        if (!m)
-            return o;
+        if (!m) return o;
         var i = m.call(o), r, ar = [], e;
         try {
-            while ((n === void 0 || n-- > 0) && !(r = i.next()).done)
-                ar.push(r.value);
+            while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
         }
-        catch (error) {
-            e = { error: error };
-        }
+        catch (error) { e = { error: error }; }
         finally {
             try {
-                if (r && !r.done && (m = i["return"]))
-                    m.call(i);
+                if (r && !r.done && (m = i["return"])) m.call(i);
             }
-            finally {
-                if (e)
-                    throw e.error;
-            }
+            finally { if (e) throw e.error; }
         }
         return ar;
     }
+
     function __spread() {
         for (var ar = [], i = 0; i < arguments.length; i++)
             ar = ar.concat(__read(arguments[i]));
         return ar;
     }
 
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    /** @type {?} */
     var DEFAULT_DISABLE_RIPPLE = false;
-    /** @type {?} */
     var STYLE_PRIORITY = -2;
-    /** @type {?} */
-    var STYLES = function (theme) {
-        return ({
-            $priority: STYLE_PRIORITY,
-            root: {
-                display: 'block',
-                paddingAfter: '1em',
-                minWidth: '3em',
-                minHeight: '1.5em',
-                '-webkit-tap-highlight-color': 'transparent',
-                '&': theme.select ? theme.select.root : null
-            },
-            container: {
-                background: theme.background.primary.default,
-                borderRadius: '2px',
-                boxShadow: ui.shadowBuilder(4),
-                display: 'block',
-                transformOrigin: 'inherit',
-                pointerEvents: 'all',
-                overflow: 'auto',
-                maxHeight: '256px'
-            },
-            valueText: {
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-                whiteSpace: 'nowrap'
-            },
-            option: {
-                display: 'flex',
-                fontFamily: theme.typography.fontFamily,
-                color: theme.text.default,
-                '-webkit-tap-highlight-color': 'transparent',
-                backgroundColor: "rgba(0, 0, 0, 0)",
-                border: 0,
-                padding: '0 1em',
-                margin: 0,
-                outline: 'none',
-                boxSizing: 'border-box',
-                position: 'relative',
-                justifyContent: 'flex-start',
-                alignItems: 'center',
-                alignContent: 'center',
-                '-webkit-user-select': 'none',
-                '-moz-user-select': 'none',
-                '-ms-user-select': 'none',
-                userSelect: 'none',
-                lineHeight: '3em',
-                height: '3em',
-                cursor: 'pointer'
-            },
-            optionText: {
-                'ly-checkbox ~ &': {
-                    marginBefore: '-16px'
-                }
-            },
-            content: {
-                padding: 0,
-                display: 'flex',
-                justifyContent: 'inherit',
-                alignItems: 'inherit',
-                alignContent: 'inherit',
-                width: '100%',
-                height: '100%',
-                boxSizing: 'border-box'
+    var STYLES = function (theme) { return ({
+        $priority: STYLE_PRIORITY,
+        root: {
+            display: 'block',
+            paddingAfter: '1em',
+            minWidth: '3em',
+            minHeight: '1.5em',
+            '-webkit-tap-highlight-color': 'transparent',
+            '&': theme.select ? theme.select.root : null
+        },
+        container: {
+            background: theme.background.primary.default,
+            borderRadius: '2px',
+            boxShadow: ui.shadowBuilder(4),
+            display: 'block',
+            transformOrigin: 'inherit',
+            pointerEvents: 'all',
+            overflow: 'auto',
+            maxHeight: '256px'
+        },
+        valueText: {
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap'
+        },
+        option: {
+            display: 'flex',
+            fontFamily: theme.typography.fontFamily,
+            color: theme.text.default,
+            '-webkit-tap-highlight-color': 'transparent',
+            backgroundColor: "rgba(0, 0, 0, 0)",
+            border: 0,
+            padding: '0 1em',
+            margin: 0,
+            outline: 'none',
+            boxSizing: 'border-box',
+            position: 'relative',
+            justifyContent: 'flex-start',
+            alignItems: 'center',
+            alignContent: 'center',
+            '-webkit-user-select': 'none',
+            '-moz-user-select': 'none',
+            '-ms-user-select': 'none',
+            userSelect: 'none',
+            lineHeight: '3em',
+            height: '3em',
+            cursor: 'pointer'
+        },
+        optionText: {
+            'ly-checkbox ~ &': {
+                marginBefore: '-16px'
             }
-        });
-    };
-    /**
-     * \@docs-private
-     * @type {?}
-     */
+        },
+        content: {
+            padding: 0,
+            display: 'flex',
+            justifyContent: 'inherit',
+            alignItems: 'inherit',
+            alignContent: 'inherit',
+            width: '100%',
+            height: '100%',
+            boxSizing: 'border-box'
+        }
+    }); };
+    /** @docs-private */
     var ANIMATIONS = [
         animations.trigger('selectEnter', [
             animations.transition('void => in', [
@@ -160,24 +157,23 @@
             animations.transition('* => void', animations.animate('100ms 25ms linear', animations.style({ opacity: 0 })))
         ])
     ];
-    /**
-     * \@docs-private
-     */
-    var /**
-     * \@docs-private
-     */ LySelectBase = /** @class */ (function () {
+    /** @docs-private */
+    var LySelectBase = /** @class */ (function () {
         function LySelectBase() {
         }
         return LySelectBase;
     }());
-    /**
-     * \@docs-private
-     * @type {?}
-     */
-    var LySelectMixinBase = ui.mixinTabIndex(( /** @type {?} */(LySelectBase)));
+    /** @docs-private */
+    var LySelectMixinBase = ui.mixinTabIndex(LySelectBase);
     var LySelect = /** @class */ (function (_super) {
         __extends(LySelect, _super);
-        function LySelect(_theme, _renderer, _el, _overlay, _field, _cd, _ngZone, ngControl, _parentForm, _parentFormGroup) {
+        function LySelect(_theme, _renderer, _el, _overlay, 
+        /** @internal */
+        _field, 
+        /** @internal */
+        _cd, _ngZone, 
+        /** @docs-private */
+        ngControl, _parentForm, _parentFormGroup) {
             var _this = _super.call(this) || this;
             _this._theme = _theme;
             _this._renderer = _renderer;
@@ -189,9 +185,7 @@
             _this.ngControl = ngControl;
             _this._parentForm = _parentForm;
             _this._parentFormGroup = _parentFormGroup;
-            /**
-             * \@docs-private
-             */
+            /** @docs-private */
             _this.classes = _this._theme.addStyleSheet(STYLES);
             _this._disabled = false;
             _this._required = false;
@@ -201,9 +195,7 @@
             _this._valueKeyFn = getValue;
             _this._focused = false;
             _this.errorState = false;
-            /**
-             * Emits whenever the component is destroyed.
-             */
+            /** Emits whenever the component is destroyed. */
             _this._destroy = new rxjs.Subject();
             /**
              * The registered callback function called when a change event occurs on the input element.
@@ -225,61 +217,34 @@
             }, _this._field._getHostElement(), null, STYLE_PRIORITY, field.STYLES);
             return _this;
         }
-        /**
-         * @return {?}
-         */
-        LySelect.prototype._onBlur = /**
-         * @return {?}
-         */
-            function () {
-                if (this._focused !== false && !this._opened) {
-                    this._focused = false;
-                    this.stateChanges.next();
-                }
-            };
-        /**
-         * @return {?}
-         */
-        LySelect.prototype._onFocus = /**
-         * @return {?}
-         */
-            function () {
-                if (this._focused !== true && !this.disabled) {
-                    this._focused = true;
-                    this.stateChanges.next();
-                }
-            };
+        LySelect_1 = LySelect;
+        LySelect.prototype._onBlur = function () {
+            if (this._focused !== false && !this._opened) {
+                this._focused = false;
+                this.stateChanges.next();
+            }
+        };
+        LySelect.prototype._onFocus = function () {
+            if (this._focused !== true && !this.disabled) {
+                this._focused = true;
+                this.stateChanges.next();
+            }
+        };
         /** @internal */
-        /**
-         * \@internal
-         * @param {?} e
-         * @return {?}
-         */
-        LySelect.prototype._endAnimation = /**
-         * \@internal
-         * @param {?} e
-         * @return {?}
-         */
-            function (e) {
-                if (e.toState === 'void') {
-                    if (this._overlayRef) {
-                        this._overlayRef.remove();
-                        this._overlayRef = null;
-                    }
+        LySelect.prototype._endAnimation = function (e) {
+            if (e.toState === 'void') {
+                if (this._overlayRef) {
+                    this._overlayRef.remove();
+                    this._overlayRef = null;
                 }
-            };
+            }
+        };
         Object.defineProperty(LySelect.prototype, "value", {
-            get: /**
-             * @return {?}
-             */ function () {
+            get: function () {
                 return this._value;
             },
             /** @docs-private */
-            set: /**
-             * \@docs-private
-             * @param {?} val
-             * @return {?}
-             */ function (val) {
+            set: function (val) {
                 var _this = this;
                 if (val !== this.value && this._selectionModel) {
                     this._value = val;
@@ -287,7 +252,6 @@
                     if (this.options) {
                         if (this.multiple) {
                             if (Array.isArray(this.value)) {
-                                /** @type {?} */
                                 var values_1 = [];
                                 this.options.forEach(function (opt) {
                                     if (_this.value.some(function (_) { return _this._valueKey(_) === _this._valueKeyFn(opt); })) {
@@ -295,7 +259,6 @@
                                     }
                                 });
                                 if (values_1.length) {
-                                    /** @type {?} */
                                     var beforeSelecteds = this._selectionModel.selected;
                                     // reset
                                     this._selectionModel.clear();
@@ -313,7 +276,6 @@
                         }
                         else {
                             // reset
-                            /** @type {?} */
                             var selecteds = this._selectionModel.selected;
                             this._selectionModel.clear();
                             if (selecteds.length) {
@@ -322,7 +284,6 @@
                                     opt._cd.markForCheck();
                                 });
                             }
-                            /** @type {?} */
                             var selected = this.options.find(function (opt) { return _this._valueKeyFn(opt) === _this.valueKey(_this.value); });
                             if (selected) {
                                 selected.select();
@@ -337,20 +298,14 @@
             configurable: true
         });
         Object.defineProperty(LySelect.prototype, "disabled", {
-            get: /**
-             * @return {?}
-             */ function () {
+            get: function () {
                 if (this.ngControl && this.ngControl.disabled !== null) {
                     return this.ngControl.disabled;
                 }
                 return this._disabled;
             },
             /** Whether the input is disabled. */
-            set: /**
-             * Whether the input is disabled.
-             * @param {?} val
-             * @return {?}
-             */ function (val) {
+            set: function (val) {
                 if (val !== this._disabled) {
                     this._disabled = ui.toBoolean(val);
                     if (this._field) {
@@ -375,39 +330,24 @@
             configurable: true
         });
         Object.defineProperty(LySelect.prototype, "required", {
-            get: /**
-             * @return {?}
-             */ function () { return this._required; },
-            set: /**
-             * @param {?} value
-             * @return {?}
-             */ function (value) {
+            get: function () { return this._required; },
+            set: function (value) {
                 this._required = ui.toBoolean(value);
             },
             enumerable: true,
             configurable: true
         });
         Object.defineProperty(LySelect.prototype, "multiple", {
-            get: /**
-             * @return {?}
-             */ function () { return this._multiple; },
-            set: /**
-             * @param {?} value
-             * @return {?}
-             */ function (value) {
+            get: function () { return this._multiple; },
+            set: function (value) {
                 this._multiple = ui.toBoolean(value);
             },
             enumerable: true,
             configurable: true
         });
         Object.defineProperty(LySelect.prototype, "valueKey", {
-            get: /**
-             * @return {?}
-             */ function () { return this._valueKey; },
-            set: /**
-             * @param {?} fn
-             * @return {?}
-             */ function (fn) {
+            get: function () { return this._valueKey; },
+            set: function (fn) {
                 this._valueKeyFn = function (opt) { return fn(getValue(opt)); };
                 this._valueKey = fn;
             },
@@ -415,32 +355,22 @@
             configurable: true
         });
         Object.defineProperty(LySelect.prototype, "placeholder", {
-            get: /**
-             * @return {?}
-             */ function () { return this._placeholder; },
-            set: /**
-             * @param {?} val
-             * @return {?}
-             */ function (val) {
+            get: function () { return this._placeholder; },
+            set: function (val) {
                 this._placeholder = val;
             },
             enumerable: true,
             configurable: true
         });
         Object.defineProperty(LySelect.prototype, "focused", {
-            get: /**
-             * @return {?}
-             */ function () {
+            get: function () {
                 return this._focused;
             },
             enumerable: true,
             configurable: true
         });
         Object.defineProperty(LySelect.prototype, "empty", {
-            get: /**
-             * @return {?}
-             */ function () {
-                /** @type {?} */
+            get: function () {
                 var val = this.value;
                 return this.multiple ? this._selectionModel.isEmpty() : val == null || this._selectionModel.isEmpty();
             },
@@ -448,9 +378,7 @@
             configurable: true
         });
         Object.defineProperty(LySelect.prototype, "floatingLabel", {
-            get: /**
-             * @return {?}
-             */ function () {
+            get: function () {
                 return this._opened ? true : !this.empty;
             },
             enumerable: true,
@@ -458,12 +386,8 @@
         });
         Object.defineProperty(LySelect.prototype, "triggerValue", {
             /** The value displayed in the trigger. */
-            get: /**
-             * The value displayed in the trigger.
-             * @return {?}
-             */ function () {
+            get: function () {
                 if (this._multiple) {
-                    /** @type {?} */
                     var selectedOptions = this._selectionModel.selected.map(function (option) { return option.viewValue; });
                     if (this._theme.variables.direction === ui.Dir.rtl) {
                         selectedOptions.reverse();
@@ -477,456 +401,345 @@
         });
         Object.defineProperty(LySelect.prototype, "selected", {
             /** Current selecteds */
-            get: /**
-             * Current selecteds
-             * @return {?}
-             */ function () {
-                /** @type {?} */
+            get: function () {
                 var selected = this._selectionModel.selected;
                 return this.multiple ? selected.map(function (option) { return option.value; }) : selected[0].value;
             },
             enumerable: true,
             configurable: true
         });
-        /**
-         * @return {?}
-         */
-        LySelect.prototype.ngOnInit = /**
-         * @return {?}
-         */
-            function () {
-                var _this = this;
-                this._selectionModel = new ui.LySelectionModel({
-                    multiple: this.multiple ? true : undefined,
-                    getKey: this._valueKeyFn
+        LySelect.prototype.ngOnInit = function () {
+            var _this = this;
+            this._selectionModel = new ui.LySelectionModel({
+                multiple: this.multiple ? true : undefined,
+                getKey: this._valueKeyFn
+            });
+            var ngControl = this.ngControl;
+            // update styles on disabled
+            if (ngControl && ngControl.statusChanges) {
+                ngControl.statusChanges.pipe(operators.takeUntil(this._destroy)).subscribe(function () {
+                    _this.disabled = !!ngControl.disabled;
                 });
-                /** @type {?} */
-                var ngControl = this.ngControl;
-                // update styles on disabled
-                if (ngControl && ngControl.statusChanges) {
-                    ngControl.statusChanges.pipe(operators.takeUntil(this._destroy)).subscribe(function () {
-                        _this.disabled = !!ngControl.disabled;
-                    });
-                }
-                // apply class {selectArrow} to `<select>`
-                this._renderer.addClass(this._field._getHostElement(), this._field.classes.selectArrow);
-                // apply default styles
-                this._renderer.addClass(this._el.nativeElement, this._field.classes.inputNative);
-                this._renderer.addClass(this._el.nativeElement, this.classes.root);
-            };
-        /**
-         * @return {?}
-         */
-        LySelect.prototype.ngDoCheck = /**
-         * @return {?}
-         */
-            function () {
-                /** @type {?} */
-                var oldVal = this.errorState;
-                /** @type {?} */
-                var newVal = !!(this.ngControl && this.ngControl.invalid && (this.ngControl.touched || (this._form && this._form.submitted)));
-                if (newVal !== oldVal) {
-                    this.errorState = newVal;
-                    if (this._field) {
-                        /** @type {?} */
-                        var errorClass = this._field.classes.errorState;
-                        if (newVal) {
-                            this._renderer.addClass(this._field._getHostElement(), errorClass);
-                            this._errorClass = errorClass;
-                        }
-                        else if (this._errorClass) {
-                            this._renderer.removeClass(this._field._getHostElement(), errorClass);
-                            this._errorClass = undefined;
-                        }
-                        this.stateChanges.next();
+            }
+            // apply class {selectArrow} to `<select>`
+            this._renderer.addClass(this._field._getHostElement(), this._field.classes.selectArrow);
+            // apply default styles
+            this._renderer.addClass(this._el.nativeElement, this._field.classes.inputNative);
+            this._renderer.addClass(this._el.nativeElement, this.classes.root);
+        };
+        LySelect.prototype.ngDoCheck = function () {
+            var oldVal = this.errorState;
+            var newVal = !!(this.ngControl && this.ngControl.invalid && (this.ngControl.touched || (this._form && this._form.submitted)));
+            if (newVal !== oldVal) {
+                this.errorState = newVal;
+                if (this._field) {
+                    var errorClass = this._field.classes.errorState;
+                    if (newVal) {
+                        this._renderer.addClass(this._field._getHostElement(), errorClass);
+                        this._errorClass = errorClass;
                     }
-                }
-            };
-        /**
-         * @return {?}
-         */
-        LySelect.prototype.ngAfterContentInit = /**
-         * @return {?}
-         */
-            function () {
-                var _this = this;
-                Promise.resolve().then(function () {
-                    _this.value = _this.ngControl ? _this.ngControl.value : _this._value;
-                    _this.stateChanges.next();
-                    _this._cd.markForCheck();
-                });
-            };
-        /**
-         * @return {?}
-         */
-        LySelect.prototype.ngAfterViewInit = /**
-         * @return {?}
-         */
-            function () {
-                var _this = this;
-                if (this.options) {
-                    this.options.changes.pipe(operators.takeUntil(this._destroy)).subscribe(function () {
-                        /** @type {?} */
-                        var selecteds = [];
-                        _this.options.forEach(function (option) {
-                            if (option.isSelected) {
-                                selecteds.push(option);
-                            }
-                        });
-                        // this only update the refs
-                        if (selecteds.length) {
-                            _this._selectionModel.clear();
-                            selecteds.forEach(function (option) { return _this._selectionModel.select(option); });
-                        }
-                    });
-                }
-            };
-        /**
-         * @return {?}
-         */
-        LySelect.prototype.ngOnDestroy = /**
-         * @return {?}
-         */
-            function () {
-                this._destroy.next();
-                this._destroy.complete();
-                this.stateChanges.complete();
-                if (this._overlayRef) {
-                    this._overlayRef.destroy();
-                }
-            };
-        /**
-         * @return {?}
-         */
-        LySelect.prototype.open = /**
-         * @return {?}
-         */
-            function () {
-                var _this = this;
-                if (this.disabled) {
-                    return;
-                }
-                // this._updateSelectedClass();
-                this._opened = true;
-                this.stateChanges.next();
-                this._overlayRef = this._overlay.create(this.templateRef, null, {
-                    styles: {
-                        top: 0,
-                        left: 0,
-                        pointerEvents: null
-                    },
-                    fnDestroy: this.close.bind(this),
-                    onResizeScroll: this._updatePlacement.bind(this)
-                });
-                this._ngZone.onStable.pipe(operators.take(1)).subscribe(function () { return _this._updatePlacement(); });
-            };
-        /**
-         * @return {?}
-         */
-        LySelect.prototype.close = /**
-         * @return {?}
-         */
-            function () {
-                if (this._overlayRef) {
-                    this.onTouched();
-                    this._overlayRef.detach();
-                    this._opened = false;
-                    this._getHostElement().focus();
+                    else if (this._errorClass) {
+                        this._renderer.removeClass(this._field._getHostElement(), errorClass);
+                        this._errorClass = undefined;
+                    }
                     this.stateChanges.next();
                 }
-            };
-        /** @docs-private */
-        /**
-         * \@docs-private
-         * @return {?}
-         */
-        LySelect.prototype.onContainerClick = /**
-         * \@docs-private
-         * @return {?}
-         */
-            function () {
-                this.open();
+            }
+        };
+        LySelect.prototype.ngAfterContentInit = function () {
+            var _this = this;
+            Promise.resolve().then(function () {
+                _this.value = _this.ngControl ? _this.ngControl.value : _this._value;
+                _this.stateChanges.next();
+                _this._cd.markForCheck();
+            });
+        };
+        LySelect.prototype.ngAfterViewInit = function () {
+            var _this = this;
+            if (this.options) {
+                this.options.changes.pipe(operators.takeUntil(this._destroy)).subscribe(function () {
+                    var selecteds = [];
+                    _this.options.forEach(function (option) {
+                        if (option.isSelected) {
+                            selecteds.push(option);
+                        }
+                    });
+                    // this only update the refs
+                    if (selecteds.length) {
+                        _this._selectionModel.clear();
+                        selecteds.forEach(function (option) { return _this._selectionModel.select(option); });
+                    }
+                });
+            }
+        };
+        LySelect.prototype.ngOnDestroy = function () {
+            this._destroy.next();
+            this._destroy.complete();
+            this.stateChanges.complete();
+            if (this._overlayRef) {
+                this._overlayRef.destroy();
+            }
+        };
+        LySelect.prototype.open = function () {
+            var _this = this;
+            if (this.disabled) {
+                return;
+            }
+            // this._updateSelectedClass();
+            this._opened = true;
+            this.stateChanges.next();
+            this._overlayRef = this._overlay.create(this.templateRef, null, {
+                styles: {
+                    top: 0,
+                    left: 0,
+                    pointerEvents: null
+                },
+                fnDestroy: this.close.bind(this),
+                onResizeScroll: this._updatePlacement.bind(this)
+            });
+            this._ngZone.onStable.pipe(operators.take(1)).subscribe(function () { return _this._updatePlacement(); });
+        };
+        LySelect.prototype.close = function () {
+            if (this._overlayRef) {
+                this.onTouched();
+                this._overlayRef.detach();
+                this._opened = false;
                 this._getHostElement().focus();
-            };
+                this.stateChanges.next();
+            }
+        };
+        /** @docs-private */
+        LySelect.prototype.onContainerClick = function () {
+            this.open();
+            this._getHostElement().focus();
+        };
         /** Focuses the input. */
-        /**
-         * Focuses the input.
-         * @return {?}
-         */
-        LySelect.prototype.focus = /**
-         * Focuses the input.
-         * @return {?}
-         */
-            function () { this._getHostElement().focus(); };
-        /**
-         * @return {?}
-         */
-        LySelect.prototype._getHostElement = /**
-         * @return {?}
-         */
-            function () {
-                return this._el.nativeElement;
-            };
+        LySelect.prototype.focus = function () { this._getHostElement().focus(); };
+        LySelect.prototype._getHostElement = function () {
+            return this._el.nativeElement;
+        };
         /**
          * Sets the "value" property on the input element.
          *
          * @param value The checked value
          */
-        /**
-         * Sets the "value" property on the input element.
-         *
-         * @param {?} value The checked value
-         * @return {?}
-         */
-        LySelect.prototype.writeValue = /**
-         * Sets the "value" property on the input element.
-         *
-         * @param {?} value The checked value
-         * @return {?}
-         */
-            function (value) {
-                if (this.options) {
-                    this.value = value;
-                }
-            };
+        LySelect.prototype.writeValue = function (value) {
+            if (this.options) {
+                this.value = value;
+            }
+        };
         /**
          * Registers a function called when the control value changes.
          *
          * @param fn The callback function
          */
-        /**
-         * Registers a function called when the control value changes.
-         *
-         * @param {?} fn The callback function
-         * @return {?}
-         */
-        LySelect.prototype.registerOnChange = /**
-         * Registers a function called when the control value changes.
-         *
-         * @param {?} fn The callback function
-         * @return {?}
-         */
-            function (fn) {
-                var _this = this;
-                this.onChange = function (_valueString) {
-                    fn(_this.value);
-                };
+        LySelect.prototype.registerOnChange = function (fn) {
+            var _this = this;
+            this.onChange = function (_valueString) {
+                fn(_this.value);
             };
+        };
         /**
          * Registers a function called when the control is touched.
          *
          * @param fn The callback function
          */
-        /**
-         * Registers a function called when the control is touched.
-         *
-         * @param {?} fn The callback function
-         * @return {?}
-         */
-        LySelect.prototype.registerOnTouched = /**
-         * Registers a function called when the control is touched.
-         *
-         * @param {?} fn The callback function
-         * @return {?}
-         */
-            function (fn) { this.onTouched = fn; };
+        LySelect.prototype.registerOnTouched = function (fn) { this.onTouched = fn; };
         /**
          * Disables the select. Part of the ControlValueAccessor interface required
          * to integrate with Angular's core forms API.
          *
          * @param isDisabled Sets whether the component is disabled.
          */
-        /**
-         * Disables the select. Part of the ControlValueAccessor interface required
-         * to integrate with Angular's core forms API.
-         *
-         * @param {?} isDisabled Sets whether the component is disabled.
-         * @return {?}
-         */
-        LySelect.prototype.setDisabledState = /**
-         * Disables the select. Part of the ControlValueAccessor interface required
-         * to integrate with Angular's core forms API.
-         *
-         * @param {?} isDisabled Sets whether the component is disabled.
-         * @return {?}
-         */
-            function (isDisabled) {
-                this.disabled = isDisabled;
-                this._cd.markForCheck();
-                this.stateChanges.next();
+        LySelect.prototype.setDisabledState = function (isDisabled) {
+            this.disabled = isDisabled;
+            this._cd.markForCheck();
+            this.stateChanges.next();
+        };
+        LySelect.prototype._updatePlacement = function () {
+            var el = this._overlayRef.containerElement;
+            var container = el.querySelector('div');
+            var nativeElement = this.valueTextDivRef.nativeElement;
+            var panelWidth;
+            if (this.multiple) {
+                panelWidth = nativeElement.offsetWidth + 32 * 2;
+            }
+            else {
+                panelWidth = nativeElement.offsetWidth + 32;
+            }
+            // reset height & width
+            this._renderer.setStyle(container, 'height', 'initial');
+            this._renderer.setStyle(container, 'width', panelWidth + "px");
+            var selectedElement = this._selectionModel.isEmpty()
+                ? el.querySelector('ly-option')
+                : this._selectionModel.selected[0]._getHostElement();
+            var offset = {
+                y: -(nativeElement.offsetHeight / 2 + selectedElement.offsetTop + selectedElement.offsetHeight / 2),
+                x: -16
             };
-        /**
-         * @private
-         * @return {?}
-         */
-        LySelect.prototype._updatePlacement = /**
-         * @private
-         * @return {?}
-         */
-            function () {
-                /** @type {?} */
-                var el = ( /** @type {?} */(( /** @type {?} */(this._overlayRef)).containerElement));
-                /** @type {?} */
-                var container = ( /** @type {?} */(el.querySelector('div')));
-                var nativeElement = this.valueTextDivRef.nativeElement;
-                /** @type {?} */
-                var panelWidth;
-                if (this.multiple) {
-                    panelWidth = nativeElement.offsetWidth + 32 * 2;
+            // scroll to selected option
+            if (container.scrollHeight !== container.offsetHeight) {
+                container.scrollTop = selectedElement.offsetTop;
+                if (container.scrollTop === selectedElement.offsetTop) {
+                    container.scrollTop = container.scrollTop - (container.offsetHeight / 2) + selectedElement.offsetHeight / 2;
                 }
                 else {
-                    panelWidth = nativeElement.offsetWidth + 32;
+                    container.scrollTop = container.scrollTop - (container.offsetHeight / 2 - (selectedElement.offsetTop - container.scrollTop)) + selectedElement.offsetHeight / 2;
                 }
-                // reset height & width
-                this._renderer.setStyle(container, 'height', 'initial');
-                this._renderer.setStyle(container, 'width', panelWidth + "px");
-                /** @type {?} */
-                var selectedElement = this._selectionModel.isEmpty()
-                    ? ( /** @type {?} */(el.querySelector('ly-option')))
-                    : this._selectionModel.selected[0]._getHostElement();
-                /** @type {?} */
-                var offset = {
-                    y: -(nativeElement.offsetHeight / 2 + selectedElement.offsetTop + selectedElement.offsetHeight / 2),
-                    x: -16
-                };
-                // scroll to selected option
-                if (container.scrollHeight !== container.offsetHeight) {
-                    container.scrollTop = selectedElement.offsetTop;
-                    if (container.scrollTop === selectedElement.offsetTop) {
-                        container.scrollTop = container.scrollTop - (container.offsetHeight / 2) + selectedElement.offsetHeight / 2;
-                    }
-                    else {
-                        container.scrollTop = container.scrollTop - (container.offsetHeight / 2 - (selectedElement.offsetTop - container.scrollTop)) + selectedElement.offsetHeight / 2;
-                    }
-                    offset.y = container.scrollTop + offset.y;
-                }
-                if (this.multiple) {
-                    offset.x -= 24;
-                }
-                /** @type {?} */
-                var position = new ui.Positioning(ui.YPosition.below, ui.XPosition.after, ( /** @type {?} */(null)), nativeElement, el, this._theme.variables, offset, false);
-                // set position
-                this._renderer.setStyle(el, 'transform', "translate3d(" + position.x + "px, " + position.y + "px, 0)");
-                this._renderer.setStyle(el, 'transform-origin', position.ox + " " + position.oy + " 0");
-                // set height & width
-                this._renderer.setStyle(container, 'height', position.height);
-                /** @type {?} */
-                var width = position.width === 'initial'
-                    ? panelWidth + "px"
-                    : position.width;
-                this._renderer.setStyle(container, 'width', width);
-            };
-        LySelect.decorators = [
-            { type: core.Component, args: [{
-                        selector: 'ly-select',
-                        template: "<div [className]=\"classes.valueText\" #valueText>{{ empty ? '\\u00A0' : triggerValue }}</div>\n<ng-template>\n  <div #container [className]=\"classes.container\" [@selectEnter]=\"'in'\" (@selectLeave.done)=\"_endAnimation($event)\">\n    <ng-content></ng-content>\n  </div>\n</ng-template>",
-                        changeDetection: core.ChangeDetectionStrategy.OnPush,
-                        exportAs: 'lySelect',
-                        host: {
-                            '[attr.tabindex]': 'tabIndex'
-                        },
-                        animations: __spread(ANIMATIONS),
-                        inputs: ['tabIndex'],
-                        providers: [
-                            { provide: field.LyFieldControlBase, useExisting: LySelect }
-                        ]
-                    }] }
-        ];
-        /** @nocollapse */
-        LySelect.ctorParameters = function () {
-            return [
-                { type: ui.LyTheme2 },
-                { type: core.Renderer2 },
-                { type: core.ElementRef },
-                { type: ui.LyOverlay },
-                { type: field.LyField, decorators: [{ type: core.Optional }] },
-                { type: core.ChangeDetectorRef },
-                { type: core.NgZone },
-                { type: forms.NgControl, decorators: [{ type: core.Optional }, { type: core.Self }] },
-                { type: forms.NgForm, decorators: [{ type: core.Optional }] },
-                { type: forms.FormGroupDirective, decorators: [{ type: core.Optional }] }
-            ];
+                offset.y = container.scrollTop + offset.y;
+            }
+            if (this.multiple) {
+                offset.x -= 24;
+            }
+            var position = new ui.Positioning(ui.YPosition.below, ui.XPosition.after, null, nativeElement, el, this._theme.variables, offset, false);
+            // set position
+            this._renderer.setStyle(el, 'transform', "translate3d(" + position.x + "px, " + position.y + "px, 0)");
+            this._renderer.setStyle(el, 'transform-origin', position.ox + " " + position.oy + " 0");
+            // set height & width
+            this._renderer.setStyle(container, 'height', position.height);
+            var width = position.width === 'initial'
+                ? panelWidth + "px"
+                : position.width;
+            this._renderer.setStyle(container, 'width', width);
         };
-        LySelect.propDecorators = {
-            templateRef: [{ type: core.ViewChild, args: [core.TemplateRef,] }],
-            valueTextDivRef: [{ type: core.ViewChild, args: ['valueText',] }],
-            _options: [{ type: core.ViewChild, args: [core.forwardRef(function () { return LyOption; }),] }],
-            options: [{ type: core.ContentChildren, args: [core.forwardRef(function () { return LyOption; }), { descendants: true },] }],
-            _onBlur: [{ type: core.HostListener, args: ['blur',] }],
-            _onFocus: [{ type: core.HostListener, args: ['focus',] }],
-            value: [{ type: core.Input }],
-            disabled: [{ type: core.Input }],
-            required: [{ type: core.Input }],
-            multiple: [{ type: core.Input }],
-            valueKey: [{ type: core.Input }],
-            placeholder: [{ type: core.Input }]
-        };
+        var LySelect_1;
+        __decorate([
+            core.ViewChild(core.TemplateRef),
+            __metadata("design:type", core.TemplateRef)
+        ], LySelect.prototype, "templateRef", void 0);
+        __decorate([
+            core.ViewChild('valueText'),
+            __metadata("design:type", core.ElementRef)
+        ], LySelect.prototype, "valueTextDivRef", void 0);
+        __decorate([
+            core.ViewChild(core.forwardRef(function () { return LyOption; })),
+            __metadata("design:type", core.QueryList)
+        ], LySelect.prototype, "_options", void 0);
+        __decorate([
+            core.ContentChildren(core.forwardRef(function () { return LyOption; }), { descendants: true }),
+            __metadata("design:type", core.QueryList)
+        ], LySelect.prototype, "options", void 0);
+        __decorate([
+            core.HostListener('blur'),
+            __metadata("design:type", Function),
+            __metadata("design:paramtypes", []),
+            __metadata("design:returntype", void 0)
+        ], LySelect.prototype, "_onBlur", null);
+        __decorate([
+            core.HostListener('focus'),
+            __metadata("design:type", Function),
+            __metadata("design:paramtypes", []),
+            __metadata("design:returntype", void 0)
+        ], LySelect.prototype, "_onFocus", null);
+        __decorate([
+            core.Input(),
+            __metadata("design:type", Object),
+            __metadata("design:paramtypes", [Object])
+        ], LySelect.prototype, "value", null);
+        __decorate([
+            core.Input(),
+            __metadata("design:type", Boolean),
+            __metadata("design:paramtypes", [Boolean])
+        ], LySelect.prototype, "disabled", null);
+        __decorate([
+            core.Input(),
+            __metadata("design:type", Boolean),
+            __metadata("design:paramtypes", [Boolean])
+        ], LySelect.prototype, "required", null);
+        __decorate([
+            core.Input(),
+            __metadata("design:type", Boolean),
+            __metadata("design:paramtypes", [Boolean])
+        ], LySelect.prototype, "multiple", null);
+        __decorate([
+            core.Input(),
+            __metadata("design:type", Function),
+            __metadata("design:paramtypes", [Function])
+        ], LySelect.prototype, "valueKey", null);
+        __decorate([
+            core.Input(),
+            __metadata("design:type", String),
+            __metadata("design:paramtypes", [String])
+        ], LySelect.prototype, "placeholder", null);
+        LySelect = LySelect_1 = __decorate([
+            core.Component({
+                selector: 'ly-select',
+                template: "<div [className]=\"classes.valueText\" #valueText>{{ empty ? '\\u00A0' : triggerValue }}</div>\n<ng-template>\n  <div #container [className]=\"classes.container\" [@selectEnter]=\"'in'\" (@selectLeave.done)=\"_endAnimation($event)\">\n    <ng-content></ng-content>\n  </div>\n</ng-template>",
+                changeDetection: core.ChangeDetectionStrategy.OnPush,
+                exportAs: 'lySelect',
+                host: {
+                    '[attr.tabindex]': 'tabIndex'
+                },
+                animations: __spread(ANIMATIONS),
+                inputs: ['tabIndex'],
+                providers: [
+                    { provide: field.LyFieldControlBase, useExisting: LySelect_1 }
+                ]
+            }),
+            __param(4, core.Optional()),
+            __param(7, core.Optional()), __param(7, core.Self()),
+            __param(8, core.Optional()),
+            __param(9, core.Optional()),
+            __metadata("design:paramtypes", [ui.LyTheme2,
+                core.Renderer2,
+                core.ElementRef,
+                ui.LyOverlay,
+                field.LyField,
+                core.ChangeDetectorRef,
+                core.NgZone,
+                forms.NgControl,
+                forms.NgForm,
+                forms.FormGroupDirective])
+        ], LySelect);
         return LySelect;
     }(LySelectMixinBase));
-    /**
-     * \@docs-private
-     */
-    var /**
-     * \@docs-private
-     */ LyOptionBase = /** @class */ (function () {
+    /** @docs-private */
+    var LyOptionBase = /** @class */ (function () {
         function LyOptionBase(_theme, _ngZone) {
             this._theme = _theme;
             this._ngZone = _ngZone;
         }
         return LyOptionBase;
     }());
-    /**
-     * \@docs-private
-     * @type {?}
-     */
+    /** @docs-private */
     var LyOptionMixinBase = ui.mixinStyleUpdater(ui.mixinBg(ui.mixinColor(ui.mixinRaised(ui.mixinDisabled(ui.mixinOutlined(ui.mixinElevation(ui.mixinShadowColor(ui.mixinDisableRipple(LyOptionBase)))))))));
     var LyOption = /** @class */ (function (_super) {
         __extends(LyOption, _super);
-        function LyOption(/** @internal */ _select, _el, _rippleService, _renderer, _theme, _cd, _ngZone) {
+        function LyOption(/** @internal */ _select, _el, 
+        /** @internal */
+        _rippleService, _renderer, _theme, 
+        /** @internal */
+        _cd, _ngZone) {
             var _this = _super.call(this, _theme, _ngZone) || this;
             _this._select = _select;
             _this._el = _el;
             _this._rippleService = _rippleService;
             _this._cd = _cd;
-            /**
-             * \@docs-private
-             */
+            /** @docs-private */
             _this.classes = _this._theme.addStyleSheet(STYLES, STYLE_PRIORITY);
             _renderer.addClass(_el.nativeElement, _this.classes.option);
             _this.setAutoContrast();
             _this._triggerElement = _el;
             return _this;
         }
-        /**
-         * @return {?}
-         */
-        LyOption.prototype._onClick = /**
-         * @return {?}
-         */
-            function () {
-                if (!this._select.multiple) {
-                    this.select();
-                    this._select.close();
-                }
-                else {
-                    this.toggle();
-                }
-                this._select.onChange(this._select._value);
-            };
+        LyOption.prototype._onClick = function () {
+            if (!this._select.multiple) {
+                this.select();
+                this._select.close();
+            }
+            else {
+                this.toggle();
+            }
+            this._select.onChange(this._select._value);
+        };
         Object.defineProperty(LyOption.prototype, "value", {
-            get: /**
-             * @return {?}
-             */ function () {
+            get: function () {
                 return this._value;
             },
             /**
              * Tracks simple string values bound to the option element.
              */
-            set: /**
-             * Tracks simple string values bound to the option element.
-             * @param {?} value
-             * @return {?}
-             */ function (value) {
+            set: function (value) {
                 this._value = value;
             },
             enumerable: true,
@@ -934,238 +747,172 @@
         });
         Object.defineProperty(LyOption.prototype, "viewValue", {
             /** The displayed value of the option. */
-            get: /**
-             * The displayed value of the option.
-             * @return {?}
-             */ function () {
-                return ((( /** @type {?} */(this._getHostElement()))).textContent || '').trim();
+            get: function () {
+                return (this._getHostElement().textContent || '').trim();
             },
             enumerable: true,
             configurable: true
         });
         Object.defineProperty(LyOption.prototype, "_color", {
             /** The color of Select */
-            get: /**
-             * The color of Select
-             * @return {?}
-             */ function () {
+            get: function () {
                 return this._select._selectionModel.isSelected(this) ? this._select._field.color : '';
             },
             enumerable: true,
             configurable: true
         });
         Object.defineProperty(LyOption.prototype, "isSelected", {
-            get: /**
-             * @return {?}
-             */ function () {
+            get: function () {
                 return this._select._selectionModel.isSelected(this);
             },
             enumerable: true,
             configurable: true
         });
-        /**
-         * @return {?}
-         */
-        LyOption.prototype.ngOnInit = /**
-         * @return {?}
-         */
-            function () {
-                if (this.disableRipple == null) {
-                    this.disableRipple = DEFAULT_DISABLE_RIPPLE;
-                }
-            };
-        /**
-         * @return {?}
-         */
-        LyOption.prototype.ngOnChanges = /**
-         * @return {?}
-         */
-            function () {
+        LyOption.prototype.ngOnInit = function () {
+            if (this.disableRipple == null) {
+                this.disableRipple = DEFAULT_DISABLE_RIPPLE;
+            }
+        };
+        LyOption.prototype.ngOnChanges = function () {
+            this.updateStyle(this._el);
+        };
+        LyOption.prototype.select = function () {
+            if (this.disabled) {
+                return;
+            }
+            if (this._select.multiple) {
+                var beforeSelecteds = this._select._selectionModel.selected;
+                this._select._selectionModel.select(this);
+                this._select._value = this._select._selectionModel.selected.map(function (opt) { return opt.value; });
                 this.updateStyle(this._el);
-            };
-        /**
-         * @return {?}
-         */
-        LyOption.prototype.select = /**
-         * @return {?}
-         */
-            function () {
-                if (this.disabled) {
-                    return;
+                if (beforeSelecteds.length) {
+                    beforeSelecteds.forEach(function (opt) { return opt.ngOnChanges(); });
                 }
-                if (this._select.multiple) {
-                    /** @type {?} */
+            }
+            else {
+                if (!this._select._selectionModel.isSelected(this)) {
                     var beforeSelecteds = this._select._selectionModel.selected;
                     this._select._selectionModel.select(this);
-                    this._select._value = this._select._selectionModel.selected.map(function (opt) { return opt.value; });
+                    this._select._value = this._value;
                     this.updateStyle(this._el);
                     if (beforeSelecteds.length) {
                         beforeSelecteds.forEach(function (opt) { return opt.ngOnChanges(); });
                     }
                 }
-                else {
-                    if (!this._select._selectionModel.isSelected(this)) {
-                        /** @type {?} */
-                        var beforeSelecteds = this._select._selectionModel.selected;
-                        this._select._selectionModel.select(this);
-                        this._select._value = this._value;
-                        this.updateStyle(this._el);
-                        if (beforeSelecteds.length) {
-                            beforeSelecteds.forEach(function (opt) { return opt.ngOnChanges(); });
-                        }
-                    }
+            }
+            this._select._cd.markForCheck();
+            this._select.stateChanges.next();
+            this._cd.markForCheck();
+        };
+        LyOption.prototype.toggle = function () {
+            if (this.disabled) {
+                return;
+            }
+            if (this._select.multiple) {
+                var beforeSelecteds = this._select._selectionModel.selected;
+                this._select._selectionModel.toggle(this);
+                this._select._value = this._select._selectionModel.selected.map(function (opt) { return opt.value; });
+                this.updateStyle(this._el);
+                if (beforeSelecteds.length) {
+                    beforeSelecteds.forEach(function (opt) { return opt.ngOnChanges(); });
                 }
-                this._select._cd.markForCheck();
-                this._select.stateChanges.next();
-                this._cd.markForCheck();
-            };
-        /**
-         * @return {?}
-         */
-        LyOption.prototype.toggle = /**
-         * @return {?}
-         */
-            function () {
-                if (this.disabled) {
-                    return;
-                }
-                if (this._select.multiple) {
-                    /** @type {?} */
+            }
+            else {
+                if (!this._select._selectionModel.isSelected(this)) {
                     var beforeSelecteds = this._select._selectionModel.selected;
                     this._select._selectionModel.toggle(this);
-                    this._select._value = this._select._selectionModel.selected.map(function (opt) { return opt.value; });
+                    this._select._value = this._value;
                     this.updateStyle(this._el);
                     if (beforeSelecteds.length) {
                         beforeSelecteds.forEach(function (opt) { return opt.ngOnChanges(); });
                     }
                 }
-                else {
-                    if (!this._select._selectionModel.isSelected(this)) {
-                        /** @type {?} */
-                        var beforeSelecteds = this._select._selectionModel.selected;
-                        this._select._selectionModel.toggle(this);
-                        this._select._value = this._value;
-                        this.updateStyle(this._el);
-                        if (beforeSelecteds.length) {
-                            beforeSelecteds.forEach(function (opt) { return opt.ngOnChanges(); });
-                        }
-                    }
-                }
-                this._select._cd.markForCheck();
-                this._select.stateChanges.next();
-                this._cd.markForCheck();
-            };
+            }
+            this._select._cd.markForCheck();
+            this._select.stateChanges.next();
+            this._cd.markForCheck();
+        };
         /** @internal */
-        /**
-         * \@internal
-         * @return {?}
-         */
-        LyOption.prototype._getHostElement = /**
-         * \@internal
-         * @return {?}
-         */
-            function () {
-                return this._el.nativeElement;
-            };
-        LyOption.decorators = [
-            { type: core.Component, args: [{
-                        selector: 'ly-option',
-                        template: "<span [className]=\"classes.content\">\n  <ly-checkbox [disabled]=\"disabled\"\n    [color]=\"_color\"\n    [checked]=\"isSelected\"\n    *ngIf=\"_select.multiple\"\n    (click)=\"$event.preventDefault()\"\n  ></ly-checkbox>\n  <span [className]=\"classes.optionText\"><ng-content></ng-content></span>\n</span>\n<div #rippleContainer [className]=\"_rippleService.classes.container\"></div>",
-                        changeDetection: core.ChangeDetectionStrategy.OnPush,
-                        inputs: [
-                            'bg',
-                            'color',
-                            'raised',
-                            'disabled',
-                            'outlined',
-                            'elevation',
-                            'shadowColor',
-                            'disableRipple'
-                        ]
-                    }] }
-        ];
-        /** @nocollapse */
-        LyOption.ctorParameters = function () {
-            return [
-                { type: LySelect, decorators: [{ type: core.Host }] },
-                { type: core.ElementRef },
-                { type: ui.LyRippleService },
-                { type: core.Renderer2 },
-                { type: ui.LyTheme2 },
-                { type: core.ChangeDetectorRef },
-                { type: core.NgZone }
-            ];
+        LyOption.prototype._getHostElement = function () {
+            return this._el.nativeElement;
         };
-        LyOption.propDecorators = {
-            _rippleContainer: [{ type: core.ViewChild, args: ['rippleContainer',] }],
-            _onClick: [{ type: core.HostListener, args: ['click',] }],
-            value: [{ type: core.Input, args: ['value',] }]
-        };
+        __decorate([
+            core.ViewChild('rippleContainer'),
+            __metadata("design:type", core.ElementRef)
+        ], LyOption.prototype, "_rippleContainer", void 0);
+        __decorate([
+            core.HostListener('click'),
+            __metadata("design:type", Function),
+            __metadata("design:paramtypes", []),
+            __metadata("design:returntype", void 0)
+        ], LyOption.prototype, "_onClick", null);
+        __decorate([
+            core.Input('value'),
+            __metadata("design:type", Object),
+            __metadata("design:paramtypes", [Object])
+        ], LyOption.prototype, "value", null);
+        LyOption = __decorate([
+            core.Component({
+                selector: 'ly-option',
+                template: "<span [className]=\"classes.content\">\n  <ly-checkbox [disabled]=\"disabled\"\n    [color]=\"_color\"\n    [checked]=\"isSelected\"\n    *ngIf=\"_select.multiple\"\n    (click)=\"$event.preventDefault()\"\n  ></ly-checkbox>\n  <span [className]=\"classes.optionText\"><ng-content></ng-content></span>\n</span>\n<div #rippleContainer [className]=\"_rippleService.classes.container\"></div>",
+                changeDetection: core.ChangeDetectionStrategy.OnPush,
+                inputs: [
+                    'bg',
+                    'color',
+                    'raised',
+                    'disabled',
+                    'outlined',
+                    'elevation',
+                    'shadowColor',
+                    'disableRipple'
+                ]
+            }),
+            __param(0, core.Host()),
+            __metadata("design:paramtypes", [LySelect,
+                core.ElementRef,
+                ui.LyRippleService,
+                core.Renderer2,
+                ui.LyTheme2,
+                core.ChangeDetectorRef,
+                core.NgZone])
+        ], LyOption);
         return LyOption;
     }(LyOptionMixinBase));
-    /**
-     * @param {?} o
-     * @return {?}
-     */
     function same(o) {
         return o;
     }
-    /**
-     * @param {?} o
-     * @return {?}
-     */
     function getValue(o) {
         return o.value;
     }
 
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
     var LySelectModule = /** @class */ (function () {
         function LySelectModule() {
         }
-        LySelectModule.decorators = [
-            { type: core.NgModule, args: [{
-                        declarations: [LySelect, LyOption],
-                        imports: [
-                            common.CommonModule,
-                            ui.LyCommonModule,
-                            checkbox.LyCheckboxModule,
-                            ui.LyOverlayModule
-                        ],
-                        exports: [LySelect, LyOption, ui.LyCommonModule]
-                    },] }
-        ];
+        LySelectModule = __decorate([
+            core.NgModule({
+                declarations: [LySelect, LyOption],
+                imports: [
+                    common.CommonModule,
+                    ui.LyCommonModule,
+                    checkbox.LyCheckboxModule,
+                    ui.LyOverlayModule
+                ],
+                exports: [LySelect, LyOption, ui.LyCommonModule]
+            })
+        ], LySelectModule);
         return LySelectModule;
     }());
 
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-
-    exports.STYLES = STYLES;
-    exports.LySelectBase = LySelectBase;
-    exports.LySelectMixinBase = LySelectMixinBase;
-    exports.LySelect = LySelect;
+    exports.LyOption = LyOption;
     exports.LyOptionBase = LyOptionBase;
     exports.LyOptionMixinBase = LyOptionMixinBase;
-    exports.LyOption = LyOption;
+    exports.LySelect = LySelect;
+    exports.LySelectBase = LySelectBase;
+    exports.LySelectMixinBase = LySelectMixinBase;
     exports.LySelectModule = LySelectModule;
+    exports.STYLES = STYLES;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 
-})));
-
+}));
 //# sourceMappingURL=alyle-ui-select.umd.js.map

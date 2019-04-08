@@ -1,46 +1,8 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@alyle/ui/responsive'), require('@alyle/ui')) :
-    typeof define === 'function' && define.amd ? define('@alyle/ui/themes/minima', ['exports', '@angular/core', '@alyle/ui/responsive', '@alyle/ui'], factory) :
-    (factory((global.ly = global.ly || {}, global.ly['themes/minima'] = {}),global.ng.core,global.ly.responsive,global.ly.core));
-}(this, (function (exports,core,responsive,ui) { 'use strict';
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    var ThemeMinimaLight = /** @class */ (function () {
-        function ThemeMinimaLight() {
-        }
-        ThemeMinimaLight.decorators = [
-            { type: core.Directive, args: [{
-                        selector: '[ly-theme-minima-light]',
-                        providers: [ui.LyTheme2, { provide: ui.LY_THEME_NAME, useValue: 'minima-light' }]
-                    },] }
-        ];
-        return ThemeMinimaLight;
-    }());
-    var ThemeMinimaDark = /** @class */ (function () {
-        function ThemeMinimaDark() {
-        }
-        ThemeMinimaDark.decorators = [
-            { type: core.Directive, args: [{
-                        selector: '[ly-theme-minima-dark]',
-                        providers: [ui.LyTheme2, { provide: ui.LY_THEME_NAME, useValue: 'minima-dark' }]
-                    },] }
-        ];
-        return ThemeMinimaDark;
-    }());
-    var ThemeMinimaModule = /** @class */ (function () {
-        function ThemeMinimaModule() {
-        }
-        ThemeMinimaModule.decorators = [
-            { type: core.NgModule, args: [{
-                        declarations: [ThemeMinimaDark, ThemeMinimaLight],
-                        exports: [ThemeMinimaDark, ThemeMinimaLight]
-                    },] }
-        ];
-        return ThemeMinimaModule;
-    }());
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@alyle/ui'), require('@alyle/ui/responsive')) :
+    typeof define === 'function' && define.amd ? define('@alyle/ui/themes/minima', ['exports', '@angular/core', '@alyle/ui', '@alyle/ui/responsive'], factory) :
+    (global = global || self, factory((global.ly = global.ly || {}, global.ly['themes/minima'] = {}), global.ng.core, global.ly.core, global.ly.responsive));
+}(this, function (exports, core, ui, responsive) { 'use strict';
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
@@ -57,39 +19,72 @@
     and limitations under the License.
     ***************************************************************************** */
     /* global Reflect, Promise */
-    var extendStatics = function (d, b) {
+
+    var extendStatics = function(d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b)
-                if (b.hasOwnProperty(p))
-                    d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
+
     function __extends(d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     }
 
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    /** @type {?} */
+    function __decorate(decorators, target, key, desc) {
+        var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+        else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+        return c > 3 && r && Object.defineProperty(target, key, r), r;
+    }
+
+    var ThemeMinimaLight = /** @class */ (function () {
+        function ThemeMinimaLight() {
+        }
+        ThemeMinimaLight = __decorate([
+            core.Directive({
+                selector: '[ly-theme-minima-light]',
+                providers: [ui.LyTheme2, { provide: ui.LY_THEME_NAME, useValue: 'minima-light' }]
+            })
+        ], ThemeMinimaLight);
+        return ThemeMinimaLight;
+    }());
+    var ThemeMinimaDark = /** @class */ (function () {
+        function ThemeMinimaDark() {
+        }
+        ThemeMinimaDark = __decorate([
+            core.Directive({
+                selector: '[ly-theme-minima-dark]',
+                providers: [ui.LyTheme2, { provide: ui.LY_THEME_NAME, useValue: 'minima-dark' }]
+            })
+        ], ThemeMinimaDark);
+        return ThemeMinimaDark;
+    }());
+    var ThemeMinimaModule = /** @class */ (function () {
+        function ThemeMinimaModule() {
+        }
+        ThemeMinimaModule = __decorate([
+            core.NgModule({
+                declarations: [ThemeMinimaDark, ThemeMinimaLight],
+                exports: [ThemeMinimaDark, ThemeMinimaLight]
+            })
+        ], ThemeMinimaModule);
+        return ThemeMinimaModule;
+    }());
+
     var iconButton = {
         size: '48px'
     };
-    /** @type {?} */
     var icon = {
         fontSize: '24px'
     };
-    /** @type {?} */
     var zIndex = {
         toolbar: 1000,
         drawer: 1100,
         overlay: 1200
     };
-    /** @type {?} */
     var RippleVariables = {
         transition: {
             opacity: 'cubic-bezier(0.4,0.0,1,1)',
@@ -97,7 +92,6 @@
         },
         duration: 950
     };
-    /** @type {?} */
     var animations = {
         curves: {
             standard: 'cubic-bezier(0.4,0.0,0.2,1)',
@@ -112,10 +106,6 @@
         }
     };
 
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
     var MinimaBase = /** @class */ (function (_super) {
         __extends(MinimaBase, _super);
         function MinimaBase() {
@@ -137,7 +127,7 @@
             _this.direction = ui.Dir.ltr;
             _this.button = {
                 defaultConfig: {
-                    size: ( /** @type {?} */('medium'))
+                    size: 'medium'
                 },
                 size: {
                     small: ({
@@ -374,13 +364,7 @@
         return MinimaBase;
     }(ui.LyStyleUtils));
 
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    /** @type {?} */
     var contrast = '#fff';
-    /** @type {?} */
     var shadow = '#333';
     var MinimaLight = /** @class */ (function (_super) {
         __extends(MinimaLight, _super);
@@ -405,7 +389,6 @@
             };
             _this.background = {
                 default: '#fafafa',
-                // secondary
                 primary: {
                     default: '#fff',
                     shadow: shadow
@@ -469,13 +452,7 @@
         return MinimaLight;
     }(MinimaBase));
 
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    /** @type {?} */
     var contrast$1 = '#fff';
-    /** @type {?} */
     var shadow$1 = 'rgba(0, 0, 0, 1)';
     var MinimaDark = /** @class */ (function (_super) {
         __extends(MinimaDark, _super);
@@ -504,7 +481,6 @@
             };
             _this.background = {
                 default: '#303030',
-                // secondary
                 primary: {
                     default: '#2b2b2b',
                     shadow: shadow$1
@@ -564,30 +540,14 @@
         return MinimaDark;
     }(MinimaBase));
 
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-
-    exports.ThemeMinimaLight = ThemeMinimaLight;
-    exports.ThemeMinimaDark = ThemeMinimaDark;
-    exports.ThemeMinimaModule = ThemeMinimaModule;
-    exports.MinimaLight = MinimaLight;
     exports.MinimaDark = MinimaDark;
+    exports.MinimaLight = MinimaLight;
+    exports.ThemeMinimaDark = ThemeMinimaDark;
+    exports.ThemeMinimaLight = ThemeMinimaLight;
+    exports.ThemeMinimaModule = ThemeMinimaModule;
     exports.ɵa = MinimaBase;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 
-})));
-
+}));
 //# sourceMappingURL=alyle-ui-themes-minima.umd.js.map

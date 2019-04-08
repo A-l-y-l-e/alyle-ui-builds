@@ -1,20 +1,12 @@
+import { __assign, __extends, __decorate, __metadata } from 'tslib';
+import { forwardRef, EventEmitter, ViewChild, ElementRef, Input, Output, Component, ViewEncapsulation, ChangeDetectionStrategy, Renderer2, ChangeDetectorRef, NgZone, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { __assign, __extends } from 'tslib';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, forwardRef, Input, NgZone, Output, Renderer2, ViewChild, ViewEncapsulation, NgModule } from '@angular/core';
+import { LY_COMMON_STYLES, mixinDisableRipple, shadowBuilder, toBoolean, LyCoreStyles, LyTheme2, LyFocusState, LyCommonModule } from '@alyle/ui';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
-import { LY_COMMON_STYLES, LyCoreStyles, LyFocusState, LyTheme2, mixinDisableRipple, toBoolean, shadowBuilder, LyCommonModule } from '@alyle/ui';
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
 var STYLE_PRIORITY = -2;
-/** @type {?} */
 var DEFAULT_WITH_COLOR = 'accent';
-/** @type {?} */
 var DEFAULT_DISABLE_RIPPLE = false;
-/** @type {?} */
 var STYLES = function (theme) { return ({
     $priority: STYLE_PRIORITY,
     root: {
@@ -106,41 +98,27 @@ var STYLES = function (theme) { return ({
 /**
  * This allows it to support [(ngModel)].
  * @ignore
- * @type {?}
  */
 var LY_CHECKBOX_CONTROL_VALUE_ACCESSOR = {
     provide: NG_VALUE_ACCESSOR,
     useExisting: forwardRef(function () { return LyCheckbox; }),
     multi: true
 };
-/**
- * Change event object emitted by LyCheckbox.
- */
-var  /**
- * Change event object emitted by LyCheckbox.
- */
-LyCheckboxChange = /** @class */ (function () {
+/** Change event object emitted by LyCheckbox. */
+var LyCheckboxChange = /** @class */ (function () {
     function LyCheckboxChange() {
     }
     return LyCheckboxChange;
 }());
-/**
- * \@docs-private
- */
-var  /**
- * \@docs-private
- */
-LyCheckboxBase = /** @class */ (function () {
+/** @docs-private */
+var LyCheckboxBase = /** @class */ (function () {
     function LyCheckboxBase(_theme, _ngZone) {
         this._theme = _theme;
         this._ngZone = _ngZone;
     }
     return LyCheckboxBase;
 }());
-/**
- * \@docs-private
- * @type {?}
- */
+/** @docs-private */
 var LyCheckboxMixinBase = mixinDisableRipple(LyCheckboxBase);
 var LyCheckbox = /** @class */ (function (_super) {
     __extends(LyCheckbox, _super);
@@ -156,9 +134,7 @@ var LyCheckbox = /** @class */ (function (_super) {
          * @ignore
          */
         _this.classes = _this._theme.addStyleSheet(STYLES);
-        /**
-         * Event emitted when the checkbox's `checked` value changes.
-         */
+        /** Event emitted when the checkbox's `checked` value changes. */
         _this.change = new EventEmitter();
         _this._onTouched = function () { };
         _this._controlValueAccessorChangeFn = function () { };
@@ -171,17 +147,10 @@ var LyCheckbox = /** @class */ (function (_super) {
         return _this;
     }
     Object.defineProperty(LyCheckbox.prototype, "color", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._color;
         },
-        set: /**
-         * @param {?} val
-         * @return {?}
-         */
-        function (val) {
+        set: function (val) {
             if (val !== this.color) {
                 this._color = val;
                 this._colorClass = this._theme.addStyle("lyCheckbox.color:" + val, function (theme) {
@@ -204,17 +173,8 @@ var LyCheckbox = /** @class */ (function (_super) {
         /**
          * Whether the checkbox is checked.
          */
-        get: /**
-         * Whether the checkbox is checked.
-         * @return {?}
-         */
-        function () { return this._checked; },
-        set: /**
-         * @param {?} val
-         * @return {?}
-         */
-        function (val) {
-            /** @type {?} */
+        get: function () { return this._checked; },
+        set: function (val) {
             var newVal = toBoolean(val);
             // if (newVal !== this.checked) {
             this._checked = newVal;
@@ -231,35 +191,20 @@ var LyCheckbox = /** @class */ (function (_super) {
         configurable: true
     });
     Object.defineProperty(LyCheckbox.prototype, "required", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._required;
         },
-        set: /**
-         * @param {?} val
-         * @return {?}
-         */
-        function (val) {
+        set: function (val) {
             this._required = toBoolean(val);
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(LyCheckbox.prototype, "disabled", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._disabled;
         },
-        set: /**
-         * @param {?} val
-         * @return {?}
-         */
-        function (val) {
-            /** @type {?} */
+        set: function (val) {
             var newVal = toBoolean(val);
             if (newVal !== this.disabled) {
                 this._disabled = newVal;
@@ -275,28 +220,15 @@ var LyCheckbox = /** @class */ (function (_super) {
         enumerable: true,
         configurable: true
     });
-    /**
-     * @return {?}
-     */
-    LyCheckbox.prototype.ngOnInit = /**
-     * @return {?}
-     */
-    function () {
+    LyCheckbox.prototype.ngOnInit = function () {
         this._renderer.addClass(this._el.nativeElement, this.classes.root);
         // set default color
         if (!this.color) {
             this.color = DEFAULT_WITH_COLOR;
         }
     };
-    /**
-     * @return {?}
-     */
-    LyCheckbox.prototype.ngAfterViewInit = /**
-     * @return {?}
-     */
-    function () {
+    LyCheckbox.prototype.ngAfterViewInit = function () {
         var _this = this;
-        /** @type {?} */
         var focusState = this._focusState.listen(this._inputElement, this._el);
         if (focusState) {
             focusState.subscribe(function (event) {
@@ -318,93 +250,31 @@ var LyCheckbox = /** @class */ (function (_super) {
         }
         this._renderer.addClass(this._el.nativeElement, this.classes.animations);
     };
-    /**
-     * @return {?}
-     */
-    LyCheckbox.prototype.ngOnDestroy = /**
-     * @return {?}
-     */
-    function () {
+    LyCheckbox.prototype.ngOnDestroy = function () {
         this._focusState.unlisten(this._el);
         this._removeRippleEvents();
     };
     /** @docs-private */
-    /**
-     * \@docs-private
-     * @param {?} value
-     * @return {?}
-     */
-    LyCheckbox.prototype.writeValue = /**
-     * \@docs-private
-     * @param {?} value
-     * @return {?}
-     */
-    function (value) {
+    LyCheckbox.prototype.writeValue = function (value) {
         this.checked = !!value;
     };
     /** @docs-private */
-    /**
-     * \@docs-private
-     * @param {?} fn
-     * @return {?}
-     */
-    LyCheckbox.prototype.registerOnChange = /**
-     * \@docs-private
-     * @param {?} fn
-     * @return {?}
-     */
-    function (fn) {
+    LyCheckbox.prototype.registerOnChange = function (fn) {
         this._controlValueAccessorChangeFn = fn;
     };
     /** @docs-private */
-    /**
-     * \@docs-private
-     * @param {?} fn
-     * @return {?}
-     */
-    LyCheckbox.prototype.registerOnTouched = /**
-     * \@docs-private
-     * @param {?} fn
-     * @return {?}
-     */
-    function (fn) {
+    LyCheckbox.prototype.registerOnTouched = function (fn) {
         this._onTouched = fn;
     };
     /** @docs-private */
-    /**
-     * \@docs-private
-     * @param {?} isDisabled
-     * @return {?}
-     */
-    LyCheckbox.prototype.setDisabledState = /**
-     * \@docs-private
-     * @param {?} isDisabled
-     * @return {?}
-     */
-    function (isDisabled) {
+    LyCheckbox.prototype.setDisabledState = function (isDisabled) {
         this.disabled = isDisabled;
     };
     /** Toggles the `checked` state of the checkbox. */
-    /**
-     * Toggles the `checked` state of the checkbox.
-     * @return {?}
-     */
-    LyCheckbox.prototype.toggle = /**
-     * Toggles the `checked` state of the checkbox.
-     * @return {?}
-     */
-    function () {
+    LyCheckbox.prototype.toggle = function () {
         this.checked = !this.checked;
     };
-    /**
-     * @param {?} event
-     * @return {?}
-     */
-    LyCheckbox.prototype._onInputClick = /**
-     * @param {?} event
-     * @return {?}
-     */
-    function (event) {
+    LyCheckbox.prototype._onInputClick = function (event) {
         event.stopPropagation();
         if (!this.disabled) {
             this.toggle();
@@ -412,119 +282,102 @@ var LyCheckbox = /** @class */ (function (_super) {
         }
         this._markForCheck();
     };
-    /**
-     * @param {?} event
-     * @return {?}
-     */
-    LyCheckbox.prototype._onChange = /**
-     * @param {?} event
-     * @return {?}
-     */
-    function (event) {
+    LyCheckbox.prototype._onChange = function (event) {
         event.stopPropagation();
     };
-    /**
-     * @private
-     * @return {?}
-     */
-    LyCheckbox.prototype._emitChangeEvent = /**
-     * @private
-     * @return {?}
-     */
-    function () {
+    LyCheckbox.prototype._emitChangeEvent = function () {
         this._controlValueAccessorChangeFn(this.checked);
         this.change.emit({
             source: this,
             checked: this.checked
         });
     };
-    /**
-     * @private
-     * @return {?}
-     */
-    LyCheckbox.prototype._markForCheck = /**
-     * @private
-     * @return {?}
-     */
-    function () {
+    LyCheckbox.prototype._markForCheck = function () {
         this._changeDetectorRef.markForCheck();
     };
-    LyCheckbox.decorators = [
-        { type: Component, args: [{
-                    selector: 'ly-checkbox',
-                    template: "\n<label [className]=\"classes.layout\">\n  <input #input\n  [className]=\"classes.input\"\n  type=\"checkbox\"\n  [checked]=\"checked\"\n  [required]=\"required\"\n  [attr.value]=\"value\"\n  [disabled]=\"disabled\"\n  (click)=\"_onInputClick($event)\"\n  (change)=\"_onChange($event)\"\n  >\n  <div #innerContainer [className]=\"classes.icon\">\n    <svg width=\"16px\" height=\"16px\" viewBox=\"0 0 20 20\">\n      <polyline points=\"4 11 8 15 16 6\"></polyline>\n    </svg>\n  </div>\n  <div #label>\n    <ng-content></ng-content>\n  </div>\n</label>",
-                    encapsulation: ViewEncapsulation.None,
-                    changeDetection: ChangeDetectionStrategy.OnPush,
-                    providers: [LY_CHECKBOX_CONTROL_VALUE_ACCESSOR],
-                    exportAs: 'lyCheckbox',
-                    inputs: [
-                        'disableRipple'
-                    ]
-                }] }
-    ];
-    /** @nocollapse */
-    LyCheckbox.ctorParameters = function () { return [
-        { type: LyCoreStyles },
-        { type: LyTheme2 },
-        { type: ElementRef },
-        { type: Renderer2 },
-        { type: ChangeDetectorRef },
-        { type: LyFocusState },
-        { type: NgZone }
-    ]; };
-    LyCheckbox.propDecorators = {
-        _innerContainer: [{ type: ViewChild, args: ['innerContainer',] }],
-        value: [{ type: Input }],
-        color: [{ type: Input }],
-        checked: [{ type: Input }],
-        required: [{ type: Input }],
-        disabled: [{ type: Input }],
-        change: [{ type: Output }],
-        _inputElement: [{ type: ViewChild, args: ['input',] }]
-    };
+    __decorate([
+        ViewChild('innerContainer'),
+        __metadata("design:type", ElementRef)
+    ], LyCheckbox.prototype, "_innerContainer", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], LyCheckbox.prototype, "value", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String),
+        __metadata("design:paramtypes", [String])
+    ], LyCheckbox.prototype, "color", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean),
+        __metadata("design:paramtypes", [Boolean])
+    ], LyCheckbox.prototype, "checked", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean),
+        __metadata("design:paramtypes", [Boolean])
+    ], LyCheckbox.prototype, "required", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean),
+        __metadata("design:paramtypes", [Boolean])
+    ], LyCheckbox.prototype, "disabled", null);
+    __decorate([
+        Output(),
+        __metadata("design:type", EventEmitter)
+    ], LyCheckbox.prototype, "change", void 0);
+    __decorate([
+        ViewChild('input'),
+        __metadata("design:type", ElementRef)
+    ], LyCheckbox.prototype, "_inputElement", void 0);
+    LyCheckbox = __decorate([
+        Component({
+            selector: 'ly-checkbox',
+            template: "\n<label [className]=\"classes.layout\">\n  <input #input\n  [className]=\"classes.input\"\n  type=\"checkbox\"\n  [checked]=\"checked\"\n  [required]=\"required\"\n  [attr.value]=\"value\"\n  [disabled]=\"disabled\"\n  (click)=\"_onInputClick($event)\"\n  (change)=\"_onChange($event)\"\n  >\n  <div #innerContainer [className]=\"classes.icon\">\n    <svg width=\"16px\" height=\"16px\" viewBox=\"0 0 20 20\">\n      <polyline points=\"4 11 8 15 16 6\"></polyline>\n    </svg>\n  </div>\n  <div #label>\n    <ng-content></ng-content>\n  </div>\n</label>",
+            encapsulation: ViewEncapsulation.None,
+            changeDetection: ChangeDetectionStrategy.OnPush,
+            providers: [LY_CHECKBOX_CONTROL_VALUE_ACCESSOR],
+            exportAs: 'lyCheckbox',
+            inputs: [
+                'disableRipple'
+            ]
+        }),
+        __metadata("design:paramtypes", [LyCoreStyles,
+            LyTheme2,
+            ElementRef,
+            Renderer2,
+            ChangeDetectorRef,
+            LyFocusState,
+            NgZone])
+    ], LyCheckbox);
     return LyCheckbox;
 }(LyCheckboxMixinBase));
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 var LyCheckboxModule = /** @class */ (function () {
     function LyCheckboxModule() {
     }
-    LyCheckboxModule.decorators = [
-        { type: NgModule, args: [{
-                    declarations: [
-                        LyCheckbox
-                    ],
-                    imports: [
-                        CommonModule,
-                        LyCommonModule
-                    ],
-                    exports: [
-                        LyCommonModule,
-                        LyCheckbox
-                    ]
-                },] }
-    ];
+    LyCheckboxModule = __decorate([
+        NgModule({
+            declarations: [
+                LyCheckbox
+            ],
+            imports: [
+                CommonModule,
+                LyCommonModule
+            ],
+            exports: [
+                LyCommonModule,
+                LyCheckbox
+            ]
+        })
+    ], LyCheckboxModule);
     return LyCheckboxModule;
 }());
 
 /**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated bundle index. Do not edit.
  */
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-
-export { LyCheckboxModule, STYLES, LY_CHECKBOX_CONTROL_VALUE_ACCESSOR, LyCheckboxChange, LyCheckboxBase, LyCheckboxMixinBase, LyCheckbox };
-
+export { LY_CHECKBOX_CONTROL_VALUE_ACCESSOR, LyCheckbox, LyCheckboxBase, LyCheckboxChange, LyCheckboxMixinBase, LyCheckboxModule, STYLES };
 //# sourceMappingURL=alyle-ui-checkbox.js.map

@@ -1,24 +1,14 @@
-import { Directive, Input, Renderer2, ElementRef, NgModule } from '@angular/core';
+import { __decorate, __metadata } from 'tslib';
+import { Input, Directive, Renderer2, ElementRef, NgModule } from '@angular/core';
 import { LyTheme2, LyCommonModule } from '@alyle/ui';
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
 const MEDIA_PRIORITY = 999;
-/** @type {?} */
 const styles = {
     hide: {
         display: 'none'
     }
 };
-class MediaDirective {
-    /**
-     * @param {?} _renderer
-     * @param {?} _elementRef
-     * @param {?} theme
-     */
+let MediaDirective = class MediaDirective {
     constructor(_renderer, _elementRef, theme) {
         this._renderer = _renderer;
         this._elementRef = _elementRef;
@@ -31,15 +21,10 @@ class MediaDirective {
     }
     /**
      * Shows the item when the value is resolved as true
-     * @return {?}
      */
     get lyShow() {
         return this._show;
     }
-    /**
-     * @param {?} val
-     * @return {?}
-     */
     set lyShow(val) {
         this._show = val;
         this._showClass = this.theme.addStyle(`lyMedia-show:${val}`, (theme) => ({
@@ -50,8 +35,6 @@ class MediaDirective {
     }
     /**
      * Hides the item when the value is resolved as true
-     * @param {?} val
-     * @return {?}
      */
     set lyHide(val) {
         this._hide = val;
@@ -61,63 +44,48 @@ class MediaDirective {
             }
         }), this._elementRef.nativeElement, this._hideClass, MEDIA_PRIORITY);
     }
-    /**
-     * @return {?}
-     */
     get lyHide() {
         return this._hide;
     }
-    /**
-     * @return {?}
-     */
     ngOnInit() {
         if (!this.lyHide) {
             this._renderer.addClass(this._elementRef.nativeElement, this.classes.hide);
         }
     }
-    /**
-     * @return {?}
-     */
     ngOnChanges() {
         if (this.lyHide && this.lyShow) {
             throw new Error(`use only \`lyHide\` or \`lyShow\` per element`);
         }
     }
-}
-MediaDirective.decorators = [
-    { type: Directive, args: [{
-                selector: '[lyShow], [lyHide]'
-            },] }
-];
-/** @nocollapse */
-MediaDirective.ctorParameters = () => [
-    { type: Renderer2 },
-    { type: ElementRef },
-    { type: LyTheme2 }
-];
-MediaDirective.propDecorators = {
-    lyShow: [{ type: Input }],
-    lyHide: [{ type: Input }]
 };
+__decorate([
+    Input(),
+    __metadata("design:type", String),
+    __metadata("design:paramtypes", [String])
+], MediaDirective.prototype, "lyShow", null);
+__decorate([
+    Input(),
+    __metadata("design:type", String),
+    __metadata("design:paramtypes", [String])
+], MediaDirective.prototype, "lyHide", null);
+MediaDirective = __decorate([
+    Directive({
+        selector: '[lyShow], [lyHide]'
+    }),
+    __metadata("design:paramtypes", [Renderer2,
+        ElementRef,
+        LyTheme2])
+], MediaDirective);
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-class ResponsiveModule {
-}
-ResponsiveModule.decorators = [
-    { type: NgModule, args: [{
-                declarations: [MediaDirective],
-                exports: [MediaDirective, LyCommonModule],
-            },] }
-];
+let ResponsiveModule = class ResponsiveModule {
+};
+ResponsiveModule = __decorate([
+    NgModule({
+        declarations: [MediaDirective],
+        exports: [MediaDirective, LyCommonModule],
+    })
+], ResponsiveModule);
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
 const Breakpoints = {
     XSmall: '(max-width: 599px)',
     Small: '(min-width: 600px) and (max-width: 959px)',
@@ -139,20 +107,8 @@ const Breakpoints = {
 };
 
 /**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated bundle index. Do not edit.
  */
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-
-export { MediaDirective, ResponsiveModule, Breakpoints };
-
+export { Breakpoints, MediaDirective, ResponsiveModule };
 //# sourceMappingURL=alyle-ui-responsive.js.map

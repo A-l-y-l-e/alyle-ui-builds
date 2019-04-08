@@ -1,24 +1,17 @@
-import { __extends, __spread } from 'tslib';
-import { animate, keyframes, style, transition, trigger } from '@angular/animations';
-import { FormGroupDirective, NgControl, NgForm } from '@angular/forms';
-import { LyField, LyFieldControlBase, STYLES } from '@alyle/ui/field';
+import { __extends, __decorate, __metadata, __spread, __param } from 'tslib';
+import { trigger, transition, animate, keyframes, style } from '@angular/animations';
+import { ViewChild, TemplateRef, ElementRef, forwardRef, QueryList, ContentChildren, HostListener, Input, Component, ChangeDetectionStrategy, Optional, Self, Renderer2, ChangeDetectorRef, NgZone, Host, NgModule } from '@angular/core';
+import { NgControl, NgForm, FormGroupDirective } from '@angular/forms';
+import { STYLES as STYLES$1, LyFieldControlBase, LyField } from '@alyle/ui/field';
+import { shadowBuilder, mixinTabIndex, toBoolean, Dir, LySelectionModel, Positioning, YPosition, XPosition, LyTheme2, LyOverlay, mixinStyleUpdater, mixinBg, mixinColor, mixinRaised, mixinDisabled, mixinOutlined, mixinElevation, mixinShadowColor, mixinDisableRipple, LyRippleService, LyCommonModule, LyOverlayModule } from '@alyle/ui';
 import { Subject } from 'rxjs';
-import { take, takeUntil } from 'rxjs/operators';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, forwardRef, Host, HostListener, Input, Optional, Renderer2, Self, TemplateRef, ViewChild, NgZone, ContentChildren, NgModule } from '@angular/core';
+import { takeUntil, take } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
-import { LyOverlay, LySelectionModel, LyTheme2, shadowBuilder, toBoolean, Positioning, mixinStyleUpdater, mixinBg, mixinColor, mixinRaised, mixinDisabled, mixinOutlined, mixinElevation, mixinShadowColor, mixinDisableRipple, mixinTabIndex, LyRippleService, XPosition, YPosition, Dir, LyCommonModule, LyOverlayModule } from '@alyle/ui';
 import { LyCheckboxModule } from '@alyle/ui/checkbox';
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
 var DEFAULT_DISABLE_RIPPLE = false;
-/** @type {?} */
 var STYLE_PRIORITY = -2;
-/** @type {?} */
-var STYLES$1 = function (theme) { return ({
+var STYLES = function (theme) { return ({
     $priority: STYLE_PRIORITY,
     root: {
         display: 'block',
@@ -82,10 +75,7 @@ var STYLES$1 = function (theme) { return ({
         boxSizing: 'border-box'
     }
 }); };
-/**
- * \@docs-private
- * @type {?}
- */
+/** @docs-private */
 var ANIMATIONS = [
     trigger('selectEnter', [
         transition('void => in', [
@@ -105,25 +95,23 @@ var ANIMATIONS = [
         transition('* => void', animate('100ms 25ms linear', style({ opacity: 0 })))
     ])
 ];
-/**
- * \@docs-private
- */
-var  /**
- * \@docs-private
- */
-LySelectBase = /** @class */ (function () {
+/** @docs-private */
+var LySelectBase = /** @class */ (function () {
     function LySelectBase() {
     }
     return LySelectBase;
 }());
-/**
- * \@docs-private
- * @type {?}
- */
-var LySelectMixinBase = mixinTabIndex((/** @type {?} */ (LySelectBase)));
+/** @docs-private */
+var LySelectMixinBase = mixinTabIndex(LySelectBase);
 var LySelect = /** @class */ (function (_super) {
     __extends(LySelect, _super);
-    function LySelect(_theme, _renderer, _el, _overlay, _field, _cd, _ngZone, ngControl, _parentForm, _parentFormGroup) {
+    function LySelect(_theme, _renderer, _el, _overlay, 
+    /** @internal */
+    _field, 
+    /** @internal */
+    _cd, _ngZone, 
+    /** @docs-private */
+    ngControl, _parentForm, _parentFormGroup) {
         var _this = _super.call(this) || this;
         _this._theme = _theme;
         _this._renderer = _renderer;
@@ -135,10 +123,8 @@ var LySelect = /** @class */ (function (_super) {
         _this.ngControl = ngControl;
         _this._parentForm = _parentForm;
         _this._parentFormGroup = _parentFormGroup;
-        /**
-         * \@docs-private
-         */
-        _this.classes = _this._theme.addStyleSheet(STYLES$1);
+        /** @docs-private */
+        _this.classes = _this._theme.addStyleSheet(STYLES);
         _this._disabled = false;
         _this._required = false;
         _this.stateChanges = new Subject();
@@ -147,9 +133,7 @@ var LySelect = /** @class */ (function (_super) {
         _this._valueKeyFn = getValue;
         _this._focused = false;
         _this.errorState = false;
-        /**
-         * Emits whenever the component is destroyed.
-         */
+        /** Emits whenever the component is destroyed. */
         _this._destroy = new Subject();
         /**
          * The registered callback function called when a change event occurs on the input element.
@@ -168,45 +152,24 @@ var LySelect = /** @class */ (function (_super) {
             '& {container}': {
                 cursor: 'pointer'
             }
-        }, _this._field._getHostElement(), null, STYLE_PRIORITY, STYLES);
+        }, _this._field._getHostElement(), null, STYLE_PRIORITY, STYLES$1);
         return _this;
     }
-    /**
-     * @return {?}
-     */
-    LySelect.prototype._onBlur = /**
-     * @return {?}
-     */
-    function () {
+    LySelect_1 = LySelect;
+    LySelect.prototype._onBlur = function () {
         if (this._focused !== false && !this._opened) {
             this._focused = false;
             this.stateChanges.next();
         }
     };
-    /**
-     * @return {?}
-     */
-    LySelect.prototype._onFocus = /**
-     * @return {?}
-     */
-    function () {
+    LySelect.prototype._onFocus = function () {
         if (this._focused !== true && !this.disabled) {
             this._focused = true;
             this.stateChanges.next();
         }
     };
     /** @internal */
-    /**
-     * \@internal
-     * @param {?} e
-     * @return {?}
-     */
-    LySelect.prototype._endAnimation = /**
-     * \@internal
-     * @param {?} e
-     * @return {?}
-     */
-    function (e) {
+    LySelect.prototype._endAnimation = function (e) {
         if (e.toState === 'void') {
             if (this._overlayRef) {
                 this._overlayRef.remove();
@@ -215,19 +178,11 @@ var LySelect = /** @class */ (function (_super) {
         }
     };
     Object.defineProperty(LySelect.prototype, "value", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._value;
         },
         /** @docs-private */
-        set: /**
-         * \@docs-private
-         * @param {?} val
-         * @return {?}
-         */
-        function (val) {
+        set: function (val) {
             var _this = this;
             if (val !== this.value && this._selectionModel) {
                 this._value = val;
@@ -235,7 +190,6 @@ var LySelect = /** @class */ (function (_super) {
                 if (this.options) {
                     if (this.multiple) {
                         if (Array.isArray(this.value)) {
-                            /** @type {?} */
                             var values_1 = [];
                             this.options.forEach(function (opt) {
                                 if (_this.value.some(function (_) { return _this._valueKey(_) === _this._valueKeyFn(opt); })) {
@@ -243,7 +197,6 @@ var LySelect = /** @class */ (function (_super) {
                                 }
                             });
                             if (values_1.length) {
-                                /** @type {?} */
                                 var beforeSelecteds = this._selectionModel.selected;
                                 // reset
                                 this._selectionModel.clear();
@@ -261,7 +214,6 @@ var LySelect = /** @class */ (function (_super) {
                     }
                     else {
                         // reset
-                        /** @type {?} */
                         var selecteds = this._selectionModel.selected;
                         this._selectionModel.clear();
                         if (selecteds.length) {
@@ -270,7 +222,6 @@ var LySelect = /** @class */ (function (_super) {
                                 opt._cd.markForCheck();
                             });
                         }
-                        /** @type {?} */
                         var selected = this.options.find(function (opt) { return _this._valueKeyFn(opt) === _this.valueKey(_this.value); });
                         if (selected) {
                             selected.select();
@@ -285,22 +236,14 @@ var LySelect = /** @class */ (function (_super) {
         configurable: true
     });
     Object.defineProperty(LySelect.prototype, "disabled", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             if (this.ngControl && this.ngControl.disabled !== null) {
                 return this.ngControl.disabled;
             }
             return this._disabled;
         },
         /** Whether the input is disabled. */
-        set: /**
-         * Whether the input is disabled.
-         * @param {?} val
-         * @return {?}
-         */
-        function (val) {
+        set: function (val) {
             if (val !== this._disabled) {
                 this._disabled = toBoolean(val);
                 if (this._field) {
@@ -325,45 +268,24 @@ var LySelect = /** @class */ (function (_super) {
         configurable: true
     });
     Object.defineProperty(LySelect.prototype, "required", {
-        get: /**
-         * @return {?}
-         */
-        function () { return this._required; },
-        set: /**
-         * @param {?} value
-         * @return {?}
-         */
-        function (value) {
+        get: function () { return this._required; },
+        set: function (value) {
             this._required = toBoolean(value);
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(LySelect.prototype, "multiple", {
-        get: /**
-         * @return {?}
-         */
-        function () { return this._multiple; },
-        set: /**
-         * @param {?} value
-         * @return {?}
-         */
-        function (value) {
+        get: function () { return this._multiple; },
+        set: function (value) {
             this._multiple = toBoolean(value);
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(LySelect.prototype, "valueKey", {
-        get: /**
-         * @return {?}
-         */
-        function () { return this._valueKey; },
-        set: /**
-         * @param {?} fn
-         * @return {?}
-         */
-        function (fn) {
+        get: function () { return this._valueKey; },
+        set: function (fn) {
             this._valueKeyFn = function (opt) { return fn(getValue(opt)); };
             this._valueKey = fn;
         },
@@ -371,36 +293,22 @@ var LySelect = /** @class */ (function (_super) {
         configurable: true
     });
     Object.defineProperty(LySelect.prototype, "placeholder", {
-        get: /**
-         * @return {?}
-         */
-        function () { return this._placeholder; },
-        set: /**
-         * @param {?} val
-         * @return {?}
-         */
-        function (val) {
+        get: function () { return this._placeholder; },
+        set: function (val) {
             this._placeholder = val;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(LySelect.prototype, "focused", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._focused;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(LySelect.prototype, "empty", {
-        get: /**
-         * @return {?}
-         */
-        function () {
-            /** @type {?} */
+        get: function () {
             var val = this.value;
             return this.multiple ? this._selectionModel.isEmpty() : val == null || this._selectionModel.isEmpty();
         },
@@ -408,10 +316,7 @@ var LySelect = /** @class */ (function (_super) {
         configurable: true
     });
     Object.defineProperty(LySelect.prototype, "floatingLabel", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._opened ? true : !this.empty;
         },
         enumerable: true,
@@ -419,13 +324,8 @@ var LySelect = /** @class */ (function (_super) {
     });
     Object.defineProperty(LySelect.prototype, "triggerValue", {
         /** The value displayed in the trigger. */
-        get: /**
-         * The value displayed in the trigger.
-         * @return {?}
-         */
-        function () {
+        get: function () {
             if (this._multiple) {
-                /** @type {?} */
                 var selectedOptions = this._selectionModel.selected.map(function (option) { return option.viewValue; });
                 if (this._theme.variables.direction === Dir.rtl) {
                     selectedOptions.reverse();
@@ -439,31 +339,19 @@ var LySelect = /** @class */ (function (_super) {
     });
     Object.defineProperty(LySelect.prototype, "selected", {
         /** Current selecteds */
-        get: /**
-         * Current selecteds
-         * @return {?}
-         */
-        function () {
-            /** @type {?} */
+        get: function () {
             var selected = this._selectionModel.selected;
             return this.multiple ? selected.map(function (option) { return option.value; }) : selected[0].value;
         },
         enumerable: true,
         configurable: true
     });
-    /**
-     * @return {?}
-     */
-    LySelect.prototype.ngOnInit = /**
-     * @return {?}
-     */
-    function () {
+    LySelect.prototype.ngOnInit = function () {
         var _this = this;
         this._selectionModel = new LySelectionModel({
             multiple: this.multiple ? true : undefined,
             getKey: this._valueKeyFn
         });
-        /** @type {?} */
         var ngControl = this.ngControl;
         // update styles on disabled
         if (ngControl && ngControl.statusChanges) {
@@ -477,21 +365,12 @@ var LySelect = /** @class */ (function (_super) {
         this._renderer.addClass(this._el.nativeElement, this._field.classes.inputNative);
         this._renderer.addClass(this._el.nativeElement, this.classes.root);
     };
-    /**
-     * @return {?}
-     */
-    LySelect.prototype.ngDoCheck = /**
-     * @return {?}
-     */
-    function () {
-        /** @type {?} */
+    LySelect.prototype.ngDoCheck = function () {
         var oldVal = this.errorState;
-        /** @type {?} */
         var newVal = !!(this.ngControl && this.ngControl.invalid && (this.ngControl.touched || (this._form && this._form.submitted)));
         if (newVal !== oldVal) {
             this.errorState = newVal;
             if (this._field) {
-                /** @type {?} */
                 var errorClass = this._field.classes.errorState;
                 if (newVal) {
                     this._renderer.addClass(this._field._getHostElement(), errorClass);
@@ -505,13 +384,7 @@ var LySelect = /** @class */ (function (_super) {
             }
         }
     };
-    /**
-     * @return {?}
-     */
-    LySelect.prototype.ngAfterContentInit = /**
-     * @return {?}
-     */
-    function () {
+    LySelect.prototype.ngAfterContentInit = function () {
         var _this = this;
         Promise.resolve().then(function () {
             _this.value = _this.ngControl ? _this.ngControl.value : _this._value;
@@ -519,17 +392,10 @@ var LySelect = /** @class */ (function (_super) {
             _this._cd.markForCheck();
         });
     };
-    /**
-     * @return {?}
-     */
-    LySelect.prototype.ngAfterViewInit = /**
-     * @return {?}
-     */
-    function () {
+    LySelect.prototype.ngAfterViewInit = function () {
         var _this = this;
         if (this.options) {
             this.options.changes.pipe(takeUntil(this._destroy)).subscribe(function () {
-                /** @type {?} */
                 var selecteds = [];
                 _this.options.forEach(function (option) {
                     if (option.isSelected) {
@@ -544,13 +410,7 @@ var LySelect = /** @class */ (function (_super) {
             });
         }
     };
-    /**
-     * @return {?}
-     */
-    LySelect.prototype.ngOnDestroy = /**
-     * @return {?}
-     */
-    function () {
+    LySelect.prototype.ngOnDestroy = function () {
         this._destroy.next();
         this._destroy.complete();
         this.stateChanges.complete();
@@ -558,13 +418,7 @@ var LySelect = /** @class */ (function (_super) {
             this._overlayRef.destroy();
         }
     };
-    /**
-     * @return {?}
-     */
-    LySelect.prototype.open = /**
-     * @return {?}
-     */
-    function () {
+    LySelect.prototype.open = function () {
         var _this = this;
         if (this.disabled) {
             return;
@@ -583,13 +437,7 @@ var LySelect = /** @class */ (function (_super) {
         });
         this._ngZone.onStable.pipe(take(1)).subscribe(function () { return _this._updatePlacement(); });
     };
-    /**
-     * @return {?}
-     */
-    LySelect.prototype.close = /**
-     * @return {?}
-     */
-    function () {
+    LySelect.prototype.close = function () {
         if (this._overlayRef) {
             this.onTouched();
             this._overlayRef.detach();
@@ -599,35 +447,13 @@ var LySelect = /** @class */ (function (_super) {
         }
     };
     /** @docs-private */
-    /**
-     * \@docs-private
-     * @return {?}
-     */
-    LySelect.prototype.onContainerClick = /**
-     * \@docs-private
-     * @return {?}
-     */
-    function () {
+    LySelect.prototype.onContainerClick = function () {
         this.open();
         this._getHostElement().focus();
     };
     /** Focuses the input. */
-    /**
-     * Focuses the input.
-     * @return {?}
-     */
-    LySelect.prototype.focus = /**
-     * Focuses the input.
-     * @return {?}
-     */
-    function () { this._getHostElement().focus(); };
-    /**
-     * @return {?}
-     */
-    LySelect.prototype._getHostElement = /**
-     * @return {?}
-     */
-    function () {
+    LySelect.prototype.focus = function () { this._getHostElement().focus(); };
+    LySelect.prototype._getHostElement = function () {
         return this._el.nativeElement;
     };
     /**
@@ -635,19 +461,7 @@ var LySelect = /** @class */ (function (_super) {
      *
      * @param value The checked value
      */
-    /**
-     * Sets the "value" property on the input element.
-     *
-     * @param {?} value The checked value
-     * @return {?}
-     */
-    LySelect.prototype.writeValue = /**
-     * Sets the "value" property on the input element.
-     *
-     * @param {?} value The checked value
-     * @return {?}
-     */
-    function (value) {
+    LySelect.prototype.writeValue = function (value) {
         if (this.options) {
             this.value = value;
         }
@@ -657,19 +471,7 @@ var LySelect = /** @class */ (function (_super) {
      *
      * @param fn The callback function
      */
-    /**
-     * Registers a function called when the control value changes.
-     *
-     * @param {?} fn The callback function
-     * @return {?}
-     */
-    LySelect.prototype.registerOnChange = /**
-     * Registers a function called when the control value changes.
-     *
-     * @param {?} fn The callback function
-     * @return {?}
-     */
-    function (fn) {
+    LySelect.prototype.registerOnChange = function (fn) {
         var _this = this;
         this.onChange = function (_valueString) {
             fn(_this.value);
@@ -680,59 +482,22 @@ var LySelect = /** @class */ (function (_super) {
      *
      * @param fn The callback function
      */
-    /**
-     * Registers a function called when the control is touched.
-     *
-     * @param {?} fn The callback function
-     * @return {?}
-     */
-    LySelect.prototype.registerOnTouched = /**
-     * Registers a function called when the control is touched.
-     *
-     * @param {?} fn The callback function
-     * @return {?}
-     */
-    function (fn) { this.onTouched = fn; };
+    LySelect.prototype.registerOnTouched = function (fn) { this.onTouched = fn; };
     /**
      * Disables the select. Part of the ControlValueAccessor interface required
      * to integrate with Angular's core forms API.
      *
      * @param isDisabled Sets whether the component is disabled.
      */
-    /**
-     * Disables the select. Part of the ControlValueAccessor interface required
-     * to integrate with Angular's core forms API.
-     *
-     * @param {?} isDisabled Sets whether the component is disabled.
-     * @return {?}
-     */
-    LySelect.prototype.setDisabledState = /**
-     * Disables the select. Part of the ControlValueAccessor interface required
-     * to integrate with Angular's core forms API.
-     *
-     * @param {?} isDisabled Sets whether the component is disabled.
-     * @return {?}
-     */
-    function (isDisabled) {
+    LySelect.prototype.setDisabledState = function (isDisabled) {
         this.disabled = isDisabled;
         this._cd.markForCheck();
         this.stateChanges.next();
     };
-    /**
-     * @private
-     * @return {?}
-     */
-    LySelect.prototype._updatePlacement = /**
-     * @private
-     * @return {?}
-     */
-    function () {
-        /** @type {?} */
-        var el = (/** @type {?} */ ((/** @type {?} */ (this._overlayRef)).containerElement));
-        /** @type {?} */
-        var container = (/** @type {?} */ (el.querySelector('div')));
+    LySelect.prototype._updatePlacement = function () {
+        var el = this._overlayRef.containerElement;
+        var container = el.querySelector('div');
         var nativeElement = this.valueTextDivRef.nativeElement;
-        /** @type {?} */
         var panelWidth;
         if (this.multiple) {
             panelWidth = nativeElement.offsetWidth + 32 * 2;
@@ -743,11 +508,9 @@ var LySelect = /** @class */ (function (_super) {
         // reset height & width
         this._renderer.setStyle(container, 'height', 'initial');
         this._renderer.setStyle(container, 'width', panelWidth + "px");
-        /** @type {?} */
         var selectedElement = this._selectionModel.isEmpty()
-            ? (/** @type {?} */ (el.querySelector('ly-option')))
+            ? el.querySelector('ly-option')
             : this._selectionModel.selected[0]._getHostElement();
-        /** @type {?} */
         var offset = {
             y: -(nativeElement.offsetHeight / 2 + selectedElement.offsetTop + selectedElement.offsetHeight / 2),
             x: -16
@@ -766,106 +529,138 @@ var LySelect = /** @class */ (function (_super) {
         if (this.multiple) {
             offset.x -= 24;
         }
-        /** @type {?} */
-        var position = new Positioning(YPosition.below, XPosition.after, (/** @type {?} */ (null)), nativeElement, el, this._theme.variables, offset, false);
+        var position = new Positioning(YPosition.below, XPosition.after, null, nativeElement, el, this._theme.variables, offset, false);
         // set position
         this._renderer.setStyle(el, 'transform', "translate3d(" + position.x + "px, " + position.y + "px, 0)");
         this._renderer.setStyle(el, 'transform-origin', position.ox + " " + position.oy + " 0");
         // set height & width
         this._renderer.setStyle(container, 'height', position.height);
-        /** @type {?} */
         var width = position.width === 'initial'
             ? panelWidth + "px"
             : position.width;
         this._renderer.setStyle(container, 'width', width);
     };
-    LySelect.decorators = [
-        { type: Component, args: [{
-                    selector: 'ly-select',
-                    template: "<div [className]=\"classes.valueText\" #valueText>{{ empty ? '\\u00A0' : triggerValue }}</div>\n<ng-template>\n  <div #container [className]=\"classes.container\" [@selectEnter]=\"'in'\" (@selectLeave.done)=\"_endAnimation($event)\">\n    <ng-content></ng-content>\n  </div>\n</ng-template>",
-                    changeDetection: ChangeDetectionStrategy.OnPush,
-                    exportAs: 'lySelect',
-                    host: {
-                        '[attr.tabindex]': 'tabIndex'
-                    },
-                    animations: __spread(ANIMATIONS),
-                    inputs: ['tabIndex'],
-                    providers: [
-                        { provide: LyFieldControlBase, useExisting: LySelect }
-                    ]
-                }] }
-    ];
-    /** @nocollapse */
-    LySelect.ctorParameters = function () { return [
-        { type: LyTheme2 },
-        { type: Renderer2 },
-        { type: ElementRef },
-        { type: LyOverlay },
-        { type: LyField, decorators: [{ type: Optional }] },
-        { type: ChangeDetectorRef },
-        { type: NgZone },
-        { type: NgControl, decorators: [{ type: Optional }, { type: Self }] },
-        { type: NgForm, decorators: [{ type: Optional }] },
-        { type: FormGroupDirective, decorators: [{ type: Optional }] }
-    ]; };
-    LySelect.propDecorators = {
-        templateRef: [{ type: ViewChild, args: [TemplateRef,] }],
-        valueTextDivRef: [{ type: ViewChild, args: ['valueText',] }],
-        _options: [{ type: ViewChild, args: [forwardRef(function () { return LyOption; }),] }],
-        options: [{ type: ContentChildren, args: [forwardRef(function () { return LyOption; }), { descendants: true },] }],
-        _onBlur: [{ type: HostListener, args: ['blur',] }],
-        _onFocus: [{ type: HostListener, args: ['focus',] }],
-        value: [{ type: Input }],
-        disabled: [{ type: Input }],
-        required: [{ type: Input }],
-        multiple: [{ type: Input }],
-        valueKey: [{ type: Input }],
-        placeholder: [{ type: Input }]
-    };
+    var LySelect_1;
+    __decorate([
+        ViewChild(TemplateRef),
+        __metadata("design:type", TemplateRef)
+    ], LySelect.prototype, "templateRef", void 0);
+    __decorate([
+        ViewChild('valueText'),
+        __metadata("design:type", ElementRef)
+    ], LySelect.prototype, "valueTextDivRef", void 0);
+    __decorate([
+        ViewChild(forwardRef(function () { return LyOption; })),
+        __metadata("design:type", QueryList)
+    ], LySelect.prototype, "_options", void 0);
+    __decorate([
+        ContentChildren(forwardRef(function () { return LyOption; }), { descendants: true }),
+        __metadata("design:type", QueryList)
+    ], LySelect.prototype, "options", void 0);
+    __decorate([
+        HostListener('blur'),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", []),
+        __metadata("design:returntype", void 0)
+    ], LySelect.prototype, "_onBlur", null);
+    __decorate([
+        HostListener('focus'),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", []),
+        __metadata("design:returntype", void 0)
+    ], LySelect.prototype, "_onFocus", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", Object),
+        __metadata("design:paramtypes", [Object])
+    ], LySelect.prototype, "value", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean),
+        __metadata("design:paramtypes", [Boolean])
+    ], LySelect.prototype, "disabled", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean),
+        __metadata("design:paramtypes", [Boolean])
+    ], LySelect.prototype, "required", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean),
+        __metadata("design:paramtypes", [Boolean])
+    ], LySelect.prototype, "multiple", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Function])
+    ], LySelect.prototype, "valueKey", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", String),
+        __metadata("design:paramtypes", [String])
+    ], LySelect.prototype, "placeholder", null);
+    LySelect = LySelect_1 = __decorate([
+        Component({
+            selector: 'ly-select',
+            template: "<div [className]=\"classes.valueText\" #valueText>{{ empty ? '\\u00A0' : triggerValue }}</div>\n<ng-template>\n  <div #container [className]=\"classes.container\" [@selectEnter]=\"'in'\" (@selectLeave.done)=\"_endAnimation($event)\">\n    <ng-content></ng-content>\n  </div>\n</ng-template>",
+            changeDetection: ChangeDetectionStrategy.OnPush,
+            exportAs: 'lySelect',
+            host: {
+                '[attr.tabindex]': 'tabIndex'
+            },
+            animations: __spread(ANIMATIONS),
+            inputs: ['tabIndex'],
+            providers: [
+                { provide: LyFieldControlBase, useExisting: LySelect_1 }
+            ]
+        }),
+        __param(4, Optional()),
+        __param(7, Optional()), __param(7, Self()),
+        __param(8, Optional()),
+        __param(9, Optional()),
+        __metadata("design:paramtypes", [LyTheme2,
+            Renderer2,
+            ElementRef,
+            LyOverlay,
+            LyField,
+            ChangeDetectorRef,
+            NgZone,
+            NgControl,
+            NgForm,
+            FormGroupDirective])
+    ], LySelect);
     return LySelect;
 }(LySelectMixinBase));
-/**
- * \@docs-private
- */
-var  /**
- * \@docs-private
- */
-LyOptionBase = /** @class */ (function () {
+/** @docs-private */
+var LyOptionBase = /** @class */ (function () {
     function LyOptionBase(_theme, _ngZone) {
         this._theme = _theme;
         this._ngZone = _ngZone;
     }
     return LyOptionBase;
 }());
-/**
- * \@docs-private
- * @type {?}
- */
+/** @docs-private */
 var LyOptionMixinBase = mixinStyleUpdater(mixinBg(mixinColor(mixinRaised(mixinDisabled(mixinOutlined(mixinElevation(mixinShadowColor(mixinDisableRipple(LyOptionBase)))))))));
 var LyOption = /** @class */ (function (_super) {
     __extends(LyOption, _super);
-    function LyOption(/** @internal */ _select, _el, _rippleService, _renderer, _theme, _cd, _ngZone) {
+    function LyOption(/** @internal */ _select, _el, 
+    /** @internal */
+    _rippleService, _renderer, _theme, 
+    /** @internal */
+    _cd, _ngZone) {
         var _this = _super.call(this, _theme, _ngZone) || this;
         _this._select = _select;
         _this._el = _el;
         _this._rippleService = _rippleService;
         _this._cd = _cd;
-        /**
-         * \@docs-private
-         */
-        _this.classes = _this._theme.addStyleSheet(STYLES$1, STYLE_PRIORITY);
+        /** @docs-private */
+        _this.classes = _this._theme.addStyleSheet(STYLES, STYLE_PRIORITY);
         _renderer.addClass(_el.nativeElement, _this.classes.option);
         _this.setAutoContrast();
         _this._triggerElement = _el;
         return _this;
     }
-    /**
-     * @return {?}
-     */
-    LyOption.prototype._onClick = /**
-     * @return {?}
-     */
-    function () {
+    LyOption.prototype._onClick = function () {
         if (!this._select.multiple) {
             this.select();
             this._select.close();
@@ -876,21 +671,13 @@ var LyOption = /** @class */ (function (_super) {
         this._select.onChange(this._select._value);
     };
     Object.defineProperty(LyOption.prototype, "value", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._value;
         },
         /**
          * Tracks simple string values bound to the option element.
          */
-        set: /**
-         * Tracks simple string values bound to the option element.
-         * @param {?} value
-         * @return {?}
-         */
-        function (value) {
+        set: function (value) {
             this._value = value;
         },
         enumerable: true,
@@ -898,70 +685,40 @@ var LyOption = /** @class */ (function (_super) {
     });
     Object.defineProperty(LyOption.prototype, "viewValue", {
         /** The displayed value of the option. */
-        get: /**
-         * The displayed value of the option.
-         * @return {?}
-         */
-        function () {
-            return (((/** @type {?} */ (this._getHostElement()))).textContent || '').trim();
+        get: function () {
+            return (this._getHostElement().textContent || '').trim();
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(LyOption.prototype, "_color", {
         /** The color of Select */
-        get: /**
-         * The color of Select
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._select._selectionModel.isSelected(this) ? this._select._field.color : '';
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(LyOption.prototype, "isSelected", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._select._selectionModel.isSelected(this);
         },
         enumerable: true,
         configurable: true
     });
-    /**
-     * @return {?}
-     */
-    LyOption.prototype.ngOnInit = /**
-     * @return {?}
-     */
-    function () {
+    LyOption.prototype.ngOnInit = function () {
         if (this.disableRipple == null) {
             this.disableRipple = DEFAULT_DISABLE_RIPPLE;
         }
     };
-    /**
-     * @return {?}
-     */
-    LyOption.prototype.ngOnChanges = /**
-     * @return {?}
-     */
-    function () {
+    LyOption.prototype.ngOnChanges = function () {
         this.updateStyle(this._el);
     };
-    /**
-     * @return {?}
-     */
-    LyOption.prototype.select = /**
-     * @return {?}
-     */
-    function () {
+    LyOption.prototype.select = function () {
         if (this.disabled) {
             return;
         }
         if (this._select.multiple) {
-            /** @type {?} */
             var beforeSelecteds = this._select._selectionModel.selected;
             this._select._selectionModel.select(this);
             this._select._value = this._select._selectionModel.selected.map(function (opt) { return opt.value; });
@@ -972,7 +729,6 @@ var LyOption = /** @class */ (function (_super) {
         }
         else {
             if (!this._select._selectionModel.isSelected(this)) {
-                /** @type {?} */
                 var beforeSelecteds = this._select._selectionModel.selected;
                 this._select._selectionModel.select(this);
                 this._select._value = this._value;
@@ -986,18 +742,11 @@ var LyOption = /** @class */ (function (_super) {
         this._select.stateChanges.next();
         this._cd.markForCheck();
     };
-    /**
-     * @return {?}
-     */
-    LyOption.prototype.toggle = /**
-     * @return {?}
-     */
-    function () {
+    LyOption.prototype.toggle = function () {
         if (this.disabled) {
             return;
         }
         if (this._select.multiple) {
-            /** @type {?} */
             var beforeSelecteds = this._select._selectionModel.selected;
             this._select._selectionModel.toggle(this);
             this._select._value = this._select._selectionModel.selected.map(function (opt) { return opt.value; });
@@ -1008,7 +757,6 @@ var LyOption = /** @class */ (function (_super) {
         }
         else {
             if (!this._select._selectionModel.isSelected(this)) {
-                /** @type {?} */
                 var beforeSelecteds = this._select._selectionModel.selected;
                 this._select._selectionModel.toggle(this);
                 this._select._value = this._value;
@@ -1023,103 +771,79 @@ var LyOption = /** @class */ (function (_super) {
         this._cd.markForCheck();
     };
     /** @internal */
-    /**
-     * \@internal
-     * @return {?}
-     */
-    LyOption.prototype._getHostElement = /**
-     * \@internal
-     * @return {?}
-     */
-    function () {
+    LyOption.prototype._getHostElement = function () {
         return this._el.nativeElement;
     };
-    LyOption.decorators = [
-        { type: Component, args: [{
-                    selector: 'ly-option',
-                    template: "<span [className]=\"classes.content\">\n  <ly-checkbox [disabled]=\"disabled\"\n    [color]=\"_color\"\n    [checked]=\"isSelected\"\n    *ngIf=\"_select.multiple\"\n    (click)=\"$event.preventDefault()\"\n  ></ly-checkbox>\n  <span [className]=\"classes.optionText\"><ng-content></ng-content></span>\n</span>\n<div #rippleContainer [className]=\"_rippleService.classes.container\"></div>",
-                    changeDetection: ChangeDetectionStrategy.OnPush,
-                    inputs: [
-                        'bg',
-                        'color',
-                        'raised',
-                        'disabled',
-                        'outlined',
-                        'elevation',
-                        'shadowColor',
-                        'disableRipple'
-                    ]
-                }] }
-    ];
-    /** @nocollapse */
-    LyOption.ctorParameters = function () { return [
-        { type: LySelect, decorators: [{ type: Host }] },
-        { type: ElementRef },
-        { type: LyRippleService },
-        { type: Renderer2 },
-        { type: LyTheme2 },
-        { type: ChangeDetectorRef },
-        { type: NgZone }
-    ]; };
-    LyOption.propDecorators = {
-        _rippleContainer: [{ type: ViewChild, args: ['rippleContainer',] }],
-        _onClick: [{ type: HostListener, args: ['click',] }],
-        value: [{ type: Input, args: ['value',] }]
-    };
+    __decorate([
+        ViewChild('rippleContainer'),
+        __metadata("design:type", ElementRef)
+    ], LyOption.prototype, "_rippleContainer", void 0);
+    __decorate([
+        HostListener('click'),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", []),
+        __metadata("design:returntype", void 0)
+    ], LyOption.prototype, "_onClick", null);
+    __decorate([
+        Input('value'),
+        __metadata("design:type", Object),
+        __metadata("design:paramtypes", [Object])
+    ], LyOption.prototype, "value", null);
+    LyOption = __decorate([
+        Component({
+            selector: 'ly-option',
+            template: "<span [className]=\"classes.content\">\n  <ly-checkbox [disabled]=\"disabled\"\n    [color]=\"_color\"\n    [checked]=\"isSelected\"\n    *ngIf=\"_select.multiple\"\n    (click)=\"$event.preventDefault()\"\n  ></ly-checkbox>\n  <span [className]=\"classes.optionText\"><ng-content></ng-content></span>\n</span>\n<div #rippleContainer [className]=\"_rippleService.classes.container\"></div>",
+            changeDetection: ChangeDetectionStrategy.OnPush,
+            inputs: [
+                'bg',
+                'color',
+                'raised',
+                'disabled',
+                'outlined',
+                'elevation',
+                'shadowColor',
+                'disableRipple'
+            ]
+        }),
+        __param(0, Host()),
+        __metadata("design:paramtypes", [LySelect,
+            ElementRef,
+            LyRippleService,
+            Renderer2,
+            LyTheme2,
+            ChangeDetectorRef,
+            NgZone])
+    ], LyOption);
     return LyOption;
 }(LyOptionMixinBase));
-/**
- * @param {?} o
- * @return {?}
- */
 function same(o) {
     return o;
 }
-/**
- * @param {?} o
- * @return {?}
- */
 function getValue(o) {
     return o.value;
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 var LySelectModule = /** @class */ (function () {
     function LySelectModule() {
     }
-    LySelectModule.decorators = [
-        { type: NgModule, args: [{
-                    declarations: [LySelect, LyOption],
-                    imports: [
-                        CommonModule,
-                        LyCommonModule,
-                        LyCheckboxModule,
-                        LyOverlayModule
-                    ],
-                    exports: [LySelect, LyOption, LyCommonModule]
-                },] }
-    ];
+    LySelectModule = __decorate([
+        NgModule({
+            declarations: [LySelect, LyOption],
+            imports: [
+                CommonModule,
+                LyCommonModule,
+                LyCheckboxModule,
+                LyOverlayModule
+            ],
+            exports: [LySelect, LyOption, LyCommonModule]
+        })
+    ], LySelectModule);
     return LySelectModule;
 }());
 
 /**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated bundle index. Do not edit.
  */
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-
-export { STYLES$1 as STYLES, LySelectBase, LySelectMixinBase, LySelect, LyOptionBase, LyOptionMixinBase, LyOption, LySelectModule };
-
+export { LyOption, LyOptionBase, LyOptionMixinBase, LySelect, LySelectBase, LySelectMixinBase, LySelectModule, STYLES };
 //# sourceMappingURL=alyle-ui-select.js.map

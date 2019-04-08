@@ -1,21 +1,13 @@
-import { __spread } from 'tslib';
-import { trigger, style, animate, transition, keyframes } from '@angular/animations';
-import { LyOverlay, LyTheme2, Positioning, shadowBuilder, XPosition, YPosition, LyCommonModule, LyOverlayModule } from '@alyle/ui';
+import { __decorate, __metadata, __spread, __param } from 'tslib';
+import { ViewChild, ElementRef, Input, HostBinding, HostListener, Component, Renderer2, Directive, Optional, TemplateRef, NgModule } from '@angular/core';
+import { YPosition, XPosition, Positioning, LyTheme2, LyOverlay, shadowBuilder, LyCommonModule, LyOverlayModule } from '@alyle/ui';
+import { trigger, transition, animate, keyframes, style } from '@angular/animations';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { Component, Directive, ElementRef, HostBinding, HostListener, Input, Optional, Renderer2, ViewChild, NgModule } from '@angular/core';
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
 var STYLE_PRIORITY = -1;
-/** @type {?} */
 var DEFAULT_PLACEMENT = YPosition.below;
-/** @type {?} */
 var DEFAULT_XPOSITION = XPosition.after;
-/** @type {?} */
 var STYLES = function (theme) { return ({
     $priority: STYLE_PRIORITY,
     root: {
@@ -42,7 +34,7 @@ var STYLES = function (theme) { return ({
         justifyContent: 'flex-start'
     }
 }); };
-/** @type {?} */
+var ɵ0 = STYLES;
 var ANIMATIONS = [
     trigger('menuEnter', [
         transition('void => in', [
@@ -62,9 +54,7 @@ var ANIMATIONS = [
         transition('* => void', animate('150ms linear', style({ opacity: 0 })))
     ])
 ];
-/**
- * Menu container
- */
+/** Menu container */
 var LyMenu = /** @class */ (function () {
     function LyMenu(_theme, _el, _renderer) {
         this._theme = _theme;
@@ -72,31 +62,17 @@ var LyMenu = /** @class */ (function () {
         this._renderer = _renderer;
         /**
          * styles
-         * \@docs-private
+         * @docs-private
          */
         this.classes = this._theme.addStyleSheet(STYLES);
         this._renderer.addClass(this._el.nativeElement, this.classes.root);
     }
-    /**
-     * @param {?} e
-     * @return {?}
-     */
-    LyMenu.prototype.endAnimation = /**
-     * @param {?} e
-     * @return {?}
-     */
-    function (e) {
+    LyMenu.prototype.endAnimation = function (e) {
         if (e.toState === 'void') {
             this.ref.destroy();
         }
     };
-    /**
-     * @return {?}
-     */
-    LyMenu.prototype.ngOnInit = /**
-     * @return {?}
-     */
-    function () {
+    LyMenu.prototype.ngOnInit = function () {
         if (!this.ref) {
             throw new Error('LyMenu: require @Input() ref');
         }
@@ -105,35 +81,18 @@ var LyMenu = /** @class */ (function () {
             this.placement = DEFAULT_PLACEMENT;
         }
     };
-    /**
-     * @return {?}
-     */
-    LyMenu.prototype.ngAfterViewInit = /**
-     * @return {?}
-     */
-    function () {
+    LyMenu.prototype.ngAfterViewInit = function () {
         if (this.ref._menuRef) {
             this.ref._menuRef.onResizeScroll = this._updatePlacement.bind(this);
         }
         this._updatePlacement();
     };
-    /**
-     * @private
-     * @return {?}
-     */
-    LyMenu.prototype._updatePlacement = /**
-     * @private
-     * @return {?}
-     */
-    function () {
-        /** @type {?} */
-        var el = (/** @type {?} */ ((/** @type {?} */ (this.ref._menuRef)).containerElement));
-        /** @type {?} */
+    LyMenu.prototype._updatePlacement = function () {
+        var el = this.ref._menuRef.containerElement;
         var container = this._container.nativeElement;
         // reset height & width
         this._renderer.setStyle(container, 'height', 'initial');
         this._renderer.setStyle(container, 'width', 'initial');
-        /** @type {?} */
         var position = new Positioning(this.placement, this.xPosition, this.yPosition, this.ref._getHostElement(), el, this._theme.variables);
         // set position
         this._renderer.setStyle(el, 'transform', "translate3d(" + position.x + "px, " + position.y + "px, 0)");
@@ -142,29 +101,47 @@ var LyMenu = /** @class */ (function () {
         this._renderer.setStyle(container, 'height', position.height);
         this._renderer.setStyle(container, 'width', position.width);
     };
-    LyMenu.decorators = [
-        { type: Component, args: [{
-                    selector: 'ly-menu',
-                    animations: __spread(ANIMATIONS),
-                    template: "<div #container\n  [class]=\"classes.container\"\n  [@menuEnter]=\"'in'\">\n  <ng-content></ng-content>\n</div>",
-                    exportAs: 'lyMenu'
-                }] }
-    ];
-    /** @nocollapse */
-    LyMenu.ctorParameters = function () { return [
-        { type: LyTheme2 },
-        { type: ElementRef },
-        { type: Renderer2 }
-    ]; };
-    LyMenu.propDecorators = {
-        _container: [{ type: ViewChild, args: ['container',] }],
-        ref: [{ type: Input }],
-        placement: [{ type: Input }],
-        xPosition: [{ type: Input }],
-        yPosition: [{ type: Input }],
-        menuLeave2: [{ type: HostBinding, args: ['@menuLeave',] }],
-        endAnimation: [{ type: HostListener, args: ['@menuLeave.done', ['$event'],] }]
-    };
+    __decorate([
+        ViewChild('container'),
+        __metadata("design:type", ElementRef)
+    ], LyMenu.prototype, "_container", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", LyMenuTriggerFor)
+    ], LyMenu.prototype, "ref", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], LyMenu.prototype, "placement", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], LyMenu.prototype, "xPosition", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], LyMenu.prototype, "yPosition", void 0);
+    __decorate([
+        HostBinding('@menuLeave'),
+        __metadata("design:type", Object)
+    ], LyMenu.prototype, "menuLeave2", void 0);
+    __decorate([
+        HostListener('@menuLeave.done', ['$event']),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Object]),
+        __metadata("design:returntype", void 0)
+    ], LyMenu.prototype, "endAnimation", null);
+    LyMenu = __decorate([
+        Component({
+            selector: 'ly-menu',
+            animations: __spread(ANIMATIONS),
+            template: "<div #container\n  [class]=\"classes.container\"\n  [@menuEnter]=\"'in'\">\n  <ng-content></ng-content>\n</div>",
+            exportAs: 'lyMenu'
+        }),
+        __metadata("design:paramtypes", [LyTheme2,
+            ElementRef,
+            Renderer2])
+    ], LyMenu);
     return LyMenu;
 }());
 var LyMenuItem = /** @class */ (function () {
@@ -172,31 +149,26 @@ var LyMenuItem = /** @class */ (function () {
         this._menu = _menu;
         renderer.addClass(el.nativeElement, _menu.classes.item);
     }
-    /**
-     * @return {?}
-     */
-    LyMenuItem.prototype._click = /**
-     * @return {?}
-     */
-    function () {
+    LyMenuItem.prototype._click = function () {
         if (this._menu.ref && this._menu.ref._menuRef) {
             this._menu.ref._menuRef.detach();
         }
     };
-    LyMenuItem.decorators = [
-        { type: Directive, args: [{
-                    selector: '[ly-menu-item]'
-                },] }
-    ];
-    /** @nocollapse */
-    LyMenuItem.ctorParameters = function () { return [
-        { type: LyMenu, decorators: [{ type: Optional }] },
-        { type: ElementRef },
-        { type: Renderer2 }
-    ]; };
-    LyMenuItem.propDecorators = {
-        _click: [{ type: HostListener, args: ['click',] }]
-    };
+    __decorate([
+        HostListener('click'),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", []),
+        __metadata("design:returntype", void 0)
+    ], LyMenuItem.prototype, "_click", null);
+    LyMenuItem = __decorate([
+        Directive({
+            selector: '[ly-menu-item]'
+        }),
+        __param(0, Optional()),
+        __metadata("design:paramtypes", [LyMenu,
+            ElementRef,
+            Renderer2])
+    ], LyMenuItem);
     return LyMenuItem;
 }());
 var LyMenuTriggerFor = /** @class */ (function () {
@@ -205,28 +177,12 @@ var LyMenuTriggerFor = /** @class */ (function () {
         this.overlay = overlay;
     }
     /** @docs-private */
-    /**
-     * \@docs-private
-     * @return {?}
-     */
-    LyMenuTriggerFor.prototype._targetPosition = /**
-     * \@docs-private
-     * @return {?}
-     */
-    function () {
-        /** @type {?} */
+    LyMenuTriggerFor.prototype._targetPosition = function () {
         var element = this.elementRef.nativeElement;
-        /** @type {?} */
         var rect = element.getBoundingClientRect();
         return rect;
     };
-    /**
-     * @return {?}
-     */
-    LyMenuTriggerFor.prototype._handleClick = /**
-     * @return {?}
-     */
-    function () {
+    LyMenuTriggerFor.prototype._handleClick = function () {
         if (this._menuRef) {
             this._menuRef.detach();
         }
@@ -243,100 +199,58 @@ var LyMenuTriggerFor = /** @class */ (function () {
             });
         }
     };
-    /**
-     * @return {?}
-     */
-    LyMenuTriggerFor.prototype.detach = /**
-     * @return {?}
-     */
-    function () {
+    LyMenuTriggerFor.prototype.detach = function () {
         if (this._menuRef) {
             this._menuRef.detach();
         }
     };
-    /**
-     * @return {?}
-     */
-    LyMenuTriggerFor.prototype.destroy = /**
-     * @return {?}
-     */
-    function () {
+    LyMenuTriggerFor.prototype.destroy = function () {
         if (this._menuRef) {
             this._menuRef.remove();
             this._menuRef = undefined;
         }
     };
-    /**
-     * @return {?}
-     */
-    LyMenuTriggerFor.prototype.ngOnDestroy = /**
-     * @return {?}
-     */
-    function () {
+    LyMenuTriggerFor.prototype.ngOnDestroy = function () {
         if (this._menuRef) {
             this._menuRef.detach();
         }
     };
-    /**
-     * @return {?}
-     */
-    LyMenuTriggerFor.prototype._getHostElement = /**
-     * @return {?}
-     */
-    function () {
+    LyMenuTriggerFor.prototype._getHostElement = function () {
         return this.elementRef.nativeElement;
     };
-    LyMenuTriggerFor.decorators = [
-        { type: Directive, args: [{
-                    selector: '[lyMenuTriggerFor]',
-                    host: {
-                        '(click)': '_handleClick($event)'
-                    }
-                },] }
-    ];
-    /** @nocollapse */
-    LyMenuTriggerFor.ctorParameters = function () { return [
-        { type: ElementRef },
-        { type: LyOverlay }
-    ]; };
-    LyMenuTriggerFor.propDecorators = {
-        lyMenuTriggerFor: [{ type: Input }]
-    };
+    __decorate([
+        Input(),
+        __metadata("design:type", TemplateRef)
+    ], LyMenuTriggerFor.prototype, "lyMenuTriggerFor", void 0);
+    LyMenuTriggerFor = __decorate([
+        Directive({
+            selector: '[lyMenuTriggerFor]',
+            host: {
+                '(click)': '_handleClick($event)'
+            }
+        }),
+        __metadata("design:paramtypes", [ElementRef,
+            LyOverlay])
+    ], LyMenuTriggerFor);
     return LyMenuTriggerFor;
 }());
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 var LyMenuModule = /** @class */ (function () {
     function LyMenuModule() {
     }
-    LyMenuModule.decorators = [
-        { type: NgModule, args: [{
-                    imports: [CommonModule, FormsModule, LyCommonModule, LyOverlayModule],
-                    exports: [LyMenu, LyMenuItem, LyMenuTriggerFor],
-                    declarations: [LyMenu, LyMenuItem, LyMenuTriggerFor],
-                },] }
-    ];
+    LyMenuModule = __decorate([
+        NgModule({
+            imports: [CommonModule, FormsModule, LyCommonModule, LyOverlayModule],
+            exports: [LyMenu, LyMenuItem, LyMenuTriggerFor],
+            declarations: [LyMenu, LyMenuItem, LyMenuTriggerFor],
+        })
+    ], LyMenuModule);
     return LyMenuModule;
 }());
 
 /**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated bundle index. Do not edit.
  */
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-
-export { LyMenu, LyMenuItem, LyMenuTriggerFor, LyMenuModule };
-
+export { LyMenu, LyMenuItem, LyMenuModule, LyMenuTriggerFor, ɵ0 };
 //# sourceMappingURL=alyle-ui-menu.js.map

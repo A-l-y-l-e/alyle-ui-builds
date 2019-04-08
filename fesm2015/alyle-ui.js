@@ -1,48 +1,23 @@
 import * as _chroma from 'chroma-js';
-import { HammerGestureConfig } from '@angular/platform-browser';
+import { InjectionToken, ViewEncapsulation, defineInjectable, inject, RendererFactory2, Injectable, Optional, Inject, isDevMode, NgZone, Input, TemplateRef, Directive, ViewContainerRef, NgModule, ElementRef, Renderer2, HostListener, Component, Injector, ComponentFactoryResolver, ApplicationRef, INJECTOR, ChangeDetectionStrategy } from '@angular/core';
+import { __decorate, __param, __metadata } from 'tslib';
 import { DOCUMENT } from '@angular/common';
-import { map, share, auditTime } from 'rxjs/operators';
 import { Subject, fromEvent, empty, Subscription, merge } from 'rxjs';
-import { InjectionToken, Injectable, Optional, Inject, RendererFactory2, ViewEncapsulation, Component, HostListener, ElementRef, Directive, Input, NgModule, NgZone, isDevMode, Renderer2, ApplicationRef, ComponentFactoryResolver, Injector, TemplateRef, ViewContainerRef, ChangeDetectionStrategy, defineInjectable, inject, INJECTOR } from '@angular/core';
+import { HammerGestureConfig } from '@angular/platform-browser';
+import { auditTime, map, share } from 'rxjs/operators';
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/**
- * @param {?} hexcolor
- * @return {?}
- */
 function getContrastYIQ(hexcolor) {
-    /** @type {?} */
     const r = parseInt(hexcolor.substr(0, 2), 16);
-    /** @type {?} */
     const g = parseInt(hexcolor.substr(2, 2), 16);
-    /** @type {?} */
     const b = parseInt(hexcolor.substr(4, 2), 16);
-    /** @type {?} */
     const yiq = ((r * 299) + (g * 587) + (b * 114)) / 1000;
     return (yiq >= 128) ? 'black' : 'white';
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
 const chroma = _chroma;
-/** @type {?} */
 const shadowKeyUmbraOpacity = 0.2;
-/** @type {?} */
 const shadowKeyPenumbraOpacity = 0.14;
-/** @type {?} */
 const shadowAmbientShadowOpacity = 0.12;
-/** @type {?} */
 const Shadows = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 1, 3, 0, 0, 1, 1, 0, 0, 2, 1, -1],
@@ -70,68 +45,40 @@ const Shadows = [
     [0, 11, 14, -7, 0, 23, 36, 3, 0, 9, 44, 8],
     [0, 11, 15, -7, 0, 24, 38, 3, 0, 9, 46, 8]
 ];
-/**
- * @param {?=} elevation
- * @param {?=} color
- * @return {?}
- */
 function shadowBuilderDeprecated(elevation = 2, color = '#000') {
-    /** @type {?} */
     const Color = chroma(color);
-    /** @type {?} */
     const colors = [
         Color.alpha(shadowKeyUmbraOpacity).css(),
         Color.alpha(shadowKeyPenumbraOpacity).css(),
         Color.alpha(shadowAmbientShadowOpacity).css()
     ];
-    /** @type {?} */
     const e = Shadows[elevation];
     // tslint:disable-next-line:max-line-length
     return `box-shadow:${e[0]}px ${e[1]}px ${e[2]}px ${e[3]}px ${colors[0]},${e[4]}px ${e[5]}px ${e[6]}px ${e[7]}px ${colors[1]},${e[8]}px ${e[9]}px ${e[10]}px ${e[11]}px ${colors[2]};`;
 }
-/**
- * @param {?} elevation
- * @param {?=} color
- * @return {?}
- */
 function shadowBuilder(elevation, color) {
-    /** @type {?} */
     let Color = chroma(color || '#000');
-    /** @type {?} */
-    const rgb = (/** @type {?} */ ((/** @type {?} */ (Color.get('rgb')))));
+    const rgb = Color.get('rgb');
     if (!(rgb[0] === rgb[1] && rgb[0] === rgb[2])) {
         // Darken and saturate if the color is not in the grayscale
         Color = Color.darken().saturate(2);
     }
-    /** @type {?} */
     const colors = [
         Color.alpha(shadowKeyUmbraOpacity).css(),
         Color.alpha(shadowKeyPenumbraOpacity).css(),
         Color.alpha(shadowAmbientShadowOpacity).css()
     ];
-    /** @type {?} */
     const e = Shadows[elevation];
     // tslint:disable-next-line:max-line-length
     return `${e[0]}px ${e[1]}px ${e[2]}px ${e[3]}px ${colors[0]},${e[4]}px ${e[5]}px ${e[6]}px ${e[7]}px ${colors[1]},${e[8]}px ${e[9]}px ${e[10]}px ${e[11]}px ${colors[2]};`;
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
 const THEME_VARIABLES = new InjectionToken('ly.theme.variables');
-/** @type {?} */
 const IS_CORE_THEME = new InjectionToken('ly.is.root');
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 // Whether the current platform supports the V8 Break Iterator. The V8 check
 // is necessary to detect all Blink based browsers.
-/** @type {?} */
-const hasV8BreakIterator = (typeof (Intl) !== 'undefined' && ((/** @type {?} */ (Intl))).v8BreakIterator);
+const hasV8BreakIterator = (typeof (Intl) !== 'undefined' && Intl.v8BreakIterator);
 /**
  * Service to detect the current platform by comparing the userAgent strings and
  * checking browser-specific global properties.
@@ -139,22 +86,18 @@ const hasV8BreakIterator = (typeof (Intl) !== 'undefined' && ((/** @type {?} */ 
 class Platform {
 }
 Platform.isBrowser = typeof document === 'object' && !!document;
-/**
- * Layout Engines
- */
+/** Layout Engines */
 Platform.EDGE = Platform.isBrowser && /(edge)/i.test(navigator.userAgent);
 Platform.TRIDENT = Platform.isBrowser && /(msie|trident)/i.test(navigator.userAgent);
 // EdgeHTML and Trident mock Blink specific things and need to be excluded from this check.
 Platform.BLINK = Platform.isBrowser &&
-    (!!(((/** @type {?} */ (window))).chrome || hasV8BreakIterator) && !!CSS && !Platform.EDGE && !Platform.TRIDENT);
+    (!!(window.chrome || hasV8BreakIterator) && !!CSS && !Platform.EDGE && !Platform.TRIDENT);
 // Webkit is part of the userAgent in EdgeHTML, Blink and Trident. Therefore we need to
 // ensure that Webkit runs standalone and is not used as another engine's base.
 Platform.WEBKIT = Platform.isBrowser &&
     /AppleWebKit/i.test(navigator.userAgent) && !Platform.BLINK && !Platform.EDGE && !Platform.TRIDENT;
-/**
- * Browsers and Platform Types
- */
-Platform.IOS = Platform.isBrowser && /iPad|iPhone|iPod/.test(navigator.userAgent) && !((/** @type {?} */ (window))).MSStream;
+/** Browsers and Platform Types */
+Platform.IOS = Platform.isBrowser && /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
 // It's difficult to detect the plain Gecko engine, because most of the browsers identify
 // them self as Gecko-like browsers and modify the userAgent's according to that.
 // Since we only cover one explicit Firefox case, we can simply check for Firefox
@@ -167,101 +110,47 @@ Platform.ANDROID = Platform.isBrowser && /android/i.test(navigator.userAgent) &&
 // Safari browser should also use Webkit as its layout engine.
 Platform.SAFARI = Platform.isBrowser && /safari/i.test(navigator.userAgent) && Platform.WEBKIT;
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
 let supportsPassive;
-/**
- * @return {?}
- */
 function supportsPassiveEventListeners() {
     if (supportsPassive === void 0) {
         try {
-            /** @type {?} */
             const opts = Object.defineProperty({}, 'passive', {
                 get: () => {
                     supportsPassive = true;
                 }
             });
-            window.addEventListener('testPassive', (/** @type {?} */ (null)), opts);
-            window.removeEventListener('testPassive', (/** @type {?} */ (null)), opts);
+            window.addEventListener('testPassive', null, opts);
+            window.removeEventListener('testPassive', null, opts);
         }
         catch (e) { }
     }
     return supportsPassive;
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
 const LY_THEME_GLOBAL_VARIABLES = new InjectionToken('ly.theme.global.variables');
-/** @type {?} */
 const LY_THEME = new InjectionToken('ly_theme_config');
-/** @type {?} */
 const LY_THEME_NAME = new InjectionToken('ly.theme.name');
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/**
- * Only for internal use
- * @type {?}
- */
+/** Only for internal use */
 const _STYLE_MAP = new Map();
-/** @enum {number} */
-const TypeStyle = {
-    Multiple: 0,
-    OnlyOne: 1,
-};
-TypeStyle[TypeStyle.Multiple] = 'Multiple';
-TypeStyle[TypeStyle.OnlyOne] = 'OnlyOne';
+var TypeStyle;
+(function (TypeStyle) {
+    TypeStyle[TypeStyle["Multiple"] = 0] = "Multiple";
+    TypeStyle[TypeStyle["OnlyOne"] = 1] = "OnlyOne";
+})(TypeStyle || (TypeStyle = {}));
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 class LyStyleUtils {
-    /**
-     * @param {?} value
-     * @return {?}
-     */
     pxToRem(value) {
-        /** @type {?} */
         const size = this.typography.fontSize / 14;
         return `${value / this.typography.htmlFontSize * size}rem`;
     }
-    /**
-     * @param {?} value
-     * @param {?=} optional
-     * @return {?}
-     */
     colorOf(value, optional) {
         return get(this, value, optional);
     }
-    /**
-     * @param {?} key
-     * @return {?}
-     */
     getBreakpoint(key) {
         return `@media ${this.breakpoints[key] || key}`;
     }
-    /**
-     * @template T
-     * @param {?} styles
-     * @return {?}
-     */
     getClasses(styles) {
-        /** @type {?} */
         const styleMap = _STYLE_MAP.get(styles);
         if (styleMap) {
             return styleMap.classes || styleMap[this.name];
@@ -270,10 +159,6 @@ class LyStyleUtils {
             throw Error('Classes not found');
         }
     }
-    /**
-     * @param {?} val
-     * @return {?}
-     */
     getDirection(val) {
         if (val === DirAlias.before) {
             return this.direction === 'rtl' ? 'right' : 'left';
@@ -286,44 +171,41 @@ class LyStyleUtils {
         }
     }
 }
-/** @enum {string} */
-const Dir = {
-    rtl: 'rtl',
-    ltr: 'ltr',
-};
-/** @enum {string} */
-const DirAlias = {
-    before: 'before',
-    after: 'after',
-};
-/** @enum {string} */
-const DirPosition = {
-    left: 'left',
-    right: 'right',
-};
+var Dir;
+(function (Dir) {
+    Dir["rtl"] = "rtl";
+    Dir["ltr"] = "ltr";
+})(Dir || (Dir = {}));
+var DirAlias;
+(function (DirAlias) {
+    DirAlias["before"] = "before";
+    DirAlias["after"] = "after";
+})(DirAlias || (DirAlias = {}));
+var DirPosition;
+(function (DirPosition) {
+    DirPosition["left"] = "left";
+    DirPosition["right"] = "right";
+})(DirPosition || (DirPosition = {}));
 /**
  * get color of object
- * @param {?} obj object
- * @param {?} path path
- * @param {?=} optional get optional value, if not exist return default if not is string
- * @return {?}
+ * @param obj object
+ * @param path path
+ * @param optional get optional value, if not exist return default if not is string
  */
 function get(obj, path, optional) {
-    /** @type {?} */
     const _path = path instanceof Array ? path : path.split(':');
     for (let i = 0; i < _path.length; i++) {
-        /** @type {?} */
         const posibleOb = obj[_path[i]];
         if (posibleOb) {
             obj = posibleOb;
         }
         else {
             /** if not exist */
-            return (/** @type {?} */ (path));
+            return path;
         }
     }
     if (typeof obj === 'string') {
-        return (/** @type {?} */ (obj));
+        return obj;
     }
     else if (optional) {
         return obj[optional] || obj['default'];
@@ -333,21 +215,12 @@ function get(obj, path, optional) {
     }
     // return typeof obj === 'string' ? obj as string : obj['default'] as string;
 }
-/**
- * @param {?} str
- * @param {?} fn
- * @return {?}
- */
 function eachMedia(str, fn) {
     if (typeof str === 'string') {
-        /** @type {?} */
         const values = str.split(/\s/g);
         for (let index = 0; index < values.length; index++) {
-            /** @type {?} */
             const valItem = values[index].split(/\@/g);
-            /** @type {?} */
             const value = valItem.shift();
-            /** @type {?} */
             const len = valItem.length;
             if (len) {
                 for (let j = 0; j < len; j++) {
@@ -365,23 +238,20 @@ function eachMedia(str, fn) {
 }
 /**
  * Simple object check.
- * @param {?} item
- * @return {?}
+ * @param item
  */
 function isObject(item) {
     return (item && typeof item === 'object' && !Array.isArray(item));
 }
 /**
  * Deep merge two objects.
- * @param {?} target
- * @param {...?} sources
- * @return {?}
+ * @param target
+ * @param ...sources
  */
 function mergeDeep(target, ...sources) {
     if (!sources.length) {
         return target;
     }
-    /** @type {?} */
     const source = sources.shift();
     if (isObject(target) && isObject(source)) {
         for (const key in source) {
@@ -399,17 +269,7 @@ function mergeDeep(target, ...sources) {
     return mergeDeep(target, ...sources);
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-class CoreTheme {
-    /**
-     * @param {?} themeConfig
-     * @param {?} globalVariables
-     * @param {?} rendererFactory
-     * @param {?} _document
-     */
+let CoreTheme = class CoreTheme {
     constructor(themeConfig, globalVariables, rendererFactory, _document) {
         this.rendererFactory = rendererFactory;
         this.themes = new Set();
@@ -426,23 +286,20 @@ class CoreTheme {
             data: {}
         });
         if (Platform.isBrowser) {
-            /** @type {?} */
             const nodes = _document.body.querySelectorAll('ly-s-c');
             if (nodes.length) {
                 for (let index = 0; index < nodes.length; index++) {
-                    /** @type {?} */
-                    const element = (/** @type {?} */ (nodes.item(index)));
-                    ((/** @type {?} */ (_document.body))).removeChild(element);
+                    const element = nodes.item(index);
+                    _document.body.removeChild(element);
                 }
             }
         }
         this.firstElement = _document.body.firstChild;
-        /** @type {?} */
         const themes = new Map();
         if (Array.isArray(themeConfig)) {
             themeConfig.forEach(item => {
                 if (themes.has(item.name)) {
-                    (/** @type {?} */ (themes.get(item.name))).push(item);
+                    themes.get(item.name).push(item);
                 }
                 else {
                     themes.set(item.name, [item]);
@@ -455,7 +312,7 @@ class CoreTheme {
                 if (items.length > 1) {
                     mergeDeep(items[0], ...items.slice(1));
                 }
-                this.add((/** @type {?} */ (items[0])));
+                this.add(items[0]);
                 this.themes.add(items[0].name);
             });
         }
@@ -463,99 +320,60 @@ class CoreTheme {
             if (globalVariables) {
                 mergeDeep(themeConfig, globalVariables);
             }
-            this.add((/** @type {?} */ (themeConfig)));
+            this.add(themeConfig);
             this.themes.add(themeConfig.name);
         }
     }
     /**
      * add new theme
-     * @param {?} theme
-     * @return {?}
+     * @param theme: ThemeVariables
      */
     add(theme) {
         this._themeMap.set(theme.name, theme);
         this._styleMap.set(theme.name, new Map());
     }
-    /**
-     * @param {?} theme
-     * @return {?}
-     */
     hasTheme(theme) {
-        /** @type {?} */
         const name = typeof theme === 'string' ? theme : theme.name;
         this._themeMap.has(name);
     }
-    /**
-     * @param {?} name
-     * @return {?}
-     */
     get(name) {
         return this._themeMap.get(name);
     }
-    /**
-     * @param {?} name
-     * @return {?}
-     */
     getStyleMap(name) {
         return this._styleMap.get(name);
     }
-    /**
-     * @param {?} element
-     * @param {?} renderer
-     * @param {?} newClassname
-     * @param {?=} oldClassname
-     * @return {?}
-     */
     updateClassName(element, renderer, newClassname, oldClassname) {
         if (oldClassname) {
             renderer.removeClass(element, oldClassname);
         }
         renderer.addClass(element, newClassname);
     }
-}
-CoreTheme.decorators = [
-    { type: Injectable, args: [{
-                providedIn: 'root'
-            },] }
-];
-/** @nocollapse */
-CoreTheme.ctorParameters = () => [
-    { type: undefined, decorators: [{ type: Optional }, { type: Inject, args: [LY_THEME,] }] },
-    { type: undefined, decorators: [{ type: Optional }, { type: Inject, args: [LY_THEME_GLOBAL_VARIABLES,] }] },
-    { type: RendererFactory2 },
-    { type: undefined, decorators: [{ type: Inject, args: [DOCUMENT,] }] }
-];
-/** @nocollapse */ CoreTheme.ngInjectableDef = defineInjectable({ factory: function CoreTheme_Factory() { return new CoreTheme(inject(LY_THEME, 8), inject(LY_THEME_GLOBAL_VARIABLES, 8), inject(RendererFactory2), inject(DOCUMENT)); }, token: CoreTheme, providedIn: "root" });
+};
+CoreTheme.ngInjectableDef = defineInjectable({ factory: function CoreTheme_Factory() { return new CoreTheme(inject(LY_THEME, 8), inject(LY_THEME_GLOBAL_VARIABLES, 8), inject(RendererFactory2), inject(DOCUMENT)); }, token: CoreTheme, providedIn: "root" });
+CoreTheme = __decorate([
+    Injectable({
+        providedIn: 'root'
+    }),
+    __param(0, Optional()), __param(0, Inject(LY_THEME)),
+    __param(1, Optional()), __param(1, Inject(LY_THEME_GLOBAL_VARIABLES)),
+    __param(3, Inject(DOCUMENT)),
+    __metadata("design:paramtypes", [Object, Object, RendererFactory2, Object])
+], CoreTheme);
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @enum {string} */
-const YPosition = {
-    above: 'above',
-    below: 'below',
-};
-/** @enum {string} */
-const XPosition = {
-    before: 'before',
-    after: 'after',
-    left: 'left',
-    right: 'right',
-};
-/** @type {?} */
+var YPosition;
+(function (YPosition) {
+    YPosition["above"] = "above";
+    YPosition["below"] = "below";
+})(YPosition || (YPosition = {}));
+var XPosition;
+(function (XPosition) {
+    XPosition["before"] = "before";
+    XPosition["after"] = "after";
+    XPosition["left"] = "left";
+    XPosition["right"] = "right";
+})(XPosition || (XPosition = {}));
 const INITIAL_WH = 'initial';
 class Positioning {
-    /**
-     * @param {?} placement
-     * @param {?} xPosition
-     * @param {?} yPosition
-     * @param {?} origin
-     * @param {?} overlayElement
-     * @param {?} _themeVariables
-     * @param {?=} _offset
-     * @param {?=} _flip
-     */
     constructor(placement, xPosition, yPosition, origin, overlayElement, _themeVariables, _offset = 0, _flip = true) {
         this.placement = placement;
         this.xPosition = xPosition;
@@ -565,11 +383,10 @@ class Positioning {
         this._themeVariables = _themeVariables;
         this._offset = _offset;
         this._offsetCheck = 16;
-        this._originRect = (/** @type {?} */ (this.origin.getBoundingClientRect()));
-        this._overlayElementRect = (/** @type {?} */ (this.overlayElement.getBoundingClientRect()));
+        this._originRect = this.origin.getBoundingClientRect();
+        this._overlayElementRect = this.overlayElement.getBoundingClientRect();
         this.width = INITIAL_WH;
         this.height = INITIAL_WH;
-        /** @type {?} */
         const offsetCheckx2 = this._offsetCheck * 2;
         this.createPosition();
         if (_flip) {
@@ -581,9 +398,7 @@ class Positioning {
         }
         // when there is not enough space
         if (this.checkAll()) {
-            /** @type {?} */
             const _max_width = this._overlayElementRect.width + offsetCheckx2 > window.innerWidth;
-            /** @type {?} */
             const _max_height = this._overlayElementRect.height + offsetCheckx2 > window.innerHeight;
             if (_max_width || _max_height) {
                 if (_max_height) {
@@ -597,16 +412,16 @@ class Positioning {
             }
             else {
                 if (this.checkBottom()) {
-                    this.y += (/** @type {?} */ (this.checkBottom(true)));
+                    this.y += this.checkBottom(true);
                 }
                 else if (this.checkTop()) {
-                    this.y -= (/** @type {?} */ (this.checkTop(true)));
+                    this.y -= this.checkTop(true);
                 }
                 if (this.checkRight()) {
-                    this.x += (/** @type {?} */ (this.checkRight(true)));
+                    this.x += this.checkRight(true);
                 }
                 else if (this.checkLeft()) {
-                    this.x -= (/** @type {?} */ (this.checkLeft(true)));
+                    this.x -= this.checkLeft(true);
                 }
             }
             this.updateOrigin();
@@ -620,26 +435,16 @@ class Positioning {
         this.ax = Math.round(this.ax);
         this.ay = Math.round(this.ay);
     }
-    /**
-     * @return {?}
-     */
     get offsetX() {
         return typeof this._offset === 'number'
             ? this._offset
             : this._offset.x || 0;
     }
-    /**
-     * @return {?}
-     */
     get offsetY() {
         return typeof this._offset === 'number'
             ? this._offset
             : this._offset.y || 0;
     }
-    /**
-     * @private
-     * @return {?}
-     */
     createPosition() {
         if (this.xPosition && this.yPosition) {
             throw new Error(`You can not use \`xPosition\` and \`yPosition\` together, use only one of them.`);
@@ -647,14 +452,7 @@ class Positioning {
         if ((this.xPosition || this.yPosition) && !this.placement) {
             throw new Error(`\`placement\` is required.`);
         }
-        /** @type {?} */
-        let x = this._originRect.x;
-        /** @type {?} */
-        let y = this._originRect.y;
-        /** @type {?} */
-        let ox = 'center';
-        /** @type {?} */
-        let oy = 'center';
+        let x = this._originRect.x, y = this._originRect.y, ox = 'center', oy = 'center';
         if (this.placement) {
             if (this.placement === YPosition.above) {
                 x += (this._originRect.width - this._overlayElementRect.width) / 2;
@@ -671,8 +469,7 @@ class Positioning {
                 y += this.offsetY;
             }
             else {
-                /** @type {?} */
-                const dir = this._themeVariables.getDirection((/** @type {?} */ (this.placement)));
+                const dir = this._themeVariables.getDirection(this.placement);
                 if (dir === DirPosition.left) {
                     ox = '100%';
                     x += -this._overlayElementRect.width;
@@ -689,8 +486,7 @@ class Positioning {
                 }
             }
             if (this.xPosition) {
-                /** @type {?} */
-                const dir = this._themeVariables.getDirection((/** @type {?} */ (this.xPosition)));
+                const dir = this._themeVariables.getDirection(this.xPosition);
                 if (dir === DirPosition.right) {
                     ox = '0%';
                     x = this._originRect.x;
@@ -732,13 +528,7 @@ class Positioning {
             oy
         };
     }
-    /**
-     * @private
-     * @param {?=} returnVal
-     * @return {?}
-     */
     checkLeft(returnVal) {
-        /** @type {?} */
         const rest = this.ax - this._offsetCheck;
         if (returnVal) {
             return rest;
@@ -748,19 +538,13 @@ class Positioning {
                 this.placement = invertPlacement(this.placement);
             }
             if (this.xPosition) {
-                this.xPosition = (/** @type {?} */ (invertPlacement(this.xPosition)));
+                this.xPosition = invertPlacement(this.xPosition);
             }
             return true;
         }
         return false;
     }
-    /**
-     * @private
-     * @param {?=} returnVal
-     * @return {?}
-     */
     checkRight(returnVal) {
-        /** @type {?} */
         const rest = window.innerWidth - (this.ax + this._overlayElementRect.width + this._offsetCheck);
         if (returnVal) {
             return rest;
@@ -770,19 +554,13 @@ class Positioning {
                 this.placement = invertPlacement(this.placement);
             }
             if (this.xPosition) {
-                this.xPosition = (/** @type {?} */ (invertPlacement(this.xPosition)));
+                this.xPosition = invertPlacement(this.xPosition);
             }
             return true;
         }
         return false;
     }
-    /**
-     * @private
-     * @param {?=} returnVal
-     * @return {?}
-     */
     checkTop(returnVal) {
-        /** @type {?} */
         const rest = this.ay - this._offsetCheck;
         if (returnVal) {
             return rest;
@@ -792,19 +570,13 @@ class Positioning {
                 this.placement = invertPlacement(this.placement);
             }
             if (this.yPosition) {
-                this.yPosition = (/** @type {?} */ (invertPlacement(this.yPosition)));
+                this.yPosition = invertPlacement(this.yPosition);
             }
             return true;
         }
         return false;
     }
-    /**
-     * @private
-     * @param {?=} returnVal
-     * @return {?}
-     */
     checkBottom(returnVal) {
-        /** @type {?} */
         const rest = window.innerHeight - (this.ay + this._overlayElementRect.height + this._offsetCheck);
         if (returnVal) {
             return rest;
@@ -814,48 +586,32 @@ class Positioning {
                 this.placement = invertPlacement(this.placement);
             }
             if (this.yPosition) {
-                this.yPosition = (/** @type {?} */ (invertPlacement(this.yPosition)));
+                this.yPosition = invertPlacement(this.yPosition);
             }
             return true;
         }
         return false;
     }
-    /**
-     * @private
-     * @return {?}
-     */
     checkAll() {
         return this.checkLeft() ||
             this.checkRight() ||
             this.checkTop() ||
             this.checkBottom();
     }
-    /**
-     * @private
-     * @return {?}
-     */
     updateOrigin() {
         // do not update if it is defined
         if (this._origin) {
             return;
         }
         this._origin = true;
-        /** @type {?} */
         const oax = this._originRect.x + this._originRect.width / 2;
-        /** @type {?} */
         const oay = this._originRect.y + this._originRect.height / 2;
-        /** @type {?} */
         const vax = this.x + this._overlayElementRect.width / 2;
-        /** @type {?} */
         const vay = this.y + this._overlayElementRect.height / 2;
         this.ox = `${oax - vax + this._overlayElementRect.width / 2}px`;
         this.oy = `${oay - vay + this._overlayElementRect.height / 2}px`;
     }
 }
-/**
- * @param {?} placement
- * @return {?}
- */
 function invertPlacement(placement) {
     if (placement === YPosition.above) {
         return YPosition.below;
@@ -878,39 +634,24 @@ function invertPlacement(placement) {
     return placement;
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
 const REF_REG_EXP = /\{([\w-]+)\}/g;
-/** @type {?} */
 let nextClassId = 0;
-/** @type {?} */
 let nextKeyFrameId = 0;
-class StylesInDocument {
+let StylesInDocument = class StylesInDocument {
     constructor() {
         this.styles = {};
         this.styleContainers = new Map();
         this.styleElementGlobalMap = new Map();
     }
-}
-StylesInDocument.decorators = [
-    { type: Injectable, args: [{
-                providedIn: 'root'
-            },] }
-];
-/** @nocollapse */ StylesInDocument.ngInjectableDef = defineInjectable({ factory: function StylesInDocument_Factory() { return new StylesInDocument(); }, token: StylesInDocument, providedIn: "root" });
-/** @type {?} */
+};
+StylesInDocument.ngInjectableDef = defineInjectable({ factory: function StylesInDocument_Factory() { return new StylesInDocument(); }, token: StylesInDocument, providedIn: "root" });
+StylesInDocument = __decorate([
+    Injectable({
+        providedIn: 'root'
+    })
+], StylesInDocument);
 const THEME_MAP = new Map();
-class LyTheme2 {
-    /**
-     * @param {?} stylesInDocument
-     * @param {?} core
-     * @param {?} themeName
-     * @param {?} _document
-     * @param {?} _ngZone
-     */
+let LyTheme2 = class LyTheme2 {
     constructor(stylesInDocument, core, themeName, _document, _ngZone) {
         this.stylesInDocument = stylesInDocument;
         this.core = core;
@@ -918,28 +659,18 @@ class LyTheme2 {
         this._ngZone = _ngZone;
         this._elementsMap = new Map();
         this.themeMap = THEME_MAP;
-        /**
-         * ssr or hmr
-         */
+        /** ssr or hmr */
         this.isDevOrServer = isDevMode() || !Platform.isBrowser;
         if (themeName) {
             this.setUpTheme(themeName);
         }
     }
-    /**
-     * Get Theme Variables
-     * @return {?}
-     */
+    /** Get Theme Variables */
     get variables() {
         return this.config;
     }
-    /**
-     * @param {?} themeName
-     * @return {?}
-     */
     setUpTheme(themeName) {
         if (!this.config) {
-            /** @type {?} */
             const theme = this.core.get(themeName);
             if (theme === undefined) {
                 throw new Error(`Theme ${themeName} not found in CoreTheme`);
@@ -961,18 +692,15 @@ class LyTheme2 {
         }
     }
     /**
-     * Add a new dynamic style, use only within \@Input()
-     * @param {?} id Unique id
-     * @param {?=} style Styles
-     * @param {?=} el Element
-     * @param {?=} instance The instance of this, this replaces the existing style with a new one when it changes
-     * @param {?=} priority
-     * @param {?=} parentStyle
-     * @return {?}
+     * Add a new dynamic style, use only within @Input()
+     * @param id Unique id
+     * @param style Styles
+     * @param el Element
+     * @param instance The instance of this, this replaces the existing style with a new one when it changes
+     * @param parentStyle
      */
     addStyle(id, style, el, instance, priority, parentStyle) {
-        /** @type {?} */
-        const newClass = (/** @type {?} */ (this._createStyleContent2(style, id, priority, TypeStyle.OnlyOne, false, parentStyle)));
+        const newClass = this._createStyleContent2(style, id, priority, TypeStyle.OnlyOne, false, parentStyle);
         if (newClass === instance) {
             return newClass;
         }
@@ -986,33 +714,17 @@ class LyTheme2 {
     }
     /**
      * Create basic style
-     * @param {?} style Styles.
+     * @param style Styles.
      * Note: Use only with inmutable variable.
-     * @param {?=} priority Priority of style
-     * @param {?=} parentStyle
-     * @return {?}
+     * @param priority Priority of style
+     * @param parentStyle
      */
     style(style, priority, parentStyle) {
-        return (/** @type {?} */ (this._createStyleContent2(style, null, priority, TypeStyle.OnlyOne, false, parentStyle)));
+        return this._createStyleContent2(style, null, priority, TypeStyle.OnlyOne, false, parentStyle);
     }
-    /**
-     * @private
-     * @param {?} element
-     * @param {?} renderer
-     * @param {?} newClassname
-     * @param {?=} oldClassname
-     * @return {?}
-     */
     updateClassName(element, renderer, newClassname, oldClassname) {
         this.core.updateClassName(element, renderer, newClassname, oldClassname);
     }
-    /**
-     * @param {?} element
-     * @param {?} renderer
-     * @param {?} newClass
-     * @param {?=} oldClass
-     * @return {?}
-     */
     updateClass(element, renderer, newClass, oldClass) {
         if (newClass === oldClass) {
             return newClass;
@@ -1020,43 +732,29 @@ class LyTheme2 {
         this.updateClassName(element, renderer, newClass, oldClass);
         return newClass;
     }
-    /**
-     * @param {?} nam
-     * @return {?}
-     */
     setTheme(nam) {
         if (!Platform.isBrowser) {
             throw new Error(`\`theme.setTheme('theme-name')\` is only available in browser platform`);
         }
         if (nam !== this.config.name) {
-            /** @type {?} */
             const theme = this.themeMap.get(this.initialTheme);
             if (theme == null) {
                 throw new Error(`Theme ${nam} not found in themeMap`);
             }
             theme.change = nam;
-            this.config = (/** @type {?} */ (this.core.get(nam)));
+            this.config = this.core.get(nam);
             this._updateAllStyles();
         }
     }
-    /**
-     * Toggle right-to-left/left-to-right
-     * @return {?}
-     */
+    /** Toggle right-to-left/left-to-right */
     toggleDirection() {
-        /** @type {?} */
         const current = this.config.direction;
         this.config.direction = current === Dir.ltr ? Dir.rtl : Dir.ltr;
         this._updateAllStyles();
     }
-    /**
-     * @private
-     * @return {?}
-     */
     _updateAllStyles() {
         this.elements.forEach((_, key) => {
-            /** @type {?} */
-            const styleData = (/** @type {?} */ (_STYLE_MAP.get(key)));
+            const styleData = _STYLE_MAP.get(key);
             if (styleData.requireUpdate) {
                 this._createStyleContent2(styleData.styles, styleData.id, styleData.priority, styleData.type, true, styleData.parentStyle);
             }
@@ -1065,81 +763,56 @@ class LyTheme2 {
     /**
      * Create a simple style
      * return className
-     * @param {?} id id of style
-     * @param {?} css style object or string
-     * @param {?=} priority style priority(default: 0)
-     * @param {?=} parentStyle
-     * @return {?}
+     * @param id id of style
+     * @param css style object or string
+     * @param priority style priority(default: 0)
      */
     addSimpleStyle(id, css, priority, parentStyle) {
-        return (/** @type {?} */ (this._createStyleContent2((/** @type {?} */ (css)), id, priority, TypeStyle.OnlyOne, false, parentStyle)));
+        return this._createStyleContent2(css, id, priority, TypeStyle.OnlyOne, false, parentStyle);
     }
     /**
      * Add new add a new style sheet
-     * @template T
-     * @param {?} styles styles
-     * @param {?=} priority priority for style
-     * @return {?}
+     * @param styles styles
+     * @param priority priority for style
      */
     addStyleSheet(styles, priority) {
         return this._createStyleContent2(styles, null, priority, TypeStyle.Multiple);
     }
-    /**
-     * @private
-     * @param {?} styles
-     * @param {?} id
-     * @param {?} priority
-     * @param {?} type
-     * @param {?=} forChangeTheme
-     * @param {?=} parentStyle
-     * @return {?}
-     */
     _createStyleContent2(styles, id, priority, type, forChangeTheme, parentStyle) {
-        /** @type {?} */
-        const newId = id || (/** @type {?} */ (styles));
-        /** @type {?} */
+        const newId = id || styles;
         let isNewStyle = null;
         if (!_STYLE_MAP.has(newId)) {
             isNewStyle = true;
             _STYLE_MAP.set(newId, {
                 priority,
-                styles: (/** @type {?} */ (styles)),
+                styles: styles,
                 type,
                 css: {},
                 id,
                 parentStyle
             });
         }
-        /** @type {?} */
-        const styleMap = (/** @type {?} */ (_STYLE_MAP.get(newId)));
-        /** @type {?} */
+        const styleMap = _STYLE_MAP.get(newId);
         const themeName = this.initialTheme;
-        /** @type {?} */
         const isCreated = isNewStyle || !(styleMap.classes || styleMap[themeName]);
         if (isCreated || forChangeTheme) {
-            /**
-             * create new style for new theme
-             * @type {?}
-             */
+            /** create new style for new theme */
             let css;
-            /** @type {?} */
-            const themeMap = (/** @type {?} */ (this.themeMap.get(this.initialTheme)));
-            /** @type {?} */
-            const config = (/** @type {?} */ (this.core.get(themeMap.change || themeName)));
+            const themeMap = this.themeMap.get(this.initialTheme);
+            const config = this.core.get(themeMap.change || themeName);
             if (typeof styles === 'function') {
                 styleMap.requireUpdate = true;
-                css = groupStyleToString(styleMap, (/** @type {?} */ (styles(config, this))), themeName, id, type, config);
+                css = groupStyleToString(styleMap, styles(config, this), themeName, id, type, config);
                 if (!forChangeTheme) {
                     styleMap.css[themeName] = css;
                 }
             }
             else {
                 /** create a new id for style that does not <-<require>-> changes */
-                css = groupStyleToString(styleMap, (/** @type {?} */ (styles)), themeName, (/** @type {?} */ (newId)), type, config);
+                css = groupStyleToString(styleMap, styles, themeName, newId, type, config);
                 styleMap.css = css;
             }
             if (!this.elements.has(newId)) {
-                /** @type {?} */
                 const newEl = this._createElementStyle(css);
                 if (styleMap.requireUpdate) {
                     // This is required for when a theme changes
@@ -1153,8 +826,7 @@ class LyTheme2 {
                 this.core.renderer.appendChild(this._createStyleContainer(styleMap.priority), newEl);
             }
             if (forChangeTheme) {
-                /** @type {?} */
-                const el = (/** @type {?} */ (this.elements.get(newId)));
+                const el = this.elements.get(newId);
                 el.innerText = css;
             }
         }
@@ -1164,32 +836,24 @@ class LyTheme2 {
              * for ssr or hmr
              */
             if (!this.elements.has(newId)) {
-                /** @type {?} */
                 const _css = styleMap.css[themeName] || styleMap.css;
-                /** @type {?} */
-                const map$$1 = this.stylesInDocument.styleElementGlobalMap;
+                const map = this.stylesInDocument.styleElementGlobalMap;
                 if (styleMap.requireUpdate) {
                     this.elements.set(newId, this._createElementStyle(_css));
                     this.core.renderer.appendChild(this._createStyleContainer(styleMap.priority), this.elements.get(newId));
                 }
-                else if (!map$$1.has(newId)) {
-                    map$$1.set(newId, this._createElementStyle(_css));
-                    this.core.renderer.appendChild(this._createStyleContainer(styleMap.priority), map$$1.get(newId));
+                else if (!map.has(newId)) {
+                    map.set(newId, this._createElementStyle(_css));
+                    this.core.renderer.appendChild(this._createStyleContainer(styleMap.priority), map.get(newId));
                 }
             }
         }
         return styleMap.classes || styleMap[themeName];
     }
-    /**
-     * @private
-     * @param {?} priority
-     * @return {?}
-     */
     _createStyleContainer(priority) {
         priority = priority || 0;
         const { styleContainers } = this.stylesInDocument;
         if (!styleContainers.has(priority)) {
-            /** @type {?} */
             const el = this.core.renderer.createElement(`ly-s-c`);
             if (isDevMode()) {
                 this.core.renderer.setAttribute(el, 'priority', `${priority}`);
@@ -1203,41 +867,22 @@ class LyTheme2 {
         else {
             return styleContainers.get(priority);
         }
-        /** @type {?} */
         const refChild = this.findNode(priority);
         this.core.renderer.insertBefore(this._document.body, styleContainers.get(priority), refChild);
         return styleContainers.get(priority);
     }
-    /**
-     * @private
-     * @param {?} index
-     * @return {?}
-     */
     findNode(index) {
         const { styleContainers } = this.stylesInDocument;
-        /** @type {?} */
         const keys = (Array.from(styleContainers.keys())).sort();
-        /** @type {?} */
         const key = keys.find(_ => index < _);
         return (key !== undefined && styleContainers.get(key)) || this.core.firstElement;
     }
-    /**
-     * @private
-     * @param {?} css
-     * @return {?}
-     */
     _createElementStyle(css) {
-        /** @type {?} */
         const styleElement = this.core.renderer.createElement('style');
-        /** @type {?} */
         const styleText = this.core.renderer.createText(css);
         this.core.renderer.appendChild(styleElement, styleText);
         return styleElement;
     }
-    /**
-     * @param {?} fn
-     * @return {?}
-     */
     requestAnimationFrame(fn) {
         if (typeof requestAnimationFrame === 'function') {
             this._ngZone.runOutsideAngular(() => {
@@ -1250,62 +895,40 @@ class LyTheme2 {
             fn();
         }
     }
-    /**
-     * @template T
-     * @param {?} classes
-     * @return {?}
-     */
     toClassSelector(classes) {
-        /** @type {?} */
         const newClasses = {};
-        for (const key in (/** @type {?} */ ((/** @type {?} */ (classes))))) {
+        for (const key in classes) {
             if (classes.hasOwnProperty(key)) {
                 newClasses[key] = `.${classes[key]}`;
             }
         }
-        return (/** @type {?} */ ((/** @type {?} */ (newClasses))));
+        return newClasses;
     }
-}
-LyTheme2.decorators = [
-    { type: Injectable }
-];
-/** @nocollapse */
-LyTheme2.ctorParameters = () => [
-    { type: StylesInDocument },
-    { type: CoreTheme },
-    { type: undefined, decorators: [{ type: Inject, args: [LY_THEME_NAME,] }] },
-    { type: undefined, decorators: [{ type: Inject, args: [DOCUMENT,] }] },
-    { type: NgZone }
-];
-/**
- * @param {?} styleMap
- * @param {?} styles
- * @param {?} themeName
- * @param {?} id
- * @param {?} typeStyle
- * @param {?} themeVariables
- * @return {?}
- */
+};
+LyTheme2 = __decorate([
+    Injectable(),
+    __param(2, Inject(LY_THEME_NAME)),
+    __param(3, Inject(DOCUMENT)),
+    __metadata("design:paramtypes", [StylesInDocument,
+        CoreTheme, Object, Object, NgZone])
+], LyTheme2);
 function groupStyleToString(styleMap, styles, themeName, id, typeStyle, themeVariables) {
     // for styles type string
     if (typeStyle === TypeStyle.OnlyOne) {
         // use current class or set new
-        /** @type {?} */
         const className = styleMap.requireUpdate
             ? styleMap[themeName] || (styleMap[themeName] = createNextClassId())
             : styleMap.classes
                 ? styleMap.classes
                 : styleMap.classes = createNextClassId();
-        /** @type {?} */
         let rules;
         if (typeof styles === 'string') {
             rules = `.${className}{${styles}}`;
         }
         else {
-            rules = styleToString(id, null, (/** @type {?} */ (styles)), themeVariables, (/** @type {?} */ (className)));
+            rules = styleToString(id, null, styles, themeVariables, className);
         }
         if (styleMap.parentStyle) {
-            /** @type {?} */
             const styleMapOfParentStyle = _STYLE_MAP.get(styleMap.parentStyle);
             if (!styleMapOfParentStyle) {
                 throw new Error(`The parentStyle not exist or is called before being created.`);
@@ -1315,11 +938,8 @@ function groupStyleToString(styleMap, styles, themeName, id, typeStyle, themeVar
         return rules;
     }
     // for multiples styles
-    /** @type {?} */
     const classesMap = styleMap[themeName] || (styleMap[themeName] = {});
-    /** @type {?} */
     let content = '';
-    /** @type {?} */
     const name = styles.$name ? `${styles.$name}-` : '';
     // set priority
     if (styles.$priority != null) {
@@ -1327,33 +947,24 @@ function groupStyleToString(styleMap, styles, themeName, id, typeStyle, themeVar
     }
     for (const key in styles) {
         if (styles.hasOwnProperty(key)) {
-            /** @type {?} */
             const value = styles[key];
             if (key === '$keyframes') {
-                content += keyframesToString(name, classesMap, (/** @type {?} */ (value)), themeVariables);
+                content += keyframesToString(name, classesMap, value, themeVariables);
             }
             else if (typeof value === 'object' || value === null) {
                 // set new id if not exist
-                /** @type {?} */
                 const currentClassName = key in classesMap
                     ? classesMap[key]
                     : classesMap[key] = isDevMode() ? toClassNameValid(`y-${name}${key}-${createNextClassId()}`) : createNextClassId();
-                /** @type {?} */
-                const style = styleToString(key, styles.$name, (/** @type {?} */ (value)), themeVariables, currentClassName);
+                const style = styleToString(key, styles.$name, value, themeVariables, currentClassName);
                 content += style;
             }
         }
     }
     return replaceRefs(content, classesMap);
 }
-/**
- * @param {?} str
- * @param {?} data
- * @return {?}
- */
 function replaceRefs(str, data) {
     return str.replace(REF_REG_EXP, (_match, token) => {
-        /** @type {?} */
         const className = data[token];
         if (className) {
             return `.${data[token]}`;
@@ -1365,22 +976,11 @@ function replaceRefs(str, data) {
 }
 /**
  * {color:'red'} to .className{color: red}
- * @param {?} key
- * @param {?} $name
- * @param {?} ob
- * @param {?} themeVariables
- * @param {?} currentKey
- * @param {?=} parentKey
- * @return {?}
  */
 function styleToString(key, $name, ob, themeVariables, currentKey, parentKey) {
-    /** @type {?} */
     let content = '';
-    /** @type {?} */
     let subContent = '';
-    /** @type {?} */
     let keyAndValue = '';
-    /** @type {?} */
     let newKey;
     if (parentKey) {
         if (currentKey.indexOf('&') !== -1) {
@@ -1404,23 +1004,21 @@ function styleToString(key, $name, ob, themeVariables, currentKey, parentKey) {
     }
     for (const styleKey in ob) {
         if (ob.hasOwnProperty(styleKey)) {
-            /** @type {?} */
             const element = ob[styleKey];
             // Omit style with value null
             if (element != null) {
                 // Check if is Object literal
                 if (element.constructor === Object) {
-                    subContent += styleToString(key, $name, (/** @type {?} */ (element)), themeVariables, styleKey, newKey);
+                    subContent += styleToString(key, $name, element, themeVariables, styleKey, newKey);
                 }
                 else {
-                    keyAndValue += convertToStyleValue(styleKey, (/** @type {?} */ (element)), themeVariables);
+                    keyAndValue += convertToStyleValue(styleKey, element, themeVariables);
                 }
             }
         }
     }
     if (keyAndValue) {
         if (isDevMode()) {
-            /** @type {?} */
             let lin = '\n\n';
             if ($name) {
                 lin += `/** Style Sheet name: ${$name} */\n`;
@@ -1442,17 +1040,9 @@ function styleToString(key, $name, ob, themeVariables, currentKey, parentKey) {
     }
     return content + subContent;
 }
-/**
- * @param {?} key
- * @param {?} value
- * @param {?} themeVariables
- * @return {?}
- */
 function convertToStyleValue(key, value, themeVariables) {
-    /** @type {?} */
     const newStyleKey = converterToCssKeyAndStyleCache(key, themeVariables);
     if (value.constructor === Array) {
-        /** @type {?} */
         let lin = '';
         for (let index = 0; index < value.length; index++) {
             lin += `${newStyleKey}:${value[index]};`;
@@ -1463,26 +1053,15 @@ function convertToStyleValue(key, value, themeVariables) {
         return `${newStyleKey}:${value};`;
     }
 }
-/**
- * @param {?} styleName
- * @param {?} keysMap
- * @param {?} keyframes
- * @param {?} themeVariables
- * @return {?}
- */
 function keyframesToString(styleName, keysMap, keyframes, themeVariables) {
-    /** @type {?} */
     let content = '';
     for (const name in keyframes) {
         if (keyframes.hasOwnProperty(name)) {
-            /** @type {?} */
             const keyframe = keyframes[name];
             // Sometimes the name of a class can be the same as the name of a keyframe,
             // so we add a character to be different
-            /** @type {?} */
             const newUniqueName = `@г.->-${name}`;
             // set new id if not exist
-            /** @type {?} */
             const newName = newUniqueName in keysMap
                 ? keysMap[newUniqueName]
                 : keysMap[newUniqueName] = isDevMode() ? toClassNameValid(`${styleName}${name}-${createNextKeyframeId()}-v`) : createNextKeyframeId();
@@ -1490,13 +1069,11 @@ function keyframesToString(styleName, keysMap, keyframes, themeVariables) {
             for (const percent in keyframe) {
                 if (keyframe.hasOwnProperty(percent)) {
                     content += `${percent}%{`;
-                    /** @type {?} */
                     const styles = keyframe[percent];
                     for (const key in styles) {
                         if (styles.hasOwnProperty(key)) {
-                            /** @type {?} */
                             const val = styles[key];
-                            content += convertToStyleValue(key, (/** @type {?} */ (val)), themeVariables);
+                            content += convertToStyleValue(key, val, themeVariables);
                         }
                     }
                     content += `}`;
@@ -1507,13 +1084,7 @@ function keyframesToString(styleName, keysMap, keyframes, themeVariables) {
     }
     return content;
 }
-/**
- * @param {?} str
- * @param {?} themeVariables
- * @return {?}
- */
 function converterToCssKeyAndStyle(str, themeVariables) {
-    /** @type {?} */
     const hyphenCase = toHyphenCase(str);
     if (hyphenCase.indexOf(DirAlias.before) !== -1) {
         return dirCache(str, hyphenCase, themeVariables, DirAlias.before);
@@ -1529,114 +1100,57 @@ function converterToCssKeyAndStyle(str, themeVariables) {
     }
     return hyphenCase;
 }
-/**
- * @param {?} str
- * @return {?}
- */
 function toClassNameValid(str) {
-    /** @type {?} */
     const s = str.replace(/^[0-9]|[^\w\-]/g, _ => {
         return `_${_.charCodeAt(0)}`;
     });
     return toHyphenCase(s);
 }
-/**
- * @param {?} str
- * @return {?}
- */
 function toHyphenCase(str) {
     return str.replace(/([A-Z])/g, (g) => `-${g[0].toLowerCase()}`);
 }
-/**
- * @param {?} str
- * @param {?} themeVariables
- * @return {?}
- */
 function converterToCssKeyAndStyleCache(str, themeVariables) {
-    /** @type {?} */
-    const map$$1 = STYLE_KEYS_MAP[themeVariables.direction];
-    return str in map$$1
-        ? map$$1[str]
-        : map$$1[str] = converterToCssKeyAndStyle(str, themeVariables);
+    const map = STYLE_KEYS_MAP[themeVariables.direction];
+    return str in map
+        ? map[str]
+        : map[str] = converterToCssKeyAndStyle(str, themeVariables);
 }
-/** @type {?} */
 const ignoreCSSKEY = {
     'break-after': 'break-after',
     'break-before': 'break-before',
     'page-break-after': 'page-break-after',
     'page-break-before': 'page-break-before'
 };
-/** @type {?} */
 const STYLE_KEYS_MAP = {
     rtl: Object.assign({}, ignoreCSSKEY),
     ltr: Object.assign({}, ignoreCSSKEY)
 };
-/** @type {?} */
 const BOTTOM = 'bottom';
-/** @type {?} */
 const TOP = 'top';
-/**
- * @param {?} original
- * @param {?} val
- * @param {?} themeVariables
- * @param {?} dirAlias
- * @return {?}
- */
 function dirCache(original, val, themeVariables, dirAlias) {
-    /** @type {?} */
-    const map$$1 = STYLE_KEYS_MAP[themeVariables.direction];
+    const map = STYLE_KEYS_MAP[themeVariables.direction];
     // Replace in original, for do not repeat this again
-    return map$$1[original] = val.replace(dirAlias, themeVariables.getDirection(dirAlias));
+    return map[original] = val.replace(dirAlias, themeVariables.getDirection(dirAlias));
 }
-/**
- * @param {?} original
- * @param {?} val
- * @param {?} themeVariables
- * @param {?} pos
- * @param {?} to
- * @return {?}
- */
 function YPositionCache(original, val, themeVariables, pos, to) {
-    /** @type {?} */
-    const map$$1 = STYLE_KEYS_MAP[themeVariables.direction];
+    const map = STYLE_KEYS_MAP[themeVariables.direction];
     // Replace in original, for do not repeat this again
-    return map$$1[original] = val.replace(pos, to);
+    return map[original] = val.replace(pos, to);
 }
-/**
- * @param {?} str
- * @return {?}
- */
 function capitalizeFirstLetter(str) {
     return str[0].toUpperCase() + str.slice(1);
 }
-/**
- * @return {?}
- */
 function createNextClassId() {
     return `i${(nextClassId++).toString(36)}`;
 }
-/**
- * @return {?}
- */
 function createNextKeyframeId() {
     return `k${(nextKeyFrameId++).toString(36)}`;
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-class NgTranscludeDirective {
-    /**
-     * @param {?} _viewRef
-     */
+let NgTranscludeDirective = class NgTranscludeDirective {
     constructor(_viewRef) {
         this._viewRef = _viewRef;
     }
-    /**
-     * @param {?} templateRef
-     * @return {?}
-     */
     set ngTransclude(templateRef) {
         if (templateRef) {
             this._ngTransclude = templateRef;
@@ -1647,94 +1161,57 @@ class NgTranscludeDirective {
             this._viewRef.clear();
         }
     }
-    /**
-     * @return {?}
-     */
     get getNgTransclude() {
         return this._ngTransclude;
     }
-    /**
-     * @return {?}
-     */
     ngOnDestroy() {
         this._viewRef.remove();
     }
-}
-NgTranscludeDirective.decorators = [
-    { type: Directive, args: [{
-                selector: '[ngTransclude]'
-            },] }
-];
-/** @nocollapse */
-NgTranscludeDirective.ctorParameters = () => [
-    { type: ViewContainerRef }
-];
-NgTranscludeDirective.propDecorators = {
-    ngTransclude: [{ type: Input }]
 };
-class NgTranscludeModule {
-}
-NgTranscludeModule.decorators = [
-    { type: NgModule, args: [{
-                exports: [NgTranscludeDirective],
-                declarations: [NgTranscludeDirective]
-            },] }
-];
+__decorate([
+    Input(),
+    __metadata("design:type", TemplateRef),
+    __metadata("design:paramtypes", [TemplateRef])
+], NgTranscludeDirective.prototype, "ngTransclude", null);
+NgTranscludeDirective = __decorate([
+    Directive({
+        selector: '[ngTransclude]'
+    }),
+    __metadata("design:paramtypes", [ViewContainerRef])
+], NgTranscludeDirective);
+let NgTranscludeModule = class NgTranscludeModule {
+};
+NgTranscludeModule = __decorate([
+    NgModule({
+        exports: [NgTranscludeDirective],
+        declarations: [NgTranscludeDirective]
+    })
+], NgTranscludeModule);
 /**
  * @ignore
- * @param {?} element
- * @return {?}
  */
 function getNativeElement(element) {
     return element instanceof ElementRef ? element.nativeElement : element;
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
 const DEFAULT_VALUE = '';
-/** @type {?} */
 const STYLE_PRIORITY = -1;
-/**
- * @template T
- * @param {?} base
- * @return {?}
- */
 function mixinStyleUpdater(base) {
     return class extends base {
-        /**
-         * @return {?}
-         */
         setAutoContrast() {
             this._autoContrast = true;
         }
-        /**
-         * @param {?} element
-         * @return {?}
-         */
         updateStyle(element) {
-            /** @type {?} */
             const __bg = this._superHyperInternalPropertyBg;
-            /** @type {?} */
             const __color = this._superHyperInternalPropertyColor;
-            /** @type {?} */
             const __raised = this._superHyperInternalPropertyRaised;
-            /** @type {?} */
             const __elevation = this._superHyperInternalPropertyElevation;
-            /** @type {?} */
             const __disabled = this._superHyperInternalPropertyDisabled;
-            /** @type {?} */
             const __outlined = this._superHyperInternalPropertyOutlined;
-            /** @type {?} */
             const __shadowColor = this._superHyperInternalPropertyShadowColor;
-            /** @type {?} */
             const __isContrast = this._autoContrast && !__color || __color === 'auto';
-            /** @type {?} */
             const newKey = `common----:${__bg || DEFAULT_VALUE}·${__color || DEFAULT_VALUE}·${__raised || DEFAULT_VALUE}·${__elevation || DEFAULT_VALUE}·${__disabled || DEFAULT_VALUE}·${__outlined || DEFAULT_VALUE}·${__shadowColor || DEFAULT_VALUE}·${__isContrast || DEFAULT_VALUE}`;
             this._classNameAnonymous = this._theme.addStyle(newKey, (theme) => {
-                /** @type {?} */
                 const style = {};
                 if (__outlined) {
                     style.border = '1px solid currentColor';
@@ -1760,9 +1237,7 @@ function mixinStyleUpdater(base) {
                         if (!__bg) {
                             style.background = theme.background.primary.default;
                         }
-                        /** @type {?} */
                         const backgroundColorCss = style.background !== __bg && theme.colorOf(__bg || 'background:primary', 'shadow');
-                        /** @type {?} */
                         const shadowColor = (__shadowColor && theme.colorOf(__shadowColor)) || backgroundColorCss || style.background || style.color || theme.shadow;
                         style.boxShadow = shadowBuilder(__elevation || 3, shadowColor);
                         if (!__elevation) {
@@ -1772,54 +1247,29 @@ function mixinStyleUpdater(base) {
                         }
                     }
                 }
-                return (/** @type {?} */ (style));
+                return style;
             }, getNativeElement(element), this._classNameAnonymous, STYLE_PRIORITY);
         }
-        /**
-         * @param {...?} args
-         */
         constructor(...args) { super(...args); }
     };
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/**
- * @param {?} value
- * @return {?}
- */
 function toBoolean(value) {
     return value != null && `${value}` !== 'false';
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 class RippleRef {
     constructor() {
         this.state = true;
         this.timestamp = -Date.now();
         this.container = document.createElement('span');
     }
-    /**
-     * @return {?}
-     */
     end() {
         this.state = false;
         this.timestamp += Date.now();
     }
 }
 class Ripple {
-    /**
-     * @param {?} _themeVariables
-     * @param {?} _ngZone
-     * @param {?} classes
-     * @param {?} _containerElement
-     * @param {?=} _triggerElement
-     */
     constructor(_themeVariables, _ngZone, classes, _containerElement, _triggerElement) {
         this._themeVariables = _themeVariables;
         this._ngZone = _ngZone;
@@ -1829,7 +1279,7 @@ class Ripple {
         this._eventHandlers = new Map();
         this.config = {};
         this._transitionDuration = this._themeVariables.ripple.duration;
-        this._eventOptions = (/** @type {?} */ ({ passive: true }));
+        this._eventOptions = { passive: true };
         if (Platform.isBrowser) {
             if (typeof PointerEvent === 'function' && typeof TouchEvent === 'function') {
                 this._eventHandlers.set('pointerdown', this.onPointerDown.bind(this));
@@ -1847,25 +1297,12 @@ class Ripple {
             this.setTriggerElement(_triggerElement);
         }
     }
-    /**
-     * @param {?} config
-     * @return {?}
-     */
     setConfig(config) {
         this.config = config;
     }
-    /**
-     * @private
-     * @return {?}
-     */
     get _rectContainer() {
         return this._containerElement.getBoundingClientRect();
     }
-    /**
-     * @private
-     * @param {?} element
-     * @return {?}
-     */
     setTriggerElement(element) {
         if (element) {
             this._ngZone.runOutsideAngular(() => {
@@ -1874,19 +1311,12 @@ class Ripple {
         }
         this._triggerElement = element;
     }
-    /**
-     * @private
-     * @param {?} styles
-     * @return {?}
-     */
     createRipple(styles) {
         this._rippleRef = new RippleRef();
-        /** @type {?} */
         const container = this._rippleRef.container;
         container.className = this.classes.rippleContainer;
         for (const key in styles) {
             if (styles.hasOwnProperty(key)) {
-                /** @type {?} */
                 const element = styles[key];
                 if (typeof element === 'number') {
                     container.style[key] = `${element}px`;
@@ -1900,11 +1330,6 @@ class Ripple {
         window.getComputedStyle(container).getPropertyValue('opacity');
         container.style.transform = `scale(1)`;
     }
-    /**
-     * @private
-     * @param {?} event
-     * @return {?}
-     */
     onPointerDown(event) {
         if (!this.config.disabled) {
             /**Destroy previous ripple if exist */
@@ -1912,37 +1337,20 @@ class Ripple {
             this.startRipple(event, this.config);
         }
     }
-    /**
-     * @private
-     * @param {?} _event
-     * @return {?}
-     */
     onPointerLeave(_event) {
         if (!this.config.disabled) {
             this.endRipple();
         }
     }
-    /**
-     * @param {?} event
-     * @param {?} rippleConfig
-     * @return {?}
-     */
     startRipple(event, rippleConfig) {
-        /** @type {?} */
         const containerRect = this._rectContainer;
-        /** @type {?} */
-        let x = event.clientX;
-        /** @type {?} */
-        let y = event.clientY;
+        let x = event.clientX, y = event.clientY;
         if (rippleConfig.centered) {
             x = containerRect.left + containerRect.width / 2;
             y = containerRect.top + containerRect.height / 2;
         }
-        /** @type {?} */
         const left = x - containerRect.left;
-        /** @type {?} */
         const top = y - containerRect.top;
-        /** @type {?} */
         let radius = rippleConfig.radius === 'containerSize' ? maxSize(containerRect) / 2 : rippleConfig.radius || rippleRadius(x, y, containerRect);
         if (rippleConfig.percentageToIncrease) {
             radius += radius * rippleConfig.percentageToIncrease / 100;
@@ -1955,22 +1363,11 @@ class Ripple {
             transitionDuration: `${this._transitionDuration}ms`
         });
     }
-    /**
-     * @private
-     * @param {?} fn
-     * @param {?=} delay
-     * @return {?}
-     */
     runTimeoutOutsideZone(fn, delay = 0) {
         this._ngZone.runOutsideAngular(() => setTimeout(fn, delay));
     }
-    /**
-     * @return {?}
-     */
     endRipple() {
-        /** @type {?} */
         const rippleRef = this._rippleRef;
-        /** @type {?} */
         const duration = this._transitionDuration;
         if (rippleRef && rippleRef.state) {
             rippleRef.end();
@@ -1981,50 +1378,30 @@ class Ripple {
                 // }, rippleRef.timestamp < duration ? duration / (duration * .001 + 1) : 0);
             }, rippleRef.timestamp < duration ? duration * .15 : 0);
             this.runTimeoutOutsideZone(() => {
-                (/** @type {?} */ (rippleRef.container.parentNode)).removeChild(rippleRef.container);
+                rippleRef.container.parentNode.removeChild(rippleRef.container);
                 // }, rippleRef.timestamp < duration ? duration * 2 : duration);
                 // }, rippleRef.timestamp < duration ? duration / (duration * .001 + 1) * 2 : duration);
             }, rippleRef.timestamp < duration ? duration * 2 : duration);
             this._rippleRef = undefined;
         }
     }
-    /**
-     * @return {?}
-     */
     removeEvents() {
         if (this._triggerElement) {
             this._eventHandlers.forEach((fn, type) => {
-                (/** @type {?} */ (this._triggerElement)).removeEventListener(type, fn, this._eventOptions);
+                this._triggerElement.removeEventListener(type, fn, this._eventOptions);
             });
         }
     }
 }
-/**
- * @param {?} x
- * @param {?} y
- * @param {?} rect
- * @return {?}
- */
 function rippleRadius(x, y, rect) {
-    /** @type {?} */
     const distX = Math.max(Math.abs(x - rect.left), Math.abs(x - rect.right));
-    /** @type {?} */
     const distY = Math.max(Math.abs(y - rect.top), Math.abs(y - rect.bottom));
     return Math.sqrt(distX * distX + distY * distY);
 }
-/**
- * @param {?} rect
- * @return {?}
- */
 function maxSize(rect) {
     return Math.max(rect.width, rect.height);
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
 const LY_COMMON_STYLES = {
     fill: {
         position: 'absolute',
@@ -2063,29 +1440,18 @@ const LY_COMMON_STYLES = {
         }
     }
 };
-class LyCoreStyles {
-    /**
-     * @param {?} theme
-     */
+let LyCoreStyles = class LyCoreStyles {
     constructor(theme) {
         this.theme = theme;
         this.classes = this.theme.addStyleSheet(LY_COMMON_STYLES);
     }
-}
-LyCoreStyles.decorators = [
-    { type: Injectable, args: [{ providedIn: 'root' },] }
-];
-/** @nocollapse */
-LyCoreStyles.ctorParameters = () => [
-    { type: LyTheme2 }
-];
-/** @nocollapse */ LyCoreStyles.ngInjectableDef = defineInjectable({ factory: function LyCoreStyles_Factory() { return new LyCoreStyles(inject(LyTheme2)); }, token: LyCoreStyles, providedIn: "root" });
+};
+LyCoreStyles.ngInjectableDef = defineInjectable({ factory: function LyCoreStyles_Factory() { return new LyCoreStyles(inject(LyTheme2)); }, token: LyCoreStyles, providedIn: "root" });
+LyCoreStyles = __decorate([
+    Injectable({ providedIn: 'root' }),
+    __metadata("design:paramtypes", [LyTheme2])
+], LyCoreStyles);
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
 const styles = (theme) => ({
     rippleContainer: {
         position: 'absolute',
@@ -2100,64 +1466,36 @@ const styles = (theme) => ({
     },
     container: Object.assign({}, LY_COMMON_STYLES.fill, { overflow: 'hidden', pointerEvents: 'none', borderRadius: 'inherit' })
 });
-class LyRippleService {
-    /**
-     * @param {?} theme
-     */
+let LyRippleService = class LyRippleService {
     constructor(theme) {
         this.theme = theme;
         this.classes = this.theme.addStyleSheet(styles);
     }
-}
-LyRippleService.decorators = [
-    { type: Injectable, args: [{
-                providedIn: 'root'
-            },] }
-];
-/** @nocollapse */
-LyRippleService.ctorParameters = () => [
-    { type: LyTheme2 }
-];
-/** @nocollapse */ LyRippleService.ngInjectableDef = defineInjectable({ factory: function LyRippleService_Factory() { return new LyRippleService(inject(LyTheme2)); }, token: LyRippleService, providedIn: "root" });
+};
+LyRippleService.ngInjectableDef = defineInjectable({ factory: function LyRippleService_Factory() { return new LyRippleService(inject(LyTheme2)); }, token: LyRippleService, providedIn: "root" });
+LyRippleService = __decorate([
+    Injectable({
+        providedIn: 'root'
+    }),
+    __metadata("design:paramtypes", [LyTheme2])
+], LyRippleService);
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/**
- * @template T
- * @param {?} base
- * @return {?}
- */
 function mixinDisableRipple(base) {
     return class extends base {
-        /**
-         * @param {...?} args
-         */
         constructor(...args) {
             super(...args);
             this._rippleConfig = {};
         }
-        /**
-         * @return {?}
-         */
         get disableRipple() { return this._disableRipple; }
-        /**
-         * @param {?} val
-         * @return {?}
-         */
         set disableRipple(val) {
             if (Platform.isBrowser && val !== this._disableRipple) {
-                /** @type {?} */
                 const newVal = this._disableRipple = toBoolean(val);
                 // remove previous ripple if exist
                 this._removeRippleEvents();
                 if (!newVal) {
                     // add ripple
                     Promise.resolve(null).then(() => {
-                        /** @type {?} */
                         const triggerElement = this._triggerElement.nativeElement;
-                        /** @type {?} */
                         const rippleContainer = (this._rippleContainer && this._rippleContainer.nativeElement) || triggerElement;
                         this._ripple = new Ripple(this._theme.variables, this._ngZone, this._theme.addStyleSheet(styles), rippleContainer, triggerElement);
                         this._ripple.setConfig(this._rippleConfig);
@@ -2165,9 +1503,6 @@ function mixinDisableRipple(base) {
                 }
             }
         }
-        /**
-         * @return {?}
-         */
         _removeRippleEvents() {
             if (Platform.isBrowser) {
                 if (this._ripple) {
@@ -2179,280 +1514,104 @@ function mixinDisableRipple(base) {
     };
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/**
- * @template T
- * @param {?} base
- * @return {?}
- */
 function mixinDisabled(base) {
     return class extends base {
-        /**
-         * @param {...?} args
-         */
         constructor(...args) {
             super(...args);
             this._superHyperInternalPropertyDisabled = false;
         }
-        /**
-         * @return {?}
-         */
         get disabled() { return this._superHyperInternalPropertyDisabled; }
-        /**
-         * @param {?} value
-         * @return {?}
-         */
         set disabled(value) { this._superHyperInternalPropertyDisabled = toBoolean(value); }
     };
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/**
- * @template T
- * @param {?} base
- * @return {?}
- */
 function mixinColor(base) {
     return class extends base {
-        /**
-         * @return {?}
-         */
         get color() { return this._superHyperInternalPropertyColor; }
-        /**
-         * @param {?} val
-         * @return {?}
-         */
         set color(val) {
-            /** @type {?} */
             const defaultColor = val;
             if (defaultColor !== this.color) {
                 this._superHyperInternalPropertyColor = defaultColor;
             }
         }
-        /**
-         * @param {...?} args
-         */
         constructor(...args) {
             super(...args);
         }
     };
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/**
- * @template T
- * @param {?} base
- * @return {?}
- */
 function mixinBg(base) {
     return class extends base {
-        /**
-         * @return {?}
-         */
         get bg() { return this._superHyperInternalPropertyBg; }
-        /**
-         * @param {?} val
-         * @return {?}
-         */
         set bg(val) {
-            /** @type {?} */
             const defaultColor = val;
             if (defaultColor !== this.bg) {
                 this._superHyperInternalPropertyBg = defaultColor;
             }
         }
-        /**
-         * @param {...?} args
-         */
         constructor(...args) {
             super(...args);
         }
     };
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/**
- * @template T
- * @param {?} base
- * @return {?}
- */
 function mixinRaised(base) {
     return class extends base {
-        /**
-         * @return {?}
-         */
         get raised() { return this._superHyperInternalPropertyRaised; }
-        /**
-         * @param {?} value
-         * @return {?}
-         */
         set raised(value) { this._superHyperInternalPropertyRaised = toBoolean(value); }
-        /**
-         * @param {...?} args
-         */
         constructor(...args) { super(...args); }
     };
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/**
- * @template T
- * @param {?} base
- * @return {?}
- */
 function mixinOutlined(base) {
     return class extends base {
-        /**
-         * @return {?}
-         */
         get outlined() { return this._superHyperInternalPropertyOutlined; }
-        /**
-         * @param {?} value
-         * @return {?}
-         */
         set outlined(value) { this._superHyperInternalPropertyOutlined = toBoolean(value); }
-        /**
-         * @param {...?} args
-         */
         constructor(...args) { super(...args); }
     };
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/**
- * @template T
- * @param {?} base
- * @return {?}
- */
 function mixinElevation(base) {
     return class extends base {
-        /**
-         * @return {?}
-         */
         get elevation() { return this._superHyperInternalPropertyElevation; }
-        /**
-         * @param {?} value
-         * @return {?}
-         */
         set elevation(value) { this._superHyperInternalPropertyElevation = value; }
-        /**
-         * @param {...?} args
-         */
         constructor(...args) { super(...args); }
     };
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/**
- * @template T
- * @param {?} base
- * @return {?}
- */
 function mixinShadowColor(base) {
     return class extends base {
-        /**
-         * @return {?}
-         */
         get shadowColor() { return this._superHyperInternalPropertyShadowColor; }
-        /**
-         * @param {?} value
-         * @return {?}
-         */
         set shadowColor(value) { this._superHyperInternalPropertyShadowColor = value; }
-        /**
-         * @param {...?} args
-         */
         constructor(...args) { super(...args); }
     };
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
 const DEFAULT_TAB_INDEX = 0;
-/**
- * @template T
- * @param {?} base
- * @return {?}
- */
 function mixinTabIndex(base) {
     return class extends base {
-        /**
-         * @param {...?} args
-         */
         constructor(...args) {
             super(...args);
             this._tabIndex = DEFAULT_TAB_INDEX;
         }
-        /**
-         * @return {?}
-         */
         get tabIndex() {
             return this.disabled ? -1 : this._tabIndex;
         }
-        /**
-         * @param {?} value
-         * @return {?}
-         */
         set tabIndex(value) {
             this._tabIndex = value != null ? value : DEFAULT_TAB_INDEX;
         }
     };
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
 const DEFAULT_BG = 'paper';
 class LyPaperBase {
-    /**
-     * @param {?} _theme
-     * @param {?} _ngZone
-     */
     constructor(_theme, _ngZone) {
         this._theme = _theme;
         this._ngZone = _ngZone;
     }
 }
-/** @type {?} */
 const LyPaperMixinBase = mixinStyleUpdater(mixinBg(mixinColor(mixinRaised(mixinOutlined(mixinElevation(mixinShadowColor(mixinDisableRipple(LyPaperBase))))))));
-class LyPaper extends LyPaperMixinBase {
-    /**
-     * @param {?} theme
-     * @param {?} ngZone
-     * @param {?} _el
-     * @param {?} _renderer
-     */
+let LyPaper = class LyPaper extends LyPaperMixinBase {
     constructor(theme, ngZone, _el, _renderer) {
         super(theme, ngZone);
         this._el = _el;
@@ -2461,28 +1620,15 @@ class LyPaper extends LyPaperMixinBase {
         this._triggerElement = this._el;
         this._rippleContainer = this._el;
     }
-    /**
-     * @param {?} val
-     * @return {?}
-     */
     set hasText(val) {
         this._hasText = toBoolean(val);
     }
-    /**
-     * @return {?}
-     */
     get hasText() {
         return this._hasText;
     }
-    /**
-     * @return {?}
-     */
     ngOnChanges() {
         this.updateStyle(this._el);
     }
-    /**
-     * @return {?}
-     */
     ngOnInit() {
         if (!this.bg && !this.hasText) {
             this.bg = DEFAULT_BG;
@@ -2492,114 +1638,74 @@ class LyPaper extends LyPaperMixinBase {
             })));
         }
     }
-    /**
-     * @return {?}
-     */
     ngOnDestroy() {
         this._removeRippleEvents();
     }
-}
-LyPaper.decorators = [
-    { type: Directive, args: [{
-                selector: `ly-paper, [ly-paper], [ly-text]`,
-                inputs: [
-                    'bg',
-                    'color',
-                    'raised',
-                    'outlined',
-                    'elevation',
-                    'shadowColor',
-                    'disableRipple'
-                ]
-            },] }
-];
-/** @nocollapse */
-LyPaper.ctorParameters = () => [
-    { type: LyTheme2 },
-    { type: NgZone },
-    { type: ElementRef },
-    { type: Renderer2 }
-];
-LyPaper.propDecorators = {
-    hasText: [{ type: Input, args: ['ly-text',] }]
 };
+__decorate([
+    Input('ly-text'),
+    __metadata("design:type", Object),
+    __metadata("design:paramtypes", [Object])
+], LyPaper.prototype, "hasText", null);
+LyPaper = __decorate([
+    Directive({
+        selector: `ly-paper, [ly-paper], [ly-text]`,
+        inputs: [
+            'bg',
+            'color',
+            'raised',
+            'outlined',
+            'elevation',
+            'shadowColor',
+            'disableRipple'
+        ]
+    }),
+    __metadata("design:paramtypes", [LyTheme2,
+        NgZone,
+        ElementRef,
+        Renderer2])
+], LyPaper);
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-class LyWithClass {
-    /**
-     * @param {?} el
-     */
+let LyWithClass = class LyWithClass {
     constructor(el) {
         this.el = el;
     }
-    /**
-     * @param {?} val
-     * @return {?}
-     */
     set withClass(val) {
         if (!val) {
             throw new Error(`'${val}' is not valid className`);
         }
         this.el.nativeElement.classList.add(val);
     }
-}
-LyWithClass.decorators = [
-    { type: Directive, args: [{
-                selector: '[withClass]'
-            },] }
-];
-/** @nocollapse */
-LyWithClass.ctorParameters = () => [
-    { type: ElementRef }
-];
-LyWithClass.propDecorators = {
-    withClass: [{ type: Input }]
 };
+__decorate([
+    Input(),
+    __metadata("design:type", String),
+    __metadata("design:paramtypes", [String])
+], LyWithClass.prototype, "withClass", null);
+LyWithClass = __decorate([
+    Directive({
+        selector: '[withClass]'
+    }),
+    __metadata("design:paramtypes", [ElementRef])
+], LyWithClass);
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-class LyCommonModule {
-}
-LyCommonModule.decorators = [
-    { type: NgModule, args: [{
-                declarations: [LyWithClass, LyPaper],
-                exports: [LyWithClass, LyPaper]
-            },] }
-];
+let LyCommonModule = class LyCommonModule {
+};
+LyCommonModule = __decorate([
+    NgModule({
+        declarations: [LyWithClass, LyPaper],
+        exports: [LyWithClass, LyPaper]
+    })
+], LyCommonModule);
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/**
- * @param {?} value
- * @param {?} defaultValue
- * @return {?}
- */
 function defaultEntry(value, defaultValue) {
     return value !== '' && value !== void 0 ? value : defaultValue;
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 // Element to move, time in ms to animate
-/**
- * @param {?} element
- * @param {?} duration
- * @return {?}
- */
 function scrollTo(element, duration) {
-    /** @type {?} */
     let e = document.documentElement;
     if (e.scrollTop === 0) {
-        /** @type {?} */
         const t = e.scrollTop;
         ++e.scrollTop;
         e = t + 1 === e.scrollTop-- ? e : document.body;
@@ -2607,13 +1713,6 @@ function scrollTo(element, duration) {
     scrollToC(e, e.scrollTop, element, duration);
 }
 // Element to move, element or px from, element or px to, time in ms to animate
-/**
- * @param {?} element
- * @param {?} from
- * @param {?} to
- * @param {?} duration
- * @return {?}
- */
 function scrollToC(element, from, to, duration) {
     if (duration <= 0) {
         return;
@@ -2626,33 +1725,12 @@ function scrollToC(element, from, to, duration) {
     }
     createScrollWithAnimation(element, from, to, 0, 1 / duration, 20, easeOutCuaic);
 }
-/**
- * @param {?} element
- * @param {?} to
- * @param {?} duration
- * @param {?=} p
- * @param {?=} motion
- * @return {?}
- */
 function scrollWithAnimation(element, to, duration, p, motion) {
-    /** @type {?} */
     const _motion = motion || easeOutCuaic;
     const { scrollLeft } = element;
     return createScrollWithAnimation(element, scrollLeft, to, 0, 1 / duration, 20, _motion, p);
 }
-/**
- * @param {?} element
- * @param {?} xFrom
- * @param {?} xTo
- * @param {?} t01
- * @param {?} speed
- * @param {?} step
- * @param {?} motion
- * @param {?=} p
- * @return {?}
- */
 function createScrollWithAnimation(element, xFrom, xTo, t01, speed, step, motion, p) {
-    /** @type {?} */
     const scrollT = p === 'y' ? 'scrollTop' : 'scrollLeft';
     if (t01 < 0 || t01 > 1 || speed <= 0) {
         element[scrollT] = xTo;
@@ -2682,66 +1760,106 @@ function createScrollWithAnimation(element, xFrom, xTo, t01, speed, step, motion
 // function easeInCuaic(t: number) {
 //   return t * t * t;
 // }
-/**
- * @param {?} t
- * @return {?}
- */
 function easeOutCuaic(t) {
     t--;
     return t * t * t + 1;
 }
+// function easeInOutCuaic(t: number) {
+//   t /= 0.5;
+//   if (t < 1) {return t * t * t / 2; }
+//   t -= 2;
+//   return (t * t * t + 2) / 2;
+// }
+// function easeInQuart(t: number) {
+//   return t * t * t * t;
+// }
+// function easeOutQuart(t: number) {
+//   t--;
+//   return -(t * t * t * t - 1);
+// }
+// function easeInOutQuart(t: number) {
+//   t /= 0.5;
+//   if (t < 1) {return 0.5 * t * t * t * t; }
+//   t -= 2;
+//   return -(t * t * t * t - 2) / 2;
+// }
+// function easeInQuint(t: number) {
+//   return t * t * t * t * t;
+// }
+// function easeOutQuint(t: number) {
+//   t--;
+//   return t * t * t * t * t + 1;
+// }
+// function easeInOutQuint(t: number) {
+//   t /= 0.5;
+//   if (t < 1) {return t * t * t * t * t / 2; }
+//   t -= 2;
+//   return (t * t * t * t * t + 2) / 2;
+// }
+// function easeInSine(t: number) {
+//   return -Math.cos(t / (Math.PI / 2)) + 1;
+// }
+// function easeOutSine(t: number) {
+//   return Math.sin(t / (Math.PI / 2));
+// }
+// function easeInOutSine(t: number) {
+//   return -(Math.cos(Math.PI * t) - 1) / 2;
+// }
+// function easeInExpo(t: number) {
+//   return Math.pow(2, 10 * (t - 1));
+// }
+// function easeOutExpo(t: number) {
+//   return -Math.pow(2, -10 * t) + 1;
+// }
+// function easeInOutExpo(t: number) {
+//   t /= 0.5;
+//   if (t < 1) {return Math.pow(2, 10 * (t - 1)) / 2; }
+//   t--;
+//   return (-Math.pow(2, -10 * t) + 2) / 2;
+// }
+// function easeInCirc(t: number) {
+//   return -Math.sqrt(1 - t * t) - 1;
+// }
+// function easeOutCirc(t: number) {
+//   t--;
+//   return Math.sqrt(1 - t * t);
+// }
+// function easeInOutCirc(t: number) {
+//   t /= 0.5;
+//   if (t < 1) {return -(Math.sqrt(1 - t * t) - 1) / 2; }
+//   t -= 2;
+//   return (Math.sqrt(1 - t * t) + 1) / 2;
+// }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @enum {string} */
-const FocusStatus = {
+var FocusStatus;
+(function (FocusStatus) {
     /**mouse and/or touch*/
-    DEFAULT: 'default',
+    FocusStatus["DEFAULT"] = "default";
     /** keyboard and/or program*/
-    KEYBOARD: 'keyboard',
-};
-class LyFocusState {
-    /**
-     * @param {?} _ngZone
-     */
+    FocusStatus["KEYBOARD"] = "keyboard";
+})(FocusStatus || (FocusStatus = {}));
+let LyFocusState = class LyFocusState {
     constructor(_ngZone) {
         this._ngZone = _ngZone;
         this._elementMap = new Map();
         this._count = 0;
     }
-    /**
-     * @param {?} element
-     * @param {?=} keyElement
-     * @return {?}
-     */
     listen(element, keyElement) {
         if (!Platform.isBrowser) {
             // return null if it is not browser platform
             return null;
         }
-        /** @type {?} */
         const nativeElement = getNativeElement(element);
-        /** @type {?} */
         const key = keyElement && getNativeElement(keyElement) || nativeElement;
         if (this._elementMap.has(key)) {
-            return (/** @type {?} */ (this._elementMap.get(key))).subject.asObservable();
+            return this._elementMap.get(key).subject.asObservable();
         }
-        /** @type {?} */
         const focusState = {
-            unlisten: (/** @type {?} */ (null)),
+            unlisten: null,
             subject: new Subject()
         };
         this._incrementCount();
-        /** @type {?} */
         const focusListener = (event) => this._on(event, focusState.subject);
-        /** @type {?} */
         const blurListener = (event) => this._on(event, focusState.subject);
         focusState.unlisten = () => {
             nativeElement.removeEventListener('focus', focusListener, true);
@@ -2754,31 +1872,18 @@ class LyFocusState {
         });
         return focusState.subject.asObservable();
     }
-    /**
-     * @param {?} element
-     * @param {?} origin
-     * @param {?} options
-     * @return {?}
-     */
     focusElement(element, origin, options) {
-        /** @type {?} */
         const nativeElement = getNativeElement(element);
         this._currentEvent = origin;
         if (typeof nativeElement.focus === 'function') {
             nativeElement.focus(options);
         }
     }
-    /**
-     * @param {?} element
-     * @return {?}
-     */
     unlisten(element) {
         if (!Platform.isBrowser) {
             return;
         }
-        /** @type {?} */
         const el = getNativeElement(element);
-        /** @type {?} */
         const focusStateInfo = this._elementMap.get(el);
         if (focusStateInfo) {
             focusStateInfo.unlisten();
@@ -2786,37 +1891,23 @@ class LyFocusState {
             this._decrementCount();
         }
     }
-    /**
-     * @private
-     * @param {?} event
-     * @param {?} subject
-     * @return {?}
-     */
     _on(event, subject) {
-        /** @type {?} */
         let by = null;
         if (event.type === 'focus') {
             by = this._currentEvent || 'keyboard';
         }
         this._ngZone.run(() => subject.next(by));
     }
-    /**
-     * @private
-     * @return {?}
-     */
     _addGlobalListeners() {
         if (!Platform.isBrowser) {
             return;
         }
-        /** @type {?} */
         const eventListenerOptions = supportsPassiveEventListeners
             ? {
                 passive: true,
                 capture: true
             } : false;
-        /** @type {?} */
         const documentKeydownListener = () => this._ngZone.runOutsideAngular(() => this._currentEvent = 'keyboard');
-        /** @type {?} */
         const documentMousedownListener = () => this._ngZone.runOutsideAngular(() => this._currentEvent = 'mouse');
         this._ngZone.runOutsideAngular(() => {
             document.addEventListener('keydown', documentKeydownListener, eventListenerOptions);
@@ -2827,58 +1918,32 @@ class LyFocusState {
             document.removeEventListener('mousedown', documentMousedownListener, eventListenerOptions);
         };
     }
-    /**
-     * @private
-     * @return {?}
-     */
     _incrementCount() {
         if (++this._count === 1) {
             this._addGlobalListeners();
         }
     }
-    /**
-     * @private
-     * @return {?}
-     */
     _decrementCount() {
         if (!--this._count) {
             this._removeGlobalListeners();
         }
     }
-    /**
-     * @return {?}
-     */
     ngOnDestroy() {
         this._elementMap.forEach((_, element) => this.unlisten(element));
     }
-}
-LyFocusState.decorators = [
-    { type: Injectable, args: [{
-                providedIn: 'root'
-            },] }
-];
-/** @nocollapse */
-LyFocusState.ctorParameters = () => [
-    { type: NgZone }
-];
-/** @nocollapse */ LyFocusState.ngInjectableDef = defineInjectable({ factory: function LyFocusState_Factory() { return new LyFocusState(inject(NgZone)); }, token: LyFocusState, providedIn: "root" });
+};
+LyFocusState.ngInjectableDef = defineInjectable({ factory: function LyFocusState_Factory() { return new LyFocusState(inject(NgZone)); }, token: LyFocusState, providedIn: "root" });
+LyFocusState = __decorate([
+    Injectable({
+        providedIn: 'root'
+    }),
+    __metadata("design:paramtypes", [NgZone])
+], LyFocusState);
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
-const AUI_VERSION = '2.6.1-nightly.20190407-ju6ntfxk';
-/** @type {?} */
-const AUI_LAST_UPDATE = '2019-04-07T08:23:09.799Z';
+const AUI_VERSION = '2.6.1-nightly.20190408-ju8391n9';
+const AUI_LAST_UPDATE = '2019-04-08T08:22:58.195Z';
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
 const LY_HAMMER_OPTIONS = new InjectionToken('LY_HAMMER_OPTIONS');
-/** @type {?} */
 const HAMMER_GESTURES_EVENTS = [
     'slide',
     'slidestart',
@@ -2887,108 +1952,62 @@ const HAMMER_GESTURES_EVENTS = [
     'slideleft',
     'slidecancel'
 ];
-class LyHammerGestureConfig extends HammerGestureConfig {
-    /**
-     * @param {?} _hammerOptions
-     */
+let LyHammerGestureConfig = class LyHammerGestureConfig extends HammerGestureConfig {
     constructor(_hammerOptions) {
         super();
         this._hammerOptions = _hammerOptions;
         this.events = HAMMER_GESTURES_EVENTS;
     }
-    /**
-     * @param {?} element
-     * @return {?}
-     */
     buildHammer(element) {
-        /** @type {?} */
-        const hammer = typeof window !== 'undefined' ? ((/** @type {?} */ (window))).Hammer : null;
-        /** @type {?} */
+        const hammer = typeof window !== 'undefined' ? window.Hammer : null;
         const mc = new hammer(element, this._hammerOptions || {});
-        /** @type {?} */
         const pan = new hammer.Pan();
-        /** @type {?} */
         const swipe = new hammer.Swipe();
-        /** @type {?} */
         const slide = this._createRecognizer(pan, { event: 'slide', threshold: 0 }, swipe);
         pan.recognizeWith(swipe);
         // Add customized gestures to Hammer manager
         mc.add([swipe, pan, slide]);
         return mc;
     }
-    /**
-     * Creates a new recognizer, without affecting the default recognizers of HammerJS
-     * @private
-     * @param {?} base
-     * @param {?} options
-     * @param {...?} inheritances
-     * @return {?}
-     */
+    /** Creates a new recognizer, without affecting the default recognizers of HammerJS */
     _createRecognizer(base, options, ...inheritances) {
-        /** @type {?} */
         const recognizer = new (base.constructor)(options);
         inheritances.push(base);
         inheritances.forEach(item => recognizer.recognizeWith(item));
         return recognizer;
     }
-}
-LyHammerGestureConfig.decorators = [
-    { type: Injectable }
-];
-/** @nocollapse */
-LyHammerGestureConfig.ctorParameters = () => [
-    { type: undefined, decorators: [{ type: Optional }, { type: Inject, args: [LY_HAMMER_OPTIONS,] }] }
-];
+};
+LyHammerGestureConfig = __decorate([
+    Injectable(),
+    __param(0, Optional()), __param(0, Inject(LY_HAMMER_OPTIONS)),
+    __metadata("design:paramtypes", [Object])
+], LyHammerGestureConfig);
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-class LyThemeModule {
-    /**
-     * @param {?} themeName
-     * @return {?}
-     */
+var LyThemeModule_1;
+let LyThemeModule = LyThemeModule_1 = class LyThemeModule {
     static setTheme(themeName) {
         return {
-            ngModule: LyThemeModule,
+            ngModule: LyThemeModule_1,
             providers: [
                 [LyTheme2],
                 { provide: LY_THEME_NAME, useValue: themeName }
             ]
         };
     }
-}
-LyThemeModule.decorators = [
-    { type: NgModule }
-];
+};
+LyThemeModule = LyThemeModule_1 = __decorate([
+    NgModule()
+], LyThemeModule);
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 class Undefined {
     constructor() { }
 }
-/** @type {?} */
 const UndefinedValue = new Undefined();
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 // @Injectable()
-/**
- * @template T
- */
 class LyOverlayRef {
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
 const styles$1 = (theme) => ({
     overlay: {
         position: 'fixed',
@@ -3000,38 +2019,27 @@ const styles$1 = (theme) => ({
         pointerEvents: 'none'
     }
 });
-class LyOverlayContainer {
-    /**
-     * @param {?} theme
-     */
+const ɵ0 = styles$1;
+let LyOverlayContainer = class LyOverlayContainer {
     constructor(theme) {
         this.theme = theme;
         this._classes = this.theme.addStyleSheet(styles$1);
         this._items = new Set();
         if (Platform.isBrowser) {
-            /** @type {?} */
             const container = document.createElement('ly-overlay-container');
             document.body.appendChild(container);
             this._containerElement = container;
         }
     }
-    /**
-     * @return {?}
-     */
     get overlayLen() {
         return this._items.size;
     }
-    /**
-     * @return {?}
-     */
     get containerElement() {
         return this._containerElement;
     }
     /**
      * Add instance
      * @ignore
-     * @param {?} item
-     * @return {?}
      */
     _add(item) {
         this._items.add(item);
@@ -3039,11 +2047,9 @@ class LyOverlayContainer {
         this._update();
     }
     /**
-     * Remove instance
-     * @ignore
-     * @param {?} item
-     * @return {?}
-     */
+   * Remove instance
+   * @ignore
+   */
     _remove(item) {
         this.containerElement.removeChild(item);
         this._items.delete(item);
@@ -3052,8 +2058,6 @@ class LyOverlayContainer {
     /**
      * Update styles for overlay container
      * @ignore
-     * @private
-     * @return {?}
      */
     _update() {
         if (this._items.size) {
@@ -3067,27 +2071,16 @@ class LyOverlayContainer {
             this._isActiveOverlayContainer = false;
         }
     }
-}
-LyOverlayContainer.decorators = [
-    { type: Injectable, args: [{
-                providedIn: 'root'
-            },] }
-];
-/** @nocollapse */
-LyOverlayContainer.ctorParameters = () => [
-    { type: LyTheme2 }
-];
-/** @nocollapse */ LyOverlayContainer.ngInjectableDef = defineInjectable({ factory: function LyOverlayContainer_Factory() { return new LyOverlayContainer(inject(LyTheme2)); }, token: LyOverlayContainer, providedIn: "root" });
+};
+LyOverlayContainer.ngInjectableDef = defineInjectable({ factory: function LyOverlayContainer_Factory() { return new LyOverlayContainer(inject(LyTheme2)); }, token: LyOverlayContainer, providedIn: "root" });
+LyOverlayContainer = __decorate([
+    Injectable({
+        providedIn: 'root'
+    }),
+    __metadata("design:paramtypes", [LyTheme2])
+], LyOverlayContainer);
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-class WinResize {
-    /**
-     * @param {?} document
-     * @param {?} ngZone
-     */
+let WinResize = class WinResize {
     constructor(document, ngZone) {
         this.document = document;
         if (Platform.isBrowser) {
@@ -3101,28 +2094,17 @@ class WinResize {
             this.resize$ = empty();
         }
     }
-}
-WinResize.decorators = [
-    { type: Injectable, args: [{
-                providedIn: 'root'
-            },] }
-];
-/** @nocollapse */
-WinResize.ctorParameters = () => [
-    { type: undefined, decorators: [{ type: Inject, args: [DOCUMENT,] }] },
-    { type: NgZone }
-];
-/** @nocollapse */ WinResize.ngInjectableDef = defineInjectable({ factory: function WinResize_Factory() { return new WinResize(inject(DOCUMENT), inject(NgZone)); }, token: WinResize, providedIn: "root" });
+};
+WinResize.ngInjectableDef = defineInjectable({ factory: function WinResize_Factory() { return new WinResize(inject(DOCUMENT), inject(NgZone)); }, token: WinResize, providedIn: "root" });
+WinResize = __decorate([
+    Injectable({
+        providedIn: 'root'
+    }),
+    __param(0, Inject(DOCUMENT)),
+    __metadata("design:paramtypes", [Object, NgZone])
+], WinResize);
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-class WinScroll {
-    /**
-     * @param {?} _document
-     * @param {?} ngZone
-     */
+let WinScroll = class WinScroll {
     constructor(_document, ngZone) {
         this._document = _document;
         if (Platform.isBrowser) {
@@ -3136,88 +2118,56 @@ class WinScroll {
             this.scroll$ = empty();
         }
     }
-}
-WinScroll.decorators = [
-    { type: Injectable, args: [{
-                providedIn: 'root'
-            },] }
-];
-/** @nocollapse */
-WinScroll.ctorParameters = () => [
-    { type: undefined, decorators: [{ type: Inject, args: [DOCUMENT,] }] },
-    { type: NgZone }
-];
-/** @nocollapse */ WinScroll.ngInjectableDef = defineInjectable({ factory: function WinScroll_Factory() { return new WinScroll(inject(DOCUMENT), inject(NgZone)); }, token: WinScroll, providedIn: "root" });
+};
+WinScroll.ngInjectableDef = defineInjectable({ factory: function WinScroll_Factory() { return new WinScroll(inject(DOCUMENT), inject(NgZone)); }, token: WinScroll, providedIn: "root" });
+WinScroll = __decorate([
+    Injectable({
+        providedIn: 'root'
+    }),
+    __param(0, Inject(DOCUMENT)),
+    __metadata("design:paramtypes", [Object, NgZone])
+], WinScroll);
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 class LyOverlayConfig {
     constructor() {
         this.hasBackdrop = true;
     }
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
 const STYLE_PRIORITY$1 = -2;
-/** @type {?} */
 const STYLES_BACKDROP_ROOT = (Object.assign({}, LY_COMMON_STYLES.fill, { width: '100vw', height: '100vh', pointerEvents: 'all', userSelect: 'none' }));
-class LyOverlayBackdrop {
-    /**
-     * @param {?} _el
-     * @param {?} _theme
-     * @param {?} _config
-     */
+let LyOverlayBackdrop = class LyOverlayBackdrop {
     constructor(_el, _theme, _config) {
         this._el = _el;
         this._config = _config;
         _el.nativeElement.classList.add(_theme.style(STYLES_BACKDROP_ROOT, STYLE_PRIORITY$1));
         // this applies custom class for backdrop,
         // if one is not defined, do nothing.
-        /** @type {?} */
         const backdropClass = _config.backdropClass;
         if (backdropClass) {
             this._el.nativeElement.classList.add(backdropClass);
         }
     }
-    /**
-     * @return {?}
-     */
     onclick() {
-        (/** @type {?} */ (this._config.fnDestroy))();
+        this._config.fnDestroy();
     }
-}
-LyOverlayBackdrop.decorators = [
-    { type: Component, args: [{
-                selector: 'ly-overlay-backdrop',
-                template: ``
-            }] }
-];
-/** @nocollapse */
-LyOverlayBackdrop.ctorParameters = () => [
-    { type: ElementRef },
-    { type: LyTheme2 },
-    { type: LyOverlayConfig }
-];
-LyOverlayBackdrop.propDecorators = {
-    onclick: [{ type: HostListener, args: ['click',] }]
 };
+__decorate([
+    HostListener('click'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], LyOverlayBackdrop.prototype, "onclick", null);
+LyOverlayBackdrop = __decorate([
+    Component({
+        selector: 'ly-overlay-backdrop',
+        template: ``
+    }),
+    __metadata("design:paramtypes", [ElementRef,
+        LyTheme2,
+        LyOverlayConfig])
+], LyOverlayBackdrop);
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/**
- * @param {?} parent
- * @param {?} config
- * @param {?} overlayFactory
- * @return {?}
- */
 function createOverlayInjector(parent, config, overlayFactory) {
     return Injector.create({
         providers: [
@@ -3234,25 +2184,7 @@ function createOverlayInjector(parent, config, overlayFactory) {
     });
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/**
- * @template T
- */
 class OverlayFactory {
-    /**
-     * @param {?} _componentFactoryResolver
-     * @param {?} _appRef
-     * @param {?} _templateRefOrComponent
-     * @param {?} _overlayContainer
-     * @param {?} _context
-     * @param {?} _injector
-     * @param {?} windowScroll
-     * @param {?} resizeService
-     * @param {?=} config
-     */
     constructor(_componentFactoryResolver, _appRef, _templateRefOrComponent, _overlayContainer, _context, _injector, windowScroll, resizeService, config) {
         this._componentFactoryResolver = _componentFactoryResolver;
         this._appRef = _appRef;
@@ -3261,7 +2193,6 @@ class OverlayFactory {
         this._windowSRSub = Subscription.EMPTY;
         this._config = config = Object.assign({}, new LyOverlayConfig(), config);
         this._el = document.createElement('div');
-        /** @type {?} */
         const __styles = {
             position: 'absolute',
             display: 'flex',
@@ -3272,7 +2203,6 @@ class OverlayFactory {
         if (config) {
             Object.assign(__styles, config.styles);
         }
-        /** @type {?} */
         const newInjector = createOverlayInjector(this._injector, Object.assign({ fnDestroy: this.destroy.bind(this) }, config, { styles: __styles }), this);
         this._updateStyles(__styles);
         if (config) {
@@ -3285,95 +2215,63 @@ class OverlayFactory {
                 }
             });
             if (config.classes) {
-                /** @type {?} */
                 const classes = config.classes;
-                classes.forEach((className) => ((/** @type {?} */ (this._el))).classList.add(className));
+                classes.forEach((className) => this._el.classList.add(className));
             }
         }
         if (config.hasBackdrop) {
             this._compRefOverlayBackdrop = this._generateComponent(LyOverlayBackdrop, newInjector);
             this._appRef.attachView(this._compRefOverlayBackdrop.hostView);
-            /** @type {?} */
             const backdropEl = this._compRefOverlayBackdrop.location.nativeElement;
             this._overlayContainer._add(backdropEl);
         }
         this._appendComponentToBody(_templateRefOrComponent, _context, newInjector);
         this._hiddeScroll();
     }
-    /**
-     * @return {?}
-     */
     get containerElement() {
-        return (/** @type {?} */ (this._el));
+        return this._el;
     }
-    /**
-     * @return {?}
-     */
     get componentRef() {
         return this._compRef;
     }
-    /**
-     * @private
-     * @param {?} __styles
-     * @return {?}
-     */
     _updateStyles(__styles) {
         /** Apply styles */
         /** set styles */
         for (const key in __styles) {
             if (__styles.hasOwnProperty(key)) {
-                /** @type {?} */
                 const styleVal = __styles[key];
                 if (styleVal != null) {
-                    (/** @type {?} */ (this._el)).style[key] = typeof __styles[key] === 'number' ? `${styleVal}px` : styleVal;
+                    this._el.style[key] = typeof __styles[key] === 'number' ? `${styleVal}px` : styleVal;
                 }
             }
         }
     }
-    /**
-     * @private
-     * @param {?} type
-     * @param {?} context
-     * @param {?} injector
-     * @return {?}
-     */
     _appendComponentToBody(type, context, injector) {
         if (type instanceof TemplateRef) {
             // Create a component reference from the component
-            /** @type {?} */
             const viewRef = this._viewRef = type.createEmbeddedView(context || {});
             this._appRef.attachView(viewRef);
             // Get DOM element from component
-            viewRef.rootNodes.forEach(_ => (/** @type {?} */ (this._el)).appendChild(_));
+            viewRef.rootNodes.forEach(_ => this._el.appendChild(_));
             // Append DOM element to the body
             this._overlayContainer._add(this._el);
         }
         else if (typeof type === 'string') {
-            (/** @type {?} */ (this._el)).innerText = type;
+            this._el.innerText = type;
             this._overlayContainer._add(this._el);
         }
         else {
             this._compRef = this._generateComponent(type, injector);
             this._appRef.attachView(this._compRef.hostView);
-            (/** @type {?} */ (this._el)).appendChild(this._compRef.location.nativeElement);
+            this._el.appendChild(this._compRef.location.nativeElement);
             this._overlayContainer._add(this._el);
         }
     }
-    /**
-     * @private
-     * @param {?} type
-     * @param {?} injector
-     * @return {?}
-     */
     _generateComponent(type, injector) {
-        /** @type {?} */
         const factory = this._componentFactoryResolver.resolveComponentFactory(type);
         return factory.create(injector);
     }
-    /**
-     * Detaches a view from dirty checking again of ApplicationRef.
-     * @return {?}
-     */
+    /** Detaches a view from dirty checking again of ApplicationRef. */
     detach() {
         if (this._viewRef) {
             this._appRef.detachView(this._viewRef);
@@ -3382,10 +2280,7 @@ class OverlayFactory {
             this._appRef.detachView(this._compRef.hostView);
         }
     }
-    /**
-     * Remove element of DOM
-     * @return {?}
-     */
+    /** Remove element of DOM */
     remove() {
         this._resetScroll();
         if (this._viewRef) {
@@ -3407,30 +2302,20 @@ class OverlayFactory {
         if (this._compRefOverlayBackdrop) {
             this._appRef.detachView(this._compRefOverlayBackdrop.hostView);
             this._compRefOverlayBackdrop.destroy();
-            /** @type {?} */
             const backdropEl = this._compRefOverlayBackdrop.location.nativeElement;
             this._overlayContainer._remove(backdropEl);
         }
         this._windowSRSub.unsubscribe();
     }
-    /**
-     * Detach & remove
-     * @return {?}
-     */
+    /** Detach & remove */
     destroy() {
         this.detach();
         this.remove();
     }
-    /**
-     * @private
-     * @return {?}
-     */
     _hiddeScroll() {
         if (Platform.isBrowser && this._config.hasBackdrop && this._overlayContainer.overlayLen) {
-            /** @type {?} */
             const scrollWidth = window.innerWidth - window.document.body.clientWidth;
             if (scrollWidth) {
-                /** @type {?} */
                 const computedStyle = getComputedStyle(window.document.body);
                 this._paddingRight = computedStyle.getPropertyValue('padding-right');
                 window.document.body.style.paddingRight = `calc(${scrollWidth}px + ${this._paddingRight})`;
@@ -3438,10 +2323,6 @@ class OverlayFactory {
             window.document.body.style.overflow = 'hidden';
         }
     }
-    /**
-     * @private
-     * @return {?}
-     */
     _resetScroll() {
         if (Platform.isBrowser && this._config.hasBackdrop && this._overlayContainer.overlayLen) {
             if (this._paddingRight) {
@@ -3453,19 +2334,7 @@ class OverlayFactory {
     }
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-class LyOverlay {
-    /**
-     * @param {?} _overlayContainer
-     * @param {?} _componentFactoryResolver
-     * @param {?} _appRef
-     * @param {?} _injector
-     * @param {?} _windowScroll
-     * @param {?} _resizeService
-     */
+let LyOverlay = class LyOverlay {
     constructor(_overlayContainer, _componentFactoryResolver, _appRef, _injector, _windowScroll, _resizeService) {
         this._overlayContainer = _overlayContainer;
         this._componentFactoryResolver = _componentFactoryResolver;
@@ -3474,108 +2343,61 @@ class LyOverlay {
         this._windowScroll = _windowScroll;
         this._resizeService = _resizeService;
     }
-    /**
-     * @template T
-     * @param {?} templateOrComponent
-     * @param {?=} context
-     * @param {?=} config
-     * @return {?}
-     */
     create(templateOrComponent, context, config) {
         return new OverlayFactory(this._componentFactoryResolver, this._appRef, templateOrComponent, this._overlayContainer, context, this._injector, this._windowScroll, this._resizeService, config);
     }
-}
-LyOverlay.decorators = [
-    { type: Injectable, args: [{
-                providedIn: 'root'
-            },] }
-];
-/** @nocollapse */
-LyOverlay.ctorParameters = () => [
-    { type: LyOverlayContainer },
-    { type: ComponentFactoryResolver },
-    { type: ApplicationRef },
-    { type: Injector },
-    { type: WinScroll },
-    { type: WinResize }
-];
-/** @nocollapse */ LyOverlay.ngInjectableDef = defineInjectable({ factory: function LyOverlay_Factory() { return new LyOverlay(inject(LyOverlayContainer), inject(ComponentFactoryResolver), inject(ApplicationRef), inject(INJECTOR), inject(WinScroll), inject(WinResize)); }, token: LyOverlay, providedIn: "root" });
+};
+LyOverlay.ngInjectableDef = defineInjectable({ factory: function LyOverlay_Factory() { return new LyOverlay(inject(LyOverlayContainer), inject(ComponentFactoryResolver), inject(ApplicationRef), inject(INJECTOR), inject(WinScroll), inject(WinResize)); }, token: LyOverlay, providedIn: "root" });
+LyOverlay = __decorate([
+    Injectable({
+        providedIn: 'root'
+    }),
+    __metadata("design:paramtypes", [LyOverlayContainer,
+        ComponentFactoryResolver,
+        ApplicationRef,
+        Injector,
+        WinScroll,
+        WinResize])
+], LyOverlay);
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-class LyOverlayModule {
-}
-LyOverlayModule.decorators = [
-    { type: NgModule, args: [{
-                declarations: [LyOverlayBackdrop],
-                entryComponents: [LyOverlayBackdrop]
-            },] }
-];
+let LyOverlayModule = class LyOverlayModule {
+};
+LyOverlayModule = __decorate([
+    NgModule({
+        declarations: [LyOverlayBackdrop],
+        entryComponents: [LyOverlayBackdrop]
+    })
+], LyOverlayModule);
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
 const STYLES_BACKDROP_DARK = ({
     backgroundColor: 'rgba(0,0,0,.32)'
 });
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
 const MUTATION_OBSERVER_INIT = {
     characterData: true,
     childList: true,
     subtree: true
 };
-class MutationObserverFactory {
-    /**
-     * @param {?} callback
-     * @return {?}
-     */
+let MutationObserverFactory = class MutationObserverFactory {
     create(callback) {
         return typeof MutationObserver === 'undefined' ? null : new MutationObserver(callback);
     }
-}
-MutationObserverFactory.decorators = [
-    { type: Injectable, args: [{ providedIn: 'root' },] }
-];
-/** @nocollapse */ MutationObserverFactory.ngInjectableDef = defineInjectable({ factory: function MutationObserverFactory_Factory() { return new MutationObserverFactory(); }, token: MutationObserverFactory, providedIn: "root" });
-class ElementObserver {
-    /**
-     * @param {?} _mutationObserverFactory
-     */
+};
+MutationObserverFactory.ngInjectableDef = defineInjectable({ factory: function MutationObserverFactory_Factory() { return new MutationObserverFactory(); }, token: MutationObserverFactory, providedIn: "root" });
+MutationObserverFactory = __decorate([
+    Injectable({ providedIn: 'root' })
+], MutationObserverFactory);
+let ElementObserver = class ElementObserver {
     constructor(_mutationObserverFactory) {
         this._mutationObserverFactory = _mutationObserverFactory;
         this._observedElements = new Map();
     }
-    /**
-     * @return {?}
-     */
     ngOnDestroy() {
         this._observedElements.forEach((_, element) => this.destroy(element));
     }
-    /**
-     * @param {?} elementOrRef
-     * @param {?} fn
-     * @param {?=} options
-     * @return {?}
-     */
     observe(elementOrRef, fn, options) {
-        /** @type {?} */
         const element = elementOrRef instanceof ElementRef ? elementOrRef.nativeElement : elementOrRef;
         if (!this._observedElements.has(element)) {
-            /** @type {?} */
             const observer = this._mutationObserverFactory.create(fn);
             if (observer) {
                 observer.observe(element, options || MUTATION_OBSERVER_INIT);
@@ -3586,70 +2408,40 @@ class ElementObserver {
     }
     /**
      * Destroy Observer
-     * @param {?} elementOrRef
-     * @return {?}
      */
     destroy(elementOrRef) {
-        /** @type {?} */
         const element = elementOrRef instanceof ElementRef ? elementOrRef.nativeElement : elementOrRef;
         if (this._observedElements.has(element)) {
-            /** @type {?} */
             const observer = this._observedElements.get(element);
             if (observer) {
-                (/** @type {?} */ (this._observedElements.get(element))).disconnect();
+                this._observedElements.get(element).disconnect();
             }
             this._observedElements.delete(element);
         }
     }
-}
-ElementObserver.decorators = [
-    { type: Injectable, args: [{ providedIn: 'root' },] }
-];
-/** @nocollapse */
-ElementObserver.ctorParameters = () => [
-    { type: MutationObserverFactory }
-];
-/** @nocollapse */ ElementObserver.ngInjectableDef = defineInjectable({ factory: function ElementObserver_Factory() { return new ElementObserver(inject(MutationObserverFactory)); }, token: ElementObserver, providedIn: "root" });
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @enum {string} */
-const AlignAlias = {
-    rowReverse: 'row-reverse',
-    columnReverse: 'column-reverse',
-    wrapReverse: 'wrap-reverse',
-    start: 'flex-start',
-    end: 'flex-end',
-    between: 'space-between',
-    around: 'space-around',
-    evenly: 'space-evenly',
 };
+ElementObserver.ngInjectableDef = defineInjectable({ factory: function ElementObserver_Factory() { return new ElementObserver(inject(MutationObserverFactory)); }, token: ElementObserver, providedIn: "root" });
+ElementObserver = __decorate([
+    Injectable({ providedIn: 'root' }),
+    __metadata("design:paramtypes", [MutationObserverFactory])
+], ElementObserver);
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/**
- * @param {?} o
- * @return {?}
- */
+var AlignAlias;
+(function (AlignAlias) {
+    AlignAlias["rowReverse"] = "row-reverse";
+    AlignAlias["columnReverse"] = "column-reverse";
+    AlignAlias["wrapReverse"] = "wrap-reverse";
+    AlignAlias["start"] = "flex-start";
+    AlignAlias["end"] = "flex-end";
+    AlignAlias["between"] = "space-between";
+    AlignAlias["around"] = "space-around";
+    AlignAlias["evenly"] = "space-evenly";
+})(AlignAlias || (AlignAlias = {}));
+
 function same(o) {
     return o;
 }
-/**
- * @template T
- */
 class LySelectionModel {
-    /**
-     * @param {?=} opts
-     */
     constructor(opts) {
         this._selectionMap = new Map();
         this._getKeyFn = same;
@@ -3668,16 +2460,13 @@ class LySelectionModel {
             }
         }
         else {
-            const { selecteds } = (/** @type {?} */ (opts));
+            const { selecteds } = opts;
             if (selecteds) {
                 this._markSelected(selecteds);
             }
         }
     }
-    /**
-     * Selected values.
-     * @return {?}
-     */
+    /** Selected values. */
     get selected() {
         if (!this._selected) {
             this._selected = Array.from(this._selectionMap.values());
@@ -3686,16 +2475,12 @@ class LySelectionModel {
     }
     /**
      * Toggles a value between selected and deselected.
-     * @param {?} value
-     * @return {?}
      */
     toggle(value) {
         this.isSelected(value) ? this.deselect(value) : this.select(value);
     }
     /**
      * Selects one or several values.
-     * @param {...?} values
-     * @return {?}
      */
     select(...values) {
         values.forEach(value => this._markSelected(value));
@@ -3703,8 +2488,6 @@ class LySelectionModel {
     }
     /**
      * Deselects a value or an array of values.
-     * @param {...?} values
-     * @return {?}
      */
     deselect(...values) {
         values.forEach(value => this._unmarkSelected(value));
@@ -3712,109 +2495,69 @@ class LySelectionModel {
     }
     /**
      * Determines whether a value is selected.
-     * @param {?} value
-     * @return {?}
      */
     isSelected(value) {
-        /** @type {?} */
         const key = this._getKeyFn(value);
         return this._selectionMap.has(key);
     }
     /**
      * Determines whether the model does not have a value.
-     * @return {?}
      */
     isEmpty() {
         return this._selectionMap.size === 0;
     }
     /**
      * Determines whether the model has a value.
-     * @return {?}
      */
     hasValue() {
         return this._selectionMap.size !== 0;
     }
     /**
      * Gets whether multiple values can be selected.
-     * @return {?}
      */
     isMultipleSelection() {
         return this._multiple;
     }
     /**
      * Clears all of the selected values.
-     * @return {?}
      */
     clear() {
         this._unmarkAll();
         this._clearSelectedValues();
     }
-    /**
-     * Selects a value.
-     * @private
-     * @param {?} value
-     * @return {?}
-     */
+    /** Selects a value. */
     _markSelected(value) {
         if (!this.isSelected(value)) {
             if (!this._multiple) {
                 this._unmarkAll();
             }
-            /** @type {?} */
             const key = this._getKeyFn(value);
             this._selectionMap.set(key, value);
         }
     }
-    /**
-     * Deselects a value.
-     * @private
-     * @param {?} value
-     * @return {?}
-     */
+    /** Deselects a value. */
     _unmarkSelected(value) {
         if (this.isSelected(value)) {
-            /** @type {?} */
             const key = this._getKeyFn(value);
             this._selectionMap.delete(key);
         }
     }
-    /**
-     * Clears out the selected values.
-     * @private
-     * @return {?}
-     */
+    /** Clears out the selected values. */
     _unmarkAll() {
         if (!this.isEmpty()) {
             this._selectionMap.clear();
         }
     }
-    /**
-     * Clear the selected values so they can be re-cached.
-     * @private
-     * @return {?}
-     */
+    /** Clear the selected values so they can be re-cached. */
     _clearSelectedValues() {
         this._selected = null;
     }
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/**
- * @param {?} variable
- * @return {?}
- */
 function getLyThemeVariableUndefinedError(variable) {
     return Error(`Variable '${variable}' undefined in Theme.`);
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
 const STYLES = (theme) => ({
     root: {
         width: '1em',
@@ -3853,12 +2596,7 @@ const STYLES = (theme) => ({
         }
     }
 });
-class LyExpansionIcon {
-    /**
-     * @param {?} _theme
-     * @param {?} _renderer
-     * @param {?} _el
-     */
+let LyExpansionIcon = class LyExpansionIcon {
     constructor(_theme, _renderer, _el) {
         this._theme = _theme;
         this._renderer = _renderer;
@@ -3867,10 +2605,6 @@ class LyExpansionIcon {
         this._up = false;
         _renderer.addClass(_el.nativeElement, this.classes.root);
     }
-    /**
-     * @param {?} val
-     * @return {?}
-     */
     set color(val) {
         this._colorClass = this._theme.addStyle('LyExpansionIcon.color', (theme) => ({
             '{line}': {
@@ -3878,18 +2612,10 @@ class LyExpansionIcon {
             }
         }), this._el.nativeElement, this._colorClass, null, STYLES);
     }
-    /**
-     * @return {?}
-     */
     get color() {
         return this._color;
     }
-    /**
-     * @param {?} val
-     * @return {?}
-     */
     set up(val) {
-        /** @type {?} */
         const newVal = toBoolean(val);
         if (newVal !== this.up) {
             this._up = newVal;
@@ -3901,70 +2627,46 @@ class LyExpansionIcon {
             }
         }
     }
-    /**
-     * @return {?}
-     */
     get up() {
         return this._up;
     }
-    /**
-     * @return {?}
-     */
     toggle() {
         this.up = !this.up;
     }
-}
-LyExpansionIcon.decorators = [
-    { type: Component, args: [{
-                selector: 'ly-expansion-icon',
-                template: "<span [className]=\"classes.line\"></span>\n<span [className]=\"classes.line\"></span>",
-                changeDetection: ChangeDetectionStrategy.OnPush
-            }] }
-];
-/** @nocollapse */
-LyExpansionIcon.ctorParameters = () => [
-    { type: LyTheme2 },
-    { type: Renderer2 },
-    { type: ElementRef }
-];
-LyExpansionIcon.propDecorators = {
-    color: [{ type: Input }],
-    up: [{ type: Input }]
 };
+__decorate([
+    Input(),
+    __metadata("design:type", String),
+    __metadata("design:paramtypes", [String])
+], LyExpansionIcon.prototype, "color", null);
+__decorate([
+    Input(),
+    __metadata("design:type", Object),
+    __metadata("design:paramtypes", [Object])
+], LyExpansionIcon.prototype, "up", null);
+LyExpansionIcon = __decorate([
+    Component({
+        selector: 'ly-expansion-icon',
+        template: "<span [className]=\"classes.line\"></span>\n<span [className]=\"classes.line\"></span>",
+        changeDetection: ChangeDetectionStrategy.OnPush
+    }),
+    __metadata("design:paramtypes", [LyTheme2,
+        Renderer2,
+        ElementRef])
+], LyExpansionIcon);
+
+let LyExpansionIconModule = class LyExpansionIconModule {
+};
+LyExpansionIconModule = __decorate([
+    NgModule({
+        declarations: [LyExpansionIcon],
+        exports: [LyExpansionIcon]
+    })
+], LyExpansionIconModule);
 
 /**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-class LyExpansionIconModule {
-}
-LyExpansionIconModule.decorators = [
-    { type: NgModule, args: [{
-                declarations: [LyExpansionIcon],
-                exports: [LyExpansionIcon]
-            },] }
-];
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated bundle index. Do not edit.
  */
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-
-export { getContrastYIQ, shadowBuilderDeprecated, shadowBuilder, Shadows, THEME_VARIABLES, IS_CORE_THEME, Platform, supportsPassiveEventListeners, LyCommonModule, getNativeElement, NgTranscludeDirective, NgTranscludeModule, toBoolean, defaultEntry, scrollTo, scrollToC, scrollWithAnimation, FocusStatus, LyFocusState, AUI_VERSION, AUI_LAST_UPDATE, LY_HAMMER_OPTIONS, LyHammerGestureConfig, LyPaperBase, LyPaperMixinBase, LyPaper, CoreTheme, LY_THEME_GLOBAL_VARIABLES, LY_THEME, LY_THEME_NAME, converterToCssKeyAndStyle, capitalizeFirstLetter, StylesInDocument, LyTheme2, _STYLE_MAP, TypeStyle, LyThemeModule, LY_COMMON_STYLES, LyCoreStyles, Undefined, UndefinedValue, eachMedia, isObject, mergeDeep, LyStyleUtils, Dir, DirAlias, DirPosition, LyOverlayRef, LyOverlayContainer, LyOverlay, LyOverlayModule, LyOverlayConfig, OverlayFactory, createOverlayInjector, STYLES_BACKDROP_DARK, MutationObserverFactory, ElementObserver, WinResize, WinScroll, mixinStyleUpdater, mixinDisableRipple, mixinColor, mixinBg, mixinRaised, mixinOutlined, mixinElevation, mixinShadowColor, mixinDisabled, mixinTabIndex, Ripple, LyRippleService, invertPlacement, YPosition, XPosition, Positioning, AlignAlias, LySelectionModel, getLyThemeVariableUndefinedError, LyExpansionIcon, LyExpansionIconModule, LyOverlayBackdrop as ɵc, LyWithClass as ɵa };
-
+export { AUI_LAST_UPDATE, AUI_VERSION, AlignAlias, CoreTheme, Dir, DirAlias, DirPosition, ElementObserver, FocusStatus, IS_CORE_THEME, LY_COMMON_STYLES, LY_HAMMER_OPTIONS, LY_THEME, LY_THEME_GLOBAL_VARIABLES, LY_THEME_NAME, LyCommonModule, LyCoreStyles, LyExpansionIcon, LyExpansionIconModule, LyFocusState, LyHammerGestureConfig, LyOverlay, LyOverlayConfig, LyOverlayContainer, LyOverlayModule, LyOverlayRef, LyPaper, LyPaperBase, LyPaperMixinBase, LyRippleService, LySelectionModel, LyStyleUtils, LyTheme2, LyThemeModule, MutationObserverFactory, NgTranscludeDirective, NgTranscludeModule, OverlayFactory, Platform, Positioning, Ripple, STYLES_BACKDROP_DARK, Shadows, StylesInDocument, THEME_VARIABLES, TypeStyle, Undefined, UndefinedValue, WinResize, WinScroll, XPosition, YPosition, _STYLE_MAP, capitalizeFirstLetter, converterToCssKeyAndStyle, createOverlayInjector, defaultEntry, eachMedia, getContrastYIQ, getLyThemeVariableUndefinedError, getNativeElement, invertPlacement, isObject, mergeDeep, mixinBg, mixinColor, mixinDisableRipple, mixinDisabled, mixinElevation, mixinOutlined, mixinRaised, mixinShadowColor, mixinStyleUpdater, mixinTabIndex, scrollTo, scrollToC, scrollWithAnimation, shadowBuilder, shadowBuilderDeprecated, supportsPassiveEventListeners, toBoolean, ɵ0, LyWithClass as ɵa, LyOverlayBackdrop as ɵc };
 //# sourceMappingURL=alyle-ui.js.map

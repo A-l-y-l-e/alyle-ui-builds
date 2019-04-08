@@ -1,8 +1,8 @@
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@alyle/ui')) :
     typeof define === 'function' && define.amd ? define('@alyle/ui/typography', ['exports', '@angular/core', '@alyle/ui'], factory) :
-    (factory((global.ly = global.ly || {}, global.ly.typography = {}),global.ng.core,global.ly.core));
-}(this, (function (exports,core,ui) { 'use strict';
+    (global = global || self, factory((global.ly = global.ly || {}, global.ly.typography = {}), global.ng.core, global.ly.core));
+}(this, function (exports, core, ui) { 'use strict';
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
@@ -19,60 +19,55 @@
     and limitations under the License.
     ***************************************************************************** */
     /* global Reflect, Promise */
-    var extendStatics = function (d, b) {
+
+    var extendStatics = function(d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b)
-                if (b.hasOwnProperty(p))
-                    d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
+
     function __extends(d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     }
 
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    /** @type {?} */
+    function __decorate(decorators, target, key, desc) {
+        var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+        else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+        return c > 3 && r && Object.defineProperty(target, key, r), r;
+    }
+
+    function __metadata(metadataKey, metadataValue) {
+        if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(metadataKey, metadataValue);
+    }
+
     var STYLE_PRIORITY = -1;
-    /** @type {?} */
-    var styles = function (theme) {
-        return ({
-            root: {
-                margin: 0,
-                display: 'block',
-                '&': theme.typography ? theme.typography.root : null
-            }
-        });
-    };
-    /** @enum {number} */
-    var Gutter = {
-        default: 0,
-        top: 1,
-        bottom: 2,
-    };
-    Gutter[Gutter.default] = 'default';
-    Gutter[Gutter.top] = 'top';
-    Gutter[Gutter.bottom] = 'bottom';
-    /**
-     * \@docs-private
-     */
-    var /**
-     * \@docs-private
-     */ LyTypographyBase = /** @class */ (function () {
+    var styles = function (theme) { return ({
+        root: {
+            margin: 0,
+            display: 'block',
+            '&': theme.typography ? theme.typography.root : null
+        }
+    }); };
+    var ɵ0 = styles;
+    /** @docs-private */
+    var Gutter;
+    (function (Gutter) {
+        Gutter[Gutter["default"] = 0] = "default";
+        Gutter[Gutter["top"] = 1] = "top";
+        Gutter[Gutter["bottom"] = 2] = "bottom";
+    })(Gutter || (Gutter = {}));
+    /** @docs-private */
+    var LyTypographyBase = /** @class */ (function () {
         function LyTypographyBase(_theme) {
             this._theme = _theme;
         }
         return LyTypographyBase;
     }());
-    /**
-     * \@docs-private
-     * @type {?}
-     */
+    /** @docs-private */
     var LyTypographyMixinBase = ui.mixinStyleUpdater(ui.mixinColor((LyTypographyBase)));
     var LyTypography = /** @class */ (function (_super) {
         __extends(LyTypography, _super);
@@ -80,23 +75,16 @@
             var _this = _super.call(this, _theme) || this;
             _this._el = _el;
             _this.renderer = renderer;
-            /**
-             * \@docs-private
-             */
+            /** @docs-private */
             _this.classes = _this._theme.addStyleSheet(styles, STYLE_PRIORITY);
             _this.renderer.addClass(_this._el.nativeElement, _this.classes.root);
             return _this;
         }
         Object.defineProperty(LyTypography.prototype, "lyTyp", {
-            get: /**
-             * @return {?}
-             */ function () {
+            get: function () {
                 return this._lyTyp;
             },
-            set: /**
-             * @param {?} val
-             * @return {?}
-             */ function (val) {
+            set: function (val) {
                 if (val !== this.lyTyp) {
                     if (val) {
                         this._lyTypClass = this._createTypClass(val, this._lyTypClass);
@@ -111,18 +99,11 @@
             configurable: true
         });
         Object.defineProperty(LyTypography.prototype, "noWrap", {
-            get: /**
-             * @return {?}
-             */ function () {
+            get: function () {
                 return this._noWrap;
             },
             /** The text will truncate with an ellipsis. */
-            set: /**
-             * The text will truncate with an ellipsis.
-             * @param {?} val
-             * @return {?}
-             */ function (val) {
-                /** @type {?} */
+            set: function (val) {
                 var newValue = ui.toBoolean(val);
                 if (newValue) {
                     this._noWrapClass = this._theme.addSimpleStyle('lyTyp.noWrap', {
@@ -141,16 +122,10 @@
             configurable: true
         });
         Object.defineProperty(LyTypography.prototype, "gutter", {
-            get: /**
-             * @return {?}
-             */ function () {
+            get: function () {
                 return this._gutter;
             },
-            set: /**
-             * @param {?} val
-             * @return {?}
-             */ function (val) {
-                /** @type {?} */
+            set: function (val) {
                 var newVal = ui.toBoolean(val);
                 if (newVal !== this.gutter) {
                     this._gutter = newVal;
@@ -161,16 +136,10 @@
             configurable: true
         });
         Object.defineProperty(LyTypography.prototype, "gutterTop", {
-            get: /**
-             * @return {?}
-             */ function () {
+            get: function () {
                 return this._gutterTop;
             },
-            set: /**
-             * @param {?} val
-             * @return {?}
-             */ function (val) {
-                /** @type {?} */
+            set: function (val) {
                 var newVal = ui.toBoolean(val);
                 if (newVal !== this.gutterTop) {
                     this._gutterTop = newVal;
@@ -182,16 +151,10 @@
             configurable: true
         });
         Object.defineProperty(LyTypography.prototype, "gutterBottom", {
-            get: /**
-             * @return {?}
-             */ function () {
+            get: function () {
                 return this._gutterBottom;
             },
-            set: /**
-             * @param {?} val
-             * @return {?}
-             */ function (val) {
-                /** @type {?} */
+            set: function (val) {
                 var newVal = ui.toBoolean(val);
                 if (newVal !== this.gutterBottom) {
                     this._gutterBottom = newVal;
@@ -201,142 +164,95 @@
             enumerable: true,
             configurable: true
         });
-        /**
-         * @return {?}
-         */
-        LyTypography.prototype.ngOnInit = /**
-         * @return {?}
-         */
-            function () {
-                if ((this.gutterTop && this.gutterBottom)) {
-                    throw new Error("use '<element lyTyp gutter>' instead of '<element lyTyp gutterTop gutterBottom>'");
+        LyTypography.prototype.ngOnInit = function () {
+            if ((this.gutterTop && this.gutterBottom)) {
+                throw new Error("use '<element lyTyp gutter>' instead of '<element lyTyp gutterTop gutterBottom>'");
+            }
+        };
+        LyTypography.prototype.ngOnChanges = function () {
+            this.updateStyle(this._el.nativeElement);
+        };
+        LyTypography.prototype._createTypClass = function (key, instance) {
+            var newKey = "k-typ:" + key;
+            return this._theme.addStyle(newKey, function (theme) {
+                var typography = theme.typography;
+                var styl = Object.assign({}, typography.lyTyp[key || 'body1']);
+                if (styl.lineHeight) {
+                    styl.lineHeight = theme.pxToRem(styl.lineHeight);
                 }
-            };
-        /**
-         * @return {?}
-         */
-        LyTypography.prototype.ngOnChanges = /**
-         * @return {?}
-         */
-            function () {
-                this.updateStyle(this._el.nativeElement);
-            };
-        /**
-         * @private
-         * @param {?} key
-         * @param {?=} instance
-         * @return {?}
-         */
-        LyTypography.prototype._createTypClass = /**
-         * @private
-         * @param {?} key
-         * @param {?=} instance
-         * @return {?}
-         */
-            function (key, instance) {
-                /** @type {?} */
-                var newKey = "k-typ:" + key;
-                return this._theme.addStyle(newKey, function (theme) {
-                    var typography = theme.typography;
-                    /** @type {?} */
-                    var styl = Object.assign({}, typography.lyTyp[key || 'body1']);
-                    if (styl.lineHeight) {
-                        styl.lineHeight = theme.pxToRem(( /** @type {?} */(styl.lineHeight)));
-                    }
-                    if (typeof styl.letterSpacing === 'number') {
-                        styl.letterSpacing = styl.letterSpacing + "px";
-                    }
-                    // set default fontFamily
-                    styl.fontFamily = styl.fontFamily || typography.fontFamily;
-                    return styl;
-                }, this._el.nativeElement, instance, STYLE_PRIORITY);
-            };
-        /**
-         * @private
-         * @param {?} name
-         * @param {?} val
-         * @param {?} instance
-         * @return {?}
-         */
-        LyTypography.prototype._createGutterClass = /**
-         * @private
-         * @param {?} name
-         * @param {?} val
-         * @param {?} instance
-         * @return {?}
-         */
-            function (name, val, instance) {
-                return this._theme.addStyle("k-typ-gutter:" + name + ":" + val, function (theme) {
-                    /** @type {?} */
-                    var gutter = name === Gutter.default;
-                    return ("margin-top:" + (val && (gutter || name === Gutter.top) ? theme.typography.gutterTop : 0) + "em;" +
-                        ("margin-bottom:" + (val && (gutter || name === Gutter.bottom) ? theme.typography.gutterBottom : 0) + "em;"));
-                }, this._el.nativeElement, instance, STYLE_PRIORITY);
-            };
-        LyTypography.decorators = [
-            { type: core.Directive, args: [{
-                        selector: "[lyTyp]",
-                        inputs: [
-                            'color'
-                        ]
-                    },] }
-        ];
-        /** @nocollapse */
-        LyTypography.ctorParameters = function () {
-            return [
-                { type: ui.LyTheme2 },
-                { type: core.ElementRef },
-                { type: core.Renderer2 }
-            ];
+                if (typeof styl.letterSpacing === 'number') {
+                    styl.letterSpacing = styl.letterSpacing + "px";
+                }
+                // set default fontFamily
+                styl.fontFamily = styl.fontFamily || typography.fontFamily;
+                return styl;
+            }, this._el.nativeElement, instance, STYLE_PRIORITY);
         };
-        LyTypography.propDecorators = {
-            lyTyp: [{ type: core.Input }],
-            noWrap: [{ type: core.Input }],
-            gutter: [{ type: core.Input }],
-            gutterTop: [{ type: core.Input }],
-            gutterBottom: [{ type: core.Input }]
+        LyTypography.prototype._createGutterClass = function (name, val, instance) {
+            return this._theme.addStyle("k-typ-gutter:" + name + ":" + val, function (theme) {
+                var gutter = name === Gutter.default;
+                return ("margin-top:" + (val && (gutter || name === Gutter.top) ? theme.typography.gutterTop : 0) + "em;" +
+                    ("margin-bottom:" + (val && (gutter || name === Gutter.bottom) ? theme.typography.gutterBottom : 0) + "em;"));
+            }, this._el.nativeElement, instance, STYLE_PRIORITY);
         };
+        __decorate([
+            core.Input(),
+            __metadata("design:type", String),
+            __metadata("design:paramtypes", [String])
+        ], LyTypography.prototype, "lyTyp", null);
+        __decorate([
+            core.Input(),
+            __metadata("design:type", Boolean),
+            __metadata("design:paramtypes", [Boolean])
+        ], LyTypography.prototype, "noWrap", null);
+        __decorate([
+            core.Input(),
+            __metadata("design:type", Boolean),
+            __metadata("design:paramtypes", [Boolean])
+        ], LyTypography.prototype, "gutter", null);
+        __decorate([
+            core.Input(),
+            __metadata("design:type", Boolean),
+            __metadata("design:paramtypes", [Boolean])
+        ], LyTypography.prototype, "gutterTop", null);
+        __decorate([
+            core.Input(),
+            __metadata("design:type", Boolean),
+            __metadata("design:paramtypes", [Boolean])
+        ], LyTypography.prototype, "gutterBottom", null);
+        LyTypography = __decorate([
+            core.Directive({
+                selector: "[lyTyp]",
+                inputs: [
+                    'color'
+                ]
+            }),
+            __metadata("design:paramtypes", [ui.LyTheme2,
+                core.ElementRef,
+                core.Renderer2])
+        ], LyTypography);
         return LyTypography;
     }(LyTypographyMixinBase));
 
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
     var LyTypographyModule = /** @class */ (function () {
         function LyTypographyModule() {
         }
-        LyTypographyModule.decorators = [
-            { type: core.NgModule, args: [{
-                        exports: [LyTypography, ui.LyCommonModule],
-                        declarations: [LyTypography]
-                    },] }
-        ];
+        LyTypographyModule = __decorate([
+            core.NgModule({
+                exports: [LyTypography, ui.LyCommonModule],
+                declarations: [LyTypography]
+            })
+        ], LyTypographyModule);
         return LyTypographyModule;
     }());
 
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-
-    exports.LyTypographyModule = LyTypographyModule;
+    exports.LyTypography = LyTypography;
     exports.LyTypographyBase = LyTypographyBase;
     exports.LyTypographyMixinBase = LyTypographyMixinBase;
-    exports.LyTypography = LyTypography;
+    exports.LyTypographyModule = LyTypographyModule;
+    exports.ɵ0 = ɵ0;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 
-})));
-
+}));
 //# sourceMappingURL=alyle-ui-typography.umd.js.map

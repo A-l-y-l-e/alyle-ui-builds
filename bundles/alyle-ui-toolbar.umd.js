@@ -1,8 +1,8 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/common'), require('@alyle/ui')) :
-    typeof define === 'function' && define.amd ? define('@alyle/ui/toolbar', ['exports', '@angular/core', '@angular/common', '@alyle/ui'], factory) :
-    (factory((global.ly = global.ly || {}, global.ly.toolbar = {}),global.ng.core,global.ng.common,global.ly.core));
-}(this, (function (exports,core,common,ui) { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@alyle/ui'), require('@angular/common')) :
+    typeof define === 'function' && define.amd ? define('@alyle/ui/toolbar', ['exports', '@angular/core', '@alyle/ui', '@angular/common'], factory) :
+    (global = global || self, factory((global.ly = global.ly || {}, global.ly.toolbar = {}), global.ng.core, global.ly.core, global.ng.common));
+}(this, function (exports, core, ui, common) { 'use strict';
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
@@ -19,45 +19,48 @@
     and limitations under the License.
     ***************************************************************************** */
     /* global Reflect, Promise */
-    var extendStatics = function (d, b) {
+
+    var extendStatics = function(d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b)
-                if (b.hasOwnProperty(p))
-                    d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
+
     function __extends(d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     }
 
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    /** @type {?} */
+    function __decorate(decorators, target, key, desc) {
+        var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+        else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+        return c > 3 && r && Object.defineProperty(target, key, r), r;
+    }
+
+    function __metadata(metadataKey, metadataValue) {
+        if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(metadataKey, metadataValue);
+    }
+
     var STYLE_PRIORITY = -2;
-    /** @type {?} */
     var DEFAULT_POSITION = 'fixed';
-    /** @type {?} */
     var DEFAULT_BG = 'background:tertiary';
-    /** @type {?} */
     var styles = function (theme) {
         var _a;
         return ({
             root: (_a = {
-                padding: '0 16px',
-                display: 'flex',
-                boxSizing: 'border-box',
-                width: '100%',
-                flexDirection: 'row',
-                alignItems: 'center',
-                whiteSpace: 'nowrap',
-                height: '64px',
-                zIndex: theme.zIndex.toolbar
-            },
+                    padding: '0 16px',
+                    display: 'flex',
+                    boxSizing: 'border-box',
+                    width: '100%',
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    whiteSpace: 'nowrap',
+                    height: '64px',
+                    zIndex: theme.zIndex.toolbar
+                },
                 _a[theme.getBreakpoint('XSmall')] = {
                     height: '56px'
                 },
@@ -68,21 +71,15 @@
             }
         });
     };
-    /**
-     * \@docs-private
-     */
-    var /**
-     * \@docs-private
-     */ LyToolbarBase = /** @class */ (function () {
+    var ɵ0 = styles;
+    /** @docs-private */
+    var LyToolbarBase = /** @class */ (function () {
         function LyToolbarBase(_theme) {
             this._theme = _theme;
         }
         return LyToolbarBase;
     }());
-    /**
-     * \@docs-private
-     * @type {?}
-     */
+    /** @docs-private */
     var LyToolbarMixinBase = ui.mixinStyleUpdater(ui.mixinBg(ui.mixinColor(ui.mixinRaised(ui.mixinDisabled(ui.mixinOutlined(ui.mixinElevation(ui.mixinShadowColor(LyToolbarBase))))))));
     var LyToolbar = /** @class */ (function (_super) {
         __extends(LyToolbar, _super);
@@ -93,7 +90,7 @@
             _this.theme = theme;
             /**
              * Styles
-             * \@docs-private
+             * @docs-private
              */
             _this.classes = _this.theme.addStyleSheet(styles, STYLE_PRIORITY);
             _this.setAutoContrast();
@@ -101,15 +98,10 @@
             return _this;
         }
         Object.defineProperty(LyToolbar.prototype, "position", {
-            get: /**
-             * @return {?}
-             */ function () {
+            get: function () {
                 return this._position;
             },
-            set: /**
-             * @param {?} val
-             * @return {?}
-             */ function (val) {
+            set: function (val) {
                 this._position = val;
                 this._positionClass = this.theme.addStyle("lyToolbar.position:" + val, "position:" + val, this._el.nativeElement, this._positionClass, STYLE_PRIORITY);
             },
@@ -117,16 +109,10 @@
             configurable: true
         });
         Object.defineProperty(LyToolbar.prototype, "dense", {
-            get: /**
-             * @return {?}
-             */ function () {
+            get: function () {
                 return this._dense;
             },
-            set: /**
-             * @param {?} val
-             * @return {?}
-             */ function (val) {
-                /** @type {?} */
+            set: function (val) {
                 var newVal = ui.toBoolean(val);
                 if (core.isDevMode() && newVal !== this.dense) {
                     console.warn(this._el.nativeElement, "LyToolbar.appearance: `dense` is deprecated, instead use `appearance=\"dense\"`");
@@ -142,123 +128,92 @@
             configurable: true
         });
         Object.defineProperty(LyToolbar.prototype, "appearance", {
-            get: /**
-             * @return {?}
-             */ function () {
+            get: function () {
                 return this._appearance;
             },
-            set: /**
-             * @param {?} val
-             * @return {?}
-             */ function (val) {
+            set: function (val) {
                 if (val !== this.appearance) {
                     this._appearance = val;
                     this._appearanceClass = this._theme.addStyle("LyToolbar.appearance:" + val, function (theme) {
                         if (!theme.toolbar) {
                             throw ui.getLyThemeVariableUndefinedError('toolbar');
                         }
-                        if (!(theme.toolbar.appearance && ( /** @type {?} */(theme.toolbar.appearance))[val])) {
+                        if (!(theme.toolbar.appearance && theme.toolbar.appearance[val])) {
                             throw new Error("Value toolbar.appearance['" + val + "'] not found in ThemeVariables");
                         }
-                        return ( /** @type {?} */(( /** @type {?} */(theme.toolbar.appearance))[val]));
+                        return theme.toolbar.appearance[val];
                     }, this._el.nativeElement, this._appearanceClass, STYLE_PRIORITY);
                 }
             },
             enumerable: true,
             configurable: true
         });
-        /**
-         * @return {?}
-         */
-        LyToolbar.prototype.ngOnChanges = /**
-         * @return {?}
-         */
-            function () {
+        LyToolbar.prototype.ngOnChanges = function () {
+            this.updateStyle(this._el);
+        };
+        LyToolbar.prototype.ngOnInit = function () {
+            if (!this.position) {
+                this.position = DEFAULT_POSITION;
+            }
+            if (!this.bg) {
+                this.bg = DEFAULT_BG;
                 this.updateStyle(this._el);
-            };
-        /**
-         * @return {?}
-         */
-        LyToolbar.prototype.ngOnInit = /**
-         * @return {?}
-         */
-            function () {
-                if (!this.position) {
-                    this.position = DEFAULT_POSITION;
-                }
-                if (!this.bg) {
-                    this.bg = DEFAULT_BG;
-                    this.updateStyle(this._el);
-                }
-            };
-        LyToolbar.decorators = [
-            { type: core.Directive, args: [{
-                        selector: 'ly-toolbar',
-                        inputs: [
-                            'bg',
-                            'color',
-                            'raised',
-                            'outlined',
-                            'elevation',
-                            'shadowColor'
-                        ]
-                    },] }
-        ];
-        /** @nocollapse */
-        LyToolbar.ctorParameters = function () {
-            return [
-                { type: core.Renderer2 },
-                { type: core.ElementRef },
-                { type: ui.LyTheme2 }
-            ];
+            }
         };
-        LyToolbar.propDecorators = {
-            position: [{ type: core.Input }],
-            dense: [{ type: core.Input }],
-            appearance: [{ type: core.Input }]
-        };
+        __decorate([
+            core.Input(),
+            __metadata("design:type", String),
+            __metadata("design:paramtypes", [String])
+        ], LyToolbar.prototype, "position", null);
+        __decorate([
+            core.Input(),
+            __metadata("design:type", Boolean),
+            __metadata("design:paramtypes", [Boolean])
+        ], LyToolbar.prototype, "dense", null);
+        __decorate([
+            core.Input(),
+            __metadata("design:type", String),
+            __metadata("design:paramtypes", [String])
+        ], LyToolbar.prototype, "appearance", null);
+        LyToolbar = __decorate([
+            core.Directive({
+                selector: 'ly-toolbar',
+                inputs: [
+                    'bg',
+                    'color',
+                    'raised',
+                    'outlined',
+                    'elevation',
+                    'shadowColor'
+                ]
+            }),
+            __metadata("design:paramtypes", [core.Renderer2,
+                core.ElementRef,
+                ui.LyTheme2])
+        ], LyToolbar);
         return LyToolbar;
     }(LyToolbarMixinBase));
 
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
     var LyToolbarModule = /** @class */ (function () {
         function LyToolbarModule() {
         }
-        LyToolbarModule.decorators = [
-            { type: core.NgModule, args: [{
-                        imports: [common.CommonModule, ui.LyCommonModule],
-                        exports: [LyToolbar, ui.LyCommonModule],
-                        declarations: [LyToolbar]
-                    },] }
-        ];
+        LyToolbarModule = __decorate([
+            core.NgModule({
+                imports: [common.CommonModule, ui.LyCommonModule],
+                exports: [LyToolbar, ui.LyCommonModule],
+                declarations: [LyToolbar]
+            })
+        ], LyToolbarModule);
         return LyToolbarModule;
     }());
 
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-
+    exports.LyToolbar = LyToolbar;
     exports.LyToolbarBase = LyToolbarBase;
     exports.LyToolbarMixinBase = LyToolbarMixinBase;
-    exports.LyToolbar = LyToolbar;
     exports.LyToolbarModule = LyToolbarModule;
+    exports.ɵ0 = ɵ0;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 
-})));
-
+}));
 //# sourceMappingURL=alyle-ui-toolbar.umd.js.map

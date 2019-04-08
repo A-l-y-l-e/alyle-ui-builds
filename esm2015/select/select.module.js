@@ -1,24 +1,22 @@
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
+import * as tslib_1 from "tslib";
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LyCommonModule, LyOverlayModule } from '@alyle/ui';
 import { LyCheckboxModule } from '@alyle/ui/checkbox';
 import { LySelect, LyOption } from './select';
-export class LySelectModule {
-}
-LySelectModule.decorators = [
-    { type: NgModule, args: [{
-                declarations: [LySelect, LyOption],
-                imports: [
-                    CommonModule,
-                    LyCommonModule,
-                    LyCheckboxModule,
-                    LyOverlayModule
-                ],
-                exports: [LySelect, LyOption, LyCommonModule]
-            },] }
-];
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoic2VsZWN0Lm1vZHVsZS5qcyIsInNvdXJjZVJvb3QiOiJuZzovL0BhbHlsZS91aS9zZWxlY3QvIiwic291cmNlcyI6WyJzZWxlY3QubW9kdWxlLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7Ozs7QUFBQSxPQUFPLEVBQUUsUUFBUSxFQUFFLE1BQU0sZUFBZSxDQUFDO0FBQ3pDLE9BQU8sRUFBRSxZQUFZLEVBQUUsTUFBTSxpQkFBaUIsQ0FBQztBQUMvQyxPQUFPLEVBQUUsY0FBYyxFQUFFLGVBQWUsRUFBRSxNQUFNLFdBQVcsQ0FBQztBQUM1RCxPQUFPLEVBQUUsZ0JBQWdCLEVBQUUsTUFBTSxvQkFBb0IsQ0FBQztBQUV0RCxPQUFPLEVBQUUsUUFBUSxFQUFFLFFBQVEsRUFBRSxNQUFNLFVBQVUsQ0FBQztBQVk5QyxNQUFNLE9BQU8sY0FBYzs7O1lBVjFCLFFBQVEsU0FBQztnQkFDUixZQUFZLEVBQUUsQ0FBQyxRQUFRLEVBQUUsUUFBUSxDQUFDO2dCQUNsQyxPQUFPLEVBQUU7b0JBQ1AsWUFBWTtvQkFDWixjQUFjO29CQUNkLGdCQUFnQjtvQkFDaEIsZUFBZTtpQkFDaEI7Z0JBQ0QsT0FBTyxFQUFFLENBQUMsUUFBUSxFQUFFLFFBQVEsRUFBRSxjQUFjLENBQUM7YUFDOUMiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyBOZ01vZHVsZSB9IGZyb20gJ0Bhbmd1bGFyL2NvcmUnO1xuaW1wb3J0IHsgQ29tbW9uTW9kdWxlIH0gZnJvbSAnQGFuZ3VsYXIvY29tbW9uJztcbmltcG9ydCB7IEx5Q29tbW9uTW9kdWxlLCBMeU92ZXJsYXlNb2R1bGUgfSBmcm9tICdAYWx5bGUvdWknO1xuaW1wb3J0IHsgTHlDaGVja2JveE1vZHVsZSB9IGZyb20gJ0BhbHlsZS91aS9jaGVja2JveCc7XG5cbmltcG9ydCB7IEx5U2VsZWN0LCBMeU9wdGlvbiB9IGZyb20gJy4vc2VsZWN0JztcblxuQE5nTW9kdWxlKHtcbiAgZGVjbGFyYXRpb25zOiBbTHlTZWxlY3QsIEx5T3B0aW9uXSxcbiAgaW1wb3J0czogW1xuICAgIENvbW1vbk1vZHVsZSxcbiAgICBMeUNvbW1vbk1vZHVsZSxcbiAgICBMeUNoZWNrYm94TW9kdWxlLFxuICAgIEx5T3ZlcmxheU1vZHVsZVxuICBdLFxuICBleHBvcnRzOiBbTHlTZWxlY3QsIEx5T3B0aW9uLCBMeUNvbW1vbk1vZHVsZV1cbn0pXG5leHBvcnQgY2xhc3MgTHlTZWxlY3RNb2R1bGUgeyB9XG4iXX0=
+let LySelectModule = class LySelectModule {
+};
+LySelectModule = tslib_1.__decorate([
+    NgModule({
+        declarations: [LySelect, LyOption],
+        imports: [
+            CommonModule,
+            LyCommonModule,
+            LyCheckboxModule,
+            LyOverlayModule
+        ],
+        exports: [LySelect, LyOption, LyCommonModule]
+    })
+], LySelectModule);
+export { LySelectModule };
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoic2VsZWN0Lm1vZHVsZS5qcyIsInNvdXJjZVJvb3QiOiJuZzovL0BhbHlsZS91aS9zZWxlY3QvIiwic291cmNlcyI6WyJzZWxlY3QubW9kdWxlLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7QUFBQSxPQUFPLEVBQUUsUUFBUSxFQUFFLE1BQU0sZUFBZSxDQUFDO0FBQ3pDLE9BQU8sRUFBRSxZQUFZLEVBQUUsTUFBTSxpQkFBaUIsQ0FBQztBQUMvQyxPQUFPLEVBQUUsY0FBYyxFQUFFLGVBQWUsRUFBRSxNQUFNLFdBQVcsQ0FBQztBQUM1RCxPQUFPLEVBQUUsZ0JBQWdCLEVBQUUsTUFBTSxvQkFBb0IsQ0FBQztBQUV0RCxPQUFPLEVBQUUsUUFBUSxFQUFFLFFBQVEsRUFBRSxNQUFNLFVBQVUsQ0FBQztBQVk5QyxJQUFhLGNBQWMsR0FBM0IsTUFBYSxjQUFjO0NBQUksQ0FBQTtBQUFsQixjQUFjO0lBVjFCLFFBQVEsQ0FBQztRQUNSLFlBQVksRUFBRSxDQUFDLFFBQVEsRUFBRSxRQUFRLENBQUM7UUFDbEMsT0FBTyxFQUFFO1lBQ1AsWUFBWTtZQUNaLGNBQWM7WUFDZCxnQkFBZ0I7WUFDaEIsZUFBZTtTQUNoQjtRQUNELE9BQU8sRUFBRSxDQUFDLFFBQVEsRUFBRSxRQUFRLEVBQUUsY0FBYyxDQUFDO0tBQzlDLENBQUM7R0FDVyxjQUFjLENBQUk7U0FBbEIsY0FBYyIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IE5nTW9kdWxlIH0gZnJvbSAnQGFuZ3VsYXIvY29yZSc7XG5pbXBvcnQgeyBDb21tb25Nb2R1bGUgfSBmcm9tICdAYW5ndWxhci9jb21tb24nO1xuaW1wb3J0IHsgTHlDb21tb25Nb2R1bGUsIEx5T3ZlcmxheU1vZHVsZSB9IGZyb20gJ0BhbHlsZS91aSc7XG5pbXBvcnQgeyBMeUNoZWNrYm94TW9kdWxlIH0gZnJvbSAnQGFseWxlL3VpL2NoZWNrYm94JztcblxuaW1wb3J0IHsgTHlTZWxlY3QsIEx5T3B0aW9uIH0gZnJvbSAnLi9zZWxlY3QnO1xuXG5ATmdNb2R1bGUoe1xuICBkZWNsYXJhdGlvbnM6IFtMeVNlbGVjdCwgTHlPcHRpb25dLFxuICBpbXBvcnRzOiBbXG4gICAgQ29tbW9uTW9kdWxlLFxuICAgIEx5Q29tbW9uTW9kdWxlLFxuICAgIEx5Q2hlY2tib3hNb2R1bGUsXG4gICAgTHlPdmVybGF5TW9kdWxlXG4gIF0sXG4gIGV4cG9ydHM6IFtMeVNlbGVjdCwgTHlPcHRpb24sIEx5Q29tbW9uTW9kdWxlXVxufSlcbmV4cG9ydCBjbGFzcyBMeVNlbGVjdE1vZHVsZSB7IH1cbiJdfQ==

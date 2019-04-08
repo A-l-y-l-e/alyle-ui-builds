@@ -1,17 +1,12 @@
-import { CommonModule } from '@angular/common';
-import { toBoolean, LyTheme2, getLyThemeVariableUndefinedError, mixinBg, mixinColor, mixinElevation, mixinShadowColor, mixinStyleUpdater, NgTranscludeModule, LyExpansionIconModule } from '@alyle/ui';
-import { trigger, state, style, transition, animate } from '@angular/animations';
+import { __decorate, __metadata, __param } from 'tslib';
+import { Input, Directive, Renderer2, ElementRef, TemplateRef, EventEmitter, ContentChild, Output, Component, ChangeDetectionStrategy, Inject, ChangeDetectorRef, NgModule } from '@angular/core';
+import { toBoolean, getLyThemeVariableUndefinedError, LyTheme2, mixinStyleUpdater, mixinBg, mixinColor, mixinElevation, mixinShadowColor, LyExpansionIconModule, NgTranscludeModule } from '@alyle/ui';
 import { Subject, Subscription } from 'rxjs';
-import { startWith, filter, first, distinctUntilChanged } from 'rxjs/operators';
-import { Directive, Input, ElementRef, Renderer2, TemplateRef, ChangeDetectionStrategy, ChangeDetectorRef, Component, ContentChild, Inject, Output, EventEmitter, NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { trigger, state, style, transition, animate } from '@angular/animations';
+import { distinctUntilChanged, startWith, filter, first } from 'rxjs/operators';
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
 const STYLE_PRIORITY = -0.9;
-/** @type {?} */
 const STYLES = (theme) => ({
     $priority: STYLE_PRIORITY,
     $name: 'expansion',
@@ -100,74 +95,41 @@ const STYLES = (theme) => ({
         color: theme.disabled.contrast
     }
 });
-class LyAccordion {
-    /**
-     * @param {?} _theme
-     * @param {?} _renderer
-     * @param {?} _el
-     */
+let LyAccordion = class LyAccordion {
     constructor(_theme, _renderer, _el) {
         this._theme = _theme;
         this._renderer = _renderer;
         this._el = _el;
-        /**
-         * \@docs-private
-         */
+        /** @docs-private */
         this.classes = this._theme.addStyleSheet(STYLES);
         this._hasToggle = true;
-        /**
-         * Stream that emits true/false when openAll/closeAll is triggered.
-         */
+        /** Stream that emits true/false when openAll/closeAll is triggered. */
         this._openCloseAllActions = new Subject();
     }
-    /**
-     * @param {?} val
-     * @return {?}
-     */
     set appearance(val) {
         this._appearance = val;
         this._appearanceClass = this._theme.addStyle(`lyAccordion.appearance:${val}`, (theme) => {
-            if (!((/** @type {?} */ (theme.expansion)).appearance && (/** @type {?} */ (theme.expansion)).appearance[val])) {
+            if (!(theme.expansion.appearance && theme.expansion.appearance[val])) {
                 throw new Error(`Value expansion.appearance['${val}'] not found in ThemeVariables`);
             }
-            return (/** @type {?} */ ((/** @type {?} */ (theme.expansion)).appearance[val]));
+            return theme.expansion.appearance[val];
         }, this._el.nativeElement, this._appearanceClass, STYLE_PRIORITY, STYLES);
     }
-    /**
-     * @return {?}
-     */
     get appearance() {
         return this._appearance;
     }
-    /**
-     * @param {?} val
-     * @return {?}
-     */
     set multiple(val) {
         this._multiple = toBoolean(val);
     }
-    /**
-     * @return {?}
-     */
     get multiple() {
         return this._multiple;
     }
-    /**
-     * @param {?} val
-     * @return {?}
-     */
     set hasToggle(val) {
         this._hasToggle = toBoolean(val);
     }
-    /**
-     * @return {?}
-     */
     get hasToggle() {
         return this._hasToggle;
     }
-    /**
-     * @return {?}
-     */
     ngOnInit() {
         const { expansion } = this._theme.variables;
         if (expansion) {
@@ -183,52 +145,43 @@ class LyAccordion {
             throw getLyThemeVariableUndefinedError('expansion');
         }
     }
-    /**
-     * @return {?}
-     */
     closeAll() {
         this._openCloseAll(true);
     }
-    /**
-     * @return {?}
-     */
     openAll() {
         this._openCloseAll(false);
     }
-    /**
-     * @private
-     * @param {?} expanded
-     * @return {?}
-     */
     _openCloseAll(expanded) {
         if (this.multiple) {
             this._openCloseAllActions.next(expanded);
         }
     }
-}
-LyAccordion.decorators = [
-    { type: Directive, args: [{
-                selector: 'ly-accordion',
-                exportAs: 'lyAccordion'
-            },] }
-];
-/** @nocollapse */
-LyAccordion.ctorParameters = () => [
-    { type: LyTheme2 },
-    { type: Renderer2 },
-    { type: ElementRef }
-];
-LyAccordion.propDecorators = {
-    appearance: [{ type: Input }],
-    multiple: [{ type: Input }],
-    hasToggle: [{ type: Input }]
 };
+__decorate([
+    Input(),
+    __metadata("design:type", String),
+    __metadata("design:paramtypes", [String])
+], LyAccordion.prototype, "appearance", null);
+__decorate([
+    Input(),
+    __metadata("design:type", Boolean),
+    __metadata("design:paramtypes", [Boolean])
+], LyAccordion.prototype, "multiple", null);
+__decorate([
+    Input(),
+    __metadata("design:type", Boolean),
+    __metadata("design:paramtypes", [Boolean])
+], LyAccordion.prototype, "hasToggle", null);
+LyAccordion = __decorate([
+    Directive({
+        selector: 'ly-accordion',
+        exportAs: 'lyAccordion'
+    }),
+    __metadata("design:paramtypes", [LyTheme2,
+        Renderer2,
+        ElementRef])
+], LyAccordion);
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
 const lyExpansionAnimations = {
     contentExpansion: trigger('contentExpansion', [
         state('collapsed, void', style({ height: '0px', visibility: 'hidden' })),
@@ -237,95 +190,50 @@ const lyExpansionAnimations = {
     ])
 };
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-class LyExpansionPanelContent {
-    /**
-     * @param {?} _template
-     */
+let LyExpansionPanelContent = class LyExpansionPanelContent {
     constructor(_template) {
         this._template = _template;
     }
-}
-LyExpansionPanelContent.decorators = [
-    { type: Directive, args: [{
-                selector: 'ng-template[lyExpansionPanelContent]'
-            },] }
-];
-/** @nocollapse */
-LyExpansionPanelContent.ctorParameters = () => [
-    { type: TemplateRef }
-];
+};
+LyExpansionPanelContent = __decorate([
+    Directive({
+        selector: 'ng-template[lyExpansionPanelContent]'
+    }),
+    __metadata("design:paramtypes", [TemplateRef])
+], LyExpansionPanelContent);
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/**
- * \@docs-private
- */
+/** @docs-private */
 class LyExpansionPanelBase {
-    /**
-     * @param {?} _theme
-     */
     constructor(_theme) {
         this._theme = _theme;
     }
 }
-/**
- * \@docs-private
- * @type {?}
- */
+/** @docs-private */
 const LyButtonMixinBase = mixinStyleUpdater(mixinBg(mixinColor(mixinElevation(mixinShadowColor(LyExpansionPanelBase)))));
-class LyExpansionPanel extends LyButtonMixinBase {
-    /**
-     * @param {?} _el
-     * @param {?} _renderer
-     * @param {?} _cd
-     * @param {?} _theme
-     * @param {?} _accordion
-     */
+let LyExpansionPanel = class LyExpansionPanel extends LyButtonMixinBase {
     constructor(_el, _renderer, _cd, _theme, _accordion) {
         super(_theme);
         this._el = _el;
         this._renderer = _renderer;
         this._cd = _cd;
         this._accordion = _accordion;
-        /**
-         * \@docs-private
-         */
+        /** @docs-private */
         this.classes = this._accordion.classes;
         this._panelAnimationTiming = `${this._theme.variables.animations.durations.entering}ms ${this._theme.variables.animations.curves.standard}`;
-        /**
-         * Subscription to openAll/closeAll events.
-         */
+        /** Subscription to openAll/closeAll events. */
         this._openCloseAllSubscription = Subscription.EMPTY;
         this._hasToggle = !!this._accordion.hasToggle;
-        /**
-         * Event emitted every time the LyExpansionPanel is closed.
-         */
+        /** Event emitted every time the LyExpansionPanel is closed. */
         this.closed = new EventEmitter();
-        /**
-         * Event emitted every time the LyExpansionPanel is opened.
-         */
+        /** Event emitted every time the LyExpansionPanel is opened. */
         this.opened = new EventEmitter();
-        /**
-         * An event emitted after the body's collapse animation happens.
-         */
+        /** An event emitted after the body's collapse animation happens. */
         this.afterCollapse = new EventEmitter();
-        /**
-         * An event emitted after the body's expansion animation happens.
-         */
+        /** An event emitted after the body's expansion animation happens. */
         this.afterExpand = new EventEmitter();
-        /**
-         * Event emitted when the LyExpansionPanel is destroyed.
-         */
+        /** Event emitted when the LyExpansionPanel is destroyed. */
         this.destroyed = new EventEmitter();
-        /**
-         * Stream of body animation done events.
-         */
+        /** Stream of body animation done events. */
         this._bodyAnimationDone = new Subject();
         _renderer.addClass(_el.nativeElement, this._accordion.classes.panel);
         this._openCloseAllSubscription = this._subscribeToOpenCloseAllActions();
@@ -342,12 +250,7 @@ class LyExpansionPanel extends LyButtonMixinBase {
             }
         });
     }
-    /**
-     * @param {?} val
-     * @return {?}
-     */
     set disabled(val) {
-        /** @type {?} */
         const newVal = toBoolean(val);
         if (newVal !== this.disabled) {
             this._disabled = newVal;
@@ -359,18 +262,10 @@ class LyExpansionPanel extends LyButtonMixinBase {
             }
         }
     }
-    /**
-     * @return {?}
-     */
     get disabled() {
         return this._disabled;
     }
-    /**
-     * @param {?} val
-     * @return {?}
-     */
     set expanded(val) {
-        /** @type {?} */
         const newVal = toBoolean(val);
         if (newVal !== this.expanded && !this.disabled) {
             // unselect other panels
@@ -389,36 +284,19 @@ class LyExpansionPanel extends LyButtonMixinBase {
             this._cd.markForCheck();
         }
     }
-    /**
-     * @return {?}
-     */
     get expanded() {
         return this._expanded;
     }
-    /**
-     * @param {?} val
-     * @return {?}
-     */
     set hasToggle(val) {
         this._hasToggle = toBoolean(val);
     }
-    /**
-     * @return {?}
-     */
     get hasToggle() {
         return this._hasToggle == null ? this._accordion.hasToggle : this._hasToggle;
     }
-    /**
-     * @return {?}
-     */
     ngOnChanges() {
         this.updateStyle(this._el);
     }
-    /**
-     * @return {?}
-     */
     ngOnInit() {
-        /** @type {?} */
         let requireUpdate = false;
         if (this.bg == null) {
             this.bg = 'paper';
@@ -436,257 +314,199 @@ class LyExpansionPanel extends LyButtonMixinBase {
             this.ngOnChanges();
         }
     }
-    /**
-     * @return {?}
-     */
     ngAfterContentInit() {
         if (this._lazyContent) {
-            this.opened.pipe(startWith((/** @type {?} */ (null))), filter(() => !!this.expanded && !this._lazyContentRef), first()).subscribe(() => this._lazyContentRef = this._lazyContent._template);
+            this.opened.pipe(startWith(null), filter(() => !!this.expanded && !this._lazyContentRef), first()).subscribe(() => this._lazyContentRef = this._lazyContent._template);
         }
     }
-    /**
-     * @return {?}
-     */
     ngOnDestroy() {
         this._openCloseAllSubscription.unsubscribe();
     }
-    /**
-     * @return {?}
-     */
     close() {
         this.expanded = false;
     }
-    /**
-     * @return {?}
-     */
     open() {
         this.expanded = true;
     }
-    /**
-     * @return {?}
-     */
     toggle() {
         this.expanded = !this.expanded;
     }
-    /**
-     * Gets the expanded state string.
-     * @return {?}
-     */
+    /** Gets the expanded state string. */
     _getExpandedState() {
         return this.expanded ? 'expanded' : 'collapsed';
     }
-    /**
-     * @private
-     * @return {?}
-     */
     _subscribeToOpenCloseAllActions() {
         return this._accordion._openCloseAllActions.subscribe(expanded => {
             this.expanded = expanded;
         });
     }
-}
-LyExpansionPanel.decorators = [
-    { type: Component, args: [{
-                selector: 'ly-expansion-panel',
-                template: "<ng-content select=\"ly-expansion-panel-header\"></ng-content>\n<div [className]=\"classes.panelContent\"\n  [@contentExpansion]=\"{\n    value: _getExpandedState(),\n    params: {\n      panelAnimationTiming: _panelAnimationTiming\n    }\n  }\"\n  (@contentExpansion.done)=\"_bodyAnimationDone.next($event)\"\n>\n  <div [className]=\"classes.panelBody\">\n    <ng-content></ng-content>\n    <ng-template [ngTransclude]=\"_lazyContentRef\"></ng-template>\n  </div>\n  <ng-content select=\"ly-action-row\"></ng-content>\n</div>",
-                changeDetection: ChangeDetectionStrategy.OnPush,
-                exportAs: 'lyExpansionPanel',
-                animations: [
-                    lyExpansionAnimations.contentExpansion
-                ],
-                inputs: [
-                    'bg',
-                    'color',
-                    'elevation',
-                    'shadowColor'
-                ]
-            }] }
-];
-/** @nocollapse */
-LyExpansionPanel.ctorParameters = () => [
-    { type: ElementRef },
-    { type: Renderer2 },
-    { type: ChangeDetectorRef },
-    { type: LyTheme2 },
-    { type: LyAccordion, decorators: [{ type: Inject, args: [LyAccordion,] }] }
-];
-LyExpansionPanel.propDecorators = {
-    _lazyContent: [{ type: ContentChild, args: [LyExpansionPanelContent,] }],
-    closed: [{ type: Output }],
-    opened: [{ type: Output }],
-    afterCollapse: [{ type: Output }],
-    afterExpand: [{ type: Output }],
-    destroyed: [{ type: Output }],
-    disabled: [{ type: Input }],
-    expanded: [{ type: Input }],
-    hasToggle: [{ type: Input }]
 };
+__decorate([
+    ContentChild(LyExpansionPanelContent),
+    __metadata("design:type", LyExpansionPanelContent)
+], LyExpansionPanel.prototype, "_lazyContent", void 0);
+__decorate([
+    Output(),
+    __metadata("design:type", EventEmitter)
+], LyExpansionPanel.prototype, "closed", void 0);
+__decorate([
+    Output(),
+    __metadata("design:type", EventEmitter)
+], LyExpansionPanel.prototype, "opened", void 0);
+__decorate([
+    Output(),
+    __metadata("design:type", EventEmitter)
+], LyExpansionPanel.prototype, "afterCollapse", void 0);
+__decorate([
+    Output(),
+    __metadata("design:type", EventEmitter)
+], LyExpansionPanel.prototype, "afterExpand", void 0);
+__decorate([
+    Output(),
+    __metadata("design:type", EventEmitter)
+], LyExpansionPanel.prototype, "destroyed", void 0);
+__decorate([
+    Input(),
+    __metadata("design:type", Boolean),
+    __metadata("design:paramtypes", [Boolean])
+], LyExpansionPanel.prototype, "disabled", null);
+__decorate([
+    Input(),
+    __metadata("design:type", Boolean),
+    __metadata("design:paramtypes", [Boolean])
+], LyExpansionPanel.prototype, "expanded", null);
+__decorate([
+    Input(),
+    __metadata("design:type", Boolean),
+    __metadata("design:paramtypes", [Boolean])
+], LyExpansionPanel.prototype, "hasToggle", null);
+LyExpansionPanel = __decorate([
+    Component({
+        selector: 'ly-expansion-panel',
+        template: "<ng-content select=\"ly-expansion-panel-header\"></ng-content>\n<div [className]=\"classes.panelContent\"\n  [@contentExpansion]=\"{\n    value: _getExpandedState(),\n    params: {\n      panelAnimationTiming: _panelAnimationTiming\n    }\n  }\"\n  (@contentExpansion.done)=\"_bodyAnimationDone.next($event)\"\n>\n  <div [className]=\"classes.panelBody\">\n    <ng-content></ng-content>\n    <ng-template [ngTransclude]=\"_lazyContentRef\"></ng-template>\n  </div>\n  <ng-content select=\"ly-action-row\"></ng-content>\n</div>",
+        changeDetection: ChangeDetectionStrategy.OnPush,
+        exportAs: 'lyExpansionPanel',
+        animations: [
+            lyExpansionAnimations.contentExpansion
+        ],
+        inputs: [
+            'bg',
+            'color',
+            'elevation',
+            'shadowColor'
+        ]
+    }),
+    __param(4, Inject(LyAccordion)),
+    __metadata("design:paramtypes", [ElementRef,
+        Renderer2,
+        ChangeDetectorRef,
+        LyTheme2,
+        LyAccordion])
+], LyExpansionPanel);
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-class LyExpansionPanelHeader {
-    /**
-     * @param {?} el
-     * @param {?} renderer
-     * @param {?} _accordion
-     * @param {?} _expansionPanel
-     */
+let LyExpansionPanelHeader = class LyExpansionPanelHeader {
     constructor(el, renderer, _accordion, _expansionPanel) {
         this._accordion = _accordion;
         this._expansionPanel = _expansionPanel;
-        /**
-         * \@docs-private
-         */
+        /** @docs-private */
         this.classes = this._accordion.classes;
         renderer.addClass(el.nativeElement, this._accordion.classes.panelHeader);
     }
-}
-LyExpansionPanelHeader.decorators = [
-    { type: Component, args: [{
-                selector: 'ly-expansion-panel-header',
-                template: "<span [className]=\"classes.panelHeaderContent\">\n  <ng-content select=\"ly-panel-title\"></ng-content>\n  <ng-content select=\"ly-panel-description\"></ng-content>\n  <ng-content></ng-content>\n</span>\n<ly-expansion-icon\n  *ngIf=\"!_expansionPanel.disabled && _expansionPanel.hasToggle\"\n  [up]=\"_expansionPanel.expanded\"\n></ly-expansion-icon>",
-                host: {
-                    '(click)': '_expansionPanel.toggle()'
-                }
-            }] }
-];
-/** @nocollapse */
-LyExpansionPanelHeader.ctorParameters = () => [
-    { type: ElementRef },
-    { type: Renderer2 },
-    { type: LyAccordion, decorators: [{ type: Inject, args: [LyAccordion,] }] },
-    { type: LyExpansionPanel, decorators: [{ type: Inject, args: [LyExpansionPanel,] }] }
-];
+};
+LyExpansionPanelHeader = __decorate([
+    Component({
+        selector: 'ly-expansion-panel-header',
+        template: "<span [className]=\"classes.panelHeaderContent\">\n  <ng-content select=\"ly-panel-title\"></ng-content>\n  <ng-content select=\"ly-panel-description\"></ng-content>\n  <ng-content></ng-content>\n</span>\n<ly-expansion-icon\n  *ngIf=\"!_expansionPanel.disabled && _expansionPanel.hasToggle\"\n  [up]=\"_expansionPanel.expanded\"\n></ly-expansion-icon>",
+        host: {
+            '(click)': '_expansionPanel.toggle()'
+        }
+    }),
+    __param(2, Inject(LyAccordion)),
+    __param(3, Inject(LyExpansionPanel)),
+    __metadata("design:paramtypes", [ElementRef,
+        Renderer2,
+        LyAccordion,
+        LyExpansionPanel])
+], LyExpansionPanelHeader);
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-class LyExpansionPanelTitle {
-    /**
-     * @param {?} el
-     * @param {?} renderer
-     * @param {?} accordion
-     */
+let LyExpansionPanelTitle = class LyExpansionPanelTitle {
     constructor(el, renderer, accordion) {
         renderer.addClass(el.nativeElement, accordion.classes.panelTitle);
     }
-}
-LyExpansionPanelTitle.decorators = [
-    { type: Directive, args: [{
-                selector: 'ly-panel-title'
-            },] }
-];
-/** @nocollapse */
-LyExpansionPanelTitle.ctorParameters = () => [
-    { type: ElementRef },
-    { type: Renderer2 },
-    { type: LyAccordion, decorators: [{ type: Inject, args: [LyAccordion,] }] }
-];
+};
+LyExpansionPanelTitle = __decorate([
+    Directive({
+        selector: 'ly-panel-title'
+    }),
+    __param(2, Inject(LyAccordion)),
+    __metadata("design:paramtypes", [ElementRef,
+        Renderer2,
+        LyAccordion])
+], LyExpansionPanelTitle);
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-class LyExpansionPanelDescription {
-    /**
-     * @param {?} el
-     * @param {?} renderer
-     * @param {?} accordion
-     */
+let LyExpansionPanelDescription = class LyExpansionPanelDescription {
     constructor(el, renderer, accordion) {
         renderer.addClass(el.nativeElement, accordion.classes.panelDescription);
     }
-}
-LyExpansionPanelDescription.decorators = [
-    { type: Directive, args: [{
-                selector: 'ly-panel-description'
-            },] }
-];
-/** @nocollapse */
-LyExpansionPanelDescription.ctorParameters = () => [
-    { type: ElementRef },
-    { type: Renderer2 },
-    { type: LyAccordion, decorators: [{ type: Inject, args: [LyAccordion,] }] }
-];
+};
+LyExpansionPanelDescription = __decorate([
+    Directive({
+        selector: 'ly-panel-description'
+    }),
+    __param(2, Inject(LyAccordion)),
+    __metadata("design:paramtypes", [ElementRef,
+        Renderer2,
+        LyAccordion])
+], LyExpansionPanelDescription);
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-class LyExpansionPanelAction {
-    /**
-     * @param {?} el
-     * @param {?} renderer
-     * @param {?} accordion
-     */
+let LyExpansionPanelAction = class LyExpansionPanelAction {
     constructor(el, renderer, accordion) {
         renderer.addClass(el.nativeElement, accordion.classes.panelActionRow);
     }
-}
-LyExpansionPanelAction.decorators = [
-    { type: Directive, args: [{
-                selector: 'ly-action-row'
-            },] }
-];
-/** @nocollapse */
-LyExpansionPanelAction.ctorParameters = () => [
-    { type: ElementRef },
-    { type: Renderer2 },
-    { type: LyAccordion, decorators: [{ type: Inject, args: [LyAccordion,] }] }
-];
+};
+LyExpansionPanelAction = __decorate([
+    Directive({
+        selector: 'ly-action-row'
+    }),
+    __param(2, Inject(LyAccordion)),
+    __metadata("design:paramtypes", [ElementRef,
+        Renderer2,
+        LyAccordion])
+], LyExpansionPanelAction);
+
+let LyExpansionModule = class LyExpansionModule {
+};
+LyExpansionModule = __decorate([
+    NgModule({
+        declarations: [
+            LyAccordion,
+            LyExpansionPanel,
+            LyExpansionPanelHeader,
+            LyExpansionPanelContent,
+            LyExpansionPanelTitle,
+            LyExpansionPanelDescription,
+            LyExpansionPanelAction
+        ],
+        imports: [
+            CommonModule,
+            LyExpansionIconModule,
+            NgTranscludeModule
+        ],
+        exports: [
+            LyAccordion,
+            LyExpansionPanel,
+            LyExpansionPanelHeader,
+            LyExpansionPanelContent,
+            LyExpansionPanelTitle,
+            LyExpansionPanelDescription,
+            LyExpansionPanelAction
+        ]
+    })
+], LyExpansionModule);
 
 /**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-class LyExpansionModule {
-}
-LyExpansionModule.decorators = [
-    { type: NgModule, args: [{
-                declarations: [
-                    LyAccordion,
-                    LyExpansionPanel,
-                    LyExpansionPanelHeader,
-                    LyExpansionPanelContent,
-                    LyExpansionPanelTitle,
-                    LyExpansionPanelDescription,
-                    LyExpansionPanelAction
-                ],
-                imports: [
-                    CommonModule,
-                    LyExpansionIconModule,
-                    NgTranscludeModule
-                ],
-                exports: [
-                    LyAccordion,
-                    LyExpansionPanel,
-                    LyExpansionPanelHeader,
-                    LyExpansionPanelContent,
-                    LyExpansionPanelTitle,
-                    LyExpansionPanelDescription,
-                    LyExpansionPanelAction
-                ]
-            },] }
-];
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated bundle index. Do not edit.
  */
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-
-export { STYLES, LyAccordion, LyExpansionModule, LyExpansionPanelBase, LyButtonMixinBase, LyExpansionPanel, LyExpansionPanelContent, LyExpansionPanelDescription, LyExpansionPanelHeader, LyExpansionPanelTitle, lyExpansionAnimations as ɵa, LyExpansionPanelAction as ɵb };
-
+export { LyAccordion, LyButtonMixinBase, LyExpansionModule, LyExpansionPanel, LyExpansionPanelBase, LyExpansionPanelContent, LyExpansionPanelDescription, LyExpansionPanelHeader, LyExpansionPanelTitle, STYLES, lyExpansionAnimations as ɵa, LyExpansionPanelAction as ɵb };
 //# sourceMappingURL=alyle-ui-expansion.js.map

@@ -1,18 +1,10 @@
-import { __extends } from 'tslib';
-import { Directive, Input, ElementRef, Renderer2, NgModule } from '@angular/core';
-import { LyTheme2, mixinBg, mixinColor, mixinElevation, mixinOutlined, mixinRaised, mixinShadowColor, mixinStyleUpdater, LyCommonModule } from '@alyle/ui';
+import { __extends, __decorate, __metadata } from 'tslib';
+import { Input, Directive, Renderer2, ElementRef, NgModule } from '@angular/core';
+import { mixinStyleUpdater, mixinBg, mixinColor, mixinRaised, mixinOutlined, mixinElevation, mixinShadowColor, LyTheme2, LyCommonModule } from '@alyle/ui';
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
 var STYLE_PRIORITY = -2;
-/** @type {?} */
 var DEFAULT_SIZE = 40;
-/** @type {?} */
 var DEFAULT_BG = 'action';
-/** @type {?} */
 var STYLES = function (theme) { return ({
     $priority: STYLE_PRIORITY,
     root: {
@@ -36,48 +28,32 @@ var STYLES = function (theme) { return ({
         '&': theme.avatar ? theme.avatar.root : null
     }
 }); };
-/**
- * \@docs-private
- */
-var  /**
- * \@docs-private
- */
-LyAvatarBase = /** @class */ (function () {
+var ɵ0 = STYLES;
+/** @docs-private */
+var LyAvatarBase = /** @class */ (function () {
     function LyAvatarBase(_theme) {
         this._theme = _theme;
     }
     return LyAvatarBase;
 }());
-/**
- * \@docs-private
- * @type {?}
- */
+/** @docs-private */
 var LyAvatarMixinBase = mixinStyleUpdater(mixinBg(mixinColor(mixinRaised(mixinOutlined(mixinElevation(mixinShadowColor(LyAvatarBase)))))));
 var LyAvatar = /** @class */ (function (_super) {
     __extends(LyAvatar, _super);
     function LyAvatar(theme, renderer, _elementRef) {
         var _this = _super.call(this, theme) || this;
         _this._elementRef = _elementRef;
-        /**
-         * \@docs-private
-         */
+        /** @docs-private */
         _this.classes = _this._theme.addStyleSheet(STYLES, STYLE_PRIORITY);
         _this.setAutoContrast();
         renderer.addClass(_elementRef.nativeElement, _this.classes.root);
         return _this;
     }
     Object.defineProperty(LyAvatar.prototype, "size", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._size;
         },
-        set: /**
-         * @param {?} val
-         * @return {?}
-         */
-        function (val) {
+        set: function (val) {
             if (val !== this.size) {
                 this._size = val;
                 this._sizeClass = this._theme.addStyle("lyAvatar.size:" + val, {
@@ -89,22 +65,10 @@ var LyAvatar = /** @class */ (function (_super) {
         enumerable: true,
         configurable: true
     });
-    /**
-     * @return {?}
-     */
-    LyAvatar.prototype.ngOnChanges = /**
-     * @return {?}
-     */
-    function () {
+    LyAvatar.prototype.ngOnChanges = function () {
         this.updateStyle(this._elementRef.nativeElement);
     };
-    /**
-     * @return {?}
-     */
-    LyAvatar.prototype.ngOnInit = /**
-     * @return {?}
-     */
-    function () {
+    LyAvatar.prototype.ngOnInit = function () {
         if (!this.bg) {
             this.bg = DEFAULT_BG;
             this.ngOnChanges();
@@ -113,62 +77,45 @@ var LyAvatar = /** @class */ (function (_super) {
             this.size = DEFAULT_SIZE;
         }
     };
-    LyAvatar.decorators = [
-        { type: Directive, args: [{
-                    selector: 'ly-avatar',
-                    inputs: [
-                        'bg',
-                        'color',
-                        'raised',
-                        'outlined',
-                        'elevation',
-                        'shadowColor',
-                    ]
-                },] }
-    ];
-    /** @nocollapse */
-    LyAvatar.ctorParameters = function () { return [
-        { type: LyTheme2 },
-        { type: Renderer2 },
-        { type: ElementRef }
-    ]; };
-    LyAvatar.propDecorators = {
-        size: [{ type: Input }]
-    };
+    __decorate([
+        Input(),
+        __metadata("design:type", Number),
+        __metadata("design:paramtypes", [Number])
+    ], LyAvatar.prototype, "size", null);
+    LyAvatar = __decorate([
+        Directive({
+            selector: 'ly-avatar',
+            inputs: [
+                'bg',
+                'color',
+                'raised',
+                'outlined',
+                'elevation',
+                'shadowColor',
+            ]
+        }),
+        __metadata("design:paramtypes", [LyTheme2,
+            Renderer2,
+            ElementRef])
+    ], LyAvatar);
     return LyAvatar;
 }(LyAvatarMixinBase));
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 var LyAvatarModule = /** @class */ (function () {
     function LyAvatarModule() {
     }
-    LyAvatarModule.decorators = [
-        { type: NgModule, args: [{
-                    exports: [LyAvatar, LyCommonModule],
-                    declarations: [LyAvatar]
-                },] }
-    ];
+    LyAvatarModule = __decorate([
+        NgModule({
+            exports: [LyAvatar, LyCommonModule],
+            declarations: [LyAvatar]
+        })
+    ], LyAvatarModule);
     return LyAvatarModule;
 }());
 
 /**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated bundle index. Do not edit.
  */
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-
-export { LyAvatarBase, LyAvatarMixinBase, LyAvatar, LyAvatarModule };
-
+export { LyAvatar, LyAvatarBase, LyAvatarMixinBase, LyAvatarModule, ɵ0 };
 //# sourceMappingURL=alyle-ui-avatar.js.map

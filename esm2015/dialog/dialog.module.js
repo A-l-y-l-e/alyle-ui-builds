@@ -1,7 +1,4 @@
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
+import * as tslib_1 from "tslib";
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LyCommonModule, LyOverlayModule } from '@alyle/ui';
@@ -10,34 +7,35 @@ import { LyDialog } from './dialog';
 import { LyDialogTitle } from './dialog-title.directive';
 import { LyDialogContent } from './dialog-content.directive';
 import { LyDialogActions } from './dialog-actions.directive';
-export class LyDialogModule {
-}
-LyDialogModule.decorators = [
-    { type: NgModule, args: [{
-                entryComponents: [
-                    LyDialogContainer
-                ],
-                declarations: [
-                    LyDialogContainer,
-                    LyDialogTitle,
-                    LyDialogContent,
-                    LyDialogActions
-                ],
-                imports: [
-                    CommonModule,
-                    LyCommonModule,
-                    LyOverlayModule
-                ],
-                exports: [
-                    LyCommonModule,
-                    LyDialogContainer,
-                    LyDialogTitle,
-                    LyDialogContent,
-                    LyDialogActions
-                ],
-                providers: [
-                    LyDialog
-                ]
-            },] }
-];
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiZGlhbG9nLm1vZHVsZS5qcyIsInNvdXJjZVJvb3QiOiJuZzovL0BhbHlsZS91aS9kaWFsb2cvIiwic291cmNlcyI6WyJkaWFsb2cubW9kdWxlLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7Ozs7QUFBQSxPQUFPLEVBQUUsUUFBUSxFQUFFLE1BQU0sZUFBZSxDQUFDO0FBQ3pDLE9BQU8sRUFBRSxZQUFZLEVBQUUsTUFBTSxpQkFBaUIsQ0FBQztBQUMvQyxPQUFPLEVBQUUsY0FBYyxFQUFFLGVBQWUsRUFBRSxNQUFNLFdBQVcsQ0FBQztBQUU1RCxPQUFPLEVBQUUsaUJBQWlCLEVBQUUsTUFBTSw4QkFBOEIsQ0FBQztBQUNqRSxPQUFPLEVBQUUsUUFBUSxFQUFFLE1BQU0sVUFBVSxDQUFDO0FBQ3BDLE9BQU8sRUFBRSxhQUFhLEVBQUUsTUFBTSwwQkFBMEIsQ0FBQztBQUN6RCxPQUFPLEVBQUUsZUFBZSxFQUFFLE1BQU0sNEJBQTRCLENBQUM7QUFDN0QsT0FBTyxFQUFFLGVBQWUsRUFBRSxNQUFNLDRCQUE0QixDQUFDO0FBNEI3RCxNQUFNLE9BQU8sY0FBYzs7O1lBMUIxQixRQUFRLFNBQUM7Z0JBQ1IsZUFBZSxFQUFFO29CQUNmLGlCQUFpQjtpQkFDbEI7Z0JBQ0QsWUFBWSxFQUFFO29CQUNaLGlCQUFpQjtvQkFDakIsYUFBYTtvQkFDYixlQUFlO29CQUNmLGVBQWU7aUJBQ2hCO2dCQUNELE9BQU8sRUFBRTtvQkFDUCxZQUFZO29CQUNaLGNBQWM7b0JBQ2QsZUFBZTtpQkFDaEI7Z0JBQ0QsT0FBTyxFQUFFO29CQUNQLGNBQWM7b0JBQ2QsaUJBQWlCO29CQUNqQixhQUFhO29CQUNiLGVBQWU7b0JBQ2YsZUFBZTtpQkFDaEI7Z0JBQ0QsU0FBUyxFQUFFO29CQUNULFFBQVE7aUJBQ1Q7YUFDRiIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IE5nTW9kdWxlIH0gZnJvbSAnQGFuZ3VsYXIvY29yZSc7XG5pbXBvcnQgeyBDb21tb25Nb2R1bGUgfSBmcm9tICdAYW5ndWxhci9jb21tb24nO1xuaW1wb3J0IHsgTHlDb21tb25Nb2R1bGUsIEx5T3ZlcmxheU1vZHVsZSB9IGZyb20gJ0BhbHlsZS91aSc7XG5cbmltcG9ydCB7IEx5RGlhbG9nQ29udGFpbmVyIH0gZnJvbSAnLi9kaWFsb2ctY29udGFpbmVyLmNvbXBvbmVudCc7XG5pbXBvcnQgeyBMeURpYWxvZyB9IGZyb20gJy4vZGlhbG9nJztcbmltcG9ydCB7IEx5RGlhbG9nVGl0bGUgfSBmcm9tICcuL2RpYWxvZy10aXRsZS5kaXJlY3RpdmUnO1xuaW1wb3J0IHsgTHlEaWFsb2dDb250ZW50IH0gZnJvbSAnLi9kaWFsb2ctY29udGVudC5kaXJlY3RpdmUnO1xuaW1wb3J0IHsgTHlEaWFsb2dBY3Rpb25zIH0gZnJvbSAnLi9kaWFsb2ctYWN0aW9ucy5kaXJlY3RpdmUnO1xuXG5ATmdNb2R1bGUoe1xuICBlbnRyeUNvbXBvbmVudHM6IFtcbiAgICBMeURpYWxvZ0NvbnRhaW5lclxuICBdLFxuICBkZWNsYXJhdGlvbnM6IFtcbiAgICBMeURpYWxvZ0NvbnRhaW5lcixcbiAgICBMeURpYWxvZ1RpdGxlLFxuICAgIEx5RGlhbG9nQ29udGVudCxcbiAgICBMeURpYWxvZ0FjdGlvbnNcbiAgXSxcbiAgaW1wb3J0czogW1xuICAgIENvbW1vbk1vZHVsZSxcbiAgICBMeUNvbW1vbk1vZHVsZSxcbiAgICBMeU92ZXJsYXlNb2R1bGVcbiAgXSxcbiAgZXhwb3J0czogW1xuICAgIEx5Q29tbW9uTW9kdWxlLFxuICAgIEx5RGlhbG9nQ29udGFpbmVyLFxuICAgIEx5RGlhbG9nVGl0bGUsXG4gICAgTHlEaWFsb2dDb250ZW50LFxuICAgIEx5RGlhbG9nQWN0aW9uc1xuICBdLFxuICBwcm92aWRlcnM6IFtcbiAgICBMeURpYWxvZ1xuICBdXG59KVxuZXhwb3J0IGNsYXNzIEx5RGlhbG9nTW9kdWxlIHsgfVxuIl19
+let LyDialogModule = class LyDialogModule {
+};
+LyDialogModule = tslib_1.__decorate([
+    NgModule({
+        entryComponents: [
+            LyDialogContainer
+        ],
+        declarations: [
+            LyDialogContainer,
+            LyDialogTitle,
+            LyDialogContent,
+            LyDialogActions
+        ],
+        imports: [
+            CommonModule,
+            LyCommonModule,
+            LyOverlayModule
+        ],
+        exports: [
+            LyCommonModule,
+            LyDialogContainer,
+            LyDialogTitle,
+            LyDialogContent,
+            LyDialogActions
+        ],
+        providers: [
+            LyDialog
+        ]
+    })
+], LyDialogModule);
+export { LyDialogModule };
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiZGlhbG9nLm1vZHVsZS5qcyIsInNvdXJjZVJvb3QiOiJuZzovL0BhbHlsZS91aS9kaWFsb2cvIiwic291cmNlcyI6WyJkaWFsb2cubW9kdWxlLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7QUFBQSxPQUFPLEVBQUUsUUFBUSxFQUFFLE1BQU0sZUFBZSxDQUFDO0FBQ3pDLE9BQU8sRUFBRSxZQUFZLEVBQUUsTUFBTSxpQkFBaUIsQ0FBQztBQUMvQyxPQUFPLEVBQUUsY0FBYyxFQUFFLGVBQWUsRUFBRSxNQUFNLFdBQVcsQ0FBQztBQUU1RCxPQUFPLEVBQUUsaUJBQWlCLEVBQUUsTUFBTSw4QkFBOEIsQ0FBQztBQUNqRSxPQUFPLEVBQUUsUUFBUSxFQUFFLE1BQU0sVUFBVSxDQUFDO0FBQ3BDLE9BQU8sRUFBRSxhQUFhLEVBQUUsTUFBTSwwQkFBMEIsQ0FBQztBQUN6RCxPQUFPLEVBQUUsZUFBZSxFQUFFLE1BQU0sNEJBQTRCLENBQUM7QUFDN0QsT0FBTyxFQUFFLGVBQWUsRUFBRSxNQUFNLDRCQUE0QixDQUFDO0FBNEI3RCxJQUFhLGNBQWMsR0FBM0IsTUFBYSxjQUFjO0NBQUksQ0FBQTtBQUFsQixjQUFjO0lBMUIxQixRQUFRLENBQUM7UUFDUixlQUFlLEVBQUU7WUFDZixpQkFBaUI7U0FDbEI7UUFDRCxZQUFZLEVBQUU7WUFDWixpQkFBaUI7WUFDakIsYUFBYTtZQUNiLGVBQWU7WUFDZixlQUFlO1NBQ2hCO1FBQ0QsT0FBTyxFQUFFO1lBQ1AsWUFBWTtZQUNaLGNBQWM7WUFDZCxlQUFlO1NBQ2hCO1FBQ0QsT0FBTyxFQUFFO1lBQ1AsY0FBYztZQUNkLGlCQUFpQjtZQUNqQixhQUFhO1lBQ2IsZUFBZTtZQUNmLGVBQWU7U0FDaEI7UUFDRCxTQUFTLEVBQUU7WUFDVCxRQUFRO1NBQ1Q7S0FDRixDQUFDO0dBQ1csY0FBYyxDQUFJO1NBQWxCLGNBQWMiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyBOZ01vZHVsZSB9IGZyb20gJ0Bhbmd1bGFyL2NvcmUnO1xuaW1wb3J0IHsgQ29tbW9uTW9kdWxlIH0gZnJvbSAnQGFuZ3VsYXIvY29tbW9uJztcbmltcG9ydCB7IEx5Q29tbW9uTW9kdWxlLCBMeU92ZXJsYXlNb2R1bGUgfSBmcm9tICdAYWx5bGUvdWknO1xuXG5pbXBvcnQgeyBMeURpYWxvZ0NvbnRhaW5lciB9IGZyb20gJy4vZGlhbG9nLWNvbnRhaW5lci5jb21wb25lbnQnO1xuaW1wb3J0IHsgTHlEaWFsb2cgfSBmcm9tICcuL2RpYWxvZyc7XG5pbXBvcnQgeyBMeURpYWxvZ1RpdGxlIH0gZnJvbSAnLi9kaWFsb2ctdGl0bGUuZGlyZWN0aXZlJztcbmltcG9ydCB7IEx5RGlhbG9nQ29udGVudCB9IGZyb20gJy4vZGlhbG9nLWNvbnRlbnQuZGlyZWN0aXZlJztcbmltcG9ydCB7IEx5RGlhbG9nQWN0aW9ucyB9IGZyb20gJy4vZGlhbG9nLWFjdGlvbnMuZGlyZWN0aXZlJztcblxuQE5nTW9kdWxlKHtcbiAgZW50cnlDb21wb25lbnRzOiBbXG4gICAgTHlEaWFsb2dDb250YWluZXJcbiAgXSxcbiAgZGVjbGFyYXRpb25zOiBbXG4gICAgTHlEaWFsb2dDb250YWluZXIsXG4gICAgTHlEaWFsb2dUaXRsZSxcbiAgICBMeURpYWxvZ0NvbnRlbnQsXG4gICAgTHlEaWFsb2dBY3Rpb25zXG4gIF0sXG4gIGltcG9ydHM6IFtcbiAgICBDb21tb25Nb2R1bGUsXG4gICAgTHlDb21tb25Nb2R1bGUsXG4gICAgTHlPdmVybGF5TW9kdWxlXG4gIF0sXG4gIGV4cG9ydHM6IFtcbiAgICBMeUNvbW1vbk1vZHVsZSxcbiAgICBMeURpYWxvZ0NvbnRhaW5lcixcbiAgICBMeURpYWxvZ1RpdGxlLFxuICAgIEx5RGlhbG9nQ29udGVudCxcbiAgICBMeURpYWxvZ0FjdGlvbnNcbiAgXSxcbiAgcHJvdmlkZXJzOiBbXG4gICAgTHlEaWFsb2dcbiAgXVxufSlcbmV4cG9ydCBjbGFzcyBMeURpYWxvZ01vZHVsZSB7IH1cbiJdfQ==

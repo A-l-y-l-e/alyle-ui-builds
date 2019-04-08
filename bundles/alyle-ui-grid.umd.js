@@ -1,21 +1,38 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@alyle/ui'), require('@angular/core')) :
-    typeof define === 'function' && define.amd ? define('@alyle/ui/grid', ['exports', '@alyle/ui', '@angular/core'], factory) :
-    (factory((global.ly = global.ly || {}, global.ly.grid = {}),global.ly.core,global.ng.core));
-}(this, (function (exports,ui,core) { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@alyle/ui')) :
+    typeof define === 'function' && define.amd ? define('@alyle/ui/grid', ['exports', '@angular/core', '@alyle/ui'], factory) :
+    (global = global || self, factory((global.ly = global.ly || {}, global.ly.grid = {}), global.ng.core, global.ly.core));
+}(this, function (exports, core, ui) { 'use strict';
 
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    /** @type {?} */
+    /*! *****************************************************************************
+    Copyright (c) Microsoft Corporation. All rights reserved.
+    Licensed under the Apache License, Version 2.0 (the "License"); you may not use
+    this file except in compliance with the License. You may obtain a copy of the
+    License at http://www.apache.org/licenses/LICENSE-2.0
+
+    THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
+    WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
+    MERCHANTABLITY OR NON-INFRINGEMENT.
+
+    See the Apache Version 2.0 License for specific language governing permissions
+    and limitations under the License.
+    ***************************************************************************** */
+
+    function __decorate(decorators, target, key, desc) {
+        var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+        else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+        return c > 3 && r && Object.defineProperty(target, key, r), r;
+    }
+
+    function __metadata(metadataKey, metadataValue) {
+        if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(metadataKey, metadataValue);
+    }
+
     var STYLE_PRIORITY = -1;
-    /**
-     * \@docs-private
-     * @type {?}
-     */
+    /** @docs-private */
     var COL_VALUES = {};
-    /** @type {?} */
     var ALIGN_ALIAS = {
         rowReverse: 'row-reverse',
         columnReverse: 'column-reverse',
@@ -26,7 +43,6 @@
         around: 'space-around',
         evenly: 'space-evenly',
     };
-    /** @type {?} */
     var styles = ({
         root: {
             width: '100%',
@@ -49,21 +65,16 @@
             this.el = el;
             /**
              * Styles
-             * \@docs-private
+             * @docs-private
              */
             this.classes = this.theme.addStyleSheet(styles, STYLE_PRIORITY);
             this.el.nativeElement.classList.add(this.classes.root);
         }
         Object.defineProperty(LyGrid.prototype, "spacingX", {
-            get: /**
-             * @return {?}
-             */ function () {
+            get: function () {
                 return this._spacingX;
             },
-            set: /**
-             * @param {?} val
-             * @return {?}
-             */ function (val) {
+            set: function (val) {
                 if (val !== this.spacingX) {
                     this._spacingX = val;
                     this._createSpacingClass(undefined, val);
@@ -73,15 +84,10 @@
             configurable: true
         });
         Object.defineProperty(LyGrid.prototype, "spacingY", {
-            get: /**
-             * @return {?}
-             */ function () {
+            get: function () {
                 return this._spacingY;
             },
-            set: /**
-             * @param {?} val
-             * @return {?}
-             */ function (val) {
+            set: function (val) {
                 if (val !== this.spacingY) {
                     this._spacingY = val;
                     this._createSpacingClass(undefined, undefined, val);
@@ -95,17 +101,10 @@
              * Defines the space between the component with the `item` attribute.
              * Support breakpoints
              */
-            get: /**
-             * Defines the space between the component with the `item` attribute.
-             * Support breakpoints
-             * @return {?}
-             */ function () {
+            get: function () {
                 return this._spacing;
             },
-            set: /**
-             * @param {?} val
-             * @return {?}
-             */ function (val) {
+            set: function (val) {
                 if (val !== this.spacing) {
                     this._spacing = val;
                     this._createSpacingClass(val);
@@ -117,115 +116,80 @@
         /**
          * Only one param must be defined
          */
-        /**
-         * Only one param must be defined
-         * @private
-         * @param {?=} xy
-         * @param {?=} x
-         * @param {?=} y
-         * @return {?}
-         */
-        LyGrid.prototype._createSpacingClass = /**
-         * Only one param must be defined
-         * @private
-         * @param {?=} xy
-         * @param {?=} x
-         * @param {?=} y
-         * @return {?}
-         */
-            function (xy, x, y) {
-                /** @type {?} */
-                var newSpacingClass = this.theme.addStyle("lyGrid-spacing:" + xy + "\u00B7" + x + "\u00B7" + y, function (theme) {
-                    /** @type {?} */
-                    var val = xy || x || y;
-                    /** @type {?} */
-                    var spacingStyles = {};
-                    ui.eachMedia(val, function (value, media) {
-                        /** @type {?} */
-                        var valuePadding = (+value) / 2 + "px";
-                        /** @type {?} */
-                        var padding = xy != null
-                            ? valuePadding
-                            : x != null
-                                ? "0 " + valuePadding
-                                : valuePadding + " 0";
-                        if (media) {
-                            spacingStyles[theme.getBreakpoint(media)] = {
-                                padding: padding
-                            };
-                        }
-                        else {
-                            spacingStyles.padding = padding;
-                        }
-                    });
-                    return spacingStyles;
-                }, undefined, undefined, STYLE_PRIORITY);
-                if (xy) {
-                    this._spacingClass = newSpacingClass;
-                }
-                else {
-                    if (x) {
-                        this._spacingXClass = newSpacingClass;
+        LyGrid.prototype._createSpacingClass = function (xy, x, y) {
+            var newSpacingClass = this.theme.addStyle("lyGrid-spacing:" + xy + "\u00B7" + x + "\u00B7" + y, function (theme) {
+                var val = xy || x || y;
+                var spacingStyles = {};
+                ui.eachMedia(val, function (value, media) {
+                    var valuePadding = (+value) / 2 + "px";
+                    var padding = xy != null
+                        ? valuePadding
+                        : x != null
+                            ? "0 " + valuePadding
+                            : valuePadding + " 0";
+                    if (media) {
+                        spacingStyles[theme.getBreakpoint(media)] = {
+                            padding: padding
+                        };
                     }
-                    if (y) {
-                        this._spacingYClass = newSpacingClass;
+                    else {
+                        spacingStyles.padding = padding;
                     }
+                });
+                return spacingStyles;
+            }, undefined, undefined, STYLE_PRIORITY);
+            if (xy) {
+                this._spacingClass = newSpacingClass;
+            }
+            else {
+                if (x) {
+                    this._spacingXClass = newSpacingClass;
                 }
-                this._negativeMarginClass = this.theme.addStyle("lyGrid-negative-margin:" + xy + "\u00B7" + x + "\u00B7" + y, function (theme) {
-                    /** @type {?} */
-                    var val = xy || x || y;
-                    /** @type {?} */
-                    var negativeMarginStyles;
-                    ui.eachMedia(val, function (value, media) {
-                        /** @type {?} */
-                        var valueMargin = (-value) / 2 + "px";
-                        /** @type {?} */
-                        var margin = xy != null
-                            ? valueMargin
-                            : x != null
-                                ? "0 " + valueMargin
-                                : valueMargin + " 0";
-                        /** @type {?} */
-                        var negativeMarginstyles = { margin: margin };
-                        if (xy != null || x != null) {
-                            negativeMarginstyles.width = "calc(100% + " + value + "px)";
+                if (y) {
+                    this._spacingYClass = newSpacingClass;
+                }
+            }
+            this._negativeMarginClass = this.theme.addStyle("lyGrid-negative-margin:" + xy + "\u00B7" + x + "\u00B7" + y, function (theme) {
+                var val = xy || x || y;
+                var negativeMarginStyles;
+                ui.eachMedia(val, function (value, media) {
+                    var valueMargin = (-value) / 2 + "px";
+                    var margin = xy != null
+                        ? valueMargin
+                        : x != null
+                            ? "0 " + valueMargin
+                            : valueMargin + " 0";
+                    var negativeMarginstyles = { margin: margin };
+                    if (xy != null || x != null) {
+                        negativeMarginstyles.width = "calc(100% + " + value + "px)";
+                    }
+                    if (media) {
+                        if (!negativeMarginStyles) {
+                            negativeMarginStyles = {};
                         }
-                        if (media) {
-                            if (!negativeMarginStyles) {
-                                negativeMarginStyles = {};
-                            }
-                            negativeMarginStyles[theme.getBreakpoint(media)] = negativeMarginstyles;
-                        }
-                        else {
-                            negativeMarginStyles = negativeMarginstyles;
-                        }
-                    });
-                    return ( /** @type {?} */(negativeMarginStyles));
-                }, this.el.nativeElement, this._negativeMarginClass, STYLE_PRIORITY);
-            };
+                        negativeMarginStyles[theme.getBreakpoint(media)] = negativeMarginstyles;
+                    }
+                    else {
+                        negativeMarginStyles = negativeMarginstyles;
+                    }
+                });
+                return negativeMarginStyles;
+            }, this.el.nativeElement, this._negativeMarginClass, STYLE_PRIORITY);
+        };
         Object.defineProperty(LyGrid.prototype, "justify", {
             /**
              * Defines the justify-content style property.
              * Support breakpoints
              */
-            get: /**
-             * Defines the justify-content style property.
-             * Support breakpoints
-             * @return {?}
-             */ function () {
+            get: function () {
                 return this._justify;
             },
-            set: /**
-             * @param {?} val
-             * @return {?}
-             */ function (val) {
+            set: function (val) {
                 if (val !== this.justify) {
                     this._justify = val;
                     this._justifyClass = this.theme.addStyle("lyGrid-justify:" + val, function (theme) {
-                        /** @type {?} */
                         var justifyStyles;
                         ui.eachMedia(val, function (value, media) {
-                            /** @type {?} */
                             var newJustifyStyles = {
                                 justifyContent: value in ALIGN_ALIAS
                                     ? ALIGN_ALIAS[value]
@@ -241,7 +205,7 @@
                                 justifyStyles = newJustifyStyles;
                             }
                         });
-                        return ( /** @type {?} */(justifyStyles));
+                        return justifyStyles;
                     }, this.el.nativeElement, this._justifyClass, STYLE_PRIORITY);
                 }
             },
@@ -253,24 +217,15 @@
              * Defines the justify-content style property.
              * Support breakpoints
              */
-            get: /**
-             * Defines the justify-content style property.
-             * Support breakpoints
-             * @return {?}
-             */ function () {
+            get: function () {
                 return this._direction;
             },
-            set: /**
-             * @param {?} val
-             * @return {?}
-             */ function (val) {
+            set: function (val) {
                 if (val !== this.direction) {
                     this._direction = val;
                     this._directionClass = this.theme.addStyle("lyGrid-direction:" + val, function (theme) {
-                        /** @type {?} */
                         var directionStyles;
                         ui.eachMedia(val, function (value, media) {
-                            /** @type {?} */
                             var newDirectionStyles = {
                                 flexDirection: value in ALIGN_ALIAS
                                     ? ALIGN_ALIAS[value]
@@ -286,7 +241,7 @@
                                 directionStyles = newDirectionStyles;
                             }
                         });
-                        return ( /** @type {?} */(directionStyles));
+                        return directionStyles;
                     }, this.el.nativeElement, this._directionClass, STYLE_PRIORITY);
                 }
             },
@@ -294,27 +249,18 @@
             configurable: true
         });
         Object.defineProperty(LyGrid.prototype, "alignItems", {
-            get: /**
-             * @return {?}
-             */ function () {
+            get: function () {
                 return this._alignItems;
             },
             /**
              * Defines the `align-items` style property.
              * Support breakpoints
              */
-            set: /**
-             * Defines the `align-items` style property.
-             * Support breakpoints
-             * @param {?} val
-             * @return {?}
-             */ function (val) {
+            set: function (val) {
                 this._alignItems = val;
                 this._alignItemsClass = this.theme.addStyle("lyGrid.align:" + val, function (theme) {
-                    /** @type {?} */
                     var alignItemsStyles;
                     ui.eachMedia(val, function (value, media) {
-                        /** @type {?} */
                         var newAlignItemsStyles = {
                             alignItems: value in ALIGN_ALIAS
                                 ? ALIGN_ALIAS[value]
@@ -330,32 +276,49 @@
                             alignItemsStyles = newAlignItemsStyles;
                         }
                     });
-                    return ( /** @type {?} */(alignItemsStyles));
+                    return alignItemsStyles;
                 }, this.el.nativeElement, this._alignItemsClass, STYLE_PRIORITY);
             },
             enumerable: true,
             configurable: true
         });
-        LyGrid.decorators = [
-            { type: core.Directive, args: [{
-                        selector: 'ly-grid[container]'
-                    },] }
-        ];
-        /** @nocollapse */
-        LyGrid.ctorParameters = function () {
-            return [
-                { type: ui.LyTheme2 },
-                { type: core.ElementRef }
-            ];
-        };
-        LyGrid.propDecorators = {
-            spacingX: [{ type: core.Input }],
-            spacingY: [{ type: core.Input }],
-            spacing: [{ type: core.Input }],
-            justify: [{ type: core.Input }],
-            direction: [{ type: core.Input }],
-            alignItems: [{ type: core.Input }]
-        };
+        __decorate([
+            core.Input(),
+            __metadata("design:type", Object),
+            __metadata("design:paramtypes", [Object])
+        ], LyGrid.prototype, "spacingX", null);
+        __decorate([
+            core.Input(),
+            __metadata("design:type", Object),
+            __metadata("design:paramtypes", [Object])
+        ], LyGrid.prototype, "spacingY", null);
+        __decorate([
+            core.Input(),
+            __metadata("design:type", Object),
+            __metadata("design:paramtypes", [Object])
+        ], LyGrid.prototype, "spacing", null);
+        __decorate([
+            core.Input(),
+            __metadata("design:type", String),
+            __metadata("design:paramtypes", [String])
+        ], LyGrid.prototype, "justify", null);
+        __decorate([
+            core.Input(),
+            __metadata("design:type", String),
+            __metadata("design:paramtypes", [String])
+        ], LyGrid.prototype, "direction", null);
+        __decorate([
+            core.Input(),
+            __metadata("design:type", String),
+            __metadata("design:paramtypes", [String])
+        ], LyGrid.prototype, "alignItems", null);
+        LyGrid = __decorate([
+            core.Directive({
+                selector: 'ly-grid[container]'
+            }),
+            __metadata("design:paramtypes", [ui.LyTheme2,
+                core.ElementRef])
+        ], LyGrid);
         return LyGrid;
     }());
     var LyGridItem = /** @class */ (function () {
@@ -373,17 +336,10 @@
              * Defines the number of grids
              * Support breakpoints
              */
-            get: /**
-             * Defines the number of grids
-             * Support breakpoints
-             * @return {?}
-             */ function () {
+            get: function () {
                 return this._col;
             },
-            set: /**
-             * @param {?} val
-             * @return {?}
-             */ function (val) {
+            set: function (val) {
                 if (val !== this.col) {
                     this._col = val;
                     this._colClass = this.theme.addStyle("lyGrid-col:" + val, function (theme) {
@@ -391,10 +347,8 @@
                             return getColStyle(val);
                         }
                         else {
-                            /** @type {?} */
                             var colStyles_1;
                             ui.eachMedia(val, function (value, media) {
-                                /** @type {?} */
                                 var newColStyles = getColStyle(+value);
                                 if (media) {
                                     if (!colStyles_1) {
@@ -406,7 +360,7 @@
                                     colStyles_1 = newColStyles;
                                 }
                             });
-                            return ( /** @type {?} */(colStyles_1));
+                            return colStyles_1;
                         }
                     }, this.el.nativeElement, this._colClass, STYLE_PRIORITY);
                 }
@@ -415,15 +369,10 @@
             configurable: true
         });
         Object.defineProperty(LyGridItem.prototype, "gridItemCol", {
-            get: /**
-             * @return {?}
-             */ function () {
+            get: function () {
                 return this.col;
             },
-            set: /**
-             * @param {?} val
-             * @return {?}
-             */ function (val) {
+            set: function (val) {
                 this.col = val;
             },
             enumerable: true,
@@ -434,24 +383,15 @@
              * Defines the order style property.
              * Support breakpoints
              */
-            get: /**
-             * Defines the order style property.
-             * Support breakpoints
-             * @return {?}
-             */ function () {
+            get: function () {
                 return this._order;
             },
-            set: /**
-             * @param {?} val
-             * @return {?}
-             */ function (val) {
+            set: function (val) {
                 if (val !== this.order) {
                     this._order = val;
                     this._orderClass = this.theme.addStyle("lyGrid-order:" + val, function (theme) {
-                        /** @type {?} */
                         var orderStyles;
                         ui.eachMedia("" + val, function (value, media) {
-                            /** @type {?} */
                             var newOrderStyles = {
                                 order: value
                             };
@@ -465,68 +405,55 @@
                                 orderStyles = newOrderStyles;
                             }
                         });
-                        return ( /** @type {?} */(orderStyles));
+                        return orderStyles;
                     }, this.el.nativeElement, this._orderClass, STYLE_PRIORITY);
                 }
             },
             enumerable: true,
             configurable: true
         });
-        /**
-         * @return {?}
-         */
-        LyGridItem.prototype.ngOnInit = /**
-         * @return {?}
-         */
-            function () {
-                this._updateSpacing();
-            };
-        /**
-         * @private
-         * @return {?}
-         */
-        LyGridItem.prototype._updateSpacing = /**
-         * @private
-         * @return {?}
-         */
-            function () {
-                if (this.gridContainer._spacingClass) {
-                    this.el.nativeElement.classList.add(this.gridContainer._spacingClass);
-                }
-                else {
-                    if (this.gridContainer._spacingXClass) {
-                        this.el.nativeElement.classList.add(this.gridContainer._spacingXClass);
-                    }
-                    if (this.gridContainer._spacingYClass) {
-                        this.el.nativeElement.classList.add(this.gridContainer._spacingYClass);
-                    }
-                }
-            };
-        LyGridItem.decorators = [
-            { type: core.Directive, args: [{
-                        selector: 'ly-grid[item], [ly-grid-item], [lyGridItem]'
-                    },] }
-        ];
-        /** @nocollapse */
-        LyGridItem.ctorParameters = function () {
-            return [
-                { type: LyGrid },
-                { type: core.ElementRef },
-                { type: core.Renderer2 },
-                { type: ui.LyTheme2 }
-            ];
+        LyGridItem.prototype.ngOnInit = function () {
+            this._updateSpacing();
         };
-        LyGridItem.propDecorators = {
-            col: [{ type: core.Input }],
-            gridItemCol: [{ type: core.Input, args: ['lyGridItem',] }],
-            order: [{ type: core.Input }]
+        LyGridItem.prototype._updateSpacing = function () {
+            if (this.gridContainer._spacingClass) {
+                this.el.nativeElement.classList.add(this.gridContainer._spacingClass);
+            }
+            else {
+                if (this.gridContainer._spacingXClass) {
+                    this.el.nativeElement.classList.add(this.gridContainer._spacingXClass);
+                }
+                if (this.gridContainer._spacingYClass) {
+                    this.el.nativeElement.classList.add(this.gridContainer._spacingYClass);
+                }
+            }
         };
+        __decorate([
+            core.Input(),
+            __metadata("design:type", Object),
+            __metadata("design:paramtypes", [Object])
+        ], LyGridItem.prototype, "col", null);
+        __decorate([
+            core.Input('lyGridItem'),
+            __metadata("design:type", Object),
+            __metadata("design:paramtypes", [Object])
+        ], LyGridItem.prototype, "gridItemCol", null);
+        __decorate([
+            core.Input(),
+            __metadata("design:type", Object),
+            __metadata("design:paramtypes", [Object])
+        ], LyGridItem.prototype, "order", null);
+        LyGridItem = __decorate([
+            core.Directive({
+                selector: 'ly-grid[item], [ly-grid-item], [lyGridItem]'
+            }),
+            __metadata("design:paramtypes", [LyGrid,
+                core.ElementRef,
+                core.Renderer2,
+                ui.LyTheme2])
+        ], LyGridItem);
         return LyGridItem;
     }());
-    /**
-     * @param {?} val
-     * @return {?}
-     */
     function getColStyle(val) {
         return {
             maxWidth: val ? getColVal(val) : '100%',
@@ -534,46 +461,23 @@
             flexGrow: val ? 0 : 1
         };
     }
-    /**
-     * @param {?} val
-     * @return {?}
-     */
     function getColVal(val) {
         return val in COL_VALUES
             ? COL_VALUES[val]
             : COL_VALUES[val] = +val * 100 / 12 + "%";
     }
 
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
     var LyGridModule = /** @class */ (function () {
         function LyGridModule() {
         }
-        LyGridModule.decorators = [
-            { type: core.NgModule, args: [{
-                        exports: [LyGrid, LyGridItem],
-                        declarations: [LyGrid, LyGridItem]
-                    },] }
-        ];
+        LyGridModule = __decorate([
+            core.NgModule({
+                exports: [LyGrid, LyGridItem],
+                declarations: [LyGrid, LyGridItem]
+            })
+        ], LyGridModule);
         return LyGridModule;
     }());
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
 
     exports.LyGrid = LyGrid;
     exports.LyGridItem = LyGridItem;
@@ -581,6 +485,5 @@
 
     Object.defineProperty(exports, '__esModule', { value: true });
 
-})));
-
+}));
 //# sourceMappingURL=alyle-ui-grid.umd.js.map

@@ -1,18 +1,11 @@
-import { __assign, __extends } from 'tslib';
+import { __assign, __decorate, __metadata, __extends } from 'tslib';
+import { Directive, ViewChild, ElementRef, ContentChildren, forwardRef, QueryList, ContentChild, Input, Component, ChangeDetectionStrategy, Renderer2, NgZone, ChangeDetectorRef, NgModule } from '@angular/core';
+import { LY_COMMON_STYLES, LyTheme2, mixinStyleUpdater, mixinBg, mixinColor, mixinRaised, mixinDisabled, mixinOutlined, mixinElevation, mixinShadowColor, mixinDisableRipple, Platform, toBoolean, LyRippleService, LyFocusState, LyCommonModule } from '@alyle/ui';
 import { LyAvatar } from '@alyle/ui/avatar';
 import { CommonModule } from '@angular/common';
-import { Directive, ElementRef, Input, NgZone, Renderer2, Component, ViewChild, forwardRef, ContentChildren, ContentChild, ChangeDetectionStrategy, ChangeDetectorRef, NgModule } from '@angular/core';
-import { LY_COMMON_STYLES, LyFocusState, LyRippleService, LyTheme2, mixinBg, mixinColor, mixinDisabled, mixinDisableRipple, mixinElevation, mixinOutlined, mixinRaised, mixinShadowColor, mixinStyleUpdater, toBoolean, Platform, LyCommonModule } from '@alyle/ui';
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
 var STYLE_PRIORITY = 2;
-/** @type {?} */
 var DISABLE_PADDING = false;
-/** @type {?} */
 var STYLES = function (theme) { return ({
     $priority: STYLE_PRIORITY,
     root: {
@@ -76,53 +69,36 @@ var STYLES = function (theme) { return ({
         }
     }
 }); };
-/**
- * List container
- */
+/** List container */
 var LyList = /** @class */ (function () {
     function LyList(theme) {
         this.theme = theme;
-        /**
-         * \@docs-private
-         */
+        /** @docs-private */
         this.classes = this.theme.addStyleSheet(STYLES);
     }
-    LyList.decorators = [
-        { type: Directive, args: [{
-                    selector: 'ly-list',
-                    exportAs: 'lyList',
-                    host: {
-                        '[className]': 'classes.root'
-                    }
-                },] }
-    ];
-    /** @nocollapse */
-    LyList.ctorParameters = function () { return [
-        { type: LyTheme2 }
-    ]; };
+    LyList = __decorate([
+        Directive({
+            selector: 'ly-list',
+            exportAs: 'lyList',
+            host: {
+                '[className]': 'classes.root'
+            }
+        }),
+        __metadata("design:paramtypes", [LyTheme2])
+    ], LyList);
     return LyList;
 }());
-/**
- * \@docs-private
- */
-var  /**
- * \@docs-private
- */
-LyListItemBase = /** @class */ (function () {
+/** @docs-private */
+var LyListItemBase = /** @class */ (function () {
     function LyListItemBase(_theme, _ngZone) {
         this._theme = _theme;
         this._ngZone = _ngZone;
     }
     return LyListItemBase;
 }());
-/**
- * \@docs-private
- * @type {?}
- */
+/** @docs-private */
 var LyListItemMixinBase = mixinStyleUpdater(mixinBg(mixinColor(mixinRaised(mixinDisabled(mixinOutlined(mixinElevation(mixinShadowColor(mixinDisableRipple(LyListItemBase)))))))));
-/**
- * List Item
- */
+/** List Item */
 var LyListItem = /** @class */ (function (_super) {
     __extends(LyListItem, _super);
     function LyListItem(_el, _renderer, theme, ngZone, _rippleService, _focusState, _list, _cd) {
@@ -133,9 +109,7 @@ var LyListItem = /** @class */ (function (_super) {
         _this._focusState = _focusState;
         _this._list = _list;
         _this._cd = _cd;
-        /**
-         * \@docs-private
-         */
+        /** @docs-private */
         _this.classes = _this._list.classes;
         _this._isBrowser = Platform.isBrowser;
         _this.setAutoContrast();
@@ -143,14 +117,9 @@ var LyListItem = /** @class */ (function (_super) {
         return _this;
     }
     Object.defineProperty(LyListItem.prototype, "_listItemClasses", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             var _a = this.classes, listItemContent = _a.listItemContent, twoLine = _a.twoLine, oneLine = _a.oneLine, listItemWithIcon = _a.listItemWithIcon, twoLineWithIcon = _a.twoLineWithIcon;
-            /** @type {?} */
             var classes = [listItemContent];
-            /** @type {?} */
             var hasIcon = this._icon || this._avatar;
             if (hasIcon) {
                 classes.push(listItemWithIcon);
@@ -169,38 +138,23 @@ var LyListItem = /** @class */ (function (_super) {
         configurable: true
     });
     Object.defineProperty(LyListItem.prototype, "isActionListItem", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._isActionListItem;
         },
         /** @docs-private */
-        set: /**
-         * \@docs-private
-         * @param {?} val
-         * @return {?}
-         */
-        function (val) {
+        set: function (val) {
             this._isActionListItem = toBoolean(val);
         },
         enumerable: true,
         configurable: true
     });
-    /**
-     * @return {?}
-     */
-    LyListItem.prototype.ngOnInit = /**
-     * @return {?}
-     */
-    function () {
+    LyListItem.prototype.ngOnInit = function () {
         var _this = this;
         this._renderer.addClass(this._el.nativeElement, this._list.classes.listItem);
         if (this.disableRipple == null) {
             if (this.isActionListItem) {
                 this._renderer.addClass(this._el.nativeElement, this.classes.actionListItem);
                 this.disableRipple = false;
-                /** @type {?} */
                 var focusState = this._focusState.listen(this._el);
                 if (focusState) {
                     focusState.subscribe(function (event) {
@@ -217,61 +171,60 @@ var LyListItem = /** @class */ (function (_super) {
             }
         }
     };
-    /**
-     * @return {?}
-     */
-    LyListItem.prototype.ngAfterContentInit = /**
-     * @return {?}
-     */
-    function () {
+    LyListItem.prototype.ngAfterContentInit = function () {
         var _this = this;
         this._lines.changes.subscribe(function () { return _this._cd.markForCheck(); });
     };
-    /**
-     * @return {?}
-     */
-    LyListItem.prototype.ngOnDestroy = /**
-     * @return {?}
-     */
-    function () {
+    LyListItem.prototype.ngOnDestroy = function () {
         this._focusState.unlisten(this._el);
     };
-    LyListItem.decorators = [
-        { type: Component, args: [{
-                    selector: 'ly-list-item, a[ly-list-item], button[ly-list-item]',
-                    template: "<span [ngClass]=\"_listItemClasses\">\n  <ng-content></ng-content>\n  <div *ngIf=\"_lines?.length\" [className]=\"classes.lines\">\n    <ng-content select=\"[ly-line]\"></ng-content>\n  </div>\n</span>\n<div *ngIf=\"_isBrowser\" #rippleContainer [className]=\"_rippleService.classes.container\"></div>",
-                    changeDetection: ChangeDetectionStrategy.OnPush,
-                    inputs: [
-                        'bg',
-                        'color',
-                        'raised',
-                        'disabled',
-                        'outlined',
-                        'elevation',
-                        'shadowColor',
-                        'disableRipple'
-                    ],
-                    exportAs: 'lyListItem'
-                }] }
-    ];
-    /** @nocollapse */
-    LyListItem.ctorParameters = function () { return [
-        { type: ElementRef },
-        { type: Renderer2 },
-        { type: LyTheme2 },
-        { type: NgZone },
-        { type: LyRippleService },
-        { type: LyFocusState },
-        { type: LyList },
-        { type: ChangeDetectorRef }
-    ]; };
-    LyListItem.propDecorators = {
-        _rippleContainer: [{ type: ViewChild, args: ['rippleContainer',] }],
-        _lines: [{ type: ContentChildren, args: [forwardRef(function () { return LyLine; }),] }],
-        _icon: [{ type: ContentChild, args: [forwardRef(function () { return LyListIcon; }),] }],
-        _avatar: [{ type: ContentChild, args: [LyAvatar,] }],
-        isActionListItem: [{ type: Input, args: ['ly-list-item',] }]
-    };
+    __decorate([
+        ViewChild('rippleContainer'),
+        __metadata("design:type", ElementRef)
+    ], LyListItem.prototype, "_rippleContainer", void 0);
+    __decorate([
+        ContentChildren(forwardRef(function () { return LyLine; })),
+        __metadata("design:type", QueryList)
+    ], LyListItem.prototype, "_lines", void 0);
+    __decorate([
+        ContentChild(forwardRef(function () { return LyListIcon; })),
+        __metadata("design:type", LyListIcon)
+    ], LyListItem.prototype, "_icon", void 0);
+    __decorate([
+        ContentChild(LyAvatar),
+        __metadata("design:type", LyAvatar)
+    ], LyListItem.prototype, "_avatar", void 0);
+    __decorate([
+        Input('ly-list-item'),
+        __metadata("design:type", Object),
+        __metadata("design:paramtypes", [Object])
+    ], LyListItem.prototype, "isActionListItem", null);
+    LyListItem = __decorate([
+        Component({
+            selector: 'ly-list-item, a[ly-list-item], button[ly-list-item]',
+            template: "<span [ngClass]=\"_listItemClasses\">\n  <ng-content></ng-content>\n  <div *ngIf=\"_lines?.length\" [className]=\"classes.lines\">\n    <ng-content select=\"[ly-line]\"></ng-content>\n  </div>\n</span>\n<div *ngIf=\"_isBrowser\" #rippleContainer [className]=\"_rippleService.classes.container\"></div>",
+            changeDetection: ChangeDetectionStrategy.OnPush,
+            inputs: [
+                'bg',
+                'color',
+                'raised',
+                'disabled',
+                'outlined',
+                'elevation',
+                'shadowColor',
+                'disableRipple'
+            ],
+            exportAs: 'lyListItem'
+        }),
+        __metadata("design:paramtypes", [ElementRef,
+            Renderer2,
+            LyTheme2,
+            NgZone,
+            LyRippleService,
+            LyFocusState,
+            LyList,
+            ChangeDetectorRef])
+    ], LyListItem);
     return LyListItem;
 }(LyListItemMixinBase));
 var LyListIcon = /** @class */ (function () {
@@ -285,20 +238,11 @@ var LyListIcon = /** @class */ (function () {
         }); }, STYLE_PRIORITY));
     }
     Object.defineProperty(LyListIcon.prototype, "disablePadding", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._disablePadding;
         },
         /** Disable extra padding */
-        set: /**
-         * Disable extra padding
-         * @param {?} val
-         * @return {?}
-         */
-        function (val) {
-            /** @type {?} */
+        set: function (val) {
             var newVal = this._disablePadding = toBoolean(val);
             this._disablePaddingClass = this._theme.addStyle("lyIconPadding:" + newVal.toString(), function () { return ({
                 paddingTop: newVal ? '4px' : '8px',
@@ -309,31 +253,24 @@ var LyListIcon = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
-    /**
-     * @return {?}
-     */
-    LyListIcon.prototype.ngOnInit = /**
-     * @return {?}
-     */
-    function () {
+    LyListIcon.prototype.ngOnInit = function () {
         if (this.disablePadding == null) {
             this.disablePadding = DISABLE_PADDING;
         }
     };
-    LyListIcon.decorators = [
-        { type: Directive, args: [{
-                    selector: '[ly-list-icon]'
-                },] }
-    ];
-    /** @nocollapse */
-    LyListIcon.ctorParameters = function () { return [
-        { type: LyTheme2 },
-        { type: ElementRef },
-        { type: Renderer2 }
-    ]; };
-    LyListIcon.propDecorators = {
-        disablePadding: [{ type: Input }]
-    };
+    __decorate([
+        Input(),
+        __metadata("design:type", Object),
+        __metadata("design:paramtypes", [Object])
+    ], LyListIcon.prototype, "disablePadding", null);
+    LyListIcon = __decorate([
+        Directive({
+            selector: '[ly-list-icon]'
+        }),
+        __metadata("design:paramtypes", [LyTheme2,
+            ElementRef,
+            Renderer2])
+    ], LyListIcon);
     return LyListIcon;
 }());
 var LyLine = /** @class */ (function () {
@@ -359,54 +296,35 @@ var LyLine = /** @class */ (function () {
             }
         }); }, STYLE_PRIORITY));
     }
-    LyLine.decorators = [
-        { type: Directive, args: [{
-                    selector: '[ly-line]'
-                },] }
-    ];
-    /** @nocollapse */
-    LyLine.ctorParameters = function () { return [
-        { type: LyTheme2 },
-        { type: ElementRef },
-        { type: Renderer2 }
-    ]; };
+    LyLine = __decorate([
+        Directive({
+            selector: '[ly-line]'
+        }),
+        __metadata("design:paramtypes", [LyTheme2,
+            ElementRef,
+            Renderer2])
+    ], LyLine);
     return LyLine;
 }());
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 var LyListModule = /** @class */ (function () {
     function LyListModule() {
     }
-    LyListModule.decorators = [
-        { type: NgModule, args: [{
-                    imports: [
-                        CommonModule
-                    ],
-                    declarations: [LyList, LyListItem, LyListIcon, LyLine],
-                    exports: [LyCommonModule, LyList, LyListItem, LyListIcon, LyLine]
-                },] }
-    ];
+    LyListModule = __decorate([
+        NgModule({
+            imports: [
+                CommonModule
+            ],
+            declarations: [LyList, LyListItem, LyListIcon, LyLine],
+            exports: [LyCommonModule, LyList, LyListItem, LyListIcon, LyLine]
+        })
+    ], LyListModule);
     return LyListModule;
 }());
 
 /**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated bundle index. Do not edit.
  */
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-
-export { STYLES, LyList, LyListItemBase, LyListItemMixinBase, LyListItem, LyListIcon, LyLine, LyListModule };
-
+export { LyLine, LyList, LyListIcon, LyListItem, LyListItemBase, LyListItemMixinBase, LyListModule, STYLES };
 //# sourceMappingURL=alyle-ui-list.js.map

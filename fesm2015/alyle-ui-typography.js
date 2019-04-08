@@ -1,13 +1,8 @@
-import { Directive, ElementRef, Renderer2, Input, NgModule } from '@angular/core';
-import { LyTheme2, toBoolean, mixinStyleUpdater, mixinColor, LyCommonModule } from '@alyle/ui';
+import { __decorate, __metadata } from 'tslib';
+import { Input, Directive, ElementRef, Renderer2, NgModule } from '@angular/core';
+import { mixinStyleUpdater, mixinColor, toBoolean, LyTheme2, LyCommonModule } from '@alyle/ui';
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
 const STYLE_PRIORITY = -1;
-/** @type {?} */
 const styles = (theme) => ({
     root: {
         margin: 0,
@@ -15,51 +10,31 @@ const styles = (theme) => ({
         '&': theme.typography ? theme.typography.root : null
     }
 });
-/** @enum {number} */
-const Gutter = {
-    default: 0,
-    top: 1,
-    bottom: 2,
-};
-Gutter[Gutter.default] = 'default';
-Gutter[Gutter.top] = 'top';
-Gutter[Gutter.bottom] = 'bottom';
-/**
- * \@docs-private
- */
+const ɵ0 = styles;
+/** @docs-private */
+var Gutter;
+(function (Gutter) {
+    Gutter[Gutter["default"] = 0] = "default";
+    Gutter[Gutter["top"] = 1] = "top";
+    Gutter[Gutter["bottom"] = 2] = "bottom";
+})(Gutter || (Gutter = {}));
+/** @docs-private */
 class LyTypographyBase {
-    /**
-     * @param {?} _theme
-     */
     constructor(_theme) {
         this._theme = _theme;
     }
 }
-/**
- * \@docs-private
- * @type {?}
- */
+/** @docs-private */
 const LyTypographyMixinBase = mixinStyleUpdater(mixinColor((LyTypographyBase)));
-class LyTypography extends LyTypographyMixinBase {
-    /**
-     * @param {?} _theme
-     * @param {?} _el
-     * @param {?} renderer
-     */
+let LyTypography = class LyTypography extends LyTypographyMixinBase {
     constructor(_theme, _el, renderer) {
         super(_theme);
         this._el = _el;
         this.renderer = renderer;
-        /**
-         * \@docs-private
-         */
+        /** @docs-private */
         this.classes = this._theme.addStyleSheet(styles, STYLE_PRIORITY);
         this.renderer.addClass(this._el.nativeElement, this.classes.root);
     }
-    /**
-     * @param {?} val
-     * @return {?}
-     */
     set lyTyp(val) {
         if (val !== this.lyTyp) {
             if (val) {
@@ -71,19 +46,11 @@ class LyTypography extends LyTypographyMixinBase {
             }
         }
     }
-    /**
-     * @return {?}
-     */
     get lyTyp() {
         return this._lyTyp;
     }
-    /**
-     * The text will truncate with an ellipsis.
-     * @param {?} val
-     * @return {?}
-     */
+    /** The text will truncate with an ellipsis. */
     set noWrap(val) {
-        /** @type {?} */
         const newValue = toBoolean(val);
         if (newValue) {
             this._noWrapClass = this._theme.addSimpleStyle('lyTyp.noWrap', {
@@ -98,36 +65,20 @@ class LyTypography extends LyTypographyMixinBase {
             this._noWrapClass = undefined;
         }
     }
-    /**
-     * @return {?}
-     */
     get noWrap() {
         return this._noWrap;
     }
-    /**
-     * @param {?} val
-     * @return {?}
-     */
     set gutter(val) {
-        /** @type {?} */
         const newVal = toBoolean(val);
         if (newVal !== this.gutter) {
             this._gutter = newVal;
             this._gutterClass = this._createGutterClass(Gutter.default, newVal, this._gutterClass);
         }
     }
-    /**
-     * @return {?}
-     */
     get gutter() {
         return this._gutter;
     }
-    /**
-     * @param {?} val
-     * @return {?}
-     */
     set gutterTop(val) {
-        /** @type {?} */
         const newVal = toBoolean(val);
         if (newVal !== this.gutterTop) {
             this._gutterTop = newVal;
@@ -135,59 +86,34 @@ class LyTypography extends LyTypographyMixinBase {
             this._gutterTopClass = this._createGutterClass(Gutter.top, newVal, this._gutterTopClass);
         }
     }
-    /**
-     * @return {?}
-     */
     get gutterTop() {
         return this._gutterTop;
     }
-    /**
-     * @param {?} val
-     * @return {?}
-     */
     set gutterBottom(val) {
-        /** @type {?} */
         const newVal = toBoolean(val);
         if (newVal !== this.gutterBottom) {
             this._gutterBottom = newVal;
             this._gutterBottomClass = this._createGutterClass(Gutter.bottom, newVal, this._gutterBottomClass);
         }
     }
-    /**
-     * @return {?}
-     */
     get gutterBottom() {
         return this._gutterBottom;
     }
-    /**
-     * @return {?}
-     */
     ngOnInit() {
         if ((this.gutterTop && this.gutterBottom)) {
             throw new Error(`use '<element lyTyp gutter>' instead of '<element lyTyp gutterTop gutterBottom>'`);
         }
     }
-    /**
-     * @return {?}
-     */
     ngOnChanges() {
         this.updateStyle(this._el.nativeElement);
     }
-    /**
-     * @private
-     * @param {?} key
-     * @param {?=} instance
-     * @return {?}
-     */
     _createTypClass(key, instance) {
-        /** @type {?} */
         const newKey = `k-typ:${key}`;
         return this._theme.addStyle(newKey, (theme) => {
             const { typography } = theme;
-            /** @type {?} */
             const styl = Object.assign({}, typography.lyTyp[key || 'body1']);
             if (styl.lineHeight) {
-                styl.lineHeight = theme.pxToRem((/** @type {?} */ (styl.lineHeight)));
+                styl.lineHeight = theme.pxToRem(styl.lineHeight);
             }
             if (typeof styl.letterSpacing === 'number') {
                 styl.letterSpacing = `${styl.letterSpacing}px`;
@@ -197,72 +123,63 @@ class LyTypography extends LyTypographyMixinBase {
             return styl;
         }, this._el.nativeElement, instance, STYLE_PRIORITY);
     }
-    /**
-     * @private
-     * @param {?} name
-     * @param {?} val
-     * @param {?} instance
-     * @return {?}
-     */
     _createGutterClass(name, val, instance) {
         return this._theme.addStyle(`k-typ-gutter:${name}:${val}`, (theme) => {
-            /** @type {?} */
             const gutter = name === Gutter.default;
             return (`margin-top:${val && (gutter || name === Gutter.top) ? theme.typography.gutterTop : 0}em;` +
                 `margin-bottom:${val && (gutter || name === Gutter.bottom) ? theme.typography.gutterBottom : 0}em;`);
         }, this._el.nativeElement, instance, STYLE_PRIORITY);
     }
-}
-LyTypography.decorators = [
-    { type: Directive, args: [{
-                selector: `[lyTyp]`,
-                inputs: [
-                    'color'
-                ]
-            },] }
-];
-/** @nocollapse */
-LyTypography.ctorParameters = () => [
-    { type: LyTheme2 },
-    { type: ElementRef },
-    { type: Renderer2 }
-];
-LyTypography.propDecorators = {
-    lyTyp: [{ type: Input }],
-    noWrap: [{ type: Input }],
-    gutter: [{ type: Input }],
-    gutterTop: [{ type: Input }],
-    gutterBottom: [{ type: Input }]
 };
+__decorate([
+    Input(),
+    __metadata("design:type", String),
+    __metadata("design:paramtypes", [String])
+], LyTypography.prototype, "lyTyp", null);
+__decorate([
+    Input(),
+    __metadata("design:type", Boolean),
+    __metadata("design:paramtypes", [Boolean])
+], LyTypography.prototype, "noWrap", null);
+__decorate([
+    Input(),
+    __metadata("design:type", Boolean),
+    __metadata("design:paramtypes", [Boolean])
+], LyTypography.prototype, "gutter", null);
+__decorate([
+    Input(),
+    __metadata("design:type", Boolean),
+    __metadata("design:paramtypes", [Boolean])
+], LyTypography.prototype, "gutterTop", null);
+__decorate([
+    Input(),
+    __metadata("design:type", Boolean),
+    __metadata("design:paramtypes", [Boolean])
+], LyTypography.prototype, "gutterBottom", null);
+LyTypography = __decorate([
+    Directive({
+        selector: `[lyTyp]`,
+        inputs: [
+            'color'
+        ]
+    }),
+    __metadata("design:paramtypes", [LyTheme2,
+        ElementRef,
+        Renderer2])
+], LyTypography);
+
+let LyTypographyModule = class LyTypographyModule {
+};
+LyTypographyModule = __decorate([
+    NgModule({
+        exports: [LyTypography, LyCommonModule],
+        declarations: [LyTypography]
+    })
+], LyTypographyModule);
 
 /**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-class LyTypographyModule {
-}
-LyTypographyModule.decorators = [
-    { type: NgModule, args: [{
-                exports: [LyTypography, LyCommonModule],
-                declarations: [LyTypography]
-            },] }
-];
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated bundle index. Do not edit.
  */
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-
-export { LyTypographyModule, LyTypographyBase, LyTypographyMixinBase, LyTypography };
-
+export { LyTypography, LyTypographyBase, LyTypographyMixinBase, LyTypographyModule, ɵ0 };
 //# sourceMappingURL=alyle-ui-typography.js.map

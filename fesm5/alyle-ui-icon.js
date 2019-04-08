@@ -1,21 +1,13 @@
-import { __extends } from 'tslib';
-import { Injectable, Optional, Inject, SecurityContext, NgModule, defineInjectable, inject, Directive, ElementRef, Renderer2, Input } from '@angular/core';
+import { __decorate, __param, __metadata, __extends } from 'tslib';
+import { SecurityContext, defineInjectable, inject, Injectable, Optional, Inject, Input, Directive, ElementRef, Renderer2, NgModule } from '@angular/core';
+import { LyTheme2, mixinStyleUpdater, mixinBg, mixinColor, mixinRaised, mixinOutlined, mixinElevation, mixinShadowColor, Platform, LyCommonModule } from '@alyle/ui';
 import { HttpClient } from '@angular/common/http';
 import { DOCUMENT } from '@angular/common';
+import { share, map, take } from 'rxjs/operators';
 import { DomSanitizer } from '@angular/platform-browser';
-import { LyTheme2, LyCommonModule, mixinStyleUpdater, mixinBg, mixinColor, mixinRaised, mixinOutlined, mixinElevation, mixinShadowColor, Platform } from '@alyle/ui';
-import { map, share, take } from 'rxjs/operators';
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
 var STYLE_PRIORITY = -2;
-/**
- * The following styles will never be updated
- * @type {?}
- */
+/** The following styles will never be updated */
 var styles = {
     svg: {
         width: 'inherit',
@@ -34,54 +26,35 @@ var LyIconService = /** @class */ (function () {
         this._fontClasses = new Map();
         /**
          * Styles
-         * \@docs-private
+         * @docs-private
          */
         this.classes = this.theme.addStyleSheet(styles, STYLE_PRIORITY);
         this.defaultSvgIcon = this._textToSvg('<svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="10"></circle></svg>');
     }
     Object.defineProperty(LyIconService.prototype, "defaultClass", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._defaultClass;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(LyIconService.prototype, "defaultClassPrefix", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._defaultClassPrefix;
         },
         enumerable: true,
         configurable: true
     });
-    /**
-     * @param {?} key
-     * @param {?} url
-     * @return {?}
-     */
-    LyIconService.prototype.setSvg = /**
-     * @param {?} key
-     * @param {?} url
-     * @return {?}
-     */
-    function (key, url) {
+    LyIconService.prototype.setSvg = function (key, url) {
         var _this = this;
         if (!this.svgMap.has(key)) {
-            /** @type {?} */
             var urlSanitized = this._sanitizer.sanitize(SecurityContext.RESOURCE_URL, url);
-            /** @type {?} */
             var svgIcon_1 = {
                 obs: this.http.get(urlSanitized + ".svg", { responseType: 'text' })
                     .pipe(share(), map(function (svgText) {
                     if (svgIcon_1.svg) {
                         return svgIcon_1.svg;
                     }
-                    /** @type {?} */
                     var svg = _this._textToSvg(svgText);
                     _this._cacheSvgIcon(svg, key);
                     return svg;
@@ -90,80 +63,35 @@ var LyIconService = /** @class */ (function () {
             this.svgMap.set(key, svgIcon_1);
         }
     };
-    /**
-     * @param {?} key
-     * @param {?} literal
-     * @return {?}
-     */
-    LyIconService.prototype.addSvgIconLiteral = /**
-     * @param {?} key
-     * @param {?} literal
-     * @return {?}
-     */
-    function (key, literal) {
+    LyIconService.prototype.addSvgIconLiteral = function (key, literal) {
         if (!this.svgMap.has(key)) {
-            /** @type {?} */
             var sanitizedLiteral = this._sanitizer.sanitize(SecurityContext.HTML, literal);
             if (!sanitizedLiteral) {
                 throw new Error("LyIconService: Failed sanitize '" + key + "'");
             }
-            /** @type {?} */
             var svg = this._textToSvg(sanitizedLiteral);
             this.svgMap.set(key, {
                 svg: svg
             });
         }
     };
-    /**
-     * @private
-     * @param {?} str
-     * @return {?}
-     */
-    LyIconService.prototype._textToSvg = /**
-     * @private
-     * @param {?} str
-     * @return {?}
-     */
-    function (str) {
-        /** @type {?} */
+    LyIconService.prototype._textToSvg = function (str) {
         var div = this._document.createElement('DIV');
         div.innerHTML = str;
-        /** @type {?} */
-        var svg = (/** @type {?} */ (div.querySelector('svg')));
+        var svg = div.querySelector('svg');
         return svg;
     };
-    /**
-     * @private
-     * @param {?} svg
-     * @param {?} key
-     * @return {?}
-     */
-    LyIconService.prototype._cacheSvgIcon = /**
-     * @private
-     * @param {?} svg
-     * @param {?} key
-     * @return {?}
-     */
-    function (svg, key) {
-        /** @type {?} */
+    LyIconService.prototype._cacheSvgIcon = function (svg, key) {
         var svgIconInfo = this.svgMap.get(key);
-        if (!(/** @type {?} */ (svgIconInfo)).svg) {
-            (/** @type {?} */ (this.svgMap.get(key))).svg = svg;
+        if (!svgIconInfo.svg) {
+            this.svgMap.get(key).svg = svg;
         }
     };
-    /**
-     * @param {?} key
-     * @return {?}
-     */
-    LyIconService.prototype.getSvg = /**
-     * @param {?} key
-     * @return {?}
-     */
-    function (key) {
+    LyIconService.prototype.getSvg = function (key) {
         if (!this.svgMap.has(key)) {
             throw new Error("LyIconService: Icon " + key + " not found");
         }
-        return (/** @type {?} */ (this.svgMap.get(key)));
+        return this.svgMap.get(key);
     };
     /**
      * Set default className for `ly-icon`
@@ -173,25 +101,7 @@ var LyIconService = /** @class */ (function () {
      * then in the template it is no longer necessary to use the prefix
      * Example: `<ly-icon fontIcon="alarm">`
      */
-    /**
-     * Set default className for `ly-icon`
-     * @param {?=} className class name
-     * @param {?=} prefix Class prefix,
-     * For example if you use FontAwesome your prefix would be `fa-`,
-     * then in the template it is no longer necessary to use the prefix
-     * Example: `<ly-icon fontIcon="alarm">`
-     * @return {?}
-     */
-    LyIconService.prototype.setDefaultClass = /**
-     * Set default className for `ly-icon`
-     * @param {?=} className class name
-     * @param {?=} prefix Class prefix,
-     * For example if you use FontAwesome your prefix would be `fa-`,
-     * then in the template it is no longer necessary to use the prefix
-     * Example: `<ly-icon fontIcon="alarm">`
-     * @return {?}
-     */
-    function (className, prefix) {
+    LyIconService.prototype.setDefaultClass = function (className, prefix) {
         this._defaultClass = className;
         this._defaultClassPrefix = prefix;
     };
@@ -205,82 +115,33 @@ var LyIconService = /** @class */ (function () {
      *   prefix: 'fa-'
      * })
      */
-    /**
-     * Register new font class alias
-     * demo:
-     * For FontAwesome
-     * registerFontClass({
-     *   key: 'fa',
-     *   class: 'fa'
-     *   prefix: 'fa-'
-     * })
-     * @param {?} opt
-     * @return {?}
-     */
-    LyIconService.prototype.registerFontClass = /**
-     * Register new font class alias
-     * demo:
-     * For FontAwesome
-     * registerFontClass({
-     *   key: 'fa',
-     *   class: 'fa'
-     *   prefix: 'fa-'
-     * })
-     * @param {?} opt
-     * @return {?}
-     */
-    function (opt) {
+    LyIconService.prototype.registerFontClass = function (opt) {
         this._fontClasses.set(opt.key, opt);
     };
-    /**
-     * @param {?} key
-     * @return {?}
-     */
-    LyIconService.prototype.getFontClass = /**
-     * @param {?} key
-     * @return {?}
-     */
-    function (key) {
+    LyIconService.prototype.getFontClass = function (key) {
         return this._fontClasses.get(key);
     };
-    LyIconService.decorators = [
-        { type: Injectable, args: [{
-                    providedIn: 'root'
-                },] }
-    ];
-    /** @nocollapse */
-    LyIconService.ctorParameters = function () { return [
-        { type: HttpClient },
-        { type: DomSanitizer },
-        { type: undefined, decorators: [{ type: Optional }, { type: Inject, args: [DOCUMENT,] }] },
-        { type: LyTheme2 }
-    ]; };
-    /** @nocollapse */ LyIconService.ngInjectableDef = defineInjectable({ factory: function LyIconService_Factory() { return new LyIconService(inject(HttpClient), inject(DomSanitizer), inject(DOCUMENT, 8), inject(LyTheme2)); }, token: LyIconService, providedIn: "root" });
+    LyIconService.ngInjectableDef = defineInjectable({ factory: function LyIconService_Factory() { return new LyIconService(inject(HttpClient), inject(DomSanitizer), inject(DOCUMENT, 8), inject(LyTheme2)); }, token: LyIconService, providedIn: "root" });
+    LyIconService = __decorate([
+        Injectable({
+            providedIn: 'root'
+        }),
+        __param(2, Optional()), __param(2, Inject(DOCUMENT)),
+        __metadata("design:paramtypes", [HttpClient,
+            DomSanitizer, Object, LyTheme2])
+    ], LyIconService);
     return LyIconService;
 }());
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
 var STYLE_PRIORITY$1 = -2;
-/**
- * \@docs-private
- */
-var  /**
- * \@docs-private
- */
-LyIconBase = /** @class */ (function () {
+/** @docs-private */
+var LyIconBase = /** @class */ (function () {
     function LyIconBase(_theme) {
         this._theme = _theme;
     }
     return LyIconBase;
 }());
-/**
- * \@docs-private
- * @type {?}
- */
+/** @docs-private */
 var LyIconMixinBase = mixinStyleUpdater(mixinBg(mixinColor(mixinRaised(mixinOutlined(mixinElevation(mixinShadowColor(LyIconBase)))))));
 var LyIcon = /** @class */ (function (_super) {
     __extends(LyIcon, _super);
@@ -293,17 +154,10 @@ var LyIcon = /** @class */ (function (_super) {
         return _this;
     }
     Object.defineProperty(LyIcon.prototype, "icon", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._icon;
         },
-        set: /**
-         * @param {?} val
-         * @return {?}
-         */
-        function (val) {
+        set: function (val) {
             this._icon = val;
             if (Platform.isBrowser) {
                 this._prepareSvgIcon(this.iconService.getSvg(val));
@@ -316,131 +170,62 @@ var LyIcon = /** @class */ (function (_super) {
         configurable: true
     });
     Object.defineProperty(LyIcon.prototype, "fontSet", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._fontSet;
         },
-        set: /**
-         * @param {?} key
-         * @return {?}
-         */
-        function (key) {
+        set: function (key) {
             this._fontSet = key;
         },
         enumerable: true,
         configurable: true
     });
     Object.defineProperty(LyIcon.prototype, "fontIcon", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._fontIcon;
         },
-        set: /**
-         * @param {?} key
-         * @return {?}
-         */
-        function (key) {
+        set: function (key) {
             this._fontIcon = key;
         },
         enumerable: true,
         configurable: true
     });
-    /**
-     * @return {?}
-     */
-    LyIcon.prototype.ngOnChanges = /**
-     * @return {?}
-     */
-    function () {
+    LyIcon.prototype.ngOnChanges = function () {
         if (this.fontSet || this.fontIcon) {
             this._updateFontClass();
         }
         this.updateStyle(this._el);
     };
-    /**
-     * @private
-     * @return {?}
-     */
-    LyIcon.prototype._isDefault = /**
-     * @private
-     * @return {?}
-     */
-    function () {
+    LyIcon.prototype._isDefault = function () {
         return !(this.icon || this.fontSet);
     };
-    /**
-     * @private
-     * @param {?} svgIcon
-     * @return {?}
-     */
-    LyIcon.prototype._prepareSvgIcon = /**
-     * @private
-     * @param {?} svgIcon
-     * @return {?}
-     */
-    function (svgIcon) {
+    LyIcon.prototype._prepareSvgIcon = function (svgIcon) {
         var _this = this;
         if (svgIcon.svg) {
-            this._appendChild((/** @type {?} */ (svgIcon.svg.cloneNode(true))));
+            this._appendChild(svgIcon.svg.cloneNode(true));
         }
         else {
-            (/** @type {?} */ (svgIcon.obs)).pipe(take(1))
+            svgIcon.obs
+                .pipe(take(1))
                 .subscribe(function (svgElement) {
-                _this._appendChild((/** @type {?} */ (svgElement.cloneNode(true))));
+                _this._appendChild(svgElement.cloneNode(true));
             });
         }
     };
-    /**
-     * @private
-     * @param {?} svg
-     * @return {?}
-     */
-    LyIcon.prototype._appendChild = /**
-     * @private
-     * @param {?} svg
-     * @return {?}
-     */
-    function (svg) {
+    LyIcon.prototype._appendChild = function (svg) {
         this._cleanIcon();
         this._iconElement = svg;
         this._renderer.addClass(svg, this.iconService.classes.svg);
         this._renderer.appendChild(this._el.nativeElement, svg);
     };
-    /**
-     * @private
-     * @return {?}
-     */
-    LyIcon.prototype._appendDefaultSvgIcon = /**
-     * @private
-     * @return {?}
-     */
-    function () {
+    LyIcon.prototype._appendDefaultSvgIcon = function () {
         this._appendChild(this.iconService.defaultSvgIcon);
     };
-    /**
-     * @private
-     * @return {?}
-     */
-    LyIcon.prototype._updateClass = /**
-     * @private
-     * @return {?}
-     */
-    function () {
+    LyIcon.prototype._updateClass = function () {
         if (this._isDefault() && this.iconService.defaultClass) {
             this._renderer.addClass(this._el.nativeElement, this.iconService.defaultClass);
         }
     };
-    /**
-     * @return {?}
-     */
-    LyIcon.prototype.ngOnInit = /**
-     * @return {?}
-     */
-    function () {
+    LyIcon.prototype.ngOnInit = function () {
         this._updateClass();
         this._theme.addStyle('lyIconRoot', function (theme) { return ("font-size:" + theme.icon.fontSize + ";" +
             "width:1em;" +
@@ -451,57 +236,25 @@ var LyIcon = /** @class */ (function (_super) {
             "-moz-box-sizing: content-box;" +
             "box-sizing: content-box;"); }, this._el.nativeElement, undefined, STYLE_PRIORITY$1);
     };
-    /**
-     * @return {?}
-     */
-    LyIcon.prototype.ngOnDestroy = /**
-     * @return {?}
-     */
-    function () {
+    LyIcon.prototype.ngOnDestroy = function () {
         this._cleanIcon();
     };
     /**
      * run only browser
      * remove current icon
      */
-    /**
-     * run only browser
-     * remove current icon
-     * @private
-     * @return {?}
-     */
-    LyIcon.prototype._cleanIcon = /**
-     * run only browser
-     * remove current icon
-     * @private
-     * @return {?}
-     */
-    function () {
-        /** @type {?} */
+    LyIcon.prototype._cleanIcon = function () {
         var icon = this._iconElement;
         if (icon) {
             this._renderer.removeChild(this._el.nativeElement, icon);
             this._iconElement = undefined;
         }
     };
-    /**
-     * @private
-     * @return {?}
-     */
-    LyIcon.prototype._updateFontClass = /**
-     * @private
-     * @return {?}
-     */
-    function () {
-        /** @type {?} */
+    LyIcon.prototype._updateFontClass = function () {
         var currentClass = this._currentClass;
-        /** @type {?} */
         var fontSetKey = this.fontSet;
-        /** @type {?} */
         var icon = this.fontIcon;
-        /** @type {?} */
         var el = this._el.nativeElement;
-        /** @type {?} */
         var iconClass = this.iconService.getFontClass(fontSetKey);
         if (currentClass) {
             this._renderer.removeClass(el, currentClass);
@@ -520,65 +273,56 @@ var LyIcon = /** @class */ (function (_super) {
         this._currentClass = "" + iconClass.prefix + icon;
         this._renderer.addClass(el, this._currentClass);
     };
-    LyIcon.decorators = [
-        { type: Directive, args: [{
-                    selector: 'ly-icon',
-                    inputs: [
-                        'bg',
-                        'color',
-                        'raised',
-                        'outlined',
-                        'elevation',
-                        'shadowColor',
-                    ],
-                },] }
-    ];
-    /** @nocollapse */
-    LyIcon.ctorParameters = function () { return [
-        { type: LyIconService },
-        { type: ElementRef },
-        { type: Renderer2 },
-        { type: LyTheme2 }
-    ]; };
-    LyIcon.propDecorators = {
-        icon: [{ type: Input }],
-        fontSet: [{ type: Input }],
-        fontIcon: [{ type: Input }]
-    };
+    __decorate([
+        Input(),
+        __metadata("design:type", String),
+        __metadata("design:paramtypes", [String])
+    ], LyIcon.prototype, "icon", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", String),
+        __metadata("design:paramtypes", [String])
+    ], LyIcon.prototype, "fontSet", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", String),
+        __metadata("design:paramtypes", [String])
+    ], LyIcon.prototype, "fontIcon", null);
+    LyIcon = __decorate([
+        Directive({
+            selector: 'ly-icon',
+            inputs: [
+                'bg',
+                'color',
+                'raised',
+                'outlined',
+                'elevation',
+                'shadowColor',
+            ],
+        }),
+        __metadata("design:paramtypes", [LyIconService,
+            ElementRef,
+            Renderer2,
+            LyTheme2])
+    ], LyIcon);
     return LyIcon;
 }(LyIconMixinBase));
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 var LyIconModule = /** @class */ (function () {
     function LyIconModule() {
     }
-    LyIconModule.decorators = [
-        { type: NgModule, args: [{
-                    declarations: [LyIcon],
-                    exports: [LyIcon, LyCommonModule]
-                },] }
-    ];
+    LyIconModule = __decorate([
+        NgModule({
+            declarations: [LyIcon],
+            exports: [LyIcon, LyCommonModule]
+        })
+    ], LyIconModule);
     return LyIconModule;
 }());
 
 /**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated bundle index. Do not edit.
  */
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-
-export { LyIconModule, LyIconService, LyIconBase, LyIconMixinBase, LyIcon };
-
+export { LyIcon, LyIconBase, LyIconMixinBase, LyIconModule, LyIconService };
 //# sourceMappingURL=alyle-ui-icon.js.map

@@ -1,13 +1,8 @@
-import { Directive, Input, Renderer2, ElementRef, NgModule } from '@angular/core';
+import { __decorate, __metadata } from 'tslib';
+import { Input, Directive, Renderer2, ElementRef, NgModule } from '@angular/core';
 import { LyTheme2, LyCommonModule } from '@alyle/ui';
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
 var MEDIA_PRIORITY = 999;
-/** @type {?} */
 var styles = {
     hide: {
         display: 'none'
@@ -28,18 +23,10 @@ var MediaDirective = /** @class */ (function () {
         /**
          * Shows the item when the value is resolved as true
          */
-        get: /**
-         * Shows the item when the value is resolved as true
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._show;
         },
-        set: /**
-         * @param {?} val
-         * @return {?}
-         */
-        function (val) {
+        set: function (val) {
             this._show = val;
             this._showClass = this.theme.addStyle("lyMedia-show:" + val, function (theme) {
                 var _a;
@@ -54,21 +41,13 @@ var MediaDirective = /** @class */ (function () {
         configurable: true
     });
     Object.defineProperty(MediaDirective.prototype, "lyHide", {
-        get: /**
-         * @return {?}
-         */
-        function () {
+        get: function () {
             return this._hide;
         },
         /**
          * Hides the item when the value is resolved as true
          */
-        set: /**
-         * Hides the item when the value is resolved as true
-         * @param {?} val
-         * @return {?}
-         */
-        function (val) {
+        set: function (val) {
             this._hide = val;
             this._hideClass = this.theme.addStyle("lyMedia-hide:" + val, function (theme) {
                 var _a;
@@ -82,67 +61,49 @@ var MediaDirective = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
-    /**
-     * @return {?}
-     */
-    MediaDirective.prototype.ngOnInit = /**
-     * @return {?}
-     */
-    function () {
+    MediaDirective.prototype.ngOnInit = function () {
         if (!this.lyHide) {
             this._renderer.addClass(this._elementRef.nativeElement, this.classes.hide);
         }
     };
-    /**
-     * @return {?}
-     */
-    MediaDirective.prototype.ngOnChanges = /**
-     * @return {?}
-     */
-    function () {
+    MediaDirective.prototype.ngOnChanges = function () {
         if (this.lyHide && this.lyShow) {
             throw new Error("use only `lyHide` or `lyShow` per element");
         }
     };
-    MediaDirective.decorators = [
-        { type: Directive, args: [{
-                    selector: '[lyShow], [lyHide]'
-                },] }
-    ];
-    /** @nocollapse */
-    MediaDirective.ctorParameters = function () { return [
-        { type: Renderer2 },
-        { type: ElementRef },
-        { type: LyTheme2 }
-    ]; };
-    MediaDirective.propDecorators = {
-        lyShow: [{ type: Input }],
-        lyHide: [{ type: Input }]
-    };
+    __decorate([
+        Input(),
+        __metadata("design:type", String),
+        __metadata("design:paramtypes", [String])
+    ], MediaDirective.prototype, "lyShow", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", String),
+        __metadata("design:paramtypes", [String])
+    ], MediaDirective.prototype, "lyHide", null);
+    MediaDirective = __decorate([
+        Directive({
+            selector: '[lyShow], [lyHide]'
+        }),
+        __metadata("design:paramtypes", [Renderer2,
+            ElementRef,
+            LyTheme2])
+    ], MediaDirective);
     return MediaDirective;
 }());
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 var ResponsiveModule = /** @class */ (function () {
     function ResponsiveModule() {
     }
-    ResponsiveModule.decorators = [
-        { type: NgModule, args: [{
-                    declarations: [MediaDirective],
-                    exports: [MediaDirective, LyCommonModule],
-                },] }
-    ];
+    ResponsiveModule = __decorate([
+        NgModule({
+            declarations: [MediaDirective],
+            exports: [MediaDirective, LyCommonModule],
+        })
+    ], ResponsiveModule);
     return ResponsiveModule;
 }());
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
 var Breakpoints = {
     XSmall: '(max-width: 599px)',
     Small: '(min-width: 600px) and (max-width: 959px)',
@@ -164,20 +125,8 @@ var Breakpoints = {
 };
 
 /**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated bundle index. Do not edit.
  */
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-
-export { MediaDirective, ResponsiveModule, Breakpoints };
-
+export { Breakpoints, MediaDirective, ResponsiveModule };
 //# sourceMappingURL=alyle-ui-responsive.js.map

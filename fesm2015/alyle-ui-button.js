@@ -1,15 +1,9 @@
-import { ChangeDetectionStrategy, Component, ElementRef, Input, Renderer2, NgZone, ViewChild, NgModule } from '@angular/core';
-import { LY_COMMON_STYLES, Platform, toBoolean, LyTheme2, mixinDisabled, mixinColor, mixinBg, mixinShadowColor, mixinOutlined, mixinElevation, mixinRaised, mixinDisableRipple, mixinStyleUpdater, LyRippleService, LyFocusState, getLyThemeVariableUndefinedError, LyCommonModule } from '@alyle/ui';
+import { __decorate, __metadata } from 'tslib';
+import { ViewChild, ElementRef, Input, Component, ChangeDetectionStrategy, Renderer2, NgZone, NgModule } from '@angular/core';
+import { LY_COMMON_STYLES, mixinStyleUpdater, mixinBg, mixinColor, mixinRaised, mixinDisabled, mixinOutlined, mixinElevation, mixinShadowColor, mixinDisableRipple, Platform, getLyThemeVariableUndefinedError, toBoolean, LyTheme2, LyRippleService, LyFocusState, LyCommonModule } from '@alyle/ui';
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
 const STYLES = (theme) => {
-    /** @type {?} */
     const typography = theme.typography;
-    /** @type {?} */
     const _styles = ({
         root: {
             fontFamily: typography.fontFamily,
@@ -68,41 +62,18 @@ const STYLES = (theme) => {
     return _styles;
 };
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
 const DEFAULT_DISABLE_RIPPLE = false;
-/** @type {?} */
 const STYLE_PRIORITY = -2;
-/**
- * \@docs-private
- */
+/** @docs-private */
 class LyButtonBase {
-    /**
-     * @param {?} _theme
-     * @param {?} _ngZone
-     */
     constructor(_theme, _ngZone) {
         this._theme = _theme;
         this._ngZone = _ngZone;
     }
 }
-/**
- * \@docs-private
- * @type {?}
- */
+/** @docs-private */
 const LyButtonMixinBase = mixinStyleUpdater(mixinBg(mixinColor(mixinRaised(mixinDisabled(mixinOutlined(mixinElevation(mixinShadowColor(mixinDisableRipple(LyButtonBase)))))))));
-class LyButton extends LyButtonMixinBase {
-    /**
-     * @param {?} _el
-     * @param {?} _renderer
-     * @param {?} _theme
-     * @param {?} _ngZone
-     * @param {?} _rippleService
-     * @param {?} _focusState
-     */
+let LyButton = class LyButton extends LyButtonMixinBase {
     constructor(_el, _renderer, _theme, _ngZone, _rippleService, _focusState) {
         super(_theme, _ngZone);
         this._el = _el;
@@ -111,7 +82,7 @@ class LyButton extends LyButtonMixinBase {
         this._focusState = _focusState;
         /**
          * Style
-         * \@docs-private
+         * @docs-private
          */
         this.classes = this._theme.addStyleSheet(STYLES, STYLE_PRIORITY);
         this._rippleSensitive = false;
@@ -129,53 +100,31 @@ class LyButton extends LyButtonMixinBase {
             throw getLyThemeVariableUndefinedError('button');
         }
     }
-    /**
-     * \@docs-private
-     * @return {?}
-     */
+    /** @docs-private */
     get rippleSensitive() {
         return this._rippleSensitive;
     }
-    /**
-     * @param {?} value
-     * @return {?}
-     */
     set rippleSensitive(value) {
-        /** @type {?} */
         const newVal = this._rippleSensitive = toBoolean(value);
         this._rippleConfig.sensitive = newVal;
     }
-    /**
-     * Button size
-     * @return {?}
-     */
+    /** Button size */
     get size() {
         return this._size;
     }
-    /**
-     * @param {?} val
-     * @return {?}
-     */
     set size(val) {
         if (val !== this.size) {
             this._size = val;
             this._sizeClass = this._theme.addStyle(`lyButton.size:${val}`, (theme) => {
                 if (theme.button && theme.button.size && theme.button.size[val]) {
-                    return (/** @type {?} */ (theme.button.size[val]));
+                    return theme.button.size[val];
                 }
                 throw new Error(`Value button.size['${val}'] not found in ThemeVariables`);
             }, this._el.nativeElement, this._sizeClass, STYLE_PRIORITY);
         }
     }
-    /**
-     * Button appearance
-     * @return {?}
-     */
+    /** Button appearance */
     get appearance() { return this._appearance; }
-    /**
-     * @param {?} val
-     * @return {?}
-     */
     set appearance(val) {
         if (val !== this.appearance) {
             if (val === 'icon' && !this._rippleConfig.centered) {
@@ -183,25 +132,18 @@ class LyButton extends LyButtonMixinBase {
             }
             this._appearance = val;
             this._appearanceClass = this._theme.addStyle(`lyButton.appearance:${val}`, (theme) => {
-                if (!((/** @type {?} */ (theme.button)).appearance && (/** @type {?} */ ((/** @type {?} */ (theme.button)).appearance))[val])) {
+                if (!(theme.button.appearance && theme.button.appearance[val])) {
                     throw new Error(`Value button.appearance['${val}'] not found in ThemeVariables`);
                 }
-                return (/** @type {?} */ ((/** @type {?} */ ((/** @type {?} */ (theme.button)).appearance))[val]));
+                return theme.button.appearance[val];
             }, this._el.nativeElement, this._appearanceClass, STYLE_PRIORITY + 1);
         }
     }
-    /**
-     * @return {?}
-     */
     ngOnChanges() {
         this.updateStyle(this._el);
-        /** @type {?} */
         const isDisabled = this.disabled;
         this._renderer.setProperty(this._el.nativeElement, 'disabled', isDisabled);
     }
-    /**
-     * @return {?}
-     */
     ngOnInit() {
         const { button } = this._theme.variables;
         if (button) {
@@ -223,13 +165,8 @@ class LyButton extends LyButtonMixinBase {
             this.disableRipple = DEFAULT_DISABLE_RIPPLE;
         }
     }
-    /**
-     * @return {?}
-     */
     ngAfterViewInit() {
         // this._renderer.addClass(this._el.nativeElement, this.classes.animations);
-        // this._renderer.addClass(this._el.nativeElement, this.classes.animations);
-        /** @type {?} */
         const focusState = this._focusState.listen(this._el);
         if (focusState) {
             focusState.subscribe((event) => {
@@ -244,81 +181,69 @@ class LyButton extends LyButtonMixinBase {
             });
         }
     }
-    /**
-     * @return {?}
-     */
     focus() {
         this._el.nativeElement.focus();
     }
-    /**
-     * @return {?}
-     */
     ngOnDestroy() {
         this._focusState.unlisten(this._el);
         this._removeRippleEvents();
     }
-}
-LyButton.decorators = [
-    { type: Component, args: [{
-                selector: 'button[ly-button], a[ly-button]',
-                changeDetection: ChangeDetectionStrategy.OnPush,
-                template: "<span [className]=\"classes.content\">\n  <ng-content></ng-content>\n</span>\n<div #rippleContainer [className]=\"_rippleService.classes.container\"></div>",
-                inputs: [
-                    'bg',
-                    'color',
-                    'raised',
-                    'disabled',
-                    'outlined',
-                    'elevation',
-                    'shadowColor',
-                    'disableRipple'
-                ]
-            }] }
-];
-/** @nocollapse */
-LyButton.ctorParameters = () => [
-    { type: ElementRef },
-    { type: Renderer2 },
-    { type: LyTheme2 },
-    { type: NgZone },
-    { type: LyRippleService },
-    { type: LyFocusState }
-];
-LyButton.propDecorators = {
-    _rippleContainer: [{ type: ViewChild, args: ['rippleContainer',] }],
-    rippleSensitive: [{ type: Input, args: ['sensitive',] }],
-    size: [{ type: Input }],
-    appearance: [{ type: Input }]
 };
+__decorate([
+    ViewChild('rippleContainer'),
+    __metadata("design:type", ElementRef)
+], LyButton.prototype, "_rippleContainer", void 0);
+__decorate([
+    Input('sensitive'),
+    __metadata("design:type", Boolean),
+    __metadata("design:paramtypes", [Boolean])
+], LyButton.prototype, "rippleSensitive", null);
+__decorate([
+    Input(),
+    __metadata("design:type", String),
+    __metadata("design:paramtypes", [String])
+], LyButton.prototype, "size", null);
+__decorate([
+    Input(),
+    __metadata("design:type", String),
+    __metadata("design:paramtypes", [String])
+], LyButton.prototype, "appearance", null);
+LyButton = __decorate([
+    Component({
+        selector: 'button[ly-button], a[ly-button]',
+        changeDetection: ChangeDetectionStrategy.OnPush,
+        template: "<span [className]=\"classes.content\">\n  <ng-content></ng-content>\n</span>\n<div #rippleContainer [className]=\"_rippleService.classes.container\"></div>",
+        inputs: [
+            'bg',
+            'color',
+            'raised',
+            'disabled',
+            'outlined',
+            'elevation',
+            'shadowColor',
+            'disableRipple'
+        ]
+    }),
+    __metadata("design:paramtypes", [ElementRef,
+        Renderer2,
+        LyTheme2,
+        NgZone,
+        LyRippleService,
+        LyFocusState])
+], LyButton);
+
+let LyButtonModule = class LyButtonModule {
+};
+LyButtonModule = __decorate([
+    NgModule({
+        exports: [LyCommonModule, LyButton],
+        declarations: [LyButton]
+    })
+], LyButtonModule);
 
 /**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-class LyButtonModule {
-}
-LyButtonModule.decorators = [
-    { type: NgModule, args: [{
-                exports: [LyCommonModule, LyButton],
-                declarations: [LyButton]
-            },] }
-];
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated bundle index. Do not edit.
  */
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-
-export { LyButtonBase, LyButtonMixinBase, LyButton, LyButtonModule };
-
+export { LyButton, LyButtonBase, LyButtonMixinBase, LyButtonModule };
 //# sourceMappingURL=alyle-ui-button.js.map

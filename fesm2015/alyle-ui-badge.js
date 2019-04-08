@@ -1,22 +1,14 @@
-import { Directive, ElementRef, Input, Renderer2, NgModule } from '@angular/core';
-import { LyTheme2, mixinBg, mixinColor, mixinDisabled, mixinElevation, mixinOutlined, mixinRaised, mixinShadowColor, mixinStyleUpdater, LyCommonModule } from '@alyle/ui';
+import { __decorate, __metadata } from 'tslib';
+import { Input, Directive, ElementRef, Renderer2, NgModule } from '@angular/core';
+import { mixinStyleUpdater, mixinBg, mixinColor, mixinRaised, mixinDisabled, mixinOutlined, mixinElevation, mixinShadowColor, LyTheme2, LyCommonModule } from '@alyle/ui';
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
 const STYLE_PRIORITY = -2;
-/** @type {?} */
 const DEFAULT_POSITION = 'startTop';
-/** @type {?} */
 const DEFAULT_BG = 'primary';
-/** @type {?} */
 const DEFAULT_POSITION_VALUE = {
     after: '-11px',
     above: '-11px'
 };
-/** @type {?} */
 const STYLES = (theme) => ({
     $priority: STYLE_PRIORITY,
     root: {
@@ -41,68 +33,43 @@ const STYLES = (theme) => ({
         position: 'relative'
     }
 });
-/**
- * \@docs-private
- */
+/** @docs-private */
 class LyBadgeBase {
-    /**
-     * @param {?} _theme
-     */
     constructor(_theme) {
         this._theme = _theme;
     }
 }
-/**
- * \@docs-private
- * @type {?}
- */
+/** @docs-private */
 const LyBadgeMixinBase = mixinStyleUpdater(mixinBg(mixinColor(mixinRaised(mixinDisabled(mixinOutlined(mixinElevation(mixinShadowColor(LyBadgeBase))))))));
-class LyBadge extends LyBadgeMixinBase {
-    /**
-     * @param {?} _el
-     * @param {?} _theme
-     * @param {?} _renderer
-     */
+let LyBadge = class LyBadge extends LyBadgeMixinBase {
     constructor(_el, _theme, _renderer) {
         super(_theme);
         this._el = _el;
         this._renderer = _renderer;
         /**
          * Styles
-         * \@docs-private
+         * @docs-private
          */
         this.classes = this._theme.addStyleSheet(STYLES);
         this.setAutoContrast();
         this._badgeElementRef = this._el.nativeElement;
     }
-    /**
-     * The content for the badge
-     * @param {?} val
-     * @return {?}
-     */
+    /** The content for the badge */
     set content(val) {
         if (val !== this.content) {
             this._content = val;
             this._createBadge();
         }
     }
-    /**
-     * @return {?}
-     */
     get content() {
         return this._content;
     }
-    /**
-     * The position for the badge
-     * @param {?} val
-     * @return {?}
-     */
+    /** The position for the badge */
     set position(val) {
         if (val !== this.position) {
             this._position = val;
             this._positionClass = this._theme.addStyle(`ly-badge.position:${val}`, (theme) => {
-                /** @type {?} */
-                const sty = (/** @type {?} */ (theme.badge)).position && (/** @type {?} */ ((/** @type {?} */ (theme.badge)).position))[val] || val === DEFAULT_POSITION ? DEFAULT_POSITION_VALUE : null;
+                const sty = theme.badge.position && theme.badge.position[val] || val === DEFAULT_POSITION ? DEFAULT_POSITION_VALUE : null;
                 if (sty) {
                     return sty;
                 }
@@ -112,23 +79,13 @@ class LyBadge extends LyBadgeMixinBase {
             }, this._badgeElementRef, this._positionClass, STYLE_PRIORITY);
         }
     }
-    /**
-     * @return {?}
-     */
     get position() {
         return this._position;
     }
-    /**
-     * The color of the badge
-     * @return {?}
-     */
+    /** The color of the badge */
     get lyBadgeBg() {
         return this._lyBadgeBg;
     }
-    /**
-     * @param {?} val
-     * @return {?}
-     */
     set lyBadgeBg(val) {
         if (val !== this.lyBadgeBg) {
             this._lyBadgeBg = val;
@@ -138,17 +95,11 @@ class LyBadge extends LyBadgeMixinBase {
             }), this._badgeElementRef, this._lyBadgeBgClass, STYLE_PRIORITY);
         }
     }
-    /**
-     * @return {?}
-     */
     ngOnChanges() {
         if (!this.content) {
             this.updateStyle(this._el);
         }
     }
-    /**
-     * @return {?}
-     */
     ngOnInit() {
         /** Add root styles */
         this._renderer.addClass(this._badgeElementRef, this.classes.root);
@@ -161,21 +112,13 @@ class LyBadge extends LyBadgeMixinBase {
             this.lyBadgeBg = DEFAULT_BG;
         }
     }
-    /**
-     * @return {?}
-     */
     ngOnDestroy() {
         if (this._elContainer) {
             this._renderer.removeChild(this._el.nativeElement, this._elContainer);
         }
     }
-    /**
-     * @private
-     * @return {?}
-     */
     _createBadge() {
         if (!this._elContainer) {
-            /** @type {?} */
             const container = this._elContainer = this._renderer.createElement('div');
             this._renderer.appendChild(this._el.nativeElement, container);
             this._badgeElementRef = container;
@@ -184,61 +127,52 @@ class LyBadge extends LyBadgeMixinBase {
         }
         this._elContainer.textContent = `${this.content}`;
     }
-}
-LyBadge.decorators = [
-    { type: Directive, args: [{
-                selector: 'ly-badge, [lyBadge]',
-                inputs: [
-                    'bg',
-                    'color',
-                    'raised',
-                    'disabled',
-                    'outlined',
-                    'elevation',
-                    'shadowColor'
-                ]
-            },] }
-];
-/** @nocollapse */
-LyBadge.ctorParameters = () => [
-    { type: ElementRef },
-    { type: LyTheme2 },
-    { type: Renderer2 }
-];
-LyBadge.propDecorators = {
-    content: [{ type: Input, args: ['lyBadge',] }],
-    position: [{ type: Input, args: ['lyBadgePosition',] }],
-    lyBadgeBg: [{ type: Input }]
 };
+__decorate([
+    Input('lyBadge'),
+    __metadata("design:type", Object),
+    __metadata("design:paramtypes", [Object])
+], LyBadge.prototype, "content", null);
+__decorate([
+    Input('lyBadgePosition'),
+    __metadata("design:type", String),
+    __metadata("design:paramtypes", [String])
+], LyBadge.prototype, "position", null);
+__decorate([
+    Input(),
+    __metadata("design:type", String),
+    __metadata("design:paramtypes", [String])
+], LyBadge.prototype, "lyBadgeBg", null);
+LyBadge = __decorate([
+    Directive({
+        selector: 'ly-badge, [lyBadge]',
+        inputs: [
+            'bg',
+            'color',
+            'raised',
+            'disabled',
+            'outlined',
+            'elevation',
+            'shadowColor'
+        ]
+    }),
+    __metadata("design:paramtypes", [ElementRef,
+        LyTheme2,
+        Renderer2])
+], LyBadge);
+
+let LyBadgeModule = class LyBadgeModule {
+};
+LyBadgeModule = __decorate([
+    NgModule({
+        exports: [LyBadge, LyCommonModule],
+        declarations: [LyBadge]
+    })
+], LyBadgeModule);
 
 /**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-class LyBadgeModule {
-}
-LyBadgeModule.decorators = [
-    { type: NgModule, args: [{
-                exports: [LyBadge, LyCommonModule],
-                declarations: [LyBadge]
-            },] }
-];
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated bundle index. Do not edit.
  */
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-
-export { STYLES, LyBadgeBase, LyBadgeMixinBase, LyBadge, LyBadgeModule };
-
+export { LyBadge, LyBadgeBase, LyBadgeMixinBase, LyBadgeModule, STYLES };
 //# sourceMappingURL=alyle-ui-badge.js.map

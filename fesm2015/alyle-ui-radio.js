@@ -1,30 +1,21 @@
-import { Component, forwardRef, NgModule, Input, Output, ChangeDetectorRef, ContentChildren, Optional, EventEmitter, ChangeDetectionStrategy, NgZone, ViewChild, ElementRef, Renderer2 } from '@angular/core';
+import { __decorate, __metadata, __param } from 'tslib';
+import { forwardRef, EventEmitter, Input, Output, ContentChildren, QueryList, Component, ChangeDetectionStrategy, ElementRef, Renderer2, ChangeDetectorRef, ViewChild, Optional, NgZone, NgModule } from '@angular/core';
 import { NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { LyCommonModule, LyTheme2, LyCoreStyles, toBoolean, mixinDisableRipple, LyFocusState, LY_COMMON_STYLES } from '@alyle/ui';
+import { LY_COMMON_STYLES, LyTheme2, mixinDisableRipple, toBoolean, LyCoreStyles, LyFocusState, LyCommonModule } from '@alyle/ui';
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
 const STYLE_PRIORITY = -2;
-/** @type {?} */
 const DEFAULT_DISABLE_RIPPLE = false;
-/** @type {?} */
 const DEFAULT_COLOR = 'accent';
-/** @type {?} */
 const LY_RADIO_CONTROL_VALUE_ACCESSOR = {
     provide: NG_VALUE_ACCESSOR,
     useExisting: forwardRef(() => LyRadioGroup),
     multi: true
 };
-/** @type {?} */
 let idx = 0;
 class UndefinedValue {
     constructor() { }
 }
-/** @type {?} */
 const STYLES = (theme) => ({
     $priority: STYLE_PRIORITY,
     root: {
@@ -104,41 +95,25 @@ const STYLES = (theme) => ({
         }
     }
 });
-class LyRadioGroup {
-    /**
-     * @param {?} elementRef
-     * @param {?} renderer
-     * @param {?} _theme
-     * @param {?} _cd
-     */
+let LyRadioGroup = class LyRadioGroup {
     constructor(elementRef, renderer, _theme, _cd) {
         this._theme = _theme;
         this._cd = _cd;
-        /**
-         * \@docs-private
-         */
+        /** @docs-private */
         this.classes = this._theme.addStyleSheet(STYLES);
-        /**
-         * \@docs-private
-         */
+        /** @docs-private */
         this.name = `ly-radio-name-${idx++}`;
         this.change = new EventEmitter();
         this.color = 'accent';
-        /**
-         * The method to be called in order to update ngModel
-         */
+        /** The method to be called in order to update ngModel */
         this._controlValueAccessorChangeFn = () => { };
         /**
          * onTouch function registered via registerOnTouch (ControlValueAccessor).
-         * \@docs-private
+         * @docs-private
          */
         this.onTouched = () => { };
         renderer.addClass(elementRef.nativeElement, this.classes.root);
     }
-    /**
-     * @param {?} val
-     * @return {?}
-     */
     set value(val) {
         if (this._value !== val) {
             if (this._radios) {
@@ -146,27 +121,19 @@ class LyRadioGroup {
             }
         }
     }
-    /**
-     * @return {?}
-     */
     get value() {
         return this._value;
     }
     /**
      * Mark this group as being "touched" (for ngModel). Meant to be called by the contained
      * radio buttons upon their blur.
-     * @return {?}
      */
     _touch() {
         if (this.onTouched) {
             this.onTouched();
         }
     }
-    /**
-     * \@docs-private
-     * @param {?} value
-     * @return {?}
-     */
+    /** @docs-private */
     writeValue(value) {
         if (!!this._radios) {
             this.value = value;
@@ -176,9 +143,8 @@ class LyRadioGroup {
     /**
      * Registers a callback to be triggered when the model value changes.
      * Implemented as part of ControlValueAccessor.
-     * \@docs-private
-     * @param {?} fn Callback to be registered.
-     * @return {?}
+     * @param fn Callback to be registered.
+     * @docs-private
      */
     registerOnChange(fn) {
         this._controlValueAccessorChangeFn = fn;
@@ -186,29 +152,22 @@ class LyRadioGroup {
     /**
      * Registers a callback to be triggered when the control is touched.
      * Implemented as part of ControlValueAccessor.
-     * \@docs-private
-     * @param {?} fn Callback to be registered.
-     * @return {?}
+     * @param fn Callback to be registered.
+     * @docs-private
      */
     registerOnTouched(fn) {
         this.onTouched = fn;
     }
     /**
      * Sets the disabled state of the control. Implemented as a part of ControlValueAccessor.
-     * \@docs-private
-     * @param {?} _isDisabled Whether the control should be disabled.
-     * @return {?}
+     * @param _isDisabled Whether the control should be disabled.
+     * @docs-private
      */
     setDisabledState(_isDisabled) {
         // this.disabled = isDisabled;
         this._markForCheck();
     }
-    /**
-     * @param {?} val
-     * @return {?}
-     */
     _updateCheckFromValue(val) {
-        /** @type {?} */
         let newChecked;
         this._radios.forEach(radioButton => {
             if (val === radioButton.value) {
@@ -220,7 +179,7 @@ class LyRadioGroup {
                 radioButton.checked = false;
             }
         });
-        if (!(/** @type {?} */ (newChecked))) {
+        if (!newChecked) {
             /** when val not exist in radio button !==  */
             this._controlValueAccessorChangeFn(null);
             if (this._value != null) {
@@ -228,83 +187,64 @@ class LyRadioGroup {
             }
         }
     }
-    /**
-     * \@docs-private
-     * @param {?} value
-     * @return {?}
-     */
+    /** @docs-private */
     updatevalue(value) {
         this._value = value;
         this._controlValueAccessorChangeFn(value);
         this.change.emit();
         this._markForCheck();
     }
-    /**
-     * @return {?}
-     */
     _markForCheck() {
         this._cd.markForCheck();
     }
-    /**
-     * @return {?}
-     */
     _radioResetChecked() {
         this._radios.forEach(_ => _._setCheckedToFalsy());
     }
-}
-LyRadioGroup.decorators = [
-    { type: Component, args: [{
-                selector: 'ly-radio-group',
-                template: `<ng-content></ng-content>`,
-                providers: [LY_RADIO_CONTROL_VALUE_ACCESSOR],
-                changeDetection: ChangeDetectionStrategy.OnPush,
-                preserveWhitespaces: false,
-                exportAs: 'lyRadioGroup'
-            }] }
-];
-/** @nocollapse */
-LyRadioGroup.ctorParameters = () => [
-    { type: ElementRef },
-    { type: Renderer2 },
-    { type: LyTheme2 },
-    { type: ChangeDetectorRef }
-];
-LyRadioGroup.propDecorators = {
-    value: [{ type: Input }],
-    change: [{ type: Output }],
-    color: [{ type: Input }],
-    _radios: [{ type: ContentChildren, args: [forwardRef(() => LyRadio),] }]
 };
-/**
- * \@docs-private
- */
+__decorate([
+    Input(),
+    __metadata("design:type", Object),
+    __metadata("design:paramtypes", [Object])
+], LyRadioGroup.prototype, "value", null);
+__decorate([
+    Output(),
+    __metadata("design:type", EventEmitter)
+], LyRadioGroup.prototype, "change", void 0);
+__decorate([
+    Input(),
+    __metadata("design:type", Object)
+], LyRadioGroup.prototype, "color", void 0);
+__decorate([
+    ContentChildren(forwardRef(() => LyRadio)),
+    __metadata("design:type", QueryList)
+], LyRadioGroup.prototype, "_radios", void 0);
+LyRadioGroup = __decorate([
+    Component({
+        selector: 'ly-radio-group',
+        template: `<ng-content></ng-content>`,
+        providers: [LY_RADIO_CONTROL_VALUE_ACCESSOR],
+        changeDetection: ChangeDetectionStrategy.OnPush,
+        preserveWhitespaces: false,
+        exportAs: 'lyRadioGroup'
+    }),
+    __metadata("design:paramtypes", [ElementRef,
+        Renderer2,
+        LyTheme2,
+        ChangeDetectorRef])
+], LyRadioGroup);
+/** @docs-private */
 class LyRadioBase {
-    /**
-     * @param {?} _theme
-     * @param {?} _ngZone
-     */
     constructor(_theme, _ngZone) {
         this._theme = _theme;
         this._ngZone = _ngZone;
     }
 }
-/**
- * \@docs-private
- * @type {?}
- */
+/** @docs-private */
 const LyRadioMixinBase = mixinDisableRipple(LyRadioBase);
-class LyRadio extends LyRadioMixinBase {
-    /**
-     * @param {?} radioGroup
-     * @param {?} _elementRef
-     * @param {?} _renderer
-     * @param {?} theme
-     * @param {?} changeDetectorRef
-     * @param {?} ngZone
-     * @param {?} _coreStyles
-     * @param {?} _focusState
-     */
-    constructor(radioGroup, _elementRef, _renderer, theme, changeDetectorRef, ngZone, _coreStyles, _focusState) {
+let LyRadio = class LyRadio extends LyRadioMixinBase {
+    constructor(
+    /** @docs-private */
+    radioGroup, _elementRef, _renderer, theme, changeDetectorRef, ngZone, _coreStyles, _focusState) {
         super(theme, ngZone);
         this.radioGroup = radioGroup;
         this._elementRef = _elementRef;
@@ -312,17 +252,11 @@ class LyRadio extends LyRadioMixinBase {
         this.changeDetectorRef = changeDetectorRef;
         this._coreStyles = _coreStyles;
         this._focusState = _focusState;
-        /**
-         * \@docs-private
-         */
+        /** @docs-private */
         this.classes = this.radioGroup.classes;
-        /**
-         * \@docs-private
-         */
+        /** @docs-private */
         this.id = `ly-radio-id-${idx++}`;
-        /**
-         * \@docs-private
-         */
+        /** @docs-private */
         this.name = '';
         this._value = null;
         this._checked = false;
@@ -335,23 +269,12 @@ class LyRadio extends LyRadioMixinBase {
         };
         _renderer.addClass(_elementRef.nativeElement, radioGroup.classes.radio);
     }
-    /**
-     * @param {?} val
-     * @return {?}
-     */
     set value(val) {
         if (this._value !== val) {
             this._value = val;
         }
     }
-    /**
-     * @return {?}
-     */
     get value() { return this._value; }
-    /**
-     * @param {?} val
-     * @return {?}
-     */
     set color(val) {
         if (this._color !== val) {
             this._color = val;
@@ -362,18 +285,9 @@ class LyRadio extends LyRadioMixinBase {
             }), this._elementRef.nativeElement, this._colorClass, STYLE_PRIORITY, STYLES);
         }
     }
-    /**
-     * @return {?}
-     */
     get color() { return this._color; }
-    /**
-     * @param {?} val
-     * @return {?}
-     */
     set checked(val) {
-        /** @type {?} */
         const newCheckedState = toBoolean(val);
-        /** @type {?} */
         const before = this._checked;
         if (before !== newCheckedState) {
             this._checked = newCheckedState;
@@ -392,29 +306,15 @@ class LyRadio extends LyRadioMixinBase {
             this._markForCheck();
         }
     }
-    /**
-     * @return {?}
-     */
     get checked() {
         return this._checked;
     }
-    /**
-     * \@docs-private
-     * @return {?}
-     */
+    /** @docs-private */
     get inputId() {
         return `${this.id}-input`;
     }
-    /**
-     * @return {?}
-     */
     get disabled() { return this._disabled; }
-    /**
-     * @param {?} value
-     * @return {?}
-     */
     set disabled(value) {
-        /** @type {?} */
         const newVal = toBoolean(value);
         if (newVal) {
             this._renderer.addClass(this._elementRef.nativeElement, this.classes.disabled);
@@ -427,9 +327,6 @@ class LyRadio extends LyRadioMixinBase {
         this._disabled = toBoolean(value);
         this._markForCheck();
     }
-    /**
-     * @return {?}
-     */
     ngOnInit() {
         if (this.radioGroup) {
             // Copy name from parent radio group
@@ -439,16 +336,12 @@ class LyRadio extends LyRadioMixinBase {
             this.color = this.radioGroup.color || DEFAULT_COLOR;
         }
     }
-    /**
-     * @return {?}
-     */
     ngAfterViewInit() {
         this._rippleContainer = this._radioContainer;
         // set default disable ripple
         if (this.disableRipple == null) {
             this.disableRipple = DEFAULT_DISABLE_RIPPLE;
         }
-        /** @type {?} */
         const focusState = this._focusState.listen(this._input, this._elementRef);
         if (focusState) {
             focusState.subscribe((event) => {
@@ -461,108 +354,99 @@ class LyRadio extends LyRadioMixinBase {
             });
         }
     }
-    /**
-     * @return {?}
-     */
     _markForCheck() {
         this.changeDetectorRef.markForCheck();
     }
-    /**
-     * @return {?}
-     */
     ngOnDestroy() {
         this._focusState.unlisten(this._elementRef);
         this._removeRippleEvents();
     }
-    /**
-     * @param {?} event
-     * @return {?}
-     */
     _onInputChange(event) {
         event.stopPropagation();
         this.radioGroup._updateCheckFromValue(this.value);
         this.radioGroup._touch();
         this._addAnim();
     }
-    /**
-     * @private
-     * @return {?}
-     */
     _addAnim() {
         if (!this._animClass) {
             this._renderer.addClass(this._elementRef.nativeElement, this.classes._animations);
             this._animClass = this.classes._animations;
         }
     }
-    /**
-     * @param {?} event
-     * @return {?}
-     */
     _onInputClick(event) { event.stopPropagation(); }
-    /**
-     * @return {?}
-     */
     _setCheckedToFalsy() {
         this.checked = false;
     }
-}
-LyRadio.decorators = [
-    { type: Component, args: [{
-                selector: 'ly-radio',
-                template: "<label #_labelContainer [attr.for]=\"inputId\" [className]=\"classes.label\">\n  <input #_input\n    [className]=\"_coreStyles.classes.visuallyHidden\"\n    [id]=\"inputId\"\n    [checked]=\"checked\"\n    [name]=\"name\"\n    (change)=\"_onInputChange($event)\"\n    (click)=\"_onInputClick($event)\"\n    [disabled]=\"disabled\"\n    type=\"radio\"\n    >\n  <div #_radioContainer [className]=\"classes.container\">\n    <div [className]=\"_coreStyles.classes.fill\"></div>\n    <div [className]=\"_coreStyles.classes.fill\"></div>\n  </div>\n  <div\n  [className]=\"classes.labelContent\">\n    <ng-content></ng-content>\n  </div>\n</label>",
-                changeDetection: ChangeDetectionStrategy.OnPush,
-                preserveWhitespaces: false,
-                inputs: [
-                    'disableRipple'
-                ]
-            }] }
-];
-/** @nocollapse */
-LyRadio.ctorParameters = () => [
-    { type: LyRadioGroup, decorators: [{ type: Optional }] },
-    { type: ElementRef },
-    { type: Renderer2 },
-    { type: LyTheme2 },
-    { type: ChangeDetectorRef },
-    { type: NgZone },
-    { type: LyCoreStyles },
-    { type: LyFocusState }
-];
-LyRadio.propDecorators = {
-    _input: [{ type: ViewChild, args: ['_input',] }],
-    _radioContainer: [{ type: ViewChild, args: ['_radioContainer',] }],
-    _labelContainer: [{ type: ViewChild, args: ['_labelContainer',] }],
-    change: [{ type: Output }],
-    value: [{ type: Input }],
-    color: [{ type: Input }],
-    checked: [{ type: Input }],
-    disabled: [{ type: Input }]
 };
-class LyRadioModule {
-}
-LyRadioModule.decorators = [
-    { type: NgModule, args: [{
-                imports: [CommonModule, FormsModule, LyCommonModule],
-                exports: [LyRadioGroup, LyRadio],
-                declarations: [LyRadioGroup, LyRadio],
-            },] }
-];
+__decorate([
+    ViewChild('_input'),
+    __metadata("design:type", ElementRef)
+], LyRadio.prototype, "_input", void 0);
+__decorate([
+    ViewChild('_radioContainer'),
+    __metadata("design:type", ElementRef)
+], LyRadio.prototype, "_radioContainer", void 0);
+__decorate([
+    ViewChild('_labelContainer'),
+    __metadata("design:type", ElementRef)
+], LyRadio.prototype, "_labelContainer", void 0);
+__decorate([
+    Output(),
+    __metadata("design:type", Object)
+], LyRadio.prototype, "change", void 0);
+__decorate([
+    Input(),
+    __metadata("design:type", Object),
+    __metadata("design:paramtypes", [Object])
+], LyRadio.prototype, "value", null);
+__decorate([
+    Input(),
+    __metadata("design:type", Object),
+    __metadata("design:paramtypes", [Object])
+], LyRadio.prototype, "color", null);
+__decorate([
+    Input(),
+    __metadata("design:type", Boolean),
+    __metadata("design:paramtypes", [Boolean])
+], LyRadio.prototype, "checked", null);
+__decorate([
+    Input(),
+    __metadata("design:type", Boolean),
+    __metadata("design:paramtypes", [Object])
+], LyRadio.prototype, "disabled", null);
+LyRadio = __decorate([
+    Component({
+        selector: 'ly-radio',
+        template: "<label #_labelContainer [attr.for]=\"inputId\" [className]=\"classes.label\">\n  <input #_input\n    [className]=\"_coreStyles.classes.visuallyHidden\"\n    [id]=\"inputId\"\n    [checked]=\"checked\"\n    [name]=\"name\"\n    (change)=\"_onInputChange($event)\"\n    (click)=\"_onInputClick($event)\"\n    [disabled]=\"disabled\"\n    type=\"radio\"\n    >\n  <div #_radioContainer [className]=\"classes.container\">\n    <div [className]=\"_coreStyles.classes.fill\"></div>\n    <div [className]=\"_coreStyles.classes.fill\"></div>\n  </div>\n  <div\n  [className]=\"classes.labelContent\">\n    <ng-content></ng-content>\n  </div>\n</label>",
+        changeDetection: ChangeDetectionStrategy.OnPush,
+        preserveWhitespaces: false,
+        inputs: [
+            'disableRipple'
+        ]
+    }),
+    __param(0, Optional()),
+    __metadata("design:paramtypes", [LyRadioGroup,
+        ElementRef,
+        Renderer2,
+        LyTheme2,
+        ChangeDetectorRef,
+        NgZone,
+        LyCoreStyles,
+        LyFocusState])
+], LyRadio);
+let LyRadioModule = class LyRadioModule {
+};
+LyRadioModule = __decorate([
+    NgModule({
+        imports: [CommonModule, FormsModule, LyCommonModule],
+        exports: [LyRadioGroup, LyRadio],
+        declarations: [LyRadioGroup, LyRadio],
+    })
+], LyRadioModule);
 
 /**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated bundle index. Do not edit.
  */
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-
-export { LY_RADIO_CONTROL_VALUE_ACCESSOR, UndefinedValue, STYLES, LyRadioGroup, LyRadioBase, LyRadioMixinBase, LyRadio, LyRadioModule };
-
+export { LY_RADIO_CONTROL_VALUE_ACCESSOR, LyRadio, LyRadioBase, LyRadioGroup, LyRadioMixinBase, LyRadioModule, STYLES, UndefinedValue };
 //# sourceMappingURL=alyle-ui-radio.js.map
