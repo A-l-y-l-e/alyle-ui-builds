@@ -1940,8 +1940,8 @@ LyFocusState = __decorate([
     __metadata("design:paramtypes", [NgZone])
 ], LyFocusState);
 
-const AUI_VERSION = '2.6.1-nightly.20190409-ju9iqcr7';
-const AUI_LAST_UPDATE = '2019-04-09T08:24:06.162Z';
+const AUI_VERSION = '2.6.1-nightly.20190410-juay4xuk';
+const AUI_LAST_UPDATE = '2019-04-10T08:23:07.098Z';
 
 const LY_HAMMER_OPTIONS = new InjectionToken('LY_HAMMER_OPTIONS');
 const HAMMER_GESTURES_EVENTS = [
