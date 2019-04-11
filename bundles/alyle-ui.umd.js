@@ -2203,8 +2203,8 @@
         return LyFocusState;
     }());
 
-    var AUI_VERSION = '2.6.1-nightly.20190410-juay4xuk';
-    var AUI_LAST_UPDATE = '2019-04-10T08:23:07.098Z';
+    var AUI_VERSION = '2.6.1-nightly.20190411-jucdkvx0';
+    var AUI_LAST_UPDATE = '2019-04-11T08:23:11.507Z';
 
     var LY_HAMMER_OPTIONS = new core.InjectionToken('LY_HAMMER_OPTIONS');
     var HAMMER_GESTURES_EVENTS = [
