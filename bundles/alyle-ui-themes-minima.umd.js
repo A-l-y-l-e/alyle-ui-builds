@@ -1,7 +1,7 @@
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@alyle/ui'), require('@alyle/ui/responsive')) :
     typeof define === 'function' && define.amd ? define('@alyle/ui/themes/minima', ['exports', '@angular/core', '@alyle/ui', '@alyle/ui/responsive'], factory) :
-    (global = global || self, factory((global.ly = global.ly || {}, global.ly['themes/minima'] = {}), global.ng.core, global.ly.core, global.ly.responsive));
+    (global = global || self, factory((global.ly = global.ly || {}, global.ly['themes/Minima'] = {}), global.ng.core, global.ly.core, global.ly.responsive));
 }(this, function (exports, core, ui, responsive) { 'use strict';
 
     /*! *****************************************************************************

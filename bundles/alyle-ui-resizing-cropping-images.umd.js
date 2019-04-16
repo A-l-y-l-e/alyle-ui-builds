@@ -1,7 +1,7 @@
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@alyle/ui'), require('rxjs/operators'), require('rxjs'), require('@angular/platform-browser'), require('@angular/common')) :
     typeof define === 'function' && define.amd ? define('@alyle/ui/resizing-cropping-images', ['exports', '@angular/core', '@alyle/ui', 'rxjs/operators', 'rxjs', '@angular/platform-browser', '@angular/common'], factory) :
-    (global = global || self, factory((global.ly = global.ly || {}, global.ly.resizingCroppingImages = {}), global.ng.core, global.ly.core, global.rxjs.operators, global.rxjs, global.ng.platformBrowser, global.ng.common));
+    (global = global || self, factory((global.ly = global.ly || {}, global.ly['resizing-Cropping-Images'] = {}), global.ng.core, global.ly.core, global.rxjs.operators, global.rxjs, global.ng.platformBrowser, global.ng.common));
 }(this, function (exports, core, ui, operators, rxjs, platformBrowser, common) { 'use strict';
 
     /*! *****************************************************************************
