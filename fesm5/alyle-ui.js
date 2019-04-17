@@ -2127,8 +2127,8 @@ var LyFocusState = /** @class */ (function () {
     return LyFocusState;
 }());
 
-var AUI_VERSION = '2.6.1-nightly.20190416-jujirzwl';
-var AUI_LAST_UPDATE = '2019-04-16T08:23:04.577Z';
+var AUI_VERSION = '2.6.1-nightly.20190417-jukyhi23';
+var AUI_LAST_UPDATE = '2019-04-17T08:30:34.918Z';
 
 var LY_HAMMER_OPTIONS = new InjectionToken('LY_HAMMER_OPTIONS');
 var HAMMER_GESTURES_EVENTS = [
