@@ -2127,8 +2127,8 @@ var LyFocusState = /** @class */ (function () {
     return LyFocusState;
 }());
 
-var AUI_VERSION = '2.6.1-nightly.20190417-jukyhi23';
-var AUI_LAST_UPDATE = '2019-04-17T08:30:34.918Z';
+var AUI_VERSION = '2.6.1-nightly.20190418-jumdrjkv';
+var AUI_LAST_UPDATE = '2019-04-18T08:26:03.867Z';
 
 var LY_HAMMER_OPTIONS = new InjectionToken('LY_HAMMER_OPTIONS');
 var HAMMER_GESTURES_EVENTS = [
@@ -2139,6 +2139,15 @@ var HAMMER_GESTURES_EVENTS = [
     'slideleft',
     'slidecancel'
 ];
+var ɵ0 = function () { }, ɵ1 = function () { };
+/**
+ * Fake HammerInstance that is used when a Hammer instance is requested when HammerJS has not
+ * been loaded on the page.
+ */
+var noopHammerInstance = {
+    on: ɵ0,
+    off: ɵ1,
+};
 var LyHammerGestureConfig = /** @class */ (function (_super) {
     __extends(LyHammerGestureConfig, _super);
     function LyHammerGestureConfig(_hammerOptions) {
@@ -2149,6 +2158,9 @@ var LyHammerGestureConfig = /** @class */ (function (_super) {
     }
     LyHammerGestureConfig.prototype.buildHammer = function (element) {
         var hammer = typeof window !== 'undefined' ? window.Hammer : null;
+        if (!hammer) {
+            return noopHammerInstance;
+        }
         var mc = new hammer(element, this._hammerOptions || {});
         var pan = new hammer.Pan();
         var swipe = new hammer.Swipe();
@@ -2222,7 +2234,6 @@ var styles$1 = function (theme) { return ({
         pointerEvents: 'none'
     }
 }); };
-var ɵ0 = styles$1;
 var LyOverlayContainer = /** @class */ (function () {
     function LyOverlayContainer(theme) {
         this.theme = theme;
@@ -2933,5 +2944,5 @@ var LyExpansionIconModule = /** @class */ (function () {
  * Generated bundle index. Do not edit.
  */
 
-export { AUI_LAST_UPDATE, AUI_VERSION, AlignAlias, CoreTheme, Dir, DirAlias, DirPosition, ElementObserver, FocusStatus, IS_CORE_THEME, LY_COMMON_STYLES, LY_HAMMER_OPTIONS, LY_THEME, LY_THEME_GLOBAL_VARIABLES, LY_THEME_NAME, LyCommonModule, LyCoreStyles, LyExpansionIcon, LyExpansionIconModule, LyFocusState, LyHammerGestureConfig, LyOverlay, LyOverlayConfig, LyOverlayContainer, LyOverlayModule, LyOverlayRef, LyPaper, LyPaperBase, LyPaperMixinBase, LyRippleService, LySelectionModel, LyStyleUtils, LyTheme2, LyThemeModule, MutationObserverFactory, NgTranscludeDirective, NgTranscludeModule, OverlayFactory, Platform, Positioning, Ripple, STYLES_BACKDROP_DARK, Shadows, StylesInDocument, THEME_VARIABLES, TypeStyle, Undefined, UndefinedValue, WinResize, WinScroll, XPosition, YPosition, _STYLE_MAP, capitalizeFirstLetter, converterToCssKeyAndStyle, createOverlayInjector, defaultEntry, eachMedia, getContrastYIQ, getLyThemeVariableUndefinedError, getNativeElement, invertPlacement, isObject, mergeDeep, mixinBg, mixinColor, mixinDisableRipple, mixinDisabled, mixinElevation, mixinOutlined, mixinRaised, mixinShadowColor, mixinStyleUpdater, mixinTabIndex, scrollTo, scrollToC, scrollWithAnimation, shadowBuilder, shadowBuilderDeprecated, supportsPassiveEventListeners, toBoolean, ɵ0, LyWithClass as ɵa, LyOverlayBackdrop as ɵc };
+export { AUI_LAST_UPDATE, AUI_VERSION, AlignAlias, CoreTheme, Dir, DirAlias, DirPosition, ElementObserver, FocusStatus, IS_CORE_THEME, LY_COMMON_STYLES, LY_HAMMER_OPTIONS, LY_THEME, LY_THEME_GLOBAL_VARIABLES, LY_THEME_NAME, LyCommonModule, LyCoreStyles, LyExpansionIcon, LyExpansionIconModule, LyFocusState, LyHammerGestureConfig, LyOverlay, LyOverlayConfig, LyOverlayContainer, LyOverlayModule, LyOverlayRef, LyPaper, LyPaperBase, LyPaperMixinBase, LyRippleService, LySelectionModel, LyStyleUtils, LyTheme2, LyThemeModule, MutationObserverFactory, NgTranscludeDirective, NgTranscludeModule, OverlayFactory, Platform, Positioning, Ripple, STYLES_BACKDROP_DARK, Shadows, StylesInDocument, THEME_VARIABLES, TypeStyle, Undefined, UndefinedValue, WinResize, WinScroll, XPosition, YPosition, _STYLE_MAP, capitalizeFirstLetter, converterToCssKeyAndStyle, createOverlayInjector, defaultEntry, eachMedia, getContrastYIQ, getLyThemeVariableUndefinedError, getNativeElement, invertPlacement, isObject, mergeDeep, mixinBg, mixinColor, mixinDisableRipple, mixinDisabled, mixinElevation, mixinOutlined, mixinRaised, mixinShadowColor, mixinStyleUpdater, mixinTabIndex, scrollTo, scrollToC, scrollWithAnimation, shadowBuilder, shadowBuilderDeprecated, supportsPassiveEventListeners, toBoolean, ɵ0, ɵ1, LyWithClass as ɵa, LyOverlayBackdrop as ɵc };
 //# sourceMappingURL=alyle-ui.js.map

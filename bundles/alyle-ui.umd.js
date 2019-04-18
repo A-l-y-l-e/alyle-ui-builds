@@ -2203,8 +2203,8 @@
         return LyFocusState;
     }());
 
-    var AUI_VERSION = '2.6.1-nightly.20190417-jukyhi23';
-    var AUI_LAST_UPDATE = '2019-04-17T08:30:34.918Z';
+    var AUI_VERSION = '2.6.1-nightly.20190418-jumdrjkv';
+    var AUI_LAST_UPDATE = '2019-04-18T08:26:03.867Z';
 
     var LY_HAMMER_OPTIONS = new core.InjectionToken('LY_HAMMER_OPTIONS');
     var HAMMER_GESTURES_EVENTS = [
@@ -2215,6 +2215,15 @@
         'slideleft',
         'slidecancel'
     ];
+    var ɵ0 = function () { }, ɵ1 = function () { };
+    /**
+     * Fake HammerInstance that is used when a Hammer instance is requested when HammerJS has not
+     * been loaded on the page.
+     */
+    var noopHammerInstance = {
+        on: ɵ0,
+        off: ɵ1,
+    };
     var LyHammerGestureConfig = /** @class */ (function (_super) {
         __extends(LyHammerGestureConfig, _super);
         function LyHammerGestureConfig(_hammerOptions) {
@@ -2225,6 +2234,9 @@
         }
         LyHammerGestureConfig.prototype.buildHammer = function (element) {
             var hammer = typeof window !== 'undefined' ? window.Hammer : null;
+            if (!hammer) {
+                return noopHammerInstance;
+            }
             var mc = new hammer(element, this._hammerOptions || {});
             var pan = new hammer.Pan();
             var swipe = new hammer.Swipe();
@@ -2298,7 +2310,6 @@
             pointerEvents: 'none'
         }
     }); };
-    var ɵ0 = styles$1;
     var LyOverlayContainer = /** @class */ (function () {
         function LyOverlayContainer(theme) {
             this.theme = theme;
@@ -3079,6 +3090,7 @@
     exports.supportsPassiveEventListeners = supportsPassiveEventListeners;
     exports.toBoolean = toBoolean;
     exports.ɵ0 = ɵ0;
+    exports.ɵ1 = ɵ1;
     exports.ɵa = LyWithClass;
     exports.ɵc = LyOverlayBackdrop;
 
