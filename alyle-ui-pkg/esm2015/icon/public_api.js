@@ -1,4 +1,0 @@
-export * from './icon.module';
-export * from './icon.service';
-export * from './icon';
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicHVibGljX2FwaS5qcyIsInNvdXJjZVJvb3QiOiJuZzovL0BhbHlsZS91aS9pY29uLyIsInNvdXJjZXMiOlsicHVibGljX2FwaS50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSxjQUFjLGVBQWUsQ0FBQztBQUM5QixjQUFjLGdCQUFnQixDQUFDO0FBQy9CLGNBQWMsUUFBUSxDQUFDIiwic291cmNlc0NvbnRlbnQiOlsiZXhwb3J0ICogZnJvbSAnLi9pY29uLm1vZHVsZSc7XG5leHBvcnQgKiBmcm9tICcuL2ljb24uc2VydmljZSc7XG5leHBvcnQgKiBmcm9tICcuL2ljb24nO1xuIl19

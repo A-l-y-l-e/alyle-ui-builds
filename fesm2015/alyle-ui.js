@@ -1210,7 +1210,7 @@ function mixinStyleUpdater(base) {
             const __outlined = this._superHyperInternalPropertyOutlined;
             const __shadowColor = this._superHyperInternalPropertyShadowColor;
             const __isContrast = this._autoContrast && !__color || __color === 'auto';
-            const newKey = `common----:${__bg || DEFAULT_VALUE}·${__color || DEFAULT_VALUE}·${__raised || DEFAULT_VALUE}·${__elevation || DEFAULT_VALUE}·${__disabled || DEFAULT_VALUE}·${__outlined || DEFAULT_VALUE}·${__shadowColor || DEFAULT_VALUE}·${__isContrast || DEFAULT_VALUE}`;
+            const newKey = `common----:${__bg || DEFAULT_VALUE}·${__color || DEFAULT_VALUE}·${__raised}·${__elevation}·${__disabled || DEFAULT_VALUE}·${__outlined || DEFAULT_VALUE}·${__shadowColor || DEFAULT_VALUE}·${__isContrast || DEFAULT_VALUE}`;
             this._classNameAnonymous = this._theme.addStyle(newKey, (theme) => {
                 const style = {};
                 if (__outlined) {
@@ -1233,14 +1233,17 @@ function mixinStyleUpdater(base) {
                     if (!style.color && __color) {
                         style.color = theme.colorOf(__color);
                     }
-                    if (__raised || __elevation) {
+                    if (__raised || (__elevation != null)) {
                         if (!__bg) {
                             style.background = theme.background.primary.default;
                         }
                         const backgroundColorCss = style.background !== __bg && theme.colorOf(__bg || 'background:primary', 'shadow');
                         const shadowColor = (__shadowColor && theme.colorOf(__shadowColor)) || backgroundColorCss || style.background || style.color || theme.shadow;
-                        style.boxShadow = shadowBuilder(__elevation || 3, shadowColor);
-                        if (!__elevation) {
+                        if (__elevation != null) {
+                            style.boxShadow = shadowBuilder(__elevation, shadowColor);
+                        }
+                        else {
+                            style.boxShadow = shadowBuilder(3, shadowColor);
                             style['&:active'] = {
                                 boxShadow: shadowBuilder(8, shadowColor)
                             };
@@ -1940,8 +1943,8 @@ LyFocusState = __decorate([
     __metadata("design:paramtypes", [NgZone])
 ], LyFocusState);
 
-const AUI_VERSION = '2.7.1-nightly.20190422-jus3es5z';
-const AUI_LAST_UPDATE = '2019-04-22T08:22:49.363Z';
+const AUI_VERSION = '2.7.0';
+const AUI_LAST_UPDATE = '2019-04-18T23:53:50.923Z';
 
 const LY_HAMMER_OPTIONS = new InjectionToken('LY_HAMMER_OPTIONS');
 const HAMMER_GESTURES_EVENTS = [

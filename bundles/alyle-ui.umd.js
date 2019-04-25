@@ -1339,7 +1339,7 @@
                 var __outlined = this._superHyperInternalPropertyOutlined;
                 var __shadowColor = this._superHyperInternalPropertyShadowColor;
                 var __isContrast = this._autoContrast && !__color || __color === 'auto';
-                var newKey = "common----:" + (__bg || DEFAULT_VALUE) + "\u00B7" + (__color || DEFAULT_VALUE) + "\u00B7" + (__raised || DEFAULT_VALUE) + "\u00B7" + (__elevation || DEFAULT_VALUE) + "\u00B7" + (__disabled || DEFAULT_VALUE) + "\u00B7" + (__outlined || DEFAULT_VALUE) + "\u00B7" + (__shadowColor || DEFAULT_VALUE) + "\u00B7" + (__isContrast || DEFAULT_VALUE);
+                var newKey = "common----:" + (__bg || DEFAULT_VALUE) + "\u00B7" + (__color || DEFAULT_VALUE) + "\u00B7" + __raised + "\u00B7" + __elevation + "\u00B7" + (__disabled || DEFAULT_VALUE) + "\u00B7" + (__outlined || DEFAULT_VALUE) + "\u00B7" + (__shadowColor || DEFAULT_VALUE) + "\u00B7" + (__isContrast || DEFAULT_VALUE);
                 this._classNameAnonymous = this._theme.addStyle(newKey, function (theme) {
                     var style = {};
                     if (__outlined) {
@@ -1362,14 +1362,17 @@
                         if (!style.color && __color) {
                             style.color = theme.colorOf(__color);
                         }
-                        if (__raised || __elevation) {
+                        if (__raised || (__elevation != null)) {
                             if (!__bg) {
                                 style.background = theme.background.primary.default;
                             }
                             var backgroundColorCss = style.background !== __bg && theme.colorOf(__bg || 'background:primary', 'shadow');
                             var shadowColor = (__shadowColor && theme.colorOf(__shadowColor)) || backgroundColorCss || style.background || style.color || theme.shadow;
-                            style.boxShadow = shadowBuilder(__elevation || 3, shadowColor);
-                            if (!__elevation) {
+                            if (__elevation != null) {
+                                style.boxShadow = shadowBuilder(__elevation, shadowColor);
+                            }
+                            else {
+                                style.boxShadow = shadowBuilder(3, shadowColor);
                                 style['&:active'] = {
                                     boxShadow: shadowBuilder(8, shadowColor)
                                 };
@@ -2203,8 +2206,8 @@
         return LyFocusState;
     }());
 
-    var AUI_VERSION = '2.7.1-nightly.20190422-jus3es5z';
-    var AUI_LAST_UPDATE = '2019-04-22T08:22:49.363Z';
+    var AUI_VERSION = '2.7.0';
+    var AUI_LAST_UPDATE = '2019-04-18T23:53:50.923Z';
 
     var LY_HAMMER_OPTIONS = new core.InjectionToken('LY_HAMMER_OPTIONS');
     var HAMMER_GESTURES_EVENTS = [
