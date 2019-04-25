@@ -1,0 +1,13 @@
+{
+  "main": "../bundles/alyle-ui-resizing-cropping-images.umd.js",
+  "module": "../fesm5/alyle-ui-resizing-cropping-images.js",
+  "es2015": "../fesm2015/alyle-ui-resizing-cropping-images.js",
+  "esm5": "../esm5/resizing-cropping-images/alyle-ui-resizing-cropping-images.js",
+  "esm2015": "../esm2015/resizing-cropping-images/alyle-ui-resizing-cropping-images.js",
+  "fesm5": "../fesm5/alyle-ui-resizing-cropping-images.js",
+  "fesm2015": "../fesm2015/alyle-ui-resizing-cropping-images.js",
+  "typings": "alyle-ui-resizing-cropping-images.d.ts",
+  "metadata": "alyle-ui-resizing-cropping-images.metadata.json",
+  "sideEffects": false,
+  "name": "@alyle/ui/resizing-cropping-images"
+}

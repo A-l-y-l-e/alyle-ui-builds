@@ -1,0 +1,14 @@
+import * as tslib_1 from "tslib";
+import { NgModule } from '@angular/core';
+import { LyCommonModule } from '@alyle/ui';
+import { LyButton } from './button';
+let LyButtonModule = class LyButtonModule {
+};
+LyButtonModule = tslib_1.__decorate([
+    NgModule({
+        exports: [LyCommonModule, LyButton],
+        declarations: [LyButton]
+    })
+], LyButtonModule);
+export { LyButtonModule };
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiYnV0dG9uLm1vZHVsZS5qcyIsInNvdXJjZVJvb3QiOiJuZzovL0BhbHlsZS91aS9idXR0b24vIiwic291cmNlcyI6WyJidXR0b24ubW9kdWxlLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7QUFBQSxPQUFPLEVBQUUsUUFBUSxFQUFFLE1BQU0sZUFBZSxDQUFDO0FBQ3pDLE9BQU8sRUFBRSxjQUFjLEVBQUUsTUFBTSxXQUFXLENBQUM7QUFDM0MsT0FBTyxFQUFFLFFBQVEsRUFBRSxNQUFNLFVBQVUsQ0FBQztBQU1wQyxJQUFhLGNBQWMsR0FBM0IsTUFBYSxjQUFjO0NBQUksQ0FBQTtBQUFsQixjQUFjO0lBSjFCLFFBQVEsQ0FBQztRQUNSLE9BQU8sRUFBRSxDQUFDLGNBQWMsRUFBRSxRQUFRLENBQUM7UUFDbkMsWUFBWSxFQUFFLENBQUMsUUFBUSxDQUFDO0tBQ3pCLENBQUM7R0FDVyxjQUFjLENBQUk7U0FBbEIsY0FBYyIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IE5nTW9kdWxlIH0gZnJvbSAnQGFuZ3VsYXIvY29yZSc7XG5pbXBvcnQgeyBMeUNvbW1vbk1vZHVsZSB9IGZyb20gJ0BhbHlsZS91aSc7XG5pbXBvcnQgeyBMeUJ1dHRvbiB9IGZyb20gJy4vYnV0dG9uJztcblxuQE5nTW9kdWxlKHtcbiAgZXhwb3J0czogW0x5Q29tbW9uTW9kdWxlLCBMeUJ1dHRvbl0sXG4gIGRlY2xhcmF0aW9uczogW0x5QnV0dG9uXVxufSlcbmV4cG9ydCBjbGFzcyBMeUJ1dHRvbk1vZHVsZSB7IH1cbiJdfQ==

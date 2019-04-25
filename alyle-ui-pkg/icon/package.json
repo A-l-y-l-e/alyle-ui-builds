@@ -1,0 +1,13 @@
+{
+  "main": "../bundles/alyle-ui-icon.umd.js",
+  "module": "../fesm5/alyle-ui-icon.js",
+  "es2015": "../fesm2015/alyle-ui-icon.js",
+  "esm5": "../esm5/icon/alyle-ui-icon.js",
+  "esm2015": "../esm2015/icon/alyle-ui-icon.js",
+  "fesm5": "../fesm5/alyle-ui-icon.js",
+  "fesm2015": "../fesm2015/alyle-ui-icon.js",
+  "typings": "alyle-ui-icon.d.ts",
+  "metadata": "alyle-ui-icon.metadata.json",
+  "sideEffects": false,
+  "name": "@alyle/ui/icon"
+}

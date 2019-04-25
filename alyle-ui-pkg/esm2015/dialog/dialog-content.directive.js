@@ -1,0 +1,34 @@
+import * as tslib_1 from "tslib";
+import { Directive, ElementRef, Renderer2 } from '@angular/core';
+import { LyTheme2 } from '@alyle/ui';
+/** @docs-private */
+const STYLE_PRIORITY = -2;
+/** @docs-private */
+const STYLES_DIALOG_CONTENT = ({
+    display: 'block',
+    overflowY: 'auto',
+    flex: '1 1 auto',
+    padding: '0 24px 24px',
+    '-webkit-overflow-scrolling': 'touch'
+});
+let LyDialogContent = class LyDialogContent {
+    constructor(_renderer, _el, _theme) {
+        this._renderer = _renderer;
+        this._el = _el;
+        this._theme = _theme;
+    }
+    ngOnInit() {
+        this._renderer.addClass(this._el.nativeElement, this._theme.style(STYLES_DIALOG_CONTENT, STYLE_PRIORITY));
+    }
+};
+LyDialogContent = tslib_1.__decorate([
+    Directive({
+        selector: 'ly-dialog-content, [ly-dialog-content], [lyDialogContent]',
+        exportAs: 'lyDialogContent'
+    }),
+    tslib_1.__metadata("design:paramtypes", [Renderer2,
+        ElementRef,
+        LyTheme2])
+], LyDialogContent);
+export { LyDialogContent };
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiZGlhbG9nLWNvbnRlbnQuZGlyZWN0aXZlLmpzIiwic291cmNlUm9vdCI6Im5nOi8vQGFseWxlL3VpL2RpYWxvZy8iLCJzb3VyY2VzIjpbImRpYWxvZy1jb250ZW50LmRpcmVjdGl2ZS50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiO0FBQUEsT0FBTyxFQUFFLFNBQVMsRUFBRSxVQUFVLEVBQVUsU0FBUyxFQUFFLE1BQU0sZUFBZSxDQUFDO0FBQ3pFLE9BQU8sRUFBRSxRQUFRLEVBQUUsTUFBTSxXQUFXLENBQUM7QUFFckMsb0JBQW9CO0FBQ3BCLE1BQU0sY0FBYyxHQUFHLENBQUMsQ0FBQyxDQUFDO0FBRTFCLG9CQUFvQjtBQUNwQixNQUFNLHFCQUFxQixHQUFHLENBQUM7SUFDN0IsT0FBTyxFQUFFLE9BQU87SUFDaEIsU0FBUyxFQUFFLE1BQU07SUFDakIsSUFBSSxFQUFFLFVBQVU7SUFDaEIsT0FBTyxFQUFFLGFBQWE7SUFDdEIsNEJBQTRCLEVBQUUsT0FBTztDQUN0QyxDQUFDLENBQUM7QUFNSCxJQUFhLGVBQWUsR0FBNUIsTUFBYSxlQUFlO0lBQzFCLFlBQ1UsU0FBb0IsRUFDcEIsR0FBNEIsRUFDNUIsTUFBZ0I7UUFGaEIsY0FBUyxHQUFULFNBQVMsQ0FBVztRQUNwQixRQUFHLEdBQUgsR0FBRyxDQUF5QjtRQUM1QixXQUFNLEdBQU4sTUFBTSxDQUFVO0lBQUksQ0FBQztJQUUvQixRQUFRO1FBQ04sSUFBSSxDQUFDLFNBQVMsQ0FBQyxRQUFRLENBQ3JCLElBQUksQ0FBQyxHQUFHLENBQUMsYUFBYSxFQUFFLElBQUksQ0FBQyxNQUFNLENBQUMsS0FBSyxDQUFDLHFCQUFxQixFQUFFLGNBQWMsQ0FBQyxDQUFDLENBQUM7SUFDdEYsQ0FBQztDQUNGLENBQUE7QUFWWSxlQUFlO0lBSjNCLFNBQVMsQ0FBQztRQUNULFFBQVEsRUFBRSwyREFBMkQ7UUFDckUsUUFBUSxFQUFFLGlCQUFpQjtLQUM1QixDQUFDOzZDQUdxQixTQUFTO1FBQ2YsVUFBVTtRQUNQLFFBQVE7R0FKZixlQUFlLENBVTNCO1NBVlksZUFBZSIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IERpcmVjdGl2ZSwgRWxlbWVudFJlZiwgT25Jbml0LCBSZW5kZXJlcjIgfSBmcm9tICdAYW5ndWxhci9jb3JlJztcbmltcG9ydCB7IEx5VGhlbWUyIH0gZnJvbSAnQGFseWxlL3VpJztcblxuLyoqIEBkb2NzLXByaXZhdGUgKi9cbmNvbnN0IFNUWUxFX1BSSU9SSVRZID0gLTI7XG5cbi8qKiBAZG9jcy1wcml2YXRlICovXG5jb25zdCBTVFlMRVNfRElBTE9HX0NPTlRFTlQgPSAoe1xuICBkaXNwbGF5OiAnYmxvY2snLFxuICBvdmVyZmxvd1k6ICdhdXRvJyxcbiAgZmxleDogJzEgMSBhdXRvJyxcbiAgcGFkZGluZzogJzAgMjRweCAyNHB4JyxcbiAgJy13ZWJraXQtb3ZlcmZsb3ctc2Nyb2xsaW5nJzogJ3RvdWNoJ1xufSk7XG5cbkBEaXJlY3RpdmUoe1xuICBzZWxlY3RvcjogJ2x5LWRpYWxvZy1jb250ZW50LCBbbHktZGlhbG9nLWNvbnRlbnRdLCBbbHlEaWFsb2dDb250ZW50XScsXG4gIGV4cG9ydEFzOiAnbHlEaWFsb2dDb250ZW50J1xufSlcbmV4cG9ydCBjbGFzcyBMeURpYWxvZ0NvbnRlbnQgaW1wbGVtZW50cyBPbkluaXQge1xuICBjb25zdHJ1Y3RvcihcbiAgICBwcml2YXRlIF9yZW5kZXJlcjogUmVuZGVyZXIyLFxuICAgIHByaXZhdGUgX2VsOiBFbGVtZW50UmVmPEhUTUxFbGVtZW50PixcbiAgICBwcml2YXRlIF90aGVtZTogTHlUaGVtZTIpIHsgfVxuXG4gIG5nT25Jbml0KCkge1xuICAgIHRoaXMuX3JlbmRlcmVyLmFkZENsYXNzKFxuICAgICAgdGhpcy5fZWwubmF0aXZlRWxlbWVudCwgdGhpcy5fdGhlbWUuc3R5bGUoU1RZTEVTX0RJQUxPR19DT05URU5ULCBTVFlMRV9QUklPUklUWSkpO1xuICB9XG59XG4iXX0=

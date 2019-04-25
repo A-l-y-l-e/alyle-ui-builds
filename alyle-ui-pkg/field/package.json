@@ -1,0 +1,13 @@
+{
+  "main": "../bundles/alyle-ui-field.umd.js",
+  "module": "../fesm5/alyle-ui-field.js",
+  "es2015": "../fesm2015/alyle-ui-field.js",
+  "esm5": "../esm5/field/alyle-ui-field.js",
+  "esm2015": "../esm2015/field/alyle-ui-field.js",
+  "fesm5": "../fesm5/alyle-ui-field.js",
+  "fesm2015": "../fesm2015/alyle-ui-field.js",
+  "typings": "alyle-ui-field.d.ts",
+  "metadata": "alyle-ui-field.metadata.json",
+  "sideEffects": false,
+  "name": "@alyle/ui/field"
+}

@@ -1,0 +1,8 @@
+var LyOverlayConfig = /** @class */ (function () {
+    function LyOverlayConfig() {
+        this.hasBackdrop = true;
+    }
+    return LyOverlayConfig;
+}());
+export { LyOverlayConfig };
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoib3ZlcmxheS1jb25maWcuanMiLCJzb3VyY2VSb290Ijoibmc6Ly9AYWx5bGUvdWkvIiwic291cmNlcyI6WyJzcmMvZG9tL292ZXJsYXktY29uZmlnLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0lBQUE7UUFJRSxnQkFBVyxHQUFhLElBQUksQ0FBQztJQUsvQixDQUFDO0lBQUQsc0JBQUM7QUFBRCxDQUFDLEFBVEQsSUFTQyIsInNvdXJjZXNDb250ZW50IjpbImV4cG9ydCBjbGFzcyBMeU92ZXJsYXlDb25maWcge1xuICAvKiogU3R5bGVzIGZvciBvdmVybGF5IGNvbnRhaW5lciAqL1xuICBzdHlsZXM/OiBPYmplY3Q7XG4gIGNsYXNzZXM/OiBzdHJpbmdbXTtcbiAgaGFzQmFja2Ryb3A/OiBib29sZWFuID0gdHJ1ZTtcbiAgYmFja2Ryb3BDbGFzcz86IHN0cmluZztcbiAgZm5EZXN0cm95PzogKC4uLmFyZzogYW55KSA9PiB2b2lkO1xuICAvKiogRnVuY3Rpb24gdGhhdCB3aWxsIGJlIGNhbGxlZCBvbiBzY3JvbGwgb3IgcmVzaXplIGV2ZW50ICovXG4gIG9uUmVzaXplU2Nyb2xsPzogKCgpID0+IHZvaWQpO1xufVxuIl19

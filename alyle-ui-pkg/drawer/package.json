@@ -1,0 +1,13 @@
+{
+  "main": "../bundles/alyle-ui-drawer.umd.js",
+  "module": "../fesm5/alyle-ui-drawer.js",
+  "es2015": "../fesm2015/alyle-ui-drawer.js",
+  "esm5": "../esm5/drawer/alyle-ui-drawer.js",
+  "esm2015": "../esm2015/drawer/alyle-ui-drawer.js",
+  "fesm5": "../fesm5/alyle-ui-drawer.js",
+  "fesm2015": "../fesm2015/alyle-ui-drawer.js",
+  "typings": "alyle-ui-drawer.d.ts",
+  "metadata": "alyle-ui-drawer.metadata.json",
+  "sideEffects": false,
+  "name": "@alyle/ui/drawer"
+}

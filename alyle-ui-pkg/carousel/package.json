@@ -1,0 +1,13 @@
+{
+  "main": "../bundles/alyle-ui-carousel.umd.js",
+  "module": "../fesm5/alyle-ui-carousel.js",
+  "es2015": "../fesm2015/alyle-ui-carousel.js",
+  "esm5": "../esm5/carousel/alyle-ui-carousel.js",
+  "esm2015": "../esm2015/carousel/alyle-ui-carousel.js",
+  "fesm5": "../fesm5/alyle-ui-carousel.js",
+  "fesm2015": "../fesm2015/alyle-ui-carousel.js",
+  "typings": "alyle-ui-carousel.d.ts",
+  "metadata": "alyle-ui-carousel.metadata.json",
+  "sideEffects": false,
+  "name": "@alyle/ui/carousel"
+}

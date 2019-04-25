@@ -1,0 +1,13 @@
+{
+  "main": "../bundles/alyle-ui-tabs.umd.js",
+  "module": "../fesm5/alyle-ui-tabs.js",
+  "es2015": "../fesm2015/alyle-ui-tabs.js",
+  "esm5": "../esm5/tabs/alyle-ui-tabs.js",
+  "esm2015": "../esm2015/tabs/alyle-ui-tabs.js",
+  "fesm5": "../fesm5/alyle-ui-tabs.js",
+  "fesm2015": "../fesm2015/alyle-ui-tabs.js",
+  "typings": "alyle-ui-tabs.d.ts",
+  "metadata": "alyle-ui-tabs.metadata.json",
+  "sideEffects": false,
+  "name": "@alyle/ui/tabs"
+}

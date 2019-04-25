@@ -1,0 +1,14 @@
+import * as tslib_1 from "tslib";
+import { NgModule } from '@angular/core';
+import { LyCommonModule } from '@alyle/ui';
+import { LyAvatar } from './avatar';
+let LyAvatarModule = class LyAvatarModule {
+};
+LyAvatarModule = tslib_1.__decorate([
+    NgModule({
+        exports: [LyAvatar, LyCommonModule],
+        declarations: [LyAvatar]
+    })
+], LyAvatarModule);
+export { LyAvatarModule };
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiYXZhdGFyLm1vZHVsZS5qcyIsInNvdXJjZVJvb3QiOiJuZzovL0BhbHlsZS91aS9hdmF0YXIvIiwic291cmNlcyI6WyJhdmF0YXIubW9kdWxlLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7QUFBQSxPQUFPLEVBQUUsUUFBUSxFQUFFLE1BQU0sZUFBZSxDQUFDO0FBQ3pDLE9BQU8sRUFBRSxjQUFjLEVBQUUsTUFBTSxXQUFXLENBQUM7QUFDM0MsT0FBTyxFQUFFLFFBQVEsRUFBRSxNQUFNLFVBQVUsQ0FBQztBQU1wQyxJQUFhLGNBQWMsR0FBM0IsTUFBYSxjQUFjO0NBQUksQ0FBQTtBQUFsQixjQUFjO0lBSjFCLFFBQVEsQ0FBQztRQUNSLE9BQU8sRUFBRSxDQUFDLFFBQVEsRUFBRSxjQUFjLENBQUM7UUFDbkMsWUFBWSxFQUFFLENBQUMsUUFBUSxDQUFDO0tBQ3pCLENBQUM7R0FDVyxjQUFjLENBQUk7U0FBbEIsY0FBYyIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IE5nTW9kdWxlIH0gZnJvbSAnQGFuZ3VsYXIvY29yZSc7XG5pbXBvcnQgeyBMeUNvbW1vbk1vZHVsZSB9IGZyb20gJ0BhbHlsZS91aSc7XG5pbXBvcnQgeyBMeUF2YXRhciB9IGZyb20gJy4vYXZhdGFyJztcblxuQE5nTW9kdWxlKHtcbiAgZXhwb3J0czogW0x5QXZhdGFyLCBMeUNvbW1vbk1vZHVsZV0sXG4gIGRlY2xhcmF0aW9uczogW0x5QXZhdGFyXVxufSlcbmV4cG9ydCBjbGFzcyBMeUF2YXRhck1vZHVsZSB7IH1cbiJdfQ==

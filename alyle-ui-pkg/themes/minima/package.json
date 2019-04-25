@@ -1,0 +1,13 @@
+{
+  "main": "../../bundles/alyle-ui-themes-minima.umd.js",
+  "module": "../../fesm5/alyle-ui-themes-minima.js",
+  "es2015": "../../fesm2015/alyle-ui-themes-minima.js",
+  "esm5": "../../esm5/themes/minima/alyle-ui-themes-minima.js",
+  "esm2015": "../../esm2015/themes/minima/alyle-ui-themes-minima.js",
+  "fesm5": "../../fesm5/alyle-ui-themes-minima.js",
+  "fesm2015": "../../fesm2015/alyle-ui-themes-minima.js",
+  "typings": "alyle-ui-themes-minima.d.ts",
+  "metadata": "alyle-ui-themes-minima.metadata.json",
+  "sideEffects": false,
+  "name": "@alyle/ui/themes/minima"
+}

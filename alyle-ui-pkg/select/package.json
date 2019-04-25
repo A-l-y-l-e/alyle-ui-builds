@@ -1,0 +1,13 @@
+{
+  "main": "../bundles/alyle-ui-select.umd.js",
+  "module": "../fesm5/alyle-ui-select.js",
+  "es2015": "../fesm2015/alyle-ui-select.js",
+  "esm5": "../esm5/select/alyle-ui-select.js",
+  "esm2015": "../esm2015/select/alyle-ui-select.js",
+  "fesm5": "../fesm5/alyle-ui-select.js",
+  "fesm2015": "../fesm2015/alyle-ui-select.js",
+  "typings": "alyle-ui-select.d.ts",
+  "metadata": "alyle-ui-select.metadata.json",
+  "sideEffects": false,
+  "name": "@alyle/ui/select"
+}

@@ -1,0 +1,13 @@
+import * as tslib_1 from "tslib";
+import { NgModule } from '@angular/core';
+import { LyOverlayBackdrop } from './overlay-backdrop';
+let LyOverlayModule = class LyOverlayModule {
+};
+LyOverlayModule = tslib_1.__decorate([
+    NgModule({
+        declarations: [LyOverlayBackdrop],
+        entryComponents: [LyOverlayBackdrop]
+    })
+], LyOverlayModule);
+export { LyOverlayModule };
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoib3ZlcmxheS5tb2R1bGUuanMiLCJzb3VyY2VSb290Ijoibmc6Ly9AYWx5bGUvdWkvIiwic291cmNlcyI6WyJzcmMvZG9tL292ZXJsYXkubW9kdWxlLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7QUFBQSxPQUFPLEVBQUUsUUFBUSxFQUFFLE1BQU0sZUFBZSxDQUFDO0FBQ3pDLE9BQU8sRUFBRSxpQkFBaUIsRUFBRSxNQUFNLG9CQUFvQixDQUFDO0FBTXZELElBQWEsZUFBZSxHQUE1QixNQUFhLGVBQWU7Q0FBSSxDQUFBO0FBQW5CLGVBQWU7SUFKM0IsUUFBUSxDQUFDO1FBQ1IsWUFBWSxFQUFFLENBQUMsaUJBQWlCLENBQUM7UUFDakMsZUFBZSxFQUFFLENBQUMsaUJBQWlCLENBQUM7S0FDckMsQ0FBQztHQUNXLGVBQWUsQ0FBSTtTQUFuQixlQUFlIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgTmdNb2R1bGUgfSBmcm9tICdAYW5ndWxhci9jb3JlJztcbmltcG9ydCB7IEx5T3ZlcmxheUJhY2tkcm9wIH0gZnJvbSAnLi9vdmVybGF5LWJhY2tkcm9wJztcblxuQE5nTW9kdWxlKHtcbiAgZGVjbGFyYXRpb25zOiBbTHlPdmVybGF5QmFja2Ryb3BdLFxuICBlbnRyeUNvbXBvbmVudHM6IFtMeU92ZXJsYXlCYWNrZHJvcF1cbn0pXG5leHBvcnQgY2xhc3MgTHlPdmVybGF5TW9kdWxlIHsgfVxuIl19

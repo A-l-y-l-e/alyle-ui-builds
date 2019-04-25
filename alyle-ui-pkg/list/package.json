@@ -1,0 +1,13 @@
+{
+  "main": "../bundles/alyle-ui-list.umd.js",
+  "module": "../fesm5/alyle-ui-list.js",
+  "es2015": "../fesm2015/alyle-ui-list.js",
+  "esm5": "../esm5/list/alyle-ui-list.js",
+  "esm2015": "../esm2015/list/alyle-ui-list.js",
+  "fesm5": "../fesm5/alyle-ui-list.js",
+  "fesm2015": "../fesm2015/alyle-ui-list.js",
+  "typings": "alyle-ui-list.d.ts",
+  "metadata": "alyle-ui-list.metadata.json",
+  "sideEffects": false,
+  "name": "@alyle/ui/list"
+}
