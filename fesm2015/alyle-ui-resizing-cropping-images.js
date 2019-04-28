@@ -139,7 +139,7 @@ let LyResizingCroppingImages = class LyResizingCroppingImages {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             ctx.drawImage(imgElement, 0, 0);
             /** set min scale */
-            this._minScale = getMinScale(this.config.width, this.config.height, canvas.width, canvas.height);
+            this._updateMinScale(canvas);
         }
     }
     _setStylesForContImg(values) {
@@ -294,20 +294,26 @@ let LyResizingCroppingImages = class LyResizingCroppingImages {
         if (!scaleFix || !startP) {
             return;
         }
+        const isMinScaleY = canvas.height * scaleFix < config.height && config.extraZoomOut;
+        const isMinScaleX = canvas.width * scaleFix < config.width && config.extraZoomOut;
+        const limitLeft = (config.width / 2 / scaleFix) >= startP.left - (event.deltaX / scaleFix);
+        const limitRight = (config.width / 2 / scaleFix) + (canvas.width) - (startP.left - (event.deltaX / scaleFix)) <= config.width / scaleFix;
+        const limitTop = ((config.height / 2 / scaleFix) >= (startP.top - (event.deltaY / scaleFix)));
+        const limitBottom = (((config.height / 2 / scaleFix) + (canvas.height) - (startP.top - (event.deltaY / scaleFix))) <= (config.height / scaleFix));
         // Limit for left
-        if ((config.width / 2 / scaleFix) >= startP.left - (event.deltaX / scaleFix)) {
+        if ((limitLeft && !isMinScaleX) || (!limitLeft && isMinScaleX)) {
             x = startP.x + (startP.left) - (config.width / 2 / scaleFix);
         }
-        // // Limit for top
-        if ((config.height / 2 / scaleFix) >= (startP.top - (event.deltaY / scaleFix))) {
-            y = startP.y + (startP.top) - (config.height / 2 / scaleFix);
-        }
-        // // Limit for right
-        if ((config.width / 2 / scaleFix) + (canvas.width) - (startP.left - (event.deltaX / scaleFix)) <= config.width / scaleFix) {
+        // Limit for right
+        if ((limitRight && !isMinScaleX) || (!limitRight && isMinScaleX)) {
             x = startP.x + (startP.left) + (config.width / 2 / scaleFix) - canvas.width;
         }
-        // // Limit for bottom
-        if (((config.height / 2 / scaleFix) + (canvas.height) - (startP.top - (event.deltaY / scaleFix))) <= (config.height / scaleFix)) {
+        // Limit for top
+        if ((limitTop && !isMinScaleY) || (!limitTop && isMinScaleY)) {
+            y = startP.y + (startP.top) - (config.height / 2 / scaleFix);
+        }
+        // Limit for bottom
+        if ((limitBottom && !isMinScaleY) || (!limitBottom && isMinScaleY)) {
             y = startP.y + (startP.top) + (config.height / 2 / scaleFix) - canvas.height;
         }
         // When press shiftKey, deprecated
@@ -483,7 +489,7 @@ let LyResizingCroppingImages = class LyResizingCroppingImages {
         ctx.rotate(degreesRad);
         ctx.drawImage(canvasClon, -canvasClon.width / 2, -canvasClon.height / 2);
         // Update min scale
-        this._minScale = getMinScale(this.config.width, this.config.height, canvas.width, canvas.height);
+        this._updateMinScale(canvas);
         // set the minimum scale, only if necessary
         if (this.scale < this.minScale) {
             this.setScale(0, true);
@@ -508,6 +514,10 @@ let LyResizingCroppingImages = class LyResizingCroppingImages {
             deltaY: 0
         });
         this._cropIfAutoCrop();
+    }
+    _updateMinScale(canvas) {
+        const config = this.config;
+        this._minScale = (config.extraZoomOut ? Math.min : Math.max)(config.width / canvas.width, config.height / canvas.height);
     }
     imageSmoothingQuality(img, config, quality) {
         /** Calculate total number of steps needed */
@@ -729,12 +739,6 @@ function createCanvasImg(img) {
     context.drawImage(img, 0, 0);
     // return the new canvas
     return newCanvas;
-}
-/**
- * @docs-private
- */
-function getMinScale(mw, mh, w, h) {
-    return Math.max(mw / w, mh / h);
 }
 
 let LyResizingCroppingImageModule = class LyResizingCroppingImageModule {

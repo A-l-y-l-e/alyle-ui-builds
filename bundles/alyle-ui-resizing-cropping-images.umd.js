@@ -186,7 +186,7 @@
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 ctx.drawImage(imgElement, 0, 0);
                 /** set min scale */
-                this._minScale = getMinScale(this.config.width, this.config.height, canvas.width, canvas.height);
+                this._updateMinScale(canvas);
             }
         };
         LyResizingCroppingImages.prototype._setStylesForContImg = function (values) {
@@ -342,20 +342,26 @@
             if (!scaleFix || !startP) {
                 return;
             }
+            var isMinScaleY = canvas.height * scaleFix < config.height && config.extraZoomOut;
+            var isMinScaleX = canvas.width * scaleFix < config.width && config.extraZoomOut;
+            var limitLeft = (config.width / 2 / scaleFix) >= startP.left - (event.deltaX / scaleFix);
+            var limitRight = (config.width / 2 / scaleFix) + (canvas.width) - (startP.left - (event.deltaX / scaleFix)) <= config.width / scaleFix;
+            var limitTop = ((config.height / 2 / scaleFix) >= (startP.top - (event.deltaY / scaleFix)));
+            var limitBottom = (((config.height / 2 / scaleFix) + (canvas.height) - (startP.top - (event.deltaY / scaleFix))) <= (config.height / scaleFix));
             // Limit for left
-            if ((config.width / 2 / scaleFix) >= startP.left - (event.deltaX / scaleFix)) {
+            if ((limitLeft && !isMinScaleX) || (!limitLeft && isMinScaleX)) {
                 x = startP.x + (startP.left) - (config.width / 2 / scaleFix);
             }
-            // // Limit for top
-            if ((config.height / 2 / scaleFix) >= (startP.top - (event.deltaY / scaleFix))) {
-                y = startP.y + (startP.top) - (config.height / 2 / scaleFix);
-            }
-            // // Limit for right
-            if ((config.width / 2 / scaleFix) + (canvas.width) - (startP.left - (event.deltaX / scaleFix)) <= config.width / scaleFix) {
+            // Limit for right
+            if ((limitRight && !isMinScaleX) || (!limitRight && isMinScaleX)) {
                 x = startP.x + (startP.left) + (config.width / 2 / scaleFix) - canvas.width;
             }
-            // // Limit for bottom
-            if (((config.height / 2 / scaleFix) + (canvas.height) - (startP.top - (event.deltaY / scaleFix))) <= (config.height / scaleFix)) {
+            // Limit for top
+            if ((limitTop && !isMinScaleY) || (!limitTop && isMinScaleY)) {
+                y = startP.y + (startP.top) - (config.height / 2 / scaleFix);
+            }
+            // Limit for bottom
+            if ((limitBottom && !isMinScaleY) || (!limitBottom && isMinScaleY)) {
                 y = startP.y + (startP.top) + (config.height / 2 / scaleFix) - canvas.height;
             }
             // When press shiftKey, deprecated
@@ -532,7 +538,7 @@
             ctx.rotate(degreesRad);
             ctx.drawImage(canvasClon, -canvasClon.width / 2, -canvasClon.height / 2);
             // Update min scale
-            this._minScale = getMinScale(this.config.width, this.config.height, canvas.width, canvas.height);
+            this._updateMinScale(canvas);
             // set the minimum scale, only if necessary
             if (this.scale < this.minScale) {
                 this.setScale(0, true);
@@ -557,6 +563,10 @@
                 deltaY: 0
             });
             this._cropIfAutoCrop();
+        };
+        LyResizingCroppingImages.prototype._updateMinScale = function (canvas) {
+            var config = this.config;
+            this._minScale = (config.extraZoomOut ? Math.min : Math.max)(config.width / canvas.width, config.height / canvas.height);
         };
         LyResizingCroppingImages.prototype.imageSmoothingQuality = function (img, config, quality) {
             /** Calculate total number of steps needed */
@@ -779,12 +789,6 @@
         context.drawImage(img, 0, 0);
         // return the new canvas
         return newCanvas;
-    }
-    /**
-     * @docs-private
-     */
-    function getMinScale(mw, mh, w, h) {
-        return Math.max(mw / w, mh / h);
     }
 
     var LyResizingCroppingImageModule = /** @class */ (function () {

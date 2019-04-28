@@ -15,6 +15,11 @@ export interface ImgCropperConfig {
     autoCrop?: boolean;
     output?: ImgOutput | ImgResolution;
     /**
+     * Zoom out until the entire image fits into the cropping area.
+     * default: false
+     */
+    extraZoomOut?: boolean;
+    /**
      * Emit event `error` if the file size for the limit.
      * Note: It only works when the image is received from the `<input>` event.
      */
@@ -152,6 +157,7 @@ export declare class LyResizingCroppingImages implements OnDestroy {
      */
     setImageUrl(src: string, fn?: () => void): void;
     rotate(degrees: number): void;
+    private _updateMinScale;
     private imageSmoothingQuality;
     /**
      * Crop Image
