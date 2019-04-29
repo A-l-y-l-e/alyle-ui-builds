@@ -1,10 +1,10 @@
-import { OnInit, ComponentFactory, TemplateRef, Injector, ApplicationRef, Renderer2, ElementRef, ChangeDetectorRef } from '@angular/core';
+import { OnInit, ComponentFactory, TemplateRef, Injector, ApplicationRef, Renderer2, ElementRef, ChangeDetectorRef, DoCheck } from '@angular/core';
 import { AnimationEvent } from '@angular/animations';
 import { LyOverlayRef, LyTheme2 } from '@alyle/ui';
 import { Subject } from 'rxjs';
 import { LyDialogRef } from './dialog-ref';
 /** @docs-private */
-export declare class LyDialogContainer implements OnInit {
+export declare class LyDialogContainer implements OnInit, DoCheck {
     private _appRef;
     private _overlayRef;
     private _theme;
@@ -33,6 +33,7 @@ export declare class LyDialogContainer implements OnInit {
     private _newInjector;
     constructor(_appRef: ApplicationRef, _overlayRef: LyOverlayRef, _theme: LyTheme2, _el: ElementRef<HTMLElement>, _cd: ChangeDetectorRef, _renderer: Renderer2);
     ngOnInit(): void;
+    ngDoCheck(): void;
     /** @internal */
     _init(componentFactoryOrTemplate: ComponentFactory<any> | TemplateRef<any>, newInjector: Injector): void;
     /**

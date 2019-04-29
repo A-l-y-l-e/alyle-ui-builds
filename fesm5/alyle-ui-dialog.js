@@ -136,6 +136,9 @@ var LyDialogContainer = /** @class */ (function () {
             this._renderer.addClass(this._el.nativeElement, containerClass);
         }
     };
+    LyDialogContainer.prototype.ngDoCheck = function () {
+        this._overlayRef.onResizeScroll();
+    };
     /** @internal */
     LyDialogContainer.prototype._init = function (componentFactoryOrTemplate, newInjector) {
         this._componentFactoryOrTemplate = componentFactoryOrTemplate;

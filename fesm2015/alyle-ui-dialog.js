@@ -118,6 +118,9 @@ let LyDialogContainer = class LyDialogContainer {
             this._renderer.addClass(this._el.nativeElement, containerClass);
         }
     }
+    ngDoCheck() {
+        this._overlayRef.onResizeScroll();
+    }
     /** @internal */
     _init(componentFactoryOrTemplate, newInjector) {
         this._componentFactoryOrTemplate = componentFactoryOrTemplate;
