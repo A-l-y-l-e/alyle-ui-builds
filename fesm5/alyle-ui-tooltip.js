@@ -101,7 +101,7 @@ var LyTooltip = /** @class */ (function () {
                     classes: [
                         _this._theme.addStyle('LyTooltip', function (theme) {
                             var _a;
-                            return (__assign({ borderRadius: '4px' }, theme.tooltip.root, (_a = { fontSize: '10px', padding: '6px 8px', opacity: 0, transition: "opacity " + theme.animations.curves.standard + " 300ms" }, _a[theme.getBreakpoint('XSmall')] = {
+                            return (__assign({ borderRadius: '4px' }, theme.tooltip.root, (_a = { fontSize: '10px', padding: '6px 8px', opacity: 0, transition: "opacity " + theme.animations.curves.standard + " 300ms", left: 0 }, _a[theme.getBreakpoint('XSmall')] = {
                                 padding: '8px 16px',
                                 fontSize: '14px',
                             }, _a)));
@@ -124,6 +124,7 @@ var LyTooltip = /** @class */ (function () {
     };
     LyTooltip.prototype.hide = function (delay) {
         var _this = this;
+        // return;
         var tooltipOverlay = this._tooltipOverlay;
         delay = typeof delay === 'number' ? delay : this.lyTooltipHideDelay;
         if (this._showTimeoutId) {

@@ -92,7 +92,7 @@ let LyTooltip = class LyTooltip {
                     },
                     onResizeScroll: this._updatePosition.bind(this),
                     classes: [
-                        this._theme.addStyle('LyTooltip', (theme) => (Object.assign({ borderRadius: '4px' }, theme.tooltip.root, { fontSize: '10px', padding: '6px 8px', opacity: 0, transition: `opacity ${theme.animations.curves.standard} 300ms`, [theme.getBreakpoint('XSmall')]: {
+                        this._theme.addStyle('LyTooltip', (theme) => (Object.assign({ borderRadius: '4px' }, theme.tooltip.root, { fontSize: '10px', padding: '6px 8px', opacity: 0, transition: `opacity ${theme.animations.curves.standard} 300ms`, left: 0, [theme.getBreakpoint('XSmall')]: {
                                 padding: '8px 16px',
                                 fontSize: '14px',
                             } })), undefined, undefined, STYLE_PRIORITY)
@@ -113,6 +113,7 @@ let LyTooltip = class LyTooltip {
         }
     }
     hide(delay) {
+        // return;
         const tooltipOverlay = this._tooltipOverlay;
         delay = typeof delay === 'number' ? delay : this.lyTooltipHideDelay;
         if (this._showTimeoutId) {
