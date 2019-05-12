@@ -61,7 +61,7 @@ export declare const STYLES: (theme: ThemeVariables) => {
     };
     onFocusByKeyboard: any;
     animations: {
-        '&,&::after': {
+        [x: string]: {
             transition: string;
         };
     };

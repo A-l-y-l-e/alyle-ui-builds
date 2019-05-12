@@ -3,6 +3,7 @@ import { ViewChild, ElementRef, Input, Component, ChangeDetectionStrategy, Rende
 import { LY_COMMON_STYLES, mixinStyleUpdater, mixinBg, mixinColor, mixinRaised, mixinDisabled, mixinOutlined, mixinElevation, mixinShadowColor, mixinDisableRipple, Platform, getLyThemeVariableUndefinedError, toBoolean, LyTheme2, LyRippleService, LyFocusState, LyCommonModule } from '@alyle/ui';
 
 var STYLES = function (theme) {
+    var _a;
     var typography = theme.typography;
     var _styles = ({
         root: {
@@ -53,11 +54,15 @@ var STYLES = function (theme) {
             boxSizing: 'border-box'
         },
         onFocusByKeyboard: null,
-        animations: {
-            '&,&::after': {
-                transition: 'background 375ms cubic-bezier(0.23, 1, 0.32, 1) 0ms, box-shadow 280ms cubic-bezier(.4,0,.2,1) 0ms'
-            }
-        }
+        animations: (_a = {},
+            _a[['&:hover',
+                '&:hover::after',
+                '&:focus',
+                '&:focus::after',
+                '{onFocusByKeyboard}'].join()] = {
+                transition: 'background 375ms cubic-bezier(0.23, 1, 0.32, 1) 0ms, box-shadow 280ms cubic-bezier(.4,0,.2,1) 0ms',
+            },
+            _a)
     });
     return _styles;
 };
