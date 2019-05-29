@@ -617,6 +617,20 @@
             _this._isBrowser = ui.Platform.isBrowser;
             return _this;
         }
+        Object.defineProperty(LyTabLabel.prototype, "active", {
+            get: function () {
+                return this._active;
+            },
+            set: function (val) {
+                var _this = this;
+                var newVal = ui.toBoolean(val);
+                if (newVal && val !== this.active) {
+                    Promise.resolve(null).then(function () { return _this._tabs.selectedIndex = _this._tab.index; });
+                }
+            },
+            enumerable: true,
+            configurable: true
+        });
         LyTabLabel.prototype._onClickTab = function () {
             if (!this.disabled) {
                 this._tabs.selectedIndex = this._tab.index;
@@ -632,14 +646,14 @@
         LyTabLabel.prototype._updateTabState = function () {
             // update styles for active tab
             if (this._tabs._selectedIndex === this._tab.index) {
-                if (!this._active) {
-                    this._active = true;
+                if (!this._activeTabStyle) {
+                    this._activeTabStyle = true;
                     this._renderer.addClass(this._el.nativeElement, this._tabs.classes.tabLabelActive);
                     this._updateTabScroll();
                 }
             }
-            else if (this._active) {
-                this._active = false;
+            else if (this._activeTabStyle) {
+                this._activeTabStyle = false;
                 this._renderer.removeClass(this._el.nativeElement, this._tabs.classes.tabLabelActive);
             }
         };
@@ -661,6 +675,11 @@
         };
         LyTabLabel.prototype.ngAfterViewInit = function () { };
         __decorate([
+            core.Input(),
+            __metadata("design:type", Boolean),
+            __metadata("design:paramtypes", [Boolean])
+        ], LyTabLabel.prototype, "active", null);
+        __decorate([
             core.ViewChild('rippleContainer'),
             __metadata("design:type", core.ElementRef)
         ], LyTabLabel.prototype, "_rippleContainer", void 0);
@@ -672,7 +691,7 @@
         ], LyTabLabel.prototype, "_onClickTab", null);
         LyTabLabel = __decorate([
             core.Component({
-                selector: 'button[ly-tab-label]',
+                selector: 'button[ly-tab-label], a[ly-tab-label]',
                 template: "<span [className]=\"classes.content\">\n  <ng-content></ng-content>\n</span>\n<div *ngIf=\"_isBrowser\" #rippleContainer [className]=\"_rippleService.classes.container\"></div>\n",
                 inputs: [
                     'bg',
@@ -683,10 +702,7 @@
                     'elevation',
                     'shadowColor',
                     'disableRipple'
-                ],
-                host: {
-                    '[disabled]': 'disabled'
-                }
+                ]
             }),
             __param(6, core.Optional()),
             __param(7, core.Optional()),

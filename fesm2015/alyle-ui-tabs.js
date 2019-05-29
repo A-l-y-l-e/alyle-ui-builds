@@ -514,6 +514,15 @@ let LyTabLabel = class LyTabLabel extends LyButton {
         this._tabs = _tabs;
         this._isBrowser = Platform.isBrowser;
     }
+    get active() {
+        return this._active;
+    }
+    set active(val) {
+        const newVal = toBoolean(val);
+        if (newVal && val !== this.active) {
+            Promise.resolve(null).then(() => this._tabs.selectedIndex = this._tab.index);
+        }
+    }
     _onClickTab() {
         if (!this.disabled) {
             this._tabs.selectedIndex = this._tab.index;
@@ -529,14 +538,14 @@ let LyTabLabel = class LyTabLabel extends LyButton {
     _updateTabState() {
         // update styles for active tab
         if (this._tabs._selectedIndex === this._tab.index) {
-            if (!this._active) {
-                this._active = true;
+            if (!this._activeTabStyle) {
+                this._activeTabStyle = true;
                 this._renderer.addClass(this._el.nativeElement, this._tabs.classes.tabLabelActive);
                 this._updateTabScroll();
             }
         }
-        else if (this._active) {
-            this._active = false;
+        else if (this._activeTabStyle) {
+            this._activeTabStyle = false;
             this._renderer.removeClass(this._el.nativeElement, this._tabs.classes.tabLabelActive);
         }
     }
@@ -559,6 +568,11 @@ let LyTabLabel = class LyTabLabel extends LyButton {
     ngAfterViewInit() { }
 };
 __decorate([
+    Input(),
+    __metadata("design:type", Boolean),
+    __metadata("design:paramtypes", [Boolean])
+], LyTabLabel.prototype, "active", null);
+__decorate([
     ViewChild('rippleContainer'),
     __metadata("design:type", ElementRef)
 ], LyTabLabel.prototype, "_rippleContainer", void 0);
@@ -570,7 +584,7 @@ __decorate([
 ], LyTabLabel.prototype, "_onClickTab", null);
 LyTabLabel = __decorate([
     Component({
-        selector: 'button[ly-tab-label]',
+        selector: 'button[ly-tab-label], a[ly-tab-label]',
         template: "<span [className]=\"classes.content\">\n  <ng-content></ng-content>\n</span>\n<div *ngIf=\"_isBrowser\" #rippleContainer [className]=\"_rippleService.classes.container\"></div>\n",
         inputs: [
             'bg',
@@ -581,10 +595,7 @@ LyTabLabel = __decorate([
             'elevation',
             'shadowColor',
             'disableRipple'
-        ],
-        host: {
-            '[disabled]': 'disabled'
-        }
+        ]
     }),
     __param(6, Optional()),
     __param(7, Optional()),

@@ -178,8 +178,10 @@ export declare class LyTab implements OnInit {
 export declare class LyTabLabel extends LyButton implements OnInit, AfterViewInit {
     private _tab;
     private _tabs;
+    private _activeTabStyle;
     private _active;
     _isBrowser: boolean;
+    active: boolean;
     _rippleContainer: ElementRef;
     _onClickTab(): void;
     constructor(_el: ElementRef, _renderer: Renderer2, _theme: LyTheme2, _ngZone: NgZone, _rippleService: LyRippleService, _focusState: LyFocusState, _tab: LyTab, _tabs: LyTabs);
