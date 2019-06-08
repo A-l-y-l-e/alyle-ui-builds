@@ -133,7 +133,6 @@ let LyTabs = class LyTabs extends LyTabsMixinBase {
         this._resizeService = _resizeService;
         /** @docs-private */
         this.classes = this.theme.addStyleSheet(STYLES);
-        this._selectedIndex = 0;
         this._tabsSubscription = Subscription.EMPTY;
         this.selectedIndexOnChange = 'auto';
         this.selectedIndexChange = new EventEmitter();
@@ -277,6 +276,9 @@ let LyTabs = class LyTabs extends LyTabsMixinBase {
         }
     }
     ngOnInit() {
+        if (this.selectedIndex == null) {
+            this.selectedIndex = 0;
+        }
         this.renderer.addClass(this.el.nativeElement, this.classes.root);
         const tabsIndicatorEl = this.tabsIndicator.nativeElement;
         this.renderer.addClass(tabsIndicatorEl, this.classes.tabsIndicator);

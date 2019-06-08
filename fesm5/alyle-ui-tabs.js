@@ -141,7 +141,6 @@ var LyTabs = /** @class */ (function (_super) {
         _this._resizeService = _resizeService;
         /** @docs-private */
         _this.classes = _this.theme.addStyleSheet(STYLES);
-        _this._selectedIndex = 0;
         _this._tabsSubscription = Subscription.EMPTY;
         _this.selectedIndexOnChange = 'auto';
         _this.selectedIndexChange = new EventEmitter();
@@ -318,6 +317,9 @@ var LyTabs = /** @class */ (function (_super) {
         }
     };
     LyTabs.prototype.ngOnInit = function () {
+        if (this.selectedIndex == null) {
+            this.selectedIndex = 0;
+        }
         this.renderer.addClass(this.el.nativeElement, this.classes.root);
         var tabsIndicatorEl = this.tabsIndicator.nativeElement;
         this.renderer.addClass(tabsIndicatorEl, this.classes.tabsIndicator);
