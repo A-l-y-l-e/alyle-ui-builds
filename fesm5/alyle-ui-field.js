@@ -415,7 +415,10 @@ var LyField = /** @class */ (function () {
         set: function (val) {
             var newVal = toBoolean(val);
             if (newVal) {
-                this._fullWidthClass = this._theme.addStyle("fullWidth", { width: '100%' }, this._getHostElement(), this._fullWidthClass, STYLE_PRIORITY$2);
+                this._fullWidthClass = this._theme.addStyle("fullWidth", {
+                    display: 'block',
+                    width: '100%'
+                }, this._getHostElement(), this._fullWidthClass, STYLE_PRIORITY$2);
             }
             else if (this._fullWidthClass) {
                 this._renderer.removeClass(this._getHostElement(), this._fullWidthClass);
