@@ -1,12 +1,12 @@
 import { __decorate, __metadata } from 'tslib';
-import { defineInjectable, Injectable, Input, Output, Directive, TemplateRef, EventEmitter, NgModule } from '@angular/core';
+import { ɵɵdefineInjectable, Injectable, Input, Output, Directive, TemplateRef, EventEmitter, NgModule } from '@angular/core';
 import { XPosition, YPosition, LyTheme2, LyOverlay, LyOverlayModule } from '@alyle/ui';
 import { Subject } from 'rxjs';
 
 var LySnackBarService = /** @class */ (function () {
     function LySnackBarService() {
     }
-    LySnackBarService.ngInjectableDef = defineInjectable({ factory: function LySnackBarService_Factory() { return new LySnackBarService(); }, token: LySnackBarService, providedIn: "root" });
+    LySnackBarService.ngInjectableDef = ɵɵdefineInjectable({ factory: function LySnackBarService_Factory() { return new LySnackBarService(); }, token: LySnackBarService, providedIn: "root" });
     LySnackBarService = __decorate([
         Injectable({
             providedIn: 'root'
@@ -204,10 +204,6 @@ var LySnackBarModule = /** @class */ (function () {
     ], LySnackBarModule);
     return LySnackBarModule;
 }());
-
-/**
- * Generated bundle index. Do not edit.
- */
 
 export { LySnackBar, LySnackBarModule, STYLES, LySnackBarService as ɵa };
 //# sourceMappingURL=alyle-ui-snack-bar.js.map

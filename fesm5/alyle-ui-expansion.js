@@ -372,7 +372,7 @@ var LyExpansionPanel = /** @class */ (function (_super) {
         });
     };
     __decorate([
-        ContentChild(LyExpansionPanelContent),
+        ContentChild(LyExpansionPanelContent, { static: false }),
         __metadata("design:type", LyExpansionPanelContent)
     ], LyExpansionPanel.prototype, "_lazyContent", void 0);
     __decorate([
@@ -542,10 +542,6 @@ var LyExpansionModule = /** @class */ (function () {
     ], LyExpansionModule);
     return LyExpansionModule;
 }());
-
-/**
- * Generated bundle index. Do not edit.
- */
 
 export { LyAccordion, LyButtonMixinBase, LyExpansionModule, LyExpansionPanel, LyExpansionPanelBase, LyExpansionPanelContent, LyExpansionPanelDescription, LyExpansionPanelHeader, LyExpansionPanelTitle, STYLES, lyExpansionAnimations as ɵa, LyExpansionPanelAction as ɵb };
 //# sourceMappingURL=alyle-ui-expansion.js.map

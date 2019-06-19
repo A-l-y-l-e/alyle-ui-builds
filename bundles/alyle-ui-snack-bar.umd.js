@@ -33,7 +33,7 @@
     var LySnackBarService = /** @class */ (function () {
         function LySnackBarService() {
         }
-        LySnackBarService.ngInjectableDef = core.defineInjectable({ factory: function LySnackBarService_Factory() { return new LySnackBarService(); }, token: LySnackBarService, providedIn: "root" });
+        LySnackBarService.ngInjectableDef = core.ɵɵdefineInjectable({ factory: function LySnackBarService_Factory() { return new LySnackBarService(); }, token: LySnackBarService, providedIn: "root" });
         LySnackBarService = __decorate([
             core.Injectable({
                 providedIn: 'root'

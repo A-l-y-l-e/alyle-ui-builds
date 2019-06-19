@@ -1,5 +1,5 @@
 import { __decorate, __param, __metadata, __extends } from 'tslib';
-import { SecurityContext, defineInjectable, inject, Injectable, Optional, Inject, Input, Directive, ElementRef, Renderer2, NgModule } from '@angular/core';
+import { SecurityContext, ɵɵdefineInjectable, ɵɵinject, Injectable, Optional, Inject, Input, Directive, ElementRef, Renderer2, NgModule } from '@angular/core';
 import { LyTheme2, mixinStyleUpdater, mixinBg, mixinColor, mixinRaised, mixinOutlined, mixinElevation, mixinShadowColor, Platform, LyCommonModule } from '@alyle/ui';
 import { HttpClient } from '@angular/common/http';
 import { DOCUMENT } from '@angular/common';
@@ -121,7 +121,7 @@ var LyIconService = /** @class */ (function () {
     LyIconService.prototype.getFontClass = function (key) {
         return this._fontClasses.get(key);
     };
-    LyIconService.ngInjectableDef = defineInjectable({ factory: function LyIconService_Factory() { return new LyIconService(inject(HttpClient), inject(DomSanitizer), inject(DOCUMENT, 8), inject(LyTheme2)); }, token: LyIconService, providedIn: "root" });
+    LyIconService.ngInjectableDef = ɵɵdefineInjectable({ factory: function LyIconService_Factory() { return new LyIconService(ɵɵinject(HttpClient), ɵɵinject(DomSanitizer), ɵɵinject(DOCUMENT, 8), ɵɵinject(LyTheme2)); }, token: LyIconService, providedIn: "root" });
     LyIconService = __decorate([
         Injectable({
             providedIn: 'root'
@@ -319,10 +319,6 @@ var LyIconModule = /** @class */ (function () {
     ], LyIconModule);
     return LyIconModule;
 }());
-
-/**
- * Generated bundle index. Do not edit.
- */
 
 export { LyIcon, LyIconBase, LyIconMixinBase, LyIconModule, LyIconService };
 //# sourceMappingURL=alyle-ui-icon.js.map

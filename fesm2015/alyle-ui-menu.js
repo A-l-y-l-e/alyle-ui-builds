@@ -103,12 +103,12 @@ let LyMenu = class LyMenu {
     }
 };
 __decorate([
-    ViewChild('container'),
+    ViewChild('container', { static: false }),
     __metadata("design:type", ElementRef)
 ], LyMenu.prototype, "_container", void 0);
 __decorate([
     Input(),
-    __metadata("design:type", LyMenuTriggerFor)
+    __metadata("design:type", Object)
 ], LyMenu.prototype, "ref", void 0);
 __decorate([
     Input(),
@@ -241,10 +241,6 @@ LyMenuModule = __decorate([
         declarations: [LyMenu, LyMenuItem, LyMenuTriggerFor],
     })
 ], LyMenuModule);
-
-/**
- * Generated bundle index. Do not edit.
- */
 
 export { LyMenu, LyMenuItem, LyMenuModule, LyMenuTriggerFor, ɵ0 };
 //# sourceMappingURL=alyle-ui-menu.js.map

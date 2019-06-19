@@ -362,15 +362,15 @@ let LyCarousel = class LyCarousel {
     }
 };
 __decorate([
-    ViewChild('slideContainer'),
+    ViewChild('slideContainer', { static: false }),
     __metadata("design:type", ElementRef)
 ], LyCarousel.prototype, "slideContainer", void 0);
 __decorate([
-    ViewChild('_slide'),
+    ViewChild('_slide', { static: false }),
     __metadata("design:type", ElementRef)
 ], LyCarousel.prototype, "_slide", void 0);
 __decorate([
-    ViewChild('_progressBar'),
+    ViewChild('_progressBar', { static: false }),
     __metadata("design:type", ElementRef)
 ], LyCarousel.prototype, "_progressBar", void 0);
 __decorate([
@@ -449,10 +449,6 @@ LyCarouselModule = __decorate([
         declarations: [LyCarouselItem, LyCarousel]
     })
 ], LyCarouselModule);
-
-/**
- * Generated bundle index. Do not edit.
- */
 
 export { CarouselMode, LyCarousel, LyCarouselItem, LyCarouselModule, STYLES };
 //# sourceMappingURL=alyle-ui-carousel.js.map

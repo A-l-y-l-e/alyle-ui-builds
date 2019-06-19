@@ -606,39 +606,39 @@ let LyField = class LyField {
     }
 };
 __decorate([
-    ViewChild('_labelContainer'),
+    ViewChild('_labelContainer', { static: false }),
     __metadata("design:type", ElementRef)
 ], LyField.prototype, "_labelContainer", void 0);
 __decorate([
-    ViewChild('_labelContainer2'),
+    ViewChild('_labelContainer2', { static: false }),
     __metadata("design:type", ElementRef)
 ], LyField.prototype, "_labelContainer2", void 0);
 __decorate([
-    ViewChild('_labelSpan'),
+    ViewChild('_labelSpan', { static: false }),
     __metadata("design:type", ElementRef)
 ], LyField.prototype, "_labelSpan", void 0);
 __decorate([
-    ViewChild('_prefixContainer'),
+    ViewChild('_prefixContainer', { static: false }),
     __metadata("design:type", ElementRef)
 ], LyField.prototype, "_prefixContainer", void 0);
 __decorate([
-    ViewChild('_suffixContainer'),
+    ViewChild('_suffixContainer', { static: false }),
     __metadata("design:type", ElementRef)
 ], LyField.prototype, "_suffixContainer", void 0);
 __decorate([
-    ViewChild('_fieldsetLegend'),
+    ViewChild('_fieldsetLegend', { static: false }),
     __metadata("design:type", ElementRef)
 ], LyField.prototype, "_fieldsetLegend", void 0);
 __decorate([
-    ContentChild(forwardRef(() => LyFieldControlBase)),
+    ContentChild(forwardRef(() => LyFieldControlBase), { static: true }),
     __metadata("design:type", LyFieldControlBase)
 ], LyField.prototype, "_control", void 0);
 __decorate([
-    ContentChild(LyPlaceholder),
+    ContentChild(LyPlaceholder, { static: false }),
     __metadata("design:type", LyPlaceholder)
 ], LyField.prototype, "_placeholderChild", void 0);
 __decorate([
-    ContentChild(LyLabel),
+    ContentChild(LyLabel, { static: false }),
     __metadata("design:type", LyLabel)
 ], LyField.prototype, "_labelChild", void 0);
 __decorate([
@@ -950,10 +950,6 @@ LyFieldModule = __decorate([
         declarations: [LyField, LyPlaceholder, LyLabel, LyNativeControl, LyPrefix, LySuffix, LyHint, LyError]
     })
 ], LyFieldModule);
-
-/**
- * Generated bundle index. Do not edit.
- */
 
 export { LyField, LyFieldControlBase, LyFieldModule, LyNativeControl, STYLES, STYLE_SELECT_ARROW, LyPlaceholder as ɵa, LyLabel as ɵb, LyHint as ɵc, LyPrefix as ɵd, LySuffix as ɵe, LyError as ɵf };
 //# sourceMappingURL=alyle-ui-field.js.map

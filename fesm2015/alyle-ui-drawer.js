@@ -1,5 +1,5 @@
-import { __decorate, __metadata } from 'tslib';
-import { ContentChild, forwardRef, Directive, Renderer2, ElementRef, ViewChild, TemplateRef, Input, Component, ChangeDetectionStrategy, ViewContainerRef, ChangeDetectorRef, NgZone, NgModule } from '@angular/core';
+import { __decorate, __param, __metadata } from 'tslib';
+import { Directive, Inject, forwardRef, Renderer2, ElementRef, ContentChild, ViewChild, TemplateRef, Input, Component, ChangeDetectionStrategy, ViewContainerRef, ChangeDetectorRef, NgZone, NgModule } from '@angular/core';
 import { XPosition, LY_COMMON_STYLES, LyTheme2, toBoolean, eachMedia, DirPosition, YPosition, Platform, WinResize, LyCommonModule } from '@alyle/ui';
 import { CommonModule } from '@angular/common';
 
@@ -36,6 +36,24 @@ const STYLES = (theme) => ({
         transitionProperty: 'transform, margin, visibility'
     }
 });
+let LyDrawerContent = class LyDrawerContent {
+    constructor(_renderer, _el, drawerContainer) {
+        this._renderer = _renderer;
+        this._el = _el;
+        this._renderer.addClass(this._el.nativeElement, drawerContainer.classes.drawerContent);
+    }
+    _getHostElement() {
+        return this._el.nativeElement;
+    }
+};
+LyDrawerContent = __decorate([
+    Directive({
+        selector: 'ly-drawer-content'
+    }),
+    __param(2, Inject(forwardRef(() => LyDrawerContainer))),
+    __metadata("design:paramtypes", [Renderer2,
+        ElementRef, Object])
+], LyDrawerContent);
 let LyDrawerContainer = class LyDrawerContainer {
     constructor(_theme, _renderer, _el) {
         this._theme = _theme;
@@ -51,7 +69,7 @@ let LyDrawerContainer = class LyDrawerContainer {
     }
 };
 __decorate([
-    ContentChild(forwardRef(() => LyDrawerContent)),
+    ContentChild(forwardRef(() => LyDrawerContent), { static: true }),
     __metadata("design:type", LyDrawerContent)
 ], LyDrawerContainer.prototype, "_drawerContent", void 0);
 LyDrawerContainer = __decorate([
@@ -62,24 +80,6 @@ LyDrawerContainer = __decorate([
         Renderer2,
         ElementRef])
 ], LyDrawerContainer);
-let LyDrawerContent = class LyDrawerContent {
-    constructor(_renderer, _el, drawerContainer) {
-        this._renderer = _renderer;
-        this._el = _el;
-        this._renderer.addClass(this._el.nativeElement, drawerContainer.classes.drawerContent);
-    }
-    _getHostElement() {
-        return this._el.nativeElement;
-    }
-};
-LyDrawerContent = __decorate([
-    Directive({
-        selector: 'ly-drawer-content'
-    }),
-    __metadata("design:paramtypes", [Renderer2,
-        ElementRef,
-        LyDrawerContainer])
-], LyDrawerContent);
 let LyDrawer = class LyDrawer {
     constructor(_theme, _renderer, _el, _drawerContainer, _vcr, _winResize, _cd, _zone) {
         this._theme = _theme;
@@ -361,7 +361,7 @@ let LyDrawer = class LyDrawer {
     }
 };
 __decorate([
-    ViewChild(TemplateRef),
+    ViewChild(TemplateRef, { static: false }),
     __metadata("design:type", TemplateRef)
 ], LyDrawer.prototype, "_backdrop", void 0);
 __decorate([
@@ -452,10 +452,6 @@ LyDrawerModule = __decorate([
         declarations: [LyDrawer, LyDrawerContainer, LyDrawerContent],
     })
 ], LyDrawerModule);
-
-/**
- * Generated bundle index. Do not edit.
- */
 
 export { LyDrawer, LyDrawerContainer, LyDrawerContent, LyDrawerModule, STYLES };
 //# sourceMappingURL=alyle-ui-drawer.js.map

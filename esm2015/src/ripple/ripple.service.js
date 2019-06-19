@@ -24,7 +24,7 @@ let LyRippleService = class LyRippleService {
         this.classes = this.theme.addStyleSheet(styles);
     }
 };
-LyRippleService.ngInjectableDef = i0.defineInjectable({ factory: function LyRippleService_Factory() { return new LyRippleService(i0.inject(i1.LyTheme2)); }, token: LyRippleService, providedIn: "root" });
+LyRippleService.ngInjectableDef = i0.ɵɵdefineInjectable({ factory: function LyRippleService_Factory() { return new LyRippleService(i0.ɵɵinject(i1.LyTheme2)); }, token: LyRippleService, providedIn: "root" });
 LyRippleService = tslib_1.__decorate([
     Injectable({
         providedIn: 'root'

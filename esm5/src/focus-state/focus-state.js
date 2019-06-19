@@ -107,7 +107,7 @@ var LyFocusState = /** @class */ (function () {
         var _this = this;
         this._elementMap.forEach(function (_, element) { return _this.unlisten(element); });
     };
-    LyFocusState.ngInjectableDef = i0.defineInjectable({ factory: function LyFocusState_Factory() { return new LyFocusState(i0.inject(i0.NgZone)); }, token: LyFocusState, providedIn: "root" });
+    LyFocusState.ngInjectableDef = i0.ɵɵdefineInjectable({ factory: function LyFocusState_Factory() { return new LyFocusState(i0.ɵɵinject(i0.NgZone)); }, token: LyFocusState, providedIn: "root" });
     LyFocusState = tslib_1.__decorate([
         Injectable({
             providedIn: 'root'

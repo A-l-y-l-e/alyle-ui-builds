@@ -347,7 +347,7 @@
             this._changeDetectorRef.markForCheck();
         };
         __decorate([
-            core.ViewChild('innerContainer'),
+            core.ViewChild('innerContainer', { static: false }),
             __metadata("design:type", core.ElementRef)
         ], LyCheckbox.prototype, "_innerContainer", void 0);
         __decorate([
@@ -379,7 +379,7 @@
             __metadata("design:type", core.EventEmitter)
         ], LyCheckbox.prototype, "change", void 0);
         __decorate([
-            core.ViewChild('input'),
+            core.ViewChild('input', { static: false }),
             __metadata("design:type", core.ElementRef)
         ], LyCheckbox.prototype, "_inputElement", void 0);
         LyCheckbox = __decorate([

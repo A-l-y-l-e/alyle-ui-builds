@@ -230,7 +230,7 @@
             this._focusState.unlisten(this._el);
         };
         __decorate([
-            core.ViewChild('rippleContainer'),
+            core.ViewChild('rippleContainer', { static: false }),
             __metadata("design:type", core.ElementRef)
         ], LyListItem.prototype, "_rippleContainer", void 0);
         __decorate([
@@ -238,11 +238,11 @@
             __metadata("design:type", core.QueryList)
         ], LyListItem.prototype, "_lines", void 0);
         __decorate([
-            core.ContentChild(core.forwardRef(function () { return LyListIcon; })),
-            __metadata("design:type", LyListIcon)
+            core.ContentChild(core.forwardRef(function () { return LyListIcon; }), { static: false }),
+            __metadata("design:type", Object)
         ], LyListItem.prototype, "_icon", void 0);
         __decorate([
-            core.ContentChild(avatar.LyAvatar),
+            core.ContentChild(avatar.LyAvatar, { static: false }),
             __metadata("design:type", avatar.LyAvatar)
         ], LyListItem.prototype, "_avatar", void 0);
         __decorate([

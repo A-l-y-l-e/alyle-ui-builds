@@ -487,15 +487,15 @@ let LySelect = LySelect_1 = class LySelect extends LySelectMixinBase {
     }
 };
 __decorate([
-    ViewChild(TemplateRef),
+    ViewChild(TemplateRef, { static: false }),
     __metadata("design:type", TemplateRef)
 ], LySelect.prototype, "templateRef", void 0);
 __decorate([
-    ViewChild('valueText'),
+    ViewChild('valueText', { static: false }),
     __metadata("design:type", ElementRef)
 ], LySelect.prototype, "valueTextDivRef", void 0);
 __decorate([
-    ViewChild(forwardRef(() => LyOption)),
+    ViewChild(forwardRef(() => LyOption), { static: false }),
     __metadata("design:type", QueryList)
 ], LySelect.prototype, "_options", void 0);
 __decorate([
@@ -700,7 +700,7 @@ let LyOption = class LyOption extends LyOptionMixinBase {
     }
 };
 __decorate([
-    ViewChild('rippleContainer'),
+    ViewChild('rippleContainer', { static: false }),
     __metadata("design:type", ElementRef)
 ], LyOption.prototype, "_rippleContainer", void 0);
 __decorate([
@@ -760,10 +760,6 @@ LySelectModule = __decorate([
         exports: [LySelect, LyOption, LyCommonModule]
     })
 ], LySelectModule);
-
-/**
- * Generated bundle index. Do not edit.
- */
 
 export { LyOption, LyOptionBase, LyOptionMixinBase, LySelect, LySelectBase, LySelectMixinBase, LySelectModule, STYLES };
 //# sourceMappingURL=alyle-ui-select.js.map

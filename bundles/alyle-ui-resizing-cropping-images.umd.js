@@ -673,15 +673,15 @@
             return this._croppingContainer.nativeElement.getBoundingClientRect();
         };
         __decorate([
-            core.ViewChild('_imgContainer'),
+            core.ViewChild('_imgContainer', { static: false }),
             __metadata("design:type", core.ElementRef)
         ], LyResizingCroppingImages.prototype, "_imgContainer", void 0);
         __decorate([
-            core.ViewChild('_croppingContainer'),
+            core.ViewChild('_croppingContainer', { static: false }),
             __metadata("design:type", core.ElementRef)
         ], LyResizingCroppingImages.prototype, "_croppingContainer", void 0);
         __decorate([
-            core.ViewChild('_imgCanvas'),
+            core.ViewChild('_imgCanvas', { static: false }),
             __metadata("design:type", core.ElementRef)
         ], LyResizingCroppingImages.prototype, "_imgCanvas", void 0);
         __decorate([

@@ -542,15 +542,15 @@ var LySelect = /** @class */ (function (_super) {
     };
     var LySelect_1;
     __decorate([
-        ViewChild(TemplateRef),
+        ViewChild(TemplateRef, { static: false }),
         __metadata("design:type", TemplateRef)
     ], LySelect.prototype, "templateRef", void 0);
     __decorate([
-        ViewChild('valueText'),
+        ViewChild('valueText', { static: false }),
         __metadata("design:type", ElementRef)
     ], LySelect.prototype, "valueTextDivRef", void 0);
     __decorate([
-        ViewChild(forwardRef(function () { return LyOption; })),
+        ViewChild(forwardRef(function () { return LyOption; }), { static: false }),
         __metadata("design:type", QueryList)
     ], LySelect.prototype, "_options", void 0);
     __decorate([
@@ -775,7 +775,7 @@ var LyOption = /** @class */ (function (_super) {
         return this._el.nativeElement;
     };
     __decorate([
-        ViewChild('rippleContainer'),
+        ViewChild('rippleContainer', { static: false }),
         __metadata("design:type", ElementRef)
     ], LyOption.prototype, "_rippleContainer", void 0);
     __decorate([
@@ -840,10 +840,6 @@ var LySelectModule = /** @class */ (function () {
     ], LySelectModule);
     return LySelectModule;
 }());
-
-/**
- * Generated bundle index. Do not edit.
- */
 
 export { LyOption, LyOptionBase, LyOptionMixinBase, LySelect, LySelectBase, LySelectMixinBase, LySelectModule, STYLES };
 //# sourceMappingURL=alyle-ui-select.js.map

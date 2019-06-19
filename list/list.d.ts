@@ -135,7 +135,7 @@ export declare class LyListItem extends LyListItemMixinBase implements OnInit, A
     private _onFocusByKeyboardState;
     _rippleContainer: ElementRef;
     _lines: QueryList<LyLine>;
-    _icon: LyListIcon;
+    _icon: LyListIcon & {};
     _avatar: LyAvatar;
     readonly _listItemClasses: string[];
     /** @docs-private */

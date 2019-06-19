@@ -102,12 +102,12 @@ var LyMenu = /** @class */ (function () {
         this._renderer.setStyle(container, 'width', position.width);
     };
     __decorate([
-        ViewChild('container'),
+        ViewChild('container', { static: false }),
         __metadata("design:type", ElementRef)
     ], LyMenu.prototype, "_container", void 0);
     __decorate([
         Input(),
-        __metadata("design:type", LyMenuTriggerFor)
+        __metadata("design:type", Object)
     ], LyMenu.prototype, "ref", void 0);
     __decorate([
         Input(),
@@ -247,10 +247,6 @@ var LyMenuModule = /** @class */ (function () {
     ], LyMenuModule);
     return LyMenuModule;
 }());
-
-/**
- * Generated bundle index. Do not edit.
- */
 
 export { LyMenu, LyMenuItem, LyMenuModule, LyMenuTriggerFor, ɵ0 };
 //# sourceMappingURL=alyle-ui-menu.js.map

@@ -499,15 +499,15 @@
             return flexDirection;
         };
         __decorate([
-            core.ViewChild('tabs'),
+            core.ViewChild('tabs', { static: true }),
             __metadata("design:type", core.ElementRef)
         ], LyTabs.prototype, "tabsRef", void 0);
         __decorate([
-            core.ViewChild('tabContents'),
+            core.ViewChild('tabContents', { static: true }),
             __metadata("design:type", core.ElementRef)
         ], LyTabs.prototype, "tabContents", void 0);
         __decorate([
-            core.ViewChild('tabsIndicator'),
+            core.ViewChild('tabsIndicator', { static: true }),
             __metadata("design:type", core.ElementRef)
         ], LyTabs.prototype, "tabsIndicator", void 0);
         __decorate([
@@ -582,20 +582,20 @@
             this._renderer.addClass(this._el.nativeElement, this._tabs.classes.tab);
         };
         __decorate([
-            core.ContentChild(LyTabContent, { read: core.TemplateRef }),
+            core.ContentChild(LyTabContent, { read: core.TemplateRef, static: true }),
             __metadata("design:type", core.TemplateRef)
         ], LyTab.prototype, "_templateRefLazy", void 0);
         __decorate([
-            core.ViewChild('_templateNgContent'),
+            core.ViewChild('_templateNgContent', { static: true }),
             __metadata("design:type", core.TemplateRef)
         ], LyTab.prototype, "_templateRef", void 0);
         __decorate([
-            core.ViewChild('tabIndicator'),
+            core.ViewChild('tabIndicator', { static: false }),
             __metadata("design:type", core.ElementRef)
         ], LyTab.prototype, "_tabIndicator", void 0);
         __decorate([
-            core.ContentChild(core.forwardRef(function () { return LyTabLabel; })),
-            __metadata("design:type", LyTabLabel)
+            core.ContentChild(core.forwardRef(function () { return LyTabLabel; }), { static: true }),
+            __metadata("design:type", Object)
         ], LyTab.prototype, "_tabLabel", void 0);
         LyTab = __decorate([
             core.Component({
@@ -682,7 +682,7 @@
             __metadata("design:paramtypes", [Boolean])
         ], LyTabLabel.prototype, "active", null);
         __decorate([
-            core.ViewChild('rippleContainer'),
+            core.ViewChild('rippleContainer', { static: false }),
             __metadata("design:type", core.ElementRef)
         ], LyTabLabel.prototype, "_rippleContainer", void 0);
         __decorate([

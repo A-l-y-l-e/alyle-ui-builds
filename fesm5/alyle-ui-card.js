@@ -242,9 +242,5 @@ var LyCardModule = /** @class */ (function () {
     return LyCardModule;
 }());
 
-/**
- * Generated bundle index. Do not edit.
- */
-
 export { LyCard, LyCardActions, LyCardBase, LyCardContent, LyCardMedia, LyCardMixinBase, LyCardModule, STYLES };
 //# sourceMappingURL=alyle-ui-card.js.map

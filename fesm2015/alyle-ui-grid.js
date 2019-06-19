@@ -410,9 +410,5 @@ LyGridModule = __decorate([
     })
 ], LyGridModule);
 
-/**
- * Generated bundle index. Do not edit.
- */
-
 export { LyGrid, LyGridItem, LyGridModule };
 //# sourceMappingURL=alyle-ui-grid.js.map

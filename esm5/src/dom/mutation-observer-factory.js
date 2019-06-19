@@ -12,7 +12,7 @@ var MutationObserverFactory = /** @class */ (function () {
     MutationObserverFactory.prototype.create = function (callback) {
         return typeof MutationObserver === 'undefined' ? null : new MutationObserver(callback);
     };
-    MutationObserverFactory.ngInjectableDef = i0.defineInjectable({ factory: function MutationObserverFactory_Factory() { return new MutationObserverFactory(); }, token: MutationObserverFactory, providedIn: "root" });
+    MutationObserverFactory.ngInjectableDef = i0.ɵɵdefineInjectable({ factory: function MutationObserverFactory_Factory() { return new MutationObserverFactory(); }, token: MutationObserverFactory, providedIn: "root" });
     MutationObserverFactory = tslib_1.__decorate([
         Injectable({ providedIn: 'root' })
     ], MutationObserverFactory);
@@ -52,7 +52,7 @@ var ElementObserver = /** @class */ (function () {
             this._observedElements.delete(element);
         }
     };
-    ElementObserver.ngInjectableDef = i0.defineInjectable({ factory: function ElementObserver_Factory() { return new ElementObserver(i0.inject(MutationObserverFactory)); }, token: ElementObserver, providedIn: "root" });
+    ElementObserver.ngInjectableDef = i0.ɵɵdefineInjectable({ factory: function ElementObserver_Factory() { return new ElementObserver(i0.ɵɵinject(MutationObserverFactory)); }, token: ElementObserver, providedIn: "root" });
     ElementObserver = tslib_1.__decorate([
         Injectable({ providedIn: 'root' }),
         tslib_1.__metadata("design:paramtypes", [MutationObserverFactory])

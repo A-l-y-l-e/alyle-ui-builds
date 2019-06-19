@@ -199,9 +199,5 @@ LyTooltipModule = __decorate([
     })
 ], LyTooltipModule);
 
-/**
- * Generated bundle index. Do not edit.
- */
-
 export { LyTooltip, LyTooltipModule, ɵ0 };
 //# sourceMappingURL=alyle-ui-tooltip.js.map

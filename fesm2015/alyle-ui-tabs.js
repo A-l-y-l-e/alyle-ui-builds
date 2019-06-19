@@ -401,15 +401,15 @@ let LyTabs = class LyTabs extends LyTabsMixinBase {
     }
 };
 __decorate([
-    ViewChild('tabs'),
+    ViewChild('tabs', { static: true }),
     __metadata("design:type", ElementRef)
 ], LyTabs.prototype, "tabsRef", void 0);
 __decorate([
-    ViewChild('tabContents'),
+    ViewChild('tabContents', { static: true }),
     __metadata("design:type", ElementRef)
 ], LyTabs.prototype, "tabContents", void 0);
 __decorate([
-    ViewChild('tabsIndicator'),
+    ViewChild('tabsIndicator', { static: true }),
     __metadata("design:type", ElementRef)
 ], LyTabs.prototype, "tabsIndicator", void 0);
 __decorate([
@@ -483,20 +483,20 @@ let LyTab = class LyTab {
     }
 };
 __decorate([
-    ContentChild(LyTabContent, { read: TemplateRef }),
+    ContentChild(LyTabContent, { read: TemplateRef, static: true }),
     __metadata("design:type", TemplateRef)
 ], LyTab.prototype, "_templateRefLazy", void 0);
 __decorate([
-    ViewChild('_templateNgContent'),
+    ViewChild('_templateNgContent', { static: true }),
     __metadata("design:type", TemplateRef)
 ], LyTab.prototype, "_templateRef", void 0);
 __decorate([
-    ViewChild('tabIndicator'),
+    ViewChild('tabIndicator', { static: false }),
     __metadata("design:type", ElementRef)
 ], LyTab.prototype, "_tabIndicator", void 0);
 __decorate([
-    ContentChild(forwardRef(() => LyTabLabel)),
-    __metadata("design:type", LyTabLabel)
+    ContentChild(forwardRef(() => LyTabLabel), { static: true }),
+    __metadata("design:type", Object)
 ], LyTab.prototype, "_tabLabel", void 0);
 LyTab = __decorate([
     Component({
@@ -575,7 +575,7 @@ __decorate([
     __metadata("design:paramtypes", [Boolean])
 ], LyTabLabel.prototype, "active", null);
 __decorate([
-    ViewChild('rippleContainer'),
+    ViewChild('rippleContainer', { static: false }),
     __metadata("design:type", ElementRef)
 ], LyTabLabel.prototype, "_rippleContainer", void 0);
 __decorate([
@@ -620,10 +620,6 @@ LyTabsModule = __decorate([
         declarations: [LyTabs, LyTab, LyTabLabel, LyTabContent]
     })
 ], LyTabsModule);
-
-/**
- * Generated bundle index. Do not edit.
- */
 
 export { LyTab, LyTabLabel, LyTabLabelBase, LyTabLabelMixinBase, LyTabs, LyTabsBase, LyTabsMixinBase, LyTabsModule, STYLES, LyTabContent as ɵa };
 //# sourceMappingURL=alyle-ui-tabs.js.map

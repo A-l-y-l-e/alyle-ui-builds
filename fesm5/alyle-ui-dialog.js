@@ -187,7 +187,7 @@ var LyDialogContainer = /** @class */ (function () {
         return this._el.nativeElement;
     };
     __decorate([
-        ViewChild(TemplateRef, { read: ViewContainerRef }),
+        ViewChild(TemplateRef, { read: ViewContainerRef, static: true }),
         __metadata("design:type", ViewContainerRef)
     ], LyDialogContainer.prototype, "viewContainerRef", void 0);
     LyDialogContainer = __decorate([
@@ -468,10 +468,6 @@ var LyDialogModule = /** @class */ (function () {
     ], LyDialogModule);
     return LyDialogModule;
 }());
-
-/**
- * Generated bundle index. Do not edit.
- */
 
 export { LY_DIALOG_DATA, LyDialog, LyDialogModule, LyDialogRef, LyDialogContainer as ɵa, LyDialogTitle as ɵb, LyDialogContent as ɵc, LyDialogActions as ɵd };
 //# sourceMappingURL=alyle-ui-dialog.js.map

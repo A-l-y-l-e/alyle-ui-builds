@@ -408,15 +408,15 @@
             this._cd.markForCheck();
         };
         __decorate([
-            core.ViewChild('slideContainer'),
+            core.ViewChild('slideContainer', { static: false }),
             __metadata("design:type", core.ElementRef)
         ], LyCarousel.prototype, "slideContainer", void 0);
         __decorate([
-            core.ViewChild('_slide'),
+            core.ViewChild('_slide', { static: false }),
             __metadata("design:type", core.ElementRef)
         ], LyCarousel.prototype, "_slide", void 0);
         __decorate([
-            core.ViewChild('_progressBar'),
+            core.ViewChild('_progressBar', { static: false }),
             __metadata("design:type", core.ElementRef)
         ], LyCarousel.prototype, "_progressBar", void 0);
         __decorate([

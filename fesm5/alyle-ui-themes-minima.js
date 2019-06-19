@@ -503,9 +503,5 @@ var MinimaDark = /** @class */ (function (_super) {
     return MinimaDark;
 }(MinimaBase));
 
-/**
- * Generated bundle index. Do not edit.
- */
-
 export { MinimaDark, MinimaLight, ThemeMinimaDark, ThemeMinimaLight, ThemeMinimaModule, MinimaBase as ɵa };
 //# sourceMappingURL=alyle-ui-themes-minima.js.map

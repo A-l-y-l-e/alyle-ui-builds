@@ -143,9 +143,5 @@ LyToolbarModule = __decorate([
     })
 ], LyToolbarModule);
 
-/**
- * Generated bundle index. Do not edit.
- */
-
 export { LyToolbar, LyToolbarBase, LyToolbarMixinBase, LyToolbarModule, ɵ0 };
 //# sourceMappingURL=alyle-ui-toolbar.js.map

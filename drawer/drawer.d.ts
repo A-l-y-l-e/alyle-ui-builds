@@ -37,6 +37,12 @@ export declare const STYLES: (theme: ThemeVariables) => {
         transitionProperty: string;
     };
 };
+export declare class LyDrawerContent {
+    private _renderer;
+    private _el;
+    constructor(_renderer: Renderer2, _el: ElementRef, drawerContainer: any);
+    _getHostElement(): any;
+}
 export declare class LyDrawerContainer {
     private _theme;
     private _renderer;
@@ -46,12 +52,6 @@ export declare class LyDrawerContainer {
     _openDrawers: number;
     _drawerContent: LyDrawerContent;
     constructor(_theme: LyTheme2, _renderer: Renderer2, _el: ElementRef);
-    _getHostElement(): any;
-}
-export declare class LyDrawerContent {
-    private _renderer;
-    private _el;
-    constructor(_renderer: Renderer2, _el: ElementRef, drawerContainer: LyDrawerContainer);
     _getHostElement(): any;
 }
 export declare class LyDrawer implements OnChanges, AfterViewInit, OnDestroy {

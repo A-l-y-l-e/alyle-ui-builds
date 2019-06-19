@@ -37,6 +37,10 @@
         return c > 3 && r && Object.defineProperty(target, key, r), r;
     }
 
+    function __param(paramIndex, decorator) {
+        return function (target, key) { decorator(target, key, paramIndex); }
+    }
+
     function __metadata(metadataKey, metadataValue) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(metadataKey, metadataValue);
     }
@@ -74,6 +78,25 @@
             transitionProperty: 'transform, margin, visibility'
         }
     }); };
+    var LyDrawerContent = /** @class */ (function () {
+        function LyDrawerContent(_renderer, _el, drawerContainer) {
+            this._renderer = _renderer;
+            this._el = _el;
+            this._renderer.addClass(this._el.nativeElement, drawerContainer.classes.drawerContent);
+        }
+        LyDrawerContent.prototype._getHostElement = function () {
+            return this._el.nativeElement;
+        };
+        LyDrawerContent = __decorate([
+            core.Directive({
+                selector: 'ly-drawer-content'
+            }),
+            __param(2, core.Inject(core.forwardRef(function () { return LyDrawerContainer; }))),
+            __metadata("design:paramtypes", [core.Renderer2,
+                core.ElementRef, Object])
+        ], LyDrawerContent);
+        return LyDrawerContent;
+    }());
     var LyDrawerContainer = /** @class */ (function () {
         function LyDrawerContainer(_theme, _renderer, _el) {
             this._theme = _theme;
@@ -88,7 +111,7 @@
             return this._el.nativeElement;
         };
         __decorate([
-            core.ContentChild(core.forwardRef(function () { return LyDrawerContent; })),
+            core.ContentChild(core.forwardRef(function () { return LyDrawerContent; }), { static: true }),
             __metadata("design:type", LyDrawerContent)
         ], LyDrawerContainer.prototype, "_drawerContent", void 0);
         LyDrawerContainer = __decorate([
@@ -100,25 +123,6 @@
                 core.ElementRef])
         ], LyDrawerContainer);
         return LyDrawerContainer;
-    }());
-    var LyDrawerContent = /** @class */ (function () {
-        function LyDrawerContent(_renderer, _el, drawerContainer) {
-            this._renderer = _renderer;
-            this._el = _el;
-            this._renderer.addClass(this._el.nativeElement, drawerContainer.classes.drawerContent);
-        }
-        LyDrawerContent.prototype._getHostElement = function () {
-            return this._el.nativeElement;
-        };
-        LyDrawerContent = __decorate([
-            core.Directive({
-                selector: 'ly-drawer-content'
-            }),
-            __metadata("design:paramtypes", [core.Renderer2,
-                core.ElementRef,
-                LyDrawerContainer])
-        ], LyDrawerContent);
-        return LyDrawerContent;
     }());
     var LyDrawer = /** @class */ (function () {
         function LyDrawer(_theme, _renderer, _el, _drawerContainer, _vcr, _winResize, _cd, _zone) {
@@ -417,7 +421,7 @@
             }
         };
         __decorate([
-            core.ViewChild(core.TemplateRef),
+            core.ViewChild(core.TemplateRef, { static: false }),
             __metadata("design:type", core.TemplateRef)
         ], LyDrawer.prototype, "_backdrop", void 0);
         __decorate([

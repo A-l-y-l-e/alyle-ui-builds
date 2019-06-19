@@ -177,9 +177,5 @@ LyTypographyModule = __decorate([
     })
 ], LyTypographyModule);
 
-/**
- * Generated bundle index. Do not edit.
- */
-
 export { LyTypography, LyTypographyBase, LyTypographyMixinBase, LyTypographyModule, ɵ0 };
 //# sourceMappingURL=alyle-ui-typography.js.map

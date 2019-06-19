@@ -16,7 +16,7 @@ export declare class LyMenu implements OnInit, AfterViewInit {
      */
     destroy: () => void;
     _container: ElementRef<HTMLDivElement>;
-    ref: LyMenuTriggerFor;
+    ref: LyMenuTriggerFor & {};
     /** Position where the menu will be placed. */
     placement: Placement;
     /** The x-axis position of the menu. */

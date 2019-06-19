@@ -102,9 +102,5 @@ LyAvatarModule = __decorate([
     })
 ], LyAvatarModule);
 
-/**
- * Generated bundle index. Do not edit.
- */
-
 export { LyAvatar, LyAvatarBase, LyAvatarMixinBase, LyAvatarModule, ɵ0 };
 //# sourceMappingURL=alyle-ui-avatar.js.map

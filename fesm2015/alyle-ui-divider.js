@@ -50,9 +50,5 @@ LyDividerModule = __decorate([
     })
 ], LyDividerModule);
 
-/**
- * Generated bundle index. Do not edit.
- */
-
 export { LyDivider, LyDividerModule, ɵ0 };
 //# sourceMappingURL=alyle-ui-divider.js.map

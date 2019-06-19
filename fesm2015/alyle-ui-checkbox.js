@@ -271,7 +271,7 @@ let LyCheckbox = class LyCheckbox extends LyCheckboxMixinBase {
     }
 };
 __decorate([
-    ViewChild('innerContainer'),
+    ViewChild('innerContainer', { static: false }),
     __metadata("design:type", ElementRef)
 ], LyCheckbox.prototype, "_innerContainer", void 0);
 __decorate([
@@ -303,7 +303,7 @@ __decorate([
     __metadata("design:type", EventEmitter)
 ], LyCheckbox.prototype, "change", void 0);
 __decorate([
-    ViewChild('input'),
+    ViewChild('input', { static: false }),
     __metadata("design:type", ElementRef)
 ], LyCheckbox.prototype, "_inputElement", void 0);
 LyCheckbox = __decorate([
@@ -344,10 +344,6 @@ LyCheckboxModule = __decorate([
         ]
     })
 ], LyCheckboxModule);
-
-/**
- * Generated bundle index. Do not edit.
- */
 
 export { LY_CHECKBOX_CONTROL_VALUE_ACCESSOR, LyCheckbox, LyCheckboxBase, LyCheckboxChange, LyCheckboxMixinBase, LyCheckboxModule, STYLES };
 //# sourceMappingURL=alyle-ui-checkbox.js.map

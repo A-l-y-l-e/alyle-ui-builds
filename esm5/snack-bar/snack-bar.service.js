@@ -4,7 +4,7 @@ import * as i0 from "@angular/core";
 var LySnackBarService = /** @class */ (function () {
     function LySnackBarService() {
     }
-    LySnackBarService.ngInjectableDef = i0.defineInjectable({ factory: function LySnackBarService_Factory() { return new LySnackBarService(); }, token: LySnackBarService, providedIn: "root" });
+    LySnackBarService.ngInjectableDef = i0.ɵɵdefineInjectable({ factory: function LySnackBarService_Factory() { return new LySnackBarService(); }, token: LySnackBarService, providedIn: "root" });
     LySnackBarService = tslib_1.__decorate([
         Injectable({
             providedIn: 'root'

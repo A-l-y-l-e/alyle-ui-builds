@@ -179,7 +179,7 @@ var LyListItem = /** @class */ (function (_super) {
         this._focusState.unlisten(this._el);
     };
     __decorate([
-        ViewChild('rippleContainer'),
+        ViewChild('rippleContainer', { static: false }),
         __metadata("design:type", ElementRef)
     ], LyListItem.prototype, "_rippleContainer", void 0);
     __decorate([
@@ -187,11 +187,11 @@ var LyListItem = /** @class */ (function (_super) {
         __metadata("design:type", QueryList)
     ], LyListItem.prototype, "_lines", void 0);
     __decorate([
-        ContentChild(forwardRef(function () { return LyListIcon; })),
-        __metadata("design:type", LyListIcon)
+        ContentChild(forwardRef(function () { return LyListIcon; }), { static: false }),
+        __metadata("design:type", Object)
     ], LyListItem.prototype, "_icon", void 0);
     __decorate([
-        ContentChild(LyAvatar),
+        ContentChild(LyAvatar, { static: false }),
         __metadata("design:type", LyAvatar)
     ], LyListItem.prototype, "_avatar", void 0);
     __decorate([
@@ -321,10 +321,6 @@ var LyListModule = /** @class */ (function () {
     ], LyListModule);
     return LyListModule;
 }());
-
-/**
- * Generated bundle index. Do not edit.
- */
 
 export { LyLine, LyList, LyListIcon, LyListItem, LyListItemBase, LyListItemMixinBase, LyListModule, STYLES };
 //# sourceMappingURL=alyle-ui-list.js.map

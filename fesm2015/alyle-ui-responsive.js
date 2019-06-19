@@ -106,9 +106,5 @@ const Breakpoints = {
     WebLandscape: '(min-width: 1280px) and (orientation: landscape)',
 };
 
-/**
- * Generated bundle index. Do not edit.
- */
-
 export { Breakpoints, MediaDirective, ResponsiveModule };
 //# sourceMappingURL=alyle-ui-responsive.js.map

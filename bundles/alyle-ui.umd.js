@@ -333,11 +333,11 @@
      * @param ...sources
      */
     function mergeDeep(target) {
+        var _a, _b;
         var sources = [];
         for (var _i = 1; _i < arguments.length; _i++) {
             sources[_i - 1] = arguments[_i];
         }
-        var _a, _b;
         if (!sources.length) {
             return target;
         }
@@ -438,7 +438,7 @@
             }
             renderer.addClass(element, newClassname);
         };
-        CoreTheme.ngInjectableDef = core.defineInjectable({ factory: function CoreTheme_Factory() { return new CoreTheme(core.inject(LY_THEME, 8), core.inject(LY_THEME_GLOBAL_VARIABLES, 8), core.inject(core.RendererFactory2), core.inject(common.DOCUMENT)); }, token: CoreTheme, providedIn: "root" });
+        CoreTheme.ngInjectableDef = core.ɵɵdefineInjectable({ factory: function CoreTheme_Factory() { return new CoreTheme(core.ɵɵinject(LY_THEME, 8), core.ɵɵinject(LY_THEME_GLOBAL_VARIABLES, 8), core.ɵɵinject(core.RendererFactory2), core.ɵɵinject(common.DOCUMENT)); }, token: CoreTheme, providedIn: "root" });
         CoreTheme = __decorate([
             core.Injectable({
                 providedIn: 'root'
@@ -745,7 +745,7 @@
             this.styleContainers = new Map();
             this.styleElementGlobalMap = new Map();
         }
-        StylesInDocument.ngInjectableDef = core.defineInjectable({ factory: function StylesInDocument_Factory() { return new StylesInDocument(); }, token: StylesInDocument, providedIn: "root" });
+        StylesInDocument.ngInjectableDef = core.ɵɵdefineInjectable({ factory: function StylesInDocument_Factory() { return new StylesInDocument(); }, token: StylesInDocument, providedIn: "root" });
         StylesInDocument = __decorate([
             core.Injectable({
                 providedIn: 'root'
@@ -1587,7 +1587,7 @@
             this.theme = theme;
             this.classes = this.theme.addStyleSheet(LY_COMMON_STYLES);
         }
-        LyCoreStyles.ngInjectableDef = core.defineInjectable({ factory: function LyCoreStyles_Factory() { return new LyCoreStyles(core.inject(LyTheme2)); }, token: LyCoreStyles, providedIn: "root" });
+        LyCoreStyles.ngInjectableDef = core.ɵɵdefineInjectable({ factory: function LyCoreStyles_Factory() { return new LyCoreStyles(core.ɵɵinject(LyTheme2)); }, token: LyCoreStyles, providedIn: "root" });
         LyCoreStyles = __decorate([
             core.Injectable({ providedIn: 'root' }),
             __metadata("design:paramtypes", [LyTheme2])
@@ -1614,7 +1614,7 @@
             this.theme = theme;
             this.classes = this.theme.addStyleSheet(styles);
         }
-        LyRippleService.ngInjectableDef = core.defineInjectable({ factory: function LyRippleService_Factory() { return new LyRippleService(core.inject(LyTheme2)); }, token: LyRippleService, providedIn: "root" });
+        LyRippleService.ngInjectableDef = core.ɵɵdefineInjectable({ factory: function LyRippleService_Factory() { return new LyRippleService(core.ɵɵinject(LyTheme2)); }, token: LyRippleService, providedIn: "root" });
         LyRippleService = __decorate([
             core.Injectable({
                 providedIn: 'root'
@@ -2196,7 +2196,7 @@
             var _this = this;
             this._elementMap.forEach(function (_, element) { return _this.unlisten(element); });
         };
-        LyFocusState.ngInjectableDef = core.defineInjectable({ factory: function LyFocusState_Factory() { return new LyFocusState(core.inject(core.NgZone)); }, token: LyFocusState, providedIn: "root" });
+        LyFocusState.ngInjectableDef = core.ɵɵdefineInjectable({ factory: function LyFocusState_Factory() { return new LyFocusState(core.ɵɵinject(core.NgZone)); }, token: LyFocusState, providedIn: "root" });
         LyFocusState = __decorate([
             core.Injectable({
                 providedIn: 'root'
@@ -2206,8 +2206,8 @@
         return LyFocusState;
     }());
 
-    var AUI_VERSION = '2.7.7';
-    var AUI_LAST_UPDATE = '2019-05-24T01:33:45.105Z';
+    var AUI_VERSION = '2.7.8';
+    var AUI_LAST_UPDATE = '2019-06-19T02:40:40.472Z';
 
     var LY_HAMMER_OPTIONS = new core.InjectionToken('LY_HAMMER_OPTIONS');
     var HAMMER_GESTURES_EVENTS = [
@@ -2372,7 +2372,7 @@
                 this._isActiveOverlayContainer = false;
             }
         };
-        LyOverlayContainer.ngInjectableDef = core.defineInjectable({ factory: function LyOverlayContainer_Factory() { return new LyOverlayContainer(core.inject(LyTheme2)); }, token: LyOverlayContainer, providedIn: "root" });
+        LyOverlayContainer.ngInjectableDef = core.ɵɵdefineInjectable({ factory: function LyOverlayContainer_Factory() { return new LyOverlayContainer(core.ɵɵinject(LyTheme2)); }, token: LyOverlayContainer, providedIn: "root" });
         LyOverlayContainer = __decorate([
             core.Injectable({
                 providedIn: 'root'
@@ -2397,7 +2397,7 @@
                 this.resize$ = rxjs.empty();
             }
         }
-        WinResize.ngInjectableDef = core.defineInjectable({ factory: function WinResize_Factory() { return new WinResize(core.inject(common.DOCUMENT), core.inject(core.NgZone)); }, token: WinResize, providedIn: "root" });
+        WinResize.ngInjectableDef = core.ɵɵdefineInjectable({ factory: function WinResize_Factory() { return new WinResize(core.ɵɵinject(common.DOCUMENT), core.ɵɵinject(core.NgZone)); }, token: WinResize, providedIn: "root" });
         WinResize = __decorate([
             core.Injectable({
                 providedIn: 'root'
@@ -2423,7 +2423,7 @@
                 this.scroll$ = rxjs.empty();
             }
         }
-        WinScroll.ngInjectableDef = core.defineInjectable({ factory: function WinScroll_Factory() { return new WinScroll(core.inject(common.DOCUMENT), core.inject(core.NgZone)); }, token: WinScroll, providedIn: "root" });
+        WinScroll.ngInjectableDef = core.ɵɵdefineInjectable({ factory: function WinScroll_Factory() { return new WinScroll(core.ɵɵinject(common.DOCUMENT), core.ɵɵinject(core.NgZone)); }, token: WinScroll, providedIn: "root" });
         WinScroll = __decorate([
             core.Injectable({
                 providedIn: 'root'
@@ -2665,7 +2665,7 @@
         LyOverlay.prototype.create = function (templateOrComponent, context, config) {
             return new OverlayFactory(this._componentFactoryResolver, this._appRef, templateOrComponent, this._overlayContainer, context, this._injector, this._windowScroll, this._resizeService, config);
         };
-        LyOverlay.ngInjectableDef = core.defineInjectable({ factory: function LyOverlay_Factory() { return new LyOverlay(core.inject(LyOverlayContainer), core.inject(core.ComponentFactoryResolver), core.inject(core.ApplicationRef), core.inject(core.INJECTOR), core.inject(WinScroll), core.inject(WinResize)); }, token: LyOverlay, providedIn: "root" });
+        LyOverlay.ngInjectableDef = core.ɵɵdefineInjectable({ factory: function LyOverlay_Factory() { return new LyOverlay(core.ɵɵinject(LyOverlayContainer), core.ɵɵinject(core.ComponentFactoryResolver), core.ɵɵinject(core.ApplicationRef), core.ɵɵinject(core.INJECTOR), core.ɵɵinject(WinScroll), core.ɵɵinject(WinResize)); }, token: LyOverlay, providedIn: "root" });
         LyOverlay = __decorate([
             core.Injectable({
                 providedIn: 'root'
@@ -2707,7 +2707,7 @@
         MutationObserverFactory.prototype.create = function (callback) {
             return typeof MutationObserver === 'undefined' ? null : new MutationObserver(callback);
         };
-        MutationObserverFactory.ngInjectableDef = core.defineInjectable({ factory: function MutationObserverFactory_Factory() { return new MutationObserverFactory(); }, token: MutationObserverFactory, providedIn: "root" });
+        MutationObserverFactory.ngInjectableDef = core.ɵɵdefineInjectable({ factory: function MutationObserverFactory_Factory() { return new MutationObserverFactory(); }, token: MutationObserverFactory, providedIn: "root" });
         MutationObserverFactory = __decorate([
             core.Injectable({ providedIn: 'root' })
         ], MutationObserverFactory);
@@ -2746,7 +2746,7 @@
                 this._observedElements.delete(element);
             }
         };
-        ElementObserver.ngInjectableDef = core.defineInjectable({ factory: function ElementObserver_Factory() { return new ElementObserver(core.inject(MutationObserverFactory)); }, token: ElementObserver, providedIn: "root" });
+        ElementObserver.ngInjectableDef = core.ɵɵdefineInjectable({ factory: function ElementObserver_Factory() { return new ElementObserver(core.ɵɵinject(MutationObserverFactory)); }, token: ElementObserver, providedIn: "root" });
         ElementObserver = __decorate([
             core.Injectable({ providedIn: 'root' }),
             __metadata("design:paramtypes", [MutationObserverFactory])

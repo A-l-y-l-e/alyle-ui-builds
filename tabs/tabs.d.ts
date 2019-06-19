@@ -171,7 +171,7 @@ export declare class LyTab implements OnInit {
     _templateRefLazy: TemplateRef<LyTabContent>;
     _templateRef: TemplateRef<any>;
     _tabIndicator: ElementRef;
-    _tabLabel: LyTabLabel;
+    _tabLabel: LyTabLabel & {};
     constructor(_tabs: LyTabs, _renderer: Renderer2, _el: ElementRef);
     ngOnInit(): void;
 }

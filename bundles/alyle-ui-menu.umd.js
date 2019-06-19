@@ -154,12 +154,12 @@
             this._renderer.setStyle(container, 'width', position.width);
         };
         __decorate([
-            core.ViewChild('container'),
+            core.ViewChild('container', { static: false }),
             __metadata("design:type", core.ElementRef)
         ], LyMenu.prototype, "_container", void 0);
         __decorate([
             core.Input(),
-            __metadata("design:type", LyMenuTriggerFor)
+            __metadata("design:type", Object)
         ], LyMenu.prototype, "ref", void 0);
         __decorate([
             core.Input(),

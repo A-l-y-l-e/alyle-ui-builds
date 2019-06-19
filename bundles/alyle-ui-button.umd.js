@@ -263,7 +263,7 @@
             this._removeRippleEvents();
         };
         __decorate([
-            core.ViewChild('rippleContainer'),
+            core.ViewChild('rippleContainer', { static: false }),
             __metadata("design:type", core.ElementRef)
         ], LyButton.prototype, "_rippleContainer", void 0);
         __decorate([

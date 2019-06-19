@@ -21,7 +21,7 @@ var WinResize = /** @class */ (function () {
             this.resize$ = empty();
         }
     }
-    WinResize.ngInjectableDef = i0.defineInjectable({ factory: function WinResize_Factory() { return new WinResize(i0.inject(i1.DOCUMENT), i0.inject(i0.NgZone)); }, token: WinResize, providedIn: "root" });
+    WinResize.ngInjectableDef = i0.ɵɵdefineInjectable({ factory: function WinResize_Factory() { return new WinResize(i0.ɵɵinject(i1.DOCUMENT), i0.ɵɵinject(i0.NgZone)); }, token: WinResize, providedIn: "root" });
     WinResize = tslib_1.__decorate([
         Injectable({
             providedIn: 'root'

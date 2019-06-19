@@ -1,5 +1,5 @@
 import * as _chroma from 'chroma-js';
-import { InjectionToken, ViewEncapsulation, defineInjectable, inject, RendererFactory2, Injectable, Optional, Inject, isDevMode, NgZone, Input, TemplateRef, Directive, ViewContainerRef, NgModule, ElementRef, Renderer2, HostListener, Component, Injector, ComponentFactoryResolver, ApplicationRef, INJECTOR, ChangeDetectionStrategy } from '@angular/core';
+import { InjectionToken, ViewEncapsulation, ɵɵdefineInjectable, ɵɵinject, RendererFactory2, Injectable, Optional, Inject, isDevMode, NgZone, Input, TemplateRef, Directive, ViewContainerRef, NgModule, ElementRef, Renderer2, HostListener, Component, Injector, ComponentFactoryResolver, ApplicationRef, INJECTOR, ChangeDetectionStrategy } from '@angular/core';
 import { __decorate, __param, __metadata } from 'tslib';
 import { DOCUMENT } from '@angular/common';
 import { Subject, fromEvent, empty, Subscription, merge } from 'rxjs';
@@ -349,7 +349,7 @@ let CoreTheme = class CoreTheme {
         renderer.addClass(element, newClassname);
     }
 };
-CoreTheme.ngInjectableDef = defineInjectable({ factory: function CoreTheme_Factory() { return new CoreTheme(inject(LY_THEME, 8), inject(LY_THEME_GLOBAL_VARIABLES, 8), inject(RendererFactory2), inject(DOCUMENT)); }, token: CoreTheme, providedIn: "root" });
+CoreTheme.ngInjectableDef = ɵɵdefineInjectable({ factory: function CoreTheme_Factory() { return new CoreTheme(ɵɵinject(LY_THEME, 8), ɵɵinject(LY_THEME_GLOBAL_VARIABLES, 8), ɵɵinject(RendererFactory2), ɵɵinject(DOCUMENT)); }, token: CoreTheme, providedIn: "root" });
 CoreTheme = __decorate([
     Injectable({
         providedIn: 'root'
@@ -644,7 +644,7 @@ let StylesInDocument = class StylesInDocument {
         this.styleElementGlobalMap = new Map();
     }
 };
-StylesInDocument.ngInjectableDef = defineInjectable({ factory: function StylesInDocument_Factory() { return new StylesInDocument(); }, token: StylesInDocument, providedIn: "root" });
+StylesInDocument.ngInjectableDef = ɵɵdefineInjectable({ factory: function StylesInDocument_Factory() { return new StylesInDocument(); }, token: StylesInDocument, providedIn: "root" });
 StylesInDocument = __decorate([
     Injectable({
         providedIn: 'root'
@@ -1449,7 +1449,7 @@ let LyCoreStyles = class LyCoreStyles {
         this.classes = this.theme.addStyleSheet(LY_COMMON_STYLES);
     }
 };
-LyCoreStyles.ngInjectableDef = defineInjectable({ factory: function LyCoreStyles_Factory() { return new LyCoreStyles(inject(LyTheme2)); }, token: LyCoreStyles, providedIn: "root" });
+LyCoreStyles.ngInjectableDef = ɵɵdefineInjectable({ factory: function LyCoreStyles_Factory() { return new LyCoreStyles(ɵɵinject(LyTheme2)); }, token: LyCoreStyles, providedIn: "root" });
 LyCoreStyles = __decorate([
     Injectable({ providedIn: 'root' }),
     __metadata("design:paramtypes", [LyTheme2])
@@ -1475,7 +1475,7 @@ let LyRippleService = class LyRippleService {
         this.classes = this.theme.addStyleSheet(styles);
     }
 };
-LyRippleService.ngInjectableDef = defineInjectable({ factory: function LyRippleService_Factory() { return new LyRippleService(inject(LyTheme2)); }, token: LyRippleService, providedIn: "root" });
+LyRippleService.ngInjectableDef = ɵɵdefineInjectable({ factory: function LyRippleService_Factory() { return new LyRippleService(ɵɵinject(LyTheme2)); }, token: LyRippleService, providedIn: "root" });
 LyRippleService = __decorate([
     Injectable({
         providedIn: 'root'
@@ -1935,7 +1935,7 @@ let LyFocusState = class LyFocusState {
         this._elementMap.forEach((_, element) => this.unlisten(element));
     }
 };
-LyFocusState.ngInjectableDef = defineInjectable({ factory: function LyFocusState_Factory() { return new LyFocusState(inject(NgZone)); }, token: LyFocusState, providedIn: "root" });
+LyFocusState.ngInjectableDef = ɵɵdefineInjectable({ factory: function LyFocusState_Factory() { return new LyFocusState(ɵɵinject(NgZone)); }, token: LyFocusState, providedIn: "root" });
 LyFocusState = __decorate([
     Injectable({
         providedIn: 'root'
@@ -1943,8 +1943,8 @@ LyFocusState = __decorate([
     __metadata("design:paramtypes", [NgZone])
 ], LyFocusState);
 
-const AUI_VERSION = '2.7.7';
-const AUI_LAST_UPDATE = '2019-05-24T01:33:45.105Z';
+const AUI_VERSION = '2.7.8';
+const AUI_LAST_UPDATE = '2019-06-19T02:40:40.472Z';
 
 const LY_HAMMER_OPTIONS = new InjectionToken('LY_HAMMER_OPTIONS');
 const HAMMER_GESTURES_EVENTS = [
@@ -2086,7 +2086,7 @@ let LyOverlayContainer = class LyOverlayContainer {
         }
     }
 };
-LyOverlayContainer.ngInjectableDef = defineInjectable({ factory: function LyOverlayContainer_Factory() { return new LyOverlayContainer(inject(LyTheme2)); }, token: LyOverlayContainer, providedIn: "root" });
+LyOverlayContainer.ngInjectableDef = ɵɵdefineInjectable({ factory: function LyOverlayContainer_Factory() { return new LyOverlayContainer(ɵɵinject(LyTheme2)); }, token: LyOverlayContainer, providedIn: "root" });
 LyOverlayContainer = __decorate([
     Injectable({
         providedIn: 'root'
@@ -2109,7 +2109,7 @@ let WinResize = class WinResize {
         }
     }
 };
-WinResize.ngInjectableDef = defineInjectable({ factory: function WinResize_Factory() { return new WinResize(inject(DOCUMENT), inject(NgZone)); }, token: WinResize, providedIn: "root" });
+WinResize.ngInjectableDef = ɵɵdefineInjectable({ factory: function WinResize_Factory() { return new WinResize(ɵɵinject(DOCUMENT), ɵɵinject(NgZone)); }, token: WinResize, providedIn: "root" });
 WinResize = __decorate([
     Injectable({
         providedIn: 'root'
@@ -2133,7 +2133,7 @@ let WinScroll = class WinScroll {
         }
     }
 };
-WinScroll.ngInjectableDef = defineInjectable({ factory: function WinScroll_Factory() { return new WinScroll(inject(DOCUMENT), inject(NgZone)); }, token: WinScroll, providedIn: "root" });
+WinScroll.ngInjectableDef = ɵɵdefineInjectable({ factory: function WinScroll_Factory() { return new WinScroll(ɵɵinject(DOCUMENT), ɵɵinject(NgZone)); }, token: WinScroll, providedIn: "root" });
 WinScroll = __decorate([
     Injectable({
         providedIn: 'root'
@@ -2361,7 +2361,7 @@ let LyOverlay = class LyOverlay {
         return new OverlayFactory(this._componentFactoryResolver, this._appRef, templateOrComponent, this._overlayContainer, context, this._injector, this._windowScroll, this._resizeService, config);
     }
 };
-LyOverlay.ngInjectableDef = defineInjectable({ factory: function LyOverlay_Factory() { return new LyOverlay(inject(LyOverlayContainer), inject(ComponentFactoryResolver), inject(ApplicationRef), inject(INJECTOR), inject(WinScroll), inject(WinResize)); }, token: LyOverlay, providedIn: "root" });
+LyOverlay.ngInjectableDef = ɵɵdefineInjectable({ factory: function LyOverlay_Factory() { return new LyOverlay(ɵɵinject(LyOverlayContainer), ɵɵinject(ComponentFactoryResolver), ɵɵinject(ApplicationRef), ɵɵinject(INJECTOR), ɵɵinject(WinScroll), ɵɵinject(WinResize)); }, token: LyOverlay, providedIn: "root" });
 LyOverlay = __decorate([
     Injectable({
         providedIn: 'root'
@@ -2397,7 +2397,7 @@ let MutationObserverFactory = class MutationObserverFactory {
         return typeof MutationObserver === 'undefined' ? null : new MutationObserver(callback);
     }
 };
-MutationObserverFactory.ngInjectableDef = defineInjectable({ factory: function MutationObserverFactory_Factory() { return new MutationObserverFactory(); }, token: MutationObserverFactory, providedIn: "root" });
+MutationObserverFactory.ngInjectableDef = ɵɵdefineInjectable({ factory: function MutationObserverFactory_Factory() { return new MutationObserverFactory(); }, token: MutationObserverFactory, providedIn: "root" });
 MutationObserverFactory = __decorate([
     Injectable({ providedIn: 'root' })
 ], MutationObserverFactory);
@@ -2434,7 +2434,7 @@ let ElementObserver = class ElementObserver {
         }
     }
 };
-ElementObserver.ngInjectableDef = defineInjectable({ factory: function ElementObserver_Factory() { return new ElementObserver(inject(MutationObserverFactory)); }, token: ElementObserver, providedIn: "root" });
+ElementObserver.ngInjectableDef = ɵɵdefineInjectable({ factory: function ElementObserver_Factory() { return new ElementObserver(ɵɵinject(MutationObserverFactory)); }, token: ElementObserver, providedIn: "root" });
 ElementObserver = __decorate([
     Injectable({ providedIn: 'root' }),
     __metadata("design:paramtypes", [MutationObserverFactory])
@@ -2677,10 +2677,6 @@ LyExpansionIconModule = __decorate([
         exports: [LyExpansionIcon]
     })
 ], LyExpansionIconModule);
-
-/**
- * Generated bundle index. Do not edit.
- */
 
 export { AUI_LAST_UPDATE, AUI_VERSION, AlignAlias, CoreTheme, Dir, DirAlias, DirPosition, ElementObserver, FocusStatus, IS_CORE_THEME, LY_COMMON_STYLES, LY_HAMMER_OPTIONS, LY_THEME, LY_THEME_GLOBAL_VARIABLES, LY_THEME_NAME, LyCommonModule, LyCoreStyles, LyExpansionIcon, LyExpansionIconModule, LyFocusState, LyHammerGestureConfig, LyOverlay, LyOverlayConfig, LyOverlayContainer, LyOverlayModule, LyOverlayRef, LyPaper, LyPaperBase, LyPaperMixinBase, LyRippleService, LySelectionModel, LyStyleUtils, LyTheme2, LyThemeModule, MutationObserverFactory, NgTranscludeDirective, NgTranscludeModule, OverlayFactory, Platform, Positioning, Ripple, STYLES_BACKDROP_DARK, Shadows, StylesInDocument, THEME_VARIABLES, TypeStyle, Undefined, UndefinedValue, WinResize, WinScroll, XPosition, YPosition, _STYLE_MAP, capitalizeFirstLetter, converterToCssKeyAndStyle, createOverlayInjector, defaultEntry, eachMedia, getContrastYIQ, getLyThemeVariableUndefinedError, getNativeElement, invertPlacement, isObject, mergeDeep, mixinBg, mixinColor, mixinDisableRipple, mixinDisabled, mixinElevation, mixinOutlined, mixinRaised, mixinShadowColor, mixinStyleUpdater, mixinTabIndex, scrollTo, scrollToC, scrollWithAnimation, shadowBuilder, shadowBuilderDeprecated, supportsPassiveEventListeners, toBoolean, ɵ0, ɵ1, LyWithClass as ɵa, LyOverlayBackdrop as ɵc };
 //# sourceMappingURL=alyle-ui.js.map

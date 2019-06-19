@@ -21,7 +21,7 @@ let WinScroll = class WinScroll {
         }
     }
 };
-WinScroll.ngInjectableDef = i0.defineInjectable({ factory: function WinScroll_Factory() { return new WinScroll(i0.inject(i1.DOCUMENT), i0.inject(i0.NgZone)); }, token: WinScroll, providedIn: "root" });
+WinScroll.ngInjectableDef = i0.ɵɵdefineInjectable({ factory: function WinScroll_Factory() { return new WinScroll(i0.ɵɵinject(i1.DOCUMENT), i0.ɵɵinject(i0.NgZone)); }, token: WinScroll, providedIn: "root" });
 WinScroll = tslib_1.__decorate([
     Injectable({
         providedIn: 'root'

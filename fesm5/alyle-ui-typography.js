@@ -204,9 +204,5 @@ var LyTypographyModule = /** @class */ (function () {
     return LyTypographyModule;
 }());
 
-/**
- * Generated bundle index. Do not edit.
- */
-
 export { LyTypography, LyTypographyBase, LyTypographyMixinBase, LyTypographyModule, ɵ0 };
 //# sourceMappingURL=alyle-ui-typography.js.map

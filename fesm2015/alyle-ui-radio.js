@@ -379,15 +379,15 @@ let LyRadio = class LyRadio extends LyRadioMixinBase {
     }
 };
 __decorate([
-    ViewChild('_input'),
+    ViewChild('_input', { static: false }),
     __metadata("design:type", ElementRef)
 ], LyRadio.prototype, "_input", void 0);
 __decorate([
-    ViewChild('_radioContainer'),
+    ViewChild('_radioContainer', { static: false }),
     __metadata("design:type", ElementRef)
 ], LyRadio.prototype, "_radioContainer", void 0);
 __decorate([
-    ViewChild('_labelContainer'),
+    ViewChild('_labelContainer', { static: false }),
     __metadata("design:type", ElementRef)
 ], LyRadio.prototype, "_labelContainer", void 0);
 __decorate([
@@ -443,10 +443,6 @@ LyRadioModule = __decorate([
         declarations: [LyRadioGroup, LyRadio],
     })
 ], LyRadioModule);
-
-/**
- * Generated bundle index. Do not edit.
- */
 
 export { LY_RADIO_CONTROL_VALUE_ACCESSOR, LyRadio, LyRadioBase, LyRadioGroup, LyRadioMixinBase, LyRadioModule, STYLES, UndefinedValue };
 //# sourceMappingURL=alyle-ui-radio.js.map

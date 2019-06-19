@@ -189,9 +189,5 @@ var LyBadgeModule = /** @class */ (function () {
     return LyBadgeModule;
 }());
 
-/**
- * Generated bundle index. Do not edit.
- */
-
 export { LyBadge, LyBadgeBase, LyBadgeMixinBase, LyBadgeModule, STYLES };
 //# sourceMappingURL=alyle-ui-badge.js.map

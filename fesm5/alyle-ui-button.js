@@ -210,7 +210,7 @@ var LyButton = /** @class */ (function (_super) {
         this._removeRippleEvents();
     };
     __decorate([
-        ViewChild('rippleContainer'),
+        ViewChild('rippleContainer', { static: false }),
         __metadata("design:type", ElementRef)
     ], LyButton.prototype, "_rippleContainer", void 0);
     __decorate([
@@ -265,10 +265,6 @@ var LyButtonModule = /** @class */ (function () {
     ], LyButtonModule);
     return LyButtonModule;
 }());
-
-/**
- * Generated bundle index. Do not edit.
- */
 
 export { LyButton, LyButtonBase, LyButtonMixinBase, LyButtonModule };
 //# sourceMappingURL=alyle-ui-button.js.map

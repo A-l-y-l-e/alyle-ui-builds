@@ -604,15 +604,15 @@
         };
         var LySelect_1;
         __decorate([
-            core.ViewChild(core.TemplateRef),
+            core.ViewChild(core.TemplateRef, { static: false }),
             __metadata("design:type", core.TemplateRef)
         ], LySelect.prototype, "templateRef", void 0);
         __decorate([
-            core.ViewChild('valueText'),
+            core.ViewChild('valueText', { static: false }),
             __metadata("design:type", core.ElementRef)
         ], LySelect.prototype, "valueTextDivRef", void 0);
         __decorate([
-            core.ViewChild(core.forwardRef(function () { return LyOption; })),
+            core.ViewChild(core.forwardRef(function () { return LyOption; }), { static: false }),
             __metadata("design:type", core.QueryList)
         ], LySelect.prototype, "_options", void 0);
         __decorate([
@@ -837,7 +837,7 @@
             return this._el.nativeElement;
         };
         __decorate([
-            core.ViewChild('rippleContainer'),
+            core.ViewChild('rippleContainer', { static: false }),
             __metadata("design:type", core.ElementRef)
         ], LyOption.prototype, "_rippleContainer", void 0);
         __decorate([

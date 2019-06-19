@@ -68,7 +68,7 @@ let LyOverlayContainer = class LyOverlayContainer {
         }
     }
 };
-LyOverlayContainer.ngInjectableDef = i0.defineInjectable({ factory: function LyOverlayContainer_Factory() { return new LyOverlayContainer(i0.inject(i1.LyTheme2)); }, token: LyOverlayContainer, providedIn: "root" });
+LyOverlayContainer.ngInjectableDef = i0.ɵɵdefineInjectable({ factory: function LyOverlayContainer_Factory() { return new LyOverlayContainer(i0.ɵɵinject(i1.LyTheme2)); }, token: LyOverlayContainer, providedIn: "root" });
 LyOverlayContainer = tslib_1.__decorate([
     Injectable({
         providedIn: 'root'

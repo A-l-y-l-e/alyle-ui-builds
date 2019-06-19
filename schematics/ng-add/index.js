@@ -8,6 +8,7 @@ const set_up_1 = require("./set-up");
 const fonts_1 = require("./fonts");
 const get_app_component_path_1 = require("../utils/get-app-component-path");
 const styles_1 = require("../utils/styles");
+const get_project_name_1 = require("../utils/get-project-name");
 let AUI_VERSION;
 try {
     AUI_VERSION = require(`@alyle/ui/package.json`).version;
@@ -23,7 +24,7 @@ catch (error) {
     ANGULAR_CORE_VERSION = '*';
 }
 const HAMMERJS_VERSION = '^2.0.8';
-const CHROMA_JS_VERSION = '^1.3.6';
+const CHROMA_JS_VERSION = '^2.0.2';
 /**
  * Sorts the keys of the given object.
  * @returns A new object instance with sorted keys
@@ -65,13 +66,16 @@ function default_1(options) {
     }
   }
 });`;
-    return (host) => schematics_1.chain([
-        gestures_1.addHammerJsToMain(options),
-        set_up_1.setUpAppModule(options),
-        fonts_1.addFontsToIndex(options),
-        styles_1.setUpStyles(options, get_app_component_path_1.getAppComponentPath(host, options), STYLES),
-        installPkgs(options)
-    ]);
+    return (host) => {
+        options.project = options.project || get_project_name_1.getDefaultProjectName(host);
+        return schematics_1.chain([
+            gestures_1.addHammerJsToMain(options),
+            set_up_1.setUpAppModule(options),
+            fonts_1.addFontsToIndex(options),
+            styles_1.setUpStyles(options, get_app_component_path_1.getAppComponentPath(host, options), STYLES),
+            installPkgs(options)
+        ]);
+    };
 }
 exports.default = default_1;
 //# sourceMappingURL=index.js.map

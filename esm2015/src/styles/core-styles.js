@@ -47,7 +47,7 @@ let LyCoreStyles = class LyCoreStyles {
         this.classes = this.theme.addStyleSheet(LY_COMMON_STYLES);
     }
 };
-LyCoreStyles.ngInjectableDef = i0.defineInjectable({ factory: function LyCoreStyles_Factory() { return new LyCoreStyles(i0.inject(i1.LyTheme2)); }, token: LyCoreStyles, providedIn: "root" });
+LyCoreStyles.ngInjectableDef = i0.ɵɵdefineInjectable({ factory: function LyCoreStyles_Factory() { return new LyCoreStyles(i0.ɵɵinject(i1.LyTheme2)); }, token: LyCoreStyles, providedIn: "root" });
 LyCoreStyles = tslib_1.__decorate([
     Injectable({ providedIn: 'root' }),
     tslib_1.__metadata("design:paramtypes", [LyTheme2])

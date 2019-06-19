@@ -194,7 +194,7 @@ let LyButton = class LyButton extends LyButtonMixinBase {
     }
 };
 __decorate([
-    ViewChild('rippleContainer'),
+    ViewChild('rippleContainer', { static: false }),
     __metadata("design:type", ElementRef)
 ], LyButton.prototype, "_rippleContainer", void 0);
 __decorate([
@@ -244,10 +244,6 @@ LyButtonModule = __decorate([
         declarations: [LyButton]
     })
 ], LyButtonModule);
-
-/**
- * Generated bundle index. Do not edit.
- */
 
 export { LyButton, LyButtonBase, LyButtonMixinBase, LyButtonModule };
 //# sourceMappingURL=alyle-ui-button.js.map

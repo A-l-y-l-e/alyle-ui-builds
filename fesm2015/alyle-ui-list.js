@@ -166,7 +166,7 @@ let LyListItem = class LyListItem extends LyListItemMixinBase {
     }
 };
 __decorate([
-    ViewChild('rippleContainer'),
+    ViewChild('rippleContainer', { static: false }),
     __metadata("design:type", ElementRef)
 ], LyListItem.prototype, "_rippleContainer", void 0);
 __decorate([
@@ -174,11 +174,11 @@ __decorate([
     __metadata("design:type", QueryList)
 ], LyListItem.prototype, "_lines", void 0);
 __decorate([
-    ContentChild(forwardRef(() => LyListIcon)),
-    __metadata("design:type", LyListIcon)
+    ContentChild(forwardRef(() => LyListIcon), { static: false }),
+    __metadata("design:type", Object)
 ], LyListItem.prototype, "_icon", void 0);
 __decorate([
-    ContentChild(LyAvatar),
+    ContentChild(LyAvatar, { static: false }),
     __metadata("design:type", LyAvatar)
 ], LyListItem.prototype, "_avatar", void 0);
 __decorate([
@@ -297,10 +297,6 @@ LyListModule = __decorate([
         exports: [LyCommonModule, LyList, LyListItem, LyListIcon, LyLine]
     })
 ], LyListModule);
-
-/**
- * Generated bundle index. Do not edit.
- */
 
 export { LyLine, LyList, LyListIcon, LyListItem, LyListItemBase, LyListItemMixinBase, LyListModule, STYLES };
 //# sourceMappingURL=alyle-ui-list.js.map

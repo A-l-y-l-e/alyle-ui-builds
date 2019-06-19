@@ -20,7 +20,7 @@ var LyOverlay = /** @class */ (function () {
     LyOverlay.prototype.create = function (templateOrComponent, context, config) {
         return new OverlayFactory(this._componentFactoryResolver, this._appRef, templateOrComponent, this._overlayContainer, context, this._injector, this._windowScroll, this._resizeService, config);
     };
-    LyOverlay.ngInjectableDef = i0.defineInjectable({ factory: function LyOverlay_Factory() { return new LyOverlay(i0.inject(i1.LyOverlayContainer), i0.inject(i0.ComponentFactoryResolver), i0.inject(i0.ApplicationRef), i0.inject(i0.INJECTOR), i0.inject(i2.WinScroll), i0.inject(i3.WinResize)); }, token: LyOverlay, providedIn: "root" });
+    LyOverlay.ngInjectableDef = i0.ɵɵdefineInjectable({ factory: function LyOverlay_Factory() { return new LyOverlay(i0.ɵɵinject(i1.LyOverlayContainer), i0.ɵɵinject(i0.ComponentFactoryResolver), i0.ɵɵinject(i0.ApplicationRef), i0.ɵɵinject(i0.INJECTOR), i0.ɵɵinject(i2.WinScroll), i0.ɵɵinject(i3.WinResize)); }, token: LyOverlay, providedIn: "root" });
     LyOverlay = tslib_1.__decorate([
         Injectable({
             providedIn: 'root'

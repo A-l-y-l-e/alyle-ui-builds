@@ -18,7 +18,7 @@ let StylesInDocument = class StylesInDocument {
         this.styleElementGlobalMap = new Map();
     }
 };
-StylesInDocument.ngInjectableDef = i0.defineInjectable({ factory: function StylesInDocument_Factory() { return new StylesInDocument(); }, token: StylesInDocument, providedIn: "root" });
+StylesInDocument.ngInjectableDef = i0.ɵɵdefineInjectable({ factory: function StylesInDocument_Factory() { return new StylesInDocument(); }, token: StylesInDocument, providedIn: "root" });
 StylesInDocument = tslib_1.__decorate([
     Injectable({
         providedIn: 'root'

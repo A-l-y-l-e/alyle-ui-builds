@@ -223,7 +223,7 @@
             return this._el.nativeElement;
         };
         __decorate([
-            core.ViewChild(core.TemplateRef, { read: core.ViewContainerRef }),
+            core.ViewChild(core.TemplateRef, { read: core.ViewContainerRef, static: true }),
             __metadata("design:type", core.ViewContainerRef)
         ], LyDialogContainer.prototype, "viewContainerRef", void 0);
         LyDialogContainer = __decorate([

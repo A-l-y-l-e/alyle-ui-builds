@@ -117,7 +117,7 @@ let LyIconService = class LyIconService {
         return this._fontClasses.get(key);
     }
 };
-LyIconService.ngInjectableDef = i0.defineInjectable({ factory: function LyIconService_Factory() { return new LyIconService(i0.inject(i1.HttpClient), i0.inject(i2.DomSanitizer), i0.inject(i3.DOCUMENT, 8), i0.inject(i4.LyTheme2)); }, token: LyIconService, providedIn: "root" });
+LyIconService.ngInjectableDef = i0.ɵɵdefineInjectable({ factory: function LyIconService_Factory() { return new LyIconService(i0.ɵɵinject(i1.HttpClient), i0.ɵɵinject(i2.DomSanitizer), i0.ɵɵinject(i3.DOCUMENT, 8), i0.ɵɵinject(i4.LyTheme2)); }, token: LyIconService, providedIn: "root" });
 LyIconService = tslib_1.__decorate([
     Injectable({
         providedIn: 'root'

@@ -87,7 +87,7 @@ var CoreTheme = /** @class */ (function () {
         }
         renderer.addClass(element, newClassname);
     };
-    CoreTheme.ngInjectableDef = i0.defineInjectable({ factory: function CoreTheme_Factory() { return new CoreTheme(i0.inject(i1.LY_THEME, 8), i0.inject(i1.LY_THEME_GLOBAL_VARIABLES, 8), i0.inject(i0.RendererFactory2), i0.inject(i2.DOCUMENT)); }, token: CoreTheme, providedIn: "root" });
+    CoreTheme.ngInjectableDef = i0.ɵɵdefineInjectable({ factory: function CoreTheme_Factory() { return new CoreTheme(i0.ɵɵinject(i1.LY_THEME, 8), i0.ɵɵinject(i1.LY_THEME_GLOBAL_VARIABLES, 8), i0.ɵɵinject(i0.RendererFactory2), i0.ɵɵinject(i2.DOCUMENT)); }, token: CoreTheme, providedIn: "root" });
     CoreTheme = tslib_1.__decorate([
         Injectable({
             providedIn: 'root'

@@ -465,15 +465,15 @@
             this.checked = false;
         };
         __decorate([
-            core.ViewChild('_input'),
+            core.ViewChild('_input', { static: false }),
             __metadata("design:type", core.ElementRef)
         ], LyRadio.prototype, "_input", void 0);
         __decorate([
-            core.ViewChild('_radioContainer'),
+            core.ViewChild('_radioContainer', { static: false }),
             __metadata("design:type", core.ElementRef)
         ], LyRadio.prototype, "_radioContainer", void 0);
         __decorate([
-            core.ViewChild('_labelContainer'),
+            core.ViewChild('_labelContainer', { static: false }),
             __metadata("design:type", core.ElementRef)
         ], LyRadio.prototype, "_labelContainer", void 0);
         __decorate([

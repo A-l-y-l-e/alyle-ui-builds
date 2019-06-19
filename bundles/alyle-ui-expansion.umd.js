@@ -414,7 +414,7 @@
             });
         };
         __decorate([
-            core.ContentChild(LyExpansionPanelContent),
+            core.ContentChild(LyExpansionPanelContent, { static: false }),
             __metadata("design:type", LyExpansionPanelContent)
         ], LyExpansionPanel.prototype, "_lazyContent", void 0);
         __decorate([

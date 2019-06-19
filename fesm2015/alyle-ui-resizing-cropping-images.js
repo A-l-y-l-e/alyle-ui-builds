@@ -625,15 +625,15 @@ let LyResizingCroppingImages = class LyResizingCroppingImages {
     }
 };
 __decorate([
-    ViewChild('_imgContainer'),
+    ViewChild('_imgContainer', { static: false }),
     __metadata("design:type", ElementRef)
 ], LyResizingCroppingImages.prototype, "_imgContainer", void 0);
 __decorate([
-    ViewChild('_croppingContainer'),
+    ViewChild('_croppingContainer', { static: false }),
     __metadata("design:type", ElementRef)
 ], LyResizingCroppingImages.prototype, "_croppingContainer", void 0);
 __decorate([
-    ViewChild('_imgCanvas'),
+    ViewChild('_imgCanvas', { static: false }),
     __metadata("design:type", ElementRef)
 ], LyResizingCroppingImages.prototype, "_imgCanvas", void 0);
 __decorate([
@@ -753,10 +753,6 @@ LyResizingCroppingImageModule = __decorate([
         declarations: [LyResizingCroppingImages]
     })
 ], LyResizingCroppingImageModule);
-
-/**
- * Generated bundle index. Do not edit.
- */
 
 export { ImgCropperError, ImgResolution, LyResizingCroppingImageModule, LyResizingCroppingImages, ɵ0 };
 //# sourceMappingURL=alyle-ui-resizing-cropping-images.js.map
