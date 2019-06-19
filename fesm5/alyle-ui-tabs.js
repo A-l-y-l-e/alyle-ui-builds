@@ -420,7 +420,12 @@ var LyTabs = /** @class */ (function (_super) {
                     _this._updateIndicator(tab);
                 }
                 else {
-                    /** for server */
+                    // for server
+                    var selectedBeforeTab = _this._selectedBeforeTab;
+                    if (selectedBeforeTab) {
+                        _this.renderer.removeClass(selectedBeforeTab._tabIndicator.nativeElement, _this.classes.tabsIndicatorForServer);
+                        _this.renderer.removeClass(selectedBeforeTab._tabIndicator.nativeElement, _this._colorClass);
+                    }
                     _this.renderer.addClass(_this._selectedTab._tabIndicator.nativeElement, _this.classes.tabsIndicatorForServer);
                     _this.renderer.addClass(_this._selectedTab._tabIndicator.nativeElement, _this._colorClass);
                 }

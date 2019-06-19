@@ -122,7 +122,7 @@ export declare class LyTabs extends LyTabsMixinBase implements OnChanges, OnInit
     _selectedIndex: number;
     _selectedBeforeIndex: number;
     _selectedTab: LyTab | null;
-    _selectedBeforeTab: LyTab;
+    _selectedBeforeTab: LyTab | null;
     _isViewInitLoaded: boolean;
     private _tabsSubscription;
     private _color;

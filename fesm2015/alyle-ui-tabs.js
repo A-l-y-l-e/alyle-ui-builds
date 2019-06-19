@@ -375,7 +375,12 @@ let LyTabs = class LyTabs extends LyTabsMixinBase {
                     this._updateIndicator(tab);
                 }
                 else {
-                    /** for server */
+                    // for server
+                    const selectedBeforeTab = this._selectedBeforeTab;
+                    if (selectedBeforeTab) {
+                        this.renderer.removeClass(selectedBeforeTab._tabIndicator.nativeElement, this.classes.tabsIndicatorForServer);
+                        this.renderer.removeClass(selectedBeforeTab._tabIndicator.nativeElement, this._colorClass);
+                    }
                     this.renderer.addClass(this._selectedTab._tabIndicator.nativeElement, this.classes.tabsIndicatorForServer);
                     this.renderer.addClass(this._selectedTab._tabIndicator.nativeElement, this._colorClass);
                 }
