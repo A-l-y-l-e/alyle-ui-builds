@@ -68,6 +68,7 @@ export declare const STYLES: (theme: ThemeVariables) => {
     slideNoEvent: {
         '&>div': {
             touchAction: string;
+            '-webkit-user-drag': string;
         };
     };
     carouselIndicators: {

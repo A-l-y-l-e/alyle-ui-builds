@@ -108,7 +108,8 @@
             },
             slideNoEvent: {
                 '&>div': {
-                    touchAction: 'initial !important'
+                    touchAction: 'initial !important',
+                    '-webkit-user-drag': 'initial !important'
                 }
             },
             carouselIndicators: {
