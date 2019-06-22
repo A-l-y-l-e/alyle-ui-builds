@@ -886,6 +886,17 @@
         LyTheme2.prototype.addStyleSheet = function (styles, priority) {
             return this._createStyleContent2(styles, null, priority, exports.TypeStyle.Multiple);
         };
+        /**
+         * Check if a style exist
+         * @param stylesOrId Style or Id of a style
+         */
+        LyTheme2.prototype.existStyle = function (stylesOrId) {
+            if (_STYLE_MAP.has(stylesOrId)) {
+                var styleMap = _STYLE_MAP.get(stylesOrId);
+                return !!(styleMap.classes || styleMap[this.initialTheme]);
+            }
+            return false;
+        };
         LyTheme2.prototype._createStyleContent2 = function (styles, id, priority, type, forChangeTheme, parentStyle) {
             var newId = id || styles;
             var isNewStyle = null;

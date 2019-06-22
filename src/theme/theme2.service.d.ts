@@ -67,6 +67,11 @@ export declare class LyTheme2 {
      * @param priority priority for style
      */
     addStyleSheet<T>(styles: T & Styles, priority?: number): LyClasses<T>;
+    /**
+     * Check if a style exist
+     * @param stylesOrId Style or Id of a style
+     */
+    existStyle(stylesOrId: string | Styles | StyleDeclarationsBlock): boolean;
     private _createStyleContent2;
     private _createStyleContainer;
     private findNode;

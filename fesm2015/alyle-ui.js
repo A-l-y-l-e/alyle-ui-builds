@@ -778,6 +778,17 @@ let LyTheme2 = class LyTheme2 {
     addStyleSheet(styles, priority) {
         return this._createStyleContent2(styles, null, priority, TypeStyle.Multiple);
     }
+    /**
+     * Check if a style exist
+     * @param stylesOrId Style or Id of a style
+     */
+    existStyle(stylesOrId) {
+        if (_STYLE_MAP.has(stylesOrId)) {
+            const styleMap = _STYLE_MAP.get(stylesOrId);
+            return !!(styleMap.classes || styleMap[this.initialTheme]);
+        }
+        return false;
+    }
     _createStyleContent2(styles, id, priority, type, forChangeTheme, parentStyle) {
         const newId = id || styles;
         let isNewStyle = null;
