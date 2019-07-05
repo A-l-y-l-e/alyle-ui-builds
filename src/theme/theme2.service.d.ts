@@ -23,6 +23,9 @@ export declare class LyTheme2 {
     initialTheme: string;
     elements: Map<string | Styles, HTMLStyleElement>;
     _elementsMap: Map<any, HTMLStyleElement>;
+    /** Event emitted when the direction has changed. */
+    private _directionChanged;
+    readonly directionChanged: import("rxjs").Observable<void>;
     /** Get Theme Variables */
     readonly variables: ThemeVariables;
     private themeMap;

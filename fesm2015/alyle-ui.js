@@ -658,12 +658,17 @@ let LyTheme2 = class LyTheme2 {
         this._document = _document;
         this._ngZone = _ngZone;
         this._elementsMap = new Map();
+        /** Event emitted when the direction has changed. */
+        this._directionChanged = new Subject();
         this.themeMap = THEME_MAP;
         /** ssr or hmr */
         this.isDevOrServer = isDevMode() || !Platform.isBrowser;
         if (themeName) {
             this.setUpTheme(themeName);
         }
+    }
+    get directionChanged() {
+        return this._directionChanged.asObservable();
     }
     /** Get Theme Variables */
     get variables() {
@@ -751,6 +756,7 @@ let LyTheme2 = class LyTheme2 {
         const current = this.config.direction;
         this.config.direction = current === Dir.ltr ? Dir.rtl : Dir.ltr;
         this._updateAllStyles();
+        this._directionChanged.next();
     }
     _updateAllStyles() {
         this.elements.forEach((_, key) => {

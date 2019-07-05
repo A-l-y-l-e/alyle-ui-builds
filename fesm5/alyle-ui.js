@@ -685,6 +685,8 @@ var LyTheme2 = /** @class */ (function () {
         this._document = _document;
         this._ngZone = _ngZone;
         this._elementsMap = new Map();
+        /** Event emitted when the direction has changed. */
+        this._directionChanged = new Subject();
         this.themeMap = THEME_MAP;
         /** ssr or hmr */
         this.isDevOrServer = isDevMode() || !Platform.isBrowser;
@@ -692,6 +694,13 @@ var LyTheme2 = /** @class */ (function () {
             this.setUpTheme(themeName);
         }
     }
+    Object.defineProperty(LyTheme2.prototype, "directionChanged", {
+        get: function () {
+            return this._directionChanged.asObservable();
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(LyTheme2.prototype, "variables", {
         /** Get Theme Variables */
         get: function () {
@@ -782,6 +791,7 @@ var LyTheme2 = /** @class */ (function () {
         var current = this.config.direction;
         this.config.direction = current === Dir.ltr ? Dir.rtl : Dir.ltr;
         this._updateAllStyles();
+        this._directionChanged.next();
     };
     LyTheme2.prototype._updateAllStyles = function () {
         var _this = this;
