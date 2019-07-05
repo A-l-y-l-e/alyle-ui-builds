@@ -2028,6 +2028,40 @@ function easeOutCuaic(t) {
 //   return (Math.sqrt(1 - t * t) + 1) / 2;
 // }
 
+var LyHostClass = /** @class */ (function () {
+    function LyHostClass(_el, _renderer) {
+        this._el = _el;
+        this._renderer = _renderer;
+        this._set = new Set();
+    }
+    LyHostClass.prototype.add = function (className) {
+        if (!this._set.has(className)) {
+            this._set.add(className);
+            this._renderer.addClass(this._el.nativeElement, className);
+        }
+    };
+    LyHostClass.prototype.remove = function (className) {
+        if (this._set.has(className)) {
+            this._set.delete(className);
+            this._renderer.removeClass(this._el.nativeElement, className);
+        }
+    };
+    LyHostClass.prototype.toggle = function (className, enabled) {
+        if (enabled) {
+            this.add(className);
+        }
+        else {
+            this.remove(className);
+        }
+    };
+    LyHostClass = __decorate([
+        Injectable(),
+        __metadata("design:paramtypes", [ElementRef,
+            Renderer2])
+    ], LyHostClass);
+    return LyHostClass;
+}());
+
 var FocusStatus;
 (function (FocusStatus) {
     /**mouse and/or touch*/
@@ -2954,5 +2988,5 @@ var LyExpansionIconModule = /** @class */ (function () {
     return LyExpansionIconModule;
 }());
 
-export { AUI_LAST_UPDATE, AUI_VERSION, AlignAlias, CoreTheme, Dir, DirAlias, DirPosition, ElementObserver, FocusStatus, IS_CORE_THEME, LY_COMMON_STYLES, LY_HAMMER_OPTIONS, LY_THEME, LY_THEME_GLOBAL_VARIABLES, LY_THEME_NAME, LyCommonModule, LyCoreStyles, LyExpansionIcon, LyExpansionIconModule, LyFocusState, LyHammerGestureConfig, LyOverlay, LyOverlayConfig, LyOverlayContainer, LyOverlayModule, LyOverlayRef, LyPaper, LyPaperBase, LyPaperMixinBase, LyRippleService, LySelectionModel, LyStyleUtils, LyTheme2, LyThemeModule, MutationObserverFactory, NgTranscludeDirective, NgTranscludeModule, OverlayFactory, Platform, Positioning, Ripple, STYLES_BACKDROP_DARK, Shadows, StylesInDocument, THEME_VARIABLES, TypeStyle, Undefined, UndefinedValue, WinResize, WinScroll, XPosition, YPosition, _STYLE_MAP, capitalizeFirstLetter, converterToCssKeyAndStyle, createOverlayInjector, defaultEntry, eachMedia, getContrastYIQ, getLyThemeVariableUndefinedError, getNativeElement, invertPlacement, isObject, mergeDeep, mixinBg, mixinColor, mixinDisableRipple, mixinDisabled, mixinElevation, mixinOutlined, mixinRaised, mixinShadowColor, mixinStyleUpdater, mixinTabIndex, scrollTo, scrollToC, scrollWithAnimation, shadowBuilder, shadowBuilderDeprecated, supportsPassiveEventListeners, toBoolean, ɵ0, ɵ1, LyWithClass as ɵa, LyOverlayBackdrop as ɵc };
+export { AUI_LAST_UPDATE, AUI_VERSION, AlignAlias, CoreTheme, Dir, DirAlias, DirPosition, ElementObserver, FocusStatus, IS_CORE_THEME, LY_COMMON_STYLES, LY_HAMMER_OPTIONS, LY_THEME, LY_THEME_GLOBAL_VARIABLES, LY_THEME_NAME, LyCommonModule, LyCoreStyles, LyExpansionIcon, LyExpansionIconModule, LyFocusState, LyHammerGestureConfig, LyHostClass, LyOverlay, LyOverlayConfig, LyOverlayContainer, LyOverlayModule, LyOverlayRef, LyPaper, LyPaperBase, LyPaperMixinBase, LyRippleService, LySelectionModel, LyStyleUtils, LyTheme2, LyThemeModule, MutationObserverFactory, NgTranscludeDirective, NgTranscludeModule, OverlayFactory, Platform, Positioning, Ripple, STYLES_BACKDROP_DARK, Shadows, StylesInDocument, THEME_VARIABLES, TypeStyle, Undefined, UndefinedValue, WinResize, WinScroll, XPosition, YPosition, _STYLE_MAP, capitalizeFirstLetter, converterToCssKeyAndStyle, createOverlayInjector, defaultEntry, eachMedia, getContrastYIQ, getLyThemeVariableUndefinedError, getNativeElement, invertPlacement, isObject, mergeDeep, mixinBg, mixinColor, mixinDisableRipple, mixinDisabled, mixinElevation, mixinOutlined, mixinRaised, mixinShadowColor, mixinStyleUpdater, mixinTabIndex, scrollTo, scrollToC, scrollWithAnimation, shadowBuilder, shadowBuilderDeprecated, supportsPassiveEventListeners, toBoolean, ɵ0, ɵ1, LyWithClass as ɵa, LyOverlayBackdrop as ɵc };
 //# sourceMappingURL=alyle-ui.js.map

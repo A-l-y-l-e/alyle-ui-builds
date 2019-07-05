@@ -2104,6 +2104,40 @@
     //   return (Math.sqrt(1 - t * t) + 1) / 2;
     // }
 
+    var LyHostClass = /** @class */ (function () {
+        function LyHostClass(_el, _renderer) {
+            this._el = _el;
+            this._renderer = _renderer;
+            this._set = new Set();
+        }
+        LyHostClass.prototype.add = function (className) {
+            if (!this._set.has(className)) {
+                this._set.add(className);
+                this._renderer.addClass(this._el.nativeElement, className);
+            }
+        };
+        LyHostClass.prototype.remove = function (className) {
+            if (this._set.has(className)) {
+                this._set.delete(className);
+                this._renderer.removeClass(this._el.nativeElement, className);
+            }
+        };
+        LyHostClass.prototype.toggle = function (className, enabled) {
+            if (enabled) {
+                this.add(className);
+            }
+            else {
+                this.remove(className);
+            }
+        };
+        LyHostClass = __decorate([
+            core.Injectable(),
+            __metadata("design:paramtypes", [core.ElementRef,
+                core.Renderer2])
+        ], LyHostClass);
+        return LyHostClass;
+    }());
+
 
     (function (FocusStatus) {
         /**mouse and/or touch*/
@@ -3046,6 +3080,7 @@
     exports.LyExpansionIconModule = LyExpansionIconModule;
     exports.LyFocusState = LyFocusState;
     exports.LyHammerGestureConfig = LyHammerGestureConfig;
+    exports.LyHostClass = LyHostClass;
     exports.LyOverlay = LyOverlay;
     exports.LyOverlayConfig = LyOverlayConfig;
     exports.LyOverlayContainer = LyOverlayContainer;
