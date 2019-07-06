@@ -1,4 +1,5 @@
 import { LyStyleUtils, Dir } from '@alyle/ui';
+import { SliderVariables } from '@alyle/ui/slider';
 export declare class MinimaBase extends LyStyleUtils {
     typography: {
         fontFamily: string;
@@ -222,5 +223,6 @@ export declare class MinimaBase extends LyStyleUtils {
             };
         };
     };
+    slider: SliderVariables;
     constructor();
 }

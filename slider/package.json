@@ -1,0 +1,13 @@
+{
+  "main": "../bundles/alyle-ui-slider.umd.js",
+  "module": "../fesm5/alyle-ui-slider.js",
+  "es2015": "../fesm2015/alyle-ui-slider.js",
+  "esm5": "../esm5/slider/alyle-ui-slider.js",
+  "esm2015": "../esm2015/slider/alyle-ui-slider.js",
+  "fesm5": "../fesm5/alyle-ui-slider.js",
+  "fesm2015": "../fesm2015/alyle-ui-slider.js",
+  "typings": "alyle-ui-slider.d.ts",
+  "metadata": "alyle-ui-slider.metadata.json",
+  "sideEffects": false,
+  "name": "@alyle/ui/slider"
+}

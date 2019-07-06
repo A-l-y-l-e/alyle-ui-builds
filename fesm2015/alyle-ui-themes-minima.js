@@ -2,6 +2,7 @@ import { __decorate } from 'tslib';
 import { Directive, NgModule } from '@angular/core';
 import { LyTheme2, LY_THEME_NAME, LyStyleUtils, Dir, mergeDeep, shadowBuilder } from '@alyle/ui';
 import { Breakpoints } from '@alyle/ui/responsive';
+import * as _chroma from 'chroma-js';
 
 let ThemeMinimaLight = class ThemeMinimaLight {
 };
@@ -60,6 +61,7 @@ const animations = {
     }
 };
 
+const chroma = _chroma;
 class MinimaBase extends LyStyleUtils {
     constructor() {
         super();
@@ -241,6 +243,80 @@ class MinimaBase extends LyStyleUtils {
             appearance: {
                 dense: {
                     height: '56px'
+                }
+            }
+        };
+        this.slider = {
+            defaultConfig: {
+                appearance: 'standard'
+            },
+            appearance: {
+                standard: {
+                    appearance: _theme => ({}),
+                    color: (_theme, color) => ({
+                        '& {track}, & {thumb}, & {thumbLabel}, & {bg}, & {tick}': {
+                            backgroundColor: color
+                        },
+                        '&:not({disabled}) {thumbContentFocused} {thumb}::before, &:not({disabled}) {thumb}:hover::before': {
+                            boxShadow: `0 0 0 8px ${chroma(color).alpha(.13).css()}`
+                        },
+                        '&{sliding} {thumbContentFocused} {thumb}::before': {
+                            boxShadow: `0 0 0 16px ${chroma(color).alpha(.13).css()}`
+                        },
+                        '{tickActive}': {
+                            backgroundColor: chroma(color).luminance(0.6).css()
+                        },
+                        '{bg}': {
+                            opacity: .3
+                        },
+                        '& {thumbContent}::before': {
+                            background: color
+                        },
+                        '&:not({disabled})': [['horizontal', 0], ['vertical', 90]].reduce((prev, orientation) => {
+                            prev[`&{${orientation[0]}}`] = {
+                                [[
+                                    // always show visible thumb, when {thumbVisible} is available
+                                    '&{thumbVisible} {thumbContent}::before',
+                                    // on hover
+                                    '&:not({thumbNotVisible}) {thumbContent}:hover::before',
+                                    // on focused
+                                    '&:not({thumbNotVisible}) {thumbContent}{thumbContentFocused}::before'
+                                ].join()]: {
+                                    background: `linear-gradient(${orientation[1]}deg, ${color} 0%, rgba(0, 0, 0, 0) 50%, ${color} 100%);`
+                                },
+                            };
+                            return prev;
+                        }, {})
+                    }),
+                    disabled: (theme, color) => {
+                        const colorDisabled = chroma(color).darken(2)
+                            .desaturate(2.5);
+                        return ({
+                            '& {track}, & {thumb}, & {thumbLabel}, & {bg}, & {tick}': {
+                                backgroundColor: colorDisabled.luminance(.4).css()
+                            },
+                            '{tickActive}': {
+                                backgroundColor: colorDisabled.luminance(.6).css()
+                            },
+                            '&': [['horizontal', 0], ['vertical', 90]].reduce((prev, orientation) => {
+                                prev[`&{${orientation[0]}}`] = {
+                                    '& {thumbContent}::before': {
+                                        background: `linear-gradient(${orientation[1]}deg, ${colorDisabled.luminance(.4).css()} 0%, rgba(0, 0, 0, 0) 50%, ${colorDisabled.luminance(.4).css()} 100%);`
+                                    },
+                                };
+                                return prev;
+                            }, {}),
+                            '{bg}': {
+                                opacity: .3
+                            },
+                            '&{horizontal} {thumbContainer}::before': {
+                                background: theme.disabled.default
+                            },
+                            '&{vertical} {thumbContainer}::before': {
+                                background: theme.disabled.default
+                            }
+                        });
+                    }
                 }
             }
         };

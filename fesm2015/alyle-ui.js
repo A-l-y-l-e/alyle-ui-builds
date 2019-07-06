@@ -2,9 +2,9 @@ import * as _chroma from 'chroma-js';
 import { InjectionToken, ViewEncapsulation, ɵɵdefineInjectable, ɵɵinject, RendererFactory2, Injectable, Optional, Inject, isDevMode, NgZone, Input, TemplateRef, Directive, ViewContainerRef, NgModule, ElementRef, Renderer2, HostListener, Component, Injector, ComponentFactoryResolver, ApplicationRef, INJECTOR, ChangeDetectionStrategy } from '@angular/core';
 import { __decorate, __param, __metadata } from 'tslib';
 import { DOCUMENT } from '@angular/common';
-import { Subject, fromEvent, empty, Subscription, merge } from 'rxjs';
+import { Subject, ReplaySubject, fromEvent, empty, Subscription, merge } from 'rxjs';
+import { takeUntil, auditTime, map, share } from 'rxjs/operators';
 import { HammerGestureConfig } from '@angular/platform-browser';
-import { auditTime, map, share } from 'rxjs/operators';
 
 function getContrastYIQ(hexcolor) {
     const r = parseInt(hexcolor.substr(0, 2), 16);
@@ -1851,6 +1851,35 @@ function easeOutCuaic(t) {
 //   return (Math.sqrt(1 - t * t) + 1) / 2;
 // }
 
+function toNumber(val, _default) {
+    const num = typeof val === 'number'
+        ? val
+        : typeof val === 'string' && val.length
+            ? +val
+            : _default;
+    return isNaN(num) ? (_default === void 0 ? 0 : _default) : num;
+}
+
+function componentDestroyed(component) {
+    const modifiedComponent = component;
+    if (modifiedComponent.__componentDestroyed$) {
+        return modifiedComponent.__componentDestroyed$;
+    }
+    const oldNgOnDestroy = component.ngOnDestroy;
+    const stop$ = new ReplaySubject();
+    modifiedComponent.ngOnDestroy = function () {
+        if (oldNgOnDestroy) {
+            oldNgOnDestroy.apply(component);
+        }
+        stop$.next();
+        stop$.complete();
+    };
+    return modifiedComponent.__componentDestroyed$ = stop$.asObservable();
+}
+function untilComponentDestroyed(component) {
+    return (source) => source.pipe(takeUntil(componentDestroyed(component)));
+}
+
 let LyHostClass = class LyHostClass {
     constructor(_el, _renderer) {
         this._el = _el;
@@ -2621,6 +2650,13 @@ class LySelectionModel {
 function getLyThemeVariableUndefinedError(variable) {
     return Error(`Variable '${variable}' undefined in Theme.`);
 }
+function getLyThemeVariableOptionUndefinedError(comp, variable) {
+    return Error(`${comp}: variable ${variable} is undefined in Theme.`);
+}
+function getLyThemeStyleUndefinedError(comp, input, val) {
+    return Error(`${comp}: no styles defined in the theme have been found for \`@Input() ${input}\`,`
+        + ` the value given is \`${val}\`.`);
+}
 
 const STYLES = (theme) => ({
     root: {
@@ -2728,5 +2764,5 @@ LyExpansionIconModule = __decorate([
     })
 ], LyExpansionIconModule);
 
-export { AUI_LAST_UPDATE, AUI_VERSION, AlignAlias, CoreTheme, Dir, DirAlias, DirPosition, ElementObserver, FocusStatus, IS_CORE_THEME, LY_COMMON_STYLES, LY_HAMMER_OPTIONS, LY_THEME, LY_THEME_GLOBAL_VARIABLES, LY_THEME_NAME, LyCommonModule, LyCoreStyles, LyExpansionIcon, LyExpansionIconModule, LyFocusState, LyHammerGestureConfig, LyHostClass, LyOverlay, LyOverlayConfig, LyOverlayContainer, LyOverlayModule, LyOverlayRef, LyPaper, LyPaperBase, LyPaperMixinBase, LyRippleService, LySelectionModel, LyStyleUtils, LyTheme2, LyThemeModule, MutationObserverFactory, NgTranscludeDirective, NgTranscludeModule, OverlayFactory, Platform, Positioning, Ripple, STYLES_BACKDROP_DARK, Shadows, StylesInDocument, THEME_VARIABLES, TypeStyle, Undefined, UndefinedValue, WinResize, WinScroll, XPosition, YPosition, _STYLE_MAP, capitalizeFirstLetter, converterToCssKeyAndStyle, createOverlayInjector, defaultEntry, eachMedia, getContrastYIQ, getLyThemeVariableUndefinedError, getNativeElement, invertPlacement, isObject, mergeDeep, mixinBg, mixinColor, mixinDisableRipple, mixinDisabled, mixinElevation, mixinOutlined, mixinRaised, mixinShadowColor, mixinStyleUpdater, mixinTabIndex, scrollTo, scrollToC, scrollWithAnimation, shadowBuilder, shadowBuilderDeprecated, supportsPassiveEventListeners, toBoolean, ɵ0, ɵ1, LyWithClass as ɵa, LyOverlayBackdrop as ɵc };
+export { AUI_LAST_UPDATE, AUI_VERSION, AlignAlias, CoreTheme, Dir, DirAlias, DirPosition, ElementObserver, FocusStatus, IS_CORE_THEME, LY_COMMON_STYLES, LY_HAMMER_OPTIONS, LY_THEME, LY_THEME_GLOBAL_VARIABLES, LY_THEME_NAME, LyCommonModule, LyCoreStyles, LyExpansionIcon, LyExpansionIconModule, LyFocusState, LyHammerGestureConfig, LyHostClass, LyOverlay, LyOverlayConfig, LyOverlayContainer, LyOverlayModule, LyOverlayRef, LyPaper, LyPaperBase, LyPaperMixinBase, LyRippleService, LySelectionModel, LyStyleUtils, LyTheme2, LyThemeModule, MutationObserverFactory, NgTranscludeDirective, NgTranscludeModule, OverlayFactory, Platform, Positioning, Ripple, STYLES_BACKDROP_DARK, Shadows, StylesInDocument, THEME_VARIABLES, TypeStyle, Undefined, UndefinedValue, WinResize, WinScroll, XPosition, YPosition, _STYLE_MAP, capitalizeFirstLetter, converterToCssKeyAndStyle, createOverlayInjector, defaultEntry, eachMedia, getContrastYIQ, getLyThemeStyleUndefinedError, getLyThemeVariableOptionUndefinedError, getLyThemeVariableUndefinedError, getNativeElement, invertPlacement, isObject, mergeDeep, mixinBg, mixinColor, mixinDisableRipple, mixinDisabled, mixinElevation, mixinOutlined, mixinRaised, mixinShadowColor, mixinStyleUpdater, mixinTabIndex, scrollTo, scrollToC, scrollWithAnimation, shadowBuilder, shadowBuilderDeprecated, supportsPassiveEventListeners, toBoolean, toNumber, untilComponentDestroyed, ɵ0, ɵ1, LyWithClass as ɵa, LyOverlayBackdrop as ɵb };
 //# sourceMappingURL=alyle-ui.js.map

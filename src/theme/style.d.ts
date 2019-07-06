@@ -1,3 +1,4 @@
+import { ThemeVariables } from './theme-config';
 /** Only for internal use */
 export declare const _STYLE_MAP: Map<any, StyleMap5>;
 /**
@@ -54,3 +55,10 @@ export interface Keyframes {
     };
 }
 export declare type LyClasses<T> = Record<(Exclude<(T extends ((...args: any[]) => any) ? (keyof ReturnType<T>) : keyof T), '$name' | '$keyframes' | '@global' | '$priority'>), string>;
+declare type LyComponentStyleItem<COMPONENT, INPUTS extends keyof COMPONENT> = {
+    [P in INPUTS]: (theme: ThemeVariables, value: COMPONENT[P]) => StyleContainer;
+};
+export interface LyComponentStyle<COMPONENT, INPUTS extends keyof COMPONENT> {
+    [key: string]: LyComponentStyleItem<COMPONENT, INPUTS>;
+}
+export {};

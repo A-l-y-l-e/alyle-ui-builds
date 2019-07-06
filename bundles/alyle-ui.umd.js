@@ -1,8 +1,8 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('chroma-js'), require('@angular/core'), require('@angular/common'), require('rxjs'), require('@angular/platform-browser'), require('rxjs/operators')) :
-    typeof define === 'function' && define.amd ? define('@alyle/ui', ['exports', 'chroma-js', '@angular/core', '@angular/common', 'rxjs', '@angular/platform-browser', 'rxjs/operators'], factory) :
-    (global = global || self, factory((global.ly = global.ly || {}, global.ly.core = {}), global.chroma, global.ng.core, global.ng.common, global.rxjs, global.ng.platformBrowser, global.rxjs.operators));
-}(this, function (exports, _chroma, core, common, rxjs, platformBrowser, operators) { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('chroma-js'), require('@angular/core'), require('@angular/common'), require('rxjs'), require('rxjs/operators'), require('@angular/platform-browser')) :
+    typeof define === 'function' && define.amd ? define('@alyle/ui', ['exports', 'chroma-js', '@angular/core', '@angular/common', 'rxjs', 'rxjs/operators', '@angular/platform-browser'], factory) :
+    (global = global || self, factory((global.ly = global.ly || {}, global.ly.core = {}), global.chroma, global.ng.core, global.ng.common, global.rxjs, global.rxjs.operators, global.ng.platformBrowser));
+}(this, function (exports, _chroma, core, common, rxjs, operators, platformBrowser) { 'use strict';
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
@@ -2114,6 +2114,35 @@
     //   return (Math.sqrt(1 - t * t) + 1) / 2;
     // }
 
+    function toNumber(val, _default) {
+        var num = typeof val === 'number'
+            ? val
+            : typeof val === 'string' && val.length
+                ? +val
+                : _default;
+        return isNaN(num) ? (_default === void 0 ? 0 : _default) : num;
+    }
+
+    function componentDestroyed(component) {
+        var modifiedComponent = component;
+        if (modifiedComponent.__componentDestroyed$) {
+            return modifiedComponent.__componentDestroyed$;
+        }
+        var oldNgOnDestroy = component.ngOnDestroy;
+        var stop$ = new rxjs.ReplaySubject();
+        modifiedComponent.ngOnDestroy = function () {
+            if (oldNgOnDestroy) {
+                oldNgOnDestroy.apply(component);
+            }
+            stop$.next();
+            stop$.complete();
+        };
+        return modifiedComponent.__componentDestroyed$ = stop$.asObservable();
+    }
+    function untilComponentDestroyed(component) {
+        return function (source) { return source.pipe(operators.takeUntil(componentDestroyed(component))); };
+    }
+
     var LyHostClass = /** @class */ (function () {
         function LyHostClass(_el, _renderer) {
             this._el = _el;
@@ -2955,6 +2984,13 @@
     function getLyThemeVariableUndefinedError(variable) {
         return Error("Variable '" + variable + "' undefined in Theme.");
     }
+    function getLyThemeVariableOptionUndefinedError(comp, variable) {
+        return Error(comp + ": variable " + variable + " is undefined in Theme.");
+    }
+    function getLyThemeStyleUndefinedError(comp, input, val) {
+        return Error(comp + ": no styles defined in the theme have been found for `@Input() " + input + "`,"
+            + (" the value given is `" + val + "`."));
+    }
 
     var STYLES = function (theme) { return ({
         root: {
@@ -3126,6 +3162,8 @@
     exports.defaultEntry = defaultEntry;
     exports.eachMedia = eachMedia;
     exports.getContrastYIQ = getContrastYIQ;
+    exports.getLyThemeStyleUndefinedError = getLyThemeStyleUndefinedError;
+    exports.getLyThemeVariableOptionUndefinedError = getLyThemeVariableOptionUndefinedError;
     exports.getLyThemeVariableUndefinedError = getLyThemeVariableUndefinedError;
     exports.getNativeElement = getNativeElement;
     exports.invertPlacement = invertPlacement;
@@ -3148,10 +3186,12 @@
     exports.shadowBuilderDeprecated = shadowBuilderDeprecated;
     exports.supportsPassiveEventListeners = supportsPassiveEventListeners;
     exports.toBoolean = toBoolean;
+    exports.toNumber = toNumber;
+    exports.untilComponentDestroyed = untilComponentDestroyed;
     exports.ɵ0 = ɵ0;
     exports.ɵ1 = ɵ1;
     exports.ɵa = LyWithClass;
-    exports.ɵc = LyOverlayBackdrop;
+    exports.ɵb = LyOverlayBackdrop;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 

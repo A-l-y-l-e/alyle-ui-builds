@@ -1,8 +1,8 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@alyle/ui'), require('@alyle/ui/responsive')) :
-    typeof define === 'function' && define.amd ? define('@alyle/ui/themes/minima', ['exports', '@angular/core', '@alyle/ui', '@alyle/ui/responsive'], factory) :
-    (global = global || self, factory((global.ly = global.ly || {}, global.ly['themes/Minima'] = {}), global.ng.core, global.ly.core, global.ly.responsive));
-}(this, function (exports, core, ui, responsive) { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@alyle/ui'), require('@alyle/ui/responsive'), require('chroma-js')) :
+    typeof define === 'function' && define.amd ? define('@alyle/ui/themes/minima', ['exports', '@angular/core', '@alyle/ui', '@alyle/ui/responsive', 'chroma-js'], factory) :
+    (global = global || self, factory((global.ly = global.ly || {}, global.ly['themes/Minima'] = {}), global.ng.core, global.ly.core, global.ly.responsive, global.chroma));
+}(this, function (exports, core, ui, responsive, _chroma) { 'use strict';
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
@@ -106,6 +106,7 @@
         }
     };
 
+    var chroma = _chroma;
     var MinimaBase = /** @class */ (function (_super) {
         __extends(MinimaBase, _super);
         function MinimaBase() {
@@ -288,6 +289,81 @@
                 appearance: {
                     dense: {
                         height: '56px'
+                    }
+                }
+            };
+            _this.slider = {
+                defaultConfig: {
+                    appearance: 'standard'
+                },
+                appearance: {
+                    standard: {
+                        appearance: function (_theme) { return ({}); },
+                        color: function (_theme, color) { return ({
+                            '& {track}, & {thumb}, & {thumbLabel}, & {bg}, & {tick}': {
+                                backgroundColor: color
+                            },
+                            '&:not({disabled}) {thumbContentFocused} {thumb}::before, &:not({disabled}) {thumb}:hover::before': {
+                                boxShadow: "0 0 0 8px " + chroma(color).alpha(.13).css()
+                            },
+                            '&{sliding} {thumbContentFocused} {thumb}::before': {
+                                boxShadow: "0 0 0 16px " + chroma(color).alpha(.13).css()
+                            },
+                            '{tickActive}': {
+                                backgroundColor: chroma(color).luminance(0.6).css()
+                            },
+                            '{bg}': {
+                                opacity: .3
+                            },
+                            '& {thumbContent}::before': {
+                                background: color
+                            },
+                            '&:not({disabled})': [['horizontal', 0], ['vertical', 90]].reduce(function (prev, orientation) {
+                                var _a;
+                                prev["&{" + orientation[0] + "}"] = (_a = {},
+                                    _a[[
+                                        // always show visible thumb, when {thumbVisible} is available
+                                        '&{thumbVisible} {thumbContent}::before',
+                                        // on hover
+                                        '&:not({thumbNotVisible}) {thumbContent}:hover::before',
+                                        // on focused
+                                        '&:not({thumbNotVisible}) {thumbContent}{thumbContentFocused}::before'
+                                    ].join()] = {
+                                        background: "linear-gradient(" + orientation[1] + "deg, " + color + " 0%, rgba(0, 0, 0, 0) 50%, " + color + " 100%);"
+                                    },
+                                    _a);
+                                return prev;
+                            }, {})
+                        }); },
+                        disabled: function (theme, color) {
+                            var colorDisabled = chroma(color).darken(2)
+                                .desaturate(2.5);
+                            return ({
+                                '& {track}, & {thumb}, & {thumbLabel}, & {bg}, & {tick}': {
+                                    backgroundColor: colorDisabled.luminance(.4).css()
+                                },
+                                '{tickActive}': {
+                                    backgroundColor: colorDisabled.luminance(.6).css()
+                                },
+                                '&': [['horizontal', 0], ['vertical', 90]].reduce(function (prev, orientation) {
+                                    prev["&{" + orientation[0] + "}"] = {
+                                        '& {thumbContent}::before': {
+                                            background: "linear-gradient(" + orientation[1] + "deg, " + colorDisabled.luminance(.4).css() + " 0%, rgba(0, 0, 0, 0) 50%, " + colorDisabled.luminance(.4).css() + " 100%);"
+                                        },
+                                    };
+                                    return prev;
+                                }, {}),
+                                '{bg}': {
+                                    opacity: .3
+                                },
+                                '&{horizontal} {thumbContainer}::before': {
+                                    background: theme.disabled.default
+                                },
+                                '&{vertical} {thumbContainer}::before': {
+                                    background: theme.disabled.default
+                                }
+                            });
+                        }
                     }
                 }
             };
