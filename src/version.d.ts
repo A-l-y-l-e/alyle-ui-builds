@@ -1,2 +1,2 @@
-export declare const AUI_VERSION = "2.7.8";
-export declare const AUI_LAST_UPDATE = "2019-06-19T02:40:40.472Z";
+export declare const AUI_VERSION = "2.9.0";
+export declare const AUI_LAST_UPDATE = "2019-07-06T02:31:03.891Z";
