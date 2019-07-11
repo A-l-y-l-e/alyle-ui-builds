@@ -38,7 +38,7 @@ export declare class LyField implements OnInit, AfterContentInit, AfterViewInit,
     _prefixContainer: ElementRef<HTMLDivElement>;
     _suffixContainer: ElementRef<HTMLDivElement>;
     _fieldsetLegend: ElementRef<HTMLDivElement>;
-    _control: LyFieldControlBase;
+    _control?: LyFieldControlBase;
     _placeholderChild: LyPlaceholder;
     _labelChild: LyLabel;
     _hintChildren: QueryList<LyHint>;
