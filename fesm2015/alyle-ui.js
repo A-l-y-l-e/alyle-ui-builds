@@ -372,7 +372,7 @@ var XPosition;
     XPosition["left"] = "left";
     XPosition["right"] = "right";
 })(XPosition || (XPosition = {}));
-const INITIAL_WH = 'initial';
+const INITIAL_V = 'initial';
 class Positioning {
     constructor(placement, xPosition, yPosition, origin, overlayElement, _themeVariables, _offset = 0, _flip = true) {
         this.placement = placement;
@@ -385,44 +385,40 @@ class Positioning {
         this._offsetCheck = 16;
         this._originRect = this.origin.getBoundingClientRect();
         this._overlayElementRect = this.overlayElement.getBoundingClientRect();
-        this.width = INITIAL_WH;
-        this.height = INITIAL_WH;
+        this.width = INITIAL_V;
+        this.height = INITIAL_V;
         const offsetCheckx2 = this._offsetCheck * 2;
         this.createPosition();
         if (_flip) {
             for (let index = 0; index < 2; index++) {
-                if (this.checkAll()) {
+                if (this.checkAll(false, true)) {
                     this.createPosition();
                 }
             }
         }
         // when there is not enough space
-        if (this.checkAll()) {
+        if (this.checkAll(true, false)) {
             const _max_width = this._overlayElementRect.width + offsetCheckx2 > window.innerWidth;
             const _max_height = this._overlayElementRect.height + offsetCheckx2 > window.innerHeight;
-            if (_max_width || _max_height) {
-                if (_max_height) {
-                    this.y = this._offsetCheck;
-                    this.height = `${window.innerHeight - offsetCheckx2}px`;
-                }
-                if (_max_width) {
-                    this.x = this._offsetCheck;
-                    this.width = `${window.innerWidth - offsetCheckx2}px`;
-                }
+            if (_max_height) {
+                this.y = this._offsetCheck;
+                this.height = `${window.innerHeight - offsetCheckx2}px`;
             }
-            else {
-                if (this.checkBottom()) {
-                    this.y += this.checkBottom(true);
-                }
-                else if (this.checkTop()) {
-                    this.y -= this.checkTop(true);
-                }
-                if (this.checkRight()) {
-                    this.x += this.checkRight(true);
-                }
-                else if (this.checkLeft()) {
-                    this.x -= this.checkLeft(true);
-                }
+            else if (this.checkBottom(false, false)) {
+                this.y += this.checkBottom(true, false);
+            }
+            else if (this.checkTop(false, false)) {
+                this.y -= this.checkTop(true, false);
+            }
+            if (_max_width) {
+                this.x = this._offsetCheck;
+                this.width = `${window.innerWidth - offsetCheckx2}px`;
+            }
+            else if (this.checkRight(false, false)) {
+                this.x += this.checkRight(true, false);
+            }
+            else if (this.checkLeft(false, false)) {
+                this.x -= this.checkLeft(true, false);
             }
             this.updateOrigin();
         }
@@ -528,75 +524,83 @@ class Positioning {
             oy
         };
     }
-    checkLeft(returnVal) {
+    checkLeft(returnVal, invertIfNeed) {
         const rest = this.ax - this._offsetCheck;
         if (returnVal) {
             return rest;
         }
         if (rest < 0) {
-            if (this.placement !== YPosition.above && this.placement !== YPosition.below) {
-                this.placement = invertPlacement(this.placement);
-            }
-            if (this.xPosition) {
-                this.xPosition = invertPlacement(this.xPosition);
+            if (invertIfNeed) {
+                if (this.placement !== YPosition.above && this.placement !== YPosition.below) {
+                    this.placement = invertPlacement(this.placement);
+                }
+                if (this.xPosition) {
+                    this.xPosition = invertPlacement(this.xPosition);
+                }
             }
             return true;
         }
         return false;
     }
-    checkRight(returnVal) {
+    checkRight(returnVal, invertIfNeed) {
         const rest = window.innerWidth - (this.ax + this._overlayElementRect.width + this._offsetCheck);
         if (returnVal) {
             return rest;
         }
         if (rest < 0) {
-            if (this.placement !== YPosition.above && this.placement !== YPosition.below) {
-                this.placement = invertPlacement(this.placement);
-            }
-            if (this.xPosition) {
-                this.xPosition = invertPlacement(this.xPosition);
+            if (invertIfNeed) {
+                if (this.placement !== YPosition.above && this.placement !== YPosition.below) {
+                    this.placement = invertPlacement(this.placement);
+                }
+                if (this.xPosition) {
+                    this.xPosition = invertPlacement(this.xPosition);
+                }
             }
             return true;
         }
         return false;
     }
-    checkTop(returnVal) {
+    checkTop(returnVal, invertIfNeed) {
         const rest = this.ay - this._offsetCheck;
         if (returnVal) {
             return rest;
         }
         if (rest < 0) {
-            if (this.placement === YPosition.above || this.placement === YPosition.below) {
-                this.placement = invertPlacement(this.placement);
-            }
-            if (this.yPosition) {
-                this.yPosition = invertPlacement(this.yPosition);
+            if (invertIfNeed) {
+                if (this.placement === YPosition.above || this.placement === YPosition.below) {
+                    this.placement = invertPlacement(this.placement);
+                }
+                if (this.yPosition) {
+                    this.yPosition = invertPlacement(this.yPosition);
+                }
             }
             return true;
         }
         return false;
     }
-    checkBottom(returnVal) {
+    checkBottom(returnVal, invertIfNeed) {
         const rest = window.innerHeight - (this.ay + this._overlayElementRect.height + this._offsetCheck);
         if (returnVal) {
             return rest;
         }
         if (rest < 0) {
-            if (this.placement === YPosition.above || this.placement === YPosition.below) {
-                this.placement = invertPlacement(this.placement);
-            }
-            if (this.yPosition) {
-                this.yPosition = invertPlacement(this.yPosition);
+            if (invertIfNeed) {
+                if (this.placement === YPosition.above || this.placement === YPosition.below) {
+                    this.placement = invertPlacement(this.placement);
+                }
+                if (this.yPosition) {
+                    this.yPosition = invertPlacement(this.yPosition);
+                }
             }
             return true;
         }
         return false;
     }
-    checkAll() {
-        return this.checkLeft() ||
-            this.checkRight() ||
-            this.checkTop() ||
-            this.checkBottom();
+    checkAll(returnVal, invertIfNeed) {
+        return this.checkLeft(returnVal, invertIfNeed) ||
+            this.checkRight(returnVal, invertIfNeed) ||
+            this.checkTop(returnVal, invertIfNeed) ||
+            this.checkBottom(returnVal, invertIfNeed);
     }
     updateOrigin() {
         // do not update if it is defined

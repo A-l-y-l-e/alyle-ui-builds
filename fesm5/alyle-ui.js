@@ -387,7 +387,7 @@ var XPosition;
     XPosition["left"] = "left";
     XPosition["right"] = "right";
 })(XPosition || (XPosition = {}));
-var INITIAL_WH = 'initial';
+var INITIAL_V = 'initial';
 var Positioning = /** @class */ (function () {
     function Positioning(placement, xPosition, yPosition, origin, overlayElement, _themeVariables, _offset, _flip) {
         if (_offset === void 0) { _offset = 0; }
@@ -402,44 +402,40 @@ var Positioning = /** @class */ (function () {
         this._offsetCheck = 16;
         this._originRect = this.origin.getBoundingClientRect();
         this._overlayElementRect = this.overlayElement.getBoundingClientRect();
-        this.width = INITIAL_WH;
-        this.height = INITIAL_WH;
+        this.width = INITIAL_V;
+        this.height = INITIAL_V;
         var offsetCheckx2 = this._offsetCheck * 2;
         this.createPosition();
         if (_flip) {
             for (var index = 0; index < 2; index++) {
-                if (this.checkAll()) {
+                if (this.checkAll(false, true)) {
                     this.createPosition();
                 }
             }
         }
         // when there is not enough space
-        if (this.checkAll()) {
+        if (this.checkAll(true, false)) {
             var _max_width = this._overlayElementRect.width + offsetCheckx2 > window.innerWidth;
             var _max_height = this._overlayElementRect.height + offsetCheckx2 > window.innerHeight;
-            if (_max_width || _max_height) {
-                if (_max_height) {
-                    this.y = this._offsetCheck;
-                    this.height = window.innerHeight - offsetCheckx2 + "px";
-                }
-                if (_max_width) {
-                    this.x = this._offsetCheck;
-                    this.width = window.innerWidth - offsetCheckx2 + "px";
-                }
+            if (_max_height) {
+                this.y = this._offsetCheck;
+                this.height = window.innerHeight - offsetCheckx2 + "px";
             }
-            else {
-                if (this.checkBottom()) {
-                    this.y += this.checkBottom(true);
-                }
-                else if (this.checkTop()) {
-                    this.y -= this.checkTop(true);
-                }
-                if (this.checkRight()) {
-                    this.x += this.checkRight(true);
-                }
-                else if (this.checkLeft()) {
-                    this.x -= this.checkLeft(true);
-                }
+            else if (this.checkBottom(false, false)) {
+                this.y += this.checkBottom(true, false);
+            }
+            else if (this.checkTop(false, false)) {
+                this.y -= this.checkTop(true, false);
+            }
+            if (_max_width) {
+                this.x = this._offsetCheck;
+                this.width = window.innerWidth - offsetCheckx2 + "px";
+            }
+            else if (this.checkRight(false, false)) {
+                this.x += this.checkRight(true, false);
+            }
+            else if (this.checkLeft(false, false)) {
+                this.x -= this.checkLeft(true, false);
             }
             this.updateOrigin();
         }
@@ -553,75 +549,83 @@ var Positioning = /** @class */ (function () {
             oy: oy
         };
     };
-    Positioning.prototype.checkLeft = function (returnVal) {
+    Positioning.prototype.checkLeft = function (returnVal, invertIfNeed) {
         var rest = this.ax - this._offsetCheck;
         if (returnVal) {
             return rest;
         }
         if (rest < 0) {
-            if (this.placement !== YPosition.above && this.placement !== YPosition.below) {
-                this.placement = invertPlacement(this.placement);
-            }
-            if (this.xPosition) {
-                this.xPosition = invertPlacement(this.xPosition);
+            if (invertIfNeed) {
+                if (this.placement !== YPosition.above && this.placement !== YPosition.below) {
+                    this.placement = invertPlacement(this.placement);
+                }
+                if (this.xPosition) {
+                    this.xPosition = invertPlacement(this.xPosition);
+                }
             }
             return true;
         }
         return false;
     };
-    Positioning.prototype.checkRight = function (returnVal) {
+    Positioning.prototype.checkRight = function (returnVal, invertIfNeed) {
         var rest = window.innerWidth - (this.ax + this._overlayElementRect.width + this._offsetCheck);
         if (returnVal) {
             return rest;
         }
         if (rest < 0) {
-            if (this.placement !== YPosition.above && this.placement !== YPosition.below) {
-                this.placement = invertPlacement(this.placement);
-            }
-            if (this.xPosition) {
-                this.xPosition = invertPlacement(this.xPosition);
+            if (invertIfNeed) {
+                if (this.placement !== YPosition.above && this.placement !== YPosition.below) {
+                    this.placement = invertPlacement(this.placement);
+                }
+                if (this.xPosition) {
+                    this.xPosition = invertPlacement(this.xPosition);
+                }
             }
             return true;
         }
         return false;
     };
-    Positioning.prototype.checkTop = function (returnVal) {
+    Positioning.prototype.checkTop = function (returnVal, invertIfNeed) {
         var rest = this.ay - this._offsetCheck;
         if (returnVal) {
             return rest;
         }
         if (rest < 0) {
-            if (this.placement === YPosition.above || this.placement === YPosition.below) {
-                this.placement = invertPlacement(this.placement);
-            }
-            if (this.yPosition) {
-                this.yPosition = invertPlacement(this.yPosition);
+            if (invertIfNeed) {
+                if (this.placement === YPosition.above || this.placement === YPosition.below) {
+                    this.placement = invertPlacement(this.placement);
+                }
+                if (this.yPosition) {
+                    this.yPosition = invertPlacement(this.yPosition);
+                }
             }
             return true;
         }
         return false;
     };
-    Positioning.prototype.checkBottom = function (returnVal) {
+    Positioning.prototype.checkBottom = function (returnVal, invertIfNeed) {
         var rest = window.innerHeight - (this.ay + this._overlayElementRect.height + this._offsetCheck);
         if (returnVal) {
             return rest;
         }
         if (rest < 0) {
-            if (this.placement === YPosition.above || this.placement === YPosition.below) {
-                this.placement = invertPlacement(this.placement);
-            }
-            if (this.yPosition) {
-                this.yPosition = invertPlacement(this.yPosition);
+            if (invertIfNeed) {
+                if (this.placement === YPosition.above || this.placement === YPosition.below) {
+                    this.placement = invertPlacement(this.placement);
+                }
+                if (this.yPosition) {
+                    this.yPosition = invertPlacement(this.yPosition);
+                }
             }
             return true;
         }
         return false;
     };
-    Positioning.prototype.checkAll = function () {
-        return this.checkLeft() ||
-            this.checkRight() ||
-            this.checkTop() ||
-            this.checkBottom();
+    Positioning.prototype.checkAll = function (returnVal, invertIfNeed) {
+        return this.checkLeft(returnVal, invertIfNeed) ||
+            this.checkRight(returnVal, invertIfNeed) ||
+            this.checkTop(returnVal, invertIfNeed) ||
+            this.checkBottom(returnVal, invertIfNeed);
     };
     Positioning.prototype.updateOrigin = function () {
         // do not update if it is defined
