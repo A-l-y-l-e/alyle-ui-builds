@@ -403,7 +403,7 @@ var LyField = /** @class */ (function () {
     }
     Object.defineProperty(LyField.prototype, "errorState", {
         get: function () {
-            return this._control.errorState;
+            return this._control ? this._control.errorState : false;
         },
         enumerable: true,
         configurable: true
@@ -640,11 +640,13 @@ var LyField = /** @class */ (function () {
                 }
             }
         }
-        if (this._control.focused) {
-            this._renderer.addClass(this._el.nativeElement, this.classes.focused);
-        }
-        else {
-            this._renderer.removeClass(this._el.nativeElement, this.classes.focused);
+        if (this._control) {
+            if (this._control.focused) {
+                this._renderer.addClass(this._el.nativeElement, this.classes.focused);
+            }
+            else {
+                this._renderer.removeClass(this._el.nativeElement, this.classes.focused);
+            }
         }
     };
     LyField.prototype._markForCheck = function () {
@@ -911,21 +913,23 @@ var LyNativeControl = /** @class */ (function () {
         }
     };
     LyNativeControl.prototype.ngDoCheck = function () {
-        var oldVal = this.errorState;
-        var newVal = !!(this.ngControl && this.ngControl.invalid && (this.ngControl.touched || (this._form && this._form.submitted)));
-        if (newVal !== oldVal) {
-            this.errorState = newVal;
-            if (this._field) {
-                var errorClass = this._field.classes.errorState;
-                if (newVal) {
-                    this._renderer.addClass(this._field._getHostElement(), errorClass);
-                    this._errorClass = errorClass;
+        if (this._field._control) {
+            var oldVal = this.errorState;
+            var newVal = !!(this.ngControl && this.ngControl.invalid && (this.ngControl.touched || (this._form && this._form.submitted)));
+            if (newVal !== oldVal) {
+                this.errorState = newVal;
+                if (this._field) {
+                    var errorClass = this._field.classes.errorState;
+                    if (newVal) {
+                        this._renderer.addClass(this._field._getHostElement(), errorClass);
+                        this._errorClass = errorClass;
+                    }
+                    else if (this._errorClass) {
+                        this._renderer.removeClass(this._field._getHostElement(), errorClass);
+                        this._errorClass = undefined;
+                    }
+                    this.stateChanges.next();
                 }
-                else if (this._errorClass) {
-                    this._renderer.removeClass(this._field._getHostElement(), errorClass);
-                    this._errorClass = undefined;
-                }
-                this.stateChanges.next();
             }
         }
     };
