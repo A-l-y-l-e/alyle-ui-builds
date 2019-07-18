@@ -2294,8 +2294,8 @@
         return LyFocusState;
     }());
 
-    var AUI_VERSION = '2.9.1';
-    var AUI_LAST_UPDATE = '2019-07-14T20:14:22.259Z';
+    var AUI_VERSION = '2.9.2';
+    var AUI_LAST_UPDATE = '2019-07-18T00:40:21.096Z';
 
     var LY_HAMMER_OPTIONS = new core.InjectionToken('LY_HAMMER_OPTIONS');
     var HAMMER_GESTURES_EVENTS = [
@@ -2525,6 +2525,10 @@
     var LyOverlayConfig = /** @class */ (function () {
         function LyOverlayConfig() {
             this.hasBackdrop = true;
+            /**
+             * Whether the user can click on the backdrop to close the overlay.
+             */
+            this.disableClose = false;
         }
         return LyOverlayConfig;
     }());
@@ -2544,7 +2548,9 @@
             }
         }
         LyOverlayBackdrop.prototype.onclick = function () {
-            this._config.fnDestroy();
+            if (!this._config.disableClose) {
+                this._config.fnDestroy();
+            }
         };
         __decorate([
             core.HostListener('click'),

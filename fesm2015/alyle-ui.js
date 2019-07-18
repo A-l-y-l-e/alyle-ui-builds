@@ -2026,8 +2026,8 @@ LyFocusState = __decorate([
     __metadata("design:paramtypes", [NgZone])
 ], LyFocusState);
 
-const AUI_VERSION = '2.9.1';
-const AUI_LAST_UPDATE = '2019-07-14T20:14:22.259Z';
+const AUI_VERSION = '2.9.2';
+const AUI_LAST_UPDATE = '2019-07-18T00:40:21.096Z';
 
 const LY_HAMMER_OPTIONS = new InjectionToken('LY_HAMMER_OPTIONS');
 const HAMMER_GESTURES_EVENTS = [
@@ -2228,6 +2228,10 @@ WinScroll = __decorate([
 class LyOverlayConfig {
     constructor() {
         this.hasBackdrop = true;
+        /**
+         * Whether the user can click on the backdrop to close the overlay.
+         */
+        this.disableClose = false;
     }
 }
 
@@ -2246,7 +2250,9 @@ let LyOverlayBackdrop = class LyOverlayBackdrop {
         }
     }
     onclick() {
-        this._config.fnDestroy();
+        if (!this._config.disableClose) {
+            this._config.fnDestroy();
+        }
     }
 };
 __decorate([
