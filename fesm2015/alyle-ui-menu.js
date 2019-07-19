@@ -1,5 +1,5 @@
 import { __decorate, __metadata, __param } from 'tslib';
-import { ViewChild, ElementRef, Input, HostBinding, HostListener, Component, Renderer2, Directive, Optional, TemplateRef, NgModule } from '@angular/core';
+import { ViewChild, ElementRef, Input, HostBinding, HostListener, Component, Renderer2, Directive, Optional, EventEmitter, TemplateRef, Output, NgModule } from '@angular/core';
 import { YPosition, XPosition, Positioning, LyTheme2, LyOverlay, shadowBuilder, LyCommonModule, LyOverlayModule } from '@alyle/ui';
 import { trigger, transition, animate, keyframes, style } from '@angular/animations';
 import { FormsModule } from '@angular/forms';
@@ -87,6 +87,10 @@ let LyMenu = class LyMenu {
             this.ref._menuRef.onResizeScroll = this._updatePlacement.bind(this);
         }
         this._updatePlacement();
+        this.ref.menuOpened.emit();
+        Promise.resolve(null).then(() => {
+            this.ref._setMenuOpenToTrue();
+        });
     }
     _updatePlacement() {
         const el = this.ref._menuRef.containerElement;
@@ -151,7 +155,7 @@ let LyMenuItem = class LyMenuItem {
     }
     _click() {
         if (this._menu.ref && this._menu.ref._menuRef) {
-            this._menu.ref._menuRef.detach();
+            this._menu.ref.closeMenu();
         }
     }
 };
@@ -174,18 +178,23 @@ let LyMenuTriggerFor = class LyMenuTriggerFor {
     constructor(elementRef, overlay) {
         this.elementRef = elementRef;
         this.overlay = overlay;
+        this._menuOpen = false;
+        this.menuOpened = new EventEmitter();
+        this.menuClosed = new EventEmitter();
     }
-    /** @docs-private */
-    _targetPosition() {
-        const element = this.elementRef.nativeElement;
-        const rect = element.getBoundingClientRect();
-        return rect;
+    /** Whether the menu is open. */
+    get menuOpen() {
+        return this._menuOpen;
+    }
+    ngOnDestroy() {
+        this.closeMenu();
     }
     _handleClick() {
-        if (this._menuRef) {
-            this._menuRef.detach();
-        }
-        else {
+        this.toggleMenu();
+    }
+    /** Opens the menu */
+    openMenu() {
+        if (!this._menuRef) {
             this._menuRef = this.overlay.create(this.lyMenuTriggerFor, {
                 $implicit: this
             }, {
@@ -198,36 +207,60 @@ let LyMenuTriggerFor = class LyMenuTriggerFor {
             });
         }
     }
+    /** Closes the menu */
+    closeMenu() {
+        this.detach();
+    }
+    /** Toggle menu */
+    toggleMenu() {
+        if (this._menuRef) {
+            this.closeMenu();
+        }
+        else {
+            this.openMenu();
+        }
+    }
+    /** @docs-private */
     detach() {
         if (this._menuRef) {
             this._menuRef.detach();
         }
     }
+    /** @docs-private */
     destroy() {
         if (this._menuRef) {
+            this.menuClosed.emit(null);
             this._menuRef.remove();
-            this._menuRef = undefined;
-        }
-    }
-    ngOnDestroy() {
-        if (this._menuRef) {
-            this._menuRef.detach();
+            this._menuRef = null;
+            Promise.resolve(null).then(() => this._menuOpen = false);
         }
     }
     _getHostElement() {
         return this.elementRef.nativeElement;
+    }
+    _setMenuOpenToTrue() {
+        this._menuOpen = true;
     }
 };
 __decorate([
     Input(),
     __metadata("design:type", TemplateRef)
 ], LyMenuTriggerFor.prototype, "lyMenuTriggerFor", void 0);
+__decorate([
+    Output(),
+    __metadata("design:type", Object)
+], LyMenuTriggerFor.prototype, "menuOpened", void 0);
+__decorate([
+    Output(),
+    __metadata("design:type", Object)
+], LyMenuTriggerFor.prototype, "menuClosed", void 0);
 LyMenuTriggerFor = __decorate([
     Directive({
         selector: '[lyMenuTriggerFor]',
         host: {
-            '(click)': '_handleClick($event)'
-        }
+            '(click)': '_handleClick()'
+        },
+        exportAs: 'lyMenuTriggerFor'
     }),
     __metadata("design:paramtypes", [ElementRef,
         LyOverlay])

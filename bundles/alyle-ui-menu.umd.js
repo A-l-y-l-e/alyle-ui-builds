@@ -135,10 +135,15 @@
             }
         };
         LyMenu.prototype.ngAfterViewInit = function () {
+            var _this = this;
             if (this.ref._menuRef) {
                 this.ref._menuRef.onResizeScroll = this._updatePlacement.bind(this);
             }
             this._updatePlacement();
+            this.ref.menuOpened.emit();
+            Promise.resolve(null).then(function () {
+                _this.ref._setMenuOpenToTrue();
+            });
         };
         LyMenu.prototype._updatePlacement = function () {
             var el = this.ref._menuRef.containerElement;
@@ -204,7 +209,7 @@
         }
         LyMenuItem.prototype._click = function () {
             if (this._menu.ref && this._menu.ref._menuRef) {
-                this._menu.ref._menuRef.detach();
+                this._menu.ref.closeMenu();
             }
         };
         __decorate([
@@ -228,18 +233,27 @@
         function LyMenuTriggerFor(elementRef, overlay) {
             this.elementRef = elementRef;
             this.overlay = overlay;
+            this._menuOpen = false;
+            this.menuOpened = new core.EventEmitter();
+            this.menuClosed = new core.EventEmitter();
         }
-        /** @docs-private */
-        LyMenuTriggerFor.prototype._targetPosition = function () {
-            var element = this.elementRef.nativeElement;
-            var rect = element.getBoundingClientRect();
-            return rect;
+        Object.defineProperty(LyMenuTriggerFor.prototype, "menuOpen", {
+            /** Whether the menu is open. */
+            get: function () {
+                return this._menuOpen;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        LyMenuTriggerFor.prototype.ngOnDestroy = function () {
+            this.closeMenu();
         };
         LyMenuTriggerFor.prototype._handleClick = function () {
-            if (this._menuRef) {
-                this._menuRef.detach();
-            }
-            else {
+            this.toggleMenu();
+        };
+        /** Opens the menu */
+        LyMenuTriggerFor.prototype.openMenu = function () {
+            if (!this._menuRef) {
                 this._menuRef = this.overlay.create(this.lyMenuTriggerFor, {
                     $implicit: this
                 }, {
@@ -252,35 +266,60 @@
                 });
             }
         };
+        /** Closes the menu */
+        LyMenuTriggerFor.prototype.closeMenu = function () {
+            this.detach();
+        };
+        /** Toggle menu */
+        LyMenuTriggerFor.prototype.toggleMenu = function () {
+            if (this._menuRef) {
+                this.closeMenu();
+            }
+            else {
+                this.openMenu();
+            }
+        };
+        /** @docs-private */
         LyMenuTriggerFor.prototype.detach = function () {
             if (this._menuRef) {
                 this._menuRef.detach();
             }
         };
+        /** @docs-private */
         LyMenuTriggerFor.prototype.destroy = function () {
+            var _this = this;
             if (this._menuRef) {
+                this.menuClosed.emit(null);
                 this._menuRef.remove();
-                this._menuRef = undefined;
-            }
-        };
-        LyMenuTriggerFor.prototype.ngOnDestroy = function () {
-            if (this._menuRef) {
-                this._menuRef.detach();
+                this._menuRef = null;
+                Promise.resolve(null).then(function () { return _this._menuOpen = false; });
             }
         };
         LyMenuTriggerFor.prototype._getHostElement = function () {
             return this.elementRef.nativeElement;
         };
+        LyMenuTriggerFor.prototype._setMenuOpenToTrue = function () {
+            this._menuOpen = true;
+        };
         __decorate([
             core.Input(),
             __metadata("design:type", core.TemplateRef)
         ], LyMenuTriggerFor.prototype, "lyMenuTriggerFor", void 0);
+        __decorate([
+            core.Output(),
+            __metadata("design:type", Object)
+        ], LyMenuTriggerFor.prototype, "menuOpened", void 0);
+        __decorate([
+            core.Output(),
+            __metadata("design:type", Object)
+        ], LyMenuTriggerFor.prototype, "menuClosed", void 0);
         LyMenuTriggerFor = __decorate([
             core.Directive({
                 selector: '[lyMenuTriggerFor]',
                 host: {
-                    '(click)': '_handleClick($event)'
-                }
+                    '(click)': '_handleClick()'
+                },
+                exportAs: 'lyMenuTriggerFor'
             }),
             __metadata("design:paramtypes", [core.ElementRef,
                 ui.LyOverlay])
