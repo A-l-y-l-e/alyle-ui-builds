@@ -41,6 +41,7 @@ export declare class LyMenuTriggerFor implements OnDestroy {
     /** Current menuRef */
     _menuRef?: OverlayFactory | null;
     private _menuOpen;
+    private _destroying;
     /** Whether the menu is open. */
     readonly menuOpen: boolean;
     lyMenuTriggerFor: TemplateRef<any>;

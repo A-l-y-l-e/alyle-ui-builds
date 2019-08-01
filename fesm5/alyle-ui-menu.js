@@ -194,7 +194,10 @@ var LyMenuTriggerFor = /** @class */ (function () {
         configurable: true
     });
     LyMenuTriggerFor.prototype.ngOnDestroy = function () {
-        this.closeMenu();
+        // Not force destruction if it is already being destroyed
+        if (!this._destroying) {
+            this.closeMenu();
+        }
     };
     LyMenuTriggerFor.prototype._handleClick = function () {
         this.toggleMenu();
@@ -230,6 +233,7 @@ var LyMenuTriggerFor = /** @class */ (function () {
     /** @docs-private */
     LyMenuTriggerFor.prototype.detach = function () {
         if (this._menuRef) {
+            this._destroying = true;
             this._menuRef.detach();
         }
     };
@@ -240,6 +244,7 @@ var LyMenuTriggerFor = /** @class */ (function () {
             this.menuClosed.emit(null);
             this._menuRef.remove();
             this._menuRef = null;
+            this._destroying = false;
             Promise.resolve(null).then(function () { return _this._menuOpen = false; });
         }
     };
