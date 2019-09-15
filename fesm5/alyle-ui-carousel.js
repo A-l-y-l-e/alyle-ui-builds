@@ -1,5 +1,5 @@
 import { __decorate, __metadata } from 'tslib';
-import { ViewChild, ElementRef, ContentChildren, forwardRef, QueryList, Input, Component, ChangeDetectionStrategy, ViewEncapsulation, ChangeDetectorRef, Renderer2, Directive, NgModule } from '@angular/core';
+import { ViewChild, ElementRef, ContentChildren, forwardRef, QueryList, Input, Component, ChangeDetectionStrategy, ChangeDetectorRef, Renderer2, Directive, NgModule } from '@angular/core';
 import { DirAlias, toBoolean, Platform, LyTheme2, LyCommonModule } from '@alyle/ui';
 import * as _chroma from 'chroma-js';
 import { Subject } from 'rxjs';
@@ -183,6 +183,21 @@ var LyCarousel = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
+    Object.defineProperty(LyCarousel.prototype, "pauseOnHover", {
+        /**
+         * It will pause the slide change when the mouse cursor passes
+         * through the carousel.
+         */
+        get: function () {
+            return this._pauseOnHover;
+        },
+        set: function (val) {
+            var newVal = toBoolean(val);
+            this._pauseOnHover = newVal;
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(LyCarousel.prototype, "touch", {
         get: function () {
             return this._touch;
@@ -265,6 +280,16 @@ var LyCarousel = /** @class */ (function () {
             this.stop();
         }
     };
+    LyCarousel.prototype._onMouseEnter = function () {
+        if (this.pauseOnHover) {
+            this.stop();
+        }
+    };
+    LyCarousel.prototype._onMouseLeave = function () {
+        if (this.pauseOnHover) {
+            this._resetInterval();
+        }
+    };
     /** @docs-private */
     LyCarousel.prototype._onDragStart = function () {
         var _this = this;
@@ -316,7 +341,6 @@ var LyCarousel = /** @class */ (function () {
             }
         }
         this._renderer.removeStyle(this._slide.nativeElement, 'transform');
-        this._resetInterval();
     };
     LyCarousel.prototype._onDragCancel = function () {
         this._renderer.addClass(this.slideContainer.nativeElement, this.classes.slideAnim);
@@ -334,7 +358,7 @@ var LyCarousel = /** @class */ (function () {
             }, this._slide.nativeElement, this._slideClass, STYLE_PRIORITY);
         }
         if (!notResetInterval) {
-            if (this.autoplay) {
+            if (this.autoplay && !this.pauseOnHover) {
                 this._resetInterval();
             }
         }
@@ -412,6 +436,11 @@ var LyCarousel = /** @class */ (function () {
         Input(),
         __metadata("design:type", Boolean),
         __metadata("design:paramtypes", [Boolean])
+    ], LyCarousel.prototype, "pauseOnHover", null);
+    __decorate([
+        Input(),
+        __metadata("design:type", Boolean),
+        __metadata("design:paramtypes", [Boolean])
     ], LyCarousel.prototype, "touch", null);
     __decorate([
         Input(),
@@ -434,7 +463,10 @@ var LyCarousel = /** @class */ (function () {
             template: "<div\n(slidestart)=\"touch && _onDragStart()\"\n(slideleft)=\"touch && _onDrag($event)\"\n(slideright)=\"touch && _onDrag($event)\"\n(slidecancel)=\"touch && _onDragCancel()\"\n(slideend)=\"touch && _onDragEnd($event)\"\n#slideContainer\n>\n  <div #_slide [className]=\"classes.slide\">\n    <ng-content></ng-content>\n  </div>\n  <div [className]=\"classes.carouselIndicators\" *ngIf=\"lyItems.length !== 1\">\n    <div tabindex=\"0\"\n      (click)=\"_select(i)\"\n      role=\"button\"\n      *ngFor=\"let item of lyItems; index as i\"\n    >\n      <span ly-paper\n      color=\"#000\"\n      bg=\"background:primary\"\n      [class.active]=\"selectedIndex==i\"\n      [elevation]=\"8\"\n      [shadowColor]=\"'text'\"></span>\n    </div>\n  </div>\n  <div [ngClass]=\"[classes.actions, 'left']\" (click)=\"prev()\">\n    <svg viewBox=\"0 0 24 24\"><path d=\"M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z\"></path></svg>\n  </div>\n  <div [ngClass]=\"[classes.actions, 'right']\" (click)=\"next()\">\n    <svg viewBox=\"0 0 24 24\"><path d=\"M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z\"></path></svg>\n  </div>\n  <div\n    [className]=\"classes.barContainer\"\n    *ngIf=\"hasProgressBar && _isIntervalFn && interval && autoplay\"\n  >\n    <div\n      [className]=\"classes.bar\"\n      #_progressBar\n      [style.animation-duration]=\"interval + 'ms'\"\n    ></div>\n  </div>\n</div>",
             changeDetection: ChangeDetectionStrategy.OnPush,
             preserveWhitespaces: false,
-            encapsulation: ViewEncapsulation.None
+            host: {
+                '(mouseenter)': '_onMouseEnter()',
+                '(mouseleave)': '_onMouseLeave()'
+            }
         }),
         __metadata("design:paramtypes", [ElementRef,
             ChangeDetectorRef,

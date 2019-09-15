@@ -207,6 +207,21 @@
             enumerable: true,
             configurable: true
         });
+        Object.defineProperty(LyCarousel.prototype, "pauseOnHover", {
+            /**
+             * It will pause the slide change when the mouse cursor passes
+             * through the carousel.
+             */
+            get: function () {
+                return this._pauseOnHover;
+            },
+            set: function (val) {
+                var newVal = ui.toBoolean(val);
+                this._pauseOnHover = newVal;
+            },
+            enumerable: true,
+            configurable: true
+        });
         Object.defineProperty(LyCarousel.prototype, "touch", {
             get: function () {
                 return this._touch;
@@ -289,6 +304,16 @@
                 this.stop();
             }
         };
+        LyCarousel.prototype._onMouseEnter = function () {
+            if (this.pauseOnHover) {
+                this.stop();
+            }
+        };
+        LyCarousel.prototype._onMouseLeave = function () {
+            if (this.pauseOnHover) {
+                this._resetInterval();
+            }
+        };
         /** @docs-private */
         LyCarousel.prototype._onDragStart = function () {
             var _this = this;
@@ -340,7 +365,6 @@
                 }
             }
             this._renderer.removeStyle(this._slide.nativeElement, 'transform');
-            this._resetInterval();
         };
         LyCarousel.prototype._onDragCancel = function () {
             this._renderer.addClass(this.slideContainer.nativeElement, this.classes.slideAnim);
@@ -358,7 +382,7 @@
                 }, this._slide.nativeElement, this._slideClass, STYLE_PRIORITY);
             }
             if (!notResetInterval) {
-                if (this.autoplay) {
+                if (this.autoplay && !this.pauseOnHover) {
                     this._resetInterval();
                 }
             }
@@ -436,6 +460,11 @@
             core.Input(),
             __metadata("design:type", Boolean),
             __metadata("design:paramtypes", [Boolean])
+        ], LyCarousel.prototype, "pauseOnHover", null);
+        __decorate([
+            core.Input(),
+            __metadata("design:type", Boolean),
+            __metadata("design:paramtypes", [Boolean])
         ], LyCarousel.prototype, "touch", null);
         __decorate([
             core.Input(),
@@ -458,7 +487,10 @@
                 template: "<div\n(slidestart)=\"touch && _onDragStart()\"\n(slideleft)=\"touch && _onDrag($event)\"\n(slideright)=\"touch && _onDrag($event)\"\n(slidecancel)=\"touch && _onDragCancel()\"\n(slideend)=\"touch && _onDragEnd($event)\"\n#slideContainer\n>\n  <div #_slide [className]=\"classes.slide\">\n    <ng-content></ng-content>\n  </div>\n  <div [className]=\"classes.carouselIndicators\" *ngIf=\"lyItems.length !== 1\">\n    <div tabindex=\"0\"\n      (click)=\"_select(i)\"\n      role=\"button\"\n      *ngFor=\"let item of lyItems; index as i\"\n    >\n      <span ly-paper\n      color=\"#000\"\n      bg=\"background:primary\"\n      [class.active]=\"selectedIndex==i\"\n      [elevation]=\"8\"\n      [shadowColor]=\"'text'\"></span>\n    </div>\n  </div>\n  <div [ngClass]=\"[classes.actions, 'left']\" (click)=\"prev()\">\n    <svg viewBox=\"0 0 24 24\"><path d=\"M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z\"></path></svg>\n  </div>\n  <div [ngClass]=\"[classes.actions, 'right']\" (click)=\"next()\">\n    <svg viewBox=\"0 0 24 24\"><path d=\"M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z\"></path></svg>\n  </div>\n  <div\n    [className]=\"classes.barContainer\"\n    *ngIf=\"hasProgressBar && _isIntervalFn && interval && autoplay\"\n  >\n    <div\n      [className]=\"classes.bar\"\n      #_progressBar\n      [style.animation-duration]=\"interval + 'ms'\"\n    ></div>\n  </div>\n</div>",
                 changeDetection: core.ChangeDetectionStrategy.OnPush,
                 preserveWhitespaces: false,
-                encapsulation: core.ViewEncapsulation.None
+                host: {
+                    '(mouseenter)': '_onMouseEnter()',
+                    '(mouseleave)': '_onMouseLeave()'
+                }
             }),
             __metadata("design:paramtypes", [core.ElementRef,
                 core.ChangeDetectorRef,

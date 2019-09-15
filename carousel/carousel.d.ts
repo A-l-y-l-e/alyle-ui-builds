@@ -164,6 +164,12 @@ export declare class LyCarousel implements OnInit, AfterViewInit, OnDestroy {
     private readonly _destroy;
     /** @internal */
     readonly _isIntervalFn: boolean;
+    /**
+     * It will pause the slide change when the mouse cursor passes
+     * through the carousel.
+     */
+    pauseOnHover: boolean;
+    private _pauseOnHover;
     touch: boolean;
     autoplay: boolean;
     hasProgressBar: boolean;
@@ -172,6 +178,8 @@ export declare class LyCarousel implements OnInit, AfterViewInit, OnDestroy {
     ngOnInit(): void;
     ngAfterViewInit(): void;
     ngOnDestroy(): void;
+    _onMouseEnter(): void;
+    _onMouseLeave(): void;
     /** @docs-private */
     _onDragStart(): void;
     _onDrag(e: any): void;
