@@ -563,10 +563,8 @@ let LySlider = LySlider_1 = class LySlider {
             this._updateValueFromPosition(event.center.x, event.center.y);
         }
         event.preventDefault();
-        if (!valueEquals(this._valueOnSlideStart, this.value) && !this.disabled) {
-            this._emitInputEvent();
-            this._changes.next();
-        }
+        this._emitInputEvent();
+        this._changes.next();
     }
     _startSlide() {
         if (!this._isSliding) {
@@ -632,8 +630,10 @@ let LySlider = LySlider_1 = class LySlider {
         }
         // focus slidingThumb
         const currentSlidingThumb = this._thumbs.find(thumb => thumb.value === value);
-        currentSlidingThumb.focused = true;
-        this._thumbsRef.toArray()[currentSlidingThumb.index].nativeElement.focus();
+        if (currentSlidingThumb) {
+            currentSlidingThumb.focused = true;
+            this._thumbsRef.toArray()[currentSlidingThumb.index].nativeElement.focus();
+        }
     }
     _updateThumbs() {
         this._thumbs.forEach(thumb => {

@@ -620,10 +620,8 @@ var LySlider = /** @class */ (function () {
             this._updateValueFromPosition(event.center.x, event.center.y);
         }
         event.preventDefault();
-        if (!valueEquals(this._valueOnSlideStart, this.value) && !this.disabled) {
-            this._emitInputEvent();
-            this._changes.next();
-        }
+        this._emitInputEvent();
+        this._changes.next();
     };
     LySlider.prototype._startSlide = function () {
         if (!this._isSliding) {
@@ -689,8 +687,10 @@ var LySlider = /** @class */ (function () {
         }
         // focus slidingThumb
         var currentSlidingThumb = this._thumbs.find(function (thumb) { return thumb.value === value; });
-        currentSlidingThumb.focused = true;
-        this._thumbsRef.toArray()[currentSlidingThumb.index].nativeElement.focus();
+        if (currentSlidingThumb) {
+            currentSlidingThumb.focused = true;
+            this._thumbsRef.toArray()[currentSlidingThumb.index].nativeElement.focus();
+        }
     };
     LySlider.prototype._updateThumbs = function () {
         var _this = this;
