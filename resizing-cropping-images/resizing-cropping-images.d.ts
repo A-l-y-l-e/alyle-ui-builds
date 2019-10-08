@@ -41,7 +41,9 @@ export declare enum ImgCropperError {
     /** The loaded image exceeds the size limit set. */
     Size = 0,
     /** The file loaded is not image. */
-    Type = 1
+    Type = 1,
+    /** When the image has not been loaded. */
+    Other = 2
 }
 export interface ImgCropperEvent {
     /** Cropped image data URL */
@@ -66,6 +68,7 @@ export interface ImgCropperEvent {
 export interface ImgCropperErrorEvent extends ImgCropperEvent {
     /** Type of error */
     error: ImgCropperError;
+    errorMsg?: string;
 }
 export declare class LyResizingCroppingImages implements OnDestroy {
     private _renderer;
