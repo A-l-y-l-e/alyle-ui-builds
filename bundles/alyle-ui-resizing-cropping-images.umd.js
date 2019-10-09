@@ -1,8 +1,8 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@alyle/ui'), require('rxjs/operators'), require('rxjs'), require('@angular/platform-browser'), require('@angular/common')) :
-    typeof define === 'function' && define.amd ? define('@alyle/ui/resizing-cropping-images', ['exports', '@angular/core', '@alyle/ui', 'rxjs/operators', 'rxjs', '@angular/platform-browser', '@angular/common'], factory) :
-    (global = global || self, factory((global.ly = global.ly || {}, global.ly['resizing-Cropping-Images'] = {}), global.ng.core, global.ly.core, global.rxjs.operators, global.rxjs, global.ng.platformBrowser, global.ng.common));
-}(this, function (exports, core, ui, operators, rxjs, platformBrowser, common) { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@alyle/ui'), require('rxjs'), require('@angular/platform-browser'), require('@angular/common')) :
+    typeof define === 'function' && define.amd ? define('@alyle/ui/resizing-cropping-images', ['exports', '@angular/core', '@alyle/ui', 'rxjs', '@angular/platform-browser', '@angular/common'], factory) :
+    (global = global || self, factory((global.ly = global.ly || {}, global.ly['resizing-Cropping-Images'] = {}), global.ng.core, global.ly.core, global.rxjs, global.ng.platformBrowser, global.ng.common));
+}(this, function (exports, core, ui, rxjs, platformBrowser, common) { 'use strict';
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
@@ -119,12 +119,11 @@
         antiAliased: true
     };
     var LyResizingCroppingImages = /** @class */ (function () {
-        function LyResizingCroppingImages(_renderer, theme, elementRef, cd, _ngZone) {
+        function LyResizingCroppingImages(_renderer, theme, elementRef, cd) {
             this._renderer = _renderer;
             this.theme = theme;
             this.elementRef = elementRef;
             this.cd = cd;
-            this._ngZone = _ngZone;
             /**
              * styles
              * @docs-private
@@ -498,7 +497,7 @@
                 img.onload = function () { return setTimeout(function () {
                     obs.next(null);
                     obs.complete();
-                }, 1); };
+                }, 0); };
             })
                 .subscribe({
                 next: function () {
@@ -507,10 +506,10 @@
                     cropEvent.height = img.height;
                     _this._isLoadedImg = true;
                     _this.cd.markForCheck();
-                    _this._ngZone
-                        .onStable
-                        .pipe(operators.take(1))
-                        .subscribe(function () { return _this._ngZone.run(function () {
+                    _this.cd.detectChanges();
+                    Promise.resolve(null).then(function () {
+                        // ...
+                        _this._updateMinScale(_this._imgCanvas.nativeElement);
                         _this.isLoaded = false;
                         if (fn) {
                             fn();
@@ -522,7 +521,7 @@
                         _this.isLoaded = true;
                         _this._cropIfAutoCrop();
                         _this.cd.markForCheck();
-                    }); });
+                    });
                     _this._listeners.delete(loadListen);
                     _this.ngOnDestroy();
                 },
@@ -703,7 +702,7 @@
             return this._croppingContainer.nativeElement.getBoundingClientRect();
         };
         __decorate([
-            core.ViewChild('_imgContainer', { static: false }),
+            core.ViewChild('_imgContainer', { static: true }),
             __metadata("design:type", core.ElementRef)
         ], LyResizingCroppingImages.prototype, "_imgContainer", void 0);
         __decorate([
@@ -711,7 +710,7 @@
             __metadata("design:type", core.ElementRef)
         ], LyResizingCroppingImages.prototype, "_croppingContainer", void 0);
         __decorate([
-            core.ViewChild('_imgCanvas', { static: false }),
+            core.ViewChild('_imgCanvas', { static: true }),
             __metadata("design:type", core.ElementRef)
         ], LyResizingCroppingImages.prototype, "_imgCanvas", void 0);
         __decorate([
@@ -760,8 +759,7 @@
             __metadata("design:paramtypes", [core.Renderer2,
                 ui.LyTheme2,
                 core.ElementRef,
-                core.ChangeDetectorRef,
-                core.NgZone])
+                core.ChangeDetectorRef])
         ], LyResizingCroppingImages);
         return LyResizingCroppingImages;
     }());

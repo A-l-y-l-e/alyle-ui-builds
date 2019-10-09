@@ -1,7 +1,6 @@
 import { __decorate, __metadata } from 'tslib';
-import { EventEmitter, ViewChild, ElementRef, Input, Output, HostListener, Component, ChangeDetectionStrategy, Renderer2, ChangeDetectorRef, NgZone, NgModule } from '@angular/core';
+import { EventEmitter, ViewChild, ElementRef, Input, Output, HostListener, Component, ChangeDetectionStrategy, Renderer2, ChangeDetectorRef, NgModule } from '@angular/core';
 import { mergeDeep, LyTheme2, LY_COMMON_STYLES, LyHammerGestureConfig } from '@alyle/ui';
-import { take } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
@@ -84,12 +83,11 @@ const CONFIG_DEFAULT = {
     antiAliased: true
 };
 let LyResizingCroppingImages = class LyResizingCroppingImages {
-    constructor(_renderer, theme, elementRef, cd, _ngZone) {
+    constructor(_renderer, theme, elementRef, cd) {
         this._renderer = _renderer;
         this.theme = theme;
         this.elementRef = elementRef;
         this.cd = cd;
-        this._ngZone = _ngZone;
         /**
          * styles
          * @docs-private
@@ -449,7 +447,7 @@ let LyResizingCroppingImages = class LyResizingCroppingImages {
             img.onload = () => setTimeout(() => {
                 obs.next(null);
                 obs.complete();
-            }, 1);
+            }, 0);
         })
             .subscribe({
             next: () => {
@@ -458,10 +456,10 @@ let LyResizingCroppingImages = class LyResizingCroppingImages {
                 cropEvent.height = img.height;
                 this._isLoadedImg = true;
                 this.cd.markForCheck();
-                this._ngZone
-                    .onStable
-                    .pipe(take(1))
-                    .subscribe(() => this._ngZone.run(() => {
+                this.cd.detectChanges();
+                Promise.resolve(null).then(() => {
+                    // ...
+                    this._updateMinScale(this._imgCanvas.nativeElement);
                     this.isLoaded = false;
                     if (fn) {
                         fn();
@@ -473,7 +471,7 @@ let LyResizingCroppingImages = class LyResizingCroppingImages {
                     this.isLoaded = true;
                     this._cropIfAutoCrop();
                     this.cd.markForCheck();
-                }));
+                });
                 this._listeners.delete(loadListen);
                 this.ngOnDestroy();
             },
@@ -655,7 +653,7 @@ let LyResizingCroppingImages = class LyResizingCroppingImages {
     }
 };
 __decorate([
-    ViewChild('_imgContainer', { static: false }),
+    ViewChild('_imgContainer', { static: true }),
     __metadata("design:type", ElementRef)
 ], LyResizingCroppingImages.prototype, "_imgContainer", void 0);
 __decorate([
@@ -663,7 +661,7 @@ __decorate([
     __metadata("design:type", ElementRef)
 ], LyResizingCroppingImages.prototype, "_croppingContainer", void 0);
 __decorate([
-    ViewChild('_imgCanvas', { static: false }),
+    ViewChild('_imgCanvas', { static: true }),
     __metadata("design:type", ElementRef)
 ], LyResizingCroppingImages.prototype, "_imgCanvas", void 0);
 __decorate([
@@ -712,8 +710,7 @@ LyResizingCroppingImages = __decorate([
     __metadata("design:paramtypes", [Renderer2,
         LyTheme2,
         ElementRef,
-        ChangeDetectorRef,
-        NgZone])
+        ChangeDetectorRef])
 ], LyResizingCroppingImages);
 /**
  * convertToValidDegrees(45) === 90
