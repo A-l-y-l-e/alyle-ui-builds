@@ -443,8 +443,8 @@ var MinimaLight = /** @class */ (function (_super) {
             shadow: shadow
         };
         _this.disabled = {
-            default: 'rgba(0, 0, 0, 0.12)',
-            contrast: 'rgba(0, 0, 0, 0.26)'
+            default: 'rgba(0, 0, 0, 0.27)',
+            contrast: 'rgba(0, 0, 0, 0.41)'
         };
         _this.text = {
             default: 'rgba(0, 0, 0, 0.87)',

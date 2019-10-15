@@ -429,8 +429,8 @@ class MinimaLight extends MinimaBase {
             shadow
         };
         this.disabled = {
-            default: 'rgba(0, 0, 0, 0.12)',
-            contrast: 'rgba(0, 0, 0, 0.26)'
+            default: 'rgba(0, 0, 0, 0.27)',
+            contrast: 'rgba(0, 0, 0, 0.41)'
         };
         this.text = {
             default: 'rgba(0, 0, 0, 0.87)',
