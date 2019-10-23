@@ -1,6 +1,6 @@
 import { __decorate, __metadata, __param } from 'tslib';
 import { trigger, transition, animate, keyframes, style } from '@angular/animations';
-import { ViewChild, TemplateRef, ElementRef, forwardRef, QueryList, ContentChildren, HostListener, Input, Component, ChangeDetectionStrategy, Optional, Self, Renderer2, ChangeDetectorRef, NgZone, Host, NgModule } from '@angular/core';
+import { Directive, ViewChild, TemplateRef, ElementRef, forwardRef, QueryList, ContentChildren, ContentChild, HostListener, Input, Component, ChangeDetectionStrategy, Optional, Self, Renderer2, ChangeDetectorRef, NgZone, Host, NgModule } from '@angular/core';
 import { NgControl, NgForm, FormGroupDirective } from '@angular/forms';
 import { STYLES as STYLES$1, LyFieldControlBase, LyField } from '@alyle/ui/field';
 import { shadowBuilder, mixinTabIndex, toBoolean, Dir, LySelectionModel, Positioning, YPosition, XPosition, LyTheme2, LyOverlay, mixinStyleUpdater, mixinBg, mixinColor, mixinRaised, mixinDisabled, mixinOutlined, mixinElevation, mixinShadowColor, mixinDisableRipple, LyRippleService, LyCommonModule, LyOverlayModule } from '@alyle/ui';
@@ -101,6 +101,16 @@ class LySelectBase {
 }
 /** @docs-private */
 const LySelectMixinBase = mixinTabIndex(LySelectBase);
+/**
+ * Allows the user to customize the trigger that is displayed when the select has a value.
+ */
+let LySelectTrigger = class LySelectTrigger {
+};
+LySelectTrigger = __decorate([
+    Directive({
+        selector: 'ly-select-trigger'
+    })
+], LySelectTrigger);
 let LySelect = LySelect_1 = class LySelect extends LySelectMixinBase {
     constructor(_theme, _renderer, _el, _overlay, 
     /** @internal */
@@ -487,7 +497,7 @@ let LySelect = LySelect_1 = class LySelect extends LySelectMixinBase {
     }
 };
 __decorate([
-    ViewChild(TemplateRef, { static: false }),
+    ViewChild('templateRef', { static: false }),
     __metadata("design:type", TemplateRef)
 ], LySelect.prototype, "templateRef", void 0);
 __decorate([
@@ -502,6 +512,10 @@ __decorate([
     ContentChildren(forwardRef(() => LyOption), { descendants: true }),
     __metadata("design:type", QueryList)
 ], LySelect.prototype, "options", void 0);
+__decorate([
+    ContentChild(LySelectTrigger, { static: false }),
+    __metadata("design:type", LySelectTrigger)
+], LySelect.prototype, "customTrigger", void 0);
 __decorate([
     HostListener('blur'),
     __metadata("design:type", Function),
@@ -547,7 +561,7 @@ __decorate([
 LySelect = LySelect_1 = __decorate([
     Component({
         selector: 'ly-select',
-        template: "<div [className]=\"classes.valueText\" #valueText>{{ empty ? '\\u00A0' : triggerValue }}</div>\n<ng-template>\n  <div #container [className]=\"classes.container\" [@selectEnter]=\"'in'\" (@selectLeave.done)=\"_endAnimation($event)\">\n    <ng-content></ng-content>\n  </div>\n</ng-template>",
+        template: "<div #valueText [ngSwitch]=\"empty\">\n  <div [className]=\"classes.valueText\" *ngSwitchCase=\"true\">{{ '\\u00A0' }}</div>\n  <div [className]=\"classes.valueText\" *ngSwitchDefault [ngSwitch]=\"!!customTrigger\">\n    <span *ngSwitchDefault>{{ triggerValue || '\\u00A0' }}</span>\n    <ng-content select=\"ly-select-trigger\" *ngSwitchCase=\"true\"></ng-content>\n  </div>\n</div>\n\n<ng-template #templateRef>\n  <div #container [className]=\"classes.container\" [@selectEnter]=\"'in'\" (@selectLeave.done)=\"_endAnimation($event)\">\n    <ng-content></ng-content>\n  </div>\n</ng-template>",
         changeDetection: ChangeDetectionStrategy.OnPush,
         exportAs: 'lySelect',
         host: {
@@ -750,16 +764,16 @@ let LySelectModule = class LySelectModule {
 };
 LySelectModule = __decorate([
     NgModule({
-        declarations: [LySelect, LyOption],
+        declarations: [LySelect, LyOption, LySelectTrigger],
         imports: [
             CommonModule,
             LyCommonModule,
             LyCheckboxModule,
             LyOverlayModule
         ],
-        exports: [LySelect, LyOption, LyCommonModule]
+        exports: [LySelect, LyOption, LySelectTrigger, LyCommonModule]
     })
 ], LySelectModule);
 
-export { LyOption, LyOptionBase, LyOptionMixinBase, LySelect, LySelectBase, LySelectMixinBase, LySelectModule, STYLES };
+export { LyOption, LyOptionBase, LyOptionMixinBase, LySelect, LySelectBase, LySelectMixinBase, LySelectModule, LySelectTrigger, STYLES };
 //# sourceMappingURL=alyle-ui-select.js.map

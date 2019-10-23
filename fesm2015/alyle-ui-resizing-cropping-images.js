@@ -1,7 +1,8 @@
 import { __decorate, __metadata } from 'tslib';
-import { EventEmitter, ViewChild, ElementRef, Input, Output, HostListener, Component, ChangeDetectionStrategy, Renderer2, ChangeDetectorRef, NgModule } from '@angular/core';
+import { EventEmitter, ViewChild, ElementRef, Input, Output, HostListener, Component, ChangeDetectionStrategy, Renderer2, ChangeDetectorRef, NgZone, NgModule } from '@angular/core';
 import { mergeDeep, LyTheme2, LY_COMMON_STYLES, LyHammerGestureConfig } from '@alyle/ui';
 import { Observable } from 'rxjs';
+import { take } from 'rxjs/operators';
 import { HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 
@@ -83,11 +84,12 @@ const CONFIG_DEFAULT = {
     antiAliased: true
 };
 let LyResizingCroppingImages = class LyResizingCroppingImages {
-    constructor(_renderer, theme, elementRef, cd) {
+    constructor(_renderer, theme, elementRef, cd, _ngZone) {
         this._renderer = _renderer;
         this.theme = theme;
         this.elementRef = elementRef;
         this.cd = cd;
+        this._ngZone = _ngZone;
         /**
          * styles
          * @docs-private
@@ -156,6 +158,8 @@ let LyResizingCroppingImages = class LyResizingCroppingImages {
         newStyles.transform = `translate3d(${(this._imgRect.x)}px,${(this._imgRect.y)}px, 0)`;
         newStyles.transform += `scale(${this._scal3Fix})`;
         newStyles.transformOrigin = `${this._imgRect.xc}px ${this._imgRect.yc}px 0`;
+        newStyles['-webkit-transform'] = newStyles.transform;
+        newStyles['-webkit-transform-origin'] = newStyles.transformOrigin;
         for (const key in newStyles) {
             if (newStyles.hasOwnProperty(key)) {
                 this._renderer.setStyle(this._imgContainer.nativeElement, key, newStyles[key]);
@@ -427,7 +431,7 @@ let LyResizingCroppingImages = class LyResizingCroppingImages {
     setImageUrl(src, fn) {
         this.clean();
         this._originalImgBase64 = src;
-        const img = new Image;
+        const img = new Image();
         const fileSize = this._sizeInBytes;
         const fileName = this._fileName;
         const defaultType = this._defaultType;
@@ -456,9 +460,10 @@ let LyResizingCroppingImages = class LyResizingCroppingImages {
                 cropEvent.height = img.height;
                 this._isLoadedImg = true;
                 this.cd.markForCheck();
-                this.cd.detectChanges();
-                Promise.resolve(null).then(() => {
-                    // ...
+                this._ngZone
+                    .onStable
+                    .pipe(take(1))
+                    .subscribe(() => this._ngZone.run(() => {
                     this._updateMinScale(this._imgCanvas.nativeElement);
                     this.isLoaded = false;
                     if (fn) {
@@ -471,7 +476,7 @@ let LyResizingCroppingImages = class LyResizingCroppingImages {
                     this.isLoaded = true;
                     this._cropIfAutoCrop();
                     this.cd.markForCheck();
-                });
+                }));
                 this._listeners.delete(loadListen);
                 this.ngOnDestroy();
             },
@@ -497,14 +502,18 @@ let LyResizingCroppingImages = class LyResizingCroppingImages {
         // clear
         ctx.clearRect(0, 0, canvasClon.width, canvasClon.height);
         // rotate canvas image
-        this._renderer.setStyle(canvas, 'transform', `rotate(${validDegrees}deg) scale(${1 / this._scal3Fix})`);
-        this._renderer.setStyle(canvas, 'transformOrigin', `${this._imgRect.xc}px ${this._imgRect.yc}px 0`);
+        const transform = `rotate(${validDegrees}deg) scale(${1 / this._scal3Fix})`;
+        const transformOrigin = `${this._imgRect.xc}px ${this._imgRect.yc}px 0`;
+        canvas.style.transform = transform;
+        canvas.style.webkitTransform = transform;
+        canvas.style.transformOrigin = transformOrigin;
+        canvas.style.webkitTransformOrigin = transformOrigin;
         const { x, y } = canvas.getBoundingClientRect();
+        console.log(transform, transformOrigin, Object.assign({}, this._imgRect));
         // save rect
         const canvasRect = canvas.getBoundingClientRect();
         // remove rotate styles
-        this._renderer.removeStyle(canvas, 'transform');
-        this._renderer.removeStyle(canvas, 'transformOrigin');
+        canvas.removeAttribute('style');
         // set w & h
         const w = canvasRect.width;
         const h = canvasRect.height;
@@ -710,7 +719,8 @@ LyResizingCroppingImages = __decorate([
     __metadata("design:paramtypes", [Renderer2,
         LyTheme2,
         ElementRef,
-        ChangeDetectorRef])
+        ChangeDetectorRef,
+        NgZone])
 ], LyResizingCroppingImages);
 /**
  * convertToValidDegrees(45) === 90

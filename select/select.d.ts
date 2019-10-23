@@ -72,6 +72,11 @@ export declare class LySelectBase {
 }
 /** @docs-private */
 export declare const LySelectMixinBase: import("@alyle/ui/src/common/constructor").Constructor<import("@alyle/ui/alyle-ui").HasTabIndex> & import("@alyle/ui/src/common/constructor").Constructor<import("@alyle/ui/alyle-ui").CanDisable>;
+/**
+ * Allows the user to customize the trigger that is displayed when the select has a value.
+ */
+export declare class LySelectTrigger {
+}
 export declare class LySelect extends LySelectMixinBase implements ControlValueAccessor, LyFieldControlBase, OnInit, DoCheck, AfterContentInit, AfterViewInit, OnDestroy {
     private _theme;
     private _renderer;
@@ -114,6 +119,7 @@ export declare class LySelect extends LySelectMixinBase implements ControlValueA
     /** @internal */
     _options: QueryList<LyOption>;
     options: QueryList<LyOption>;
+    customTrigger: LySelectTrigger;
     /**
      * The registered callback function called when a change event occurs on the input element.
      */

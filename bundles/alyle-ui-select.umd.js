@@ -165,6 +165,19 @@
     }());
     /** @docs-private */
     var LySelectMixinBase = ui.mixinTabIndex(LySelectBase);
+    /**
+     * Allows the user to customize the trigger that is displayed when the select has a value.
+     */
+    var LySelectTrigger = /** @class */ (function () {
+        function LySelectTrigger() {
+        }
+        LySelectTrigger = __decorate([
+            core.Directive({
+                selector: 'ly-select-trigger'
+            })
+        ], LySelectTrigger);
+        return LySelectTrigger;
+    }());
     var LySelect = /** @class */ (function (_super) {
         __extends(LySelect, _super);
         function LySelect(_theme, _renderer, _el, _overlay, 
@@ -604,7 +617,7 @@
         };
         var LySelect_1;
         __decorate([
-            core.ViewChild(core.TemplateRef, { static: false }),
+            core.ViewChild('templateRef', { static: false }),
             __metadata("design:type", core.TemplateRef)
         ], LySelect.prototype, "templateRef", void 0);
         __decorate([
@@ -619,6 +632,10 @@
             core.ContentChildren(core.forwardRef(function () { return LyOption; }), { descendants: true }),
             __metadata("design:type", core.QueryList)
         ], LySelect.prototype, "options", void 0);
+        __decorate([
+            core.ContentChild(LySelectTrigger, { static: false }),
+            __metadata("design:type", LySelectTrigger)
+        ], LySelect.prototype, "customTrigger", void 0);
         __decorate([
             core.HostListener('blur'),
             __metadata("design:type", Function),
@@ -664,7 +681,7 @@
         LySelect = LySelect_1 = __decorate([
             core.Component({
                 selector: 'ly-select',
-                template: "<div [className]=\"classes.valueText\" #valueText>{{ empty ? '\\u00A0' : triggerValue }}</div>\n<ng-template>\n  <div #container [className]=\"classes.container\" [@selectEnter]=\"'in'\" (@selectLeave.done)=\"_endAnimation($event)\">\n    <ng-content></ng-content>\n  </div>\n</ng-template>",
+                template: "<div #valueText [ngSwitch]=\"empty\">\n  <div [className]=\"classes.valueText\" *ngSwitchCase=\"true\">{{ '\\u00A0' }}</div>\n  <div [className]=\"classes.valueText\" *ngSwitchDefault [ngSwitch]=\"!!customTrigger\">\n    <span *ngSwitchDefault>{{ triggerValue || '\\u00A0' }}</span>\n    <ng-content select=\"ly-select-trigger\" *ngSwitchCase=\"true\"></ng-content>\n  </div>\n</div>\n\n<ng-template #templateRef>\n  <div #container [className]=\"classes.container\" [@selectEnter]=\"'in'\" (@selectLeave.done)=\"_endAnimation($event)\">\n    <ng-content></ng-content>\n  </div>\n</ng-template>",
                 changeDetection: core.ChangeDetectionStrategy.OnPush,
                 exportAs: 'lySelect',
                 host: {
@@ -890,14 +907,14 @@
         }
         LySelectModule = __decorate([
             core.NgModule({
-                declarations: [LySelect, LyOption],
+                declarations: [LySelect, LyOption, LySelectTrigger],
                 imports: [
                     common.CommonModule,
                     ui.LyCommonModule,
                     checkbox.LyCheckboxModule,
                     ui.LyOverlayModule
                 ],
-                exports: [LySelect, LyOption, ui.LyCommonModule]
+                exports: [LySelect, LyOption, LySelectTrigger, ui.LyCommonModule]
             })
         ], LySelectModule);
         return LySelectModule;
@@ -910,6 +927,7 @@
     exports.LySelectBase = LySelectBase;
     exports.LySelectMixinBase = LySelectMixinBase;
     exports.LySelectModule = LySelectModule;
+    exports.LySelectTrigger = LySelectTrigger;
     exports.STYLES = STYLES;
 
     Object.defineProperty(exports, '__esModule', { value: true });

@@ -1,8 +1,8 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@alyle/ui'), require('rxjs'), require('@angular/platform-browser'), require('@angular/common')) :
-    typeof define === 'function' && define.amd ? define('@alyle/ui/resizing-cropping-images', ['exports', '@angular/core', '@alyle/ui', 'rxjs', '@angular/platform-browser', '@angular/common'], factory) :
-    (global = global || self, factory((global.ly = global.ly || {}, global.ly['resizing-Cropping-Images'] = {}), global.ng.core, global.ly.core, global.rxjs, global.ng.platformBrowser, global.ng.common));
-}(this, function (exports, core, ui, rxjs, platformBrowser, common) { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@alyle/ui'), require('rxjs'), require('rxjs/operators'), require('@angular/platform-browser'), require('@angular/common')) :
+    typeof define === 'function' && define.amd ? define('@alyle/ui/resizing-cropping-images', ['exports', '@angular/core', '@alyle/ui', 'rxjs', 'rxjs/operators', '@angular/platform-browser', '@angular/common'], factory) :
+    (global = global || self, factory((global.ly = global.ly || {}, global.ly['resizing-Cropping-Images'] = {}), global.ng.core, global.ly.core, global.rxjs, global.rxjs.operators, global.ng.platformBrowser, global.ng.common));
+}(this, function (exports, core, ui, rxjs, operators, platformBrowser, common) { 'use strict';
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
@@ -119,11 +119,12 @@
         antiAliased: true
     };
     var LyResizingCroppingImages = /** @class */ (function () {
-        function LyResizingCroppingImages(_renderer, theme, elementRef, cd) {
+        function LyResizingCroppingImages(_renderer, theme, elementRef, cd, _ngZone) {
             this._renderer = _renderer;
             this.theme = theme;
             this.elementRef = elementRef;
             this.cd = cd;
+            this._ngZone = _ngZone;
             /**
              * styles
              * @docs-private
@@ -204,6 +205,8 @@
             newStyles.transform = "translate3d(" + (this._imgRect.x) + "px," + (this._imgRect.y) + "px, 0)";
             newStyles.transform += "scale(" + this._scal3Fix + ")";
             newStyles.transformOrigin = this._imgRect.xc + "px " + this._imgRect.yc + "px 0";
+            newStyles['-webkit-transform'] = newStyles.transform;
+            newStyles['-webkit-transform-origin'] = newStyles.transformOrigin;
             for (var key in newStyles) {
                 if (newStyles.hasOwnProperty(key)) {
                     this._renderer.setStyle(this._imgContainer.nativeElement, key, newStyles[key]);
@@ -477,7 +480,7 @@
             var _this = this;
             this.clean();
             this._originalImgBase64 = src;
-            var img = new Image;
+            var img = new Image();
             var fileSize = this._sizeInBytes;
             var fileName = this._fileName;
             var defaultType = this._defaultType;
@@ -506,9 +509,10 @@
                     cropEvent.height = img.height;
                     _this._isLoadedImg = true;
                     _this.cd.markForCheck();
-                    _this.cd.detectChanges();
-                    Promise.resolve(null).then(function () {
-                        // ...
+                    _this._ngZone
+                        .onStable
+                        .pipe(operators.take(1))
+                        .subscribe(function () { return _this._ngZone.run(function () {
                         _this._updateMinScale(_this._imgCanvas.nativeElement);
                         _this.isLoaded = false;
                         if (fn) {
@@ -521,7 +525,7 @@
                         _this.isLoaded = true;
                         _this._cropIfAutoCrop();
                         _this.cd.markForCheck();
-                    });
+                    }); });
                     _this._listeners.delete(loadListen);
                     _this.ngOnDestroy();
                 },
@@ -547,14 +551,18 @@
             // clear
             ctx.clearRect(0, 0, canvasClon.width, canvasClon.height);
             // rotate canvas image
-            this._renderer.setStyle(canvas, 'transform', "rotate(" + validDegrees + "deg) scale(" + 1 / this._scal3Fix + ")");
-            this._renderer.setStyle(canvas, 'transformOrigin', this._imgRect.xc + "px " + this._imgRect.yc + "px 0");
+            var transform = "rotate(" + validDegrees + "deg) scale(" + 1 / this._scal3Fix + ")";
+            var transformOrigin = this._imgRect.xc + "px " + this._imgRect.yc + "px 0";
+            canvas.style.transform = transform;
+            canvas.style.webkitTransform = transform;
+            canvas.style.transformOrigin = transformOrigin;
+            canvas.style.webkitTransformOrigin = transformOrigin;
             var _a = canvas.getBoundingClientRect(), x = _a.x, y = _a.y;
+            console.log(transform, transformOrigin, __assign({}, this._imgRect));
             // save rect
             var canvasRect = canvas.getBoundingClientRect();
             // remove rotate styles
-            this._renderer.removeStyle(canvas, 'transform');
-            this._renderer.removeStyle(canvas, 'transformOrigin');
+            canvas.removeAttribute('style');
             // set w & h
             var w = canvasRect.width;
             var h = canvasRect.height;
@@ -759,7 +767,8 @@
             __metadata("design:paramtypes", [core.Renderer2,
                 ui.LyTheme2,
                 core.ElementRef,
-                core.ChangeDetectorRef])
+                core.ChangeDetectorRef,
+                core.NgZone])
         ], LyResizingCroppingImages);
         return LyResizingCroppingImages;
     }());

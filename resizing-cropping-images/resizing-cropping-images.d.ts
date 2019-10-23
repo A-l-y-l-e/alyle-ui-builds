@@ -1,4 +1,4 @@
-import { ElementRef, ChangeDetectorRef, EventEmitter, Renderer2, OnDestroy } from '@angular/core';
+import { ElementRef, ChangeDetectorRef, EventEmitter, Renderer2, OnDestroy, NgZone } from '@angular/core';
 import { LyTheme2 } from '@alyle/ui';
 /** Image Cropper Config */
 export interface ImgCropperConfig {
@@ -75,6 +75,7 @@ export declare class LyResizingCroppingImages implements OnDestroy {
     private theme;
     private elementRef;
     private cd;
+    private _ngZone;
     /**
      * styles
      * @docs-private
@@ -122,7 +123,7 @@ export declare class LyResizingCroppingImages implements OnDestroy {
     /** Emit an error when the loaded image is not valid */
     readonly error: EventEmitter<ImgCropperErrorEvent>;
     private _defaultType?;
-    constructor(_renderer: Renderer2, theme: LyTheme2, elementRef: ElementRef<HTMLElement>, cd: ChangeDetectorRef);
+    constructor(_renderer: Renderer2, theme: LyTheme2, elementRef: ElementRef<HTMLElement>, cd: ChangeDetectorRef, _ngZone: NgZone);
     ngOnDestroy(): void;
     private _imgLoaded;
     private _setStylesForContImg;

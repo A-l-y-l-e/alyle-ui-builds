@@ -1,7 +1,8 @@
 import { __assign, __decorate, __metadata } from 'tslib';
-import { ViewChild, ElementRef, Input, Output, HostListener, Component, ChangeDetectionStrategy, Renderer2, ChangeDetectorRef, EventEmitter, NgModule } from '@angular/core';
+import { ViewChild, ElementRef, Input, Output, HostListener, Component, ChangeDetectionStrategy, Renderer2, ChangeDetectorRef, NgZone, EventEmitter, NgModule } from '@angular/core';
 import { mergeDeep, LyTheme2, LY_COMMON_STYLES, LyHammerGestureConfig } from '@alyle/ui';
 import { Observable } from 'rxjs';
+import { take } from 'rxjs/operators';
 import { HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 
@@ -83,11 +84,12 @@ var CONFIG_DEFAULT = {
     antiAliased: true
 };
 var LyResizingCroppingImages = /** @class */ (function () {
-    function LyResizingCroppingImages(_renderer, theme, elementRef, cd) {
+    function LyResizingCroppingImages(_renderer, theme, elementRef, cd, _ngZone) {
         this._renderer = _renderer;
         this.theme = theme;
         this.elementRef = elementRef;
         this.cd = cd;
+        this._ngZone = _ngZone;
         /**
          * styles
          * @docs-private
@@ -168,6 +170,8 @@ var LyResizingCroppingImages = /** @class */ (function () {
         newStyles.transform = "translate3d(" + (this._imgRect.x) + "px," + (this._imgRect.y) + "px, 0)";
         newStyles.transform += "scale(" + this._scal3Fix + ")";
         newStyles.transformOrigin = this._imgRect.xc + "px " + this._imgRect.yc + "px 0";
+        newStyles['-webkit-transform'] = newStyles.transform;
+        newStyles['-webkit-transform-origin'] = newStyles.transformOrigin;
         for (var key in newStyles) {
             if (newStyles.hasOwnProperty(key)) {
                 this._renderer.setStyle(this._imgContainer.nativeElement, key, newStyles[key]);
@@ -441,7 +445,7 @@ var LyResizingCroppingImages = /** @class */ (function () {
         var _this = this;
         this.clean();
         this._originalImgBase64 = src;
-        var img = new Image;
+        var img = new Image();
         var fileSize = this._sizeInBytes;
         var fileName = this._fileName;
         var defaultType = this._defaultType;
@@ -470,9 +474,10 @@ var LyResizingCroppingImages = /** @class */ (function () {
                 cropEvent.height = img.height;
                 _this._isLoadedImg = true;
                 _this.cd.markForCheck();
-                _this.cd.detectChanges();
-                Promise.resolve(null).then(function () {
-                    // ...
+                _this._ngZone
+                    .onStable
+                    .pipe(take(1))
+                    .subscribe(function () { return _this._ngZone.run(function () {
                     _this._updateMinScale(_this._imgCanvas.nativeElement);
                     _this.isLoaded = false;
                     if (fn) {
@@ -485,7 +490,7 @@ var LyResizingCroppingImages = /** @class */ (function () {
                     _this.isLoaded = true;
                     _this._cropIfAutoCrop();
                     _this.cd.markForCheck();
-                });
+                }); });
                 _this._listeners.delete(loadListen);
                 _this.ngOnDestroy();
             },
@@ -511,14 +516,18 @@ var LyResizingCroppingImages = /** @class */ (function () {
         // clear
         ctx.clearRect(0, 0, canvasClon.width, canvasClon.height);
         // rotate canvas image
-        this._renderer.setStyle(canvas, 'transform', "rotate(" + validDegrees + "deg) scale(" + 1 / this._scal3Fix + ")");
-        this._renderer.setStyle(canvas, 'transformOrigin', this._imgRect.xc + "px " + this._imgRect.yc + "px 0");
+        var transform = "rotate(" + validDegrees + "deg) scale(" + 1 / this._scal3Fix + ")";
+        var transformOrigin = this._imgRect.xc + "px " + this._imgRect.yc + "px 0";
+        canvas.style.transform = transform;
+        canvas.style.webkitTransform = transform;
+        canvas.style.transformOrigin = transformOrigin;
+        canvas.style.webkitTransformOrigin = transformOrigin;
         var _a = canvas.getBoundingClientRect(), x = _a.x, y = _a.y;
+        console.log(transform, transformOrigin, __assign({}, this._imgRect));
         // save rect
         var canvasRect = canvas.getBoundingClientRect();
         // remove rotate styles
-        this._renderer.removeStyle(canvas, 'transform');
-        this._renderer.removeStyle(canvas, 'transformOrigin');
+        canvas.removeAttribute('style');
         // set w & h
         var w = canvasRect.width;
         var h = canvasRect.height;
@@ -723,7 +732,8 @@ var LyResizingCroppingImages = /** @class */ (function () {
         __metadata("design:paramtypes", [Renderer2,
             LyTheme2,
             ElementRef,
-            ChangeDetectorRef])
+            ChangeDetectorRef,
+            NgZone])
     ], LyResizingCroppingImages);
     return LyResizingCroppingImages;
 }());
