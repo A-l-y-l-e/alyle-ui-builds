@@ -146,8 +146,8 @@ let LyResizingCroppingImages = class LyResizingCroppingImages {
     }
     _setStylesForContImg(values) {
         const newStyles = {};
-        const rootRect = this._rootRect();
         if (values.x !== void 0 && values.y !== void 0) {
+            const rootRect = this._rootRect();
             const x = rootRect.width / 2 - (values.x);
             const y = rootRect.height / 2 - (values.y);
             this._imgRect.x = (values.x);
@@ -365,8 +365,8 @@ let LyResizingCroppingImages = class LyResizingCroppingImages {
             x = this._imgRect.xc;
             y = this._imgRect.yc;
         }
-        x = (croppingContainerRect.x - hostRect.x) - (x - (this.config.width / 2));
-        y = (croppingContainerRect.y - hostRect.y) - (y - (this.config.height / 2));
+        x = (croppingContainerRect.left - hostRect.left) - (x - (this.config.width / 2));
+        y = (croppingContainerRect.top - hostRect.top) - (y - (this.config.height / 2));
         this._setStylesForContImg({
             x, y
         });
@@ -448,10 +448,10 @@ let LyResizingCroppingImages = class LyResizingCroppingImages {
         const loadListen = new Observable(obs => {
             img.onerror = err => obs.error(err);
             img.onabort = err => obs.error(err);
-            img.onload = () => setTimeout(() => {
+            img.onload = () => {
                 obs.next(null);
                 obs.complete();
-            }, 0);
+            };
         })
             .subscribe({
             next: () => {
@@ -463,7 +463,7 @@ let LyResizingCroppingImages = class LyResizingCroppingImages {
                 this._ngZone
                     .onStable
                     .pipe(take(1))
-                    .subscribe(() => this._ngZone.run(() => {
+                    .subscribe(() => setTimeout(() => this._ngZone.run(() => {
                     this._updateMinScale(this._imgCanvas.nativeElement);
                     this.isLoaded = false;
                     if (fn) {
@@ -476,7 +476,7 @@ let LyResizingCroppingImages = class LyResizingCroppingImages {
                     this.isLoaded = true;
                     this._cropIfAutoCrop();
                     this.cd.markForCheck();
-                }));
+                }), 0));
                 this._listeners.delete(loadListen);
                 this.ngOnDestroy();
             },
@@ -508,8 +508,7 @@ let LyResizingCroppingImages = class LyResizingCroppingImages {
         canvas.style.webkitTransform = transform;
         canvas.style.transformOrigin = transformOrigin;
         canvas.style.webkitTransformOrigin = transformOrigin;
-        const { x, y } = canvas.getBoundingClientRect();
-        console.log(transform, transformOrigin, Object.assign({}, this._imgRect));
+        const { left, top } = canvas.getBoundingClientRect();
         // save rect
         const canvasRect = canvas.getBoundingClientRect();
         // remove rotate styles
@@ -533,8 +532,8 @@ let LyResizingCroppingImages = class LyResizingCroppingImages {
         } //                ↑ no AutoCrop
         const rootRect = this._rootRect();
         this._setStylesForContImg({
-            x: (x - rootRect.x),
-            y: (y - rootRect.y)
+            x: (left - rootRect.left),
+            y: (top - rootRect.top)
         });
         // keep image inside the frame
         const originPosition = Object.assign({}, this._imgRect);

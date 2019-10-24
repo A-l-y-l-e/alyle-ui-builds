@@ -193,8 +193,8 @@
         };
         LyResizingCroppingImages.prototype._setStylesForContImg = function (values) {
             var newStyles = {};
-            var rootRect = this._rootRect();
             if (values.x !== void 0 && values.y !== void 0) {
+                var rootRect = this._rootRect();
                 var x = rootRect.width / 2 - (values.x);
                 var y = rootRect.height / 2 - (values.y);
                 this._imgRect.x = (values.x);
@@ -413,8 +413,8 @@
                 x = this._imgRect.xc;
                 y = this._imgRect.yc;
             }
-            x = (croppingContainerRect.x - hostRect.x) - (x - (this.config.width / 2));
-            y = (croppingContainerRect.y - hostRect.y) - (y - (this.config.height / 2));
+            x = (croppingContainerRect.left - hostRect.left) - (x - (this.config.width / 2));
+            y = (croppingContainerRect.top - hostRect.top) - (y - (this.config.height / 2));
             this._setStylesForContImg({
                 x: x, y: y
             });
@@ -497,10 +497,10 @@
             var loadListen = new rxjs.Observable(function (obs) {
                 img.onerror = function (err) { return obs.error(err); };
                 img.onabort = function (err) { return obs.error(err); };
-                img.onload = function () { return setTimeout(function () {
+                img.onload = function () {
                     obs.next(null);
                     obs.complete();
-                }, 0); };
+                };
             })
                 .subscribe({
                 next: function () {
@@ -512,7 +512,7 @@
                     _this._ngZone
                         .onStable
                         .pipe(operators.take(1))
-                        .subscribe(function () { return _this._ngZone.run(function () {
+                        .subscribe(function () { return setTimeout(function () { return _this._ngZone.run(function () {
                         _this._updateMinScale(_this._imgCanvas.nativeElement);
                         _this.isLoaded = false;
                         if (fn) {
@@ -525,7 +525,7 @@
                         _this.isLoaded = true;
                         _this._cropIfAutoCrop();
                         _this.cd.markForCheck();
-                    }); });
+                    }); }, 0); });
                     _this._listeners.delete(loadListen);
                     _this.ngOnDestroy();
                 },
@@ -557,8 +557,7 @@
             canvas.style.webkitTransform = transform;
             canvas.style.transformOrigin = transformOrigin;
             canvas.style.webkitTransformOrigin = transformOrigin;
-            var _a = canvas.getBoundingClientRect(), x = _a.x, y = _a.y;
-            console.log(transform, transformOrigin, __assign({}, this._imgRect));
+            var _a = canvas.getBoundingClientRect(), left = _a.left, top = _a.top;
             // save rect
             var canvasRect = canvas.getBoundingClientRect();
             // remove rotate styles
@@ -582,8 +581,8 @@
             } //                ↑ no AutoCrop
             var rootRect = this._rootRect();
             this._setStylesForContImg({
-                x: (x - rootRect.x),
-                y: (y - rootRect.y)
+                x: (left - rootRect.left),
+                y: (top - rootRect.top)
             });
             // keep image inside the frame
             var originPosition = __assign({}, this._imgRect);
