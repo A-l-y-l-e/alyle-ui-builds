@@ -61,7 +61,10 @@ var STYLES = function (theme) { return ({
     },
     optionText: {
         'ly-checkbox ~ &': {
-            marginBefore: '-16px'
+            marginBefore: '-16px',
+            display: 'flex',
+            alignItems: 'inherit',
+            alignContent: 'inherit'
         }
     },
     content: {

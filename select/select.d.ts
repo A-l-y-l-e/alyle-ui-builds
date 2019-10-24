@@ -54,6 +54,9 @@ export declare const STYLES: (theme: ThemeVariables) => {
     optionText: {
         'ly-checkbox ~ &': {
             marginBefore: string;
+            display: string;
+            alignItems: string;
+            alignContent: string;
         };
     };
     content: {
