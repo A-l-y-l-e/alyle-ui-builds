@@ -431,17 +431,16 @@ let LyResizingCroppingImages = class LyResizingCroppingImages {
     setImageUrl(src, fn) {
         this.clean();
         this._originalImgBase64 = src;
-        const img = new Image();
+        src = normalizeSVG(src);
+        const img = createHtmlImg(src);
         const fileSize = this._sizeInBytes;
         const fileName = this._fileName;
         const defaultType = this._defaultType;
-        img.crossOrigin = 'anonymous';
         const cropEvent = {
             name: fileName,
             type: defaultType,
             originalDataURL: src
         };
-        img.src = src;
         if (fileSize) {
             cropEvent.size = fileSize;
         }
@@ -775,6 +774,36 @@ function createCanvasImg(img) {
     context.drawImage(img, 0, 0);
     // return the new canvas
     return newCanvas;
+}
+const DATA_IMAGE_SVG_PREFIX = 'data:image/svg+xml;base64,';
+function normalizeSVG(dataURL) {
+    if (window.atob && isSvgImage(dataURL)) {
+        const len = dataURL.length / 5;
+        const text = window.atob(dataURL.replace(DATA_IMAGE_SVG_PREFIX, ''));
+        const span = document.createElement('span');
+        span.innerHTML = text;
+        const svg = span.querySelector('svg');
+        span.setAttribute('style', 'display:none');
+        document.body.appendChild(span);
+        const width = parseFloat(getComputedStyle(svg).width) || 1;
+        const height = parseFloat(getComputedStyle(svg).height) || 1;
+        const max = Math.max(width, height);
+        svg.setAttribute('width', `${len / (width / max)}px`);
+        svg.setAttribute('height', `${len / (height / max)}px`);
+        const result = DATA_IMAGE_SVG_PREFIX + window.btoa(span.innerHTML);
+        document.body.removeChild(span);
+        return result;
+    }
+    return dataURL;
+}
+function isSvgImage(dataUrl) {
+    return dataUrl.startsWith(DATA_IMAGE_SVG_PREFIX);
+}
+function createHtmlImg(src) {
+    const img = new Image();
+    img.src = src;
+    img.crossOrigin = 'anonymous';
+    return img;
 }
 
 let LyResizingCroppingImageModule = class LyResizingCroppingImageModule {

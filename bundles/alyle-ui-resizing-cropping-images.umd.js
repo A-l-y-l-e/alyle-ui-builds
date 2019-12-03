@@ -480,17 +480,16 @@
             var _this = this;
             this.clean();
             this._originalImgBase64 = src;
-            var img = new Image();
+            src = normalizeSVG(src);
+            var img = createHtmlImg(src);
             var fileSize = this._sizeInBytes;
             var fileName = this._fileName;
             var defaultType = this._defaultType;
-            img.crossOrigin = 'anonymous';
             var cropEvent = {
                 name: fileName,
                 type: defaultType,
                 originalDataURL: src
             };
-            img.src = src;
             if (fileSize) {
                 cropEvent.size = fileSize;
             }
@@ -825,6 +824,36 @@
         context.drawImage(img, 0, 0);
         // return the new canvas
         return newCanvas;
+    }
+    var DATA_IMAGE_SVG_PREFIX = 'data:image/svg+xml;base64,';
+    function normalizeSVG(dataURL) {
+        if (window.atob && isSvgImage(dataURL)) {
+            var len = dataURL.length / 5;
+            var text = window.atob(dataURL.replace(DATA_IMAGE_SVG_PREFIX, ''));
+            var span = document.createElement('span');
+            span.innerHTML = text;
+            var svg = span.querySelector('svg');
+            span.setAttribute('style', 'display:none');
+            document.body.appendChild(span);
+            var width = parseFloat(getComputedStyle(svg).width) || 1;
+            var height = parseFloat(getComputedStyle(svg).height) || 1;
+            var max = Math.max(width, height);
+            svg.setAttribute('width', len / (width / max) + "px");
+            svg.setAttribute('height', len / (height / max) + "px");
+            var result = DATA_IMAGE_SVG_PREFIX + window.btoa(span.innerHTML);
+            document.body.removeChild(span);
+            return result;
+        }
+        return dataURL;
+    }
+    function isSvgImage(dataUrl) {
+        return dataUrl.startsWith(DATA_IMAGE_SVG_PREFIX);
+    }
+    function createHtmlImg(src) {
+        var img = new Image();
+        img.src = src;
+        img.crossOrigin = 'anonymous';
+        return img;
     }
 
     var LyResizingCroppingImageModule = /** @class */ (function () {
