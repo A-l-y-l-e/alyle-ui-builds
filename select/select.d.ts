@@ -1,20 +1,20 @@
 import { ChangeDetectorRef, DoCheck, ElementRef, OnDestroy, OnInit, Renderer2, TemplateRef, NgZone, OnChanges, QueryList, AfterViewInit, AfterContentInit } from '@angular/core';
 import { ControlValueAccessor, FormGroupDirective, NgControl, NgForm } from '@angular/forms';
 import { LyField, LyFieldControlBase } from '@alyle/ui/field';
-import { LyOverlay, LySelectionModel, LyTheme2, ThemeVariables, LyRippleService } from '@alyle/ui';
+import { LyOverlay, LySelectionModel, LyTheme2, LyRippleService, StyleCollection, LyClasses, StyleTemplate, ThemeRef } from '@alyle/ui';
 import { Subject } from 'rxjs';
-export declare const STYLES: (theme: ThemeVariables) => {
+export interface LySelectTheme {
+    /** Styles for Select Component */
+    root?: StyleCollection<((classes: LyClasses<typeof STYLES>) => StyleTemplate)> | ((classes: LyClasses<typeof STYLES>) => StyleTemplate);
+}
+export interface LySelectVariables {
+    select?: LySelectTheme;
+}
+export declare const STYLES: (theme: import("@alyle/ui/alyle-ui").LyStyleUtils & import("@alyle/ui/alyle-ui").ThemeConfig & LySelectVariables, ref: ThemeRef) => {
     $priority: number;
-    root: {
-        display: string;
-        paddingAfter: string;
-        minWidth: string;
-        minHeight: string;
-        '-webkit-tap-highlight-color': string;
-        '&': import("@alyle/ui/alyle-ui").StyleContainer;
-    };
+    root: () => (className: string) => string;
     container: {
-        background: string;
+        background: import("@alyle/ui/color").Color;
         borderRadius: string;
         boxShadow: string;
         display: string;
@@ -31,7 +31,7 @@ export declare const STYLES: (theme: ThemeVariables) => {
     option: {
         display: string;
         fontFamily: string;
-        color: string;
+        color: import("@alyle/ui/color").Color;
         '-webkit-tap-highlight-color': string;
         backgroundColor: string;
         border: number;
@@ -95,7 +95,15 @@ export declare class LySelect extends LySelectMixinBase implements ControlValueA
     private _parentForm;
     private _parentFormGroup;
     /** @docs-private */
-    readonly classes: Record<"root" | "container" | "valueText" | "option" | "optionText" | "content", string>;
+    readonly classes: Pick<{
+        $priority: string;
+        root: string;
+        container: string;
+        valueText: string;
+        option: string;
+        optionText: string;
+        content: string;
+    }, "root" | "container" | "valueText" | "option" | "optionText" | "content">;
     /** @internal */
     _selectionModel: LySelectionModel<LyOption>;
     /** @internal */
@@ -212,7 +220,15 @@ export declare class LyOption extends LyOptionMixinBase implements OnInit, OnCha
     /** @internal */
     _cd: ChangeDetectorRef;
     /** @docs-private */
-    readonly classes: Record<"root" | "container" | "valueText" | "option" | "optionText" | "content", string>;
+    readonly classes: Pick<{
+        $priority: string;
+        root: string;
+        container: string;
+        valueText: string;
+        option: string;
+        optionText: string;
+        content: string;
+    }, "root" | "container" | "valueText" | "option" | "optionText" | "content">;
     private _value;
     _rippleContainer: ElementRef;
     _onClick(): void;

@@ -1,41 +1,33 @@
-import { __decorate, __param, __metadata } from 'tslib';
-import { Directive, Inject, forwardRef, Renderer2, ElementRef, ContentChild, ViewChild, TemplateRef, Input, Component, ChangeDetectionStrategy, ViewContainerRef, ChangeDetectorRef, NgZone, NgModule } from '@angular/core';
-import { XPosition, LY_COMMON_STYLES, LyTheme2, toBoolean, eachMedia, DirPosition, YPosition, Platform, WinResize, LyCommonModule } from '@alyle/ui';
+import { __decorate, __param } from 'tslib';
+import { Renderer2, ElementRef, Inject, forwardRef, Directive, ContentChild, ViewContainerRef, ChangeDetectorRef, NgZone, ViewChild, TemplateRef, Input, Component, ChangeDetectionStrategy, NgModule } from '@angular/core';
+import { XPosition, StyleCollection, styleTemplateToString, LY_COMMON_STYLES, LyTheme2, toBoolean, eachMedia, DirPosition, YPosition, Platform, StyleRenderer, WinResize, LyHostClass, LyCommonModule } from '@alyle/ui';
 import { CommonModule } from '@angular/common';
 
+var LyDrawer_1;
 const DEFAULT_MODE = 'side';
 const DEFAULT_WIDTH = '230px';
 const DEFAULT_VALUE = '';
 const STYLE_PRIORITY = -2;
 const DEFAULT_POSITION = XPosition.before;
-const STYLES = (theme) => ({
-    drawerContainer: {
-        display: 'block',
-        position: 'relative',
-        overflow: 'hidden',
-        '-webkit-overflow-scrolling': 'touch'
-    },
-    drawer: {
-        display: 'block',
-        position: 'fixed',
-        zIndex: theme.zIndex.drawer,
-        overflow: 'auto',
-        visibility: 'hidden'
-    },
-    drawerContent: {
-        display: 'block'
-    },
-    drawerOpened: {
-        transform: 'translate(0px, 0px)',
-        visibility: 'visible'
-    },
-    drawerClosed: null,
-    backdrop: Object.assign({}, LY_COMMON_STYLES.fill, { backgroundColor: theme.drawer.backdrop }),
-    transition: {
-        transition: `${theme.animations.durations.complex}ms ${theme.animations.curves.deceleration}`,
-        transitionProperty: 'transform, margin, visibility'
-    }
-});
+const STYLES = (theme, ref) => {
+    const __ = ref.selectorsOf(STYLES);
+    return {
+        $name: LyDrawerContent.и,
+        $priority: STYLE_PRIORITY + 1.9,
+        root: () => (theme.drawer
+            && theme.drawer.root
+            && (theme.drawer.root instanceof StyleCollection
+                ? theme.drawer.root.setTransformer(fn => fn(__)).css
+                : theme.drawer.root(__))),
+        drawerContainer: (className) => `${className}{display:block;position:relative;overflow:hidden;-webkit-overflow-scrolling:touch;}`,
+        drawer: (className) => `${className}{display:block;position:fixed;z-index:${theme.zIndex.drawer};overflow:auto;visibility:hidden;}`,
+        drawerContent: (className) => `${className}{display:block;}`,
+        drawerOpened: (className) => `${className}{transform:translate(0px, 0px);visibility:visible;}`,
+        drawerClosed: null,
+        backdrop: (className) => `${styleTemplateToString((LY_COMMON_STYLES.fill), `${className}`)}${className}{background-color:${theme.drawer.backdrop};}`,
+        transition: (className) => `${className}{transition:${theme.animations.durations.complex}ms ${theme.animations.curves.deceleration};transition-property:transform, margin, visibility;}`
+    };
+};
 let LyDrawerContent = class LyDrawerContent {
     constructor(_renderer, _el, drawerContainer) {
         this._renderer = _renderer;
@@ -46,13 +38,17 @@ let LyDrawerContent = class LyDrawerContent {
         return this._el.nativeElement;
     }
 };
+LyDrawerContent.и = 'LyDrawerContent';
+LyDrawerContent.ctorParameters = () => [
+    { type: Renderer2 },
+    { type: ElementRef },
+    { type: undefined, decorators: [{ type: Inject, args: [forwardRef(() => LyDrawerContainer),] }] }
+];
 LyDrawerContent = __decorate([
     Directive({
         selector: 'ly-drawer-content'
     }),
-    __param(2, Inject(forwardRef(() => LyDrawerContainer))),
-    __metadata("design:paramtypes", [Renderer2,
-        ElementRef, Object])
+    __param(2, Inject(forwardRef(() => LyDrawerContainer)))
 ], LyDrawerContent);
 let LyDrawerContainer = class LyDrawerContainer {
     constructor(_theme, _renderer, _el) {
@@ -60,7 +56,7 @@ let LyDrawerContainer = class LyDrawerContainer {
         this._renderer = _renderer;
         this._el = _el;
         /** @docs-private */
-        this.classes = this._theme.addStyleSheet(STYLES, STYLE_PRIORITY + 1.9);
+        this.classes = this._theme.renderStyleSheet(STYLES);
         this._openDrawers = 0;
         this._renderer.addClass(this._el.nativeElement, this.classes.drawerContainer);
     }
@@ -68,21 +64,23 @@ let LyDrawerContainer = class LyDrawerContainer {
         return this._el.nativeElement;
     }
 };
+LyDrawerContainer.ctorParameters = () => [
+    { type: LyTheme2 },
+    { type: Renderer2 },
+    { type: ElementRef }
+];
 __decorate([
-    ContentChild(forwardRef(() => LyDrawerContent), { static: true }),
-    __metadata("design:type", LyDrawerContent)
+    ContentChild(forwardRef(() => LyDrawerContent), { static: true })
 ], LyDrawerContainer.prototype, "_drawerContent", void 0);
 LyDrawerContainer = __decorate([
     Directive({
         selector: 'ly-drawer-container'
-    }),
-    __metadata("design:paramtypes", [LyTheme2,
-        Renderer2,
-        ElementRef])
+    })
 ], LyDrawerContainer);
-let LyDrawer = class LyDrawer {
-    constructor(_theme, _renderer, _el, _drawerContainer, _vcr, _winResize, _cd, _zone) {
+let LyDrawer = LyDrawer_1 = class LyDrawer {
+    constructor(_theme, _styleRenderer, _renderer, _el, _drawerContainer, _vcr, _winResize, _cd, _zone) {
         this._theme = _theme;
+        this._styleRenderer = _styleRenderer;
         this._renderer = _renderer;
         this._el = _el;
         this._drawerContainer = _drawerContainer;
@@ -117,11 +115,7 @@ let LyDrawer = class LyDrawer {
     set position(val) {
         if (val !== this.position) {
             this._position = val;
-            this._theme.addStyle(`drawer.position:${val}`, 
-            // the style needs to be a function so that it can be changed dynamically
-            () => ({
-                [val]: 0
-            }), this._el.nativeElement, this._positionClass, STYLE_PRIORITY);
+            this[0x1] = this._styleRenderer.add(`${LyDrawer_1.и}--position-${val}`, (theme) => (className) => `${className}{${theme.getDirection(val)}:0;}`, STYLE_PRIORITY, this[0x1]);
         }
     }
     get position() {
@@ -360,68 +354,62 @@ let LyDrawer = class LyDrawer {
         }
     }
 };
+LyDrawer.и = 'LyDrawer';
+LyDrawer.ctorParameters = () => [
+    { type: LyTheme2 },
+    { type: StyleRenderer },
+    { type: Renderer2 },
+    { type: ElementRef },
+    { type: LyDrawerContainer },
+    { type: ViewContainerRef },
+    { type: WinResize },
+    { type: ChangeDetectorRef },
+    { type: NgZone }
+];
 __decorate([
-    ViewChild(TemplateRef, { static: false }),
-    __metadata("design:type", TemplateRef)
+    ViewChild(TemplateRef, { static: false })
 ], LyDrawer.prototype, "_backdrop", void 0);
 __decorate([
-    Input(),
-    __metadata("design:type", Boolean),
-    __metadata("design:paramtypes", [Boolean])
+    Input()
 ], LyDrawer.prototype, "opened", null);
 __decorate([
-    Input(),
-    __metadata("design:type", String)
+    Input()
 ], LyDrawer.prototype, "mode", void 0);
 __decorate([
-    Input(),
-    __metadata("design:type", Object)
+    Input()
 ], LyDrawer.prototype, "spacingAbove", void 0);
 __decorate([
-    Input(),
-    __metadata("design:type", Object)
+    Input()
 ], LyDrawer.prototype, "spacingBelow", void 0);
 __decorate([
-    Input(),
-    __metadata("design:type", Object)
+    Input()
 ], LyDrawer.prototype, "spacingBefore", void 0);
 __decorate([
-    Input(),
-    __metadata("design:type", Object)
+    Input()
 ], LyDrawer.prototype, "spacingAfter", void 0);
 __decorate([
-    Input(),
-    __metadata("design:type", Object)
+    Input()
 ], LyDrawer.prototype, "width", void 0);
 __decorate([
-    Input(),
-    __metadata("design:type", Object)
+    Input()
 ], LyDrawer.prototype, "height", void 0);
 __decorate([
-    Input(),
-    __metadata("design:type", Object),
-    __metadata("design:paramtypes", [Object])
+    Input()
 ], LyDrawer.prototype, "hasBackdrop", null);
 __decorate([
-    Input(),
-    __metadata("design:type", String),
-    __metadata("design:paramtypes", [String])
+    Input()
 ], LyDrawer.prototype, "position", null);
-LyDrawer = __decorate([
+LyDrawer = LyDrawer_1 = __decorate([
     Component({
         selector: 'ly-drawer',
         template: "<ng-content></ng-content>\n<ng-template>\n  <div [className]=\"classes.backdrop\" (click)=\"toggle()\"></div>\n</ng-template>",
         changeDetection: ChangeDetectionStrategy.OnPush,
-        exportAs: 'lyDrawer'
-    }),
-    __metadata("design:paramtypes", [LyTheme2,
-        Renderer2,
-        ElementRef,
-        LyDrawerContainer,
-        ViewContainerRef,
-        WinResize,
-        ChangeDetectorRef,
-        NgZone])
+        exportAs: 'lyDrawer',
+        providers: [
+            LyHostClass,
+            StyleRenderer
+        ]
+    })
 ], LyDrawer);
 /**
  * convert number to px
@@ -452,6 +440,10 @@ LyDrawerModule = __decorate([
         declarations: [LyDrawer, LyDrawerContainer, LyDrawerContent],
     })
 ], LyDrawerModule);
+
+/**
+ * Generated bundle index. Do not edit.
+ */
 
 export { LyDrawer, LyDrawerContainer, LyDrawerContent, LyDrawerModule, STYLES };
 //# sourceMappingURL=alyle-ui-drawer.js.map

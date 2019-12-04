@@ -1,38 +1,22 @@
-import { __extends, __decorate, __metadata } from 'tslib';
-import { Directive, ElementRef, Renderer2, NgZone, Input, NgModule } from '@angular/core';
+import { __extends, __decorate } from 'tslib';
+import { ElementRef, Renderer2, NgZone, Directive, Input, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { mixinStyleUpdater, mixinBg, mixinColor, mixinRaised, mixinDisabled, mixinOutlined, mixinElevation, mixinShadowColor, mixinDisableRipple, LyTheme2, toBoolean, LyCommonModule } from '@alyle/ui';
+import { styleTemplateToString, StyleCollection, mixinStyleUpdater, mixinBg, mixinColor, mixinRaised, mixinDisabled, mixinOutlined, mixinElevation, mixinShadowColor, mixinDisableRipple, LyTheme2, StyleRenderer, toBoolean, LyHostClass, LyCommonModule } from '@alyle/ui';
 
-var STYLES = function (theme) {
-    var _a, _b;
-    return ({
+var STYLES = function (theme, ref) {
+    var card = ref.selectorsOf(STYLES);
+    return {
         $priority: STYLE_PRIORITY,
-        root: {
-            display: 'block',
-            overflow: 'hidden',
-            borderRadius: '2px',
-            '&': theme.card ? theme.card.root : null
-        },
-        content: (_a = {
-                display: 'block',
-                padding: '16px 24px'
-            },
-            _a[theme.getBreakpoint('XSmall')] = {
-                padding: '16px 16px'
-            },
-            _a),
-        actions: (_b = {
-                display: 'block',
-                padding: '8px 12px'
-            },
-            _b[theme.getBreakpoint('XSmall')] = {
-                padding: '8px 4px'
-            },
-            _b),
-        actionsItem: {
-            margin: '0 4px'
-        }
-    });
+        $name: LyCard.и,
+        root: function () { return function (className) { return className + "{display:block;overflow:hidden;border-radius:2px;}" + styleTemplateToString(((theme.card
+            && theme.card.root
+            && (theme.card.root instanceof StyleCollection
+                ? theme.card.root.setTransformer(function (fn) { return fn(card); })
+                : theme.card.root(card)))), "" + className); }; },
+        content: function (className) { return className + "{display:block;padding:16px 24px;}" + className + " " + theme.getBreakpoint('XSmall') + "{padding:16px 16px;}"; },
+        actions: function (className) { return className + "{display:block;padding:8px 12px;}" + className + " " + theme.getBreakpoint('XSmall') + "{padding:8px 4px;}"; },
+        actionsItem: function (className) { return className + "{margin:0 4px;}"; }
+    };
 };
 var DEFAULT_ASPECT_RATIO = '16:9';
 var STYLE_PRIORITY = -1;
@@ -57,7 +41,7 @@ var LyCard = /** @class */ (function (_super) {
          * styles
          * @docs-private
          */
-        _this.classes = _this.theme.addStyleSheet(STYLES);
+        _this.classes = _this.theme.renderStyleSheet(STYLES);
         _this.setAutoContrast();
         return _this;
     }
@@ -82,6 +66,13 @@ var LyCard = /** @class */ (function (_super) {
     LyCard.prototype.ngOnDestroy = function () {
         this._removeRippleEvents();
     };
+    LyCard.и = 'LyCard';
+    LyCard.ctorParameters = function () { return [
+        { type: LyTheme2 },
+        { type: ElementRef },
+        { type: Renderer2 },
+        { type: NgZone }
+    ]; };
     LyCard = __decorate([
         Directive({
             selector: 'ly-card',
@@ -93,12 +84,9 @@ var LyCard = /** @class */ (function (_super) {
                 'elevation',
                 'shadowColor',
                 'disableRipple',
-            ]
-        }),
-        __metadata("design:paramtypes", [LyTheme2,
-            ElementRef,
-            Renderer2,
-            NgZone])
+            ],
+            providers: [StyleRenderer]
+        })
     ], LyCard);
     return LyCard;
 }(LyCardMixinBase));
@@ -111,13 +99,15 @@ var LyCardContent = /** @class */ (function () {
     LyCardContent.prototype.ngOnInit = function () {
         this.renderer.addClass(this.el.nativeElement, this.card.classes.content);
     };
+    LyCardContent.ctorParameters = function () { return [
+        { type: ElementRef },
+        { type: Renderer2 },
+        { type: LyCard }
+    ]; };
     LyCardContent = __decorate([
         Directive({
             selector: 'ly-card-content'
-        }),
-        __metadata("design:paramtypes", [ElementRef,
-            Renderer2,
-            LyCard])
+        })
     ], LyCardContent);
     return LyCardContent;
 }());
@@ -136,33 +126,37 @@ var LyCardActions = /** @class */ (function () {
             });
         }
     };
+    LyCardActions.ctorParameters = function () { return [
+        { type: ElementRef },
+        { type: Renderer2 },
+        { type: LyCard }
+    ]; };
     __decorate([
-        Input(),
-        __metadata("design:type", Boolean)
+        Input()
     ], LyCardActions.prototype, "disableActionSpacing", void 0);
     LyCardActions = __decorate([
         Directive({
             selector: 'ly-card-actions'
-        }),
-        __metadata("design:paramtypes", [ElementRef,
-            Renderer2,
-            LyCard])
+        })
     ], LyCardActions);
     return LyCardActions;
 }());
 var LyCardMedia = /** @class */ (function () {
-    function LyCardMedia(el, renderer, theme) {
+    function LyCardMedia(el, renderer, styleRenderer) {
         this.el = el;
         this.renderer = renderer;
-        this.theme = theme;
+        this.styleRenderer = styleRenderer;
     }
+    LyCardMedia_1 = LyCardMedia;
     Object.defineProperty(LyCardMedia.prototype, "bgImg", {
         get: function () {
             return this._bgImg;
         },
         set: function (val) {
             if (val !== this.bgImg) {
-                this._bgImgClass = this._createBgImgClass(val, this._bgImgClass);
+                this._bgImg = val;
+                this[0x1] = this.styleRenderer.add(LyCardMedia_1.и + "--bgImg-" + val, function () { return function (className) { return className + "{display:block;background-size:cover;background-repeat:no-repeat;background-position:center;}"; }; }, STYLE_PRIORITY, this[0x1]);
+                this.renderer.setStyle(this.el.nativeElement, "background-image", "url(\"" + val + "\")");
             }
         },
         enumerable: true,
@@ -172,10 +166,19 @@ var LyCardMedia = /** @class */ (function () {
         get: function () {
             return this._ratio;
         },
-        /** Aspect ratio */
+        /**
+         * Aspect ratio
+         *
+         * e.g:
+         * 4:3
+         * 1:1
+         */
         set: function (val) {
             if (val !== this.ratio) {
-                this._createAspectRatioClass(val);
+                this._ratio = val;
+                this[0x2] = this.styleRenderer.add(LyCardMedia_1.и + "--ratio-" + val, function () { return function (className) { return className + "::before{content:'';display:block;padding-top:" + val
+                    .split(':')
+                    .reduce(function (prev, current) { return (+current / +prev * 100).toString(); }) + "%;}"; }; }, STYLE_PRIORITY, this[0x2]);
             }
         },
         enumerable: true,
@@ -186,43 +189,27 @@ var LyCardMedia = /** @class */ (function () {
             this.ratio = DEFAULT_ASPECT_RATIO;
         }
     };
-    LyCardMedia.prototype._createBgImgClass = function (val, instance) {
-        this._bgImg = val;
-        this.renderer.setStyle(this.el.nativeElement, "background-image", "url(\"" + val + "\")");
-        return this.theme.addStyle("lyCard-media:" + val, ("display:block;" +
-            "background-size: cover;" +
-            "background-repeat: no-repeat;" +
-            "background-position: center;"), this.el.nativeElement, instance, STYLE_PRIORITY);
-    };
-    LyCardMedia.prototype._createAspectRatioClass = function (val) {
-        this._ratio = val;
-        this._ratioClass = this.theme.addStyle("lyCard-media-ar:" + val, ({
-            '&:before': val.split(':').reduce(function (valorAnterior, valorActual) {
-                return ({
-                    paddingTop: +valorActual / +valorAnterior * 100 + "%",
-                    content: "''",
-                    display: 'block'
-                });
-            })
-        }), this.el.nativeElement, this._ratioClass, STYLE_PRIORITY);
-    };
+    var LyCardMedia_1;
+    LyCardMedia.и = 'LyCardMedia';
+    LyCardMedia.ctorParameters = function () { return [
+        { type: ElementRef },
+        { type: Renderer2 },
+        { type: StyleRenderer }
+    ]; };
     __decorate([
-        Input(),
-        __metadata("design:type", String),
-        __metadata("design:paramtypes", [String])
+        Input()
     ], LyCardMedia.prototype, "bgImg", null);
     __decorate([
-        Input(),
-        __metadata("design:type", String),
-        __metadata("design:paramtypes", [String])
+        Input()
     ], LyCardMedia.prototype, "ratio", null);
-    LyCardMedia = __decorate([
+    LyCardMedia = LyCardMedia_1 = __decorate([
         Directive({
-            selector: 'ly-card-media'
-        }),
-        __metadata("design:paramtypes", [ElementRef,
-            Renderer2,
-            LyTheme2])
+            selector: 'ly-card-media',
+            providers: [
+                StyleRenderer,
+                LyHostClass
+            ]
+        })
     ], LyCardMedia);
     return LyCardMedia;
 }());
@@ -241,6 +228,10 @@ var LyCardModule = /** @class */ (function () {
     ], LyCardModule);
     return LyCardModule;
 }());
+
+/**
+ * Generated bundle index. Do not edit.
+ */
 
 export { LyCard, LyCardActions, LyCardBase, LyCardContent, LyCardMedia, LyCardMixinBase, LyCardModule, STYLES };
 //# sourceMappingURL=alyle-ui-card.js.map

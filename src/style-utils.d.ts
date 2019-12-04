@@ -1,4 +1,6 @@
+import { Color } from '@alyle/ui/color';
 import { Styles, LyClasses } from './theme/style';
+import { StyleCollection, StyleTemplate } from './parse';
 export declare class LyStyleUtils {
     name: string;
     typography: {
@@ -24,11 +26,19 @@ export declare class LyStyleUtils {
         [key: string]: string;
     };
     direction: Dir;
+    /** Returns left or right according to the direction */
+    readonly before: "before" | "after" | "right" | "left" | "top" | "bottom";
+    /** Returns left or right according to the direction */
+    readonly after: "before" | "after" | "right" | "left" | "top" | "bottom";
+    /** Returns top */
+    readonly above = "top";
+    /** Returns bottom */
+    readonly below = "bottom";
     pxToRem(value: number): string;
-    colorOf(value: string, optional?: string): string;
+    colorOf(value: string | number, optional?: string): Color;
     getBreakpoint(key: string): string;
-    getClasses<T>(styles: T & Styles): LyClasses<T>;
-    getDirection(val: DirAlias): "right" | "left";
+    selectorsOf<T>(styles: T & Styles): LyClasses<T>;
+    getDirection(val: DirAlias | 'before' | 'after' | 'above' | 'below'): "before" | "after" | "right" | "left" | "top" | "bottom";
 }
 export declare enum Dir {
     rtl = "rtl",
@@ -42,12 +52,8 @@ export declare enum DirPosition {
     left = "left",
     right = "right"
 }
-export declare function eachMedia(str: string | number | undefined, fn: ((val: string, media: string | null, index: number) => void)): void;
-/**
- * Simple object check.
- * @param item
- */
-export declare function isObject(item: any): boolean;
+export declare function eachMedia(str: string | number | undefined, fn: ((val: string | number, media: string | null, index: number) => void)): void;
+export declare function eachMedia(str: string | number | undefined, fn: ((val: string | number, media: string | null, index: number) => void), styleCollection: StyleCollection): StyleTemplate;
 export declare function mergeDeep<T, U>(target: T, source: U): T & U;
 export declare function mergeDeep<T, U, V>(target: T, source1: U, source2: V): T & U & V;
 export declare function mergeDeep<T, U, V, W>(target: T, source1: U, source2: V, source3: W): T & U & V & W;

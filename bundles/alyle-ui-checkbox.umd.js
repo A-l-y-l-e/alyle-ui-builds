@@ -2,7 +2,7 @@
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/common'), require('@alyle/ui'), require('@angular/forms')) :
     typeof define === 'function' && define.amd ? define('@alyle/ui/checkbox', ['exports', '@angular/core', '@angular/common', '@alyle/ui', '@angular/forms'], factory) :
     (global = global || self, factory((global.ly = global.ly || {}, global.ly.checkbox = {}), global.ng.core, global.ng.common, global.ly.core, global.ng.forms));
-}(this, function (exports, core, common, ui, forms) { 'use strict';
+}(this, (function (exports, core, common, ui, forms) { 'use strict';
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
@@ -44,6 +44,18 @@
         return __assign.apply(this, arguments);
     };
 
+    function __rest(s, e) {
+        var t = {};
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+            t[p] = s[p];
+        if (s != null && typeof Object.getOwnPropertySymbols === "function")
+            for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+                if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                    t[p[i]] = s[p[i]];
+            }
+        return t;
+    }
+
     function __decorate(decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -51,101 +63,167 @@
         return c > 3 && r && Object.defineProperty(target, key, r), r;
     }
 
+    function __param(paramIndex, decorator) {
+        return function (target, key) { decorator(target, key, paramIndex); }
+    }
+
     function __metadata(metadataKey, metadataValue) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(metadataKey, metadataValue);
+    }
+
+    function __awaiter(thisArg, _arguments, P, generator) {
+        return new (P || (P = Promise))(function (resolve, reject) {
+            function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+            function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+            function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+            step((generator = generator.apply(thisArg, _arguments || [])).next());
+        });
+    }
+
+    function __generator(thisArg, body) {
+        var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+        return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+        function verb(n) { return function (v) { return step([n, v]); }; }
+        function step(op) {
+            if (f) throw new TypeError("Generator is already executing.");
+            while (_) try {
+                if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+                if (y = 0, t) op = [op[0] & 2, t.value];
+                switch (op[0]) {
+                    case 0: case 1: t = op; break;
+                    case 4: _.label++; return { value: op[1], done: false };
+                    case 5: _.label++; y = op[1]; op = [0]; continue;
+                    case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                    default:
+                        if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                        if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                        if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                        if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                        if (t[2]) _.ops.pop();
+                        _.trys.pop(); continue;
+                }
+                op = body.call(thisArg, _);
+            } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+            if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+        }
+    }
+
+    function __exportStar(m, exports) {
+        for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
+    }
+
+    function __values(o) {
+        var m = typeof Symbol === "function" && o[Symbol.iterator], i = 0;
+        if (m) return m.call(o);
+        return {
+            next: function () {
+                if (o && i >= o.length) o = void 0;
+                return { value: o && o[i++], done: !o };
+            }
+        };
+    }
+
+    function __read(o, n) {
+        var m = typeof Symbol === "function" && o[Symbol.iterator];
+        if (!m) return o;
+        var i = m.call(o), r, ar = [], e;
+        try {
+            while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
+        }
+        catch (error) { e = { error: error }; }
+        finally {
+            try {
+                if (r && !r.done && (m = i["return"])) m.call(i);
+            }
+            finally { if (e) throw e.error; }
+        }
+        return ar;
+    }
+
+    function __spread() {
+        for (var ar = [], i = 0; i < arguments.length; i++)
+            ar = ar.concat(__read(arguments[i]));
+        return ar;
+    }
+
+    function __spreadArrays() {
+        for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
+        for (var r = Array(s), k = 0, i = 0; i < il; i++)
+            for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
+                r[k] = a[j];
+        return r;
+    };
+
+    function __await(v) {
+        return this instanceof __await ? (this.v = v, this) : new __await(v);
+    }
+
+    function __asyncGenerator(thisArg, _arguments, generator) {
+        if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
+        var g = generator.apply(thisArg, _arguments || []), i, q = [];
+        return i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () { return this; }, i;
+        function verb(n) { if (g[n]) i[n] = function (v) { return new Promise(function (a, b) { q.push([n, v, a, b]) > 1 || resume(n, v); }); }; }
+        function resume(n, v) { try { step(g[n](v)); } catch (e) { settle(q[0][3], e); } }
+        function step(r) { r.value instanceof __await ? Promise.resolve(r.value.v).then(fulfill, reject) : settle(q[0][2], r); }
+        function fulfill(value) { resume("next", value); }
+        function reject(value) { resume("throw", value); }
+        function settle(f, v) { if (f(v), q.shift(), q.length) resume(q[0][0], q[0][1]); }
+    }
+
+    function __asyncDelegator(o) {
+        var i, p;
+        return i = {}, verb("next"), verb("throw", function (e) { throw e; }), verb("return"), i[Symbol.iterator] = function () { return this; }, i;
+        function verb(n, f) { i[n] = o[n] ? function (v) { return (p = !p) ? { value: __await(o[n](v)), done: n === "return" } : f ? f(v) : v; } : f; }
+    }
+
+    function __asyncValues(o) {
+        if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
+        var m = o[Symbol.asyncIterator], i;
+        return m ? m.call(o) : (o = typeof __values === "function" ? __values(o) : o[Symbol.iterator](), i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () { return this; }, i);
+        function verb(n) { i[n] = o[n] && function (v) { return new Promise(function (resolve, reject) { v = o[n](v), settle(resolve, reject, v.done, v.value); }); }; }
+        function settle(resolve, reject, d, v) { Promise.resolve(v).then(function(v) { resolve({ value: v, done: d }); }, reject); }
+    }
+
+    function __makeTemplateObject(cooked, raw) {
+        if (Object.defineProperty) { Object.defineProperty(cooked, "raw", { value: raw }); } else { cooked.raw = raw; }
+        return cooked;
+    };
+
+    function __importStar(mod) {
+        if (mod && mod.__esModule) return mod;
+        var result = {};
+        if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+        result.default = mod;
+        return result;
+    }
+
+    function __importDefault(mod) {
+        return (mod && mod.__esModule) ? mod : { default: mod };
     }
 
     var STYLE_PRIORITY = -2;
     var DEFAULT_WITH_COLOR = 'accent';
     var DEFAULT_DISABLE_RIPPLE = false;
-    var STYLES = function (theme) { return ({
-        $priority: STYLE_PRIORITY,
-        root: {
-            marginAfter: '16px',
-            marginBefore: '-16px',
-            display: 'inline-flex',
-            '&{disabled}:not({checked}) {icon}:before': {
-                color: theme.disabled.default
-            },
-            '&{disabled}': {
-                pointerEvents: 'none',
-                '{layout}': {
-                    color: theme.text.secondary
-                }
-            },
-            '&{disabled}{checked} {icon}:before': {
-                border: 0,
-                background: theme.disabled.default
-            },
-            '&{onFocusByKeyboard} {icon}::after': {
-                boxShadow: '0 0 0 12px',
-                opacity: .13,
-                borderRadius: '50%'
-            },
-            '&:not({checked}) {icon}': {
-                color: theme.text.secondary
-            },
-            '&': theme.checkbox ? theme.checkbox.root : null
-        },
-        layout: {
-            display: 'inline-flex',
-            alignItems: 'baseline',
-            cursor: 'pointer',
-            marginBefore: '16px',
-            paddingTop: '12px',
-            paddingBottom: '12px'
-        },
-        icon: {
-            position: 'relative',
-            marginAfter: '8px',
-            marginTop: 'auto',
-            marginBottom: 'auto',
-            width: '16px',
-            height: '16px',
-            userSelect: 'none',
-            '&::before, &::after': __assign({ content: "''" }, ui.LY_COMMON_STYLES.fill, { width: '16px', height: '16px', margin: 'auto', boxSizing: 'border-box' }),
-            // border icon
-            '&::before': {
-                border: 'solid 2px',
-                borderRadius: '2px'
-            },
-            svg: {
-                position: 'absolute',
-                polyline: {
-                    fill: 'none',
-                    stroke: theme.background.primary.default,
-                    strokeWidth: 2,
-                    strokeLinecap: 'round',
-                    strokeLinejoin: 'round',
-                    strokeDasharray: '18px',
-                    strokeDashoffset: '18px'
-                }
-            },
-        },
-        checked: {
-            '& {icon}::before': {
-                background: 'currentColor'
-            },
-            '& {icon} polyline': {
-                strokeDashoffset: 0
-            }
-        },
-        input: __assign({}, ui.LY_COMMON_STYLES.visuallyHidden),
-        onFocusByKeyboard: {},
-        disabled: {
-            '& {input}': {
-                visibility: 'hidden'
-            },
-            '& {icon}': {
-                color: 'inherit !important'
-            }
-        },
-        animations: {
-            '& {icon} svg polyline': {
-                transition: "all " + theme.animations.durations.entering + "ms " + theme.animations.curves.sharp
-            }
-        }
-    }); };
+    var STYLES = function (theme, ref) {
+        var checkbox = ref.selectorsOf(STYLES);
+        var before = theme.before, after = theme.after;
+        return {
+            $name: LyCheckbox.и,
+            $priority: STYLE_PRIORITY,
+            root: function () { return function (className) { return className + "{margin-" + after + ":16px;margin-" + before + ":-16px;display:inline-flex;}" + ui.styleTemplateToString(((theme.checkbox
+                && theme.checkbox.root
+                && (theme.checkbox.root instanceof ui.StyleCollection
+                    ? theme.checkbox.root.setTransformer(function (fn) { return fn(checkbox); })
+                    : theme.checkbox.root(checkbox)))), "" + className) + className + checkbox.disabled + ":not(" + checkbox.checked + ") " + checkbox.icon + ":before{color:" + theme.disabled.default + ";}" + className + checkbox.disabled + "{pointer-events:none;}" + className + checkbox.disabled + " " + checkbox.layout + "{color:" + theme.text.secondary + ";}" + className + checkbox.disabled + checkbox.checked + " " + checkbox.icon + ":before{border:0;background:" + theme.disabled.default + ";}" + className + checkbox.onFocusByKeyboard + " " + checkbox.icon + "::after{box-shadow:0 0 0 12px;opacity:.13;border-radius:50%;}" + className + ":not(" + checkbox.checked + ") " + checkbox.icon + "{color:" + theme.text.secondary + ";}"; }; },
+            layout: function (className) { return className + "{display:inline-flex;align-items:baseline;cursor:pointer;margin-" + before + ":16px;padding-top:12px;padding-bottom:12px;}"; },
+            icon: function (className) { return className + "{position:relative;margin-" + after + ":8px;margin-top:auto;margin-bottom:auto;width:16px;height:16px;user-select:none;}" + className + "::before," + className + "::after{content:'';width:16px;height:16px;margin:auto;box-sizing:border-box;}" + ui.styleTemplateToString((ui.LY_COMMON_STYLES.fill), className + "::before," + className + "::after") + className + "::before{border:solid 2px;border-radius:2px;}" + className + " svg{position:absolute;}" + className + " svg polyline{fill:none;stroke:" + theme.background.primary.default + ";stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:18px;stroke-dashoffset:18px;}"; },
+            checked: function () { return function (className) { return className + " " + checkbox.icon + "::before{background:currentColor;}" + className + " " + checkbox.icon + " polyline{stroke-dashoffset:0;}"; }; },
+            input: ui.LY_COMMON_STYLES.visuallyHidden,
+            onFocusByKeyboard: null,
+            disabled: function () { return function (className) { return className + " " + checkbox.input + "{visibility:hidden;}" + className + " " + checkbox.icon + "{color:inherit !important;}"; }; },
+            animations: function () { return function (className) { return className + " " + checkbox.icon + " svg polyline{transition:all " + theme.animations.durations.entering + "ms " + theme.animations.curves.sharp + ";}"; }; }
+        };
+    };
     /**
      * This allows it to support [(ngModel)].
      * @ignore
@@ -173,18 +251,19 @@
     var LyCheckboxMixinBase = ui.mixinDisableRipple(LyCheckboxBase);
     var LyCheckbox = /** @class */ (function (_super) {
         __extends(LyCheckbox, _super);
-        function LyCheckbox(_commonStyles, _theme, _el, _renderer, _changeDetectorRef, _focusState, ngZone) {
+        function LyCheckbox(_commonStyles, _theme, _el, _renderer, _changeDetectorRef, _focusState, _styleRenderer, ngZone) {
             var _this = _super.call(this, _theme, ngZone) || this;
             _this._commonStyles = _commonStyles;
             _this._el = _el;
             _this._renderer = _renderer;
             _this._changeDetectorRef = _changeDetectorRef;
             _this._focusState = _focusState;
+            _this._styleRenderer = _styleRenderer;
             /**
              * styles
              * @ignore
              */
-            _this.classes = _this._theme.addStyleSheet(STYLES);
+            _this.classes = _this._theme.renderStyleSheet(STYLES);
             /** Event emitted when the checkbox's `checked` value changes. */
             _this.change = new core.EventEmitter();
             _this._onTouched = function () { };
@@ -197,6 +276,7 @@
             };
             return _this;
         }
+        LyCheckbox_1 = LyCheckbox;
         Object.defineProperty(LyCheckbox.prototype, "color", {
             get: function () {
                 return this._color;
@@ -204,17 +284,14 @@
             set: function (val) {
                 if (val !== this.color) {
                     this._color = val;
-                    this._colorClass = this._theme.addStyle("lyCheckbox.color:" + val, function (theme) {
-                        var _a;
-                        return (_a = {},
-                            _a["&{checked} {icon}"] = {
-                                color: theme.colorOf(val)
-                            },
-                            _a["&{checked}:not({disabled}) {icon}"] = {
-                                boxShadow: ui.shadowBuilder(1, theme.colorOf(val))
-                            },
-                            _a);
-                    }, this._el.nativeElement, this._colorClass, STYLE_PRIORITY, STYLES);
+                    this._colorClass = this._styleRenderer.add(LyCheckbox_1.и + "--color-" + val, function (theme, ref) {
+                        var checkbox = ref.selectorsOf(STYLES);
+                        var color = theme.colorOf(val);
+                        if (theme.checkbox && theme.checkbox.color) {
+                            return theme.checkbox.color(checkbox, color);
+                        }
+                        throw new Error(LyCheckbox_1.и + ": styles theme.checkbox.color is undefined");
+                    }, STYLE_PRIORITY, this._colorClass);
                 }
             },
             enumerable: true,
@@ -346,61 +423,59 @@
         LyCheckbox.prototype._markForCheck = function () {
             this._changeDetectorRef.markForCheck();
         };
+        var LyCheckbox_1;
+        /** @ignore */
+        LyCheckbox.и = 'LyCheckbox';
+        LyCheckbox.ctorParameters = function () { return [
+            { type: ui.LyCoreStyles },
+            { type: ui.LyTheme2 },
+            { type: core.ElementRef },
+            { type: core.Renderer2 },
+            { type: core.ChangeDetectorRef },
+            { type: ui.LyFocusState },
+            { type: ui.StyleRenderer },
+            { type: core.NgZone }
+        ]; };
         __decorate([
-            core.ViewChild('innerContainer', { static: false }),
-            __metadata("design:type", core.ElementRef)
+            core.ViewChild('innerContainer', { static: false })
         ], LyCheckbox.prototype, "_innerContainer", void 0);
         __decorate([
-            core.Input(),
-            __metadata("design:type", String)
+            core.Input()
         ], LyCheckbox.prototype, "value", void 0);
         __decorate([
-            core.Input(),
-            __metadata("design:type", String),
-            __metadata("design:paramtypes", [String])
+            core.Input()
         ], LyCheckbox.prototype, "color", null);
         __decorate([
-            core.Input(),
-            __metadata("design:type", Boolean),
-            __metadata("design:paramtypes", [Boolean])
+            core.Input()
         ], LyCheckbox.prototype, "checked", null);
         __decorate([
-            core.Input(),
-            __metadata("design:type", Boolean),
-            __metadata("design:paramtypes", [Boolean])
+            core.Input()
         ], LyCheckbox.prototype, "required", null);
         __decorate([
-            core.Input(),
-            __metadata("design:type", Boolean),
-            __metadata("design:paramtypes", [Boolean])
+            core.Input()
         ], LyCheckbox.prototype, "disabled", null);
         __decorate([
-            core.Output(),
-            __metadata("design:type", core.EventEmitter)
+            core.Output()
         ], LyCheckbox.prototype, "change", void 0);
         __decorate([
-            core.ViewChild('input', { static: false }),
-            __metadata("design:type", core.ElementRef)
+            core.ViewChild('input', { static: false })
         ], LyCheckbox.prototype, "_inputElement", void 0);
-        LyCheckbox = __decorate([
+        LyCheckbox = LyCheckbox_1 = __decorate([
             core.Component({
                 selector: 'ly-checkbox',
                 template: "\n<label [className]=\"classes.layout\">\n  <input #input\n  [className]=\"classes.input\"\n  type=\"checkbox\"\n  [checked]=\"checked\"\n  [required]=\"required\"\n  [attr.value]=\"value\"\n  [disabled]=\"disabled\"\n  (click)=\"_onInputClick($event)\"\n  (change)=\"_onChange($event)\"\n  >\n  <div #innerContainer [className]=\"classes.icon\">\n    <svg width=\"16px\" height=\"16px\" viewBox=\"0 0 20 20\">\n      <polyline points=\"4 11 8 15 16 6\"></polyline>\n    </svg>\n  </div>\n  <div #label>\n    <ng-content></ng-content>\n  </div>\n</label>",
                 encapsulation: core.ViewEncapsulation.None,
                 changeDetection: core.ChangeDetectionStrategy.OnPush,
-                providers: [LY_CHECKBOX_CONTROL_VALUE_ACCESSOR],
+                providers: [
+                    ui.LyHostClass,
+                    ui.StyleRenderer,
+                    LY_CHECKBOX_CONTROL_VALUE_ACCESSOR,
+                ],
                 exportAs: 'lyCheckbox',
                 inputs: [
                     'disableRipple'
                 ]
-            }),
-            __metadata("design:paramtypes", [ui.LyCoreStyles,
-                ui.LyTheme2,
-                core.ElementRef,
-                core.Renderer2,
-                core.ChangeDetectorRef,
-                ui.LyFocusState,
-                core.NgZone])
+            })
         ], LyCheckbox);
         return LyCheckbox;
     }(LyCheckboxMixinBase));
@@ -436,5 +511,5 @@
 
     Object.defineProperty(exports, '__esModule', { value: true });
 
-}));
+})));
 //# sourceMappingURL=alyle-ui-checkbox.umd.js.map

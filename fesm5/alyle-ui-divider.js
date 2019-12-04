@@ -1,47 +1,52 @@
-import { __decorate, __metadata } from 'tslib';
-import { Input, Directive, ElementRef, NgModule } from '@angular/core';
-import { LyTheme2 } from '@alyle/ui';
+import { __decorate } from 'tslib';
+import { Input, Directive, NgModule } from '@angular/core';
+import { toBoolean, StyleRenderer, LyHostClass } from '@alyle/ui';
 
-var style = function (theme) { return ({
-    display: 'block',
-    backgroundColor: theme.divider,
-    height: '1px'
-}); };
-var ɵ0 = style;
+var STYLES = function (theme) { return function (className) { return className + "{display:block;background-color:" + theme.divider + ";height:1px;}"; }; };
+var ɵ0 = STYLES;
 var LyDivider = /** @class */ (function () {
-    function LyDivider(_el, _theme) {
-        this._el = _el;
-        this._theme = _theme;
+    function LyDivider(_styleRenderer, _hostClass) {
+        this._styleRenderer = _styleRenderer;
+        this._hostClass = _hostClass;
     }
+    LyDivider_1 = LyDivider;
     Object.defineProperty(LyDivider.prototype, "inset", {
         get: function () {
             return this._inset;
         },
         /** Add indentation (72px) */
         set: function (val) {
-            this._inset = val;
-            this._theme.addStyle("lyDivider.inset", function () { return ({
-                marginBefore: '74px'
-            }); }, this._el.nativeElement, this._insetClass);
+            var newVal = this._inset = toBoolean(val);
+            if (newVal) {
+                this[0x1] = this._styleRenderer.add(LyDivider_1.и + "--inset", function () { return function (className) { return className + "{margin-before:74px;}"; }; }, this[0x1]);
+            }
+            else {
+                this._hostClass.remove(this[0x1]);
+            }
         },
         enumerable: true,
         configurable: true
     });
     LyDivider.prototype.ngOnInit = function () {
-        var className = this._theme.addSimpleStyle('lyDivider', style);
-        this._el.nativeElement.classList.add(className);
+        this._styleRenderer.add(STYLES);
     };
+    var LyDivider_1;
+    LyDivider.и = 'LyDivider';
+    LyDivider.ctorParameters = function () { return [
+        { type: StyleRenderer },
+        { type: LyHostClass }
+    ]; };
     __decorate([
-        Input(),
-        __metadata("design:type", Boolean),
-        __metadata("design:paramtypes", [Boolean])
+        Input()
     ], LyDivider.prototype, "inset", null);
-    LyDivider = __decorate([
+    LyDivider = LyDivider_1 = __decorate([
         Directive({
-            selector: 'ly-divider'
-        }),
-        __metadata("design:paramtypes", [ElementRef,
-            LyTheme2])
+            selector: 'ly-divider',
+            providers: [
+                LyHostClass,
+                StyleRenderer
+            ]
+        })
     ], LyDivider);
     return LyDivider;
 }());
@@ -57,6 +62,10 @@ var LyDividerModule = /** @class */ (function () {
     ], LyDividerModule);
     return LyDividerModule;
 }());
+
+/**
+ * Generated bundle index. Do not edit.
+ */
 
 export { LyDivider, LyDividerModule, ɵ0 };
 //# sourceMappingURL=alyle-ui-divider.js.map

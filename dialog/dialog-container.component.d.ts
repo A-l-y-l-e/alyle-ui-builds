@@ -1,8 +1,22 @@
 import { OnInit, ComponentFactory, TemplateRef, Injector, ApplicationRef, Renderer2, ElementRef, ChangeDetectorRef, DoCheck } from '@angular/core';
 import { AnimationEvent } from '@angular/animations';
-import { LyOverlayRef, LyTheme2 } from '@alyle/ui';
+import { LyOverlayRef, LyTheme2, LyClasses, StyleCollection, StyleTemplate, ThemeRef } from '@alyle/ui';
 import { Subject } from 'rxjs';
 import { LyDialogRef } from './dialog-ref';
+import { Color } from '@alyle/ui/color';
+export interface LyDialogTheme {
+    /** Styles for Dialog Component. */
+    root?: StyleCollection<((classes: LyClasses<typeof STYLES>) => StyleTemplate)> | ((classes: LyClasses<typeof STYLES>) => StyleTemplate);
+    /** Styles that apply when a color is set. */
+    color?: (classes: LyClasses<typeof STYLES>, color: Color) => StyleTemplate;
+}
+export interface LyDialogVariables {
+    dialog?: LyDialogTheme;
+}
+/** @docs-private */
+declare const STYLES: (theme: import("@alyle/ui/alyle-ui").LyStyleUtils & import("@alyle/ui/alyle-ui").ThemeConfig & LyDialogVariables, ref: ThemeRef) => {
+    root: () => (className: string) => string;
+};
 /** @docs-private */
 export declare class LyDialogContainer implements OnInit, DoCheck {
     private _appRef;
@@ -12,7 +26,9 @@ export declare class LyDialogContainer implements OnInit, DoCheck {
     private _cd;
     private _renderer;
     /** @docs-private */
-    readonly classes: Record<"root", string>;
+    readonly classes: Pick<{
+        root: string;
+    }, "root">;
     private _embeddedViewRef;
     private _componentRef;
     /** @internal */
@@ -52,6 +68,7 @@ export declare class LyDialogContext {
     private _injector;
     $implicit: any;
     dialogRef: LyDialogRef;
-    readonly data: {};
+    readonly data: unknown;
     constructor(_injector: Injector);
 }
+export {};

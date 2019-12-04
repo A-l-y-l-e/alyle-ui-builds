@@ -1,12 +1,13 @@
-import { ElementRef, OnInit } from '@angular/core';
-import { LyTheme2 } from '@alyle/ui';
+import { OnInit } from '@angular/core';
+import { StyleRenderer, LyHostClass } from '@alyle/ui';
 export declare class LyDivider implements OnInit {
-    private _el;
-    private _theme;
+    private _styleRenderer;
+    private _hostClass;
+    static readonly и = "LyDivider";
     private _inset;
-    private _insetClass;
     /** Add indentation (72px) */
     inset: boolean;
-    constructor(_el: ElementRef, _theme: LyTheme2);
+    [0x1]: string;
+    constructor(_styleRenderer: StyleRenderer, _hostClass: LyHostClass);
     ngOnInit(): void;
 }

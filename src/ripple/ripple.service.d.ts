@@ -25,6 +25,9 @@ export declare const styles: (theme: ThemeVariables) => {
 };
 export declare class LyRippleService {
     private theme;
-    classes: Record<"rippleContainer" | "container", string>;
+    classes: Pick<{
+        rippleContainer: string;
+        container: string;
+    }, "rippleContainer" | "container">;
     constructor(theme: LyTheme2);
 }

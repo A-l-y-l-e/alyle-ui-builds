@@ -1,137 +1,25 @@
 import { QueryList, AfterViewInit, OnDestroy, ElementRef, ChangeDetectorRef, OnInit, Renderer2 } from '@angular/core';
-import { LyTheme2, ThemeVariables } from '@alyle/ui';
-export declare const STYLES: (theme: ThemeVariables) => {
+import { LyTheme2, ThemeRef, StyleCollection, LyClasses, StyleTemplate } from '@alyle/ui';
+export interface LyCarouselTheme {
+    /** Styles for Carousel Component */
+    root?: StyleCollection<((classes: LyClasses<typeof STYLES>) => StyleTemplate)> | ((classes: LyClasses<typeof STYLES>) => StyleTemplate);
+}
+export interface LyCarouselVariables {
+    carousel?: LyCarouselTheme;
+}
+export declare const STYLES: (theme: import("@alyle/ui/alyle-ui").LyStyleUtils & import("@alyle/ui/alyle-ui").ThemeConfig & LyCarouselVariables, ref: ThemeRef) => {
     $priority: number;
-    root: {
-        display: string;
-        '-webkit-user-select': string;
-        '-moz-user-select': string;
-        '-ms-user-select': string;
-        position: string;
-        '& {actions}.right': {
-            after: number;
-            transform: string;
-        };
-        '& {actions}.left': {
-            before: number;
-            transform: string;
-        };
-        '& svg': {
-            display: string;
-            fill: string;
-        };
-        '&': import("@alyle/ui/alyle-ui").StyleContainer;
-    };
-    actions: {
-        position: string;
-        top: number;
-        bottom: number;
-        margin: string;
-        height: string;
-        width: string;
-        fontSize: string;
-        cursor: string;
-        background: string;
-        color: string;
-        willChange: string;
-    };
-    slideContainer: {
-        overflow: string;
-        display: string;
-        width: string;
-        height: string;
-        position: string;
-        touchAction: string;
-    };
-    slide: {
-        display: string;
-        width: string;
-        height: string;
-        willChange: string;
-        '& > ly-carousel-item': {
-            width: string;
-            flexShrink: number;
-            position: string;
-            backgroundSize: string;
-            backgroundPosition: string;
-            backgroundRepeat: string;
-        };
-    };
-    slideContent: {
-        display: string;
-    };
-    slideAnim: {
-        '& > div': {
-            transition: string;
-        };
-    };
-    slideNoEvent: {
-        '&>div': {
-            touchAction: string;
-            '-webkit-user-drag': string;
-        };
-    };
-    carouselIndicators: {
-        position: string;
-        bottom: number;
-        left: number;
-        right: number;
-        margin: number;
-        boxSizing: string;
-        display: string;
-        alignItems: string;
-        justifyContent: string;
-        height: string;
-        '&>div': {
-            display: string;
-            borderRadius: string;
-            cursor: string;
-            position: string;
-            padding: string;
-            outline: string;
-        };
-        '&>div > span': {
-            transition: string;
-            width: string;
-            height: string;
-            transform: string;
-            borderRadius: string;
-            willChange: string;
-            display: string;
-            opacity: number;
-        };
-        '&>div>span.active': {
-            transform: string;
-            opacity: number;
-        };
-    };
-    barContainer: {
-        background: string;
-        height: string;
-        position: string;
-        bottom: number;
-        width: string;
-    };
-    bar: {
-        height: string;
-        position: string;
-        bottom: number;
-        width: string;
-        animationName: string;
-        animationTimingFunction: string;
-        animationIterationCount: string;
-        background: string;
-    };
-    $keyframes: {
-        interval: {
-            0: {
-                transform: string;
-            };
-            100: {
-                transform: string;
-            };
-        };
-    };
+    $global: (className: string) => string;
+    root: () => (className: string) => string;
+    actions: (className: string) => string;
+    slideContainer: (className: string) => string;
+    slide: (className: string) => string;
+    slideContent: (className: string) => string;
+    slideAnim: (className: string) => string;
+    slideNoEvent: (className: string) => string;
+    carouselIndicators: (className: string) => string;
+    barContainer: (className: string) => string;
+    bar: (className: string) => string;
 };
 /** @docs-private */
 export declare enum CarouselMode {
@@ -145,7 +33,20 @@ export declare class LyCarousel implements OnInit, AfterViewInit, OnDestroy {
     private _theme;
     private _renderer;
     /** @docs-private */
-    readonly classes: Record<"root" | "actions" | "slideContainer" | "slide" | "slideContent" | "slideAnim" | "slideNoEvent" | "carouselIndicators" | "barContainer" | "bar", string>;
+    readonly classes: Pick<{
+        $priority: string;
+        $global: string;
+        root: string;
+        actions: string;
+        slideContainer: string;
+        slide: string;
+        slideContent: string;
+        slideAnim: string;
+        slideNoEvent: string;
+        carouselIndicators: string;
+        barContainer: string;
+        bar: string;
+    }, "root" | "actions" | "slideContainer" | "slide" | "slideContent" | "slideAnim" | "slideNoEvent" | "carouselIndicators" | "barContainer" | "bar">;
     private _intervalFn;
     slideContainer: ElementRef;
     _slide: ElementRef;

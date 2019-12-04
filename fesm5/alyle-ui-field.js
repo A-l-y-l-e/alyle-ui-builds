@@ -1,6 +1,6 @@
-import { __decorate, __assign, __metadata, __param } from 'tslib';
-import { Directive, Input, Renderer2, ElementRef, ViewChild, ContentChild, forwardRef, ContentChildren, QueryList, HostListener, Component, ChangeDetectionStrategy, ViewEncapsulation, ChangeDetectorRef, NgZone, HostBinding, Optional, Self, NgModule } from '@angular/core';
-import { LY_COMMON_STYLES, LyTheme2, toBoolean, Platform, DirAlias, ElementObserver, getLyThemeVariableUndefinedError, LyCommonModule } from '@alyle/ui';
+import { __decorate, __param } from 'tslib';
+import { Directive, InjectionToken, Renderer2, ElementRef, Inject, Input, ChangeDetectorRef, NgZone, ViewChild, ContentChild, forwardRef, ContentChildren, HostListener, Component, ChangeDetectionStrategy, ViewEncapsulation, Optional, Self, HostBinding, NgModule } from '@angular/core';
+import { LyTheme2, keyframesUniqueId, styleTemplateToString, StyleCollection, LY_COMMON_STYLES, toBoolean, Platform, DirAlias, ElementObserver, StyleRenderer, LyHostClass, LyCommonModule } from '@alyle/ui';
 import { Subject } from 'rxjs';
 import { NgControl, NgForm, FormGroupDirective } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -27,218 +27,21 @@ var LyPlaceholder = /** @class */ (function () {
     return LyPlaceholder;
 }());
 
-var STYLE_SELECT_ARROW = ({
-    '&:after': {
-        position: 'absolute',
-        content: "''",
-        width: 0,
-        height: 0,
-        borderLeft: '0.3125em solid transparent',
-        borderRight: '0.3125em solid transparent',
-        borderTop: '0.3125em solid',
-        top: '50%',
-        after: 0,
-        marginTop: '-0.15625em',
-        pointerEvents: 'none'
-    }
-});
-var STYLES = function (theme) {
-    var field = theme.field;
-    var selectionStyle = {
-        backgroundColor: theme.warn.default + " !important",
-        color: theme.warn.contrast + " !important"
-    };
-    return {
-        root: {
-            display: 'inline-block',
-            position: 'relative',
-            marginTop: '1em',
-            lineHeight: 1.5,
-            '& {hint}, & {error}': {
-                display: 'block',
-                fontSize: '.75em',
-                marginTop: '.25em'
-            },
-            '&': theme.field ? theme.field.root : null
-        },
-        animations: {
-            '& {labelSpan}': {
-                transition: "font-size " + theme.animations.curves.deceleration + " ." + theme.animations.durations.complex + "s"
-            },
-            '& {label}': {
-                transition: theme.animations.curves.deceleration + " ." + theme.animations.durations.complex + "s"
-            }
-        },
-        container: {
-            height: '100%',
-            display: 'flex',
-            alignItems: 'center',
-            position: 'relative',
-            '-webkit-tap-highlight-color': 'transparent',
-            '&:after': __assign({}, LY_COMMON_STYLES.fill, { content: "''", pointerEvents: 'none', borderColor: field.borderColor })
-        },
-        fieldset: __assign({}, LY_COMMON_STYLES.fill, { margin: 0, borderStyle: 'solid', borderColor: field.borderColor, borderWidth: 0 }),
-        fieldsetSpan: {
-            padding: 0,
-            height: '2px'
-        },
-        labelSpan: {
-            maxWidth: '100%',
-            display: 'inline-block'
-        },
-        prefix: {
-            maxHeight: '2em',
-            display: 'flex',
-            alignItems: 'center'
-        },
-        infix: {
-            display: 'inline-flex',
-            position: 'relative',
-            alignItems: 'baseline',
-            minWidth: 0,
-            width: '180px',
-            flex: '1 0'
-        },
-        suffix: {
-            maxHeight: '2em',
-            display: 'flex',
-            alignItems: 'center'
-        },
-        labelContainer: __assign({}, LY_COMMON_STYLES.fill, { pointerEvents: 'none', display: 'flex', width: '100%', borderColor: field.borderColor }),
-        labelSpacingStart: {},
-        labelCenter: {
-            display: 'flex',
-            maxWidth: '100%'
-        },
-        labelSpacingEnd: {
-            flex: 1
-        },
-        label: __assign({}, LY_COMMON_STYLES.fill, { margin: 0, border: 'none', pointerEvents: 'none', whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden', color: field.labelColor, width: '100%' }),
-        isFloatingLabel: {},
-        floatingLabel: {
-            '& {labelSpan}': {
-                fontSize: '75%'
-            }
-        },
-        placeholder: __assign({}, LY_COMMON_STYLES.fill, { pointerEvents: 'none', color: field.labelColor }),
-        focused: {},
-        inputNative: {
-            resize: 'vertical',
-            padding: 0,
-            outline: 'none',
-            border: 'none',
-            backgroundColor: 'transparent',
-            color: 'inherit',
-            font: 'inherit',
-            width: '100%',
-            'select&': {
-                '-moz-appearance': 'none',
-                '-webkit-appearance': 'none',
-                position: 'relative',
-                backgroundColor: 'transparent',
-                display: 'inline-flex',
-                boxSizing: 'border-box',
-                paddingAfter: '1em',
-                'option:not([disabled])': {
-                    color: 'initial'
-                },
-                'optgroup:not([disabled])': {
-                    color: 'initial'
-                }
-            },
-            'select&::-ms-expand': {
-                display: 'none'
-            },
-            'select&::-moz-focus-inner': {
-                border: 0
-            },
-            'select&:not(:disabled)': {
-                cursor: 'pointer'
-            },
-            'select&::-ms-value': {
-                color: 'inherit',
-                background: '0 0'
-            }
-        },
-        hintContainer: {
-            minHeight: '1.25em',
-            lineHeight: '1.25',
-            '>div': {
-                display: 'flex',
-                flex: '1 0 auto',
-                maxWidth: '100%',
-                overflow: 'hidden',
-                justifyContent: 'space-between'
-            }
-        },
-        disabled: {
-            '&, & {label}, & {container}:after': {
-                color: theme.disabled.contrast,
-                cursor: 'default'
-            }
-        },
-        hint: null,
-        error: null,
-        errorState: {
-            '& {label}, & {hintContainer}, &{selectArrow} {infix}:after': {
-                color: theme.warn.default + "!important"
-            },
-            '& {fieldset}, & {container}:after': {
-                borderColor: theme.warn.default + "!important"
-            },
-            '& {inputNative}': {
-                caretColor: theme.warn.default + "!important"
-            },
-            // hidde all hints except after hint
-            '& {hintContainer} ly-hint:not({hintAfter})': {
-                display: 'none'
-            },
-            '& {labelSpan}': {
-                animation: "{shake} " + theme.animations.durations.complex + "ms " + theme.animations.curves.deceleration
-            },
-            '& {inputNative}::selection': selectionStyle,
-            '& {inputNative}::-moz-selection': selectionStyle
-        },
-        hintAfter: {
-            marginBefore: 'auto'
-        },
-        hintBefore: {
-            marginAfter: 'auto'
-        },
-        selectArrow: {
-            '{infix}': STYLE_SELECT_ARROW
-        },
-        $keyframes: {
-            shake: {
-                0: {
-                    marginBefore: 0
-                },
-                40: {
-                    marginBefore: '2px'
-                },
-                50: {
-                    marginBefore: '-2px'
-                },
-                70: {
-                    marginBefore: '2px'
-                },
-                100: {
-                    marginBefore: 0
-                },
-            }
-        }
-    };
-};
+/**
+ * For internal use only.
+ * @docs-private
+ */
+var LY_FIELD_STYLES_TOKEN = new InjectionToken('LY_FIELD_STYLES_TOKEN');
 
 /** LyHint */
 var STYLE_PRIORITY = -2;
 /** Hint text to be shown underneath the field. */
 var LyHint = /** @class */ (function () {
-    function LyHint(_renderer, _el, _theme) {
+    function LyHint(_renderer, _el, _theme, styles) {
         this._renderer = _renderer;
         this._el = _el;
         this._theme = _theme;
-        this.classes = this._theme.addStyleSheet(STYLES, STYLE_PRIORITY);
+        this.classes = this._theme.addStyleSheet(styles, STYLE_PRIORITY);
         _renderer.addClass(_el.nativeElement, this.classes.hint);
     }
     Object.defineProperty(LyHint.prototype, "align", {
@@ -265,18 +68,20 @@ var LyHint = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
+    LyHint.ctorParameters = function () { return [
+        { type: Renderer2 },
+        { type: ElementRef },
+        { type: LyTheme2 },
+        { type: undefined, decorators: [{ type: Inject, args: [LY_FIELD_STYLES_TOKEN,] }] }
+    ]; };
     __decorate([
-        Input(),
-        __metadata("design:type", String),
-        __metadata("design:paramtypes", [String])
+        Input()
     ], LyHint.prototype, "align", null);
     LyHint = __decorate([
         Directive({
             selector: 'ly-field > ly-hint'
         }),
-        __metadata("design:paramtypes", [Renderer2,
-            ElementRef,
-            LyTheme2])
+        __param(3, Inject(LY_FIELD_STYLES_TOKEN))
     ], LyHint);
     return LyHint;
 }());
@@ -305,22 +110,23 @@ var LySuffix = /** @class */ (function () {
     return LySuffix;
 }());
 
-/** LyError */
 var STYLE_PRIORITY$1 = -2;
 var LyError = /** @class */ (function () {
-    function LyError(renderer, el, _theme) {
-        this._theme = _theme;
-        this.classes = this._theme.addStyleSheet(STYLES, STYLE_PRIORITY$1);
-        var className = _theme.addStyleSheet(STYLES, STYLE_PRIORITY$1).error;
+    function LyError(renderer, el, theme, styles) {
+        var className = theme.addStyleSheet(styles, STYLE_PRIORITY$1).error;
         renderer.addClass(el.nativeElement, className);
     }
+    LyError.ctorParameters = function () { return [
+        { type: Renderer2 },
+        { type: ElementRef },
+        { type: LyTheme2 },
+        { type: undefined, decorators: [{ type: Inject, args: [LY_FIELD_STYLES_TOKEN,] }] }
+    ]; };
     LyError = __decorate([
         Directive({
             selector: 'ly-error'
         }),
-        __metadata("design:paramtypes", [Renderer2,
-            ElementRef,
-            LyTheme2])
+        __param(3, Inject(LY_FIELD_STYLES_TOKEN))
     ], LyError);
     return LyError;
 }());
@@ -335,45 +141,6 @@ var LyFieldControlBase = /** @class */ (function () {
 /** LyField */
 var STYLE_PRIORITY$2 = -2;
 var DEFAULT_APPEARANCE = 'standard';
-var DEFAULT_APPEARANCE_THEME = {
-    standard: {
-        '&:not({disabled}) {container}:hover:after': {
-            borderBottomColor: 'currentColor'
-        },
-        '&{disabled} {container}:after': {
-            borderBottomStyle: 'dotted',
-            borderColor: 'inherit'
-        },
-        'textarea{inputNative}': {
-            margin: '0.25em 0'
-        },
-        '{inputNative}:not(textarea)': {
-            padding: '0.25em 0'
-        },
-        '& {container}': {
-            padding: '1em 0 0',
-            '&:after': {
-                borderBottomStyle: 'solid',
-                borderBottomWidth: '1px'
-            }
-        },
-        '&{focused} {container}': {
-            '&:after': {
-                borderWidth: '2px',
-                borderColor: 'currentColor'
-            }
-        },
-        '& {label}': {
-            margin: '0.25em 0'
-        },
-        '& {placeholder}': {
-            margin: '0.25em 0'
-        },
-        '& {floatingLabel}': {
-            transform: 'translateY(-1.25em)'
-        }
-    }
-};
 var DEFAULT_WITH_COLOR = 'primary';
 var inputText = [
     'text',
@@ -383,23 +150,62 @@ var inputText = [
     'tel',
     'url'
 ];
+var STYLE_SELECT_ARROW = function (className) { return className + "::after{position:absolute;content:'';width:0;height:0;border-left:0.3125em solid transparent;border-right:0.3125em solid transparent;border-top:0.3125em solid;top:50%;{after}:0;margin-top:-0.15625em;pointer-events:none;}"; };
+var STYLES = function (theme, ref) {
+    var classes = ref.selectorsOf(STYLES);
+    var before = theme.before, after = theme.after;
+    var shake = keyframesUniqueId.next();
+    return {
+        $priority: STYLE_PRIORITY$2,
+        $global: function (className) { return "@keyframes " + shake + "{" + className + " 0%{margin-" + before + ":0;}" + className + " 40%{margin-" + before + ":2px;}" + className + " 50%{margin-" + before + ":-2px;}" + className + " 70%{margin-" + before + ":2px;}" + className + " 100%{margin-" + before + ":0;}}"; },
+        root: function () { return function (className) { return className + "{display:inline-block;position:relative;margin-top:1em;line-height:1.5;}" + styleTemplateToString(((theme.field
+            && theme.field.root
+            && (theme.field.root instanceof StyleCollection
+                ? theme.field.root.setTransformer(function (fn) { return fn(classes); })
+                : theme.field.root(classes)))), "" + className) + className + " " + classes.hint + "," + className + " " + classes.error + "{display:block;font-size:.75em;margin-top:.25em;}"; }; },
+        animations: function () { return function (className) { return className + " " + classes.labelSpan + "{transition:font-size " + theme.animations.curves.deceleration + " ." + theme.animations.durations.complex + "s;}" + className + " " + classes.label + "{transition:" + theme.animations.curves.deceleration + " ." + theme.animations.durations.complex + "s;}"; }; },
+        container: function (className) { return className + "{height:100%;display:flex;align-items:center;position:relative;-webkit-tap-highlight-color:transparent;}" + styleTemplateToString((LY_COMMON_STYLES.fill), className + ":after") + className + ":after{content:'';pointer-events:none;}"; },
+        fieldset: function (className) { return "" + styleTemplateToString((LY_COMMON_STYLES.fill), "" + className) + className + "{margin:0;border-style:solid;border-width:0;}"; },
+        fieldsetSpan: function (className) { return className + "{padding:0;height:2px;}"; },
+        labelSpan: function (className) { return className + "{max-width:100%;display:inline-block;}"; },
+        prefix: function (className) { return className + "{max-height:2em;display:flex;align-items:center;}"; },
+        infix: function (className) { return className + "{display:inline-flex;position:relative;align-items:baseline;min-width:0;width:180px;flex:1 0;}"; },
+        suffix: function (className) { return className + "{max-height:2em;display:flex;align-items:center;}"; },
+        labelContainer: function (className) { return "" + styleTemplateToString((LY_COMMON_STYLES.fill), "" + className) + className + "{pointer-events:none;display:flex;width:100%;}"; },
+        labelSpacingStart: null,
+        labelCenter: function (className) { return className + "{display:flex;max-width:100%;}"; },
+        labelSpacingEnd: function (className) { return className + "{flex:1;}"; },
+        label: function (className) { return "" + styleTemplateToString((LY_COMMON_STYLES.fill), "" + className) + className + "{margin:0;border:none;pointer-events:none;white-space:nowrap;text-overflow:ellipsis;overflow:hidden;width:100%;}"; },
+        isFloatingLabel: null,
+        floatingLabel: function () { return function (className) { return className + " " + classes.labelSpan + "{font-size:75%;}"; }; },
+        placeholder: function (className) { return "" + styleTemplateToString((LY_COMMON_STYLES.fill), "" + className) + className + "{pointer-events:none;}"; },
+        focused: null,
+        inputNative: function (className) { return className + "{resize:vertical;padding:0;outline:none;border:none;background-color:transparent;color:inherit;font:inherit;width:100%;}select" + className + "{-moz-appearance:none;-webkit-appearance:none;position:relative;background-color:transparent;display:inline-flex;box-sizing:border-box;padding-after:1em;}select" + className + " option:not([disabled]){color:initial;}select" + className + " optgroup:not([disabled]){color:initial;}select" + className + "::-ms-expand{display:none;}select" + className + "::-moz-focus-inner{border:0;}select" + className + ":not(:disabled){cursor:pointer;}select" + className + "::-ms-value{color:inherit;background:0 0;}"; },
+        hintContainer: function (className) { return className + "{min-height:1.25em;line-height:1.25;}" + className + " > div{display:flex;flex:1 0 auto;max-width:100%;overflow:hidden;justify-content:space-between;}"; },
+        disabled: function () { return function (className) { return className + "," + className + " " + classes.label + "," + className + " " + classes.container + ":after{color:" + theme.disabled.default + ";cursor:default;}"; }; },
+        hint: null,
+        error: null,
+        errorState: function () { return function (className) { return className + " " + classes.label + "," + className + " " + classes.hintContainer + "," + className + classes.selectArrow + " " + classes.infix + ":after{color:" + theme.warn.default + "!important;}" + className + " " + classes.fieldset + "," + className + " " + classes.container + ":after{border-color:" + theme.warn.default + "!important;}" + className + " " + classes.inputNative + "{caret-color:" + theme.warn.default + "!important;}" + className + " " + classes.hintContainer + " ly-hint:not(" + classes.hintAfter + "){display:none;}" + className + " " + classes.labelSpan + "{animation:" + shake + " " + theme.animations.durations.complex + "ms " + theme.animations.curves.deceleration + ";}" + className + " " + classes.inputNative + "::selection," + className + " " + classes.inputNative + "::-moz-selection{background-color:" + theme.warn.default + " !important;color:" + theme.warn.contrast + " !important;}"; }; },
+        hintAfter: function (className) { return className + "{margin-" + before + ":auto;}"; },
+        hintBefore: function (className) { return className + "{margin-" + after + ":auto;}"; },
+        selectArrow: function () { return function (className) { return className + " " + classes.infix + "::after{position:absolute;content:'';width:0;height:0;border-left:0.3125em solid transparent;border-right:0.3125em solid transparent;border-top:0.3125em solid;top:50%;" + after + ":0;margin-top:-0.15625em;pointer-events:none;}"; }; }
+    };
+};
 var LyField = /** @class */ (function () {
-    function LyField(_renderer, _el, _elementObserver, _theme, _cd, _ngZone) {
+    function LyField(_renderer, _el, _elementObserver, _theme, _cd, _ngZone, _styleRenderer) {
         this._renderer = _renderer;
         this._el = _el;
         this._elementObserver = _elementObserver;
         this._theme = _theme;
         this._cd = _cd;
         this._ngZone = _ngZone;
+        this._styleRenderer = _styleRenderer;
         /**
          * styles
          * @docs-private
          */
-        this.classes = this._theme.addStyleSheet(STYLES, STYLE_PRIORITY$2);
+        this.classes = this._theme.renderStyleSheet(STYLES);
         _renderer.addClass(_el.nativeElement, this.classes.root);
-        if (!_theme.variables.field) {
-            throw getLyThemeVariableUndefinedError('field');
-        }
     }
     Object.defineProperty(LyField.prototype, "errorState", {
         get: function () {
@@ -490,13 +296,18 @@ var LyField = /** @class */ (function () {
         set: function (val) {
             if (val !== this.appearance) {
                 this._appearance = val;
-                if (!(this._theme.variables.field.appearance[val] || DEFAULT_APPEARANCE_THEME[val])) {
+                this[0x1] = this._styleRenderer.add("ly-field.appearance:" + val, function (theme, ref) {
+                    var classes = ref.selectorsOf(STYLES);
+                    if (theme.field && theme.field.appearance) {
+                        var appearance = theme.field.appearance[val];
+                        if (appearance) {
+                            return appearance instanceof StyleCollection
+                                ? appearance.setTransformer(function (_) { return _(classes); }).css
+                                : appearance(classes);
+                        }
+                    }
                     throw new Error(val + " not found in theme.field.appearance");
-                }
-                this._appearanceClass = this._theme.addStyle("ly-field.appearance:" + val, function (theme) {
-                    var appearance = theme.field.appearance[val] || DEFAULT_APPEARANCE_THEME[val];
-                    return appearance;
-                }, this._el.nativeElement, this._appearanceClass, STYLE_PRIORITY$2, STYLES);
+                }, STYLE_PRIORITY$2, this[0x1]);
             }
         },
         enumerable: true,
@@ -655,87 +466,71 @@ var LyField = /** @class */ (function () {
     LyField.prototype._getHostElement = function () {
         return this._el.nativeElement;
     };
+    LyField.ctorParameters = function () { return [
+        { type: Renderer2 },
+        { type: ElementRef },
+        { type: ElementObserver },
+        { type: LyTheme2 },
+        { type: ChangeDetectorRef },
+        { type: NgZone },
+        { type: StyleRenderer }
+    ]; };
     __decorate([
-        ViewChild('_labelContainer', { static: false }),
-        __metadata("design:type", ElementRef)
+        ViewChild('_labelContainer', { static: false })
     ], LyField.prototype, "_labelContainer", void 0);
     __decorate([
-        ViewChild('_labelContainer2', { static: false }),
-        __metadata("design:type", ElementRef)
+        ViewChild('_labelContainer2', { static: false })
     ], LyField.prototype, "_labelContainer2", void 0);
     __decorate([
-        ViewChild('_labelSpan', { static: false }),
-        __metadata("design:type", ElementRef)
+        ViewChild('_labelSpan', { static: false })
     ], LyField.prototype, "_labelSpan", void 0);
     __decorate([
-        ViewChild('_prefixContainer', { static: false }),
-        __metadata("design:type", ElementRef)
+        ViewChild('_prefixContainer', { static: false })
     ], LyField.prototype, "_prefixContainer", void 0);
     __decorate([
-        ViewChild('_suffixContainer', { static: false }),
-        __metadata("design:type", ElementRef)
+        ViewChild('_suffixContainer', { static: false })
     ], LyField.prototype, "_suffixContainer", void 0);
     __decorate([
-        ViewChild('_fieldsetLegend', { static: false }),
-        __metadata("design:type", ElementRef)
+        ViewChild('_fieldsetLegend', { static: false })
     ], LyField.prototype, "_fieldsetLegend", void 0);
     __decorate([
-        ContentChild(forwardRef(function () { return LyFieldControlBase; }), { static: false }),
-        __metadata("design:type", LyFieldControlBase)
+        ContentChild(forwardRef(function () { return LyFieldControlBase; }), { static: false })
     ], LyField.prototype, "_control", void 0);
     __decorate([
-        ContentChild(LyPlaceholder, { static: false }),
-        __metadata("design:type", LyPlaceholder)
+        ContentChild(LyPlaceholder, { static: false })
     ], LyField.prototype, "_placeholderChild", void 0);
     __decorate([
-        ContentChild(LyLabel, { static: false }),
-        __metadata("design:type", LyLabel)
+        ContentChild(LyLabel, { static: false })
     ], LyField.prototype, "_labelChild", void 0);
     __decorate([
-        ContentChildren(LyHint),
-        __metadata("design:type", QueryList)
+        ContentChildren(LyHint)
     ], LyField.prototype, "_hintChildren", void 0);
     __decorate([
-        ContentChildren(LyPrefix),
-        __metadata("design:type", QueryList)
+        ContentChildren(LyPrefix)
     ], LyField.prototype, "_prefixChildren", void 0);
     __decorate([
-        ContentChildren(LySuffix),
-        __metadata("design:type", QueryList)
+        ContentChildren(LySuffix)
     ], LyField.prototype, "_suffixChildren", void 0);
     __decorate([
-        ContentChildren(LyError),
-        __metadata("design:type", QueryList)
+        ContentChildren(LyError)
     ], LyField.prototype, "_errorChildren", void 0);
     __decorate([
-        Input(),
-        __metadata("design:type", Boolean)
+        Input()
     ], LyField.prototype, "persistentHint", void 0);
     __decorate([
-        Input(),
-        __metadata("design:type", Boolean),
-        __metadata("design:paramtypes", [Boolean])
+        Input()
     ], LyField.prototype, "fullWidth", null);
     __decorate([
-        Input(),
-        __metadata("design:type", Boolean),
-        __metadata("design:paramtypes", [Boolean])
+        Input()
     ], LyField.prototype, "floatingLabel", null);
     __decorate([
-        Input(),
-        __metadata("design:type", String),
-        __metadata("design:paramtypes", [String])
+        Input()
     ], LyField.prototype, "color", null);
     __decorate([
-        Input(),
-        __metadata("design:type", String),
-        __metadata("design:paramtypes", [String])
+        Input()
     ], LyField.prototype, "appearance", null);
     __decorate([
-        HostListener('focus'),
-        __metadata("design:type", Function),
-        __metadata("design:paramtypes", []),
-        __metadata("design:returntype", void 0)
+        HostListener('focus')
     ], LyField.prototype, "onFocus", null);
     LyField = __decorate([
         Component({
@@ -743,14 +538,12 @@ var LyField = /** @class */ (function () {
             exportAs: 'lyFormField',
             template: "<div [className]=\"classes.container\" (click)=\"_control && _control.onContainerClick && _control.onContainerClick($event)\">\n  <fieldset [className]=\"classes.fieldset\"><legend #_fieldsetLegend [className]=\"classes.fieldsetSpan\"></legend></fieldset>\n  <div [className]=\"classes.prefix\" *ngIf=\"_prefixChildren.length\" #_prefixContainer>\n    <ng-content select=\"[lyPrefix]\"></ng-content>\n  </div>\n  <div [className]=\"classes.infix\">\n    <ng-content></ng-content>\n    <div [className]=\"classes.label\" *ngIf=\"_isLabel()\" #_labelContainer2>\n      <span #_labelSpan [className]=\"classes.labelSpan\">\n        <ng-container *ngTemplateOutlet=\"_labelTemplate\"></ng-container>\n      </span>\n    </div>\n    <div [className]=\"classes.placeholder\" *ngIf=\"_isPlaceholder() && _control?.empty && (_control?.floatingLabel || floatingLabel)\">\n      <ng-container *ngTemplateOutlet=\"_placeholderTemplate\"></ng-container>\n    </div>\n  </div>\n  <div [className]=\"classes.suffix\" *ngIf=\"_suffixChildren.length\" #_suffixContainer>\n    <ng-content select=\"[lySuffix]\"></ng-content>\n  </div>\n</div>\n\n<div [className]=\"classes.hintContainer\">\n  <div *ngIf=\"_hintChildren.length && (persistentHint || _control?.errorState || _control?.focused)\">\n    <span *ngIf=\"_control.errorState\">\n      <ng-content select=\"ly-error\"></ng-content>\n    </span>\n    <ng-content select=\"ly-hint\"></ng-content>\n  </div>\n</div>\n\n<ng-template #_labelTemplate>\n  <ng-content select=\"ly-label\"></ng-content>\n  <ng-container *ngIf=\"!_labelChild\">\n    <ng-template *ngTemplateOutlet=\"_placeholderTemplate\"></ng-template>\n  </ng-container>\n</ng-template>\n\n<ng-template #_placeholderTemplate>\n  <ng-content select=\"ly-placeholder\"></ng-content>\n  <ng-container *ngIf=\"_control.placeholder\">{{ _control.placeholder }}</ng-container>\n</ng-template>\n",
             changeDetection: ChangeDetectionStrategy.OnPush,
-            encapsulation: ViewEncapsulation.None
-        }),
-        __metadata("design:paramtypes", [Renderer2,
-            ElementRef,
-            ElementObserver,
-            LyTheme2,
-            ChangeDetectorRef,
-            NgZone])
+            encapsulation: ViewEncapsulation.None,
+            providers: [
+                LyHostClass,
+                StyleRenderer,
+            ]
+        })
     ], LyField);
     return LyField;
 }());
@@ -951,45 +744,37 @@ var LyNativeControl = /** @class */ (function () {
         return option ? !!option.label : false;
     };
     var LyNativeControl_1;
+    LyNativeControl.ctorParameters = function () { return [
+        { type: LyTheme2 },
+        { type: ElementRef },
+        { type: Renderer2 },
+        { type: LyField, decorators: [{ type: Optional }] },
+        { type: NgControl, decorators: [{ type: Optional }, { type: Self }] },
+        { type: NgForm, decorators: [{ type: Optional }] },
+        { type: FormGroupDirective, decorators: [{ type: Optional }] }
+    ]; };
     __decorate([
-        HostListener('input'),
-        __metadata("design:type", Function),
-        __metadata("design:paramtypes", []),
-        __metadata("design:returntype", void 0)
+        HostListener('input')
     ], LyNativeControl.prototype, "_onInput", null);
     __decorate([
-        HostListener('blur'),
-        __metadata("design:type", Function),
-        __metadata("design:paramtypes", []),
-        __metadata("design:returntype", void 0)
+        HostListener('blur')
     ], LyNativeControl.prototype, "_onBlur", null);
     __decorate([
-        HostListener('focus'),
-        __metadata("design:type", Function),
-        __metadata("design:paramtypes", []),
-        __metadata("design:returntype", void 0)
+        HostListener('focus')
     ], LyNativeControl.prototype, "_onFocus", null);
     __decorate([
-        Input(),
-        __metadata("design:type", Object),
-        __metadata("design:paramtypes", [Object])
+        Input()
     ], LyNativeControl.prototype, "value", null);
     __decorate([
         HostBinding(),
-        Input(),
-        __metadata("design:type", Boolean),
-        __metadata("design:paramtypes", [Boolean])
+        Input()
     ], LyNativeControl.prototype, "disabled", null);
     __decorate([
         HostBinding(),
-        Input(),
-        __metadata("design:type", Boolean),
-        __metadata("design:paramtypes", [Boolean])
+        Input()
     ], LyNativeControl.prototype, "required", null);
     __decorate([
-        Input(),
-        __metadata("design:type", String),
-        __metadata("design:paramtypes", [String])
+        Input()
     ], LyNativeControl.prototype, "placeholder", null);
     LyNativeControl = LyNativeControl_1 = __decorate([
         Directive({
@@ -1002,18 +787,12 @@ var LyNativeControl = /** @class */ (function () {
         __param(3, Optional()),
         __param(4, Optional()), __param(4, Self()),
         __param(5, Optional()),
-        __param(6, Optional()),
-        __metadata("design:paramtypes", [LyTheme2,
-            ElementRef,
-            Renderer2,
-            LyField,
-            NgControl,
-            NgForm,
-            FormGroupDirective])
+        __param(6, Optional())
     ], LyNativeControl);
     return LyNativeControl;
 }());
 
+var ɵ0 = STYLES;
 var LyFieldModule = /** @class */ (function () {
     function LyFieldModule() {
     }
@@ -1034,11 +813,21 @@ var LyFieldModule = /** @class */ (function () {
                 LyError,
                 LyCommonModule
             ],
+            providers: [
+                {
+                    provide: LY_FIELD_STYLES_TOKEN,
+                    useValue: ɵ0
+                }
+            ],
             declarations: [LyField, LyPlaceholder, LyLabel, LyNativeControl, LyPrefix, LySuffix, LyHint, LyError]
         })
     ], LyFieldModule);
     return LyFieldModule;
 }());
 
-export { LyField, LyFieldControlBase, LyFieldModule, LyNativeControl, STYLES, STYLE_SELECT_ARROW, LyPlaceholder as ɵa, LyLabel as ɵb, LyHint as ɵc, LyPrefix as ɵd, LySuffix as ɵe, LyError as ɵf };
+/**
+ * Generated bundle index. Do not edit.
+ */
+
+export { LyField, LyFieldControlBase, LyFieldModule, LyNativeControl, STYLES, STYLE_SELECT_ARROW, ɵ0, LyPlaceholder as ɵa, LyLabel as ɵb, LyHint as ɵc, LY_FIELD_STYLES_TOKEN as ɵd, LyPrefix as ɵe, LySuffix as ɵf, LyError as ɵg };
 //# sourceMappingURL=alyle-ui-field.js.map

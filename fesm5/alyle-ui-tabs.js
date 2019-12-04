@@ -1,6 +1,6 @@
-import { __decorate, __metadata, __assign, __extends, __param } from 'tslib';
-import { Directive, TemplateRef, EventEmitter, ViewChild, ElementRef, Input, Output, ContentChildren, forwardRef, QueryList, Component, ChangeDetectionStrategy, ViewEncapsulation, Renderer2, ChangeDetectorRef, ContentChild, HostListener, Optional, NgZone, NgModule } from '@angular/core';
-import { LY_COMMON_STYLES, mixinStyleUpdater, mixinBg, mixinElevation, mixinShadowColor, mixinColor, mixinRaised, mixinDisabled, mixinOutlined, mixinDisableRipple, toBoolean, YPosition, XPosition, AlignAlias, Platform, Dir, LyTheme2, WinResize, scrollWithAnimation, LyRippleService, LyFocusState, LyThemeModule, LyCommonModule, NgTranscludeModule } from '@alyle/ui';
+import { __decorate, __extends, __param } from 'tslib';
+import { TemplateRef, Directive, EventEmitter, Renderer2, ElementRef, ChangeDetectorRef, ViewChild, Input, Output, ContentChildren, forwardRef, Component, ChangeDetectionStrategy, ViewEncapsulation, ContentChild, NgZone, Optional, HostListener, NgModule } from '@angular/core';
+import { styleTemplateToString, StyleCollection, LY_COMMON_STYLES, mixinStyleUpdater, mixinBg, mixinElevation, mixinShadowColor, mixinColor, mixinRaised, mixinDisabled, mixinOutlined, mixinDisableRipple, toBoolean, XPosition, YPosition, AlignAlias, Platform, Dir, LyTheme2, WinResize, scrollWithAnimation, LyRippleService, LyFocusState, LyHostClass, LyThemeModule, LyCommonModule, NgTranscludeModule } from '@alyle/ui';
 import { LyButton } from '@alyle/ui/button';
 import { Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
@@ -9,9 +9,11 @@ var LyTabContent = /** @class */ (function () {
     function LyTabContent(template) {
         this.template = template;
     }
+    LyTabContent.ctorParameters = function () { return [
+        { type: TemplateRef }
+    ]; };
     LyTabContent = __decorate([
-        Directive({ selector: '[ly-tab-content]' }),
-        __metadata("design:paramtypes", [TemplateRef])
+        Directive({ selector: '[ly-tab-content]' })
     ], LyTabContent);
     return LyTabContent;
 }());
@@ -22,94 +24,32 @@ var DEFAULT_BG = 'primary';
 var DEFAULT_INDICATOR_COLOR = 'accent';
 var DEFAULT_ELEVATION = 4;
 var DEFAULT_HEADER_PLACEMENT = 'above';
-var STYLES = function (theme) {
-    var _a;
-    return ({
+var STYLES = function (theme, ref) {
+    var __ = ref.selectorsOf(STYLES);
+    return {
+        $name: LyTabs.и,
         $priority: STYLE_PRIORITY,
-        root: {
-            display: 'block'
-        },
-        container: {
-            display: 'flex'
-        },
-        tab: {
-            position: 'relative',
-            display: 'inline-flex'
-        },
+        root: function () { return function (className) { return className + "{display:block;}" + styleTemplateToString(((theme.tab
+            && theme.tab.root
+            && (theme.tab.root instanceof StyleCollection
+                ? theme.tab.root.setTransformer(function (fn) { return fn(__); }).css
+                : theme.tab.root(__)))), "" + className); }; },
+        container: function (className) { return className + "{display:flex;}"; },
+        tab: function (className) { return className + "{position:relative;display:inline-flex;}"; },
         /** Tab content */
-        contentContainer: {
-            overflow: 'hidden',
-            flexGrow: 1
-        },
+        contentContainer: function (className) { return className + "{overflow:hidden;flex-grow:1;}"; },
         /** Tab header */
-        tabsLabels: {
-            display: 'flex',
-            position: 'relative'
-        },
-        tabsLabelsContainer: {
-            overflow: 'hidden',
-            '{scrollable} &': {
-                '@media (hover: none)': {
-                    overflow: 'auto'
-                }
-            }
-        },
-        label: (_a = {
-                '-webkit-tap-highlight-color': 'transparent',
-                '-webkit-appearance': 'none',
-                backgroundColor: 'transparent',
-                userSelect: 'none',
-                border: 0,
-                minWidth: '72px',
-                padding: '0 24px',
-                cursor: 'pointer',
-                height: '48px',
-                display: 'inline-flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                position: 'relative',
-                overflow: 'hidden',
-                fontFamily: theme.typography.fontFamily,
-                fontSize: theme.pxToRem(theme.typography.fontSize),
-                letterSpacing: '0.02857em',
-                color: 'currentColor',
-                outline: 'none',
-                width: '100%',
-                fontWeight: 500,
-                opacity: .7
-            },
-            _a[theme.getBreakpoint('XSmall')] = {
-                padding: '0 12px'
-            },
-            _a),
-        tabLabelActive: {
-            opacity: 1
-        },
-        tabContents: {
-            display: 'flex',
-            transition: '450ms cubic-bezier(.1, 1, 0.5, 1)',
-            willChange: 'transform',
-            height: '100%'
-        },
-        tabContent: {
-            width: '100%',
-            height: '100%',
-            flexShrink: 0,
-            position: 'relative'
-        },
-        tabsIndicator: {
-            position: 'absolute',
-            height: '2px',
-            transition: '450ms cubic-bezier(.1, 1, 0.5, 1)',
-            background: 'currentColor'
-        },
-        tabsIndicatorForServer: {
-            position: 'absolute',
-            background: 'currentColor'
-        },
-        rippleContainer: __assign({}, LY_COMMON_STYLES.fill, { overflow: 'hidden' }),
+        tabsLabels: function (className) { return className + "{display:flex;position:relative;}"; },
+        tabsLabelsContainer: function () { return function (className) { return className + "{overflow:hidden;}@media (hover: none){" + __.scrollable + " " + className + "{overflow:auto;}}"; }; },
+        label: function (className) { return className + "{-webkit-tap-highlight-color:transparent;-webkit-appearance:none;background-color:transparent;user-select:none;border:0;min-width:72px;padding:0 24px;cursor:pointer;height:48px;display:inline-flex;justify-content:center;align-items:center;position:relative;overflow:hidden;font-family:" + theme.typography.fontFamily + ";font-size:" + theme.pxToRem(theme.typography.fontSize) + ";letter-spacing:0.02857em;color:currentColor;outline:none;width:100%;font-weight:500;opacity:.7;}" + className + " " + theme.getBreakpoint('XSmall') + "{padding:0 12px;}"; },
+        tabLabelActive: function (className) { return className + "{opacity:1;}"; },
+        tabContents: function (className) { return className + "{display:flex;transition:450ms cubic-bezier(.1, 1, 0.5, 1);will-change:transform;height:100%;}"; },
+        tabContent: function (className) { return className + "{width:100%;height:100%;flex-shrink:0;position:relative;}"; },
+        tabsIndicator: function (className) { return className + "{position:absolute;height:2px;transition:450ms cubic-bezier(.1, 1, 0.5, 1);background:currentColor;}"; },
+        tabsIndicatorForServer: function (className) { return className + "{position:absolute;background:currentColor;}"; },
+        rippleContainer: function (className) { return "" + styleTemplateToString((LY_COMMON_STYLES.fill), "" + className) + className + "{overflow:hidden;}"; },
         scrollable: null
-    });
+    };
 };
 /** @docs-private */
 var LyTabsBase = /** @class */ (function () {
@@ -140,7 +80,7 @@ var LyTabs = /** @class */ (function (_super) {
         _this.cd = cd;
         _this._resizeService = _resizeService;
         /** @docs-private */
-        _this.classes = _this.theme.addStyleSheet(STYLES);
+        _this.classes = _this.theme.renderStyleSheet(STYLES);
         _this._tabsSubscription = Subscription.EMPTY;
         _this.selectedIndexOnChange = 'auto';
         _this.selectedIndexChange = new EventEmitter();
@@ -449,59 +389,50 @@ var LyTabs = /** @class */ (function (_super) {
         }
         return flexDirection;
     };
+    /** @docs-private */
+    LyTabs.и = 'LyTabs';
+    LyTabs.ctorParameters = function () { return [
+        { type: LyTheme2 },
+        { type: Renderer2 },
+        { type: ElementRef },
+        { type: ChangeDetectorRef },
+        { type: WinResize }
+    ]; };
     __decorate([
-        ViewChild('tabs', { static: true }),
-        __metadata("design:type", ElementRef)
+        ViewChild('tabs', { static: true })
     ], LyTabs.prototype, "tabsRef", void 0);
     __decorate([
-        ViewChild('tabContents', { static: true }),
-        __metadata("design:type", ElementRef)
+        ViewChild('tabContents', { static: true })
     ], LyTabs.prototype, "tabContents", void 0);
     __decorate([
-        ViewChild('tabsIndicator', { static: true }),
-        __metadata("design:type", ElementRef)
+        ViewChild('tabsIndicator', { static: true })
     ], LyTabs.prototype, "tabsIndicator", void 0);
     __decorate([
-        Input(),
-        __metadata("design:type", Object)
+        Input()
     ], LyTabs.prototype, "selectedIndexOnChange", void 0);
     __decorate([
-        Input(),
-        __metadata("design:type", Object),
-        __metadata("design:paramtypes", [Object])
+        Input()
     ], LyTabs.prototype, "scrollable", null);
     __decorate([
-        Input(),
-        __metadata("design:type", String),
-        __metadata("design:paramtypes", [String])
+        Input()
     ], LyTabs.prototype, "indicatorColor", null);
     __decorate([
-        Input(),
-        __metadata("design:type", String),
-        __metadata("design:paramtypes", [String])
+        Input()
     ], LyTabs.prototype, "headerPlacement", null);
     __decorate([
-        Input(),
-        __metadata("design:type", String),
-        __metadata("design:paramtypes", [String])
+        Input()
     ], LyTabs.prototype, "alignTabs", null);
     __decorate([
-        Input(),
-        __metadata("design:type", String),
-        __metadata("design:paramtypes", [String])
+        Input()
     ], LyTabs.prototype, "textColor", null);
     __decorate([
-        Input(),
-        __metadata("design:type", Number),
-        __metadata("design:paramtypes", [Number])
+        Input()
     ], LyTabs.prototype, "selectedIndex", null);
     __decorate([
-        Output(),
-        __metadata("design:type", EventEmitter)
+        Output()
     ], LyTabs.prototype, "selectedIndexChange", void 0);
     __decorate([
-        ContentChildren(forwardRef(function () { return LyTab; })),
-        __metadata("design:type", QueryList)
+        ContentChildren(forwardRef(function () { return LyTab; }))
     ], LyTabs.prototype, "tabsList", void 0);
     LyTabs = __decorate([
         Component({
@@ -513,12 +444,7 @@ var LyTabs = /** @class */ (function (_super) {
             inputs: [
                 'bg', 'elevation', 'shadowColor'
             ]
-        }),
-        __metadata("design:paramtypes", [LyTheme2,
-            Renderer2,
-            ElementRef,
-            ChangeDetectorRef,
-            WinResize])
+        })
     ], LyTabs);
     return LyTabs;
 }(LyTabsMixinBase));
@@ -532,21 +458,22 @@ var LyTab = /** @class */ (function () {
     LyTab.prototype.ngOnInit = function () {
         this._renderer.addClass(this._el.nativeElement, this._tabs.classes.tab);
     };
+    LyTab.ctorParameters = function () { return [
+        { type: LyTabs },
+        { type: Renderer2 },
+        { type: ElementRef }
+    ]; };
     __decorate([
-        ContentChild(LyTabContent, { read: TemplateRef, static: true }),
-        __metadata("design:type", TemplateRef)
+        ContentChild(LyTabContent, { read: TemplateRef, static: true })
     ], LyTab.prototype, "_templateRefLazy", void 0);
     __decorate([
-        ViewChild('_templateNgContent', { static: true }),
-        __metadata("design:type", TemplateRef)
+        ViewChild('_templateNgContent', { static: true })
     ], LyTab.prototype, "_templateRef", void 0);
     __decorate([
-        ViewChild('tabIndicator', { static: false }),
-        __metadata("design:type", ElementRef)
+        ViewChild('tabIndicator', { static: false })
     ], LyTab.prototype, "_tabIndicator", void 0);
     __decorate([
-        ContentChild(forwardRef(function () { return LyTabLabel; }), { static: true }),
-        __metadata("design:type", Object)
+        ContentChild(forwardRef(function () { return LyTabLabel; }), { static: true })
     ], LyTab.prototype, "_tabLabel", void 0);
     LyTab = __decorate([
         Component({
@@ -554,17 +481,14 @@ var LyTab = /** @class */ (function () {
             template: "<ng-content select=\"ly-tab-label\"></ng-content>\n<ng-content select=\"[ly-tab-label]\"></ng-content>\n<ng-content select=\"[ly-tab-label-native]\"></ng-content>\n<div></div>\n<span *ngIf=\"!_isBrowser\" #tabIndicator></span>\n<ng-template #_templateNgContent>\n  <ng-content></ng-content>\n</ng-template>",
             changeDetection: ChangeDetectionStrategy.OnPush,
             encapsulation: ViewEncapsulation.None
-        }),
-        __metadata("design:paramtypes", [LyTabs,
-            Renderer2,
-            ElementRef])
+        })
     ], LyTab);
     return LyTab;
 }());
 var LyTabLabel = /** @class */ (function (_super) {
     __extends(LyTabLabel, _super);
-    function LyTabLabel(_el, _renderer, _theme, _ngZone, _rippleService, _focusState, _tab, _tabs) {
-        var _this = _super.call(this, _el, _renderer, _theme, _ngZone, _rippleService, _focusState) || this;
+    function LyTabLabel(_el, _renderer, _theme, _ngZone, _rippleService, _focusState, _hostClass, _tab, _tabs) {
+        var _this = _super.call(this, _el, _renderer, _theme, _ngZone, _rippleService, _focusState, _hostClass, null) || this;
         _this._tab = _tab;
         _this._tabs = _tabs;
         _this._isBrowser = Platform.isBrowser;
@@ -627,20 +551,25 @@ var LyTabLabel = /** @class */ (function (_super) {
         }
     };
     LyTabLabel.prototype.ngAfterViewInit = function () { };
+    LyTabLabel.ctorParameters = function () { return [
+        { type: ElementRef },
+        { type: Renderer2 },
+        { type: LyTheme2 },
+        { type: NgZone },
+        { type: LyRippleService },
+        { type: LyFocusState },
+        { type: LyHostClass },
+        { type: LyTab, decorators: [{ type: Optional }] },
+        { type: LyTabs, decorators: [{ type: Optional }] }
+    ]; };
     __decorate([
-        Input(),
-        __metadata("design:type", Boolean),
-        __metadata("design:paramtypes", [Boolean])
+        Input()
     ], LyTabLabel.prototype, "active", null);
     __decorate([
-        ViewChild('rippleContainer', { static: false }),
-        __metadata("design:type", ElementRef)
+        ViewChild('rippleContainer', { static: false })
     ], LyTabLabel.prototype, "_rippleContainer", void 0);
     __decorate([
-        HostListener('click'),
-        __metadata("design:type", Function),
-        __metadata("design:paramtypes", []),
-        __metadata("design:returntype", void 0)
+        HostListener('click')
     ], LyTabLabel.prototype, "_onClickTab", null);
     LyTabLabel = __decorate([
         Component({
@@ -655,18 +584,11 @@ var LyTabLabel = /** @class */ (function (_super) {
                 'elevation',
                 'shadowColor',
                 'disableRipple'
-            ]
+            ],
+            providers: [LyHostClass]
         }),
-        __param(6, Optional()),
         __param(7, Optional()),
-        __metadata("design:paramtypes", [ElementRef,
-            Renderer2,
-            LyTheme2,
-            NgZone,
-            LyRippleService,
-            LyFocusState,
-            LyTab,
-            LyTabs])
+        __param(8, Optional())
     ], LyTabLabel);
     return LyTabLabel;
 }(LyButton));
@@ -683,6 +605,10 @@ var LyTabsModule = /** @class */ (function () {
     ], LyTabsModule);
     return LyTabsModule;
 }());
+
+/**
+ * Generated bundle index. Do not edit.
+ */
 
 export { LyTab, LyTabLabel, LyTabLabelBase, LyTabLabelMixinBase, LyTabs, LyTabsBase, LyTabsMixinBase, LyTabsModule, STYLES, LyTabContent as ɵa };
 //# sourceMappingURL=alyle-ui-tabs.js.map

@@ -1,0 +1,13 @@
+{
+  "main": "../bundles/alyle-ui-image-cropper.umd.js",
+  "module": "../fesm5/alyle-ui-image-cropper.js",
+  "es2015": "../fesm2015/alyle-ui-image-cropper.js",
+  "esm5": "../esm5/image-cropper/alyle-ui-image-cropper.js",
+  "esm2015": "../esm2015/image-cropper/alyle-ui-image-cropper.js",
+  "fesm5": "../fesm5/alyle-ui-image-cropper.js",
+  "fesm2015": "../fesm2015/alyle-ui-image-cropper.js",
+  "typings": "alyle-ui-image-cropper.d.ts",
+  "metadata": "alyle-ui-image-cropper.metadata.json",
+  "sideEffects": false,
+  "name": "@alyle/ui/image-cropper"
+}

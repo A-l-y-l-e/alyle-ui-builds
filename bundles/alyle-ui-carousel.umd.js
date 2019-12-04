@@ -1,8 +1,8 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@alyle/ui'), require('chroma-js'), require('rxjs'), require('rxjs/operators'), require('@angular/common')) :
-    typeof define === 'function' && define.amd ? define('@alyle/ui/carousel', ['exports', '@angular/core', '@alyle/ui', 'chroma-js', 'rxjs', 'rxjs/operators', '@angular/common'], factory) :
-    (global = global || self, factory((global.ly = global.ly || {}, global.ly.carousel = {}), global.ng.core, global.ly.core, global.chroma, global.rxjs, global.rxjs.operators, global.ng.common));
-}(this, function (exports, core, ui, _chroma, rxjs, operators, common) { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@alyle/ui'), require('rxjs'), require('rxjs/operators'), require('@angular/common')) :
+    typeof define === 'function' && define.amd ? define('@alyle/ui/carousel', ['exports', '@angular/core', '@alyle/ui', 'rxjs', 'rxjs/operators', '@angular/common'], factory) :
+    (global = global || self, factory((global.ly = global.ly || {}, global.ly.carousel = {}), global.ng.core, global.ly.core, global.rxjs, global.rxjs.operators, global.ng.common));
+}(this, (function (exports, core, ui, rxjs, operators, common) { 'use strict';
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
@@ -18,6 +18,43 @@
     See the Apache Version 2.0 License for specific language governing permissions
     and limitations under the License.
     ***************************************************************************** */
+    /* global Reflect, Promise */
+
+    var extendStatics = function(d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+
+    function __extends(d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    }
+
+    var __assign = function() {
+        __assign = Object.assign || function __assign(t) {
+            for (var s, i = 1, n = arguments.length; i < n; i++) {
+                s = arguments[i];
+                for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+            }
+            return t;
+        };
+        return __assign.apply(this, arguments);
+    };
+
+    function __rest(s, e) {
+        var t = {};
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+            t[p] = s[p];
+        if (s != null && typeof Object.getOwnPropertySymbols === "function")
+            for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+                if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                    t[p[i]] = s[p[i]];
+            }
+        return t;
+    }
 
     function __decorate(decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -26,153 +63,173 @@
         return c > 3 && r && Object.defineProperty(target, key, r), r;
     }
 
+    function __param(paramIndex, decorator) {
+        return function (target, key) { decorator(target, key, paramIndex); }
+    }
+
     function __metadata(metadataKey, metadataValue) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(metadataKey, metadataValue);
     }
 
-    /** @docs-private */
-    var chroma = _chroma;
+    function __awaiter(thisArg, _arguments, P, generator) {
+        return new (P || (P = Promise))(function (resolve, reject) {
+            function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+            function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+            function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+            step((generator = generator.apply(thisArg, _arguments || [])).next());
+        });
+    }
+
+    function __generator(thisArg, body) {
+        var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+        return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+        function verb(n) { return function (v) { return step([n, v]); }; }
+        function step(op) {
+            if (f) throw new TypeError("Generator is already executing.");
+            while (_) try {
+                if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+                if (y = 0, t) op = [op[0] & 2, t.value];
+                switch (op[0]) {
+                    case 0: case 1: t = op; break;
+                    case 4: _.label++; return { value: op[1], done: false };
+                    case 5: _.label++; y = op[1]; op = [0]; continue;
+                    case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                    default:
+                        if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                        if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                        if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                        if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                        if (t[2]) _.ops.pop();
+                        _.trys.pop(); continue;
+                }
+                op = body.call(thisArg, _);
+            } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+            if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+        }
+    }
+
+    function __exportStar(m, exports) {
+        for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
+    }
+
+    function __values(o) {
+        var m = typeof Symbol === "function" && o[Symbol.iterator], i = 0;
+        if (m) return m.call(o);
+        return {
+            next: function () {
+                if (o && i >= o.length) o = void 0;
+                return { value: o && o[i++], done: !o };
+            }
+        };
+    }
+
+    function __read(o, n) {
+        var m = typeof Symbol === "function" && o[Symbol.iterator];
+        if (!m) return o;
+        var i = m.call(o), r, ar = [], e;
+        try {
+            while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
+        }
+        catch (error) { e = { error: error }; }
+        finally {
+            try {
+                if (r && !r.done && (m = i["return"])) m.call(i);
+            }
+            finally { if (e) throw e.error; }
+        }
+        return ar;
+    }
+
+    function __spread() {
+        for (var ar = [], i = 0; i < arguments.length; i++)
+            ar = ar.concat(__read(arguments[i]));
+        return ar;
+    }
+
+    function __spreadArrays() {
+        for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
+        for (var r = Array(s), k = 0, i = 0; i < il; i++)
+            for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
+                r[k] = a[j];
+        return r;
+    };
+
+    function __await(v) {
+        return this instanceof __await ? (this.v = v, this) : new __await(v);
+    }
+
+    function __asyncGenerator(thisArg, _arguments, generator) {
+        if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
+        var g = generator.apply(thisArg, _arguments || []), i, q = [];
+        return i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () { return this; }, i;
+        function verb(n) { if (g[n]) i[n] = function (v) { return new Promise(function (a, b) { q.push([n, v, a, b]) > 1 || resume(n, v); }); }; }
+        function resume(n, v) { try { step(g[n](v)); } catch (e) { settle(q[0][3], e); } }
+        function step(r) { r.value instanceof __await ? Promise.resolve(r.value.v).then(fulfill, reject) : settle(q[0][2], r); }
+        function fulfill(value) { resume("next", value); }
+        function reject(value) { resume("throw", value); }
+        function settle(f, v) { if (f(v), q.shift(), q.length) resume(q[0][0], q[0][1]); }
+    }
+
+    function __asyncDelegator(o) {
+        var i, p;
+        return i = {}, verb("next"), verb("throw", function (e) { throw e; }), verb("return"), i[Symbol.iterator] = function () { return this; }, i;
+        function verb(n, f) { i[n] = o[n] ? function (v) { return (p = !p) ? { value: __await(o[n](v)), done: n === "return" } : f ? f(v) : v; } : f; }
+    }
+
+    function __asyncValues(o) {
+        if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
+        var m = o[Symbol.asyncIterator], i;
+        return m ? m.call(o) : (o = typeof __values === "function" ? __values(o) : o[Symbol.iterator](), i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () { return this; }, i);
+        function verb(n) { i[n] = o[n] && function (v) { return new Promise(function (resolve, reject) { v = o[n](v), settle(resolve, reject, v.done, v.value); }); }; }
+        function settle(resolve, reject, d, v) { Promise.resolve(v).then(function(v) { resolve({ value: v, done: d }); }, reject); }
+    }
+
+    function __makeTemplateObject(cooked, raw) {
+        if (Object.defineProperty) { Object.defineProperty(cooked, "raw", { value: raw }); } else { cooked.raw = raw; }
+        return cooked;
+    };
+
+    function __importStar(mod) {
+        if (mod && mod.__esModule) return mod;
+        var result = {};
+        if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+        result.default = mod;
+        return result;
+    }
+
+    function __importDefault(mod) {
+        return (mod && mod.__esModule) ? mod : { default: mod };
+    }
+
     /** Default interval in ms */
     var DEFAULT_INTERVAL = 7000;
     var DEFAULT_AUTOPLAY = true;
     var DEFAULT_HAS_PROGRESS_BAR = false;
     var STYLE_PRIORITY = -2;
-    var STYLES = function (theme) {
+    var STYLES = function (theme, ref) {
         var dir = theme.getDirection(ui.DirAlias.before);
         var right = dir === 'right' ? 0 : 180;
         var left = dir === 'left' ? 0 : 180;
+        var carousel = ref.selectorsOf(STYLES);
+        var barAnimation = ui.keyframesUniqueId.next();
+        var after = theme.after, before = theme.before;
         return {
             $priority: STYLE_PRIORITY,
-            root: {
-                display: 'block',
-                '-webkit-user-select': 'none',
-                '-moz-user-select': 'none',
-                '-ms-user-select': 'none',
-                position: 'relative',
-                '& {actions}.right': {
-                    after: 0,
-                    transform: "rotate(" + right + "deg)"
-                },
-                '& {actions}.left': {
-                    before: 0,
-                    transform: "rotate(" + left + "deg)"
-                },
-                '& svg': {
-                    display: 'block',
-                    fill: 'currentColor'
-                },
-                '&': theme.carousel ? theme.carousel.root : null
-            },
-            actions: {
-                position: 'absolute',
-                top: 0,
-                bottom: 0,
-                margin: 'auto .25em',
-                height: '1em',
-                width: '1em',
-                fontSize: '36px',
-                cursor: 'pointer',
-                background: chroma(theme.background.primary.default).alpha(.25).css(),
-                color: theme.text.primary,
-                willChange: 'transform'
-            },
-            slideContainer: {
-                overflow: 'hidden',
-                display: 'block',
-                width: '100%',
-                height: '100%',
-                position: 'relative',
-                touchAction: 'pan-y !important'
-            },
-            slide: {
-                display: 'flex',
-                width: '100%',
-                height: '100%',
-                willChange: 'transform',
-                '& > ly-carousel-item': {
-                    width: '100%',
-                    flexShrink: 0,
-                    position: 'relative',
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
-                    backgroundRepeat: 'no-repeat'
-                }
-            },
-            slideContent: {
-                display: 'flex'
-            },
-            slideAnim: {
-                '& > div': {
-                    transition: 'transform 750ms cubic-bezier(.1, 1, 0.5, 1)'
-                }
-            },
-            slideNoEvent: {
-                '&>div': {
-                    touchAction: 'initial !important',
-                    '-webkit-user-drag': 'initial !important'
-                }
-            },
-            carouselIndicators: {
-                position: 'absolute',
-                bottom: 0,
-                left: 0,
-                right: 0,
-                margin: 0,
-                boxSizing: 'border-box',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                height: '48px',
-                '&>div': {
-                    display: 'inline-block',
-                    borderRadius: '50%',
-                    cursor: 'pointer',
-                    position: 'relative',
-                    padding: '.5em',
-                    outline: 'none'
-                },
-                '&>div > span': {
-                    transition: '300ms cubic-bezier(0.65, 0.05, 0.36, 1)',
-                    width: '1em',
-                    height: '1em',
-                    transform: 'scale(.5)',
-                    borderRadius: '50%',
-                    willChange: 'transform',
-                    display: 'block',
-                    opacity: .65
-                },
-                '&>div>span.active': {
-                    transform: 'scale(1)',
-                    opacity: 1
-                }
-            },
-            barContainer: {
-                background: chroma(theme.background.primary.default).alpha(.25).css(),
-                height: '4px',
-                position: 'absolute',
-                bottom: 0,
-                width: '100%',
-            },
-            bar: {
-                height: '4px',
-                position: 'absolute',
-                bottom: 0,
-                width: '100%',
-                animationName: '{interval}',
-                animationTimingFunction: 'linear',
-                animationIterationCount: 'infinite',
-                background: theme.text.primary
-            },
-            $keyframes: {
-                interval: {
-                    0: {
-                        transform: 'translateX(0%)'
-                    },
-                    100: {
-                        transform: "translateX(" + (dir === 'left' ? '-' : '') + "100%)"
-                    }
-                }
-            }
+            $global: function (className) { return "@keyframes " + barAnimation + "{" + className + " 0%{transform:translateX(0%);}" + className + " 100%{transform:translateX(" + (dir === 'left' ? '-' : '') + "100%);}}"; },
+            root: function () { return function (className) { return className + "{display:block;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;position:relative;}" + ui.styleTemplateToString(((theme.carousel
+                && theme.carousel.root
+                && (theme.carousel.root instanceof ui.StyleCollection
+                    ? theme.carousel.root.setTransformer(function (fn) { return fn(carousel); })
+                    : theme.carousel.root(carousel)))), "" + className) + className + " " + carousel.actions + ".right{" + after + ":0;transform:rotate(" + right + "deg);}" + className + " " + carousel.actions + ".left{" + before + ":0;transform:rotate(" + left + "deg);}" + className + " svg{display:block;fill:currentColor;}"; }; },
+            actions: function (className) { return className + "{position:absolute;top:0;bottom:0;margin:auto .25em;height:1em;width:1em;font-size:36px;cursor:pointer;background:" + theme.background.primary.default.alpha(.25) + ";color:" + theme.text.primary + ";will-change:transform;}"; },
+            slideContainer: function (className) { return className + "{overflow:hidden;display:block;width:100%;height:100%;position:relative;touch-action:pan-y !important;}"; },
+            slide: function (className) { return className + "{display:flex;width:100%;height:100%;will-change:transform;}" + className + " > ly-carousel-item{width:100%;flex-shrink:0;position:relative;background-size:cover;background-position:center;background-repeat:no-repeat;}"; },
+            slideContent: function (className) { return className + "{display:flex;}"; },
+            slideAnim: function (className) { return className + " > div{transition:transform 750ms cubic-bezier(.1, 1, 0.5, 1);}"; },
+            slideNoEvent: function (className) { return className + ">div{touch-action:initial !important;-webkit-user-drag:initial !important;}"; },
+            carouselIndicators: function (className) { return className + "{position:absolute;bottom:0;left:0;right:0;margin:0;box-sizing:border-box;display:flex;align-items:center;justify-content:center;height:48px;}" + className + ">div{display:inline-block;border-radius:50%;cursor:pointer;position:relative;padding:.5em;outline:none;}" + className + ">div }," + className + ">div>div > span{transition:300ms cubic-bezier(0.65, 0.05, 0.36, 1);width:1em;height:1em;transform:scale(.5);border-radius:50%;will-change:transform;display:block;opacity:.65;}" + className + ">div } },'" + className + ">div }>div>span.active," + className + ">div>div > span },'" + className + ">div>div > span>div>span.active{transform:scale(1);opacity:1;}"; },
+            barContainer: function (className) { return className + "{background:" + theme.background.primary.default.alpha(.25) + ";height:4px;position:absolute;bottom:0;width:100%;}"; },
+            bar: function (className) { return className + "{height:4px;position:absolute;bottom:0;width:100%;animation-name:" + barAnimation + ";animation-timing-function:linear;animation-iteration-count:infinite;background:" + theme.text.primary + ";}"; }
         };
     };
     /** @docs-private */
@@ -432,54 +489,44 @@
         LyCarousel.prototype._markForCheck = function () {
             this._cd.markForCheck();
         };
+        LyCarousel.ctorParameters = function () { return [
+            { type: core.ElementRef },
+            { type: core.ChangeDetectorRef },
+            { type: ui.LyTheme2 },
+            { type: core.Renderer2 }
+        ]; };
         __decorate([
-            core.ViewChild('slideContainer', { static: false }),
-            __metadata("design:type", core.ElementRef)
+            core.ViewChild('slideContainer', { static: false })
         ], LyCarousel.prototype, "slideContainer", void 0);
         __decorate([
-            core.ViewChild('_slide', { static: false }),
-            __metadata("design:type", core.ElementRef)
+            core.ViewChild('_slide', { static: false })
         ], LyCarousel.prototype, "_slide", void 0);
         __decorate([
-            core.ViewChild('_progressBar', { static: false }),
-            __metadata("design:type", core.ElementRef)
+            core.ViewChild('_progressBar', { static: false })
         ], LyCarousel.prototype, "_progressBar", void 0);
         __decorate([
-            core.ContentChildren(core.forwardRef(function () { return LyCarouselItem; })),
-            __metadata("design:type", core.QueryList)
+            core.ContentChildren(core.forwardRef(function () { return LyCarouselItem; }))
         ], LyCarousel.prototype, "lyItems", void 0);
         __decorate([
-            core.Input(),
-            __metadata("design:type", Number)
+            core.Input()
         ], LyCarousel.prototype, "mode", void 0);
         __decorate([
-            core.Input(),
-            __metadata("design:type", Object)
+            core.Input()
         ], LyCarousel.prototype, "selectedIndex", void 0);
         __decorate([
-            core.Input(),
-            __metadata("design:type", Boolean),
-            __metadata("design:paramtypes", [Boolean])
+            core.Input()
         ], LyCarousel.prototype, "pauseOnHover", null);
         __decorate([
-            core.Input(),
-            __metadata("design:type", Boolean),
-            __metadata("design:paramtypes", [Boolean])
+            core.Input()
         ], LyCarousel.prototype, "touch", null);
         __decorate([
-            core.Input(),
-            __metadata("design:type", Boolean),
-            __metadata("design:paramtypes", [Boolean])
+            core.Input()
         ], LyCarousel.prototype, "autoplay", null);
         __decorate([
-            core.Input(),
-            __metadata("design:type", Boolean),
-            __metadata("design:paramtypes", [Boolean])
+            core.Input()
         ], LyCarousel.prototype, "hasProgressBar", null);
         __decorate([
-            core.Input(),
-            __metadata("design:type", Number),
-            __metadata("design:paramtypes", [Number])
+            core.Input()
         ], LyCarousel.prototype, "interval", null);
         LyCarousel = __decorate([
             core.Component({
@@ -491,11 +538,7 @@
                     '(mouseenter)': '_onMouseEnter()',
                     '(mouseleave)': '_onMouseLeave()'
                 }
-            }),
-            __metadata("design:paramtypes", [core.ElementRef,
-                core.ChangeDetectorRef,
-                ui.LyTheme2,
-                core.Renderer2])
+            })
         ], LyCarousel);
         return LyCarousel;
     }());
@@ -511,17 +554,17 @@
             enumerable: true,
             configurable: true
         });
+        LyCarouselItem.ctorParameters = function () { return [
+            { type: ui.LyTheme2 },
+            { type: core.ElementRef }
+        ]; };
         __decorate([
-            core.Input(),
-            __metadata("design:type", String),
-            __metadata("design:paramtypes", [String])
+            core.Input()
         ], LyCarouselItem.prototype, "srcImg", null);
         LyCarouselItem = __decorate([
             core.Directive({
                 selector: 'ly-carousel-item'
-            }),
-            __metadata("design:paramtypes", [ui.LyTheme2,
-                core.ElementRef])
+            })
         ], LyCarouselItem);
         return LyCarouselItem;
     }());
@@ -546,5 +589,5 @@
 
     Object.defineProperty(exports, '__esModule', { value: true });
 
-}));
+})));
 //# sourceMappingURL=alyle-ui-carousel.umd.js.map

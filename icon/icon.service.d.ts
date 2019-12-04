@@ -26,14 +26,17 @@ export declare class LyIconService {
      * Styles
      * @docs-private
      */
-    readonly classes: Record<"svg", string>;
-    readonly defaultSvgIcon: SVGElement;
+    readonly classes: Pick<{
+        svg: string;
+    }, "svg">;
+    readonly defaultSvgIcon: string;
     readonly defaultClass: string;
     readonly defaultClassPrefix: string;
     constructor(http: HttpClient, _sanitizer: DomSanitizer, _document: any, theme: LyTheme2);
     setSvg(key: string, url: SafeResourceUrl): void;
     addSvgIconLiteral(key: string, literal: SafeHtml): void;
-    private _textToSvg;
+    /** String to SVG */
+    _textToSvg(str: string): SVGElement;
     private _cacheSvgIcon;
     getSvg(key: string): SvgIcon;
     /**

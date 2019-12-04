@@ -1,5 +1,13 @@
-import { LyStyleUtils, Dir } from '@alyle/ui';
-import { SliderVariables } from '@alyle/ui/slider';
+import { LyStyleUtils, Dir, StyleCollection, StyleTemplate } from '@alyle/ui';
+import { LyAvatarTheme } from '@alyle/ui/avatar';
+import { ExpansionConfig } from '@alyle/ui/expansion';
+import { LySnackBarTheme } from '@alyle/ui/snack-bar';
+import { LyButtonTheme } from '@alyle/ui/button';
+import { LyBadgeTheme } from '@alyle/ui/badge';
+import { LyCheckboxTheme } from '@alyle/ui/checkbox';
+import { LyFieldTheme } from '@alyle/ui/field';
+import { LySliderTheme } from '@alyle/ui/slider';
+import { LyToolbarTheme } from '@alyle/ui/toolbar';
 export declare class MinimaBase extends LyStyleUtils {
     typography: {
         fontFamily: string;
@@ -7,8 +15,12 @@ export declare class MinimaBase extends LyStyleUtils {
         fontSize: number;
         gutterTop: number;
         gutterBottom: number;
-        lyTyp: {};
+        lyTyp: {
+            [key: string]: StyleCollection<any> | (() => StyleTemplate);
+        };
     };
+    avatar?: LyAvatarTheme;
+    snackBar?: LySnackBarTheme;
     iconButton: {
         size: string;
     };
@@ -57,172 +69,12 @@ export declare class MinimaBase extends LyStyleUtils {
         };
     };
     direction: Dir;
-    button: {
-        defaultConfig: {
-            size: "medium";
-        };
-        size: {
-            small: {
-                padding: string;
-                fontSize: string;
-                minHeight: string;
-                minWidth: string;
-            };
-            medium: {
-                padding: string;
-                minHeight: string;
-                minWidth: string;
-            };
-            large: {
-                padding: string;
-                fontSize: string;
-                minHeight: string;
-                minWidth: string;
-            };
-        };
-        appearance: {
-            icon: {
-                minWidth: string;
-                width: string;
-                height: string;
-                padding: number;
-                borderRadius: string;
-            };
-            fab: {
-                minWidth: string;
-                width: string;
-                height: string;
-                padding: number;
-                borderRadius: string;
-            };
-            miniFab: {
-                minWidth: string;
-                width: string;
-                height: string;
-                padding: number;
-                borderRadius: string;
-            };
-        };
-    };
-    expansion: {
-        root: {
-            '& {panelHeader}': {
-                height: string;
-            };
-            '& {expanded} {panelHeader}': {
-                height: string;
-            };
-        };
-        appearance: {
-            popOut: {
-                '& {panel}': {
-                    transition: string;
-                };
-                '& {expanded}{panel}': {
-                    margin: string;
-                    '&:first-child': {
-                        marginTop: number;
-                    };
-                    '&:last-child': {
-                        marginBottom: number;
-                    };
-                };
-            };
-        };
-    };
-    field: {
-        appearance: {
-            outlined: {
-                '&:not({focused}):not({disabled}):hover {fieldset}': {
-                    borderColor: string;
-                };
-                '&{focused} {fieldset}': {
-                    borderWidth: string;
-                    borderColor: string;
-                };
-                '& textarea{inputNative}': {
-                    margin: string;
-                };
-                '& {inputNative}:not(textarea)': {
-                    padding: string;
-                };
-                '& {container}': {
-                    padding: string;
-                };
-                '& {fieldset}': {
-                    borderWidth: string;
-                    borderRadius: string;
-                    padding: string;
-                };
-                '& {prefix}': {
-                    '&:after': {
-                        padding: string;
-                    };
-                };
-                '& suffix': {
-                    '&:after': {
-                        padding: string;
-                    };
-                };
-                '& {label}': {
-                    margin: string;
-                };
-                '& {placeholder}': {
-                    margin: string;
-                };
-                '& {floatingLabel}{label}': {
-                    transform: string;
-                };
-                '& {hintContainer}': {
-                    padding: string;
-                };
-            };
-            filled: {
-                '&:not({focused}):not({disabled}) {container}:hover:after': {
-                    borderBottomWidth: string;
-                };
-                'textarea{inputNative}': {
-                    margin: string;
-                };
-                '{inputNative}:not(textarea)': {
-                    padding: string;
-                };
-                '& {container}': {
-                    borderRadius: string;
-                    padding: string;
-                    '&:after': {
-                        borderBottomStyle: string;
-                        borderBottomColor: string;
-                        borderBottomWidth: string;
-                    };
-                };
-                '&{focused} {container}': {
-                    '&:after': {
-                        borderBottomWidth: string;
-                    };
-                };
-                '& {placeholder}': {
-                    margin: string;
-                };
-                '& {label}': {
-                    margin: string;
-                };
-                '& {floatingLabel}{label}': {
-                    transform: string;
-                };
-                '& {hintContainer}': {
-                    padding: string;
-                };
-            };
-        };
-    };
-    toolbar: {
-        appearance: {
-            dense: {
-                height: string;
-            };
-        };
-    };
-    slider: SliderVariables;
+    button: LyButtonTheme;
+    badge: LyBadgeTheme;
+    checkbox: LyCheckboxTheme;
+    expansion: ExpansionConfig;
+    field: LyFieldTheme;
+    toolbar: LyToolbarTheme;
+    slider: LySliderTheme;
     constructor();
 }

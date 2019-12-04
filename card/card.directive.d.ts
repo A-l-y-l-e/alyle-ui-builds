@@ -1,30 +1,19 @@
 import { ElementRef, NgZone, OnChanges, OnDestroy, OnInit, Renderer2 } from '@angular/core';
-import { LyTheme2, ThemeVariables } from '@alyle/ui';
-export declare const STYLES: (theme: ThemeVariables) => {
+import { LyTheme2, StyleCollection, LyClasses, StyleTemplate, ThemeRef, StyleRenderer } from '@alyle/ui';
+export interface LyCardTheme {
+    /** Styles for Card Component */
+    root?: StyleCollection<((classes: LyClasses<typeof STYLES>) => StyleTemplate)> | ((classes: LyClasses<typeof STYLES>) => StyleTemplate);
+}
+export interface LyCardVariables {
+    card?: LyCardTheme;
+}
+export declare const STYLES: (theme: import("@alyle/ui/alyle-ui").LyStyleUtils & import("@alyle/ui/alyle-ui").ThemeConfig & LyCardVariables, ref: ThemeRef) => {
     $priority: number;
-    root: {
-        display: string;
-        overflow: string;
-        borderRadius: string;
-        '&': import("@alyle/ui/alyle-ui").StyleContainer;
-    };
-    content: {
-        [x: string]: string | {
-            padding: string;
-        };
-        display: string;
-        padding: string;
-    };
-    actions: {
-        [x: string]: string | {
-            padding: string;
-        };
-        display: string;
-        padding: string;
-    };
-    actionsItem: {
-        margin: string;
-    };
+    $name: string;
+    root: () => (className: string) => string;
+    content: (className: string) => string;
+    actions: (className: string) => string;
+    actionsItem: (className: string) => string;
 };
 /** @docs-private */
 export declare class LyCardBase {
@@ -38,11 +27,19 @@ export declare class LyCard extends LyCardMixinBase implements OnChanges, OnInit
     private theme;
     private _el;
     private renderer;
+    static readonly и = "LyCard";
     /**
      * styles
      * @docs-private
      */
-    readonly classes: Record<"root" | "content" | "actions" | "actionsItem", string>;
+    readonly classes: Pick<{
+        $priority: string;
+        $name: string;
+        root: string;
+        content: string;
+        actions: string;
+        actionsItem: string;
+    }, "root" | "content" | "actions" | "actionsItem">;
     constructor(theme: LyTheme2, _el: ElementRef, renderer: Renderer2, ngZone: NgZone);
     ngOnChanges(): void;
     ngOnInit(): void;
@@ -66,16 +63,22 @@ export declare class LyCardActions implements OnInit {
 export declare class LyCardMedia implements OnInit {
     private el;
     private renderer;
-    private theme;
+    private styleRenderer;
+    static readonly и = "LyCardMedia";
     private _bgImg;
-    private _bgImgClass;
     private _ratio;
-    private _ratioClass;
     bgImg: string;
-    /** Aspect ratio */
+    /** bgImg class name */
+    [0x1]: string;
+    /**
+     * Aspect ratio
+     *
+     * e.g:
+     * 4:3
+     * 1:1
+     */
     ratio: string;
-    constructor(el: ElementRef, renderer: Renderer2, theme: LyTheme2);
+    [0x2]: string;
+    constructor(el: ElementRef, renderer: Renderer2, styleRenderer: StyleRenderer);
     ngOnInit(): void;
-    private _createBgImgClass;
-    private _createAspectRatioClass;
 }

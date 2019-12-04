@@ -1,32 +1,23 @@
-import { __decorate, __metadata } from 'tslib';
-import { isDevMode, Input, Directive, Renderer2, ElementRef, NgModule } from '@angular/core';
-import { mixinStyleUpdater, mixinBg, mixinColor, mixinRaised, mixinDisabled, mixinOutlined, mixinElevation, mixinShadowColor, toBoolean, getLyThemeVariableUndefinedError, LyTheme2, LyCommonModule } from '@alyle/ui';
+import { __decorate } from 'tslib';
+import { Renderer2, ElementRef, Input, Directive, NgModule } from '@angular/core';
+import { styleTemplateToString, StyleCollection, mixinStyleUpdater, mixinBg, mixinColor, mixinRaised, mixinDisabled, mixinOutlined, mixinElevation, mixinShadowColor, LyTheme2, StyleRenderer, LyHostClass, LyCommonModule } from '@alyle/ui';
 import { CommonModule } from '@angular/common';
 
 const STYLE_PRIORITY = -2;
 const DEFAULT_POSITION = 'fixed';
 const DEFAULT_BG = 'background:tertiary';
-const styles = (theme) => ({
-    root: {
-        padding: '0 16px',
-        display: 'flex',
-        boxSizing: 'border-box',
-        width: '100%',
-        flexDirection: 'row',
-        alignItems: 'center',
-        whiteSpace: 'nowrap',
-        height: '64px',
-        zIndex: theme.zIndex.toolbar,
-        [theme.getBreakpoint('XSmall')]: {
-            height: '56px'
-        },
-        '&': theme.toolbar ? theme.toolbar.root : null
-    },
-    dense: {
-        height: '56px'
-    }
-});
-const ɵ0 = styles;
+const STYLES = (theme, ref) => {
+    const __ = ref.selectorsOf(STYLES);
+    return {
+        $priority: STYLE_PRIORITY,
+        root: () => (className) => `${className}{padding:0 16px;display:flex;box-sizing:border-box;width:100%;flex-direction:row;align-items:center;white-space:nowrap;height:64px;z-index:${theme.zIndex.toolbar};}${styleTemplateToString(((theme.toolbar
+            && theme.toolbar.root
+            && (theme.toolbar.root instanceof StyleCollection
+                ? theme.toolbar.root.setTransformer(fn => fn(__)).css
+                : theme.toolbar.root(__)))), `${className}`)}${className} ${theme.getBreakpoint('XSmall')}{height:56px;}`
+    };
+};
+const ɵ0 = STYLES;
 /** @docs-private */
 class LyToolbarBase {
     constructor(_theme) {
@@ -36,16 +27,16 @@ class LyToolbarBase {
 /** @docs-private */
 const LyToolbarMixinBase = mixinStyleUpdater(mixinBg(mixinColor(mixinRaised(mixinDisabled(mixinOutlined(mixinElevation(mixinShadowColor(LyToolbarBase))))))));
 let LyToolbar = class LyToolbar extends LyToolbarMixinBase {
-    constructor(_renderer, _el, theme) {
+    constructor(_renderer, _el, theme, _sr) {
         super(theme);
-        this._renderer = _renderer;
         this._el = _el;
         this.theme = theme;
+        this._sr = _sr;
         /**
          * Styles
          * @docs-private
          */
-        this.classes = this.theme.addStyleSheet(styles, STYLE_PRIORITY);
+        this.classes = this.theme.renderStyleSheet(STYLES);
         this.setAutoContrast();
         _renderer.addClass(this._el.nativeElement, this.classes.root);
     }
@@ -56,33 +47,21 @@ let LyToolbar = class LyToolbar extends LyToolbarMixinBase {
     get position() {
         return this._position;
     }
-    set dense(val) {
-        const newVal = toBoolean(val);
-        if (isDevMode() && newVal !== this.dense) {
-            console.warn(this._el.nativeElement, `LyToolbar.appearance: \`dense\` is deprecated, instead use \`appearance="dense"\``);
-            if (newVal) {
-                this._renderer.addClass(this._el.nativeElement, this.classes.dense);
-            }
-            else {
-                this._renderer.removeClass(this._el.nativeElement, this.classes.dense);
-            }
-        }
-    }
-    get dense() {
-        return this._dense;
-    }
     set appearance(val) {
         if (val !== this.appearance) {
             this._appearance = val;
-            this._appearanceClass = this._theme.addStyle(`LyToolbar.appearance:${val}`, (theme) => {
-                if (!theme.toolbar) {
-                    throw getLyThemeVariableUndefinedError('toolbar');
+            this._appearanceClass = this._sr.add(`LyToolbar.appearance:${val}`, (theme, ref) => {
+                const classes = ref.selectorsOf(STYLES);
+                if (theme.toolbar && theme.toolbar.appearance) {
+                    const appearance = theme.toolbar.appearance[val];
+                    if (appearance) {
+                        return appearance instanceof StyleCollection
+                            ? appearance.setTransformer((_) => _(classes)).css
+                            : appearance(classes);
+                    }
                 }
-                if (!(theme.toolbar.appearance && theme.toolbar.appearance[val])) {
-                    throw new Error(`Value toolbar.appearance['${val}'] not found in ThemeVariables`);
-                }
-                return theme.toolbar.appearance[val];
-            }, this._el.nativeElement, this._appearanceClass, STYLE_PRIORITY);
+                throw new Error(`${val} not found in theme.field.appearance`);
+            }, STYLE_PRIORITY, this._appearanceClass);
         }
     }
     get appearance() {
@@ -101,20 +80,17 @@ let LyToolbar = class LyToolbar extends LyToolbarMixinBase {
         }
     }
 };
+LyToolbar.ctorParameters = () => [
+    { type: Renderer2 },
+    { type: ElementRef },
+    { type: LyTheme2 },
+    { type: StyleRenderer }
+];
 __decorate([
-    Input(),
-    __metadata("design:type", String),
-    __metadata("design:paramtypes", [String])
+    Input()
 ], LyToolbar.prototype, "position", null);
 __decorate([
-    Input(),
-    __metadata("design:type", Boolean),
-    __metadata("design:paramtypes", [Boolean])
-], LyToolbar.prototype, "dense", null);
-__decorate([
-    Input(),
-    __metadata("design:type", String),
-    __metadata("design:paramtypes", [String])
+    Input()
 ], LyToolbar.prototype, "appearance", null);
 LyToolbar = __decorate([
     Directive({
@@ -126,11 +102,12 @@ LyToolbar = __decorate([
             'outlined',
             'elevation',
             'shadowColor'
+        ],
+        providers: [
+            LyHostClass,
+            StyleRenderer
         ]
-    }),
-    __metadata("design:paramtypes", [Renderer2,
-        ElementRef,
-        LyTheme2])
+    })
 ], LyToolbar);
 
 let LyToolbarModule = class LyToolbarModule {
@@ -142,6 +119,10 @@ LyToolbarModule = __decorate([
         declarations: [LyToolbar]
     })
 ], LyToolbarModule);
+
+/**
+ * Generated bundle index. Do not edit.
+ */
 
 export { LyToolbar, LyToolbarBase, LyToolbarMixinBase, LyToolbarModule, ɵ0 };
 //# sourceMappingURL=alyle-ui-toolbar.js.map

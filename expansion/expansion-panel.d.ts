@@ -19,7 +19,22 @@ export declare class LyExpansionPanel extends LyButtonMixinBase implements OnCha
     private _cd;
     private _accordion;
     /** @docs-private */
-    readonly classes: Record<"root" | "panel" | "panelHeader" | "panelHeaderContent" | "panelContent" | "panelBody" | "panelTitle" | "panelDescription" | "panelActionRow" | "expanded" | "disabled", string>;
+    readonly classes: Pick<{
+        $priority: string;
+        $name: string;
+        $global: string;
+        root: string;
+        panel: string;
+        panelHeader: string;
+        panelHeaderContent: string;
+        panelContent: string;
+        panelBody: string;
+        panelTitle: string;
+        panelDescription: string;
+        panelActionRow: string;
+        expanded: string;
+        disabled: string;
+    }, "root" | "panel" | "panelHeader" | "panelHeaderContent" | "panelContent" | "panelBody" | "panelTitle" | "panelDescription" | "panelActionRow" | "expanded" | "disabled">;
     readonly _panelAnimationTiming: string;
     /** Subscription to openAll/closeAll events. */
     private _openCloseAllSubscription;

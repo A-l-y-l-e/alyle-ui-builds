@@ -1,115 +1,46 @@
 import { ElementRef, NgZone, OnInit, Renderer2, QueryList, AfterContentInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
-import { LyFocusState, LyRippleService, LyTheme2, ThemeVariables } from '@alyle/ui';
+import { LyFocusState, LyRippleService, LyTheme2, StyleCollection, LyClasses, StyleTemplate, ThemeRef } from '@alyle/ui';
 import { LyAvatar } from '@alyle/ui/avatar';
-export declare const STYLES: (theme: ThemeVariables) => {
+export interface LyListTheme {
+    /** Styles for List Component */
+    root?: StyleCollection<((classes: LyClasses<typeof STYLES>) => StyleTemplate)> | ((classes: LyClasses<typeof STYLES>) => StyleTemplate);
+}
+export interface LyListVariables {
+    list?: LyListTheme;
+}
+export declare const STYLES: (theme: import("@alyle/ui/alyle-ui").LyStyleUtils & import("@alyle/ui/alyle-ui").ThemeConfig & LyListVariables, ref: ThemeRef) => {
+    $name: string;
     $priority: number;
-    root: {
-        display: string;
-        position: string;
-        paddingTop: string;
-        paddingBottom: string;
-        '&': import("@alyle/ui/alyle-ui").StyleContainer;
-    };
-    listItem: {
-        fontFamily: string;
-        fontSize: string;
-        color: string;
-        display: string;
-        width: string;
-        position: string;
-        padding: string;
-        minHeight: string;
-        overflow: string;
-        textAlign: string;
-        alignItems: string;
-        justifyContent: string;
-        borderRadius: number;
-        '&::after': {
-            width: string;
-            height: string;
-            background: string;
-            opacity: number;
-            pointerEvents: string;
-            position: string;
-            top: number;
-            bottom: number;
-            left: number;
-            right: number;
-            content: string;
-        };
-        '&{onFocusByKeyboard}::after, &{actionListItem}:hover::after': {
-            background: string;
-            opacity: number;
-            borderRadius: string;
-        };
-        '-webkit-tap-highlight-color': string;
-        backgroundColor: string;
-        border: number;
-        '-moz-appearance': string;
-        '-webkit-appearance': string;
-        margin: number;
-        outline: string;
-        boxSizing: string;
-        textDecorationLine: string;
-        '-webkit-text-decoration-line': string;
-        '&::-moz-focus-inner': {
-            border: number;
-        };
-    };
+    root: () => (className: string) => string;
+    listItem: () => (className: string) => string;
     onFocusByKeyboard: any;
-    listItemContent: {
-        display: string;
-        justifyContent: string;
-        alignItems: string;
-        alignContent: string;
-        fontSize: string;
-        width: string;
-        height: string;
-        boxSizing: string;
-    };
-    oneLine: {
-        paddingTop: string;
-        paddingBottom: string;
-        minHeight: string;
-    };
-    twoLine: {
-        paddingTop: string;
-        paddingBottom: string;
-        minHeight: string;
-        '{lines}': {
-            marginBottom: string;
-        };
-    };
-    actionListItem: {
-        cursor: string;
-        userSelect: string;
-    };
-    lines: {
-        alignSelf: string;
-        minWidth: number;
-        width: string;
-        justifyContent: string;
-        flexDirection: string;
-        display: string;
-    };
-    listItemWithIcon: {
-        '{lines}': {
-            paddingBefore: string;
-        };
-    };
-    twoLineWithIcon: {
-        paddingTop: string;
-        paddingBottom: string;
-        '{lines}': {
-            marginBottom: string;
-        };
-    };
+    listItemContent: (className: string) => string;
+    oneLine: (className: string) => string;
+    twoLine: () => (className: string) => string;
+    actionListItem: (className: string) => string;
+    lines: (className: string) => string;
+    listItemWithIcon: () => (className: string) => string;
+    twoLineWithIcon: () => (className: string) => string;
 };
 /** List container */
 export declare class LyList {
     private theme;
+    static readonly и = "LyList";
     /** @docs-private */
-    readonly classes: Record<"root" | "listItem" | "onFocusByKeyboard" | "listItemContent" | "oneLine" | "twoLine" | "actionListItem" | "lines" | "listItemWithIcon" | "twoLineWithIcon", string>;
+    readonly classes: Pick<{
+        $name: string;
+        $priority: string;
+        root: string;
+        listItem: string;
+        onFocusByKeyboard: string;
+        listItemContent: string;
+        oneLine: string;
+        twoLine: string;
+        actionListItem: string;
+        lines: string;
+        listItemWithIcon: string;
+        twoLineWithIcon: string;
+    }, "root" | "listItem" | "onFocusByKeyboard" | "listItemContent" | "oneLine" | "twoLine" | "actionListItem" | "lines" | "listItemWithIcon" | "twoLineWithIcon">;
     constructor(theme: LyTheme2);
 }
 /** @docs-private */
@@ -129,7 +60,20 @@ export declare class LyListItem extends LyListItemMixinBase implements OnInit, A
     private _list;
     private _cd;
     /** @docs-private */
-    readonly classes: Record<"root" | "listItem" | "onFocusByKeyboard" | "listItemContent" | "oneLine" | "twoLine" | "actionListItem" | "lines" | "listItemWithIcon" | "twoLineWithIcon", string>;
+    readonly classes: Pick<{
+        $name: string;
+        $priority: string;
+        root: string;
+        listItem: string;
+        onFocusByKeyboard: string;
+        listItemContent: string;
+        oneLine: string;
+        twoLine: string;
+        actionListItem: string;
+        lines: string;
+        listItemWithIcon: string;
+        twoLineWithIcon: string;
+    }, "root" | "listItem" | "onFocusByKeyboard" | "listItemContent" | "oneLine" | "twoLine" | "actionListItem" | "lines" | "listItemWithIcon" | "twoLineWithIcon">;
     readonly _isBrowser: boolean;
     private _isActionListItem;
     private _onFocusByKeyboardState;

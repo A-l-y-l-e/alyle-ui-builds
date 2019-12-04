@@ -12,7 +12,9 @@ export declare class MediaDirective implements OnInit, OnChanges {
      * Styles
      * @ignore
      */
-    classes: Record<"hide", string>;
+    classes: Pick<{
+        hide: string;
+    }, "hide">;
     /**
      * Shows the item when the value is resolved as true
      */

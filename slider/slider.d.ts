@@ -1,11 +1,52 @@
-import { ElementRef, Renderer2, OnInit, ChangeDetectorRef, EventEmitter, OnChanges, OnDestroy, QueryList } from '@angular/core';
-import { LyTheme2, HammerInput, LyHostClass } from '@alyle/ui';
+import { ElementRef, Renderer2, OnInit, ChangeDetectorRef, EventEmitter, OnChanges, OnDestroy, QueryList, InjectionToken } from '@angular/core';
+import { LyTheme2, HammerInput, LyHostClass, StyleCollection, LyClasses, StyleTemplate, ThemeRef, StyleRenderer } from '@alyle/ui';
+import { Color } from '@alyle/ui/color';
 import { ControlValueAccessor } from '@angular/forms';
 import { Subject } from 'rxjs';
+export interface LySliderTheme {
+    /** Styles for Slider Component */
+    root?: StyleCollection<((classes: LyClasses<typeof STYLES>) => StyleTemplate)> | ((classes: LyClasses<typeof STYLES>) => StyleTemplate);
+    disabled?: StyleCollection<((classes: LyClasses<typeof STYLES>, color: Color) => StyleTemplate)> | ((classes: LyClasses<typeof STYLES>, color: Color) => StyleTemplate);
+    color?: StyleCollection<((classes: LyClasses<typeof STYLES>, color: Color) => StyleTemplate)> | ((classes: LyClasses<typeof STYLES>, color: Color) => StyleTemplate);
+    appearance?: {
+        standard?: StyleCollection<((classes: LyClasses<typeof STYLES>) => StyleTemplate)> | ((classes: LyClasses<typeof STYLES>) => StyleTemplate);
+        [key: string]: StyleCollection<((classes: LyClasses<typeof STYLES>) => StyleTemplate)> | ((classes: LyClasses<typeof STYLES>) => StyleTemplate) | undefined;
+    };
+}
+export interface LySliderDefaultOptions {
+    appearance?: string;
+}
+export declare const LY_SLIDER_DEFAULT_OPTIONS: InjectionToken<LySliderDefaultOptions>;
+export interface LySliderVariables {
+    slider?: LySliderTheme;
+}
 export declare const LY_SLIDER_CONTROL_VALUE_ACCESSOR: {
-    provide: import("@angular/core").InjectionToken<ControlValueAccessor>;
+    provide: InjectionToken<ControlValueAccessor>;
     useExisting: import("@angular/core").Type<any>;
     multi: boolean;
+};
+declare const STYLES: (theme: import("@alyle/ui/alyle-ui").LyStyleUtils & import("@alyle/ui/alyle-ui").ThemeConfig & LySliderVariables, ref: ThemeRef) => {
+    $priority: number;
+    root: () => (className: string) => string;
+    track: (className: string) => string;
+    bg: any;
+    thumbContainer: (className: string) => string;
+    thumbContent: (className: string) => string;
+    thumb: (className: string) => string;
+    thumbLabel: (className: string) => string;
+    thumbLabelValue: (className: string) => string;
+    horizontal: () => (className: string) => string;
+    vertical: () => (className: string) => string;
+    marked: any;
+    mark: (className: string) => string;
+    markActive: (className: string) => string;
+    tick: (className: string) => string;
+    tickActive: any;
+    thumbVisible: any;
+    thumbNotVisible: any;
+    thumbContentFocused: any;
+    sliding: any;
+    disabled: (className: string) => string;
 };
 /** A change event emitted by the LySlider component. */
 export declare class LySliderChange {
@@ -40,10 +81,34 @@ export declare class LySlider implements OnChanges, OnInit, OnDestroy, ControlVa
     private _renderer;
     private _cd;
     private _hostClass;
+    private _sr;
+    private _default;
     static и: string;
-    readonly classes: Record<"disabled" | "thumbVisible" | "vertical" | "root" | "track" | "bg" | "thumbContainer" | "thumbContent" | "thumb" | "thumbLabel" | "thumbLabelValue" | "horizontal" | "marked" | "mark" | "markActive" | "tick" | "tickActive" | "thumbNotVisible" | "thumbContentFocused" | "sliding", string>;
+    readonly classes: Pick<{
+        $priority: string;
+        root: string;
+        track: string;
+        bg: string;
+        thumbContainer: string;
+        thumbContent: string;
+        thumb: string;
+        thumbLabel: string;
+        thumbLabelValue: string;
+        horizontal: string;
+        vertical: string;
+        marked: string;
+        mark: string;
+        markActive: string;
+        tick: string;
+        tickActive: string;
+        thumbVisible: string;
+        thumbNotVisible: string;
+        thumbContentFocused: string;
+        sliding: string;
+        disabled: string;
+    }, "root" | "track" | "bg" | "thumbContainer" | "thumbContent" | "thumb" | "thumbLabel" | "thumbLabelValue" | "horizontal" | "vertical" | "marked" | "mark" | "markActive" | "tick" | "tickActive" | "thumbVisible" | "thumbNotVisible" | "thumbContentFocused" | "sliding" | "disabled">;
     private _disabled;
-    private _disabledClass?;
+    private _disabledClass;
     private _color;
     private _colorClass;
     private _vertical;
@@ -126,7 +191,7 @@ export declare class LySlider implements OnChanges, OnInit, OnDestroy, ControlVa
     _tickInterval: number;
     readonly _tickList: number[];
     private __tickList;
-    constructor(_theme: LyTheme2, _el: ElementRef, _renderer: Renderer2, _cd: ChangeDetectorRef, _hostClass: LyHostClass);
+    constructor(_theme: LyTheme2, _el: ElementRef, _renderer: Renderer2, _cd: ChangeDetectorRef, _hostClass: LyHostClass, _sr: StyleRenderer, _default: LySliderDefaultOptions);
     ngOnChanges(): void;
     ngOnInit(): void;
     ngOnDestroy(): void;

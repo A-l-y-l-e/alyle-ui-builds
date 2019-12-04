@@ -1,23 +1,23 @@
-import { __extends, __decorate, __metadata } from 'tslib';
-import { Input, Directive, ElementRef, Renderer2, NgModule } from '@angular/core';
-import { mixinStyleUpdater, mixinColor, toBoolean, LyTheme2, LyCommonModule } from '@alyle/ui';
+import { __extends, __decorate } from 'tslib';
+import { ElementRef, Renderer2, Input, Directive, NgModule } from '@angular/core';
+import { styleTemplateToString, StyleCollection, mixinStyleUpdater, mixinColor, toBoolean, LyTheme2, StyleRenderer, LyHostClass, LyCommonModule } from '@alyle/ui';
 
 var STYLE_PRIORITY = -1;
-var styles = function (theme) { return ({
-    root: {
-        margin: 0,
-        display: 'block',
-        '&': theme.typography ? theme.typography.root : null
-    }
-}); };
-var ɵ0 = styles;
-/** @docs-private */
-var Gutter;
-(function (Gutter) {
-    Gutter[Gutter["default"] = 0] = "default";
-    Gutter[Gutter["top"] = 1] = "top";
-    Gutter[Gutter["bottom"] = 2] = "bottom";
-})(Gutter || (Gutter = {}));
+var STYLES = function (theme) {
+    return {
+        $name: LyTypography.и,
+        $priority: STYLE_PRIORITY,
+        root: function (className) { return className + "{margin:0;display:block;font-family:" + theme.typography.fontFamily + ";}" + styleTemplateToString(((theme.typography
+            && theme.typography.root
+            && (theme.typography.root instanceof StyleCollection
+                ? theme.typography.root.setTransformer(function (fn) { return fn(); }).css
+                : theme.typography.root()))), "" + className); },
+        gutterTop: function (className) { return className + "{margin-top:0.35em;}"; },
+        gutterBottom: function (className) { return className + "{margin-bottom:0.35em;}"; },
+        gutter: function (className) { return className + "{margin:0.35em 0;}"; }
+    };
+};
+var ɵ0 = STYLES;
 /** @docs-private */
 var LyTypographyBase = /** @class */ (function () {
     function LyTypographyBase(_theme) {
@@ -29,12 +29,14 @@ var LyTypographyBase = /** @class */ (function () {
 var LyTypographyMixinBase = mixinStyleUpdater(mixinColor((LyTypographyBase)));
 var LyTypography = /** @class */ (function (_super) {
     __extends(LyTypography, _super);
-    function LyTypography(_theme, _el, renderer) {
+    function LyTypography(_theme, _el, renderer, sr, hostClass) {
         var _this = _super.call(this, _theme) || this;
         _this._el = _el;
         _this.renderer = renderer;
+        _this.sr = sr;
+        _this.hostClass = hostClass;
         /** @docs-private */
-        _this.classes = _this._theme.addStyleSheet(styles, STYLE_PRIORITY);
+        _this.classes = _this._theme.renderStyleSheet(STYLES);
         _this.renderer.addClass(_this._el.nativeElement, _this.classes.root);
         return _this;
     }
@@ -49,7 +51,7 @@ var LyTypography = /** @class */ (function (_super) {
                 }
                 else if (this._lyTypClass) {
                     this.renderer.removeClass(this._el.nativeElement, this._lyTypClass);
-                    this._lyTypClass = undefined;
+                    this._lyTypClass = null;
                 }
             }
         },
@@ -87,7 +89,7 @@ var LyTypography = /** @class */ (function (_super) {
             var newVal = toBoolean(val);
             if (newVal !== this.gutter) {
                 this._gutter = newVal;
-                this._gutterClass = this._createGutterClass(Gutter.default, newVal, this._gutterClass);
+                this.hostClass.toggle(this.classes.gutter, newVal);
             }
         },
         enumerable: true,
@@ -101,8 +103,7 @@ var LyTypography = /** @class */ (function (_super) {
             var newVal = toBoolean(val);
             if (newVal !== this.gutterTop) {
                 this._gutterTop = newVal;
-                // const newClass = this._createGutterClass(Gutter.top, newVal);
-                this._gutterTopClass = this._createGutterClass(Gutter.top, newVal, this._gutterTopClass);
+                this.hostClass.toggle(this.classes.gutterTop, newVal);
             }
         },
         enumerable: true,
@@ -116,7 +117,7 @@ var LyTypography = /** @class */ (function (_super) {
             var newVal = toBoolean(val);
             if (newVal !== this.gutterBottom) {
                 this._gutterBottom = newVal;
-                this._gutterBottomClass = this._createGutterClass(Gutter.bottom, newVal, this._gutterBottomClass);
+                this.hostClass.toggle(this.classes.gutterBottom, newVal);
             }
         },
         enumerable: true,
@@ -130,64 +131,55 @@ var LyTypography = /** @class */ (function (_super) {
     LyTypography.prototype.ngOnChanges = function () {
         this.updateStyle(this._el.nativeElement);
     };
-    LyTypography.prototype._createTypClass = function (key, instance) {
-        var newKey = "k-typ:" + key;
-        return this._theme.addStyle(newKey, function (theme) {
-            var typography = theme.typography;
-            var styl = Object.assign({}, typography.lyTyp[key || 'body1']);
-            if (styl.lineHeight) {
-                styl.lineHeight = theme.pxToRem(styl.lineHeight);
+    LyTypography.prototype._createTypClass = function (val, instance) {
+        var newKey = "k-typ:" + val;
+        return this.sr.add(newKey, function (theme) {
+            if (theme.typography && theme.typography.lyTyp) {
+                var lyTyp = theme.typography.lyTyp[val];
+                if (lyTyp) {
+                    return lyTyp instanceof StyleCollection
+                        ? lyTyp.setTransformer(function (_) { return _(); }).css
+                        : lyTyp();
+                }
             }
-            if (typeof styl.letterSpacing === 'number') {
-                styl.letterSpacing = styl.letterSpacing + "px";
-            }
-            // set default fontFamily
-            styl.fontFamily = styl.fontFamily || typography.fontFamily;
-            return styl;
-        }, this._el.nativeElement, instance, STYLE_PRIORITY);
+            throw new Error("Value typography.lyTyp['" + val + "'] not found in ThemeVariables");
+        }, STYLE_PRIORITY, instance);
     };
-    LyTypography.prototype._createGutterClass = function (name, val, instance) {
-        return this._theme.addStyle("k-typ-gutter:" + name + ":" + val, function (theme) {
-            var gutter = name === Gutter.default;
-            return ("margin-top:" + (val && (gutter || name === Gutter.top) ? theme.typography.gutterTop : 0) + "em;" +
-                ("margin-bottom:" + (val && (gutter || name === Gutter.bottom) ? theme.typography.gutterBottom : 0) + "em;"));
-        }, this._el.nativeElement, instance, STYLE_PRIORITY);
-    };
+    /** @docs-private */
+    LyTypography.и = 'LyTypography';
+    LyTypography.ctorParameters = function () { return [
+        { type: LyTheme2 },
+        { type: ElementRef },
+        { type: Renderer2 },
+        { type: StyleRenderer },
+        { type: LyHostClass }
+    ]; };
     __decorate([
-        Input(),
-        __metadata("design:type", String),
-        __metadata("design:paramtypes", [String])
+        Input()
     ], LyTypography.prototype, "lyTyp", null);
     __decorate([
-        Input(),
-        __metadata("design:type", Boolean),
-        __metadata("design:paramtypes", [Boolean])
+        Input()
     ], LyTypography.prototype, "noWrap", null);
     __decorate([
-        Input(),
-        __metadata("design:type", Boolean),
-        __metadata("design:paramtypes", [Boolean])
+        Input()
     ], LyTypography.prototype, "gutter", null);
     __decorate([
-        Input(),
-        __metadata("design:type", Boolean),
-        __metadata("design:paramtypes", [Boolean])
+        Input()
     ], LyTypography.prototype, "gutterTop", null);
     __decorate([
-        Input(),
-        __metadata("design:type", Boolean),
-        __metadata("design:paramtypes", [Boolean])
+        Input()
     ], LyTypography.prototype, "gutterBottom", null);
     LyTypography = __decorate([
         Directive({
             selector: "[lyTyp]",
             inputs: [
                 'color'
+            ],
+            providers: [
+                LyHostClass,
+                StyleRenderer
             ]
-        }),
-        __metadata("design:paramtypes", [LyTheme2,
-            ElementRef,
-            Renderer2])
+        })
     ], LyTypography);
     return LyTypography;
 }(LyTypographyMixinBase));
@@ -203,6 +195,10 @@ var LyTypographyModule = /** @class */ (function () {
     ], LyTypographyModule);
     return LyTypographyModule;
 }());
+
+/**
+ * Generated bundle index. Do not edit.
+ */
 
 export { LyTypography, LyTypographyBase, LyTypographyMixinBase, LyTypographyModule, ɵ0 };
 //# sourceMappingURL=alyle-ui-typography.js.map

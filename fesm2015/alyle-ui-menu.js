@@ -1,6 +1,6 @@
-import { __decorate, __metadata, __param } from 'tslib';
-import { ViewChild, ElementRef, Input, HostBinding, HostListener, Component, Renderer2, Directive, Optional, EventEmitter, TemplateRef, Output, NgModule } from '@angular/core';
-import { YPosition, XPosition, Positioning, LyTheme2, LyOverlay, shadowBuilder, LyCommonModule, LyOverlayModule } from '@alyle/ui';
+import { __decorate, __param } from 'tslib';
+import { ElementRef, Renderer2, ViewChild, Input, HostBinding, HostListener, Component, Optional, Directive, EventEmitter, Output, NgModule } from '@angular/core';
+import { YPosition, XPosition, StyleCollection, shadowBuilder, Positioning, LyTheme2, LyOverlay, LyCommonModule, LyOverlayModule } from '@alyle/ui';
 import { trigger, transition, animate, keyframes, style } from '@angular/animations';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -8,33 +8,19 @@ import { CommonModule } from '@angular/common';
 const STYLE_PRIORITY = -1;
 const DEFAULT_PLACEMENT = YPosition.below;
 const DEFAULT_XPOSITION = XPosition.after;
-const STYLES = (theme) => ({
-    $priority: STYLE_PRIORITY,
-    root: {
-        '&': theme.menu ? theme.menu.root : null
-    },
-    container: {
-        background: theme.background.primary.default,
-        borderRadius: '2px',
-        boxShadow: shadowBuilder(4),
-        display: 'block',
-        paddingTop: '8px',
-        paddingBottom: '8px',
-        transformOrigin: 'inherit',
-        pointerEvents: 'all',
-        overflow: 'auto',
-        maxHeight: 'inherit',
-        maxWidth: 'inherit',
-        boxSizing: 'border-box'
-    },
-    item: {
-        display: 'flex',
-        minHeight: '48px',
-        borderRadius: 0,
-        width: '100%',
-        justifyContent: 'flex-start'
-    }
-});
+const STYLES = (theme, ref) => {
+    const menu = ref.selectorsOf(STYLES);
+    return {
+        $priority: STYLE_PRIORITY,
+        root: () => (theme.menu
+            && theme.menu.root
+            && (theme.menu.root instanceof StyleCollection
+                ? theme.menu.root.setTransformer(fn => fn(menu)).css
+                : theme.menu.root(menu))),
+        container: (className) => `${className}{background:${theme.background.primary.default};border-radius:2px;box-shadow:${shadowBuilder(4)};display:block;padding-top:8px;padding-bottom:8px;transform-origin:inherit;pointer-events:all;overflow:auto;max-height:inherit;max-width:inherit;box-sizing:border-box;}`,
+        item: (className) => `${className}{display:flex;min-height:48px;border-radius:0;width:100%;justify-content:flex-start;}`
+    };
+};
 const ɵ0 = STYLES;
 const ANIMATIONS = [
     trigger('menuEnter', [
@@ -65,7 +51,7 @@ let LyMenu = class LyMenu {
          * styles
          * @docs-private
          */
-        this.classes = this._theme.addStyleSheet(STYLES);
+        this.classes = this._theme.renderStyleSheet(STYLES);
         this._renderer.addClass(this._el.nativeElement, this.classes.root);
     }
     endAnimation(e) {
@@ -107,35 +93,31 @@ let LyMenu = class LyMenu {
         this._renderer.setStyle(container, 'width', position.width === 'initial' ? '100%' : position.width);
     }
 };
+LyMenu.ctorParameters = () => [
+    { type: LyTheme2 },
+    { type: ElementRef },
+    { type: Renderer2 }
+];
 __decorate([
-    ViewChild('container', { static: false }),
-    __metadata("design:type", ElementRef)
+    ViewChild('container', { static: false })
 ], LyMenu.prototype, "_container", void 0);
 __decorate([
-    Input(),
-    __metadata("design:type", Object)
+    Input()
 ], LyMenu.prototype, "ref", void 0);
 __decorate([
-    Input(),
-    __metadata("design:type", String)
+    Input()
 ], LyMenu.prototype, "placement", void 0);
 __decorate([
-    Input(),
-    __metadata("design:type", String)
+    Input()
 ], LyMenu.prototype, "xPosition", void 0);
 __decorate([
-    Input(),
-    __metadata("design:type", String)
+    Input()
 ], LyMenu.prototype, "yPosition", void 0);
 __decorate([
-    HostBinding('@menuLeave'),
-    __metadata("design:type", Object)
+    HostBinding('@menuLeave')
 ], LyMenu.prototype, "menuLeave2", void 0);
 __decorate([
-    HostListener('@menuLeave.done', ['$event']),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", void 0)
+    HostListener('@menuLeave.done', ['$event'])
 ], LyMenu.prototype, "endAnimation", null);
 LyMenu = __decorate([
     Component({
@@ -143,10 +125,7 @@ LyMenu = __decorate([
         animations: [...ANIMATIONS],
         template: "<div #container\n  [class]=\"classes.container\"\n  [@menuEnter]=\"'in'\">\n  <ng-content></ng-content>\n</div>",
         exportAs: 'lyMenu'
-    }),
-    __metadata("design:paramtypes", [LyTheme2,
-        ElementRef,
-        Renderer2])
+    })
 ], LyMenu);
 let LyMenuItem = class LyMenuItem {
     constructor(_menu, el, renderer) {
@@ -159,20 +138,19 @@ let LyMenuItem = class LyMenuItem {
         }
     }
 };
+LyMenuItem.ctorParameters = () => [
+    { type: LyMenu, decorators: [{ type: Optional }] },
+    { type: ElementRef },
+    { type: Renderer2 }
+];
 __decorate([
-    HostListener('click'),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
+    HostListener('click')
 ], LyMenuItem.prototype, "_click", null);
 LyMenuItem = __decorate([
     Directive({
         selector: '[ly-menu-item]'
     }),
-    __param(0, Optional()),
-    __metadata("design:paramtypes", [LyMenu,
-        ElementRef,
-        Renderer2])
+    __param(0, Optional())
 ], LyMenuItem);
 let LyMenuTriggerFor = class LyMenuTriggerFor {
     constructor(elementRef, overlay) {
@@ -247,17 +225,18 @@ let LyMenuTriggerFor = class LyMenuTriggerFor {
         this._menuOpen = true;
     }
 };
+LyMenuTriggerFor.ctorParameters = () => [
+    { type: ElementRef },
+    { type: LyOverlay }
+];
 __decorate([
-    Input(),
-    __metadata("design:type", TemplateRef)
+    Input()
 ], LyMenuTriggerFor.prototype, "lyMenuTriggerFor", void 0);
 __decorate([
-    Output(),
-    __metadata("design:type", Object)
+    Output()
 ], LyMenuTriggerFor.prototype, "menuOpened", void 0);
 __decorate([
-    Output(),
-    __metadata("design:type", Object)
+    Output()
 ], LyMenuTriggerFor.prototype, "menuClosed", void 0);
 LyMenuTriggerFor = __decorate([
     Directive({
@@ -266,9 +245,7 @@ LyMenuTriggerFor = __decorate([
             '(click)': '_handleClick()'
         },
         exportAs: 'lyMenuTriggerFor'
-    }),
-    __metadata("design:paramtypes", [ElementRef,
-        LyOverlay])
+    })
 ], LyMenuTriggerFor);
 
 let LyMenuModule = class LyMenuModule {
@@ -280,6 +257,10 @@ LyMenuModule = __decorate([
         declarations: [LyMenu, LyMenuItem, LyMenuTriggerFor],
     })
 ], LyMenuModule);
+
+/**
+ * Generated bundle index. Do not edit.
+ */
 
 export { LyMenu, LyMenuItem, LyMenuModule, LyMenuTriggerFor, ɵ0 };
 //# sourceMappingURL=alyle-ui-menu.js.map

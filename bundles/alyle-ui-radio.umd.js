@@ -2,7 +2,7 @@
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@angular/forms'), require('@angular/common'), require('@alyle/ui')) :
     typeof define === 'function' && define.amd ? define('@alyle/ui/radio', ['exports', '@angular/core', '@angular/forms', '@angular/common', '@alyle/ui'], factory) :
     (global = global || self, factory((global.ly = global.ly || {}, global.ly.radio = {}), global.ng.core, global.ng.forms, global.ng.common, global.ly.core));
-}(this, function (exports, core, forms, common, ui) { 'use strict';
+}(this, (function (exports, core, forms, common, ui) { 'use strict';
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
@@ -44,6 +44,18 @@
         return __assign.apply(this, arguments);
     };
 
+    function __rest(s, e) {
+        var t = {};
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+            t[p] = s[p];
+        if (s != null && typeof Object.getOwnPropertySymbols === "function")
+            for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+                if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                    t[p[i]] = s[p[i]];
+            }
+        return t;
+    }
+
     function __decorate(decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -57,6 +69,136 @@
 
     function __metadata(metadataKey, metadataValue) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(metadataKey, metadataValue);
+    }
+
+    function __awaiter(thisArg, _arguments, P, generator) {
+        return new (P || (P = Promise))(function (resolve, reject) {
+            function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+            function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+            function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+            step((generator = generator.apply(thisArg, _arguments || [])).next());
+        });
+    }
+
+    function __generator(thisArg, body) {
+        var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+        return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+        function verb(n) { return function (v) { return step([n, v]); }; }
+        function step(op) {
+            if (f) throw new TypeError("Generator is already executing.");
+            while (_) try {
+                if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+                if (y = 0, t) op = [op[0] & 2, t.value];
+                switch (op[0]) {
+                    case 0: case 1: t = op; break;
+                    case 4: _.label++; return { value: op[1], done: false };
+                    case 5: _.label++; y = op[1]; op = [0]; continue;
+                    case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                    default:
+                        if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                        if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                        if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                        if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                        if (t[2]) _.ops.pop();
+                        _.trys.pop(); continue;
+                }
+                op = body.call(thisArg, _);
+            } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+            if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+        }
+    }
+
+    function __exportStar(m, exports) {
+        for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
+    }
+
+    function __values(o) {
+        var m = typeof Symbol === "function" && o[Symbol.iterator], i = 0;
+        if (m) return m.call(o);
+        return {
+            next: function () {
+                if (o && i >= o.length) o = void 0;
+                return { value: o && o[i++], done: !o };
+            }
+        };
+    }
+
+    function __read(o, n) {
+        var m = typeof Symbol === "function" && o[Symbol.iterator];
+        if (!m) return o;
+        var i = m.call(o), r, ar = [], e;
+        try {
+            while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
+        }
+        catch (error) { e = { error: error }; }
+        finally {
+            try {
+                if (r && !r.done && (m = i["return"])) m.call(i);
+            }
+            finally { if (e) throw e.error; }
+        }
+        return ar;
+    }
+
+    function __spread() {
+        for (var ar = [], i = 0; i < arguments.length; i++)
+            ar = ar.concat(__read(arguments[i]));
+        return ar;
+    }
+
+    function __spreadArrays() {
+        for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
+        for (var r = Array(s), k = 0, i = 0; i < il; i++)
+            for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
+                r[k] = a[j];
+        return r;
+    };
+
+    function __await(v) {
+        return this instanceof __await ? (this.v = v, this) : new __await(v);
+    }
+
+    function __asyncGenerator(thisArg, _arguments, generator) {
+        if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
+        var g = generator.apply(thisArg, _arguments || []), i, q = [];
+        return i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () { return this; }, i;
+        function verb(n) { if (g[n]) i[n] = function (v) { return new Promise(function (a, b) { q.push([n, v, a, b]) > 1 || resume(n, v); }); }; }
+        function resume(n, v) { try { step(g[n](v)); } catch (e) { settle(q[0][3], e); } }
+        function step(r) { r.value instanceof __await ? Promise.resolve(r.value.v).then(fulfill, reject) : settle(q[0][2], r); }
+        function fulfill(value) { resume("next", value); }
+        function reject(value) { resume("throw", value); }
+        function settle(f, v) { if (f(v), q.shift(), q.length) resume(q[0][0], q[0][1]); }
+    }
+
+    function __asyncDelegator(o) {
+        var i, p;
+        return i = {}, verb("next"), verb("throw", function (e) { throw e; }), verb("return"), i[Symbol.iterator] = function () { return this; }, i;
+        function verb(n, f) { i[n] = o[n] ? function (v) { return (p = !p) ? { value: __await(o[n](v)), done: n === "return" } : f ? f(v) : v; } : f; }
+    }
+
+    function __asyncValues(o) {
+        if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
+        var m = o[Symbol.asyncIterator], i;
+        return m ? m.call(o) : (o = typeof __values === "function" ? __values(o) : o[Symbol.iterator](), i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () { return this; }, i);
+        function verb(n) { i[n] = o[n] && function (v) { return new Promise(function (resolve, reject) { v = o[n](v), settle(resolve, reject, v.done, v.value); }); }; }
+        function settle(resolve, reject, d, v) { Promise.resolve(v).then(function(v) { resolve({ value: v, done: d }); }, reject); }
+    }
+
+    function __makeTemplateObject(cooked, raw) {
+        if (Object.defineProperty) { Object.defineProperty(cooked, "raw", { value: raw }); } else { cooked.raw = raw; }
+        return cooked;
+    };
+
+    function __importStar(mod) {
+        if (mod && mod.__esModule) return mod;
+        var result = {};
+        if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+        result.default = mod;
+        return result;
+    }
+
+    function __importDefault(mod) {
+        return (mod && mod.__esModule) ? mod : { default: mod };
     }
 
     var STYLE_PRIORITY = -2;
@@ -73,91 +215,32 @@
         }
         return UndefinedValue;
     }());
-    var STYLES = function (theme) { return ({
-        $priority: STYLE_PRIORITY,
-        root: {
-            display: 'inline-block',
-            '&': theme.radio ? theme.radio.root : null
-        },
-        radio: {
-            display: 'inline-block',
-            marginAfter: '16px',
-            marginBefore: '-16px',
-            '&{checked}': {
-                '{container}': {
-                    'div:nth-child(1)': {
-                        transform: 'scale(1.25)',
-                    },
-                    'div:nth-child(2)': {
-                        transform: 'scale(0.8)'
-                    }
-                }
-            },
-            '&{onFocusByKeyboard} {container}::after': {
-                boxShadow: '0 0 0 12px',
-                background: 'currentColor',
-                opacity: .13,
-                borderRadius: '50%',
-            }
-        },
-        label: {
-            marginBefore: '16px',
-            cursor: 'pointer',
-            whiteSpace: 'nowrap',
-            position: 'relative',
-            display: 'flex',
-            alignItems: 'baseline',
-            paddingTop: '12px',
-            paddingBottom: '12px'
-        },
-        labelContent: null,
-        container: {
-            position: 'relative',
-            marginBefore: '.125em',
-            marginAfter: '.5em',
-            marginTop: 'auto',
-            marginBottom: 'auto',
-            width: '16px',
-            height: '16px',
-            'div': {
-                margin: 'auto',
-                borderRadius: '50%',
-                width: '1em',
-                height: '1em',
-                boxSizing: 'border-box'
-            },
-            '&::after': __assign({ content: "''" }, ui.LY_COMMON_STYLES.fill, { width: '16px', height: '16px', margin: 'auto' }),
-            'div:nth-child(2)': {
-                background: 'currentColor',
-                transform: 'scale(0)'
-            },
-            'div:nth-child(1)': {
-                transform: 'scale(1)',
-                border: 'solid .08em currentColor',
-                color: theme.text.disabled
-            }
-        },
-        checked: null,
-        _animations: {
-            '{container} div': {
-                transition: 'transform cubic-bezier(.1, 1, 0.5, 1)',
-                transitionDuration: '250ms'
-            }
-        },
-        onFocusByKeyboard: null,
-        disabled: {
-            color: theme.disabled.contrast,
-            '{container} div': {
-                color: theme.disabled.contrast + "!important"
-            }
-        }
-    }); };
+    var STYLES = function (theme, ref) {
+        var radio = ref.selectorsOf(STYLES);
+        var after = theme.after, before = theme.before;
+        return {
+            $priority: STYLE_PRIORITY,
+            root: function () { return function (className) { return className + "{display:inline-block;}" + ui.styleTemplateToString(((theme.radio
+                && theme.radio.root
+                && (theme.radio.root instanceof ui.StyleCollection
+                    ? theme.radio.root.setTransformer(function (fn) { return fn(radio); })
+                    : theme.radio.root(radio)))), "" + className); }; },
+            radio: function () { return function (className) { return className + "{display:inline-block;margin-" + after + ":16px;margin-" + before + ":-16px;}" + className + radio.checked + " " + radio.container + " div:nth-child(1){transform:scale(1.25);}" + className + radio.checked + " " + radio.container + " div:nth-child(2){transform:scale(0.8);}" + className + radio.onFocusByKeyboard + " " + radio.container + "::after{box-shadow:0 0 0 12px;background:currentColor;opacity:.13;border-radius:50%;}"; }; },
+            label: function (className) { return className + "{margin-" + before + ":16px;cursor:pointer;white-space:nowrap;position:relative;display:flex;align-items:baseline;padding-top:12px;padding-bottom:12px;}"; },
+            labelContent: null,
+            container: function (className) { return className + "{position:relative;margin-" + before + ":.125em;margin-" + after + ":.5em;margin-top:auto;margin-bottom:auto;width:16px;height:16px;}" + className + " div{margin:auto;border-radius:50%;width:1em;height:1em;box-sizing:border-box;}" + className + "::after{content:'';width:16px;height:16px;margin:auto;}" + ui.styleTemplateToString((ui.LY_COMMON_STYLES.fill), className + "::after") + className + " div:nth-child(2){background:currentColor;transform:scale(0);}" + className + " div:nth-child(1){transform:scale(1);border:solid .08em currentColor;color:" + theme.text.disabled + ";}"; },
+            checked: null,
+            _animations: function () { return function (className) { return className + " " + radio.container + " div{transition:transform cubic-bezier(.1, 1, 0.5, 1);transition-duration:250ms;}"; }; },
+            onFocusByKeyboard: null,
+            disabled: function () { return function (className) { return className + "{color:" + theme.disabled.contrast + ";}" + className + " " + radio.container + " div{color:" + theme.disabled.contrast + "!important;}"; }; }
+        };
+    };
     var LyRadioGroup = /** @class */ (function () {
         function LyRadioGroup(elementRef, renderer, _theme, _cd) {
             this._theme = _theme;
             this._cd = _cd;
             /** @docs-private */
-            this.classes = this._theme.addStyleSheet(STYLES);
+            this.classes = this._theme.renderStyleSheet(STYLES);
             /** @docs-private */
             this.name = "ly-radio-name-" + idx++;
             this.change = new core.EventEmitter();
@@ -262,22 +345,25 @@
         LyRadioGroup.prototype._radioResetChecked = function () {
             this._radios.forEach(function (_) { return _._setCheckedToFalsy(); });
         };
+        /** @docs-private */
+        LyRadioGroup.и = 'LyRadioGroup';
+        LyRadioGroup.ctorParameters = function () { return [
+            { type: core.ElementRef },
+            { type: core.Renderer2 },
+            { type: ui.LyTheme2 },
+            { type: core.ChangeDetectorRef }
+        ]; };
         __decorate([
-            core.Input(),
-            __metadata("design:type", Object),
-            __metadata("design:paramtypes", [Object])
+            core.Input()
         ], LyRadioGroup.prototype, "value", null);
         __decorate([
-            core.Output(),
-            __metadata("design:type", core.EventEmitter)
+            core.Output()
         ], LyRadioGroup.prototype, "change", void 0);
         __decorate([
-            core.Input(),
-            __metadata("design:type", Object)
+            core.Input()
         ], LyRadioGroup.prototype, "color", void 0);
         __decorate([
-            core.ContentChildren(core.forwardRef(function () { return LyRadio; })),
-            __metadata("design:type", core.QueryList)
+            core.ContentChildren(core.forwardRef(function () { return LyRadio; }))
         ], LyRadioGroup.prototype, "_radios", void 0);
         LyRadioGroup = __decorate([
             core.Component({
@@ -287,11 +373,7 @@
                 changeDetection: core.ChangeDetectionStrategy.OnPush,
                 preserveWhitespaces: false,
                 exportAs: 'lyRadioGroup'
-            }),
-            __metadata("design:paramtypes", [core.ElementRef,
-                core.Renderer2,
-                ui.LyTheme2,
-                core.ChangeDetectorRef])
+            })
         ], LyRadioGroup);
         return LyRadioGroup;
     }());
@@ -309,7 +391,7 @@
         __extends(LyRadio, _super);
         function LyRadio(
         /** @docs-private */
-        radioGroup, _elementRef, _renderer, theme, changeDetectorRef, ngZone, _coreStyles, _focusState) {
+        radioGroup, _elementRef, _renderer, theme, changeDetectorRef, ngZone, _coreStyles, _focusState, _styleRenderer) {
             var _this = _super.call(this, theme, ngZone) || this;
             _this.radioGroup = radioGroup;
             _this._elementRef = _elementRef;
@@ -317,6 +399,7 @@
             _this.changeDetectorRef = changeDetectorRef;
             _this._coreStyles = _coreStyles;
             _this._focusState = _focusState;
+            _this._styleRenderer = _styleRenderer;
             /** @docs-private */
             _this.classes = _this.radioGroup.classes;
             /** @docs-private */
@@ -335,6 +418,7 @@
             _renderer.addClass(_elementRef.nativeElement, radioGroup.classes.radio);
             return _this;
         }
+        LyRadio_1 = LyRadio;
         Object.defineProperty(LyRadio.prototype, "value", {
             get: function () { return this._value; },
             set: function (val) {
@@ -350,11 +434,10 @@
             set: function (val) {
                 if (this._color !== val) {
                     this._color = val;
-                    this._colorClass = this._theme.addStyle("lyRadio.color:" + val, function (theme) { return ({
-                        '&{checked} {container}, &{checked} {container} div:nth-child(1), & {container} div:nth-child(2)': {
-                            color: theme.colorOf(val)
-                        }
-                    }); }, this._elementRef.nativeElement, this._colorClass, STYLE_PRIORITY, STYLES);
+                    this[0x1] = this._styleRenderer.add(LyRadio_1.и + "--color-" + val, function (theme, ref) {
+                        var _a = ref.selectorsOf(STYLES), checked = _a.checked, container = _a.container;
+                        return function (className) { return "" + className + checked + " " + container + "," + className + checked + " " + container + " div:nth-child(1)," + className + " " + container + " div:nth-child(2){color:" + theme.colorOf(val) + ";}"; };
+                    }, STYLE_PRIORITY, this[0x1]);
                 }
             },
             enumerable: true,
@@ -464,43 +547,45 @@
         LyRadio.prototype._setCheckedToFalsy = function () {
             this.checked = false;
         };
+        var LyRadio_1;
+        /** @docs-private */
+        LyRadio.и = 'LyRadio';
+        LyRadio.ctorParameters = function () { return [
+            { type: LyRadioGroup, decorators: [{ type: core.Optional }] },
+            { type: core.ElementRef },
+            { type: core.Renderer2 },
+            { type: ui.LyTheme2 },
+            { type: core.ChangeDetectorRef },
+            { type: core.NgZone },
+            { type: ui.LyCoreStyles },
+            { type: ui.LyFocusState },
+            { type: ui.StyleRenderer }
+        ]; };
         __decorate([
-            core.ViewChild('_input', { static: false }),
-            __metadata("design:type", core.ElementRef)
+            core.ViewChild('_input', { static: false })
         ], LyRadio.prototype, "_input", void 0);
         __decorate([
-            core.ViewChild('_radioContainer', { static: false }),
-            __metadata("design:type", core.ElementRef)
+            core.ViewChild('_radioContainer', { static: false })
         ], LyRadio.prototype, "_radioContainer", void 0);
         __decorate([
-            core.ViewChild('_labelContainer', { static: false }),
-            __metadata("design:type", core.ElementRef)
+            core.ViewChild('_labelContainer', { static: false })
         ], LyRadio.prototype, "_labelContainer", void 0);
         __decorate([
-            core.Output(),
-            __metadata("design:type", Object)
+            core.Output()
         ], LyRadio.prototype, "change", void 0);
         __decorate([
-            core.Input(),
-            __metadata("design:type", Object),
-            __metadata("design:paramtypes", [Object])
+            core.Input()
         ], LyRadio.prototype, "value", null);
         __decorate([
-            core.Input(),
-            __metadata("design:type", Object),
-            __metadata("design:paramtypes", [Object])
+            core.Input()
         ], LyRadio.prototype, "color", null);
         __decorate([
-            core.Input(),
-            __metadata("design:type", Boolean),
-            __metadata("design:paramtypes", [Boolean])
+            core.Input()
         ], LyRadio.prototype, "checked", null);
         __decorate([
-            core.Input(),
-            __metadata("design:type", Boolean),
-            __metadata("design:paramtypes", [Object])
+            core.Input()
         ], LyRadio.prototype, "disabled", null);
-        LyRadio = __decorate([
+        LyRadio = LyRadio_1 = __decorate([
             core.Component({
                 selector: 'ly-radio',
                 template: "<label #_labelContainer [attr.for]=\"inputId\" [className]=\"classes.label\">\n  <input #_input\n    [className]=\"_coreStyles.classes.visuallyHidden\"\n    [id]=\"inputId\"\n    [checked]=\"checked\"\n    [name]=\"name\"\n    (change)=\"_onInputChange($event)\"\n    (click)=\"_onInputClick($event)\"\n    [disabled]=\"disabled\"\n    type=\"radio\"\n    >\n  <div #_radioContainer [className]=\"classes.container\">\n    <div [className]=\"_coreStyles.classes.fill\"></div>\n    <div [className]=\"_coreStyles.classes.fill\"></div>\n  </div>\n  <div\n  [className]=\"classes.labelContent\">\n    <ng-content></ng-content>\n  </div>\n</label>",
@@ -508,17 +593,13 @@
                 preserveWhitespaces: false,
                 inputs: [
                     'disableRipple'
+                ],
+                providers: [
+                    ui.LyHostClass,
+                    ui.StyleRenderer
                 ]
             }),
-            __param(0, core.Optional()),
-            __metadata("design:paramtypes", [LyRadioGroup,
-                core.ElementRef,
-                core.Renderer2,
-                ui.LyTheme2,
-                core.ChangeDetectorRef,
-                core.NgZone,
-                ui.LyCoreStyles,
-                ui.LyFocusState])
+            __param(0, core.Optional())
         ], LyRadio);
         return LyRadio;
     }(LyRadioMixinBase));
@@ -546,5 +627,5 @@
 
     Object.defineProperty(exports, '__esModule', { value: true });
 
-}));
+})));
 //# sourceMappingURL=alyle-ui-radio.umd.js.map

@@ -1,71 +1,61 @@
-import { ThemeConfig } from '@alyle/ui';
 import { MinimaBase } from './base';
-export declare class MinimaDark extends MinimaBase implements ThemeConfig {
+import { Color } from '@alyle/ui/color';
+import { LyFieldTheme } from '@alyle/ui/field';
+import { LyTooltipTheme } from '@alyle/ui/tooltip';
+import { LySnackBarTheme } from '@alyle/ui/snack-bar';
+export declare class MinimaDark extends MinimaBase {
     name: string;
     primary: {
-        default: string;
-        contrast: string;
+        default: Color;
+        contrast: Color;
     };
     accent: {
-        default: string;
-        contrast: string;
+        default: Color;
+        contrast: Color;
     };
     warn: {
-        default: string;
-        contrast: string;
+        default: Color;
+        contrast: Color;
     };
     disabled: {
-        default: string;
-        contrast: string;
+        default: Color;
+        contrast: Color;
     };
     action: {
-        default: string;
-        contrast: string;
+        default: Color;
+        contrast: Color;
     };
     background: {
-        default: string;
+        default: Color;
         primary: {
-            default: string;
-            shadow: string;
+            default: Color;
+            shadow: Color;
         };
-        secondary: string;
-        tertiary: string;
-        base: string;
+        secondary: Color;
+        tertiary: Color;
     };
-    hover: string;
+    hover: Color;
     paper: {
-        default: string;
-        shadow: string;
+        default: Color;
+        shadow: Color;
     };
     text: {
-        default: string;
-        primary: string;
-        secondary: string;
-        disabled: string;
-        hint: string;
+        default: Color;
+        primary: Color;
+        secondary: Color;
+        disabled: Color;
+        hint: Color;
+        dark: Color;
+        light: Color;
     };
-    menu: {};
     drawer: {
-        backdrop: string;
+        backdrop: Color;
     };
-    bar: string;
-    divider: string;
-    colorShadow: string;
-    shadow: string;
-    field: any;
-    badge: {};
-    snackBar: {
-        root: {
-            background: string;
-            color: string;
-            boxShadow: string;
-        };
-    };
-    tooltip: {
-        root: {
-            background: string;
-            color: string;
-        };
-    };
-    avatar: {};
+    bar: Color;
+    divider: Color;
+    colorShadow: Color;
+    shadow: Color;
+    field: LyFieldTheme;
+    snackBar: LySnackBarTheme;
+    tooltip: LyTooltipTheme;
 }

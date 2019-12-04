@@ -1,5 +1,5 @@
 import { AfterContentInit, AfterViewInit, ChangeDetectorRef, ElementRef, OnInit, Renderer2, QueryList, NgZone, OnDestroy, DoCheck } from '@angular/core';
-import { LyTheme2, ElementObserver } from '@alyle/ui';
+import { LyTheme2, ElementObserver, StyleCollection, LyClasses, StyleTemplate, StyleRenderer, ThemeRef } from '@alyle/ui';
 import { LyLabel } from './label';
 import { LyPlaceholder } from './placeholder';
 import { LyHint } from './hint';
@@ -9,6 +9,51 @@ import { Subject } from 'rxjs';
 import { NgControl, NgForm, FormGroupDirective } from '@angular/forms';
 import { LyError } from './error';
 import { LyFieldControlBase } from './field-control-base';
+export interface LyFieldTheme {
+    /** Styles for Field Component */
+    root?: StyleCollection<((classes: LyClasses<typeof STYLES>) => StyleTemplate)> | ((classes: LyClasses<typeof STYLES>) => StyleTemplate);
+    appearance?: {
+        standard?: StyleCollection<((classes: LyClasses<typeof STYLES>) => StyleTemplate)> | ((classes: LyClasses<typeof STYLES>) => StyleTemplate);
+        filled?: StyleCollection<((classes: LyClasses<typeof STYLES>) => StyleTemplate)> | ((classes: LyClasses<typeof STYLES>) => StyleTemplate);
+        outlined?: StyleCollection<((classes: LyClasses<typeof STYLES>) => StyleTemplate)> | ((classes: LyClasses<typeof STYLES>) => StyleTemplate);
+        [name: string]: StyleCollection<((classes: LyClasses<typeof STYLES>) => StyleTemplate)> | ((classes: LyClasses<typeof STYLES>) => StyleTemplate) | undefined;
+    };
+}
+export interface LyFieldVariables {
+    field?: LyFieldTheme;
+}
+export declare const STYLE_SELECT_ARROW: (className: string) => string;
+export declare const STYLES: (theme: import("@alyle/ui/alyle-ui").LyStyleUtils & import("@alyle/ui/alyle-ui").ThemeConfig & LyFieldVariables, ref: ThemeRef) => {
+    $priority: number;
+    $global: (className: string) => string;
+    root: () => (className: string) => string;
+    animations: () => (className: string) => string;
+    container: (className: string) => string;
+    fieldset: (className: string) => string;
+    fieldsetSpan: (className: string) => string;
+    labelSpan: (className: string) => string;
+    prefix: (className: string) => string;
+    infix: (className: string) => string;
+    suffix: (className: string) => string;
+    labelContainer: (className: string) => string;
+    labelSpacingStart: any;
+    labelCenter: (className: string) => string;
+    labelSpacingEnd: (className: string) => string;
+    label: (className: string) => string;
+    isFloatingLabel: any;
+    floatingLabel: () => (className: string) => string;
+    placeholder: (className: string) => string;
+    focused: any;
+    inputNative: (className: string) => string;
+    hintContainer: (className: string) => string;
+    disabled: () => (className: string) => string;
+    hint: any;
+    error: any;
+    errorState: () => (className: string) => string;
+    hintAfter: (className: string) => string;
+    hintBefore: (className: string) => string;
+    selectArrow: () => (className: string) => string;
+};
 export declare class LyField implements OnInit, AfterContentInit, AfterViewInit, OnDestroy {
     private _renderer;
     private _el;
@@ -16,11 +61,42 @@ export declare class LyField implements OnInit, AfterContentInit, AfterViewInit,
     private _theme;
     private _cd;
     private _ngZone;
+    private _styleRenderer;
     /**
      * styles
      * @docs-private
      */
-    readonly classes: Record<"root" | "animations" | "container" | "fieldset" | "fieldsetSpan" | "labelSpan" | "prefix" | "infix" | "suffix" | "labelContainer" | "labelSpacingStart" | "labelCenter" | "labelSpacingEnd" | "label" | "isFloatingLabel" | "floatingLabel" | "placeholder" | "focused" | "inputNative" | "hintContainer" | "disabled" | "hint" | "error" | "errorState" | "hintAfter" | "hintBefore" | "selectArrow", string>;
+    readonly classes: Pick<{
+        $priority: string;
+        $global: string;
+        root: string;
+        animations: string;
+        container: string;
+        fieldset: string;
+        fieldsetSpan: string;
+        labelSpan: string;
+        prefix: string;
+        infix: string;
+        suffix: string;
+        labelContainer: string;
+        labelSpacingStart: string;
+        labelCenter: string;
+        labelSpacingEnd: string;
+        label: string;
+        isFloatingLabel: string;
+        floatingLabel: string;
+        placeholder: string;
+        focused: string;
+        inputNative: string;
+        hintContainer: string;
+        disabled: string;
+        hint: string;
+        error: string;
+        errorState: string;
+        hintAfter: string;
+        hintBefore: string;
+        selectArrow: string;
+    }, "root" | "animations" | "container" | "fieldset" | "fieldsetSpan" | "labelSpan" | "prefix" | "infix" | "suffix" | "labelContainer" | "labelSpacingStart" | "labelCenter" | "labelSpacingEnd" | "label" | "isFloatingLabel" | "floatingLabel" | "placeholder" | "focused" | "inputNative" | "hintContainer" | "disabled" | "hint" | "error" | "errorState" | "hintAfter" | "hintBefore" | "selectArrow">;
     protected _appearance: string;
     protected _appearanceClass: string;
     protected _color: string;
@@ -54,8 +130,9 @@ export declare class LyField implements OnInit, AfterContentInit, AfterViewInit,
     color: string;
     /** The field appearance style. */
     appearance: string;
+    [0x1]: string;
     onFocus(): void;
-    constructor(_renderer: Renderer2, _el: ElementRef, _elementObserver: ElementObserver, _theme: LyTheme2, _cd: ChangeDetectorRef, _ngZone: NgZone);
+    constructor(_renderer: Renderer2, _el: ElementRef, _elementObserver: ElementObserver, _theme: LyTheme2, _cd: ChangeDetectorRef, _ngZone: NgZone, _styleRenderer: StyleRenderer);
     ngOnInit(): void;
     ngAfterContentInit(): void;
     ngAfterViewInit(): void;

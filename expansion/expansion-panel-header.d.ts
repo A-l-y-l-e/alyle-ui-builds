@@ -5,6 +5,21 @@ export declare class LyExpansionPanelHeader {
     readonly _accordion: LyAccordion;
     readonly _expansionPanel: LyExpansionPanel;
     /** @docs-private */
-    readonly classes: Record<"root" | "panel" | "panelHeader" | "panelHeaderContent" | "panelContent" | "panelBody" | "panelTitle" | "panelDescription" | "panelActionRow" | "expanded" | "disabled", string>;
+    readonly classes: Pick<{
+        $priority: string;
+        $name: string;
+        $global: string;
+        root: string;
+        panel: string;
+        panelHeader: string;
+        panelHeaderContent: string;
+        panelContent: string;
+        panelBody: string;
+        panelTitle: string;
+        panelDescription: string;
+        panelActionRow: string;
+        expanded: string;
+        disabled: string;
+    }, "root" | "panel" | "panelHeader" | "panelHeaderContent" | "panelContent" | "panelBody" | "panelTitle" | "panelDescription" | "panelActionRow" | "expanded" | "disabled">;
     constructor(el: ElementRef, renderer: Renderer2, _accordion: LyAccordion, _expansionPanel: LyExpansionPanel);
 }

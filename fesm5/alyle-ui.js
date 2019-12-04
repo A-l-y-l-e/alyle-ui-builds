@@ -1,6 +1,6 @@
-import * as _chroma from 'chroma-js';
-import { InjectionToken, ɵɵdefineInjectable, ɵɵinject, RendererFactory2, Injectable, Optional, Inject, ViewEncapsulation, isDevMode, NgZone, Input, TemplateRef, Directive, ViewContainerRef, NgModule, ElementRef, Renderer2, HostListener, Component, Injector, ComponentFactoryResolver, ApplicationRef, INJECTOR, ChangeDetectionStrategy } from '@angular/core';
-import { __spread, __decorate, __param, __metadata, __assign, __extends } from 'tslib';
+import { Color, hexColorToInt } from '@alyle/ui/color';
+import { InjectionToken, ViewEncapsulation, Optional, Inject, RendererFactory2, ɵɵdefineInjectable, ɵɵinject, Injectable, isDevMode, NgZone, ViewContainerRef, Input, Directive, NgModule, ElementRef, Renderer2, SimpleChange, HostListener, Component, Injector, TemplateRef, ComponentFactoryResolver, ApplicationRef, ChangeDetectionStrategy } from '@angular/core';
+import { __spread, __values, __decorate, __param, __assign, __extends } from 'tslib';
 import { DOCUMENT } from '@angular/common';
 import { Subject, ReplaySubject, fromEvent, empty, Subscription, merge } from 'rxjs';
 import { takeUntil, auditTime, map, share } from 'rxjs/operators';
@@ -14,7 +14,6 @@ function getContrastYIQ(hexcolor) {
     return (yiq >= 128) ? 'black' : 'white';
 }
 
-var chroma = _chroma;
 var shadowKeyUmbraOpacity = 0.2;
 var shadowKeyPenumbraOpacity = 0.14;
 var shadowAmbientShadowOpacity = 0.12;
@@ -45,34 +44,21 @@ var Shadows = [
     [0, 11, 14, -7, 0, 23, 36, 3, 0, 9, 44, 8],
     [0, 11, 15, -7, 0, 24, 38, 3, 0, 9, 46, 8]
 ];
-function shadowBuilderDeprecated(elevation, color) {
-    if (elevation === void 0) { elevation = 2; }
-    if (color === void 0) { color = '#000'; }
-    var Color = chroma(color);
-    var colors = [
-        Color.alpha(shadowKeyUmbraOpacity).css(),
-        Color.alpha(shadowKeyPenumbraOpacity).css(),
-        Color.alpha(shadowAmbientShadowOpacity).css()
-    ];
-    var e = Shadows[elevation];
-    // tslint:disable-next-line:max-line-length
-    return "box-shadow:" + e[0] + "px " + e[1] + "px " + e[2] + "px " + e[3] + "px " + colors[0] + "," + e[4] + "px " + e[5] + "px " + e[6] + "px " + e[7] + "px " + colors[1] + "," + e[8] + "px " + e[9] + "px " + e[10] + "px " + e[11] + "px " + colors[2] + ";";
-}
 function shadowBuilder(elevation, color) {
-    var Color = chroma(color || '#000');
-    var rgb = Color.get('rgb');
+    var _color = color || new Color(0, 0, 0);
+    var rgb = _color.rgb;
     if (!(rgb[0] === rgb[1] && rgb[0] === rgb[2])) {
         // Darken and saturate if the color is not in the grayscale
-        Color = Color.darken().saturate(2);
+        _color = _color.darken().saturate(2);
     }
     var colors = [
-        Color.alpha(shadowKeyUmbraOpacity).css(),
-        Color.alpha(shadowKeyPenumbraOpacity).css(),
-        Color.alpha(shadowAmbientShadowOpacity).css()
+        _color.alpha(shadowKeyUmbraOpacity).css(),
+        _color.alpha(shadowKeyPenumbraOpacity).css(),
+        _color.alpha(shadowAmbientShadowOpacity).css()
     ];
     var e = Shadows[elevation];
     // tslint:disable-next-line:max-line-length
-    return e[0] + "px " + e[1] + "px " + e[2] + "px " + e[3] + "px " + colors[0] + "," + e[4] + "px " + e[5] + "px " + e[6] + "px " + e[7] + "px " + colors[1] + "," + e[8] + "px " + e[9] + "px " + e[10] + "px " + e[11] + "px " + colors[2] + ";";
+    return e[0] + "px " + e[1] + "px " + e[2] + "px " + e[3] + "px " + colors[0] + "," + e[4] + "px " + e[5] + "px " + e[6] + "px " + e[7] + "px " + colors[1] + "," + e[8] + "px " + e[9] + "px " + e[10] + "px " + e[11] + "px " + colors[2];
 }
 
 var THEME_VARIABLES = new InjectionToken('ly.theme.variables');
@@ -136,28 +122,572 @@ var LY_THEME_GLOBAL_VARIABLES = new InjectionToken('ly.theme.global.variables');
 var LY_THEME = new InjectionToken('ly_theme_config');
 var LY_THEME_NAME = new InjectionToken('ly.theme.name');
 
-/** Only for internal use */
+var LINE_FEED_REGEX = function () { return /(\n?[^\n]+\n?)/g; };
+var ɵ0 = LINE_FEED_REGEX;
+var AMPERSAND_REGEX = function () { return /&/g; };
+var ɵ1 = AMPERSAND_REGEX;
+var STYLE_TEMPLATE_REGEX = function () { return /StyleTemplate\[[\w]+\]/g; };
+var ɵ2 = STYLE_TEMPLATE_REGEX;
+var id = 0;
+/**
+ * Transform a lyl style block to CSS
+ *
+ * Allowed blocks:
+ *
+ * // Simple
+ * const BUTTON_STYLE = lyl `{
+ *   padding: 8px 12px
+ *   font-size: 14px
+ *   border-radius: 9px
+ *   border: 1px solid #e0e0e0
+ * }`
+ *
+ * // Nesting
+ * const style = lyl `{
+ *   ul > {
+ *     li {
+ *       list-style-type: none;
+ *     }
+ *   }
+ *   p {
+ *     ~ {
+ *       span {
+ *         opacity: 0.8;
+ *       }
+ *     }
+ *   }
+ * }`
+ *
+ */
+var LylParse = /** @class */ (function () {
+    function LylParse(_template, _className) {
+        if (_className === void 0) { _className = '${className}'; }
+        this._template = _template;
+        this._className = _className;
+    }
+    LylParse.prototype.toCss = function () {
+        var _this = this;
+        var selectors = [];
+        var selector = null;
+        var rules = new Map();
+        this._template
+            .replace(/(\/\/[^\n\r]*(?:[\n\r]+|$))/g, '')
+            .replace(/,\n/g, ',')
+            .replace(LINE_FEED_REGEX(), function (_ex, fullLine) {
+            fullLine = fullLine.trim();
+            if (fullLine.endsWith('{')) {
+                if (selectors.length === 0) {
+                    selectors.push([_this._className]);
+                    selector = selectors[0][0];
+                }
+                else {
+                    var line_1 = fullLine.slice(0, fullLine.length - 1).trim();
+                    selectors.push(line_1
+                        .split(',')
+                        .map(function (_) { return _.trim(); }));
+                    selector = _this._resolveSelectors(selectors);
+                    if (line_1.includes('@')) {
+                        if (!rules.has(line_1)) {
+                            rules.set(line_1, []);
+                        }
+                    }
+                }
+                if (!rules.has(selector)) {
+                    rules.set(selector, []);
+                }
+            }
+            else if (fullLine.length === 1 && fullLine.endsWith('}')) {
+                selectors.pop();
+                if (selectors.length) {
+                    selector = _this._resolveSelectors(selectors);
+                    if (!rules.has(selector)) {
+                        rules.set(selector, []);
+                    }
+                }
+            }
+            else if (fullLine.startsWith('/* >> ds')) {
+                selector = _this._resolveSelectors(selectors);
+                var lin = fullLine;
+                // Ignore compiled css
+                rules.get(selector).push(lin);
+                // fullLine = lin;
+                // /** For non LylModule< */else {
+                //   fullLine = `\${(${lin.slice(2, lin.length - 1)})(\`${selector}\`)}`;
+                //   rules.set(createUniqueCommentSelector('ds'), fullLine);
+                // } /** for non LylModule>  */
+            }
+            else if (fullLine.startsWith('...')) {
+                // for non LylModule>
+                var content = fullLine.slice(3);
+                selector = _this._resolveSelectors(selectors);
+                // Ignore compiled css
+                rules.get(selector).push("" + createUniqueCommentSelector('cc') + content);
+            }
+            else {
+                if (fullLine) {
+                    if (fullLine.includes('undefined') || fullLine.startsWith('// ')) {
+                        return '';
+                    }
+                    if (fullLine.endsWith(';')) {
+                        throw new Error("Do not require semicolon in [" + fullLine + "]");
+                    }
+                    if (fullLine.includes(': ')) {
+                        fullLine = fullLine.replace(': ', ':');
+                    }
+                    fullLine += ';';
+                    rules.get(selector).push(fullLine);
+                }
+            }
+            return '';
+        });
+        // Join media queries & keyframes
+        rules.forEach(function (val, key) {
+            var matchArray = key.match(/(@[^\${]*(?:\${[^{]*)*){/);
+            if (matchArray) {
+                var media = matchArray[1];
+                if (media !== key && val.length) {
+                    var after = rules.get(media);
+                    var newValue = after + key.replace(media + '{', '') + ("{" + val + "}");
+                    rules.set(media, [newValue]);
+                    rules.delete(key);
+                }
+            }
+        });
+        return Array.from(rules.entries())
+            .filter(function (rule) { return rule[1]; })
+            .map(function (rule) {
+            var sel = rule[0];
+            var contents = rule[1];
+            var css = [];
+            var contentRendered = [];
+            var set = new Set();
+            for (var index = 0; index < contents.length; index++) {
+                var content = contents[index];
+                if (content) {
+                    if (content.startsWith('/* >> ds')) {
+                        contentRendered.push(content.replace(/\|\|\&\|\|/g, sel));
+                        set.add(contentRendered);
+                    }
+                    else if (content.startsWith('/* >> cc')) {
+                        content = content.replace(/\/\* >> cc[^\/\*]+\*\//g, '');
+                        var expression = content.slice(2, content.length - 1);
+                        expression = "styleTemplateToString((" + expression + "), `" + sel + "`)";
+                        contentRendered.push("${" + expression + "}");
+                        set.add(contentRendered);
+                    }
+                    else {
+                        // css += `${sel}{${content}}`;
+                        css.push(content);
+                        set.add(css);
+                    }
+                }
+            }
+            return Array.from(set).map(function (_) {
+                if (_ === css) {
+                    return css.length
+                        ? sel + "{" + css.join('') + "}"
+                        : '';
+                }
+                else {
+                    return _.join('');
+                }
+            }).join('');
+            // return (css
+            //   ? `${sel}{${css}}`
+            //   :  '') + contentRendered;
+            // if (content.startsWith('/* >> ds')) {
+            //   return content.replace(/\|\|\&\|\|/g, sel);
+            // }
+            // if (content.startsWith('/* >> cc')) {
+            //   content = content.replace(/\/\* >> cc[^\/\*]+\*\//g, '');
+            //   let variable = content.slice(2, content.length - 1);
+            //   variable = `styleTemplateToString((${variable}), \`${sel}\`)`;
+            //   return `\${${variable}}`;
+            // }
+            // // for non LylModule>
+            // if (sel.startsWith('@')) {
+            //   return `${sel}{${rule[1]}}`;
+            // }
+            // return `${sel}{${content}}`;
+        }).join('');
+    };
+    LylParse.prototype._resolveSelectors = function (selectors) {
+        var media = null;
+        var sel = selectors
+            .map(function (_) { return _.filter(function (__) {
+            if (__.startsWith('@')) {
+                // save media
+                media = __;
+                return false;
+            }
+            return __;
+        }); })
+            .filter(function (_) { return _.length; })
+            .reduce(function (prev, current) {
+            var result = prev.map(function (item) { return current.map(function (cu) {
+                if (cu.includes('&')) {
+                    return cu.replace(AMPERSAND_REGEX(), item);
+                }
+                return item + " " + cu;
+            }); });
+            return Array.prototype.concat.apply([], result);
+        })
+            .join(',');
+        if (media) {
+            return media + "{" + sel;
+        }
+        return sel;
+    };
+    return LylParse;
+}());
+function lyl(literals) {
+    var placeholders = [];
+    for (var _i = 1; _i < arguments.length; _i++) {
+        placeholders[_i - 1] = arguments[_i];
+    }
+    return function (className) {
+        var result = '';
+        var dsMap = new Map();
+        for (var i = 0; i < placeholders.length; i++) {
+            var placeholder = placeholders[i];
+            result += literals[i];
+            if (result.endsWith('...')) {
+                result = result.slice(0, result.length - 3);
+                if (typeof placeholder === 'function' || placeholder instanceof StyleCollection) {
+                    var newID = createUniqueId();
+                    dsMap.set(newID, placeholder);
+                    result += newID;
+                }
+            }
+            else {
+                result += placeholder;
+            }
+        }
+        // add the last literal
+        result += literals[literals.length - 1];
+        var css = result.replace(STYLE_TEMPLATE_REGEX(), function (str) {
+            if (dsMap.has(str)) {
+                var fn = dsMap.get(str);
+                var template = void 0;
+                if (fn instanceof StyleCollection) {
+                    template = fn.css;
+                }
+                else {
+                    template = fn;
+                }
+                return "" + createUniqueCommentSelector('ds') + template('||&||');
+            }
+            return '';
+        });
+        return new LylParse(css, className).toCss();
+    };
+}
+function createUniqueId() {
+    return "StyleTemplate[__" + (id++).toString(36) + "]";
+}
+function createUniqueCommentSelector(text) {
+    if (text === void 0) { text = 'id'; }
+    return "/* >> " + text + " -- " + Math.floor(new Date().valueOf() * Math.random()).toString(36) + " */";
+}
+var StyleCollection = /** @class */ (function () {
+    function StyleCollection() {
+        var templates = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            templates[_i] = arguments[_i];
+        }
+        this._templates = templates;
+        this.css = this.css.bind(this);
+    }
+    StyleCollection.prototype.add = function () {
+        var _a;
+        var templates = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            templates[_i] = arguments[_i];
+        }
+        // return new StyleCollection(...[...this._templates, ...templates]);
+        (_a = this._templates).push.apply(_a, __spread(templates));
+        return this;
+    };
+    /** Transform style */
+    StyleCollection.prototype.setTransformer = function (transformer) {
+        this._transformer = transformer;
+        return this;
+    };
+    /**
+     * @return StyleTemplate
+     * @docs-private
+     */
+    StyleCollection.prototype.css = function (className) {
+        var lin = '';
+        var templates = this._templates;
+        for (var index = 0; index < templates.length; index++) {
+            var template = void 0;
+            if (this._transformer) {
+                template = ((this._transformer(templates[index])));
+            }
+            else {
+                template = templates[index];
+            }
+            lin += template(className);
+        }
+        return lin;
+    };
+    return StyleCollection;
+}());
+/**
+ * Simple object check.
+ * @param item
+ */
+function isObject(item) {
+    return (item && typeof item === 'object' && !Array.isArray(item)) && !(item instanceof StyleCollection);
+}
+function mergeThemes(target) {
+    var sources = [];
+    for (var _i = 1; _i < arguments.length; _i++) {
+        sources[_i - 1] = arguments[_i];
+    }
+    if (!sources.length) {
+        return target;
+    }
+    var source = sources.shift();
+    if (isObject(target) && isObject(source)) {
+        for (var key in source) {
+            if (isObject(source[key])) {
+                if (!target[key]) {
+                    if (source[key].constructor.name === 'Object') {
+                        target[key] = {};
+                    }
+                    else {
+                        // if is a class
+                        target[key] = source[key];
+                    }
+                }
+                mergeThemes(target[key], source[key]);
+            }
+            else {
+                var targetKey = target[key];
+                var sourceKey = source[key];
+                // Merge styles
+                if (targetKey instanceof StyleCollection && typeof sourceKey === 'function') {
+                    target[key] = target[key].add(sourceKey);
+                }
+                else {
+                    target[key] = source[key];
+                }
+            }
+        }
+    }
+    return mergeThemes.apply(void 0, __spread([target], sources));
+}
+function styleTemplateToString(fn, className) {
+    if (fn instanceof StyleCollection) {
+        return fn.css(className);
+    }
+    return fn ? (fn)(className) : '';
+}
+// export function normalizeStyleTemplate(
+//   fn: StyleTemplate
+//   ) {
+//   if (fn.length) {
+//     return fn as StyleTemplate;
+//   } else {
+//     return (fn as (() => StyleTemplate))();
+//   }
+// }
+var StringIdGenerator = /** @class */ (function () {
+    function StringIdGenerator(chars) {
+        if (chars === void 0) { chars = 'abcdefghijklmnopqrstuvwxyz'; }
+        this._chars = chars;
+        this._nextId = [0];
+    }
+    StringIdGenerator.prototype.next = function () {
+        var e_1, _a;
+        var r = [];
+        try {
+            for (var _b = __values(this._nextId), _c = _b.next(); !_c.done; _c = _b.next()) {
+                var char = _c.value;
+                r.unshift(this._chars[char]);
+            }
+        }
+        catch (e_1_1) { e_1 = { error: e_1_1 }; }
+        finally {
+            try {
+                if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
+            }
+            finally { if (e_1) throw e_1.error; }
+        }
+        this._increment();
+        return r.join('');
+    };
+    StringIdGenerator.prototype._increment = function () {
+        for (var i = 0; i < this._nextId.length; i++) {
+            var val = ++this._nextId[i];
+            if (val >= this._chars.length) {
+                this._nextId[i] = 0;
+            }
+            else {
+                return;
+            }
+        }
+        this._nextId.push(0);
+    };
+    return StringIdGenerator;
+}());
+
+var CoreTheme = /** @class */ (function () {
+    function CoreTheme(themeConfig, globalVariables, rendererFactory, _document) {
+        this.rendererFactory = rendererFactory;
+        this.themes = new Set();
+        this._themeMap = new Map();
+        this._styleMap = new Map();
+        this._document = _document;
+        if (Platform.isBrowser) {
+            // Clean
+            var nodes = this._document.body.querySelectorAll('ly-s-c');
+            if (nodes.length) {
+                for (var index = 0; index < nodes.length; index++) {
+                    var element = nodes.item(index);
+                    this._document.body.removeChild(element);
+                }
+            }
+        }
+        this.firstElement = this._document.body.firstChild;
+        this.renderer = this.rendererFactory.createRenderer(null, {
+            id: 'ly',
+            encapsulation: ViewEncapsulation.None,
+            styles: [],
+            data: {}
+        });
+        if (themeConfig) {
+            this.initializeTheme(themeConfig, globalVariables);
+        }
+    }
+    CoreTheme.prototype.initializeTheme = function (themeConfig, globalVariables) {
+        var _this = this;
+        var allThemes = Array.isArray(themeConfig) ? themeConfig : [themeConfig];
+        var themes = new Map();
+        allThemes.forEach(function (item) {
+            // Do not install themes that are already initialized.
+            if (_this.hasTheme(item.name)) {
+                throw new Error("Theme '" + item.name + "' is already initialized.");
+            }
+            if (themes.has(item.name)) {
+                themes.get(item.name).push(item);
+            }
+            else {
+                themes.set(item.name, [item]);
+            }
+        });
+        themes.forEach(function (items) {
+            if (globalVariables) {
+                items.push(globalVariables);
+            }
+            if (items.length > 1) {
+                mergeThemes.apply(void 0, __spread([items[0]], items.slice(1)));
+            }
+            _this._add(items[0]);
+            _this.themes.add(items[0].name);
+        });
+    };
+    /**
+     * add new theme
+     * @param theme: ThemeVariables
+     */
+    CoreTheme.prototype._add = function (theme) {
+        this._themeMap.set(theme.name, theme);
+        this._styleMap.set(theme.name, new Map());
+    };
+    CoreTheme.prototype.hasTheme = function (theme) {
+        var name = typeof theme === 'string' ? theme : theme.name;
+        return this._themeMap.has(name);
+    };
+    CoreTheme.prototype.get = function (name) {
+        return this._themeMap.get(name);
+    };
+    CoreTheme.prototype.updateClassName = function (element, renderer, newClassname, oldClassname) {
+        if (oldClassname) {
+            renderer.removeClass(element, oldClassname);
+        }
+        renderer.addClass(element, newClassname);
+    };
+    CoreTheme.ctorParameters = function () { return [
+        { type: undefined, decorators: [{ type: Optional }, { type: Inject, args: [LY_THEME,] }] },
+        { type: undefined, decorators: [{ type: Optional }, { type: Inject, args: [LY_THEME_GLOBAL_VARIABLES,] }] },
+        { type: RendererFactory2 },
+        { type: undefined, decorators: [{ type: Inject, args: [DOCUMENT,] }] }
+    ]; };
+    CoreTheme.ngInjectableDef = ɵɵdefineInjectable({ factory: function CoreTheme_Factory() { return new CoreTheme(ɵɵinject(LY_THEME, 8), ɵɵinject(LY_THEME_GLOBAL_VARIABLES, 8), ɵɵinject(RendererFactory2), ɵɵinject(DOCUMENT)); }, token: CoreTheme, providedIn: "root" });
+    CoreTheme = __decorate([
+        Injectable({
+            providedIn: 'root'
+        }),
+        __param(0, Optional()), __param(0, Inject(LY_THEME)),
+        __param(1, Optional()), __param(1, Inject(LY_THEME_GLOBAL_VARIABLES)),
+        __param(3, Inject(DOCUMENT))
+    ], CoreTheme);
+    return CoreTheme;
+}());
+
+/** For internal use only */
 var _STYLE_MAP = new Map();
 var TypeStyle;
 (function (TypeStyle) {
     TypeStyle[TypeStyle["Multiple"] = 0] = "Multiple";
     TypeStyle[TypeStyle["OnlyOne"] = 1] = "OnlyOne";
+    /**
+     * A lyl Style
+     */
+    TypeStyle[TypeStyle["LylStyle"] = 2] = "LylStyle";
 })(TypeStyle || (TypeStyle = {}));
+function getThemeNameForSelectors(themeId) {
+    return themeId + "<~(selectors)";
+}
 
 var LyStyleUtils = /** @class */ (function () {
     function LyStyleUtils() {
+        /** Returns top */
+        this.above = 'top';
+        /** Returns bottom */
+        this.below = 'bottom';
     }
+    Object.defineProperty(LyStyleUtils.prototype, "before", {
+        /** Returns left or right according to the direction */
+        get: function () {
+            return this.getDirection(DirAlias.before);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(LyStyleUtils.prototype, "after", {
+        /** Returns left or right according to the direction */
+        get: function () {
+            return this.getDirection(DirAlias.after);
+        },
+        enumerable: true,
+        configurable: true
+    });
     LyStyleUtils.prototype.pxToRem = function (value) {
         var size = this.typography.fontSize / 14;
         return value / this.typography.htmlFontSize * size + "rem";
     };
     LyStyleUtils.prototype.colorOf = function (value, optional) {
-        return get(this, value, optional);
+        if (typeof value === 'number') {
+            return new Color(value);
+        }
+        if (value.includes('#') && value.length === 7) {
+            return new Color(hexColorToInt(value));
+        }
+        var color = get(this, value, optional);
+        if (color) {
+            return color;
+        }
+        /** Create invalid color */
+        return new Color();
     };
     LyStyleUtils.prototype.getBreakpoint = function (key) {
         return "@media " + (this.breakpoints[key] || key);
     };
-    LyStyleUtils.prototype.getClasses = function (styles) {
+    LyStyleUtils.prototype.selectorsOf = function (styles) {
         var styleMap = _STYLE_MAP.get(styles);
         if (styleMap) {
             return styleMap.classes || styleMap[this.name];
@@ -173,9 +703,13 @@ var LyStyleUtils = /** @class */ (function () {
         else if (val === DirAlias.after) {
             return this.direction === 'rtl' ? 'left' : 'right';
         }
-        else {
-            return val;
+        else if (val === 'above') {
+            return 'top';
         }
+        else if (val === 'below') {
+            return 'bottom';
+        }
+        return val;
     };
     return LyStyleUtils;
 }());
@@ -201,6 +735,9 @@ var DirPosition;
  * @param optional get optional value, if not exist return default if not is string
  */
 function get(obj, path, optional) {
+    if (path === 'transparent') {
+        return new Color(0, 0, 0, 0);
+    }
     var _path = path instanceof Array ? path : path.split(':');
     for (var i = 0; i < _path.length; i++) {
         var posibleOb = obj[_path[i]];
@@ -209,10 +746,10 @@ function get(obj, path, optional) {
         }
         else {
             /** if not exist */
-            return path;
+            return new Color();
         }
     }
-    if (typeof obj === 'string') {
+    if (obj instanceof Color) {
         return obj;
     }
     else if (optional) {
@@ -223,32 +760,45 @@ function get(obj, path, optional) {
     }
     // return typeof obj === 'string' ? obj as string : obj['default'] as string;
 }
-function eachMedia(str, fn) {
+function eachMedia(str, fn, styleCollection) {
     if (typeof str === 'string') {
         var values = str.split(/\s/g);
         for (var index = 0; index < values.length; index++) {
             var valItem = values[index].split(/\@/g);
-            var value = valItem.shift();
+            var strValue = valItem.shift();
             var len = valItem.length;
+            var value = isNaN(+strValue) ? strValue : +strValue;
             if (len) {
                 for (var j = 0; j < len; j++) {
-                    fn.call(undefined, value, valItem[j], index);
+                    var st = fn.call(undefined, value, valItem[j], index);
+                    if (styleCollection) {
+                        styleCollection.add(st);
+                    }
                 }
             }
             else {
-                fn.call(undefined, value, null, index);
+                var st = fn.call(undefined, value, null, index);
+                if (styleCollection) {
+                    styleCollection.add(st);
+                }
             }
         }
     }
     else {
-        fn.call(undefined, str, null, 0);
+        var st = fn.call(undefined, str, null, 0);
+        if (styleCollection) {
+            styleCollection.add(st);
+        }
+    }
+    if (styleCollection) {
+        return styleCollection.css;
     }
 }
 /**
  * Simple object check.
  * @param item
  */
-function isObject(item) {
+function isObject$1(item) {
     return (item && typeof item === 'object' && !Array.isArray(item));
 }
 /**
@@ -266,9 +816,9 @@ function mergeDeep(target) {
         return target;
     }
     var source = sources.shift();
-    if (isObject(target) && isObject(source)) {
+    if (isObject$1(target) && isObject$1(source)) {
         for (var key in source) {
-            if (isObject(source[key])) {
+            if (isObject$1(source[key])) {
                 if (!target[key]) {
                     Object.assign(target, (_a = {}, _a[key] = {}, _a));
                 }
@@ -281,99 +831,6 @@ function mergeDeep(target) {
     }
     return mergeDeep.apply(void 0, __spread([target], sources));
 }
-
-var CoreTheme = /** @class */ (function () {
-    function CoreTheme(themeConfig, globalVariables, rendererFactory, _document) {
-        var _this = this;
-        this.rendererFactory = rendererFactory;
-        this.themes = new Set();
-        this._themeMap = new Map();
-        this._styleMap = new Map();
-        if (!themeConfig) {
-            throw new Error("LY_THEME undefined: no theme has been added, please add at least one theme\n\n" +
-                "Follow the steps of the documentation https://goo.gl/8V486A");
-        }
-        this.renderer = this.rendererFactory.createRenderer(null, {
-            id: 'ly',
-            encapsulation: ViewEncapsulation.None,
-            styles: [],
-            data: {}
-        });
-        if (Platform.isBrowser) {
-            var nodes = _document.body.querySelectorAll('ly-s-c');
-            if (nodes.length) {
-                for (var index = 0; index < nodes.length; index++) {
-                    var element = nodes.item(index);
-                    _document.body.removeChild(element);
-                }
-            }
-        }
-        this.firstElement = _document.body.firstChild;
-        var themes = new Map();
-        if (Array.isArray(themeConfig)) {
-            themeConfig.forEach(function (item) {
-                if (themes.has(item.name)) {
-                    themes.get(item.name).push(item);
-                }
-                else {
-                    themes.set(item.name, [item]);
-                }
-            });
-            themes.forEach(function (items) {
-                if (globalVariables) {
-                    items.push(globalVariables);
-                }
-                if (items.length > 1) {
-                    mergeDeep.apply(void 0, __spread([items[0]], items.slice(1)));
-                }
-                _this.add(items[0]);
-                _this.themes.add(items[0].name);
-            });
-        }
-        else {
-            if (globalVariables) {
-                mergeDeep(themeConfig, globalVariables);
-            }
-            this.add(themeConfig);
-            this.themes.add(themeConfig.name);
-        }
-    }
-    /**
-     * add new theme
-     * @param theme: ThemeVariables
-     */
-    CoreTheme.prototype.add = function (theme) {
-        this._themeMap.set(theme.name, theme);
-        this._styleMap.set(theme.name, new Map());
-    };
-    CoreTheme.prototype.hasTheme = function (theme) {
-        var name = typeof theme === 'string' ? theme : theme.name;
-        this._themeMap.has(name);
-    };
-    CoreTheme.prototype.get = function (name) {
-        return this._themeMap.get(name);
-    };
-    CoreTheme.prototype.getStyleMap = function (name) {
-        return this._styleMap.get(name);
-    };
-    CoreTheme.prototype.updateClassName = function (element, renderer, newClassname, oldClassname) {
-        if (oldClassname) {
-            renderer.removeClass(element, oldClassname);
-        }
-        renderer.addClass(element, newClassname);
-    };
-    CoreTheme.ngInjectableDef = ɵɵdefineInjectable({ factory: function CoreTheme_Factory() { return new CoreTheme(ɵɵinject(LY_THEME, 8), ɵɵinject(LY_THEME_GLOBAL_VARIABLES, 8), ɵɵinject(RendererFactory2), ɵɵinject(DOCUMENT)); }, token: CoreTheme, providedIn: "root" });
-    CoreTheme = __decorate([
-        Injectable({
-            providedIn: 'root'
-        }),
-        __param(0, Optional()), __param(0, Inject(LY_THEME)),
-        __param(1, Optional()), __param(1, Inject(LY_THEME_GLOBAL_VARIABLES)),
-        __param(3, Inject(DOCUMENT)),
-        __metadata("design:paramtypes", [Object, Object, RendererFactory2, Object])
-    ], CoreTheme);
-    return CoreTheme;
-}());
 
 var YPosition;
 (function (YPosition) {
@@ -665,8 +1122,9 @@ function invertPlacement(placement) {
 }
 
 var REF_REG_EXP = /\{([\w-]+)\}/g;
-var nextClassId = 0;
 var nextKeyFrameId = 0;
+var yClassID = new StringIdGenerator();
+var keyframesUniqueId = new StringIdGenerator();
 var StylesInDocument = /** @class */ (function () {
     function StylesInDocument() {
         this.styles = {};
@@ -736,6 +1194,21 @@ var LyTheme2 = /** @class */ (function () {
         }
     };
     /**
+     * Build multiple styles and render them in the DOM
+     */
+    LyTheme2.prototype.renderStyleSheet = function (styles) {
+        return this._createStyleContent2(styles, null, null, TypeStyle.Multiple);
+    };
+    /**
+     * Build the styles and render them in the DOM
+     */
+    LyTheme2.prototype.renderStyle = function (styleOrId, priorityOrStyle, priority) {
+        if (typeof styleOrId === 'string') {
+            return this._createStyleContent2(priorityOrStyle, styleOrId, priority, TypeStyle.LylStyle);
+        }
+        return this._createStyleContent2(styleOrId, null, priority, TypeStyle.LylStyle);
+    };
+    /**
      * Add a new dynamic style, use only within @Input()
      * @param id Unique id
      * @param style Styles
@@ -759,7 +1232,7 @@ var LyTheme2 = /** @class */ (function () {
     /**
      * Create basic style
      * @param style Styles.
-     * Note: Use only with inmutable variable.
+     * Note: Use only with immutable variable.
      * @param priority Priority of style
      * @param parentStyle
      */
@@ -835,12 +1308,36 @@ var LyTheme2 = /** @class */ (function () {
         }
         return false;
     };
+    LyTheme2.prototype.selectorsOf = function (styles) {
+        var themeName = this.initialTheme;
+        if (!_STYLE_MAP.has(styles)) {
+            _STYLE_MAP.set(styles, {
+                isNewStyle: true,
+                styles: styles,
+                type: TypeStyle.Multiple,
+                css: {},
+                id: null
+            });
+        }
+        var styleMap = _STYLE_MAP.get(styles);
+        var themeNameForSelectors = getThemeNameForSelectors(themeName);
+        var classesMap = styleMap[themeNameForSelectors] || (styleMap[themeNameForSelectors] = {});
+        return classesMap;
+    };
+    LyTheme2.prototype.getClass = function (styles) {
+        var themeName = this.initialTheme;
+        var styleMap = _STYLE_MAP.get(styles);
+        return styleMap.classes || styleMap[themeName];
+    };
+    /**
+     * For internal use only
+     * @docs-private
+     */
     LyTheme2.prototype._createStyleContent2 = function (styles, id, priority, type, forChangeTheme, parentStyle) {
         var newId = id || styles;
-        var isNewStyle = null;
         if (!_STYLE_MAP.has(newId)) {
-            isNewStyle = true;
             _STYLE_MAP.set(newId, {
+                isNewStyle: true,
                 priority: priority,
                 styles: styles,
                 type: type,
@@ -851,15 +1348,18 @@ var LyTheme2 = /** @class */ (function () {
         }
         var styleMap = _STYLE_MAP.get(newId);
         var themeName = this.initialTheme;
-        var isCreated = isNewStyle || !(styleMap.classes || styleMap[themeName]);
+        var isCreated = styleMap.isNewStyle || !(styleMap.classes || styleMap[themeName]);
         if (isCreated || forChangeTheme) {
-            /** create new style for new theme */
+            styleMap.isNewStyle = false;
+            // create new style for new theme
             var css = void 0;
             var themeMap = this.themeMap.get(this.initialTheme);
             var config = this.core.get(themeMap.change || themeName);
             if (typeof styles === 'function') {
                 styleMap.requireUpdate = true;
-                css = groupStyleToString(styleMap, styles(config, this), themeName, id, type, config);
+                css = type === TypeStyle.LylStyle
+                    ? createLylStyle(styleMap, styles(config, this), themeName)
+                    : groupStyleToString(styleMap, styles(config, this), themeName, id, type, config);
                 if (!forChangeTheme) {
                     styleMap.css[themeName] = css;
                 }
@@ -952,24 +1452,36 @@ var LyTheme2 = /** @class */ (function () {
             fn();
         }
     };
-    LyTheme2.prototype.toClassSelector = function (classes) {
-        var newClasses = {};
-        for (var key in classes) {
-            if (classes.hasOwnProperty(key)) {
-                newClasses[key] = "." + classes[key];
-            }
-        }
-        return newClasses;
-    };
+    LyTheme2.ctorParameters = function () { return [
+        { type: StylesInDocument },
+        { type: CoreTheme },
+        { type: undefined, decorators: [{ type: Inject, args: [LY_THEME_NAME,] }] },
+        { type: undefined, decorators: [{ type: Inject, args: [DOCUMENT,] }] },
+        { type: NgZone }
+    ]; };
     LyTheme2 = __decorate([
         Injectable(),
         __param(2, Inject(LY_THEME_NAME)),
-        __param(3, Inject(DOCUMENT)),
-        __metadata("design:paramtypes", [StylesInDocument,
-            CoreTheme, Object, Object, NgZone])
+        __param(3, Inject(DOCUMENT))
     ], LyTheme2);
     return LyTheme2;
 }());
+function createLylStyle(styleMap, styles, themeName) {
+    // const className = styleMap.requireUpdate
+    // ? styleMap[themeName] || (styleMap[themeName] = createNextClassId())
+    // : styleMap.classes
+    //   ? styleMap.classes
+    //   : styleMap.classes = createNextClassId();
+    // use current class or set new
+    var className;
+    className = styleMap[themeName]
+        || (styleMap[themeName] = isDevMode()
+            ? styleMap.id
+                ? toValidClassName(styleMap.id) + "-" + createNextClassId()
+                : (styleMap.styles.name || 'ii') + "-" + createNextClassId()
+            : createNextClassId());
+    return styles("." + className);
+}
 function groupStyleToString(styleMap, styles, themeName, id, typeStyle, themeVariables) {
     // for styles type string
     if (typeStyle === TypeStyle.OnlyOne) {
@@ -996,27 +1508,82 @@ function groupStyleToString(styleMap, styles, themeName, id, typeStyle, themeVar
         return rules;
     }
     // for multiples styles
+    var themeNameForSelectors = getThemeNameForSelectors(themeName);
     var classesMap = styleMap[themeName] || (styleMap[themeName] = {});
+    var selectorsMap = styleMap[themeNameForSelectors] || (styleMap[themeNameForSelectors] = {});
+    var styleGroup = styles;
     var content = '';
-    var name = styles.$name ? styles.$name + "-" : '';
+    var name = styleGroup.$name ? styleGroup.$name + "-" : '';
     // set priority
-    if (styles.$priority != null) {
-        styleMap.priority = styles.$priority;
+    if (styleGroup.$priority != null) {
+        styleMap.priority = styleGroup.$priority;
     }
-    for (var key in styles) {
-        if (styles.hasOwnProperty(key)) {
-            var value = styles[key];
-            if (key === '$keyframes') {
-                content += keyframesToString(name, classesMap, value, themeVariables);
+    if (!styleMap.keys) {
+        styleMap.keys = Object.keys(styles);
+    }
+    var keys = styleMap.keys;
+    /** This loop creates the classes if necessary */
+    for (var index = 0; index < keys.length; index++) {
+        var key = keys[index];
+        var value = styles[key];
+        if (key === '$global' || key === '$keyframes') {
+            continue;
+        }
+        if (typeof value === 'function') {
+            // lyl
+            // set new id if not exist
+            if (!(key in classesMap)) {
+                classesMap[key] = isDevMode()
+                    ? toValidClassName(name + key) + "-" + createUniqueClassID()
+                    : createUniqueClassID();
             }
-            else if (typeof value === 'object' || value === null) {
-                // set new id if not exist
-                var currentClassName = key in classesMap
-                    ? classesMap[key]
-                    : classesMap[key] = isDevMode() ? toClassNameValid("y-" + name + key + "-" + createNextClassId()) : createNextClassId();
-                var style = styleToString(key, styles.$name, value, themeVariables, currentClassName);
-                content += style;
+        }
+        else if (typeof value === 'object' || value === null) {
+            // set new id if not exist
+            if (!(key in classesMap)) {
+                classesMap[key] = isDevMode() ? toValidClassName("y-" + name + key + "-" + createNextClassId()) : createNextClassId();
             }
+        }
+        else {
+            continue;
+        }
+        if (!(key in selectorsMap)) {
+            selectorsMap[key] = "." + classesMap[key];
+        }
+    }
+    for (var index = 0; index < keys.length; index++) {
+        var key = keys[index];
+        var value = styles[key];
+        if (typeof value === 'function') {
+            // lyl
+            if (key === '$global') {
+                if (value.length) {
+                    content += value("/* Global Style */");
+                }
+                else {
+                    content += value()("/* Global Style */");
+                }
+            }
+            else {
+                var selector = selectorsMap[key];
+                if (value.length) {
+                    content += value(selector);
+                }
+                else {
+                    var st = value();
+                    if (st) {
+                        content += st(selector);
+                    }
+                }
+            }
+        }
+        else if (key === '$keyframes') {
+            content += keyframesToString(name, classesMap, value, themeVariables);
+        }
+        else if (typeof value === 'object' || value === null) {
+            var currentClassName = classesMap[key];
+            var style = styleToString(key, styleGroup.$name, value, themeVariables, currentClassName);
+            content += style;
         }
     }
     return replaceRefs(content, classesMap);
@@ -1122,7 +1689,7 @@ function keyframesToString(styleName, keysMap, keyframes, themeVariables) {
             // set new id if not exist
             var newName = newUniqueName in keysMap
                 ? keysMap[newUniqueName]
-                : keysMap[newUniqueName] = isDevMode() ? toClassNameValid("" + styleName + name_1 + "-" + createNextKeyframeId() + "-v") : createNextKeyframeId();
+                : keysMap[newUniqueName] = isDevMode() ? toValidClassName("" + styleName + name_1 + "-" + createNextKeyframeId() + "-v") : createNextKeyframeId();
             content += "@keyframes " + newName + "{";
             for (var percent in keyframe) {
                 if (keyframe.hasOwnProperty(percent)) {
@@ -1158,11 +1725,11 @@ function converterToCssKeyAndStyle(str, themeVariables) {
     }
     return hyphenCase;
 }
-function toClassNameValid(str) {
+function toValidClassName(str) {
     var s = str.replace(/^[0-9]|[^\w\-]/g, function (_) {
         return "_" + _.charCodeAt(0);
     });
-    return toHyphenCase(s);
+    return s;
 }
 function toHyphenCase(str) {
     return str.replace(/([A-Z])/g, function (g) { return "-" + g[0].toLowerCase(); });
@@ -1199,7 +1766,10 @@ function capitalizeFirstLetter(str) {
     return str[0].toUpperCase() + str.slice(1);
 }
 function createNextClassId() {
-    return "i" + (nextClassId++).toString(36);
+    return yClassID.next();
+}
+function createUniqueClassID() {
+    return yClassID.next();
 }
 function createNextKeyframeId() {
     return "k" + (nextKeyFrameId++).toString(36);
@@ -1233,16 +1803,16 @@ var NgTranscludeDirective = /** @class */ (function () {
     NgTranscludeDirective.prototype.ngOnDestroy = function () {
         this._viewRef.remove();
     };
+    NgTranscludeDirective.ctorParameters = function () { return [
+        { type: ViewContainerRef }
+    ]; };
     __decorate([
-        Input(),
-        __metadata("design:type", TemplateRef),
-        __metadata("design:paramtypes", [TemplateRef])
+        Input()
     ], NgTranscludeDirective.prototype, "ngTransclude", null);
     NgTranscludeDirective = __decorate([
         Directive({
             selector: '[ngTransclude]'
-        }),
-        __metadata("design:paramtypes", [ViewContainerRef])
+        })
     ], NgTranscludeDirective);
     return NgTranscludeDirective;
 }());
@@ -1281,58 +1851,75 @@ function mixinStyleUpdater(base) {
         };
         class_1.prototype.updateStyle = function (element) {
             var __bg = this._superHyperInternalPropertyBg;
-            var __color = this._superHyperInternalPropertyColor;
+            var __color = this._superHyperInternalPropertyColor === 'auto'
+                ? ''
+                : this._superHyperInternalPropertyColor;
             var __raised = this._superHyperInternalPropertyRaised;
             var __elevation = this._superHyperInternalPropertyElevation;
             var __disabled = this._superHyperInternalPropertyDisabled;
             var __outlined = this._superHyperInternalPropertyOutlined;
             var __shadowColor = this._superHyperInternalPropertyShadowColor;
-            var __isContrast = this._autoContrast && !__color || __color === 'auto';
-            var newKey = "common----:" + (__bg || DEFAULT_VALUE) + "\u00B7" + (__color || DEFAULT_VALUE) + "\u00B7" + __raised + "\u00B7" + __elevation + "\u00B7" + (__disabled || DEFAULT_VALUE) + "\u00B7" + (__outlined || DEFAULT_VALUE) + "\u00B7" + (__shadowColor || DEFAULT_VALUE) + "\u00B7" + (__isContrast || DEFAULT_VALUE);
-            this._classNameAnonymous = this._theme.addStyle(newKey, function (theme) {
-                var style = {};
+            var __isContrast = this._autoContrast || this._superHyperInternalPropertyColor === 'auto';
+            var el = getNativeElement(element);
+            var newKey = "c--" + (__bg || DEFAULT_VALUE) + "_" + (__color || DEFAULT_VALUE) + "_" + (__raised || DEFAULT_VALUE) + "_" + (__elevation || DEFAULT_VALUE) + "_" + (__disabled || DEFAULT_VALUE) + "_" + (__outlined || DEFAULT_VALUE) + "_" + (__shadowColor || DEFAULT_VALUE) + "_" + (__isContrast || DEFAULT_VALUE);
+            var newClass = this._theme.renderStyle(newKey, function (theme) {
+                var sColor;
+                var sBackground;
+                var sBorder;
+                var sPointerEvents;
+                var sBoxShadow;
+                var sBoxShadowActive;
                 if (__outlined) {
-                    style.border = '1px solid currentColor';
+                    sBorder = '1px solid currentColor';
                 }
                 if (__disabled) {
-                    style.color = theme.disabled.contrast;
-                    style.pointerEvents = 'none';
+                    sColor = theme.disabled.contrast;
+                    sPointerEvents = 'none';
                     if (__bg) {
-                        style.background = theme.disabled.default;
+                        sBackground = theme.disabled.default;
                     }
                 }
                 else {
                     if (__bg) {
-                        style.background = theme.colorOf(__bg);
-                        if (__isContrast) {
-                            style.color = theme.colorOf(__bg + ":contrast");
+                        sBackground = colorOf(theme, __bg);
+                        if (__isContrast && !__color) {
+                            sColor = theme.colorOf(__bg + ":contrast");
+                            // Generate auto contrast if is necessary
+                            if (sColor.css().includes('invalid')) {
+                                var lum = (__bg instanceof Color ? __bg : theme.colorOf(__bg)).luminance();
+                                sColor = lum < 0.5 ? theme.text.light : theme.text.dark;
+                            }
                         }
                     }
-                    if (!style.color && __color) {
-                        style.color = theme.colorOf(__color);
+                    if (!sColor && __color) {
+                        sColor = colorOf(theme, __color);
                     }
                     if (__raised || (__elevation != null)) {
                         if (!__bg) {
-                            style.background = theme.background.primary.default;
+                            sBackground = theme.background.primary.default;
                         }
-                        var backgroundColorCss = style.background !== __bg && theme.colorOf(__bg || 'background:primary', 'shadow');
-                        var shadowColor = (__shadowColor && theme.colorOf(__shadowColor)) || backgroundColorCss || style.background || style.color || theme.shadow;
+                        var backgroundColorCss = sBackground !== __bg && colorOf(theme, __bg || 'background:primary', 'shadow');
+                        var shadowColor = (__shadowColor && colorOf(theme, __shadowColor)) || backgroundColorCss || sBackground || sColor || theme.shadow;
                         if (__elevation != null) {
-                            style.boxShadow = shadowBuilder(__elevation, shadowColor);
+                            sBoxShadow = shadowBuilder(__elevation, shadowColor);
                         }
                         else {
-                            style.boxShadow = shadowBuilder(3, shadowColor);
-                            style['&:active'] = {
-                                boxShadow: shadowBuilder(8, shadowColor)
-                            };
+                            sBoxShadow = shadowBuilder(3, shadowColor);
+                            sBoxShadowActive = shadowBuilder(8, shadowColor);
                         }
                     }
                 }
-                return style;
-            }, getNativeElement(element), this._classNameAnonymous, STYLE_PRIORITY);
+                return function (className) { return className + "{color:" + sColor + ";background:" + sBackground + ";border:" + sBorder + ";pointer-events:" + sPointerEvents + ";box-shadow:" + sBoxShadow + ";}" + className + ":active{box-shadow:" + sBoxShadowActive + ";}"; };
+            }, STYLE_PRIORITY);
+            el.classList.remove(this._classNameAnonymous);
+            el.classList.add(newClass);
+            this._classNameAnonymous = newClass;
         };
         return class_1;
     }(base));
+}
+function colorOf(theme, color, optional) {
+    return color instanceof Color ? color : theme.colorOf(color, optional);
 }
 
 function toBoolean(value) {
@@ -1493,7 +2080,13 @@ function maxSize(rect) {
     return Math.max(rect.width, rect.height);
 }
 
+var ɵ0$1 = function (className) { return className + "{position:absolute;top:0;bottom:0;left:0;right:0;}"; }, ɵ1$1 = function (className) { return className + "{border:0;clip:rect(0 0 0 0);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;width:1px;outline:0;-webkit-appearance:none;-moz-appearance:none;}"; }, ɵ2$1 = function (className) { return className + "{-webkit-tap-highlight-color:transparent;background-color:transparent;border:0;-moz-appearance:none;-webkit-appearance:none;margin:0;outline:none;box-sizing:border-box;position:relative;text-decoration-line:none;-webkit-text-decoration-line:none;}" + className + "::-moz-focus-inner:{border:0;}"; };
 var LY_COMMON_STYLES = {
+    fill: ɵ0$1,
+    visuallyHidden: ɵ1$1,
+    button: ɵ2$1
+};
+var LY_COMMON_STYLES_DEPRECATED = {
     fill: {
         position: 'absolute',
         top: 0,
@@ -1534,12 +2127,14 @@ var LY_COMMON_STYLES = {
 var LyCoreStyles = /** @class */ (function () {
     function LyCoreStyles(theme) {
         this.theme = theme;
-        this.classes = this.theme.addStyleSheet(LY_COMMON_STYLES);
+        this.classes = this.theme.addStyleSheet(LY_COMMON_STYLES_DEPRECATED);
     }
+    LyCoreStyles.ctorParameters = function () { return [
+        { type: LyTheme2 }
+    ]; };
     LyCoreStyles.ngInjectableDef = ɵɵdefineInjectable({ factory: function LyCoreStyles_Factory() { return new LyCoreStyles(ɵɵinject(LyTheme2)); }, token: LyCoreStyles, providedIn: "root" });
     LyCoreStyles = __decorate([
-        Injectable({ providedIn: 'root' }),
-        __metadata("design:paramtypes", [LyTheme2])
+        Injectable({ providedIn: 'root' })
     ], LyCoreStyles);
     return LyCoreStyles;
 }());
@@ -1556,19 +2151,21 @@ var styles = function (theme) { return ({
         transition: "opacity " + theme.ripple.transition.opacity + ",transform " + theme.ripple.transition.transform,
         pointerEvents: 'none'
     },
-    container: __assign({}, LY_COMMON_STYLES.fill, { overflow: 'hidden', pointerEvents: 'none', borderRadius: 'inherit' })
+    container: __assign({}, LY_COMMON_STYLES_DEPRECATED.fill, { overflow: 'hidden', pointerEvents: 'none', borderRadius: 'inherit' })
 }); };
 var LyRippleService = /** @class */ (function () {
     function LyRippleService(theme) {
         this.theme = theme;
         this.classes = this.theme.addStyleSheet(styles);
     }
+    LyRippleService.ctorParameters = function () { return [
+        { type: LyTheme2 }
+    ]; };
     LyRippleService.ngInjectableDef = ɵɵdefineInjectable({ factory: function LyRippleService_Factory() { return new LyRippleService(ɵɵinject(LyTheme2)); }, token: LyRippleService, providedIn: "root" });
     LyRippleService = __decorate([
         Injectable({
             providedIn: 'root'
-        }),
-        __metadata("design:paramtypes", [LyTheme2])
+        })
     ], LyRippleService);
     return LyRippleService;
 }());
@@ -1843,10 +2440,14 @@ var LyPaper = /** @class */ (function (_super) {
     LyPaper.prototype.ngOnDestroy = function () {
         this._removeRippleEvents();
     };
+    LyPaper.ctorParameters = function () { return [
+        { type: LyTheme2 },
+        { type: NgZone },
+        { type: ElementRef },
+        { type: Renderer2 }
+    ]; };
     __decorate([
-        Input('ly-text'),
-        __metadata("design:type", Object),
-        __metadata("design:paramtypes", [Object])
+        Input('ly-text')
     ], LyPaper.prototype, "hasText", null);
     LyPaper = __decorate([
         Directive({
@@ -1860,11 +2461,7 @@ var LyPaper = /** @class */ (function (_super) {
                 'shadowColor',
                 'disableRipple'
             ]
-        }),
-        __metadata("design:paramtypes", [LyTheme2,
-            NgZone,
-            ElementRef,
-            Renderer2])
+        })
     ], LyPaper);
     return LyPaper;
 }(LyPaperMixinBase));
@@ -1883,27 +2480,353 @@ var LyWithClass = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
+    LyWithClass.ctorParameters = function () { return [
+        { type: ElementRef }
+    ]; };
     __decorate([
-        Input(),
-        __metadata("design:type", String),
-        __metadata("design:paramtypes", [String])
+        Input()
     ], LyWithClass.prototype, "withClass", null);
     LyWithClass = __decorate([
         Directive({
             selector: '[withClass]'
-        }),
-        __metadata("design:paramtypes", [ElementRef])
+        })
     ], LyWithClass);
     return LyWithClass;
 }());
+
+var LyHostClass = /** @class */ (function () {
+    function LyHostClass(_el, _renderer) {
+        this._renderer = _renderer;
+        this._set = new Set();
+        this._nEl = _el.nativeElement;
+    }
+    LyHostClass.prototype.add = function (className) {
+        if (!this._set.has(className)) {
+            this._set.add(className);
+            this._renderer.addClass(this._nEl, className);
+        }
+    };
+    LyHostClass.prototype.remove = function (className) {
+        if (className && this._set.has(className)) {
+            this._set.delete(className);
+            this._renderer.removeClass(this._nEl, className);
+        }
+    };
+    LyHostClass.prototype.toggle = function (className, enabled) {
+        if (enabled) {
+            this.add(className);
+        }
+        else {
+            this.remove(className);
+        }
+    };
+    LyHostClass.prototype.update = function (newClassName, oldClassName) {
+        this.remove(oldClassName);
+        this.add(newClassName);
+        return newClassName;
+    };
+    LyHostClass.ctorParameters = function () { return [
+        { type: ElementRef },
+        { type: Renderer2 }
+    ]; };
+    LyHostClass = __decorate([
+        Injectable()
+    ], LyHostClass);
+    return LyHostClass;
+}());
+
+var StyleRenderer = /** @class */ (function () {
+    function StyleRenderer(_el, _theme, _hostClass) {
+        this._theme = _theme;
+        this._hostClass = _hostClass;
+    }
+    /**
+     * Build multiple styles and render them in the DOM
+     */
+    StyleRenderer.prototype.addSheet = function (styles) {
+        return this._theme._createStyleContent2(styles, null, null, TypeStyle.Multiple);
+    };
+    StyleRenderer.prototype.add = function (id, style, priority, oldClass) {
+        var args = arguments;
+        /** Class name or keyframe name */
+        var className;
+        var len = args.length;
+        // clean
+        if (len === 4 && args[3] == null) {
+            len -= 1;
+        }
+        if (len === 3 && args[2] == null) {
+            len -= 1;
+        }
+        if (len === 1) {
+            className = this._theme._createStyleContent2(id, null, null, TypeStyle.LylStyle);
+        }
+        else if (len === 2) {
+            if (typeof id === 'string') {
+                className = this._theme._createStyleContent2(style, id, null, TypeStyle.LylStyle);
+            }
+            else if (typeof style === 'number') {
+                className = this._theme._createStyleContent2(id, null, style, TypeStyle.LylStyle);
+            }
+            else {
+                className = this._theme._createStyleContent2(id, null, null, TypeStyle.LylStyle);
+                oldClass = style;
+            }
+        }
+        else if (len === 3) {
+            if (typeof id === 'string') {
+                if (typeof priority === 'number') {
+                    // (id, style, priority)
+                    className = this._theme._createStyleContent2(style, id, priority, TypeStyle.LylStyle);
+                }
+                else {
+                    // (id, style, oldClass)
+                    className = this._theme._createStyleContent2(style, id, null, TypeStyle.LylStyle);
+                    oldClass = priority;
+                }
+            }
+            else {
+                // (style, priority, oldClass)
+                className = this._theme._createStyleContent2(id, null, style, TypeStyle.LylStyle);
+                oldClass = priority;
+            }
+        }
+        else if (len === 4) {
+            className = this._theme._createStyleContent2(style, id, priority, TypeStyle.LylStyle);
+        }
+        if (this._hostClass) {
+            return this._hostClass.update(className, oldClass);
+        }
+        throw new Error("LyHostClass is required "
+            + "to update classes.\n\n"
+            + "Add LyHostClass to Component or Directive:\n\n"
+            + "e.g:\n\n"
+            + "@Component({\n"
+            + "  providers: [ LyHostClass ]\n"
+            + "})\n");
+    };
+    StyleRenderer.ctorParameters = function () { return [
+        { type: ElementRef },
+        { type: LyTheme2 },
+        { type: LyHostClass, decorators: [{ type: Optional }] }
+    ]; };
+    StyleRenderer = __decorate([
+        Injectable(),
+        __param(2, Optional())
+    ], StyleRenderer);
+    return StyleRenderer;
+}());
+
+var STYLE_PRIORITY$1 = -0.5;
+var LyStyle = /** @class */ (function () {
+    function LyStyle(_sr, _hClass) {
+        this._sr = _sr;
+        this._hClass = _hClass;
+    }
+    LyStyle_1 = LyStyle;
+    Object.defineProperty(LyStyle.prototype, "lyStyle", {
+        get: function () {
+            return this._lyStyle;
+        },
+        set: function (val) {
+            if (typeof val === 'function') {
+                this._sr.add(val);
+            }
+            else {
+                this._updateStyle(0xa, 'style', val, function () { return eachMedia(val, function (v, media) { return (function (className) { return "@media " + (media || 'all') + "{" + className + "{" + v + ";}}"; }); }, new StyleCollection()); });
+            }
+        },
+        enumerable: true,
+        configurable: true
+    });
+    LyStyle.prototype._updateStyle = function (index, styleId, simpleChange, style) {
+        if (simpleChange) {
+            var currentValue = simpleChange instanceof SimpleChange
+                ? simpleChange.currentValue
+                : simpleChange;
+            if (currentValue != null) {
+                this[index] = this._sr.add(LyStyle_1.и + "--" + styleId + "-" + currentValue, style, STYLE_PRIORITY$1, this[index]);
+            }
+            else {
+                this._hClass.remove(this[index]);
+            }
+        }
+    };
+    LyStyle.prototype.ngOnChanges = function (_a) {
+        var p = _a.p, pf = _a.pf, pe = _a.pe, pt = _a.pt, pb = _a.pb, px = _a.px, py = _a.py, m = _a.m, mf = _a.mf, me = _a.me, mt = _a.mt, mb = _a.mb, mx = _a.mx, my = _a.my, display = _a.display, width = _a.width, maxWidth = _a.maxWidth;
+        if (p) {
+            var currentValue_1 = p.currentValue;
+            this._updateStyle(0x1, 'p', p, function () { return eachMedia(currentValue_1, function (val, media) { return (function (className) { return "@media " + (media || 'all') + "{" + className + "{padding:" + to8Px(val) + ";}}"; }); }, new StyleCollection()); });
+        }
+        if (pf) {
+            var currentValue_2 = pf.currentValue;
+            this._updateStyle(0x2, 'pf', pf, function (_a) {
+                var after = _a.after;
+                return eachMedia(currentValue_2, function (val, media) { return (function (className) { return "@media " + (media || 'all') + "{" + className + "{padding-" + after + ":" + to8Px(val) + ";}}"; }); }, new StyleCollection());
+            });
+        }
+        if (pe) {
+            var currentValue_3 = pe.currentValue;
+            this._updateStyle(0x3, 'pe', pe, function (_a) {
+                var before = _a.before;
+                return eachMedia(currentValue_3, function (val, media) { return (function (className) { return "@media " + (media || 'all') + "{" + className + "{padding-" + before + ":" + to8Px(val) + ";}}"; }); }, new StyleCollection());
+            });
+        }
+        if (pt) {
+            var currentValue_4 = pt.currentValue;
+            this._updateStyle(0x4, 'pt', pt, function () { return eachMedia(currentValue_4, function (val, media) { return (function (className) { return "@media " + (media || 'all') + "{" + className + "{padding-top:" + to8Px(val) + ";}}"; }); }, new StyleCollection()); });
+        }
+        if (pb) {
+            var currentValue_5 = pb.currentValue;
+            this._updateStyle(0x5, 'pb', pb, function () { return eachMedia(currentValue_5, function (val, media) { return (function (className) { return "@media " + (media || 'all') + "{" + className + "{padding-bottom:" + to8Px(val) + ";}}"; }); }, new StyleCollection()); });
+        }
+        if (px) {
+            var currentValue_6 = px.currentValue;
+            this._updateStyle(0x6, 'px', px, function () { return eachMedia(currentValue_6, function (val, media) { return (function (className) { return "@media " + (media || 'all') + "{" + className + "{padding:0 " + (typeof val === 'number'
+                ? val * 8 + 'px'
+                : val) + ";}}"; }); }, new StyleCollection()); });
+        }
+        if (py) {
+            var currentValue_7 = py.currentValue;
+            this._updateStyle(0x7, 'py', py, function () { return eachMedia(currentValue_7, function (val, media) { return (function (className) { return "@media " + (media || 'all') + "{" + className + "{padding:" + (typeof val === 'number'
+                ? val * 8 + 'px'
+                : val) + " 0;}}"; }); }, new StyleCollection()); });
+        }
+        if (m) {
+            var currentValue_8 = m.currentValue;
+            this._updateStyle(0x8, 'm', m, function () { return eachMedia(currentValue_8, function (val, media) { return (function (className) { return "@media " + (media || 'all') + "{" + className + "{margin:" + to8Px(val) + ";}}"; }); }, new StyleCollection()); });
+        }
+        if (mf) {
+            var currentValue_9 = mf.currentValue;
+            this._updateStyle(0x9, 'mf', mf, function (_a) {
+                var after = _a.after;
+                return eachMedia(currentValue_9, function (val, media) { return (function (className) { return "@media " + (media || 'all') + "{" + className + "{margin-" + after + ":" + to8Px(val) + ";}}"; }); }, new StyleCollection());
+            });
+        }
+        if (me) {
+            var currentValue_10 = me.currentValue;
+            this._updateStyle(0x10, 'me', me, function (_a) {
+                var before = _a.before;
+                return eachMedia(currentValue_10, function (val, media) { return (function (className) { return "@media " + (media || 'all') + "{" + className + "{margin-" + before + ":" + to8Px(val) + ";}}"; }); }, new StyleCollection());
+            });
+        }
+        if (mt) {
+            var currentValue_11 = mt.currentValue;
+            this._updateStyle(0x11, 'mt', mt, function () { return eachMedia(currentValue_11, function (val, media) { return (function (className) { return "@media " + (media || 'all') + "{" + className + "{margin-top:" + to8Px(val) + ";}}"; }); }, new StyleCollection()); });
+        }
+        if (mb) {
+            var currentValue_12 = mb.currentValue;
+            this._updateStyle(0x12, 'mb', mb, function () { return eachMedia(currentValue_12, function (val, media) { return (function (className) { return "@media " + (media || 'all') + "{" + className + "{margin-bottom:" + to8Px(val) + ";}}"; }); }, new StyleCollection()); });
+        }
+        if (mx) {
+            var currentValue_13 = mx.currentValue;
+            this._updateStyle(0x13, 'mx', mx, function () { return eachMedia(currentValue_13, function (val, media) { return (function (className) { return "@media " + (media || 'all') + "{" + className + "{margin:0 " + to8Px(val) + ";}}"; }); }, new StyleCollection()); });
+        }
+        if (my) {
+            var currentValue_14 = my.currentValue;
+            this._updateStyle(0x14, 'my', my, function () { return eachMedia(currentValue_14, function (val, media) { return (function (className) { return "@media " + (media || 'all') + "{" + className + "{margin:" + to8Px(val) + " 0;}}"; }); }, new StyleCollection()); });
+        }
+        if (display) {
+            var currentValue_15 = display.currentValue;
+            this._updateStyle(0x15, 'display', display, function () { return eachMedia(currentValue_15, function (val, media) { return (function (className) { return "@media " + (media || 'all') + "{" + className + "{display:" + val + ";}}"; }); }, new StyleCollection()); });
+        }
+        this._updateStyle(0x16, 'width', width, function () { return eachMedia(width.currentValue, function (val, media) { return (function (className) { return "@media " + (media || 'all') + "{" + className + "{width:" + transform(val) + ";}}"; }); }, new StyleCollection()); });
+        this._updateStyle(0x17, 'maxWidth', maxWidth, function () { return eachMedia(maxWidth.currentValue, function (val, media) { return (function (className) { return "@media " + (media || 'all') + "{" + className + "{max-width:" + transform(val) + ";}}"; }); }, new StyleCollection()); });
+    };
+    var LyStyle_1;
+    /** @docs-private */
+    LyStyle.и = 'LyStyle';
+    LyStyle.ctorParameters = function () { return [
+        { type: StyleRenderer },
+        { type: LyHostClass }
+    ]; };
+    __decorate([
+        Input()
+    ], LyStyle.prototype, "p", void 0);
+    __decorate([
+        Input()
+    ], LyStyle.prototype, "pf", void 0);
+    __decorate([
+        Input()
+    ], LyStyle.prototype, "pe", void 0);
+    __decorate([
+        Input()
+    ], LyStyle.prototype, "pt", void 0);
+    __decorate([
+        Input()
+    ], LyStyle.prototype, "pb", void 0);
+    __decorate([
+        Input()
+    ], LyStyle.prototype, "px", void 0);
+    __decorate([
+        Input()
+    ], LyStyle.prototype, "py", void 0);
+    __decorate([
+        Input()
+    ], LyStyle.prototype, "m", void 0);
+    __decorate([
+        Input()
+    ], LyStyle.prototype, "mf", void 0);
+    __decorate([
+        Input()
+    ], LyStyle.prototype, "me", void 0);
+    __decorate([
+        Input()
+    ], LyStyle.prototype, "mt", void 0);
+    __decorate([
+        Input()
+    ], LyStyle.prototype, "mb", void 0);
+    __decorate([
+        Input()
+    ], LyStyle.prototype, "mx", void 0);
+    __decorate([
+        Input()
+    ], LyStyle.prototype, "my", void 0);
+    __decorate([
+        Input()
+    ], LyStyle.prototype, "display", void 0);
+    __decorate([
+        Input()
+    ], LyStyle.prototype, "width", void 0);
+    __decorate([
+        Input()
+    ], LyStyle.prototype, "maxWidth", void 0);
+    __decorate([
+        Input()
+    ], LyStyle.prototype, "lyStyle", null);
+    LyStyle = LyStyle_1 = __decorate([
+        Directive({
+            selector: "[lyStyle],\n              [p], [pf], [pe], [pt], [pb], [px], [py],\n              [m], [mf], [me], [mt], [mb], [mx], [my],\n              [display],\n              [maxWidth],\n              [width]",
+            providers: [
+                LyHostClass,
+                StyleRenderer
+            ]
+        })
+    ], LyStyle);
+    return LyStyle;
+}());
+/**
+ * Convert to px if the value is a number, otherwise leave it as is
+ * @docs-private
+ */
+function to8Px(val) {
+    return typeof val === 'number'
+        ? val * 8 + "px"
+        : val;
+}
+function transform(value) {
+    return value <= 1
+        ? value * 100 + "%"
+        : value;
+}
 
 var LyCommonModule = /** @class */ (function () {
     function LyCommonModule() {
     }
     LyCommonModule = __decorate([
         NgModule({
-            declarations: [LyWithClass, LyPaper],
-            exports: [LyWithClass, LyPaper]
+            declarations: [LyStyle, LyWithClass, LyPaper],
+            exports: [LyStyle, LyWithClass, LyPaper]
         })
     ], LyCommonModule);
     return LyCommonModule;
@@ -2071,40 +2994,6 @@ function untilComponentDestroyed(component) {
     return function (source) { return source.pipe(takeUntil(componentDestroyed(component))); };
 }
 
-var LyHostClass = /** @class */ (function () {
-    function LyHostClass(_el, _renderer) {
-        this._el = _el;
-        this._renderer = _renderer;
-        this._set = new Set();
-    }
-    LyHostClass.prototype.add = function (className) {
-        if (!this._set.has(className)) {
-            this._set.add(className);
-            this._renderer.addClass(this._el.nativeElement, className);
-        }
-    };
-    LyHostClass.prototype.remove = function (className) {
-        if (this._set.has(className)) {
-            this._set.delete(className);
-            this._renderer.removeClass(this._el.nativeElement, className);
-        }
-    };
-    LyHostClass.prototype.toggle = function (className, enabled) {
-        if (enabled) {
-            this.add(className);
-        }
-        else {
-            this.remove(className);
-        }
-    };
-    LyHostClass = __decorate([
-        Injectable(),
-        __metadata("design:paramtypes", [ElementRef,
-            Renderer2])
-    ], LyHostClass);
-    return LyHostClass;
-}());
-
 var FocusStatus;
 (function (FocusStatus) {
     /**mouse and/or touch*/
@@ -2208,18 +3097,20 @@ var LyFocusState = /** @class */ (function () {
         var _this = this;
         this._elementMap.forEach(function (_, element) { return _this.unlisten(element); });
     };
+    LyFocusState.ctorParameters = function () { return [
+        { type: NgZone }
+    ]; };
     LyFocusState.ngInjectableDef = ɵɵdefineInjectable({ factory: function LyFocusState_Factory() { return new LyFocusState(ɵɵinject(NgZone)); }, token: LyFocusState, providedIn: "root" });
     LyFocusState = __decorate([
         Injectable({
             providedIn: 'root'
-        }),
-        __metadata("design:paramtypes", [NgZone])
+        })
     ], LyFocusState);
     return LyFocusState;
 }());
 
-var AUI_VERSION = '2.9.6';
-var AUI_LAST_UPDATE = '2019-10-24T21:35:04.329Z';
+var AUI_VERSION = '2.9.7';
+var AUI_LAST_UPDATE = '2019-12-04T00:10:50.574Z';
 
 var LY_HAMMER_OPTIONS = new InjectionToken('LY_HAMMER_OPTIONS');
 var HAMMER_GESTURES_EVENTS = [
@@ -2230,14 +3121,14 @@ var HAMMER_GESTURES_EVENTS = [
     'slideleft',
     'slidecancel'
 ];
-var ɵ0 = function () { }, ɵ1 = function () { };
+var ɵ0$2 = function () { }, ɵ1$2 = function () { };
 /**
  * Fake HammerInstance that is used when a Hammer instance is requested when HammerJS has not
  * been loaded on the page.
  */
 var noopHammerInstance = {
-    on: ɵ0,
-    off: ɵ1,
+    on: ɵ0$2,
+    off: ɵ1$2,
 };
 var LyHammerGestureConfig = /** @class */ (function (_super) {
     __extends(LyHammerGestureConfig, _super);
@@ -2272,10 +3163,12 @@ var LyHammerGestureConfig = /** @class */ (function (_super) {
         inheritances.forEach(function (item) { return recognizer.recognizeWith(item); });
         return recognizer;
     };
+    LyHammerGestureConfig.ctorParameters = function () { return [
+        { type: undefined, decorators: [{ type: Optional }, { type: Inject, args: [LY_HAMMER_OPTIONS,] }] }
+    ]; };
     LyHammerGestureConfig = __decorate([
         Injectable(),
-        __param(0, Optional()), __param(0, Inject(LY_HAMMER_OPTIONS)),
-        __metadata("design:paramtypes", [Object])
+        __param(0, Optional()), __param(0, Inject(LY_HAMMER_OPTIONS))
     ], LyHammerGestureConfig);
     return LyHammerGestureConfig;
 }(HammerGestureConfig));
@@ -2325,6 +3218,7 @@ var styles$1 = function (theme) { return ({
         pointerEvents: 'none'
     }
 }); };
+var ɵ0$3 = styles$1;
 var LyOverlayContainer = /** @class */ (function () {
     function LyOverlayContainer(theme) {
         this.theme = theme;
@@ -2384,12 +3278,14 @@ var LyOverlayContainer = /** @class */ (function () {
             this._isActiveOverlayContainer = false;
         }
     };
+    LyOverlayContainer.ctorParameters = function () { return [
+        { type: LyTheme2 }
+    ]; };
     LyOverlayContainer.ngInjectableDef = ɵɵdefineInjectable({ factory: function LyOverlayContainer_Factory() { return new LyOverlayContainer(ɵɵinject(LyTheme2)); }, token: LyOverlayContainer, providedIn: "root" });
     LyOverlayContainer = __decorate([
         Injectable({
             providedIn: 'root'
-        }),
-        __metadata("design:paramtypes", [LyTheme2])
+        })
     ], LyOverlayContainer);
     return LyOverlayContainer;
 }());
@@ -2409,13 +3305,16 @@ var WinResize = /** @class */ (function () {
             this.resize$ = empty();
         }
     }
+    WinResize.ctorParameters = function () { return [
+        { type: undefined, decorators: [{ type: Inject, args: [DOCUMENT,] }] },
+        { type: NgZone }
+    ]; };
     WinResize.ngInjectableDef = ɵɵdefineInjectable({ factory: function WinResize_Factory() { return new WinResize(ɵɵinject(DOCUMENT), ɵɵinject(NgZone)); }, token: WinResize, providedIn: "root" });
     WinResize = __decorate([
         Injectable({
             providedIn: 'root'
         }),
-        __param(0, Inject(DOCUMENT)),
-        __metadata("design:paramtypes", [Object, NgZone])
+        __param(0, Inject(DOCUMENT))
     ], WinResize);
     return WinResize;
 }());
@@ -2435,13 +3334,16 @@ var WinScroll = /** @class */ (function () {
             this.scroll$ = empty();
         }
     }
+    WinScroll.ctorParameters = function () { return [
+        { type: undefined, decorators: [{ type: Inject, args: [DOCUMENT,] }] },
+        { type: NgZone }
+    ]; };
     WinScroll.ngInjectableDef = ɵɵdefineInjectable({ factory: function WinScroll_Factory() { return new WinScroll(ɵɵinject(DOCUMENT), ɵɵinject(NgZone)); }, token: WinScroll, providedIn: "root" });
     WinScroll = __decorate([
         Injectable({
             providedIn: 'root'
         }),
-        __param(0, Inject(DOCUMENT)),
-        __metadata("design:paramtypes", [Object, NgZone])
+        __param(0, Inject(DOCUMENT))
     ], WinScroll);
     return WinScroll;
 }());
@@ -2457,13 +3359,13 @@ var LyOverlayConfig = /** @class */ (function () {
     return LyOverlayConfig;
 }());
 
-var STYLE_PRIORITY$1 = -2;
-var STYLES_BACKDROP_ROOT = (__assign({}, LY_COMMON_STYLES.fill, { width: '100vw', height: '100vh', pointerEvents: 'all', userSelect: 'none' }));
+var STYLE_PRIORITY$2 = -2;
+var STYLES_BACKDROP_ROOT = (__assign({}, LY_COMMON_STYLES_DEPRECATED.fill, { width: '100vw', height: '100vh', pointerEvents: 'all', userSelect: 'none' }));
 var LyOverlayBackdrop = /** @class */ (function () {
     function LyOverlayBackdrop(_el, _theme, _config) {
         this._el = _el;
         this._config = _config;
-        _el.nativeElement.classList.add(_theme.style(STYLES_BACKDROP_ROOT, STYLE_PRIORITY$1));
+        _el.nativeElement.classList.add(_theme.style(STYLES_BACKDROP_ROOT, STYLE_PRIORITY$2));
         // this applies custom class for backdrop,
         // if one is not defined, do nothing.
         var backdropClass = _config.backdropClass;
@@ -2476,20 +3378,19 @@ var LyOverlayBackdrop = /** @class */ (function () {
             this._config.fnDestroy();
         }
     };
+    LyOverlayBackdrop.ctorParameters = function () { return [
+        { type: ElementRef },
+        { type: LyTheme2 },
+        { type: LyOverlayConfig }
+    ]; };
     __decorate([
-        HostListener('click'),
-        __metadata("design:type", Function),
-        __metadata("design:paramtypes", []),
-        __metadata("design:returntype", void 0)
+        HostListener('click')
     ], LyOverlayBackdrop.prototype, "onclick", null);
     LyOverlayBackdrop = __decorate([
         Component({
             selector: 'ly-overlay-backdrop',
             template: ""
-        }),
-        __metadata("design:paramtypes", [ElementRef,
-            LyTheme2,
-            LyOverlayConfig])
+        })
     ], LyOverlayBackdrop);
     return LyOverlayBackdrop;
 }());
@@ -2683,17 +3584,16 @@ var LyOverlay = /** @class */ (function () {
     LyOverlay.prototype.create = function (templateOrComponent, context, config) {
         return new OverlayFactory(this._componentFactoryResolver, this._appRef, templateOrComponent, this._overlayContainer, context, this._injector, this._windowScroll, this._resizeService, config);
     };
-    LyOverlay.ngInjectableDef = ɵɵdefineInjectable({ factory: function LyOverlay_Factory() { return new LyOverlay(ɵɵinject(LyOverlayContainer), ɵɵinject(ComponentFactoryResolver), ɵɵinject(ApplicationRef), ɵɵinject(INJECTOR), ɵɵinject(WinScroll), ɵɵinject(WinResize)); }, token: LyOverlay, providedIn: "root" });
+    LyOverlay.ctorParameters = function () { return [
+        { type: LyOverlayContainer },
+        { type: ComponentFactoryResolver },
+        { type: ApplicationRef },
+        { type: Injector },
+        { type: WinScroll },
+        { type: WinResize }
+    ]; };
     LyOverlay = __decorate([
-        Injectable({
-            providedIn: 'root'
-        }),
-        __metadata("design:paramtypes", [LyOverlayContainer,
-            ComponentFactoryResolver,
-            ApplicationRef,
-            Injector,
-            WinScroll,
-            WinResize])
+        Injectable()
     ], LyOverlay);
     return LyOverlay;
 }());
@@ -2704,7 +3604,10 @@ var LyOverlayModule = /** @class */ (function () {
     LyOverlayModule = __decorate([
         NgModule({
             declarations: [LyOverlayBackdrop],
-            entryComponents: [LyOverlayBackdrop]
+            entryComponents: [LyOverlayBackdrop],
+            providers: [
+                LyOverlay
+            ]
         })
     ], LyOverlayModule);
     return LyOverlayModule;
@@ -2764,10 +3667,12 @@ var ElementObserver = /** @class */ (function () {
             this._observedElements.delete(element);
         }
     };
+    ElementObserver.ctorParameters = function () { return [
+        { type: MutationObserverFactory }
+    ]; };
     ElementObserver.ngInjectableDef = ɵɵdefineInjectable({ factory: function ElementObserver_Factory() { return new ElementObserver(ɵɵinject(MutationObserverFactory)); }, token: ElementObserver, providedIn: "root" });
     ElementObserver = __decorate([
-        Injectable({ providedIn: 'root' }),
-        __metadata("design:paramtypes", [MutationObserverFactory])
+        Injectable({ providedIn: 'root' })
     ], ElementObserver);
     return ElementObserver;
 }());
@@ -2964,6 +3869,7 @@ var STYLES = function (theme) { return ({
         }
     }
 }); };
+var ɵ0$4 = STYLES;
 var LyExpansionIcon = /** @class */ (function () {
     function LyExpansionIcon(_theme, _renderer, _el) {
         this._theme = _theme;
@@ -3009,25 +3915,23 @@ var LyExpansionIcon = /** @class */ (function () {
     LyExpansionIcon.prototype.toggle = function () {
         this.up = !this.up;
     };
+    LyExpansionIcon.ctorParameters = function () { return [
+        { type: LyTheme2 },
+        { type: Renderer2 },
+        { type: ElementRef }
+    ]; };
     __decorate([
-        Input(),
-        __metadata("design:type", String),
-        __metadata("design:paramtypes", [String])
+        Input()
     ], LyExpansionIcon.prototype, "color", null);
     __decorate([
-        Input(),
-        __metadata("design:type", Object),
-        __metadata("design:paramtypes", [Object])
+        Input()
     ], LyExpansionIcon.prototype, "up", null);
     LyExpansionIcon = __decorate([
         Component({
             selector: 'ly-expansion-icon',
             template: "<span [className]=\"classes.line\"></span>\n<span [className]=\"classes.line\"></span>",
             changeDetection: ChangeDetectionStrategy.OnPush
-        }),
-        __metadata("design:paramtypes", [LyTheme2,
-            Renderer2,
-            ElementRef])
+        })
     ], LyExpansionIcon);
     return LyExpansionIcon;
 }());
@@ -3044,5 +3948,9 @@ var LyExpansionIconModule = /** @class */ (function () {
     return LyExpansionIconModule;
 }());
 
-export { AUI_LAST_UPDATE, AUI_VERSION, AlignAlias, CoreTheme, Dir, DirAlias, DirPosition, ElementObserver, FocusStatus, IS_CORE_THEME, LY_COMMON_STYLES, LY_HAMMER_OPTIONS, LY_THEME, LY_THEME_GLOBAL_VARIABLES, LY_THEME_NAME, LyCommonModule, LyCoreStyles, LyExpansionIcon, LyExpansionIconModule, LyFocusState, LyHammerGestureConfig, LyHostClass, LyOverlay, LyOverlayConfig, LyOverlayContainer, LyOverlayModule, LyOverlayRef, LyPaper, LyPaperBase, LyPaperMixinBase, LyRippleService, LySelectionModel, LyStyleUtils, LyTheme2, LyThemeModule, MutationObserverFactory, NgTranscludeDirective, NgTranscludeModule, OverlayFactory, Platform, Positioning, Ripple, STYLES_BACKDROP_DARK, Shadows, StylesInDocument, THEME_VARIABLES, TypeStyle, Undefined, UndefinedValue, WinResize, WinScroll, XPosition, YPosition, _STYLE_MAP, capitalizeFirstLetter, converterToCssKeyAndStyle, createOverlayInjector, defaultEntry, eachMedia, getContrastYIQ, getLyThemeStyleUndefinedError, getLyThemeVariableOptionUndefinedError, getLyThemeVariableUndefinedError, getNativeElement, invertPlacement, isObject, mergeDeep, mixinBg, mixinColor, mixinDisableRipple, mixinDisabled, mixinElevation, mixinOutlined, mixinRaised, mixinShadowColor, mixinStyleUpdater, mixinTabIndex, scrollTo, scrollToC, scrollWithAnimation, shadowBuilder, shadowBuilderDeprecated, supportsPassiveEventListeners, toBoolean, toNumber, untilComponentDestroyed, ɵ0, ɵ1, LyWithClass as ɵa, LyOverlayBackdrop as ɵb };
+/**
+ * Generated bundle index. Do not edit.
+ */
+
+export { AUI_LAST_UPDATE, AUI_VERSION, AlignAlias, CoreTheme, Dir, DirAlias, DirPosition, ElementObserver, FocusStatus, IS_CORE_THEME, LY_COMMON_STYLES, LY_COMMON_STYLES_DEPRECATED, LY_HAMMER_OPTIONS, LY_THEME, LY_THEME_GLOBAL_VARIABLES, LY_THEME_NAME, LyCommonModule, LyCoreStyles, LyExpansionIcon, LyExpansionIconModule, LyFocusState, LyHammerGestureConfig, LyHostClass, LyOverlay, LyOverlayConfig, LyOverlayContainer, LyOverlayModule, LyOverlayRef, LyPaper, LyPaperBase, LyPaperMixinBase, LyRippleService, LySelectionModel, LyStyle, LyStyleUtils, LyTheme2, LyThemeModule, LylParse, MutationObserverFactory, NgTranscludeDirective, NgTranscludeModule, OverlayFactory, Platform, Positioning, Ripple, STYLES_BACKDROP_DARK, Shadows, StringIdGenerator, StyleCollection, StyleRenderer, StylesInDocument, THEME_VARIABLES, TypeStyle, Undefined, UndefinedValue, WinResize, WinScroll, XPosition, YPosition, _STYLE_MAP, capitalizeFirstLetter, converterToCssKeyAndStyle, createOverlayInjector, defaultEntry, eachMedia, getContrastYIQ, getLyThemeStyleUndefinedError, getLyThemeVariableOptionUndefinedError, getLyThemeVariableUndefinedError, getNativeElement, getThemeNameForSelectors, invertPlacement, keyframesUniqueId, lyl, mergeDeep, mergeThemes, mixinBg, mixinColor, mixinDisableRipple, mixinDisabled, mixinElevation, mixinOutlined, mixinRaised, mixinShadowColor, mixinStyleUpdater, mixinTabIndex, scrollTo, scrollToC, scrollWithAnimation, shadowBuilder, styleTemplateToString, supportsPassiveEventListeners, toBoolean, toNumber, untilComponentDestroyed, ɵ0$2 as ɵ0, ɵ1$2 as ɵ1, ɵ2$1 as ɵ2, LyWithClass as ɵa, LyOverlayBackdrop as ɵb };
 //# sourceMappingURL=alyle-ui.js.map

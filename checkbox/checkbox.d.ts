@@ -1,115 +1,27 @@
 import { AfterViewInit, ChangeDetectorRef, ElementRef, EventEmitter, NgZone, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { ControlValueAccessor } from '@angular/forms';
-import { LyCoreStyles as LyCommonStyles, LyFocusState, LyTheme2, ThemeVariables } from '@alyle/ui';
-export declare const STYLES: (theme: ThemeVariables) => {
+import { LyCoreStyles as LyCommonStyles, LyFocusState, LyTheme2, ThemeRef, StyleRenderer, StyleCollection, LyClasses, StyleTemplate } from '@alyle/ui';
+import { Color } from '@alyle/ui/color';
+export interface LyCheckboxTheme {
+    /** Styles for Checkbox Component. */
+    root?: StyleCollection<((classes: LyClasses<typeof STYLES>) => StyleTemplate)> | ((classes: LyClasses<typeof STYLES>) => StyleTemplate);
+    /** Styles that apply when a color is set. */
+    color?: (classes: LyClasses<typeof STYLES>, color: Color) => StyleTemplate;
+}
+export interface LyCheckboxVariables {
+    checkbox?: LyCheckboxTheme;
+}
+export declare const STYLES: (theme: import("@alyle/ui/alyle-ui").LyStyleUtils & import("@alyle/ui/alyle-ui").ThemeConfig & LyCheckboxVariables, ref: ThemeRef) => {
+    $name: string;
     $priority: number;
-    root: {
-        marginAfter: string;
-        marginBefore: string;
-        display: string;
-        '&{disabled}:not({checked}) {icon}:before': {
-            color: string;
-        };
-        '&{disabled}': {
-            pointerEvents: string;
-            '{layout}': {
-                color: string;
-            };
-        };
-        '&{disabled}{checked} {icon}:before': {
-            border: number;
-            background: string;
-        };
-        '&{onFocusByKeyboard} {icon}::after': {
-            boxShadow: string;
-            opacity: number;
-            borderRadius: string;
-        };
-        '&:not({checked}) {icon}': {
-            color: string;
-        };
-        '&': import("@alyle/ui/alyle-ui").StyleContainer;
-    };
-    layout: {
-        display: string;
-        alignItems: string;
-        cursor: string;
-        marginBefore: string;
-        paddingTop: string;
-        paddingBottom: string;
-    };
-    icon: {
-        position: string;
-        marginAfter: string;
-        marginTop: string;
-        marginBottom: string;
-        width: string;
-        height: string;
-        userSelect: string;
-        '&::before, &::after': {
-            width: string;
-            height: string;
-            margin: string;
-            boxSizing: string;
-            position: string;
-            top: number;
-            bottom: number;
-            left: number;
-            right: number;
-            content: string;
-        };
-        '&::before': {
-            border: string;
-            borderRadius: string;
-        };
-        svg: {
-            position: string;
-            polyline: {
-                fill: string;
-                stroke: string;
-                strokeWidth: number;
-                strokeLinecap: string;
-                strokeLinejoin: string;
-                strokeDasharray: string;
-                strokeDashoffset: string;
-            };
-        };
-    };
-    checked: {
-        '& {icon}::before': {
-            background: string;
-        };
-        '& {icon} polyline': {
-            strokeDashoffset: number;
-        };
-    };
-    input: {
-        border: number;
-        clip: string;
-        height: string;
-        margin: string;
-        overflow: string;
-        padding: number;
-        position: string;
-        width: string;
-        outline: number;
-        '-webkit-appearance': string;
-        '-moz-appearance': string;
-    };
-    onFocusByKeyboard: {};
-    disabled: {
-        '& {input}': {
-            visibility: string;
-        };
-        '& {icon}': {
-            color: string;
-        };
-    };
-    animations: {
-        '& {icon} svg polyline': {
-            transition: string;
-        };
-    };
+    root: () => (className: string) => string;
+    layout: (className: string) => string;
+    icon: (className: string) => string;
+    checked: () => (className: string) => string;
+    input: (className: string) => string;
+    onFocusByKeyboard: any;
+    disabled: () => (className: string) => string;
+    animations: () => (className: string) => string;
 };
 /**
  * This allows it to support [(ngModel)].
@@ -137,11 +49,25 @@ export declare class LyCheckbox extends LyCheckboxMixinBase implements ControlVa
     private _renderer;
     private _changeDetectorRef;
     private _focusState;
+    private _styleRenderer;
+    /** @ignore */
+    static readonly и = "LyCheckbox";
     /**
      * styles
      * @ignore
      */
-    readonly classes: Record<"root" | "layout" | "icon" | "checked" | "input" | "onFocusByKeyboard" | "disabled" | "animations", string>;
+    readonly classes: Pick<{
+        $name: string;
+        $priority: string;
+        root: string;
+        layout: string;
+        icon: string;
+        checked: string;
+        input: string;
+        onFocusByKeyboard: string;
+        disabled: string;
+        animations: string;
+    }, "root" | "layout" | "icon" | "checked" | "input" | "onFocusByKeyboard" | "disabled" | "animations">;
     protected _color: string;
     protected _colorClass: string;
     protected _required: boolean;
@@ -165,7 +91,7 @@ export declare class LyCheckbox extends LyCheckboxMixinBase implements ControlVa
     _inputElement: ElementRef<HTMLInputElement>;
     _onTouched: () => any;
     private _controlValueAccessorChangeFn;
-    constructor(_commonStyles: LyCommonStyles, _theme: LyTheme2, _el: ElementRef, _renderer: Renderer2, _changeDetectorRef: ChangeDetectorRef, _focusState: LyFocusState, ngZone: NgZone);
+    constructor(_commonStyles: LyCommonStyles, _theme: LyTheme2, _el: ElementRef, _renderer: Renderer2, _changeDetectorRef: ChangeDetectorRef, _focusState: LyFocusState, _styleRenderer: StyleRenderer, ngZone: NgZone);
     ngOnInit(): void;
     ngAfterViewInit(): void;
     ngOnDestroy(): void;

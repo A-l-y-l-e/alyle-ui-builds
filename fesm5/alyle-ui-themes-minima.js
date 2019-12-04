@@ -1,42 +1,8 @@
-import { __decorate, __extends } from 'tslib';
-import { Directive, NgModule } from '@angular/core';
-import { LyTheme2, LY_THEME_NAME, Dir, LyStyleUtils, mergeDeep, shadowBuilder } from '@alyle/ui';
+import { __extends, __decorate } from 'tslib';
+import { Dir, shadowBuilder, StyleCollection, LyStyleUtils, LyTheme2, LY_THEME_NAME, mergeThemes } from '@alyle/ui';
 import { Breakpoints } from '@alyle/ui/responsive';
-import * as _chroma from 'chroma-js';
-
-var ThemeMinimaLight = /** @class */ (function () {
-    function ThemeMinimaLight() {
-    }
-    ThemeMinimaLight = __decorate([
-        Directive({
-            selector: '[ly-theme-minima-light]',
-            providers: [LyTheme2, { provide: LY_THEME_NAME, useValue: 'minima-light' }]
-        })
-    ], ThemeMinimaLight);
-    return ThemeMinimaLight;
-}());
-var ThemeMinimaDark = /** @class */ (function () {
-    function ThemeMinimaDark() {
-    }
-    ThemeMinimaDark = __decorate([
-        Directive({
-            selector: '[ly-theme-minima-dark]',
-            providers: [LyTheme2, { provide: LY_THEME_NAME, useValue: 'minima-dark' }]
-        })
-    ], ThemeMinimaDark);
-    return ThemeMinimaDark;
-}());
-var ThemeMinimaModule = /** @class */ (function () {
-    function ThemeMinimaModule() {
-    }
-    ThemeMinimaModule = __decorate([
-        NgModule({
-            declarations: [ThemeMinimaDark, ThemeMinimaLight],
-            exports: [ThemeMinimaDark, ThemeMinimaLight]
-        })
-    ], ThemeMinimaModule);
-    return ThemeMinimaModule;
-}());
+import { Directive, NgModule } from '@angular/core';
+import { Color } from '@alyle/ui/color';
 
 var iconButton = {
     size: '48px'
@@ -70,7 +36,6 @@ var animations = {
     }
 };
 
-var chroma = _chroma;
 var MinimaBase = /** @class */ (function (_super) {
     __extends(MinimaBase, _super);
     function MinimaBase() {
@@ -91,494 +56,311 @@ var MinimaBase = /** @class */ (function (_super) {
         _this.animations = animations;
         _this.direction = Dir.ltr;
         _this.button = {
-            defaultConfig: {
-                size: 'medium'
-            },
             size: {
-                small: ({
-                    padding: '0 8px',
-                    fontSize: _this.pxToRem(13),
-                    minHeight: '32px',
-                    minWidth: '48px'
-                }),
-                medium: ({
-                    padding: '0 14px',
-                    minHeight: '36px',
-                    minWidth: '64px'
-                }),
-                large: ({
-                    padding: '0 21px',
-                    fontSize: _this.pxToRem(15),
-                    minHeight: '40px',
-                    minWidth: '96px'
-                })
+                small: function () { return function (className) { return className + "{padding:0 8px;font-size:" + _this.pxToRem(13) + ";min-height:32px;min-width:48p;}"; }; },
+                medium: function () { return function (className) { return className + "{padding:0 14px;min-height:36px;min-width:64px;}"; }; },
+                large: function () { return function (className) { return className + "{padding:0 21px;font-size:" + _this.pxToRem(15) + ";min-height:40px;min-width:96px;}"; }; }
             },
             appearance: {
-                icon: {
-                    minWidth: '40px',
-                    width: '40px',
-                    height: '40px',
-                    padding: 0,
-                    borderRadius: '50%'
-                },
-                fab: {
-                    minWidth: '56px',
-                    width: '56px',
-                    height: '56px',
-                    padding: 0,
-                    borderRadius: '50%'
-                },
-                miniFab: {
-                    minWidth: '40px',
-                    width: '40px',
-                    height: '40px',
-                    padding: 0,
-                    borderRadius: '50%'
-                }
+                icon: function () { return function (className) { return className + "{min-width:40px;width:40px;height:40px;padding:0;border-radius:50%;}"; }; },
+                fab: function () { return function (className) { return className + "{min-width:56px;width:56px;height:56px;padding:0;border-radius:50%;}"; }; },
+                miniFab: function () { return function (className) { return className + "{min-width:40px;width:40px;height:40px;padding:0;border-radius:50%;}"; }; }
             }
         };
-        _this.expansion = {
-            root: {
-                '& {panelHeader}': {
-                    height: '48px'
-                },
-                '& {expanded} {panelHeader}': {
-                    height: '64px'
-                },
-            },
+        _this.badge = {
             appearance: {
-                popOut: {
-                    '& {panel}': {
-                        transition: "margin " + _this.animations.durations.entering + "ms " + _this.animations.curves.standard
-                    },
-                    '& {expanded}{panel}': {
-                        margin: '16px 0',
-                        '&:first-child': {
-                            marginTop: 0
-                        },
-                        '&:last-child': {
-                            marginBottom: 0
-                        }
-                    }
-                }
+                default: function () { return function (className) { return className + "{padding:0 6px;min-width:22px;height:22px;border-radius:2em;}"; }; },
+                dot: function () { return function (className) { return className + "{width:6px;height:6px;border-radius:50%;}"; }; }
+            }
+        };
+        _this.checkbox = {
+            color: function (checkbox, color) { return function (className) { return "" + className + checkbox.checked + " " + checkbox.icon + "{color:" + color + ";}" + className + checkbox.checked + ":not({disabled}) " + checkbox.icon + "{box-shadow:" + shadowBuilder(1, color) + ";}"; }; }
+        };
+        _this.expansion = {
+            root: function (classes) { return function (className) { return className + " " + classes.panelHeader + "{height:48px;}" + className + " " + classes.expanded + " " + classes.panelHeader + "{height:64px;}"; }; },
+            appearance: {
+                popOut: function (classes) { return function (className) { return className + " " + classes.panel + "{transition:margin " + _this.animations.durations.entering + "ms " + _this.animations.curves.standard + ";}" + className + " " + classes.expanded + classes.panel + "{margin:16px 0;}" + className + " " + classes.expanded + classes.panel + ":first-child{margin-top:0;}" + className + " " + classes.expanded + classes.panel + ":last-child{margin-bottom:0jj;}"; }; }
             }
         };
         _this.field = {
             appearance: {
-                outlined: {
-                    '&:not({focused}):not({disabled}):hover {fieldset}': {
-                        borderColor: 'currentColor'
-                    },
-                    '&{focused} {fieldset}': {
-                        borderWidth: '2px',
-                        borderColor: 'inherit'
-                    },
-                    '& textarea{inputNative}': {
-                        margin: '1em 0'
-                    },
-                    '& {inputNative}:not(textarea)': {
-                        padding: '1em 0'
-                    },
-                    '& {container}': {
-                        padding: '0 0.75em'
-                    },
-                    '& {fieldset}': {
-                        borderWidth: '1px',
-                        borderRadius: '5px',
-                        padding: '0 .5em'
-                    },
-                    '& {prefix}': {
-                        '&:after': {
-                            padding: '0.25em'
-                        }
-                    },
-                    '& suffix': {
-                        '&:after': {
-                            padding: '0.25em'
-                        }
-                    },
-                    '& {label}': {
-                        margin: '1em 0'
-                    },
-                    '& {placeholder}': {
-                        margin: '1em 0'
-                    },
-                    '& {floatingLabel}{label}': {
-                        transform: 'translateY(-1.75em)'
-                    },
-                    '& {hintContainer}': {
-                        padding: '0 0.75em'
-                    }
-                },
-                filled: {
-                    '&:not({focused}):not({disabled}) {container}:hover:after': {
-                        borderBottomWidth: '1px'
-                    },
-                    'textarea{inputNative}': {
-                        margin: '1.59375em 0 0.40625em'
-                    },
-                    '{inputNative}:not(textarea)': {
-                        padding: '1.59375em 0 0.40625em'
-                    },
-                    '& {container}': {
-                        borderRadius: '5px 5px 0 0',
-                        padding: '0 0.75em',
-                        '&:after': {
-                            borderBottomStyle: 'solid',
-                            borderBottomColor: 'currentColor',
-                            borderBottomWidth: '0'
-                        }
-                    },
-                    '&{focused} {container}': {
-                        '&:after': {
-                            borderBottomWidth: '2px'
-                        }
-                    },
-                    '& {placeholder}': {
-                        margin: '1.59375em 0 0.40625em'
-                    },
-                    '& {label}': {
-                        margin: '1em 0'
-                    },
-                    '& {floatingLabel}{label}': {
-                        transform: 'translateY(-.75em)'
-                    },
-                    '& {hintContainer}': {
-                        padding: '0 0.75em'
-                    }
-                }
+                standard: new StyleCollection(function (classes) { return function (className) { return className + ":not(" + classes.disabled + ") " + classes.container + ":hover:after{border-bottom-color:currentColor;}" + className + classes.disabled + " " + classes.container + ":after{border-bottom-style:dotted;border-color:inherit;}" + className + " textarea{inputNative}{margin:0.25em 0;}" + className + " " + classes.inputNative + ":not(textarea){padding:0.25em 0;}" + className + " " + classes.container + "{padding:1em 0 0;}" + className + " " + classes.container + ":after{border-bottom-style:solid;border-bottom-width:1px;}" + className + classes.focused + " " + classes.container + ":after{border-width:2px;border-color:currentColor;}" + className + " " + classes.label + "{margin:0.25em 0;}" + className + " " + classes.placeholder + "{margin:0.25em 0;}" + className + " " + classes.floatingLabel + "{transform:translateY(-1.25em);}"; }; }),
+                outlined: new StyleCollection(function (classes) { return function (className) { return className + ":not(" + classes.focused + "):not({disabled}):hover " + classes.fieldset + "{border-color:currentColor;}" + className + classes.focused + " " + classes.fieldset + "{border-width:2px;border-color:inherit;}" + className + " textarea" + classes.inputNative + "{margin:1em 0;}" + className + " " + classes.inputNative + ":not(textarea){padding:1em 0;}" + className + " " + classes.container + "{padding:0 0.75em;}" + className + " " + classes.fieldset + "{border-width:1px;border-radius:5px;padding:0 .5em;}" + className + " " + classes.prefix + ":after{padding:0.25em;}" + className + " " + classes.suffix + ":after{padding:0.25em;}" + className + " " + classes.label + "{margin:1em 0;}" + className + " " + classes.placeholder + "{margin:1em 0;}" + className + " " + classes.floatingLabel + classes.label + "{transform:translateY(-1.75em);}" + className + " " + classes.hintContainer + "{padding:0 0.75em;}"; }; }),
+                filled: new StyleCollection(function (classes) { return function (className) { return className + ":not(" + classes.focused + "):not(" + classes.disabled + ") " + classes.container + ":hover:after{border-bottom-width:1px;}" + className + " textarea" + classes.inputNative + "{margin:1.59375em 0 0.40625em;}" + className + " " + classes.inputNative + ":not(textarea){padding:1.59375em 0 0.40625em;}" + className + " " + classes.container + "{border-radius:5px 5px 0 0;padding:0 0.75em;}" + className + " " + classes.container + ":after{border-bottom-style:solid;border-bottom-color:currentColor;border-bottom-width:0;}" + className + classes.focused + " " + classes.container + ":after{border-bottom-width:2px;}" + className + " " + classes.placeholder + "{margin:1.59375em 0 0.40625em;}" + className + " " + classes.label + "{margin:1em 0;}" + className + " " + classes.floatingLabel + classes.label + "{transform:translateY(-.75em);}" + className + " " + classes.hintContainer + "{padding:0 0.75em;}"; }; })
             }
         };
         _this.toolbar = {
             appearance: {
-                dense: {
-                    height: '56px'
-                }
+                dense: new StyleCollection(function () { return function (className) { return className + "{height:56px;}"; }; })
             }
         };
         _this.slider = {
-            defaultConfig: {
-                appearance: 'standard'
-            },
             appearance: {
-                standard: {
-                    appearance: function (_theme) { return ({}); },
-                    color: function (_theme, color) { return ({
-                        '& {track}, & {thumb}, & {thumbLabel}, & {bg}, & {tick}': {
-                            backgroundColor: color
-                        },
-                        '&:not({disabled}) {thumbContentFocused} {thumb}::before, &:not({disabled}) {thumb}:hover::before': {
-                            boxShadow: "0 0 0 8px " + chroma(color).alpha(.13).css()
-                        },
-                        '&{sliding} {thumbContentFocused} {thumb}::before': {
-                            boxShadow: "0 0 0 16px " + chroma(color).alpha(.13).css()
-                        },
-                        '{tickActive}': {
-                            backgroundColor: chroma(color).luminance(0.6).css()
-                        },
-                        '{bg}': {
-                            opacity: .3
-                        },
-                        '& {thumbContent}::before': {
-                            background: color
-                        },
-                        '&:not({disabled})': [['horizontal', 0], ['vertical', 90]].reduce(function (prev, orientation) {
-                            var _a;
-                            prev["&{" + orientation[0] + "}"] = (_a = {},
-                                _a[[
-                                    // always show visible thumb, when {thumbVisible} is available
-                                    '&{thumbVisible} {thumbContent}::before',
-                                    // on hover
-                                    '&:not({thumbNotVisible}) {thumbContent}:hover::before',
-                                    // on focused
-                                    '&:not({thumbNotVisible}) {thumbContent}{thumbContentFocused}::before'
-                                ].join()] = {
-                                    background: "linear-gradient(" + orientation[1] + "deg, " + color + " 0%, rgba(0, 0, 0, 0) 50%, " + color + " 100%);"
-                                },
-                                _a);
-                            return prev;
-                        }, {})
-                    }); },
-                    disabled: function (theme, color) {
-                        var colorDisabled = chroma(color).darken(2)
-                            .desaturate(2.5);
-                        return ({
-                            '& {track}, & {thumb}, & {thumbLabel}, & {bg}, & {tick}': {
-                                backgroundColor: colorDisabled.luminance(.4).css()
-                            },
-                            '{tickActive}': {
-                                backgroundColor: colorDisabled.luminance(.6).css()
-                            },
-                            '&': [['horizontal', 0], ['vertical', 90]].reduce(function (prev, orientation) {
-                                prev["&{" + orientation[0] + "}"] = {
-                                    '& {thumbContent}::before': {
-                                        background: "linear-gradient(" + orientation[1] + "deg, " + colorDisabled.luminance(.4).css() + " 0%, rgba(0, 0, 0, 0) 50%, " + colorDisabled.luminance(.4).css() + " 100%);"
-                                    },
-                                };
-                                return prev;
-                            }, {}),
-                            '{bg}': {
-                                opacity: .3
-                            },
-                            '&{horizontal} {thumbContainer}::before': {
-                                background: theme.disabled.default
-                            },
-                            '&{vertical} {thumbContainer}::before': {
-                                background: theme.disabled.default
-                            }
-                        });
-                    }
-                }
+                standard: new StyleCollection()
+            },
+            color: function (_a, color) {
+                var track = _a.track, thumb = _a.thumb, thumbLabel = _a.thumbLabel, tick = _a.tick, disabled = _a.disabled, thumbContentFocused = _a.thumbContentFocused, tickActive = _a.tickActive, bg = _a.bg, thumbContent = _a.thumbContent, horizontal = _a.horizontal, vertical = _a.vertical, thumbVisible = _a.thumbVisible, thumbNotVisible = _a.thumbNotVisible, sliding = _a.sliding;
+                return function (className) { return className + " " + track + "," + className + " " + thumb + "," + className + " " + thumbLabel + "," + className + " " + bg + "," + className + " " + tick + "{background-color:" + color + ";}" + className + ":not(" + disabled + ") " + thumbContentFocused + " " + thumb + "::before," + className + ":not(" + disabled + ") " + thumb + ":hover::before{box-shadow:0 0 0 8px " + color.alpha(.13) + ";}" + className + sliding + " " + thumbContentFocused + " " + thumb + "::before{box-shadow:0 0 0 16px " + color.alpha(.13) + ";}" + className + " " + tickActive + "{background-color:" + color.luminance(0.6) + ";}" + className + " " + bg + "{opacity:.3;}" + className + ":not(" + disabled + ") " + thumbContent + "::before{background:" + color + ";}" + className + ":not(" + disabled + ")" + horizontal + thumbVisible + " " + thumbContent + "::before," + className + ":not(" + disabled + ")" + horizontal + ":not(" + thumbNotVisible + ") " + thumbContent + ":hover::before," + className + ":not(" + disabled + ")" + horizontal + ":not(" + thumbNotVisible + ") " + thumbContent + thumbContentFocused + "::before{background:linear-gradient(0deg, " + color + " 0%, rgba(0, 0, 0, 0) 50%, " + color + " 100%);}" + className + ":not(" + disabled + ")" + vertical + thumbVisible + " " + thumbContent + "::before," + className + ":not(" + disabled + ")" + vertical + ":not(" + thumbNotVisible + ") " + thumbContent + ":hover::before," + className + ":not(" + disabled + ")" + vertical + ":not(" + thumbNotVisible + ") " + thumbContent + thumbContentFocused + "::before{background:linear-gradient(90deg, " + color + " 0%, rgba(0, 0, 0, 0) 50%, " + color + " 100%);}"; };
+            },
+            disabled: function (_a, color) {
+                var track = _a.track, thumb = _a.thumb, thumbContainer = _a.thumbContainer, thumbContent = _a.thumbContent, thumbLabel = _a.thumbLabel, bg = _a.bg, tick = _a.tick, tickActive = _a.tickActive, horizontal = _a.horizontal, vertical = _a.vertical;
+                var colorDisabled = color.darken(2)
+                    .desaturate(2.5);
+                var colorDisabledLum0_4 = colorDisabled.luminance(.4);
+                return function (className) { return className + " " + track + "," + className + " " + thumb + "," + className + " " + thumbLabel + "," + className + " " + bg + "," + className + " " + tick + "{background-color:" + colorDisabled.luminance(.4).css() + ";}" + className + " " + tickActive + "{background-color:" + colorDisabled.luminance(.6).css() + ";}" + className + horizontal + " " + thumbContent + "::before{background:linear-gradient(0deg, " + colorDisabledLum0_4 + " 0%, rgba(0, 0, 0, 0) 50%, " + colorDisabledLum0_4 + " 100%);}" + className + vertical + " " + thumbContent + "::before{background:linear-gradient(90deg, " + colorDisabledLum0_4 + " 0%, rgba(0, 0, 0, 0) 50%, " + colorDisabledLum0_4 + " 100%);}" + className + " " + bg + "{opacity:.3;}" + className + horizontal + " " + thumbContainer + "::before{background:" + _this.disabled.default + ";}" + className + vertical + " " + thumbContainer + "::before{background:" + _this.disabled.default + ";}"; };
             }
         };
         _this.typography.lyTyp = {
-            display4: {
-                fontSize: _this.pxToRem(96),
-                fontWeight: 300,
-                letterSpacing: _this.pxToRem(-1.5)
-            },
-            display3: {
-                fontSize: _this.pxToRem(60),
-                fontWeight: 300,
-                letterSpacing: _this.pxToRem(-0.5)
-            },
-            display2: {
-                fontSize: _this.pxToRem(48),
-                fontWeight: 400,
-                letterSpacing: 0
-            },
-            display1: {
-                fontSize: _this.pxToRem(34),
-                fontWeight: 400,
-                letterSpacing: _this.pxToRem(0.25)
-            },
-            headline: {
-                fontSize: _this.pxToRem(24),
-                fontWeight: 400,
-                letterSpacing: 0
-            },
-            title: {
-                fontSize: _this.pxToRem(20),
-                fontWeight: 500,
-                letterSpacing: _this.pxToRem(0.15)
-            },
-            subheading: {
-                fontSize: _this.pxToRem(16),
-                fontWeight: 400,
-                letterSpacing: _this.pxToRem(0.15),
-                lineHeight: 24
-            },
-            subheading2: {
-                fontSize: _this.pxToRem(14),
-                fontWeight: 500,
-                letterSpacing: _this.pxToRem(0.1)
-            },
-            body2: {
-                fontSize: _this.pxToRem(16),
-                fontWeight: 400,
-                letterSpacing: _this.pxToRem(0.15)
-            },
-            body1: {
-                fontSize: _this.pxToRem(14),
-                fontWeight: 400,
-                letterSpacing: _this.pxToRem(0.25)
-            },
-            button: {
-                fontSize: _this.pxToRem(14),
-                fontWeight: 500
-            },
-            caption: {
-                fontSize: _this.pxToRem(12),
-                fontWeight: 400,
-                letterSpacing: 0.4
-            },
-            overline: {
-                fontSize: _this.pxToRem(10),
-                fontWeight: 400,
-                letterSpacing: _this.pxToRem(1.5),
-                textTransform: 'uppercase'
-            }
+            display4: new StyleCollection(function () { return function (className) { return className + "{font-size:" + _this.pxToRem(96) + ";font-weight:300;letter-spacing:" + -1.5 / 96 + "em;}"; }; }),
+            display3: new StyleCollection(function () { return function (className) { return className + "{font-size:" + _this.pxToRem(60) + ";font-weight:300;letter-spacing:" + -0.5 / 60 + "em;}"; }; }),
+            display2: new StyleCollection(function () { return function (className) { return className + "{font-size:" + _this.pxToRem(48) + ";font-weight:400;letter-spacing:0;}"; }; }),
+            display1: new StyleCollection(function () { return function (className) { return className + "{font-size:" + _this.pxToRem(34) + ";font-weight:400;letter-spacing:" + 0.25 / 34 + "em;}"; }; }),
+            headline: new StyleCollection(function () { return function (className) { return className + "{font-size:" + _this.pxToRem(24) + ";font-weight:400;letter-spacing:0;}"; }; }),
+            title: new StyleCollection(function () { return function (className) { return className + "{font-size:" + _this.pxToRem(20) + ";font-weight:500;letter-spacing:" + 0.15 / 20 + "em;}"; }; }),
+            subheading: new StyleCollection(function () { return function (className) { return className + "{font-size:" + _this.pxToRem(16) + ";font-weight:400;letter-spacing:" + 0.15 / 16 + "em;line-height:" + _this.pxToRem(24) + ";}"; }; }),
+            subheading2: new StyleCollection(function () { return function (className) { return className + "{font-size:" + _this.pxToRem(14) + ";font-weight:500;letter-spacing:" + 0.1 / 14 + "em;}"; }; }),
+            body1: new StyleCollection(function () { return function (className) { return className + "{font-size:" + _this.pxToRem(16) + ";font-weight:400,        letter-spacing: " + 0.5 / 16 + "em;}"; }; }),
+            body2: new StyleCollection(function () { return function (className) { return className + "{font-size:" + _this.pxToRem(14) + ";font-weight:400;letter-spacing:" + 0.25 / 14 + "em;}"; }; }),
+            button: new StyleCollection(function () { return function (className) { return className + "{font-size:" + _this.pxToRem(14) + ";font-weight:500;letter-spacing:" + 1.25 / 14 + "em;}"; }; }),
+            caption: new StyleCollection(function () { return function (className) { return className + "{font-size:" + _this.pxToRem(12) + ";font-weight:400;letter-spacing:" + 0.4 / 12 + "em;}"; }; }),
+            overline: new StyleCollection(function () { return function (className) { return className + "{font-size:" + _this.pxToRem(10) + ";font-weight:400;letter-spacing:" + 1.5 / 10 + "em;text-transform:uppercase;}"; }; })
         };
+        var lyTyp = _this.typography.lyTyp;
+        lyTyp.h1 = lyTyp.display4;
+        lyTyp.h2 = lyTyp.display3;
+        lyTyp.h3 = lyTyp.display2;
+        lyTyp.h4 = lyTyp.display1;
+        lyTyp.h5 = lyTyp.headline;
+        lyTyp.h6 = lyTyp.title;
+        lyTyp.subtitle1 = lyTyp.subheading;
+        lyTyp.subtitle2 = lyTyp.subheading2;
         return _this;
     }
     return MinimaBase;
 }(LyStyleUtils));
 
-var contrast = '#fff';
-var shadow = '#333';
+var ThemeMinimaLight = /** @class */ (function () {
+    function ThemeMinimaLight() {
+    }
+    ThemeMinimaLight = __decorate([
+        Directive({
+            selector: '[ly-theme-minima-light]',
+            providers: [LyTheme2, { provide: LY_THEME_NAME, useValue: 'minima-light' }]
+        })
+    ], ThemeMinimaLight);
+    return ThemeMinimaLight;
+}());
+var ThemeMinimaDark = /** @class */ (function () {
+    function ThemeMinimaDark() {
+    }
+    ThemeMinimaDark = __decorate([
+        Directive({
+            selector: '[ly-theme-minima-dark]',
+            providers: [LyTheme2, { provide: LY_THEME_NAME, useValue: 'minima-dark' }]
+        })
+    ], ThemeMinimaDark);
+    return ThemeMinimaDark;
+}());
+var ThemeMinimaModule = /** @class */ (function () {
+    function ThemeMinimaModule() {
+        console.warn("ThemeMinimaModule is deprecated.");
+    }
+    ThemeMinimaModule = __decorate([
+        NgModule({
+            declarations: [ThemeMinimaDark, ThemeMinimaLight],
+            exports: [ThemeMinimaDark, ThemeMinimaLight]
+        })
+    ], ThemeMinimaModule);
+    return ThemeMinimaModule;
+}());
+
+var contrast = new Color(0xffffff);
+var shadow = new Color(0x333333);
 var MinimaLight = /** @class */ (function (_super) {
     __extends(MinimaLight, _super);
     function MinimaLight() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.name = 'minima-light';
         _this.primary = {
-            default: '#6200EE',
+            default: new Color(0x6200EE),
             contrast: contrast
         };
         _this.accent = {
-            default: '#FF2997',
+            default: new Color(0xFF2997),
             contrast: contrast,
         };
         _this.warn = {
-            default: '#f5414e',
+            default: new Color(0xf5414e),
             contrast: contrast
         };
         _this.action = {
-            default: 'rgba(0,0,0,.6)',
-            contrast: '#fff'
+            default: new Color(0, 0, 0, .6),
+            contrast: new Color(0xffffff)
         };
         _this.background = {
-            default: '#fafafa',
+            default: new Color(0xfafafa),
             primary: {
-                default: '#fff',
+                default: new Color(0xffffff),
                 shadow: shadow
             },
-            secondary: '#fafafa',
-            tertiary: '#efefef',
-            base: '#E0E0E0'
+            secondary: new Color(0xfafafa),
+            tertiary: new Color(0xefefef),
         };
-        _this.hover = 'rgba(0, 0, 0, 0.04)';
+        _this.hover = new Color(0, 0, 0, 0.04);
         _this.paper = {
-            default: '#fff',
+            default: new Color(0xffffff),
             shadow: shadow
         };
         _this.disabled = {
-            default: 'rgba(0, 0, 0, 0.27)',
-            contrast: 'rgba(0, 0, 0, 0.41)'
+            default: new Color(0, 0, 0, 0.27),
+            contrast: new Color(0, 0, 0, 0.41)
         };
         _this.text = {
-            default: 'rgba(0, 0, 0, 0.87)',
-            primary: 'rgba(0, 0, 0, 0.87)',
-            secondary: 'rgba(0, 0, 0, 0.54)',
-            disabled: 'rgba(0, 0, 0, 0.26)',
-            hint: 'rgba(0, 0, 0, 0.38)'
+            default: new Color(0, 0, 0, 0.87),
+            primary: new Color(0, 0, 0, 0.87),
+            secondary: new Color(0, 0, 0, 0.54),
+            disabled: new Color(0, 0, 0, 0.26),
+            hint: new Color(0, 0, 0, 0.38),
+            dark: new Color(0, 0, 0, 0.87),
+            light: new Color(0xffffff)
         };
-        _this.divider = 'rgba(0, 0, 0, 0.12)';
-        _this.colorShadow = '#33base3';
-        _this.shadow = '#333';
-        _this.menu = {};
+        _this.divider = new Color(0, 0, 0, 0.12);
+        _this.colorShadow = new Color(0x333333);
+        _this.shadow = new Color(0x333333);
         _this.drawer = {
-            backdrop: 'rgba(0,0,0,.6)'
+            backdrop: new Color(0, 0, 0, .6)
         };
-        _this.bar = '#f5f5f5';
-        _this.field = mergeDeep({}, _this.field, {
-            borderColor: 'rgba(0, 0, 0, 0.23)',
-            labelColor: 'rgba(0, 0, 0, 0.6)',
+        _this.bar = new Color(0xf5f5f5);
+        _this.field = mergeThemes(_this.field, {
+            root: function (_a) {
+                var container = _a.container, fieldset = _a.fieldset, labelContainer = _a.labelContainer, placeholder = _a.placeholder, label = _a.label;
+                return function (className) { return className + " " + container + ":after," + className + " " + fieldset + "," + className + " " + labelContainer + "{border-color:" + new Color(0, 0, 0, 0.23) + ";}" + className + " " + label + "," + className + " " + placeholder + "{color:" + new Color(0, 0, 0, 0.6) + ";}"; };
+            },
             appearance: {
-                filled: {
-                    '{container}': {
-                        backgroundColor: 'rgba(0, 0, 0, 0.04)',
-                    }
+                filled: function (_a) {
+                    var container = _a.container;
+                    return function (className) { return className + " " + container + "{background-color:" + new Color(0, 0, 0, 0.04) + ";}"; };
                 }
             }
         });
-        _this.badge = {};
         _this.snackBar = {
-            root: {
-                background: '#323232',
-                color: '#fff',
-                boxShadow: shadowBuilder(4, '#323232')
-            }
+            root: new StyleCollection(function (className) { return className + "{background:" + new Color(0x323232) + ";color:" + new Color(0xffffff) + ";box-shadow:" + shadowBuilder(4, new Color(0x323232)) + ";}"; })
         };
         _this.tooltip = {
-            root: {
-                background: 'rgba(50, 50, 50, 0.85)',
-                color: '#fff'
-            }
+            root: new StyleCollection(function () { return function (className) { return className + "{background:" + new Color(50, 50, 50, 0.85) + ";color:" + new Color(0xffffff) + ";}"; }; })
         };
-        _this.avatar = {};
         return _this;
     }
     return MinimaLight;
 }(MinimaBase));
 
-var contrast$1 = '#fff';
-var shadow$1 = 'rgba(0, 0, 0, 1)';
+var contrast$1 = new Color(0xffffff);
+var shadow$1 = new Color(0, 0, 0, 1);
 var MinimaDark = /** @class */ (function (_super) {
     __extends(MinimaDark, _super);
     function MinimaDark() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.name = 'minima-dark';
         _this.primary = {
-            default: '#1DE9B6',
-            contrast: 'rgba(0, 0, 0, 0.87)'
+            default: new Color(0x1DE9B6),
+            contrast: new Color(0, 0, 0, 0.87)
         };
         _this.accent = {
-            default: '#9C27B0',
+            default: new Color(0x9C27B0),
             contrast: contrast$1
         };
         _this.warn = {
-            default: '#EA404C',
+            default: new Color(0xEA404C),
             contrast: contrast$1
         };
         _this.disabled = {
-            default: 'rgba(255, 255, 255, 0.3)',
-            contrast: 'rgba(255, 255, 255, 0.5)'
+            default: new Color(255, 255, 255, 0.3),
+            contrast: new Color(255, 255, 255, 0.5)
         };
         _this.action = {
-            default: 'rgba(255, 255, 255, 0.70)',
-            contrast: 'rgba(0, 0, 0, 0.87)'
+            default: new Color(255, 255, 255, 0.70),
+            contrast: new Color(0, 0, 0, 0.87)
         };
         _this.background = {
-            default: '#303030',
+            default: new Color(0x303030),
             primary: {
-                default: '#2b2b2b',
+                default: new Color(0x242424),
                 shadow: shadow$1
             },
-            secondary: '#303030',
-            tertiary: '#212121',
-            base: '#0E0E0E'
+            secondary: new Color(47, 47, 47),
+            tertiary: new Color(65, 65, 65),
         };
-        _this.hover = 'rgba(255, 255, 255, 0.04)';
+        _this.hover = new Color(255, 255, 255, 0.04);
         _this.paper = {
-            default: '#2b2b2b',
+            default: new Color(0x242424),
             shadow: shadow$1
         };
         _this.text = {
-            default: '#fff',
-            primary: '#fff',
-            secondary: 'rgba(255, 255, 255, 0.70)',
-            disabled: 'rgba(255, 255, 255, 0.50)',
-            hint: 'rgba(255, 255, 255, 0.50)'
+            default: new Color(0xffffff),
+            primary: new Color(0xffffff),
+            secondary: new Color(255, 255, 255, 0.70),
+            disabled: new Color(255, 255, 255, 0.50),
+            hint: new Color(255, 255, 255, 0.50),
+            dark: new Color(0x2b2b2b),
+            light: new Color(0xffffff)
         };
-        _this.menu = {};
         _this.drawer = {
-            backdrop: 'rgba(49,49,49,.6)'
+            backdrop: new Color(49, 49, 49, .6)
         };
-        _this.bar = '#212121';
-        _this.divider = 'rgba(255, 255, 255, 0.12)';
+        _this.bar = new Color(0x212121);
+        _this.divider = new Color(255, 255, 255, 0.12);
         _this.colorShadow = shadow$1;
         _this.shadow = shadow$1;
-        _this.field = mergeDeep({}, _this.field, {
-            borderColor: 'rgba(255, 255, 255, 0.12)',
-            labelColor: 'rgba(255, 255, 255, 0.4)',
+        _this.field = mergeThemes(_this.field, {
+            root: function (_) { return function (className) { return className + " " + _.container + ":after," + className + " " + _.fieldset + "," + className + " " + _.labelContainer + "{border-color:" + new Color(255, 255, 255, 0.12) + ";}" + className + " " + _.label + "," + className + " " + _.placeholder + "{color:" + new Color(255, 255, 255, 0.4) + ";}"; }; },
             appearance: {
-                filled: {
-                    '& {container}': {
-                        backgroundColor: 'rgba(255, 255, 255, 0.04)',
-                    }
-                }
+                filled: function (_) { return function (className) { return className + " " + _.container + "{background-color:" + new Color(255, 255, 255, 0.04) + ";}"; }; }
             }
         });
-        _this.badge = {};
         _this.snackBar = {
-            root: {
-                background: '#fafafa',
-                color: 'rgba(0,0,0,.87)',
-                boxShadow: shadowBuilder(4, '#fafafa')
-            }
+            root: new StyleCollection(function (className) { return className + "{background:" + new Color(0xfafafa) + ";color:" + new Color(0, 0, 0, .87) + ";box-shadow:" + shadowBuilder(4, new Color(0xfafafa)) + ";}"; })
         };
         _this.tooltip = {
-            root: {
-                background: 'rgba(250, 250, 250, 0.85)',
-                color: 'rgba(0,0,0,.87)'
-            }
+            root: new StyleCollection(function () { return function (className) { return className + "{background:" + new Color(250, 250, 250, 0.85) + ";color:" + new Color(0, 0, 0, .87) + ";}"; }; })
         };
-        _this.avatar = {};
         return _this;
     }
     return MinimaDark;
 }(MinimaBase));
 
-export { MinimaDark, MinimaLight, ThemeMinimaDark, ThemeMinimaLight, ThemeMinimaModule, MinimaBase as ɵa };
+var shadow$2 = new Color(0, 0, 0, 1);
+var MinimaDeepDark = /** @class */ (function (_super) {
+    __extends(MinimaDeepDark, _super);
+    function MinimaDeepDark() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.name = 'minima-deep-dark';
+        _this.background = {
+            default: new Color(0x161616),
+            primary: {
+                default: new Color(0x101010),
+                shadow: shadow$2
+            },
+            secondary: new Color(0x161616),
+            tertiary: new Color(0x1b1b1b),
+        };
+        _this.paper = {
+            default: new Color(0x101010),
+            shadow: shadow$2
+        };
+        return _this;
+        // field: LyFieldTheme = mergeThemes<LyFieldTheme, LyFieldTheme>(this.field, {
+        //   root: _ => (className: string) => ``,
+        //   appearance: {
+        //     filled: _ => (className: string) => ``
+        //   }
+        // });
+    }
+    return MinimaDeepDark;
+}(MinimaDark));
+
+/**
+ * Generated bundle index. Do not edit.
+ */
+
+export { MinimaBase, MinimaDark, MinimaDeepDark, MinimaLight, ThemeMinimaDark, ThemeMinimaLight, ThemeMinimaModule };
 //# sourceMappingURL=alyle-ui-themes-minima.js.map

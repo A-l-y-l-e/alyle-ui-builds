@@ -1,5 +1,5 @@
-import { __decorate, __metadata } from 'tslib';
-import { Input, Directive, Renderer2, ElementRef, NgModule } from '@angular/core';
+import { __decorate } from 'tslib';
+import { Renderer2, ElementRef, Input, Directive, NgModule } from '@angular/core';
 import { LyTheme2, LyCommonModule } from '@alyle/ui';
 
 var MEDIA_PRIORITY = 999;
@@ -71,23 +71,21 @@ var MediaDirective = /** @class */ (function () {
             throw new Error("use only `lyHide` or `lyShow` per element");
         }
     };
+    MediaDirective.ctorParameters = function () { return [
+        { type: Renderer2 },
+        { type: ElementRef },
+        { type: LyTheme2 }
+    ]; };
     __decorate([
-        Input(),
-        __metadata("design:type", String),
-        __metadata("design:paramtypes", [String])
+        Input()
     ], MediaDirective.prototype, "lyShow", null);
     __decorate([
-        Input(),
-        __metadata("design:type", String),
-        __metadata("design:paramtypes", [String])
+        Input()
     ], MediaDirective.prototype, "lyHide", null);
     MediaDirective = __decorate([
         Directive({
             selector: '[lyShow], [lyHide]'
-        }),
-        __metadata("design:paramtypes", [Renderer2,
-            ElementRef,
-            LyTheme2])
+        })
     ], MediaDirective);
     return MediaDirective;
 }());
@@ -123,6 +121,10 @@ var Breakpoints = {
     TabletLandscape: '(min-width: 960px) and (max-width: 1279px) and (orientation: landscape)',
     WebLandscape: '(min-width: 1280px) and (orientation: landscape)',
 };
+
+/**
+ * Generated bundle index. Do not edit.
+ */
 
 export { Breakpoints, MediaDirective, ResponsiveModule };
 //# sourceMappingURL=alyle-ui-responsive.js.map

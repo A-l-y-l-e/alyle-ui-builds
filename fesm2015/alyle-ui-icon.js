@@ -1,6 +1,6 @@
-import { __decorate, __param, __metadata } from 'tslib';
-import { SecurityContext, ɵɵdefineInjectable, ɵɵinject, Injectable, Optional, Inject, Input, Directive, ElementRef, Renderer2, NgModule } from '@angular/core';
-import { LyTheme2, mixinStyleUpdater, mixinBg, mixinColor, mixinRaised, mixinOutlined, mixinElevation, mixinShadowColor, Platform, LyCommonModule } from '@alyle/ui';
+import { __decorate, __param } from 'tslib';
+import { SecurityContext, Optional, Inject, ɵɵdefineInjectable, ɵɵinject, Injectable, ElementRef, Renderer2, Input, Directive, NgModule } from '@angular/core';
+import { LyTheme2, keyframesUniqueId, mixinStyleUpdater, mixinBg, mixinColor, mixinRaised, mixinOutlined, mixinElevation, mixinShadowColor, Platform, LyHostClass, LyCommonModule } from '@alyle/ui';
 import { HttpClient } from '@angular/common/http';
 import { DOCUMENT } from '@angular/common';
 import { share, map, take } from 'rxjs/operators';
@@ -29,7 +29,7 @@ let LyIconService = class LyIconService {
          * @docs-private
          */
         this.classes = this.theme.addStyleSheet(styles, STYLE_PRIORITY);
-        this.defaultSvgIcon = this._textToSvg('<svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="10"></circle></svg>');
+        this.defaultSvgIcon = '<svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="10"></circle></svg>';
     }
     get defaultClass() {
         return this._defaultClass;
@@ -66,6 +66,7 @@ let LyIconService = class LyIconService {
             });
         }
     }
+    /** String to SVG */
     _textToSvg(str) {
         const div = this._document.createElement('DIV');
         div.innerHTML = str;
@@ -113,17 +114,41 @@ let LyIconService = class LyIconService {
         return this._fontClasses.get(key);
     }
 };
+LyIconService.ctorParameters = () => [
+    { type: HttpClient },
+    { type: DomSanitizer },
+    { type: undefined, decorators: [{ type: Optional }, { type: Inject, args: [DOCUMENT,] }] },
+    { type: LyTheme2 }
+];
 LyIconService.ngInjectableDef = ɵɵdefineInjectable({ factory: function LyIconService_Factory() { return new LyIconService(ɵɵinject(HttpClient), ɵɵinject(DomSanitizer), ɵɵinject(DOCUMENT, 8), ɵɵinject(LyTheme2)); }, token: LyIconService, providedIn: "root" });
 LyIconService = __decorate([
     Injectable({
         providedIn: 'root'
     }),
-    __param(2, Optional()), __param(2, Inject(DOCUMENT)),
-    __metadata("design:paramtypes", [HttpClient,
-        DomSanitizer, Object, LyTheme2])
+    __param(2, Optional()), __param(2, Inject(DOCUMENT))
 ], LyIconService);
 
 const STYLE_PRIORITY$1 = -2;
+const STYLES = (theme) => {
+    const loading = keyframesUniqueId.next();
+    const { primary, secondary, tertiary } = theme.background;
+    const lum = primary.default.luminance();
+    let one = (lum < .5
+        ? tertiary
+        : secondary);
+    let two = (lum < .5
+        ? secondary
+        : tertiary);
+    one = one.darken(.25 * (lum < .5 ? -1 : 1.1));
+    two = two.darken(.25 * (lum < .5 ? -1 : 1.1));
+    return {
+        $priority: STYLE_PRIORITY$1,
+        $global: (className) => `@keyframes ${loading}{${className} 0%{background-position:200% 50%;}${className} 100%{background-position:-200% 50%;}}`,
+        loading: (className) => `${className}{background:${`linear-gradient(270deg, ${one}, ${two}, ${two}, ${one})`};background-size:400% 400%;animation:${loading} 8s ease-in-out infinite;}`,
+        defaultIcon: (className) => `${className}{border-radius:50px;}`
+    };
+};
+const ɵ0 = STYLES;
 /** @docs-private */
 class LyIconBase {
     constructor(_theme) {
@@ -133,11 +158,13 @@ class LyIconBase {
 /** @docs-private */
 const LyIconMixinBase = mixinStyleUpdater(mixinBg(mixinColor(mixinRaised(mixinOutlined(mixinElevation(mixinShadowColor(LyIconBase)))))));
 let LyIcon = class LyIcon extends LyIconMixinBase {
-    constructor(iconService, _el, _renderer, theme) {
+    constructor(iconService, _el, _renderer, theme, _hostClass) {
         super(theme);
         this.iconService = iconService;
         this._el = _el;
         this._renderer = _renderer;
+        this._hostClass = _hostClass;
+        this.classes = this._theme.addStyleSheet(STYLES);
         this.setAutoContrast();
     }
     get icon() {
@@ -145,11 +172,9 @@ let LyIcon = class LyIcon extends LyIconMixinBase {
     }
     set icon(val) {
         this._icon = val;
+        this._addDefaultIcon();
         if (Platform.isBrowser) {
             this._prepareSvgIcon(this.iconService.getSvg(val));
-        }
-        else {
-            this._appendDefaultSvgIcon();
         }
     }
     get fontSet() {
@@ -163,6 +188,10 @@ let LyIcon = class LyIcon extends LyIconMixinBase {
     }
     set fontIcon(key) {
         this._fontIcon = key;
+    }
+    /** @docs-private */
+    get hostElement() {
+        return this._el.nativeElement;
     }
     ngOnChanges() {
         if (this.fontSet || this.fontIcon) {
@@ -191,9 +220,15 @@ let LyIcon = class LyIcon extends LyIconMixinBase {
         this._renderer.addClass(svg, this.iconService.classes.svg);
         this._renderer.appendChild(this._el.nativeElement, svg);
     }
-    _appendDefaultSvgIcon() {
-        this._appendChild(this.iconService.defaultSvgIcon);
+    _addDefaultIcon() {
+        this._hostClass.add(this.classes.defaultIcon);
+        this._hostClass.add(this.classes.loading);
     }
+    // private _appendDefaultSvgIcon() {
+    //   const svgIcon = this.iconService._textToSvg(this.iconService.defaultSvgIcon) as SVGAElement;
+    //   svgIcon.classList.add(this.classes.loading);
+    //   this._appendChild(svgIcon);
+    // }
     _updateClass() {
         if (this._isDefault() && this.iconService.defaultClass) {
             this._renderer.addClass(this._el.nativeElement, this.iconService.defaultClass);
@@ -219,6 +254,8 @@ let LyIcon = class LyIcon extends LyIconMixinBase {
      */
     _cleanIcon() {
         const icon = this._iconElement;
+        this._hostClass.remove(this.classes.defaultIcon);
+        this._hostClass.remove(this.classes.loading);
         if (icon) {
             this._renderer.removeChild(this._el.nativeElement, icon);
             this._iconElement = undefined;
@@ -248,20 +285,21 @@ let LyIcon = class LyIcon extends LyIconMixinBase {
         this._renderer.addClass(el, this._currentClass);
     }
 };
+LyIcon.ctorParameters = () => [
+    { type: LyIconService },
+    { type: ElementRef },
+    { type: Renderer2 },
+    { type: LyTheme2 },
+    { type: LyHostClass }
+];
 __decorate([
-    Input(),
-    __metadata("design:type", String),
-    __metadata("design:paramtypes", [String])
+    Input()
 ], LyIcon.prototype, "icon", null);
 __decorate([
-    Input(),
-    __metadata("design:type", String),
-    __metadata("design:paramtypes", [String])
+    Input()
 ], LyIcon.prototype, "fontSet", null);
 __decorate([
-    Input(),
-    __metadata("design:type", String),
-    __metadata("design:paramtypes", [String])
+    Input()
 ], LyIcon.prototype, "fontIcon", null);
 LyIcon = __decorate([
     Directive({
@@ -274,11 +312,11 @@ LyIcon = __decorate([
             'elevation',
             'shadowColor',
         ],
-    }),
-    __metadata("design:paramtypes", [LyIconService,
-        ElementRef,
-        Renderer2,
-        LyTheme2])
+        exportAs: 'lyIcon',
+        providers: [
+            LyHostClass
+        ]
+    })
 ], LyIcon);
 
 let LyIconModule = class LyIconModule {
@@ -290,5 +328,9 @@ LyIconModule = __decorate([
     })
 ], LyIconModule);
 
-export { LyIcon, LyIconBase, LyIconMixinBase, LyIconModule, LyIconService };
+/**
+ * Generated bundle index. Do not edit.
+ */
+
+export { LyIcon, LyIconBase, LyIconMixinBase, LyIconModule, LyIconService, ɵ0 };
 //# sourceMappingURL=alyle-ui-icon.js.map

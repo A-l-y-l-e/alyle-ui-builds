@@ -1,5 +1,5 @@
-import { __decorate, __metadata, __extends, __param } from 'tslib';
-import { Input, Directive, Renderer2, ElementRef, TemplateRef, EventEmitter, ContentChild, Output, Component, ChangeDetectionStrategy, Inject, ChangeDetectorRef, NgModule } from '@angular/core';
+import { __decorate, __extends, __param } from 'tslib';
+import { Renderer2, ElementRef, Input, Directive, TemplateRef, EventEmitter, ChangeDetectorRef, Inject, ContentChild, Output, Component, ChangeDetectionStrategy, NgModule } from '@angular/core';
 import { toBoolean, getLyThemeVariableUndefinedError, LyTheme2, mixinStyleUpdater, mixinBg, mixinColor, mixinElevation, mixinShadowColor, LyExpansionIconModule, NgTranscludeModule } from '@alyle/ui';
 import { Subject, Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
@@ -7,94 +7,26 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 import { distinctUntilChanged, startWith, filter, first } from 'rxjs/operators';
 
 var STYLE_PRIORITY = -0.9;
-var STYLES = function (theme) { return ({
-    $priority: STYLE_PRIORITY,
-    $name: 'expansion',
-    '@global': {
-        '{panelTitle},{panelDescription}': {
-            display: 'flex',
-            marginAfter: '16px',
-        },
-        '{panel}:not({disabled})': {
-            '{panelTitle}': {
-                color: theme.text.default
-            },
-            '{panelDescription}': {
-                color: theme.text.secondary
-            }
-        },
-    },
-    root: {
-        '&': theme.expansion ? theme.expansion.root : null
-    },
-    panel: {
-        display: 'block',
-        overflow: 'hidden',
-        position: 'relative',
-        '&:not({disabled}) {panelHeader}': {
-            cursor: 'pointer'
-        }
-    },
-    panelHeader: {
-        display: 'flex',
-        position: 'relative',
-        flexDirection: 'row',
-        alignItems: 'center',
-        padding: '0 24px',
-        transition: "height " + theme.animations.durations.entering + "ms " + theme.animations.curves.standard,
-        fontFamily: theme.typography.fontFamily,
-        fontSize: theme.pxToRem(15),
-        fontWeight: 400,
-        '{panel}:not({expanded}):not({disabled}) &:hover': {
-            background: theme.hover,
-            '@media (hover: none)': {
-                background: 'none'
-            }
-        }
-    },
-    panelHeaderContent: {
-        display: 'flex',
-        flex: 1,
-        flexDirection: 'row',
-        alignItems: 'center',
-        overflow: 'hidden'
-    },
-    panelContent: {
-        display: 'flex',
-        flexDirection: 'column',
-        overflow: 'visible'
-    },
-    panelBody: {
-        visibility: 'hidden',
-        padding: '0 24px 16px',
-        transition: "visibility " + theme.animations.durations.entering + "ms " + theme.animations.curves.standard,
-        fontFamily: theme.typography.fontFamily,
-        fontSize: theme.pxToRem(14),
-        fontWeight: 400,
-        lineHeight: theme.pxToRem(20)
-    },
-    panelTitle: {
-        flexGrow: 1
-    },
-    panelDescription: {
-        flexGrow: 2
-    },
-    panelActionRow: {
-        borderTop: "1px solid " + theme.divider,
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'flex-end',
-        padding: '16px 8px 16px 24px'
-    },
-    expanded: {
-        '{panelBody}': {
-            visibility: 'visible'
-        }
-    },
-    disabled: {
-        color: theme.disabled.contrast
-    }
-}); };
+var STYLES = function (theme, ref) {
+    var classes = ref.selectorsOf(STYLES);
+    var after = theme.after;
+    return {
+        $priority: STYLE_PRIORITY,
+        $name: LyAccordion.и,
+        $global: function () { return function (className) { return className + " " + classes.panelTitle + "," + className + " " + classes.panelDescription + "{display:flex;margin-" + after + ":16px;}" + className + " " + classes.panel + ":not(" + classes.disabled + ") " + classes.panelTitle + "{color:" + theme.text.default + ";}" + className + " " + classes.panel + ":not(" + classes.disabled + ") " + classes.panelDescription + "{color:" + theme.text.secondary + ";}"; }; },
+        root: (theme.expansion && theme.expansion.root) ? function () { return theme.expansion.root(classes); } : null,
+        panel: function () { return function (className) { return className + "{display:block;overflow:hidden;position:relative;}" + className + ":not(" + classes.disabled + ") " + classes.panelHeader + "{cursor:pointer;}"; }; },
+        panelHeader: function () { return function (className) { return className + "{display:flex;position:relative;flex-direction:row;align-items:center;padding:0 24px;transition:height " + theme.animations.durations.entering + "ms " + theme.animations.curves.standard + ";font-family:" + theme.typography.fontFamily + ";font-size:" + theme.pxToRem(15) + ";font-weight:400;}" + classes.panel + ":not(" + classes.expanded + "):not(" + classes.disabled + ") " + className + ":hover{background:" + theme.hover + ";}@media (hover: none){" + classes.panel + ":not(" + classes.expanded + "):not(" + classes.disabled + ") " + className + ":hover{background:none;}}"; }; },
+        panelHeaderContent: function (className) { return className + "{display:flex;flex:1;flex-direction:row;align-items:center;overflow:hidden;}"; },
+        panelContent: function (className) { return className + "{display:flex;flex-direction:column;overflow:visible;}"; },
+        panelBody: function (className) { return className + "{visibility:hidden;padding:0 24px 16px;transition:visibility " + theme.animations.durations.entering + "ms " + theme.animations.curves.standard + ";font-family:" + theme.typography.fontFamily + ";font-size:" + theme.pxToRem(14) + ";font-weight:400;line-height:" + theme.pxToRem(20) + ";}"; },
+        panelTitle: function (className) { return className + "{flex-grow:1;}"; },
+        panelDescription: function (className) { return className + "{flex-grow:2;}"; },
+        panelActionRow: function (className) { return className + "{border-top:1px solid " + theme.divider + ";display:flex;flex-direction:row;justify-content:flex-end;padding:16px 8px 16px 24px;}"; },
+        expanded: function () { return function (className) { return className + " " + classes.panelBody + "{visibility:visible;}"; }; },
+        disabled: function (className) { return className + "{color:" + theme.disabled.contrast + ";}"; }
+    };
+};
 var LyAccordion = /** @class */ (function () {
     function LyAccordion(_theme, _renderer, _el) {
         this._theme = _theme;
@@ -112,12 +44,13 @@ var LyAccordion = /** @class */ (function () {
         },
         set: function (val) {
             this._appearance = val;
-            this._appearanceClass = this._theme.addStyle("lyAccordion.appearance:" + val, function (theme) {
+            this._appearanceClass = this._theme.addStyle("lyAccordion.appearance:" + val, function (theme, ref) {
                 if (!(theme.expansion.appearance && theme.expansion.appearance[val])) {
                     throw new Error("Value expansion.appearance['" + val + "'] not found in ThemeVariables");
                 }
-                return theme.expansion.appearance[val];
-            }, this._el.nativeElement, this._appearanceClass, STYLE_PRIORITY, STYLES);
+                var classes = ref.selectorsOf(STYLES);
+                return theme.expansion.appearance[val](classes);
+            }, this._el.nativeElement, this._appearanceClass, STYLE_PRIORITY);
         },
         enumerable: true,
         configurable: true
@@ -168,29 +101,27 @@ var LyAccordion = /** @class */ (function () {
             this._openCloseAllActions.next(expanded);
         }
     };
+    /** @docs-private */
+    LyAccordion.и = 'LyAccordion';
+    LyAccordion.ctorParameters = function () { return [
+        { type: LyTheme2 },
+        { type: Renderer2 },
+        { type: ElementRef }
+    ]; };
     __decorate([
-        Input(),
-        __metadata("design:type", String),
-        __metadata("design:paramtypes", [String])
+        Input()
     ], LyAccordion.prototype, "appearance", null);
     __decorate([
-        Input(),
-        __metadata("design:type", Boolean),
-        __metadata("design:paramtypes", [Boolean])
+        Input()
     ], LyAccordion.prototype, "multiple", null);
     __decorate([
-        Input(),
-        __metadata("design:type", Boolean),
-        __metadata("design:paramtypes", [Boolean])
+        Input()
     ], LyAccordion.prototype, "hasToggle", null);
     LyAccordion = __decorate([
         Directive({
             selector: 'ly-accordion',
             exportAs: 'lyAccordion'
-        }),
-        __metadata("design:paramtypes", [LyTheme2,
-            Renderer2,
-            ElementRef])
+        })
     ], LyAccordion);
     return LyAccordion;
 }());
@@ -207,11 +138,13 @@ var LyExpansionPanelContent = /** @class */ (function () {
     function LyExpansionPanelContent(_template) {
         this._template = _template;
     }
+    LyExpansionPanelContent.ctorParameters = function () { return [
+        { type: TemplateRef }
+    ]; };
     LyExpansionPanelContent = __decorate([
         Directive({
             selector: 'ng-template[lyExpansionPanelContent]'
-        }),
-        __metadata("design:paramtypes", [TemplateRef])
+        })
     ], LyExpansionPanelContent);
     return LyExpansionPanelContent;
 }());
@@ -371,44 +304,39 @@ var LyExpansionPanel = /** @class */ (function (_super) {
             _this.expanded = expanded;
         });
     };
+    LyExpansionPanel.ctorParameters = function () { return [
+        { type: ElementRef },
+        { type: Renderer2 },
+        { type: ChangeDetectorRef },
+        { type: LyTheme2 },
+        { type: LyAccordion, decorators: [{ type: Inject, args: [LyAccordion,] }] }
+    ]; };
     __decorate([
-        ContentChild(LyExpansionPanelContent, { static: false }),
-        __metadata("design:type", LyExpansionPanelContent)
+        ContentChild(LyExpansionPanelContent, { static: false })
     ], LyExpansionPanel.prototype, "_lazyContent", void 0);
     __decorate([
-        Output(),
-        __metadata("design:type", EventEmitter)
+        Output()
     ], LyExpansionPanel.prototype, "closed", void 0);
     __decorate([
-        Output(),
-        __metadata("design:type", EventEmitter)
+        Output()
     ], LyExpansionPanel.prototype, "opened", void 0);
     __decorate([
-        Output(),
-        __metadata("design:type", EventEmitter)
+        Output()
     ], LyExpansionPanel.prototype, "afterCollapse", void 0);
     __decorate([
-        Output(),
-        __metadata("design:type", EventEmitter)
+        Output()
     ], LyExpansionPanel.prototype, "afterExpand", void 0);
     __decorate([
-        Output(),
-        __metadata("design:type", EventEmitter)
+        Output()
     ], LyExpansionPanel.prototype, "destroyed", void 0);
     __decorate([
-        Input(),
-        __metadata("design:type", Boolean),
-        __metadata("design:paramtypes", [Boolean])
+        Input()
     ], LyExpansionPanel.prototype, "disabled", null);
     __decorate([
-        Input(),
-        __metadata("design:type", Boolean),
-        __metadata("design:paramtypes", [Boolean])
+        Input()
     ], LyExpansionPanel.prototype, "expanded", null);
     __decorate([
-        Input(),
-        __metadata("design:type", Boolean),
-        __metadata("design:paramtypes", [Boolean])
+        Input()
     ], LyExpansionPanel.prototype, "hasToggle", null);
     LyExpansionPanel = __decorate([
         Component({
@@ -426,12 +354,7 @@ var LyExpansionPanel = /** @class */ (function (_super) {
                 'shadowColor'
             ]
         }),
-        __param(4, Inject(LyAccordion)),
-        __metadata("design:paramtypes", [ElementRef,
-            Renderer2,
-            ChangeDetectorRef,
-            LyTheme2,
-            LyAccordion])
+        __param(4, Inject(LyAccordion))
     ], LyExpansionPanel);
     return LyExpansionPanel;
 }(LyButtonMixinBase));
@@ -444,6 +367,12 @@ var LyExpansionPanelHeader = /** @class */ (function () {
         this.classes = this._accordion.classes;
         renderer.addClass(el.nativeElement, this._accordion.classes.panelHeader);
     }
+    LyExpansionPanelHeader.ctorParameters = function () { return [
+        { type: ElementRef },
+        { type: Renderer2 },
+        { type: LyAccordion, decorators: [{ type: Inject, args: [LyAccordion,] }] },
+        { type: LyExpansionPanel, decorators: [{ type: Inject, args: [LyExpansionPanel,] }] }
+    ]; };
     LyExpansionPanelHeader = __decorate([
         Component({
             selector: 'ly-expansion-panel-header',
@@ -453,11 +382,7 @@ var LyExpansionPanelHeader = /** @class */ (function () {
             }
         }),
         __param(2, Inject(LyAccordion)),
-        __param(3, Inject(LyExpansionPanel)),
-        __metadata("design:paramtypes", [ElementRef,
-            Renderer2,
-            LyAccordion,
-            LyExpansionPanel])
+        __param(3, Inject(LyExpansionPanel))
     ], LyExpansionPanelHeader);
     return LyExpansionPanelHeader;
 }());
@@ -466,14 +391,16 @@ var LyExpansionPanelTitle = /** @class */ (function () {
     function LyExpansionPanelTitle(el, renderer, accordion) {
         renderer.addClass(el.nativeElement, accordion.classes.panelTitle);
     }
+    LyExpansionPanelTitle.ctorParameters = function () { return [
+        { type: ElementRef },
+        { type: Renderer2 },
+        { type: LyAccordion, decorators: [{ type: Inject, args: [LyAccordion,] }] }
+    ]; };
     LyExpansionPanelTitle = __decorate([
         Directive({
             selector: 'ly-panel-title'
         }),
-        __param(2, Inject(LyAccordion)),
-        __metadata("design:paramtypes", [ElementRef,
-            Renderer2,
-            LyAccordion])
+        __param(2, Inject(LyAccordion))
     ], LyExpansionPanelTitle);
     return LyExpansionPanelTitle;
 }());
@@ -482,14 +409,16 @@ var LyExpansionPanelDescription = /** @class */ (function () {
     function LyExpansionPanelDescription(el, renderer, accordion) {
         renderer.addClass(el.nativeElement, accordion.classes.panelDescription);
     }
+    LyExpansionPanelDescription.ctorParameters = function () { return [
+        { type: ElementRef },
+        { type: Renderer2 },
+        { type: LyAccordion, decorators: [{ type: Inject, args: [LyAccordion,] }] }
+    ]; };
     LyExpansionPanelDescription = __decorate([
         Directive({
             selector: 'ly-panel-description'
         }),
-        __param(2, Inject(LyAccordion)),
-        __metadata("design:paramtypes", [ElementRef,
-            Renderer2,
-            LyAccordion])
+        __param(2, Inject(LyAccordion))
     ], LyExpansionPanelDescription);
     return LyExpansionPanelDescription;
 }());
@@ -498,14 +427,16 @@ var LyExpansionPanelAction = /** @class */ (function () {
     function LyExpansionPanelAction(el, renderer, accordion) {
         renderer.addClass(el.nativeElement, accordion.classes.panelActionRow);
     }
+    LyExpansionPanelAction.ctorParameters = function () { return [
+        { type: ElementRef },
+        { type: Renderer2 },
+        { type: LyAccordion, decorators: [{ type: Inject, args: [LyAccordion,] }] }
+    ]; };
     LyExpansionPanelAction = __decorate([
         Directive({
             selector: 'ly-action-row'
         }),
-        __param(2, Inject(LyAccordion)),
-        __metadata("design:paramtypes", [ElementRef,
-            Renderer2,
-            LyAccordion])
+        __param(2, Inject(LyAccordion))
     ], LyExpansionPanelAction);
     return LyExpansionPanelAction;
 }());
@@ -542,6 +473,10 @@ var LyExpansionModule = /** @class */ (function () {
     ], LyExpansionModule);
     return LyExpansionModule;
 }());
+
+/**
+ * Generated bundle index. Do not edit.
+ */
 
 export { LyAccordion, LyButtonMixinBase, LyExpansionModule, LyExpansionPanel, LyExpansionPanelBase, LyExpansionPanelContent, LyExpansionPanelDescription, LyExpansionPanelHeader, LyExpansionPanelTitle, STYLES, lyExpansionAnimations as ɵa, LyExpansionPanelAction as ɵb };
 //# sourceMappingURL=alyle-ui-expansion.js.map

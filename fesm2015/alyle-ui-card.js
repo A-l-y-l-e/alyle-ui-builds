@@ -1,34 +1,24 @@
-import { __decorate, __metadata } from 'tslib';
-import { Directive, ElementRef, Renderer2, NgZone, Input, NgModule } from '@angular/core';
+import { __decorate } from 'tslib';
+import { ElementRef, Renderer2, NgZone, Directive, Input, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { mixinStyleUpdater, mixinBg, mixinColor, mixinRaised, mixinDisabled, mixinOutlined, mixinElevation, mixinShadowColor, mixinDisableRipple, LyTheme2, toBoolean, LyCommonModule } from '@alyle/ui';
+import { styleTemplateToString, StyleCollection, mixinStyleUpdater, mixinBg, mixinColor, mixinRaised, mixinDisabled, mixinOutlined, mixinElevation, mixinShadowColor, mixinDisableRipple, LyTheme2, StyleRenderer, toBoolean, LyHostClass, LyCommonModule } from '@alyle/ui';
 
-const STYLES = (theme) => ({
-    $priority: STYLE_PRIORITY,
-    root: {
-        display: 'block',
-        overflow: 'hidden',
-        borderRadius: '2px',
-        '&': theme.card ? theme.card.root : null
-    },
-    content: {
-        display: 'block',
-        padding: '16px 24px',
-        [theme.getBreakpoint('XSmall')]: {
-            padding: '16px 16px'
-        }
-    },
-    actions: {
-        display: 'block',
-        padding: '8px 12px',
-        [theme.getBreakpoint('XSmall')]: {
-            padding: '8px 4px'
-        }
-    },
-    actionsItem: {
-        margin: '0 4px'
-    }
-});
+var LyCardMedia_1;
+const STYLES = (theme, ref) => {
+    const card = ref.selectorsOf(STYLES);
+    return {
+        $priority: STYLE_PRIORITY,
+        $name: LyCard.и,
+        root: () => (className) => `${className}{display:block;overflow:hidden;border-radius:2px;}${styleTemplateToString(((theme.card
+            && theme.card.root
+            && (theme.card.root instanceof StyleCollection
+                ? theme.card.root.setTransformer(fn => fn(card))
+                : theme.card.root(card)))), `${className}`)}`,
+        content: (className) => `${className}{display:block;padding:16px 24px;}${className} ${theme.getBreakpoint('XSmall')}{padding:16px 16px;}`,
+        actions: (className) => `${className}{display:block;padding:8px 12px;}${className} ${theme.getBreakpoint('XSmall')}{padding:8px 4px;}`,
+        actionsItem: (className) => `${className}{margin:0 4px;}`
+    };
+};
 const DEFAULT_ASPECT_RATIO = '16:9';
 const STYLE_PRIORITY = -1;
 /** @docs-private */
@@ -50,7 +40,7 @@ let LyCard = class LyCard extends LyCardMixinBase {
          * styles
          * @docs-private
          */
-        this.classes = this.theme.addStyleSheet(STYLES);
+        this.classes = this.theme.renderStyleSheet(STYLES);
         this.setAutoContrast();
     }
     ngOnChanges() {
@@ -75,6 +65,13 @@ let LyCard = class LyCard extends LyCardMixinBase {
         this._removeRippleEvents();
     }
 };
+LyCard.и = 'LyCard';
+LyCard.ctorParameters = () => [
+    { type: LyTheme2 },
+    { type: ElementRef },
+    { type: Renderer2 },
+    { type: NgZone }
+];
 LyCard = __decorate([
     Directive({
         selector: 'ly-card',
@@ -86,12 +83,9 @@ LyCard = __decorate([
             'elevation',
             'shadowColor',
             'disableRipple',
-        ]
-    }),
-    __metadata("design:paramtypes", [LyTheme2,
-        ElementRef,
-        Renderer2,
-        NgZone])
+        ],
+        providers: [StyleRenderer]
+    })
 ], LyCard);
 let LyCardContent = class LyCardContent {
     constructor(el, renderer, card) {
@@ -103,13 +97,15 @@ let LyCardContent = class LyCardContent {
         this.renderer.addClass(this.el.nativeElement, this.card.classes.content);
     }
 };
+LyCardContent.ctorParameters = () => [
+    { type: ElementRef },
+    { type: Renderer2 },
+    { type: LyCard }
+];
 LyCardContent = __decorate([
     Directive({
         selector: 'ly-card-content'
-    }),
-    __metadata("design:paramtypes", [ElementRef,
-        Renderer2,
-        LyCard])
+    })
 ], LyCardContent);
 let LyCardActions = class LyCardActions {
     constructor(el, renderer, card) {
@@ -126,36 +122,48 @@ let LyCardActions = class LyCardActions {
         }
     }
 };
+LyCardActions.ctorParameters = () => [
+    { type: ElementRef },
+    { type: Renderer2 },
+    { type: LyCard }
+];
 __decorate([
-    Input(),
-    __metadata("design:type", Boolean)
+    Input()
 ], LyCardActions.prototype, "disableActionSpacing", void 0);
 LyCardActions = __decorate([
     Directive({
         selector: 'ly-card-actions'
-    }),
-    __metadata("design:paramtypes", [ElementRef,
-        Renderer2,
-        LyCard])
+    })
 ], LyCardActions);
-let LyCardMedia = class LyCardMedia {
-    constructor(el, renderer, theme) {
+let LyCardMedia = LyCardMedia_1 = class LyCardMedia {
+    constructor(el, renderer, styleRenderer) {
         this.el = el;
         this.renderer = renderer;
-        this.theme = theme;
+        this.styleRenderer = styleRenderer;
     }
     set bgImg(val) {
         if (val !== this.bgImg) {
-            this._bgImgClass = this._createBgImgClass(val, this._bgImgClass);
+            this._bgImg = val;
+            this[0x1] = this.styleRenderer.add(`${LyCardMedia_1.и}--bgImg-${val}`, () => (className) => `${className}{display:block;background-size:cover;background-repeat:no-repeat;background-position:center;}`, STYLE_PRIORITY, this[0x1]);
+            this.renderer.setStyle(this.el.nativeElement, `background-image`, `url("${val}")`);
         }
     }
     get bgImg() {
         return this._bgImg;
     }
-    /** Aspect ratio */
+    /**
+     * Aspect ratio
+     *
+     * e.g:
+     * 4:3
+     * 1:1
+     */
     set ratio(val) {
         if (val !== this.ratio) {
-            this._createAspectRatioClass(val);
+            this._ratio = val;
+            this[0x2] = this.styleRenderer.add(`${LyCardMedia_1.и}--ratio-${val}`, () => (className) => `${className}::before{content:'';display:block;padding-top:${val
+                .split(':')
+                .reduce((prev, current) => (+current / +prev * 100).toString())}%;}`, STYLE_PRIORITY, this[0x2]);
         }
     }
     get ratio() {
@@ -166,44 +174,27 @@ let LyCardMedia = class LyCardMedia {
             this.ratio = DEFAULT_ASPECT_RATIO;
         }
     }
-    _createBgImgClass(val, instance) {
-        this._bgImg = val;
-        this.renderer.setStyle(this.el.nativeElement, `background-image`, `url("${val}")`);
-        return this.theme.addStyle(`lyCard-media:${val}`, (`display:block;` +
-            `background-size: cover;` +
-            `background-repeat: no-repeat;` +
-            `background-position: center;`), this.el.nativeElement, instance, STYLE_PRIORITY);
-    }
-    _createAspectRatioClass(val) {
-        this._ratio = val;
-        this._ratioClass = this.theme.addStyle(`lyCard-media-ar:${val}`, ({
-            '&:before': val.split(':').reduce((valorAnterior, valorActual) => {
-                return ({
-                    paddingTop: `${+valorActual / +valorAnterior * 100}%`,
-                    content: `\'\'`,
-                    display: 'block'
-                });
-            })
-        }), this.el.nativeElement, this._ratioClass, STYLE_PRIORITY);
-    }
 };
+LyCardMedia.и = 'LyCardMedia';
+LyCardMedia.ctorParameters = () => [
+    { type: ElementRef },
+    { type: Renderer2 },
+    { type: StyleRenderer }
+];
 __decorate([
-    Input(),
-    __metadata("design:type", String),
-    __metadata("design:paramtypes", [String])
+    Input()
 ], LyCardMedia.prototype, "bgImg", null);
 __decorate([
-    Input(),
-    __metadata("design:type", String),
-    __metadata("design:paramtypes", [String])
+    Input()
 ], LyCardMedia.prototype, "ratio", null);
-LyCardMedia = __decorate([
+LyCardMedia = LyCardMedia_1 = __decorate([
     Directive({
-        selector: 'ly-card-media'
-    }),
-    __metadata("design:paramtypes", [ElementRef,
-        Renderer2,
-        LyTheme2])
+        selector: 'ly-card-media',
+        providers: [
+            StyleRenderer,
+            LyHostClass
+        ]
+    })
 ], LyCardMedia);
 
 let LyCardModule = class LyCardModule {
@@ -217,6 +208,10 @@ LyCardModule = __decorate([
         declarations: [LyCard, LyCardContent, LyCardActions, LyCardMedia]
     })
 ], LyCardModule);
+
+/**
+ * Generated bundle index. Do not edit.
+ */
 
 export { LyCard, LyCardActions, LyCardBase, LyCardContent, LyCardMedia, LyCardMixinBase, LyCardModule, STYLES };
 //# sourceMappingURL=alyle-ui-card.js.map

@@ -1,0 +1,13 @@
+import * as tslib_1 from "tslib";
+import { NgModule } from '@angular/core';
+import { LySkeleton } from './skeleton';
+let LySkeletonModule = class LySkeletonModule {
+};
+LySkeletonModule = tslib_1.__decorate([
+    NgModule({
+        declarations: [LySkeleton],
+        exports: [LySkeleton]
+    })
+], LySkeletonModule);
+export { LySkeletonModule };
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoic2tlbGV0b24ubW9kdWxlLmpzIiwic291cmNlUm9vdCI6Im5nOi8vQGFseWxlL3VpL3NrZWxldG9uLyIsInNvdXJjZXMiOlsic2tlbGV0b24ubW9kdWxlLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7QUFBQSxPQUFPLEVBQUUsUUFBUSxFQUFFLE1BQU0sZUFBZSxDQUFDO0FBQ3pDLE9BQU8sRUFBRSxVQUFVLEVBQUUsTUFBTSxZQUFZLENBQUM7QUFNeEMsSUFBYSxnQkFBZ0IsR0FBN0IsTUFBYSxnQkFBZ0I7Q0FBSSxDQUFBO0FBQXBCLGdCQUFnQjtJQUo1QixRQUFRLENBQUM7UUFDUixZQUFZLEVBQUUsQ0FBQyxVQUFVLENBQUM7UUFDMUIsT0FBTyxFQUFFLENBQUMsVUFBVSxDQUFDO0tBQ3RCLENBQUM7R0FDVyxnQkFBZ0IsQ0FBSTtTQUFwQixnQkFBZ0IiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyBOZ01vZHVsZSB9IGZyb20gJ0Bhbmd1bGFyL2NvcmUnO1xuaW1wb3J0IHsgTHlTa2VsZXRvbiB9IGZyb20gJy4vc2tlbGV0b24nO1xuXG5ATmdNb2R1bGUoe1xuICBkZWNsYXJhdGlvbnM6IFtMeVNrZWxldG9uXSxcbiAgZXhwb3J0czogW0x5U2tlbGV0b25dXG59KVxuZXhwb3J0IGNsYXNzIEx5U2tlbGV0b25Nb2R1bGUgeyB9XG4iXX0=

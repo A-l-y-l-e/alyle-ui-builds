@@ -1,9 +1,9 @@
-import { __decorate, __extends, __metadata, __spread, __param } from 'tslib';
+import { __decorate, __extends, __spread, __param } from 'tslib';
 import { trigger, transition, animate, keyframes, style } from '@angular/animations';
-import { Directive, ViewChild, TemplateRef, ElementRef, forwardRef, QueryList, ContentChildren, ContentChild, HostListener, Input, Component, ChangeDetectionStrategy, Optional, Self, Renderer2, ChangeDetectorRef, NgZone, Host, NgModule } from '@angular/core';
+import { Directive, Renderer2, ElementRef, Optional, ChangeDetectorRef, NgZone, Self, ViewChild, forwardRef, ContentChildren, ContentChild, HostListener, Input, Component, ChangeDetectionStrategy, Host, NgModule } from '@angular/core';
 import { NgControl, NgForm, FormGroupDirective } from '@angular/forms';
-import { STYLES as STYLES$1, LyFieldControlBase, LyField } from '@alyle/ui/field';
-import { shadowBuilder, mixinTabIndex, toBoolean, Dir, LySelectionModel, Positioning, YPosition, XPosition, LyTheme2, LyOverlay, mixinStyleUpdater, mixinBg, mixinColor, mixinRaised, mixinDisabled, mixinOutlined, mixinElevation, mixinShadowColor, mixinDisableRipple, LyRippleService, LyCommonModule, LyOverlayModule } from '@alyle/ui';
+import { STYLES as STYLES$1, LyField, LyFieldControlBase } from '@alyle/ui/field';
+import { styleTemplateToString, StyleCollection, shadowBuilder, mixinTabIndex, toBoolean, Dir, LySelectionModel, Positioning, YPosition, XPosition, LyTheme2, LyOverlay, mixinStyleUpdater, mixinBg, mixinColor, mixinRaised, mixinDisabled, mixinOutlined, mixinElevation, mixinShadowColor, mixinDisableRipple, LyRippleService, LyCommonModule, LyOverlayModule } from '@alyle/ui';
 import { Subject } from 'rxjs';
 import { takeUntil, take } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
@@ -11,73 +11,73 @@ import { LyCheckboxModule } from '@alyle/ui/checkbox';
 
 var DEFAULT_DISABLE_RIPPLE = false;
 var STYLE_PRIORITY = -2;
-var STYLES = function (theme) { return ({
-    $priority: STYLE_PRIORITY,
-    root: {
-        display: 'block',
-        paddingAfter: '1em',
-        minWidth: '3em',
-        minHeight: '1.5em',
-        '-webkit-tap-highlight-color': 'transparent',
-        '&': theme.select ? theme.select.root : null
-    },
-    container: {
-        background: theme.background.primary.default,
-        borderRadius: '2px',
-        boxShadow: shadowBuilder(4),
-        display: 'block',
-        transformOrigin: 'inherit',
-        pointerEvents: 'all',
-        overflow: 'auto',
-        maxHeight: '256px'
-    },
-    valueText: {
-        overflow: 'hidden',
-        textOverflow: 'ellipsis',
-        whiteSpace: 'nowrap'
-    },
-    option: {
-        display: 'flex',
-        fontFamily: theme.typography.fontFamily,
-        color: theme.text.default,
-        '-webkit-tap-highlight-color': 'transparent',
-        backgroundColor: "rgba(0, 0, 0, 0)",
-        border: 0,
-        padding: '0 1em',
-        margin: 0,
-        outline: 'none',
-        boxSizing: 'border-box',
-        position: 'relative',
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-        alignContent: 'center',
-        '-webkit-user-select': 'none',
-        '-moz-user-select': 'none',
-        '-ms-user-select': 'none',
-        userSelect: 'none',
-        lineHeight: '3em',
-        height: '3em',
-        cursor: 'pointer'
-    },
-    optionText: {
-        'ly-checkbox ~ &': {
-            marginBefore: '-16px',
+var STYLES = function (theme, ref) {
+    var select = ref.selectorsOf(STYLES);
+    return {
+        $priority: STYLE_PRIORITY,
+        root: function () { return function (className) { return className + "{display:block;padding-after:1em;min-width:em;min-height:1.5em;-webkit-tap-highlight-color:transparent;}" + styleTemplateToString(((theme.select
+            && theme.select.root
+            && (theme.select.root instanceof StyleCollection
+                ? theme.select.root.setTransformer(function (fn) { return fn(select); })
+                : theme.select.root(select)))), "" + className); }; },
+        container: {
+            background: theme.background.primary.default,
+            borderRadius: '2px',
+            boxShadow: shadowBuilder(4),
+            display: 'block',
+            transformOrigin: 'inherit',
+            pointerEvents: 'all',
+            overflow: 'auto',
+            maxHeight: '256px'
+        },
+        valueText: {
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap'
+        },
+        option: {
             display: 'flex',
+            fontFamily: theme.typography.fontFamily,
+            color: theme.text.default,
+            '-webkit-tap-highlight-color': 'transparent',
+            backgroundColor: "rgba(0, 0, 0, 0)",
+            border: 0,
+            padding: '0 1em',
+            margin: 0,
+            outline: 'none',
+            boxSizing: 'border-box',
+            position: 'relative',
+            justifyContent: 'flex-start',
+            alignItems: 'center',
+            alignContent: 'center',
+            '-webkit-user-select': 'none',
+            '-moz-user-select': 'none',
+            '-ms-user-select': 'none',
+            userSelect: 'none',
+            lineHeight: '3em',
+            height: '3em',
+            cursor: 'pointer'
+        },
+        optionText: {
+            'ly-checkbox ~ &': {
+                marginBefore: '-16px',
+                display: 'flex',
+                alignItems: 'inherit',
+                alignContent: 'inherit'
+            }
+        },
+        content: {
+            padding: 0,
+            display: 'flex',
+            justifyContent: 'inherit',
             alignItems: 'inherit',
-            alignContent: 'inherit'
+            alignContent: 'inherit',
+            width: '100%',
+            height: '100%',
+            boxSizing: 'border-box'
         }
-    },
-    content: {
-        padding: 0,
-        display: 'flex',
-        justifyContent: 'inherit',
-        alignItems: 'inherit',
-        alignContent: 'inherit',
-        width: '100%',
-        height: '100%',
-        boxSizing: 'border-box'
-    }
-}); };
+    };
+};
 /** @docs-private */
 var ANIMATIONS = [
     trigger('selectEnter', [
@@ -557,67 +557,56 @@ var LySelect = /** @class */ (function (_super) {
         this._renderer.setStyle(container, 'width', width);
     };
     var LySelect_1;
+    LySelect.ctorParameters = function () { return [
+        { type: LyTheme2 },
+        { type: Renderer2 },
+        { type: ElementRef },
+        { type: LyOverlay },
+        { type: LyField, decorators: [{ type: Optional }] },
+        { type: ChangeDetectorRef },
+        { type: NgZone },
+        { type: NgControl, decorators: [{ type: Optional }, { type: Self }] },
+        { type: NgForm, decorators: [{ type: Optional }] },
+        { type: FormGroupDirective, decorators: [{ type: Optional }] }
+    ]; };
     __decorate([
-        ViewChild('templateRef', { static: false }),
-        __metadata("design:type", TemplateRef)
+        ViewChild('templateRef', { static: false })
     ], LySelect.prototype, "templateRef", void 0);
     __decorate([
-        ViewChild('valueText', { static: false }),
-        __metadata("design:type", ElementRef)
+        ViewChild('valueText', { static: false })
     ], LySelect.prototype, "valueTextDivRef", void 0);
     __decorate([
-        ViewChild(forwardRef(function () { return LyOption; }), { static: false }),
-        __metadata("design:type", QueryList)
+        ViewChild(forwardRef(function () { return LyOption; }), { static: false })
     ], LySelect.prototype, "_options", void 0);
     __decorate([
-        ContentChildren(forwardRef(function () { return LyOption; }), { descendants: true }),
-        __metadata("design:type", QueryList)
+        ContentChildren(forwardRef(function () { return LyOption; }), { descendants: true })
     ], LySelect.prototype, "options", void 0);
     __decorate([
-        ContentChild(LySelectTrigger, { static: false }),
-        __metadata("design:type", LySelectTrigger)
+        ContentChild(LySelectTrigger, { static: false })
     ], LySelect.prototype, "customTrigger", void 0);
     __decorate([
-        HostListener('blur'),
-        __metadata("design:type", Function),
-        __metadata("design:paramtypes", []),
-        __metadata("design:returntype", void 0)
+        HostListener('blur')
     ], LySelect.prototype, "_onBlur", null);
     __decorate([
-        HostListener('focus'),
-        __metadata("design:type", Function),
-        __metadata("design:paramtypes", []),
-        __metadata("design:returntype", void 0)
+        HostListener('focus')
     ], LySelect.prototype, "_onFocus", null);
     __decorate([
-        Input(),
-        __metadata("design:type", Object),
-        __metadata("design:paramtypes", [Object])
+        Input()
     ], LySelect.prototype, "value", null);
     __decorate([
-        Input(),
-        __metadata("design:type", Boolean),
-        __metadata("design:paramtypes", [Boolean])
+        Input()
     ], LySelect.prototype, "disabled", null);
     __decorate([
-        Input(),
-        __metadata("design:type", Boolean),
-        __metadata("design:paramtypes", [Boolean])
+        Input()
     ], LySelect.prototype, "required", null);
     __decorate([
-        Input(),
-        __metadata("design:type", Boolean),
-        __metadata("design:paramtypes", [Boolean])
+        Input()
     ], LySelect.prototype, "multiple", null);
     __decorate([
-        Input(),
-        __metadata("design:type", Function),
-        __metadata("design:paramtypes", [Function])
+        Input()
     ], LySelect.prototype, "valueKey", null);
     __decorate([
-        Input(),
-        __metadata("design:type", String),
-        __metadata("design:paramtypes", [String])
+        Input()
     ], LySelect.prototype, "placeholder", null);
     LySelect = LySelect_1 = __decorate([
         Component({
@@ -637,17 +626,7 @@ var LySelect = /** @class */ (function (_super) {
         __param(4, Optional()),
         __param(7, Optional()), __param(7, Self()),
         __param(8, Optional()),
-        __param(9, Optional()),
-        __metadata("design:paramtypes", [LyTheme2,
-            Renderer2,
-            ElementRef,
-            LyOverlay,
-            LyField,
-            ChangeDetectorRef,
-            NgZone,
-            NgControl,
-            NgForm,
-            FormGroupDirective])
+        __param(9, Optional())
     ], LySelect);
     return LySelect;
 }(LySelectMixinBase));
@@ -794,20 +773,23 @@ var LyOption = /** @class */ (function (_super) {
     LyOption.prototype._getHostElement = function () {
         return this._el.nativeElement;
     };
+    LyOption.ctorParameters = function () { return [
+        { type: LySelect, decorators: [{ type: Host }] },
+        { type: ElementRef },
+        { type: LyRippleService },
+        { type: Renderer2 },
+        { type: LyTheme2 },
+        { type: ChangeDetectorRef },
+        { type: NgZone }
+    ]; };
     __decorate([
-        ViewChild('rippleContainer', { static: false }),
-        __metadata("design:type", ElementRef)
+        ViewChild('rippleContainer', { static: false })
     ], LyOption.prototype, "_rippleContainer", void 0);
     __decorate([
-        HostListener('click'),
-        __metadata("design:type", Function),
-        __metadata("design:paramtypes", []),
-        __metadata("design:returntype", void 0)
+        HostListener('click')
     ], LyOption.prototype, "_onClick", null);
     __decorate([
-        Input('value'),
-        __metadata("design:type", Object),
-        __metadata("design:paramtypes", [Object])
+        Input('value')
     ], LyOption.prototype, "value", null);
     LyOption = __decorate([
         Component({
@@ -825,14 +807,7 @@ var LyOption = /** @class */ (function (_super) {
                 'disableRipple'
             ]
         }),
-        __param(0, Host()),
-        __metadata("design:paramtypes", [LySelect,
-            ElementRef,
-            LyRippleService,
-            Renderer2,
-            LyTheme2,
-            ChangeDetectorRef,
-            NgZone])
+        __param(0, Host())
     ], LyOption);
     return LyOption;
 }(LyOptionMixinBase));
@@ -860,6 +835,10 @@ var LySelectModule = /** @class */ (function () {
     ], LySelectModule);
     return LySelectModule;
 }());
+
+/**
+ * Generated bundle index. Do not edit.
+ */
 
 export { LyOption, LyOptionBase, LyOptionMixinBase, LySelect, LySelectBase, LySelectMixinBase, LySelectModule, LySelectTrigger, STYLES };
 //# sourceMappingURL=alyle-ui-select.js.map

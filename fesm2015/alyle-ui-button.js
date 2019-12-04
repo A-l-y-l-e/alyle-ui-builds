@@ -1,73 +1,30 @@
-import { __decorate, __metadata } from 'tslib';
-import { ViewChild, ElementRef, Input, Component, ChangeDetectionStrategy, Renderer2, NgZone, NgModule } from '@angular/core';
-import { LY_COMMON_STYLES, mixinStyleUpdater, mixinBg, mixinColor, mixinRaised, mixinDisabled, mixinOutlined, mixinElevation, mixinShadowColor, mixinDisableRipple, Platform, getLyThemeVariableUndefinedError, toBoolean, LyTheme2, LyRippleService, LyFocusState, LyCommonModule } from '@alyle/ui';
+import { __decorate, __param } from 'tslib';
+import { InjectionToken, ElementRef, Renderer2, NgZone, Optional, Inject, ViewChild, Input, Component, ChangeDetectionStrategy, NgModule } from '@angular/core';
+import { styleTemplateToString, StyleCollection, LY_COMMON_STYLES, mixinStyleUpdater, mixinBg, mixinColor, mixinRaised, mixinDisabled, mixinOutlined, mixinElevation, mixinShadowColor, mixinDisableRipple, Platform, getLyThemeVariableUndefinedError, toBoolean, LyTheme2, LyRippleService, LyFocusState, LyHostClass, LyCommonModule } from '@alyle/ui';
+import { Color } from '@alyle/ui/color';
 
-const STYLES = (theme) => {
-    const typography = theme.typography;
-    const _styles = ({
-        root: {
-            fontFamily: typography.fontFamily,
-            color: theme.text.default,
-            '-webkit-tap-highlight-color': 'transparent',
-            backgroundColor: `rgba(0, 0, 0, 0)`,
-            border: 0,
-            padding: '0 1em',
-            '-moz-appearance': 'none',
-            margin: 0,
-            borderRadius: '3px',
-            outline: 'none',
-            fontWeight: 500,
-            boxSizing: 'border-box',
-            position: 'relative',
-            justifyContent: 'center',
-            alignItems: 'center',
-            alignContent: 'center',
-            display: 'inline-flex',
-            cursor: 'pointer',
-            '-webkit-user-select': 'none',
-            '-moz-user-select': 'none',
-            '-ms-user-select': 'none',
-            userSelect: 'none',
-            textDecorationLine: 'none',
-            '-webkit-text-decoration-line': 'none',
-            fontSize: theme.pxToRem(14),
-            '&::-moz-focus-inner': {
-                border: 0
-            },
-            '&::after': Object.assign({ content: `''` }, LY_COMMON_STYLES.fill, { width: '100%', height: '100%', background: 'transparent', opacity: 0, pointerEvents: 'none' }),
-            '&{onFocusByKeyboard}::after, &:hover::after': {
-                background: 'currentColor',
-                opacity: .13,
-                borderRadius: 'inherit'
-            },
-            '&': theme.button ? theme.button.root : null
-        },
-        content: {
-            padding: 0,
-            display: 'flex',
-            justifyContent: 'inherit',
-            alignItems: 'inherit',
-            alignContent: 'inherit',
-            width: '100%',
-            height: '100%',
-            boxSizing: 'border-box'
-        },
-        onFocusByKeyboard: null,
-        animations: {
-            [['&:hover',
-                '&:hover::after',
-                '&:focus',
-                '&:focus::after',
-                '{onFocusByKeyboard}'].join()]: {
-                transition: 'background 375ms cubic-bezier(0.23, 1, 0.32, 1) 0ms, box-shadow 280ms cubic-bezier(.4,0,.2,1) 0ms',
-            }
-        }
-    });
-    return _styles;
-};
-
+var LyButton_1;
 const DEFAULT_DISABLE_RIPPLE = false;
+const DEFAULT_SIZE = 'medium';
 const STYLE_PRIORITY = -2;
+const LY_BUTTON_DEFAULT_OPTIONS = new InjectionToken('LY_BUTTON_DEFAULT_OPTIONS');
+const STYLES = (theme, ref) => {
+    const typography = theme.typography;
+    const button = ref.selectorsOf(STYLES);
+    return {
+        $priority: STYLE_PRIORITY,
+        $name: LyButton.и,
+        root: () => (className) => `${className}{font-family:${typography.fontFamily};color:${theme.text.default};-webkit-tap-highlight-color:transparent;background-color:${new Color(0, 0, 0, 0)};border:0;padding:0 1em;-moz-appearance:none;margin:0;border-radius:3px;outline:none;font-weight:500;box-sizing:border-box;position:relative;justify-content:center;align-items:center;align-content:center;display:inline-flex;cursor:pointer;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;text-decoration-line:none;-webkit-text-decoration-line:none;font-size:${theme.pxToRem(14)};}${styleTemplateToString(((theme.button
+            && theme.button.root
+            && (theme.button.root instanceof StyleCollection
+                ? theme.button.root.setTransformer(fn => fn(button)).css
+                : theme.button.root(button)))), `${className}`)}${className}::-moz-focus-inner{border:0;}${className}::before{content:'';width:100%;height:100%;background:transparent;opacity:0;pointer-events:none;}${styleTemplateToString((LY_COMMON_STYLES.fill), `${className}::before`)}${className}${button.onFocusByKeyboard}::before,${className}:hover::before{background:currentColor;opacity:.13;border-radius:inherit;}`,
+        content: (className) => `${className}{padding:0;display:flex;justify-content:inherit;align-items:inherit;align-content:inherit;width:100%;height:100%;box-sizing:border-box;}`,
+        /** When focus by keyboard */
+        onFocusByKeyboard: null,
+        animations: (className) => `${className}:hover,${className}:hover::before,${className}:focus,${className}:focus::before{transition:background 375ms cubic-bezier(0.23, 1, 0.32, 1) 0ms, box-shadow 280ms cubic-bezier(.4,0,.2,1) 0ms;}`
+    };
+};
 /** @docs-private */
 class LyButtonBase {
     constructor(_theme, _ngZone) {
@@ -77,27 +34,26 @@ class LyButtonBase {
 }
 /** @docs-private */
 const LyButtonMixinBase = mixinStyleUpdater(mixinBg(mixinColor(mixinRaised(mixinDisabled(mixinOutlined(mixinElevation(mixinShadowColor(mixinDisableRipple(LyButtonBase)))))))));
-let LyButton = class LyButton extends LyButtonMixinBase {
-    constructor(_el, _renderer, _theme, _ngZone, _rippleService, _focusState) {
+let LyButton = LyButton_1 = class LyButton extends LyButtonMixinBase {
+    constructor(_el, _renderer, _theme, _ngZone, _rippleService, _focusState, _hostClass, _defaultConfig) {
         super(_theme, _ngZone);
         this._el = _el;
         this._renderer = _renderer;
         this._rippleService = _rippleService;
         this._focusState = _focusState;
+        this._hostClass = _hostClass;
+        this._defaultConfig = _defaultConfig;
         /**
          * Style
          * @docs-private
          */
-        this.classes = this._theme.addStyleSheet(STYLES, STYLE_PRIORITY);
+        this.classes = this._theme.renderStyleSheet(STYLES);
         this._rippleSensitive = false;
         this.setAutoContrast();
         this._triggerElement = _el;
         if (Platform.FIREFOX) {
-            this._theme.addStyle('button-ff', {
-                '&::-moz-focus-inner,&::-moz-focus-inner,&::-moz-focus-inner,&::-moz-focus-inner': {
-                    border: 0
-                }
-            }, this._el.nativeElement, undefined, STYLE_PRIORITY);
+            const newClass = this._theme.renderStyle('button-ff', () => (className) => `${className}::-moz-focus-inner,${className}::-moz-focus-inner{border:0;}`, STYLE_PRIORITY);
+            _renderer.addClass(_el.nativeElement, newClass);
         }
         this._renderer.addClass(this._el.nativeElement, this.classes.animations);
         if (!_theme.variables.button) {
@@ -119,12 +75,13 @@ let LyButton = class LyButton extends LyButtonMixinBase {
     set size(val) {
         if (val !== this.size) {
             this._size = val;
-            this._sizeClass = this._theme.addStyle(`lyButton.size:${val}`, (theme) => {
+            const newClass = this._theme.renderStyle(`${LyButton_1.и}--${val}-size`, (theme, ref) => {
                 if (theme.button && theme.button.size && theme.button.size[val]) {
-                    return theme.button.size[val];
+                    return theme.button.size[val](ref.selectorsOf(STYLES));
                 }
                 throw new Error(`Value button.size['${val}'] not found in ThemeVariables`);
-            }, this._el.nativeElement, this._sizeClass, STYLE_PRIORITY);
+            }, STYLE_PRIORITY);
+            this._sizeClass = this._hostClass.update(newClass, this._sizeClass);
         }
     }
     /** Button appearance */
@@ -135,13 +92,18 @@ let LyButton = class LyButton extends LyButtonMixinBase {
                 this._rippleConfig.centered = true;
             }
             this._appearance = val;
-            this._appearanceClass = this._theme.addStyle(`lyButton.appearance:${val}`, (theme) => {
+            const newClass = this._theme.renderStyle(`${LyButton_1.и}--${val}-appearance`, (theme, ref) => {
                 if (!(theme.button.appearance && theme.button.appearance[val])) {
                     throw new Error(`Value button.appearance['${val}'] not found in ThemeVariables`);
                 }
-                return theme.button.appearance[val];
-            }, this._el.nativeElement, this._appearanceClass, STYLE_PRIORITY + 1);
+                return theme.button.appearance[val](ref.selectorsOf(STYLES));
+            }, STYLE_PRIORITY + 1);
+            this._appearanceClass = this._hostClass.update(newClass, this._appearanceClass);
         }
+    }
+    /** @docs-private */
+    get hostElement() {
+        return this._el.nativeElement;
     }
     ngOnChanges() {
         this.updateStyle(this._el);
@@ -152,14 +114,15 @@ let LyButton = class LyButton extends LyButtonMixinBase {
         const { button } = this._theme.variables;
         if (button) {
             this._renderer.addClass(this._el.nativeElement, this.classes.root);
-            // Apply default config
             if (this.size == null && this.appearance == null) {
-                this.size = button.defaultConfig.size;
+                // Apply default config
+                this.size = (this._defaultConfig && this._defaultConfig.size)
+                    || DEFAULT_SIZE;
             }
             else {
-                if (button.defaultConfig && button.defaultConfig.appearance) {
+                if (this._defaultConfig && this._defaultConfig.appearance) {
                     if (this.appearance == null) {
-                        this.appearance = button.defaultConfig.appearance;
+                        this.appearance = this._defaultConfig.appearance;
                     }
                 }
             }
@@ -170,7 +133,6 @@ let LyButton = class LyButton extends LyButtonMixinBase {
         }
     }
     ngAfterViewInit() {
-        // this._renderer.addClass(this._el.nativeElement, this.classes.animations);
         const focusState = this._focusState.listen(this._el);
         if (focusState) {
             focusState.subscribe((event) => {
@@ -193,26 +155,30 @@ let LyButton = class LyButton extends LyButtonMixinBase {
         this._removeRippleEvents();
     }
 };
+LyButton.и = 'LyButton';
+LyButton.ctorParameters = () => [
+    { type: ElementRef },
+    { type: Renderer2 },
+    { type: LyTheme2 },
+    { type: NgZone },
+    { type: LyRippleService },
+    { type: LyFocusState },
+    { type: LyHostClass },
+    { type: undefined, decorators: [{ type: Optional }, { type: Inject, args: [LY_BUTTON_DEFAULT_OPTIONS,] }] }
+];
 __decorate([
-    ViewChild('rippleContainer', { static: false }),
-    __metadata("design:type", ElementRef)
+    ViewChild('rippleContainer', { static: false })
 ], LyButton.prototype, "_rippleContainer", void 0);
 __decorate([
-    Input('sensitive'),
-    __metadata("design:type", Boolean),
-    __metadata("design:paramtypes", [Boolean])
+    Input('sensitive')
 ], LyButton.prototype, "rippleSensitive", null);
 __decorate([
-    Input(),
-    __metadata("design:type", String),
-    __metadata("design:paramtypes", [String])
+    Input()
 ], LyButton.prototype, "size", null);
 __decorate([
-    Input(),
-    __metadata("design:type", String),
-    __metadata("design:paramtypes", [String])
+    Input()
 ], LyButton.prototype, "appearance", null);
-LyButton = __decorate([
+LyButton = LyButton_1 = __decorate([
     Component({
         selector: 'button[ly-button], a[ly-button]',
         changeDetection: ChangeDetectionStrategy.OnPush,
@@ -226,14 +192,11 @@ LyButton = __decorate([
             'elevation',
             'shadowColor',
             'disableRipple'
-        ]
+        ],
+        providers: [LyHostClass],
+        exportAs: 'lyButton'
     }),
-    __metadata("design:paramtypes", [ElementRef,
-        Renderer2,
-        LyTheme2,
-        NgZone,
-        LyRippleService,
-        LyFocusState])
+    __param(7, Optional()), __param(7, Inject(LY_BUTTON_DEFAULT_OPTIONS))
 ], LyButton);
 
 let LyButtonModule = class LyButtonModule {
@@ -245,5 +208,9 @@ LyButtonModule = __decorate([
     })
 ], LyButtonModule);
 
-export { LyButton, LyButtonBase, LyButtonMixinBase, LyButtonModule };
+/**
+ * Generated bundle index. Do not edit.
+ */
+
+export { LY_BUTTON_DEFAULT_OPTIONS, LyButton, LyButtonBase, LyButtonMixinBase, LyButtonModule, STYLES };
 //# sourceMappingURL=alyle-ui-button.js.map

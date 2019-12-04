@@ -1,6 +1,6 @@
-import { __assign, __decorate, __param, __metadata } from 'tslib';
-import { Directive, Inject, forwardRef, Renderer2, ElementRef, ContentChild, ViewChild, TemplateRef, Input, Component, ChangeDetectionStrategy, ViewContainerRef, ChangeDetectorRef, NgZone, NgModule } from '@angular/core';
-import { XPosition, LY_COMMON_STYLES, LyTheme2, toBoolean, eachMedia, DirPosition, YPosition, Platform, WinResize, LyCommonModule } from '@alyle/ui';
+import { __decorate, __param } from 'tslib';
+import { Renderer2, ElementRef, Inject, forwardRef, Directive, ContentChild, ViewContainerRef, ChangeDetectorRef, NgZone, ViewChild, TemplateRef, Input, Component, ChangeDetectionStrategy, NgModule } from '@angular/core';
+import { XPosition, StyleCollection, styleTemplateToString, LY_COMMON_STYLES, LyTheme2, toBoolean, eachMedia, DirPosition, YPosition, Platform, StyleRenderer, WinResize, LyHostClass, LyCommonModule } from '@alyle/ui';
 import { CommonModule } from '@angular/common';
 
 var DEFAULT_MODE = 'side';
@@ -8,34 +8,25 @@ var DEFAULT_WIDTH = '230px';
 var DEFAULT_VALUE = '';
 var STYLE_PRIORITY = -2;
 var DEFAULT_POSITION = XPosition.before;
-var STYLES = function (theme) { return ({
-    drawerContainer: {
-        display: 'block',
-        position: 'relative',
-        overflow: 'hidden',
-        '-webkit-overflow-scrolling': 'touch'
-    },
-    drawer: {
-        display: 'block',
-        position: 'fixed',
-        zIndex: theme.zIndex.drawer,
-        overflow: 'auto',
-        visibility: 'hidden'
-    },
-    drawerContent: {
-        display: 'block'
-    },
-    drawerOpened: {
-        transform: 'translate(0px, 0px)',
-        visibility: 'visible'
-    },
-    drawerClosed: null,
-    backdrop: __assign({}, LY_COMMON_STYLES.fill, { backgroundColor: theme.drawer.backdrop }),
-    transition: {
-        transition: theme.animations.durations.complex + "ms " + theme.animations.curves.deceleration,
-        transitionProperty: 'transform, margin, visibility'
-    }
-}); };
+var STYLES = function (theme, ref) {
+    var __ = ref.selectorsOf(STYLES);
+    return {
+        $name: LyDrawerContent.и,
+        $priority: STYLE_PRIORITY + 1.9,
+        root: function () { return (theme.drawer
+            && theme.drawer.root
+            && (theme.drawer.root instanceof StyleCollection
+                ? theme.drawer.root.setTransformer(function (fn) { return fn(__); }).css
+                : theme.drawer.root(__))); },
+        drawerContainer: function (className) { return className + "{display:block;position:relative;overflow:hidden;-webkit-overflow-scrolling:touch;}"; },
+        drawer: function (className) { return className + "{display:block;position:fixed;z-index:" + theme.zIndex.drawer + ";overflow:auto;visibility:hidden;}"; },
+        drawerContent: function (className) { return className + "{display:block;}"; },
+        drawerOpened: function (className) { return className + "{transform:translate(0px, 0px);visibility:visible;}"; },
+        drawerClosed: null,
+        backdrop: function (className) { return "" + styleTemplateToString((LY_COMMON_STYLES.fill), "" + className) + className + "{background-color:" + theme.drawer.backdrop + ";}"; },
+        transition: function (className) { return className + "{transition:" + theme.animations.durations.complex + "ms " + theme.animations.curves.deceleration + ";transition-property:transform, margin, visibility;}"; }
+    };
+};
 var LyDrawerContent = /** @class */ (function () {
     function LyDrawerContent(_renderer, _el, drawerContainer) {
         this._renderer = _renderer;
@@ -45,13 +36,17 @@ var LyDrawerContent = /** @class */ (function () {
     LyDrawerContent.prototype._getHostElement = function () {
         return this._el.nativeElement;
     };
+    LyDrawerContent.и = 'LyDrawerContent';
+    LyDrawerContent.ctorParameters = function () { return [
+        { type: Renderer2 },
+        { type: ElementRef },
+        { type: undefined, decorators: [{ type: Inject, args: [forwardRef(function () { return LyDrawerContainer; }),] }] }
+    ]; };
     LyDrawerContent = __decorate([
         Directive({
             selector: 'ly-drawer-content'
         }),
-        __param(2, Inject(forwardRef(function () { return LyDrawerContainer; }))),
-        __metadata("design:paramtypes", [Renderer2,
-            ElementRef, Object])
+        __param(2, Inject(forwardRef(function () { return LyDrawerContainer; })))
     ], LyDrawerContent);
     return LyDrawerContent;
 }());
@@ -61,30 +56,32 @@ var LyDrawerContainer = /** @class */ (function () {
         this._renderer = _renderer;
         this._el = _el;
         /** @docs-private */
-        this.classes = this._theme.addStyleSheet(STYLES, STYLE_PRIORITY + 1.9);
+        this.classes = this._theme.renderStyleSheet(STYLES);
         this._openDrawers = 0;
         this._renderer.addClass(this._el.nativeElement, this.classes.drawerContainer);
     }
     LyDrawerContainer.prototype._getHostElement = function () {
         return this._el.nativeElement;
     };
+    LyDrawerContainer.ctorParameters = function () { return [
+        { type: LyTheme2 },
+        { type: Renderer2 },
+        { type: ElementRef }
+    ]; };
     __decorate([
-        ContentChild(forwardRef(function () { return LyDrawerContent; }), { static: true }),
-        __metadata("design:type", LyDrawerContent)
+        ContentChild(forwardRef(function () { return LyDrawerContent; }), { static: true })
     ], LyDrawerContainer.prototype, "_drawerContent", void 0);
     LyDrawerContainer = __decorate([
         Directive({
             selector: 'ly-drawer-container'
-        }),
-        __metadata("design:paramtypes", [LyTheme2,
-            Renderer2,
-            ElementRef])
+        })
     ], LyDrawerContainer);
     return LyDrawerContainer;
 }());
 var LyDrawer = /** @class */ (function () {
-    function LyDrawer(_theme, _renderer, _el, _drawerContainer, _vcr, _winResize, _cd, _zone) {
+    function LyDrawer(_theme, _styleRenderer, _renderer, _el, _drawerContainer, _vcr, _winResize, _cd, _zone) {
         this._theme = _theme;
+        this._styleRenderer = _styleRenderer;
         this._renderer = _renderer;
         this._el = _el;
         this._drawerContainer = _drawerContainer;
@@ -101,6 +98,7 @@ var LyDrawer = /** @class */ (function () {
         this.mode = DEFAULT_MODE;
         this._renderer.addClass(this._el.nativeElement, _drawerContainer.classes.drawer);
     }
+    LyDrawer_1 = LyDrawer;
     Object.defineProperty(LyDrawer.prototype, "opened", {
         get: function () {
             return this._opened;
@@ -131,14 +129,7 @@ var LyDrawer = /** @class */ (function () {
         set: function (val) {
             if (val !== this.position) {
                 this._position = val;
-                this._theme.addStyle("drawer.position:" + val, 
-                // the style needs to be a function so that it can be changed dynamically
-                function () {
-                    var _a;
-                    return (_a = {},
-                        _a[val] = 0,
-                        _a);
-                }, this._el.nativeElement, this._positionClass, STYLE_PRIORITY);
+                this[0x1] = this._styleRenderer.add(LyDrawer_1.и + "--position-" + val, function (theme) { return function (className) { return className + "{" + theme.getDirection(val) + ":0;}"; }; }, STYLE_PRIORITY, this[0x1]);
             }
         },
         enumerable: true,
@@ -378,68 +369,63 @@ var LyDrawer = /** @class */ (function () {
             this._isAnimation = false;
         }
     };
+    var LyDrawer_1;
+    LyDrawer.и = 'LyDrawer';
+    LyDrawer.ctorParameters = function () { return [
+        { type: LyTheme2 },
+        { type: StyleRenderer },
+        { type: Renderer2 },
+        { type: ElementRef },
+        { type: LyDrawerContainer },
+        { type: ViewContainerRef },
+        { type: WinResize },
+        { type: ChangeDetectorRef },
+        { type: NgZone }
+    ]; };
     __decorate([
-        ViewChild(TemplateRef, { static: false }),
-        __metadata("design:type", TemplateRef)
+        ViewChild(TemplateRef, { static: false })
     ], LyDrawer.prototype, "_backdrop", void 0);
     __decorate([
-        Input(),
-        __metadata("design:type", Boolean),
-        __metadata("design:paramtypes", [Boolean])
+        Input()
     ], LyDrawer.prototype, "opened", null);
     __decorate([
-        Input(),
-        __metadata("design:type", String)
+        Input()
     ], LyDrawer.prototype, "mode", void 0);
     __decorate([
-        Input(),
-        __metadata("design:type", Object)
+        Input()
     ], LyDrawer.prototype, "spacingAbove", void 0);
     __decorate([
-        Input(),
-        __metadata("design:type", Object)
+        Input()
     ], LyDrawer.prototype, "spacingBelow", void 0);
     __decorate([
-        Input(),
-        __metadata("design:type", Object)
+        Input()
     ], LyDrawer.prototype, "spacingBefore", void 0);
     __decorate([
-        Input(),
-        __metadata("design:type", Object)
+        Input()
     ], LyDrawer.prototype, "spacingAfter", void 0);
     __decorate([
-        Input(),
-        __metadata("design:type", Object)
+        Input()
     ], LyDrawer.prototype, "width", void 0);
     __decorate([
-        Input(),
-        __metadata("design:type", Object)
+        Input()
     ], LyDrawer.prototype, "height", void 0);
     __decorate([
-        Input(),
-        __metadata("design:type", Object),
-        __metadata("design:paramtypes", [Object])
+        Input()
     ], LyDrawer.prototype, "hasBackdrop", null);
     __decorate([
-        Input(),
-        __metadata("design:type", String),
-        __metadata("design:paramtypes", [String])
+        Input()
     ], LyDrawer.prototype, "position", null);
-    LyDrawer = __decorate([
+    LyDrawer = LyDrawer_1 = __decorate([
         Component({
             selector: 'ly-drawer',
             template: "<ng-content></ng-content>\n<ng-template>\n  <div [className]=\"classes.backdrop\" (click)=\"toggle()\"></div>\n</ng-template>",
             changeDetection: ChangeDetectionStrategy.OnPush,
-            exportAs: 'lyDrawer'
-        }),
-        __metadata("design:paramtypes", [LyTheme2,
-            Renderer2,
-            ElementRef,
-            LyDrawerContainer,
-            ViewContainerRef,
-            WinResize,
-            ChangeDetectorRef,
-            NgZone])
+            exportAs: 'lyDrawer',
+            providers: [
+                LyHostClass,
+                StyleRenderer
+            ]
+        })
     ], LyDrawer);
     return LyDrawer;
 }());
@@ -475,6 +461,10 @@ var LyDrawerModule = /** @class */ (function () {
     ], LyDrawerModule);
     return LyDrawerModule;
 }());
+
+/**
+ * Generated bundle index. Do not edit.
+ */
 
 export { LyDrawer, LyDrawerContainer, LyDrawerContent, LyDrawerModule, STYLES };
 //# sourceMappingURL=alyle-ui-drawer.js.map

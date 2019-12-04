@@ -2,7 +2,7 @@
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@alyle/ui'), require('@angular/forms'), require('rxjs'), require('@angular/common')) :
     typeof define === 'function' && define.amd ? define('@alyle/ui/slider', ['exports', '@angular/core', '@alyle/ui', '@angular/forms', 'rxjs', '@angular/common'], factory) :
     (global = global || self, factory((global.ly = global.ly || {}, global.ly.slider = {}), global.ng.core, global.ly.core, global.ng.forms, global.rxjs, global.ng.common));
-}(this, function (exports, core, ui, forms, rxjs, common) { 'use strict';
+}(this, (function (exports, core, ui, forms, rxjs, common) { 'use strict';
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
@@ -18,6 +18,20 @@
     See the Apache Version 2.0 License for specific language governing permissions
     and limitations under the License.
     ***************************************************************************** */
+    /* global Reflect, Promise */
+
+    var extendStatics = function(d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+
+    function __extends(d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    }
 
     var __assign = function() {
         __assign = Object.assign || function __assign(t) {
@@ -30,6 +44,18 @@
         return __assign.apply(this, arguments);
     };
 
+    function __rest(s, e) {
+        var t = {};
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+            t[p] = s[p];
+        if (s != null && typeof Object.getOwnPropertySymbols === "function")
+            for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+                if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                    t[p[i]] = s[p[i]];
+            }
+        return t;
+    }
+
     function __decorate(decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -37,8 +63,64 @@
         return c > 3 && r && Object.defineProperty(target, key, r), r;
     }
 
+    function __param(paramIndex, decorator) {
+        return function (target, key) { decorator(target, key, paramIndex); }
+    }
+
     function __metadata(metadataKey, metadataValue) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(metadataKey, metadataValue);
+    }
+
+    function __awaiter(thisArg, _arguments, P, generator) {
+        return new (P || (P = Promise))(function (resolve, reject) {
+            function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+            function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+            function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+            step((generator = generator.apply(thisArg, _arguments || [])).next());
+        });
+    }
+
+    function __generator(thisArg, body) {
+        var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+        return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+        function verb(n) { return function (v) { return step([n, v]); }; }
+        function step(op) {
+            if (f) throw new TypeError("Generator is already executing.");
+            while (_) try {
+                if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+                if (y = 0, t) op = [op[0] & 2, t.value];
+                switch (op[0]) {
+                    case 0: case 1: t = op; break;
+                    case 4: _.label++; return { value: op[1], done: false };
+                    case 5: _.label++; y = op[1]; op = [0]; continue;
+                    case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                    default:
+                        if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                        if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                        if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                        if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                        if (t[2]) _.ops.pop();
+                        _.trys.pop(); continue;
+                }
+                op = body.call(thisArg, _);
+            } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+            if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+        }
+    }
+
+    function __exportStar(m, exports) {
+        for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
+    }
+
+    function __values(o) {
+        var m = typeof Symbol === "function" && o[Symbol.iterator], i = 0;
+        if (m) return m.call(o);
+        return {
+            next: function () {
+                if (o && i >= o.length) o = void 0;
+                return { value: o && o[i++], done: !o };
+            }
+        };
     }
 
     function __read(o, n) {
@@ -64,234 +146,98 @@
         return ar;
     }
 
+    function __spreadArrays() {
+        for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
+        for (var r = Array(s), k = 0, i = 0; i < il; i++)
+            for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
+                r[k] = a[j];
+        return r;
+    };
+
+    function __await(v) {
+        return this instanceof __await ? (this.v = v, this) : new __await(v);
+    }
+
+    function __asyncGenerator(thisArg, _arguments, generator) {
+        if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
+        var g = generator.apply(thisArg, _arguments || []), i, q = [];
+        return i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () { return this; }, i;
+        function verb(n) { if (g[n]) i[n] = function (v) { return new Promise(function (a, b) { q.push([n, v, a, b]) > 1 || resume(n, v); }); }; }
+        function resume(n, v) { try { step(g[n](v)); } catch (e) { settle(q[0][3], e); } }
+        function step(r) { r.value instanceof __await ? Promise.resolve(r.value.v).then(fulfill, reject) : settle(q[0][2], r); }
+        function fulfill(value) { resume("next", value); }
+        function reject(value) { resume("throw", value); }
+        function settle(f, v) { if (f(v), q.shift(), q.length) resume(q[0][0], q[0][1]); }
+    }
+
+    function __asyncDelegator(o) {
+        var i, p;
+        return i = {}, verb("next"), verb("throw", function (e) { throw e; }), verb("return"), i[Symbol.iterator] = function () { return this; }, i;
+        function verb(n, f) { i[n] = o[n] ? function (v) { return (p = !p) ? { value: __await(o[n](v)), done: n === "return" } : f ? f(v) : v; } : f; }
+    }
+
+    function __asyncValues(o) {
+        if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
+        var m = o[Symbol.asyncIterator], i;
+        return m ? m.call(o) : (o = typeof __values === "function" ? __values(o) : o[Symbol.iterator](), i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () { return this; }, i);
+        function verb(n) { i[n] = o[n] && function (v) { return new Promise(function (resolve, reject) { v = o[n](v), settle(resolve, reject, v.done, v.value); }); }; }
+        function settle(resolve, reject, d, v) { Promise.resolve(v).then(function(v) { resolve({ value: v, done: d }); }, reject); }
+    }
+
+    function __makeTemplateObject(cooked, raw) {
+        if (Object.defineProperty) { Object.defineProperty(cooked, "raw", { value: raw }); } else { cooked.raw = raw; }
+        return cooked;
+    };
+
+    function __importStar(mod) {
+        if (mod && mod.__esModule) return mod;
+        var result = {};
+        if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+        result.default = mod;
+        return result;
+    }
+
+    function __importDefault(mod) {
+        return (mod && mod.__esModule) ? mod : { default: mod };
+    }
+
+    var LY_SLIDER_DEFAULT_OPTIONS = new core.InjectionToken('LY_SLIDER_DEFAULT_OPTIONS');
     var LY_SLIDER_CONTROL_VALUE_ACCESSOR = {
         provide: forms.NG_VALUE_ACCESSOR,
         useExisting: core.forwardRef(function () { return LySlider; }),
         multi: true
     };
     var STYLE_PRIORITY = -2;
-    var STYLES = function (theme) {
-        var _a, _b, _c, _d;
-        return ({
+    var STYLES = function (theme, ref) {
+        var __ = ref.selectorsOf(STYLES);
+        var before = theme.before;
+        return {
             $priority: STYLE_PRIORITY,
-            root: (_a = {
-                    display: 'inline-block',
-                    position: 'relative',
-                    boxSizing: 'border-box',
-                    cursor: 'pointer',
-                    '{bg}': __assign({}, ui.LY_COMMON_STYLES.fill, { margin: 'auto' })
-                },
-                _a[[
-                    // always show visible thumb, when {thumbVisible} is available
-                    '&{thumbVisible} {thumb}',
-                    // on hover
-                    '&:not({thumbNotVisible}):not({disabled}) {thumbContent}:hover {thumb}',
-                    // on focused
-                    '&:not({thumbNotVisible}) {thumbContent}{thumbContentFocused} {thumb}'
-                ].join()] = {
-                    borderRadius: '50% 50% 0%'
-                },
-                _a[[
-                    '&{thumbVisible} {thumbContent}::before',
-                    '&:not({thumbNotVisible}):not({disabled}) {thumbContent}:hover::before',
-                    '&:not({thumbNotVisible}) {thumbContent}{thumbContentFocused}::before'
-                ].join()] = {
-                    transform: 'scale(1)'
-                },
-                _a['&'] = theme.slider ? theme.slider.root : null,
-                _a),
-            track: {
-                position: 'absolute',
-                margin: 'auto'
-            },
-            bg: {},
-            thumbContainer: {
-                width: 0,
-                height: 0,
-                position: 'absolute',
-                margin: 'auto'
-            },
-            thumbContent: {
-                '&::before': {
-                    content: "''",
-                    position: 'absolute',
-                    opacity: .6,
-                    transform: 'scale(0)',
-                    transition: "transform " + theme.animations.durations.entering + "ms " + theme.animations.curves.sharp + " 0ms, background " + theme.animations.durations.complex + "ms " + theme.animations.curves.sharp + " 0ms"
-                }
-            },
-            thumb: {
-                position: 'absolute',
-                width: '12px',
-                height: '12px',
-                left: '-6px',
-                top: '-6px',
-                borderRadius: '50%',
-                outline: 0,
-                transition: ['border-radius'].map(function (prop) { return prop + " " + theme.animations.durations.exiting + "ms " + theme.animations.curves.standard + " 0ms"; }).join(),
-                '&::before': __assign({ content: "''" }, ui.LY_COMMON_STYLES.fill, { borderRadius: '50%', transition: ['box-shadow'].map(function (prop) { return prop + " " + theme.animations.durations.entering + "ms " + theme.animations.curves.sharp + " 0ms"; }).join() })
-            },
-            thumbLabel: {
-                position: 'absolute',
-                width: '28px',
-                height: '28px',
-                borderRadius: '50%',
-                top: '-14px',
-                before: '-14px',
-                transition: ['transform', 'top', 'left', 'right', 'border-radius'].map(function (prop) { return prop + " " + theme.animations.durations.entering + "ms " + theme.animations.curves.sharp + " 0ms"; }).join()
-            },
-            thumbLabelValue: {
-                display: 'flex',
-                height: '100%',
-                width: '100%',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: '12px',
-                color: '#fff'
-            },
-            horizontal: (_b = {
-                    width: '120px',
-                    height: '2px',
-                    padding: '10px 0',
-                    touchAction: 'pan-y !important',
-                    '& {track}, & {bg}': {
-                        height: '2px',
-                        width: '100%'
-                    },
-                    '{track}': {
-                        before: 0,
-                        top: 0,
-                        bottom: 0
-                    },
-                    '& {thumb}': {
-                        transform: 'rotateZ(-135deg)'
-                    },
-                    '{thumbLabel}': {
-                        transform: 'rotateZ(45deg) scale(0)',
-                    }
-                },
-                _b[[
-                    // always show visible thumb, when {thumbVisible} is available
-                    '&{thumbVisible} {thumbLabel}',
-                    // on hover
-                    '&:not({disabled}) {thumbContent}:hover {thumbLabel}',
-                    // on focused
-                    '& {thumbContent}{thumbContentFocused} {thumbLabel}'
-                ].join()] = {
-                    borderRadius: '50% 50% 0%',
-                    top: '-50px',
-                    transform: 'rotateZ(45deg) scale(1)'
-                },
-                _b['& {thumbLabelValue}'] = {
-                    transform: 'rotateZ(-45deg)'
-                },
-                _b['{thumbContainer}'] = {
-                    top: 0,
-                    bottom: 0
-                },
-                _b['& {thumbContent}::before'] = {
-                    width: '2px',
-                    height: '24px',
-                    left: '-1px',
-                    top: '-24px'
-                },
-                _b['{tick}'] = {
-                    width: '2px',
-                    height: 'inherit',
-                    top: 0,
-                    bottom: 0,
-                },
-                _b['{mark}'] = {
-                    top: '22px',
-                    transform: "translateX(" + (theme.direction === ui.Dir.ltr ? '-' : '') + "50%)",
-                },
-                _b['&{marked}'] = {
-                    marginBottom: '24px'
-                },
-                _b),
-            vertical: (_c = {
-                    width: '2px',
-                    height: '120px',
-                    padding: '0 10px',
-                    touchAction: 'pan-x !important',
-                    '& {track}, & {bg}': {
-                        height: '100%',
-                        width: '2px'
-                    },
-                    '{track}': {
-                        bottom: 0,
-                        left: 0,
-                        right: 0
-                    },
-                    '& {thumb}': {
-                        transform: theme.direction === ui.Dir.ltr ? 'rotateZ(135deg)' : 'rotateZ(-45deg)'
-                    },
-                    '& {thumbLabel}': {
-                        transform: 'rotateZ(-45deg) scale(0)'
-                    }
-                },
-                _c[[
-                    // always show visible thumb, when {thumbVisible} is available
-                    '&{thumbVisible} {thumbLabel}',
-                    // on hover
-                    '&:not({disabled}) {thumbContent}:hover {thumbLabel}',
-                    // on focused
-                    '& {thumbContent}{thumbContentFocused} {thumbLabel}'
-                ].join()] = {
-                    borderRadius: theme.direction === ui.Dir.ltr ? '50% 50% 0%' : '0 50% 50% 50%',
-                    before: '-50px',
-                    transform: 'rotateZ(-45deg) scale(1)'
-                },
-                _c['& {thumbLabelValue}'] = {
-                    transform: 'rotateZ(45deg)'
-                },
-                _c['{thumbContainer}'] = {
-                    left: 0,
-                    right: 0
-                },
-                _c['{thumbContent}::before'] = {
-                    width: '24px',
-                    height: '2px',
-                    before: '-24px',
-                    top: '-1px'
-                },
-                _c['{tick}'] = {
-                    width: 'inherit',
-                    height: '2px',
-                    left: 0,
-                    right: 0
-                },
-                _c['{mark}'] = {
-                    before: '22px',
-                    transform: 'translateY(50%)',
-                },
-                _c['&{marked}'] = (_d = {},
-                    _d[theme.direction === ui.Dir.ltr ? 'marginRight' : 'marginLeft'] = '24px',
-                    _d),
-                _c),
-            marked: {},
-            mark: {
-                position: 'absolute',
-                whiteSpace: 'nowrap',
-                fontSize: '14px',
-                color: theme.text.secondary
-            },
-            markActive: {
-                color: 'currentColor'
-            },
-            tick: {
-                position: 'absolute',
-                margin: 'auto'
-            },
-            tickActive: {},
+            root: function () { return function (className) { return className + "{display:inline-block;position:relative;box-sizing:border-box;cursor:pointer;}" + ui.styleTemplateToString(((theme.slider
+                && theme.slider.root
+                && (theme.slider.root instanceof ui.StyleCollection
+                    ? theme.slider.root.setTransformer(function (fn) { return fn(__); }).css
+                    : theme.slider.root(__)))), "" + className) + ui.styleTemplateToString((ui.LY_COMMON_STYLES.fill), className + " " + __.bg) + className + " " + __.bg + "{margin:auto;}" + className + __.thumbVisible + " " + __.thumb + "," + className + ":not(" + __.thumbNotVisible + "):not(" + __.disabled + ") " + __.thumbContent + ":hover " + __.thumb + "," + className + ":not(" + __.thumbNotVisible + ") " + __.thumbContent + __.thumbContentFocused + " " + __.thumb + "{border-radius:50% 50% 0%;}" + className + __.thumbVisible + " " + __.thumbContent + "::before," + className + ":not(" + __.thumbNotVisible + "):not(" + __.disabled + ") " + __.thumbContent + ":hover::before," + className + ":not(" + __.thumbNotVisible + ") " + __.thumbContent + __.thumbContentFocused + "::before{transform:scale(1);}"; }; },
+            track: function (className) { return className + "{position:absolute;margin:auto;}"; },
+            bg: null,
+            thumbContainer: function (className) { return className + "{width:0;height:0;position:absolute;margin:auto;}"; },
+            thumbContent: function (className) { return className + "::before{content:'';position:absolute;opacity:.6;transform:scale(0);transition:transform " + theme.animations.durations.entering + "ms " + theme.animations.curves.sharp + " 0ms, background " + theme.animations.durations.complex + "ms " + theme.animations.curves.sharp + " 0ms;}"; },
+            thumb: function (className) { return className + "{position:absolute;width:12px;height:12px;left:-6px;top:-6px;border-radius:50%;outline:0;transition:" + ['border-radius'].map(function (prop) { return prop + " " + theme.animations.durations.exiting + "ms " + theme.animations.curves.standard + " 0ms"; }).join() + ";}" + className + "::before{content:'';border-radius:50%;transition:" + ['box-shadow'].map(function (prop) { return prop + " " + theme.animations.durations.entering + "ms " + theme.animations.curves.sharp + " 0ms"; }).join() + ";}" + ui.styleTemplateToString((ui.LY_COMMON_STYLES.fill), className + "::before"); },
+            thumbLabel: function (className) { return className + "{position:absolute;width:28px;height:28px;border-radius:50%;top:-14px;" + before + ":-14px;transition:" + ['transform', 'top', 'left', 'right', 'border-radius'].map(function (prop) { return prop + " " + theme.animations.durations.entering + "ms " + theme.animations.curves.sharp + " 0ms"; }).join() + ";}"; },
+            thumbLabelValue: function (className) { return className + "{display:flex;height:100%;width:100%;align-items:center;justify-content:center;font-size:12px;color:#fff;}"; },
+            horizontal: function () { return function (className) { return className + "{width:120px;height:2px;padding:10px 0;touch-action:pan-y !important;}" + className + " " + __.track + "," + className + " " + __.bg + "{height:2px;width:100%;}" + className + " " + __.track + "{" + before + ":0;top:0;bottom:0;}" + className + " " + __.thumb + "{transform:rotateZ(-135deg);}" + className + " " + __.thumbLabel + "{transform:rotateZ(45deg) scale(0);}" + className + __.thumbVisible + " " + __.thumbLabel + "," + className + ":not(" + __.disabled + ") " + __.thumbContent + ":hover " + __.thumbLabel + "," + className + " " + __.thumbContent + __.thumbContentFocused + " " + __.thumbLabel + "{border-radius:50% 50% 0%;top:-50px;transform:rotateZ(45deg) scale(1);}" + className + " " + __.thumbLabelValue + "{transform:rotateZ(-45deg);}" + className + " " + __.thumbContainer + "{top:0;bottom:0;}" + className + " " + __.thumbContent + "::before{width:2px;height:24px;left:-1px;top:-24px;}" + className + " " + __.tick + "{width:2px;height:inherit;top:0;bottom:0;}" + className + " " + __.mark + "{top:22px;transform:translateX(" + (theme.direction === ui.Dir.ltr ? '-' : '') + "50%);}" + className + __.marked + "{margin-bottom:24px;}"; }; },
+            vertical: function () { return function (className) { return className + "{width:2px;height:120px;padding:0 10px;touch-action:pan-x !important;}" + className + " " + __.track + "," + className + " " + __.bg + "{height:100%;width:2px;}" + className + " " + __.track + "{bottom:0;left:0;right:0;}" + className + " " + __.thumb + "{transform:" + (theme.direction === ui.Dir.ltr ? 'rotateZ(135deg)' : 'rotateZ(-45deg)') + ";}" + className + " " + __.thumbLabel + "{transform:rotateZ(-45deg) scale(0);}" + className + __.thumbVisible + " " + __.thumbLabel + "," + className + ":not(" + __.disabled + ") " + __.thumbContent + ":hover " + __.thumbLabel + "," + className + " " + __.thumbContent + __.thumbContentFocused + " " + __.thumbLabel + "{border-radius:" + (theme.direction === ui.Dir.ltr ? '50% 50% 0%' : '0 50% 50% 50%') + ";before:-50px;transform:rotateZ(-45deg) scale(1);}" + className + " " + __.thumbLabelValue + "{transform:rotateZ(45deg);}" + className + " " + __.thumbContainer + "{left:0;right:0;}" + className + " " + __.thumbContent + "::before{width:24px;height:2px;before:-24px;top:-1px;}" + className + " " + __.tick + "{width:inherit;height:2px;left:0;right:0;}" + className + " " + __.mark + "{" + before + ":22px;transform:translateY(50%);}" + className + __.marked + "{" + (theme.direction === ui.Dir.ltr ? 'margin-right' : 'margin-left') + ":24px;}"; }; },
+            marked: null,
+            mark: function (className) { return className + "{position:absolute;white-space:nowrap;font-size:14px;color:" + theme.text.secondary + ";}"; },
+            markActive: function (className) { return className + "{color:currentColor;}"; },
+            tick: function (className) { return className + "{position:absolute;margin:auto;}"; },
+            tickActive: null,
             thumbVisible: null,
             thumbNotVisible: null,
             thumbContentFocused: null,
             sliding: null,
-            disabled: {
-                cursor: 'default'
-            }
-        });
+            disabled: function (className) { return className + "{cursor:default;}"; }
+        };
     };
     var ɵ0 = STYLES;
     /** A change event emitted by the LySlider component. */
@@ -308,13 +254,15 @@
     }());
     var LySlider = /** @class */ (function () {
         // private _ngClass: NgClass;
-        function LySlider(_theme, _el, _renderer, _cd, _hostClass) {
+        function LySlider(_theme, _el, _renderer, _cd, _hostClass, _sr, _default) {
             this._theme = _theme;
             this._el = _el;
             this._renderer = _renderer;
             this._cd = _cd;
             this._hostClass = _hostClass;
-            this.classes = this._theme.addStyleSheet(STYLES);
+            this._sr = _sr;
+            this._default = _default;
+            this.classes = this._theme.renderStyleSheet(STYLES);
             this._value = null;
             this._min = 0;
             this._max = 100;
@@ -423,13 +371,18 @@
             set: function (val) {
                 if (val !== this.appearance) {
                     this._appearance = val;
-                    this._appearanceClass = this._theme.addStyle(LySlider_1.и + ".appearance:" + val, function (theme) {
-                        var styleFn = theme.slider.appearance[val].appearance;
-                        if (!styleFn) {
-                            throw ui.getLyThemeStyleUndefinedError(LySlider_1.и, 'appearance', val);
+                    this._appearanceClass = this._sr.add(LySlider_1.и + ".appearance:" + val, function (theme, ref) {
+                        var classes = ref.selectorsOf(STYLES);
+                        if (theme.slider && theme.slider.appearance) {
+                            var appearance = theme.slider.appearance[val];
+                            if (appearance) {
+                                return appearance instanceof ui.StyleCollection
+                                    ? appearance.setTransformer(function (_) { return _(classes); }).css
+                                    : appearance(classes);
+                            }
                         }
-                        return styleFn(theme, val);
-                    }, this._el.nativeElement, this._appearanceClass, STYLE_PRIORITY, STYLES);
+                        throw new Error(val + " not found in theme.slider.appearance");
+                    }, STYLE_PRIORITY, this._appearanceClass);
                 }
             },
             enumerable: true,
@@ -442,13 +395,21 @@
             },
             set: function (val) {
                 this._color = val;
-                var appearance = this.appearance;
                 var styleKey = LySlider_1.и + ".color:" + val;
-                var newStyle = function (theme) {
+                var newStyle = function (theme, ref) {
                     var color = theme.colorOf(val);
-                    return theme.slider.appearance[appearance].color(theme, color);
+                    var __ = ref.selectorsOf(STYLES);
+                    if (theme.slider && theme.slider.color) {
+                        var sliderColor = theme.slider.color;
+                        if (sliderColor) {
+                            return sliderColor instanceof ui.StyleCollection
+                                ? (sliderColor).setTransformer(function (_) { return _(__, color); }).css
+                                : sliderColor(__, color);
+                        }
+                    }
+                    throw new Error(val + " not found in theme.slider.color");
                 };
-                this._colorClass = this._theme.addStyle(styleKey, newStyle, this._el.nativeElement, this._colorClass, STYLE_PRIORITY + 1, STYLES);
+                this._colorClass = this._sr.add(styleKey, newStyle, STYLE_PRIORITY + 1, this._colorClass);
             },
             enumerable: true,
             configurable: true
@@ -535,23 +496,29 @@
                 if (newVal !== this.disabled) {
                     this._disabled = newVal;
                     if (newVal) {
-                        var appearance_1 = this.appearance;
-                        var styleKey = LySlider_1.и + ".disabled:" + val;
+                        var color_1 = this.color;
+                        var styleKey = LySlider_1.и + ".disabled:" + val + "-" + color_1;
                         var newStyle = void 0;
-                        if (!this._theme.existStyle(styleKey)) {
-                            var color_1 = this.color;
-                            newStyle = function (theme) {
-                                var colorCss = theme.colorOf(color_1);
-                                return theme.slider.appearance[appearance_1].disabled(theme, colorCss);
-                            };
-                        }
-                        var newClass = this._theme.addStyle(styleKey, newStyle, this._el.nativeElement, this._disabledClass, STYLE_PRIORITY + 2, STYLES);
-                        this._renderer.addClass(this._getHostElement(), this.classes.disabled);
+                        newStyle = function (theme, ref) {
+                            var clr = theme.colorOf(color_1);
+                            var __ = ref.selectorsOf(STYLES);
+                            if (theme.slider && theme.slider.disabled) {
+                                var sliderColor = theme.slider.disabled;
+                                if (sliderColor) {
+                                    return sliderColor instanceof ui.StyleCollection
+                                        ? (sliderColor).setTransformer(function (_) { return _(__, clr); }).css
+                                        : sliderColor(__, clr);
+                                }
+                            }
+                            throw new Error(val + " not found in theme.slider.color");
+                        };
+                        var newClass = this._sr.add(styleKey, newStyle, STYLE_PRIORITY + 1.5, this._disabledClass);
+                        this._hostClass.add(this.classes.disabled);
                         this._disabledClass = newClass;
                     }
                     else if (this._disabledClass) {
-                        this._renderer.removeClass(this._getHostElement(), this._disabledClass);
-                        this._renderer.removeClass(this._getHostElement(), this.classes.disabled);
+                        this._hostClass.remove(this._disabledClass);
+                        this._hostClass.remove(this.classes.disabled);
                         this._disabledClass = null;
                     }
                 }
@@ -595,7 +562,7 @@
             });
             /** Set default appearance */
             if (this.appearance == null) {
-                this.appearance = this._theme.variables.slider.defaultConfig.appearance;
+                this.appearance = (this._default && this._default.appearance) || 'standard';
             }
             /** Set horizontal slider */
             if (this.vertical == null) {
@@ -854,92 +821,71 @@
         };
         var LySlider_1;
         LySlider.и = 'LySlider';
+        LySlider.ctorParameters = function () { return [
+            { type: ui.LyTheme2 },
+            { type: core.ElementRef },
+            { type: core.Renderer2 },
+            { type: core.ChangeDetectorRef },
+            { type: ui.LyHostClass },
+            { type: ui.StyleRenderer },
+            { type: undefined, decorators: [{ type: core.Optional }, { type: core.Inject, args: [LY_SLIDER_DEFAULT_OPTIONS,] }] }
+        ]; };
         __decorate([
-            core.ViewChild('bg', { static: false }),
-            __metadata("design:type", core.ElementRef)
+            core.ViewChild('bg', { static: false })
         ], LySlider.prototype, "_bg", void 0);
         __decorate([
-            core.ViewChild('track', { static: true }),
-            __metadata("design:type", core.ElementRef)
+            core.ViewChild('track', { static: true })
         ], LySlider.prototype, "_track", void 0);
         __decorate([
-            core.ViewChild('ticksRef', { static: true }),
-            __metadata("design:type", core.ElementRef)
+            core.ViewChild('ticksRef', { static: true })
         ], LySlider.prototype, "_ticksRef", void 0);
         __decorate([
-            core.ViewChildren('thumbsRef'),
-            __metadata("design:type", core.QueryList)
+            core.ViewChildren('thumbsRef')
         ], LySlider.prototype, "_thumbsRef", void 0);
         __decorate([
-            core.Input(),
-            __metadata("design:type", Function)
+            core.Input()
         ], LySlider.prototype, "displayWith", void 0);
         __decorate([
-            core.Output(),
-            __metadata("design:type", core.EventEmitter)
+            core.Output()
         ], LySlider.prototype, "change", void 0);
         __decorate([
-            core.Output(),
-            __metadata("design:type", core.EventEmitter)
+            core.Output()
         ], LySlider.prototype, "input", void 0);
         __decorate([
-            core.Output(),
-            __metadata("design:type", core.EventEmitter)
+            core.Output()
         ], LySlider.prototype, "valueChange", void 0);
         __decorate([
-            core.Input(),
-            __metadata("design:type", Boolean),
-            __metadata("design:paramtypes", [Boolean])
+            core.Input()
         ], LySlider.prototype, "thumbVisible", null);
         __decorate([
-            core.Input(),
-            __metadata("design:type", Object),
-            __metadata("design:paramtypes", [Object])
+            core.Input()
         ], LySlider.prototype, "marks", null);
         __decorate([
-            core.Input(),
-            __metadata("design:type", Number),
-            __metadata("design:paramtypes", [Number])
+            core.Input()
         ], LySlider.prototype, "max", null);
         __decorate([
-            core.Input(),
-            __metadata("design:type", Number),
-            __metadata("design:paramtypes", [Number])
+            core.Input()
         ], LySlider.prototype, "min", null);
         __decorate([
-            core.Input(),
-            __metadata("design:type", String),
-            __metadata("design:paramtypes", [String])
+            core.Input()
         ], LySlider.prototype, "appearance", null);
         __decorate([
-            core.Input(),
-            __metadata("design:type", String),
-            __metadata("design:paramtypes", [String])
+            core.Input()
         ], LySlider.prototype, "color", null);
         __decorate([
-            core.Input(),
-            __metadata("design:type", Boolean),
-            __metadata("design:paramtypes", [Boolean])
+            core.Input()
         ], LySlider.prototype, "vertical", null);
         __decorate([
-            core.Input(),
-            __metadata("design:type", Number),
-            __metadata("design:paramtypes", [Number])
+            core.Input()
         ], LySlider.prototype, "step", null);
         __decorate([
-            core.Input(),
-            __metadata("design:type", Object),
-            __metadata("design:paramtypes", [Object])
+            core.Input()
         ], LySlider.prototype, "value", null);
         __decorate([
-            core.Input(),
-            __metadata("design:type", Boolean),
-            __metadata("design:paramtypes", [Boolean])
+            core.Input()
         ], LySlider.prototype, "disabled", null);
         __decorate([
-            core.Input(),
-            __metadata("design:type", Object),
-            __metadata("design:paramtypes", [Object])
+            core.Input()
         ], LySlider.prototype, "ticks", null);
         LySlider = LySlider_1 = __decorate([
             core.Component({
@@ -949,7 +895,8 @@
                 exportAs: 'lySlider',
                 providers: [
                     LY_SLIDER_CONTROL_VALUE_ACCESSOR,
-                    ui.LyHostClass
+                    ui.LyHostClass,
+                    ui.StyleRenderer
                 ],
                 host: {
                     '(slide)': '_onSlide($event)',
@@ -957,11 +904,7 @@
                     '(tap)': '_onTap($event)'
                 }
             }),
-            __metadata("design:paramtypes", [ui.LyTheme2,
-                core.ElementRef,
-                core.Renderer2,
-                core.ChangeDetectorRef,
-                ui.LyHostClass])
+            __param(6, core.Optional()), __param(6, core.Inject(LY_SLIDER_DEFAULT_OPTIONS))
         ], LySlider);
         return LySlider;
     }());
@@ -1051,17 +994,18 @@
         LyTick.prototype._getHostElement = function () {
             return this._el.nativeElement;
         };
+        LyTick.ctorParameters = function () { return [
+            { type: LySlider },
+            { type: core.Renderer2 },
+            { type: core.ElementRef }
+        ]; };
         __decorate([
-            core.Input(),
-            __metadata("design:type", Number)
+            core.Input()
         ], LyTick.prototype, "value", void 0);
         LyTick = __decorate([
             core.Directive({
                 selector: 'ly-tick'
-            }),
-            __metadata("design:paramtypes", [LySlider,
-                core.Renderer2,
-                core.ElementRef])
+            })
         ], LyTick);
         return LyTick;
     }());
@@ -1105,23 +1049,23 @@
         LyMark.prototype._getHostElement = function () {
             return this._el.nativeElement;
         };
+        LyMark.ctorParameters = function () { return [
+            { type: LySlider },
+            { type: core.Renderer2 },
+            { type: core.ElementRef }
+        ]; };
         __decorate([
-            core.ViewChild(LyTick, { static: true }),
-            __metadata("design:type", LyTick)
+            core.ViewChild(LyTick, { static: true })
         ], LyMark.prototype, "_tick", void 0);
         __decorate([
-            core.Input(),
-            __metadata("design:type", Number)
+            core.Input()
         ], LyMark.prototype, "value", void 0);
         LyMark = __decorate([
             core.Component({
                 selector: 'ly-mark',
                 template: "<ly-tick [value]=\"value\"></ly-tick>\n<ng-content></ng-content>",
                 changeDetection: core.ChangeDetectionStrategy.OnPush
-            }),
-            __metadata("design:paramtypes", [LySlider,
-                core.Renderer2,
-                core.ElementRef])
+            })
         ], LyMark);
         return LyMark;
     }());
@@ -1143,6 +1087,7 @@
     }());
 
     exports.LY_SLIDER_CONTROL_VALUE_ACCESSOR = LY_SLIDER_CONTROL_VALUE_ACCESSOR;
+    exports.LY_SLIDER_DEFAULT_OPTIONS = LY_SLIDER_DEFAULT_OPTIONS;
     exports.LySlider = LySlider;
     exports.LySliderChange = LySliderChange;
     exports.LySliderModule = LySliderModule;
@@ -1154,5 +1099,5 @@
 
     Object.defineProperty(exports, '__esModule', { value: true });
 
-}));
+})));
 //# sourceMappingURL=alyle-ui-slider.umd.js.map

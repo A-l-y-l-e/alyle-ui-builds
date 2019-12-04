@@ -1,6 +1,6 @@
 {
   "name": "@alyle/ui",
-  "version": "2.9.6",
+  "version": "2.9.7",
   "description": "Minimal Design, a set of components for Angular",
   "repository": {
     "type": "git",
@@ -25,9 +25,7 @@
   "homepage": "https://alyle.io/",
   "peerDependencies": {
     "@angular/cli": "^8.0.0",
-    "@angular/common": "^8.0.0",
     "@angular/core": "^8.0.0",
-    "chroma-js": "^2.0.2",
     "hammerjs": "^2.0.8"
   },
   "schematics": "./schematics/collection.json",

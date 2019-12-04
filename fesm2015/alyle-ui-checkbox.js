@@ -1,100 +1,33 @@
-import { __decorate, __metadata } from 'tslib';
-import { forwardRef, EventEmitter, ViewChild, ElementRef, Input, Output, Component, ViewEncapsulation, ChangeDetectionStrategy, Renderer2, ChangeDetectorRef, NgZone, NgModule } from '@angular/core';
+import { __decorate } from 'tslib';
+import { forwardRef, EventEmitter, ElementRef, Renderer2, ChangeDetectorRef, NgZone, ViewChild, Input, Output, Component, ViewEncapsulation, ChangeDetectionStrategy, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LY_COMMON_STYLES, mixinDisableRipple, shadowBuilder, toBoolean, LyCoreStyles, LyTheme2, LyFocusState, LyCommonModule } from '@alyle/ui';
+import { styleTemplateToString, StyleCollection, LY_COMMON_STYLES, mixinDisableRipple, toBoolean, LyCoreStyles, LyTheme2, LyFocusState, StyleRenderer, LyHostClass, LyCommonModule } from '@alyle/ui';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
+var LyCheckbox_1;
 const STYLE_PRIORITY = -2;
 const DEFAULT_WITH_COLOR = 'accent';
 const DEFAULT_DISABLE_RIPPLE = false;
-const STYLES = (theme) => ({
-    $priority: STYLE_PRIORITY,
-    root: {
-        marginAfter: '16px',
-        marginBefore: '-16px',
-        display: 'inline-flex',
-        '&{disabled}:not({checked}) {icon}:before': {
-            color: theme.disabled.default
-        },
-        '&{disabled}': {
-            pointerEvents: 'none',
-            '{layout}': {
-                color: theme.text.secondary
-            }
-        },
-        '&{disabled}{checked} {icon}:before': {
-            border: 0,
-            background: theme.disabled.default
-        },
-        '&{onFocusByKeyboard} {icon}::after': {
-            boxShadow: '0 0 0 12px',
-            opacity: .13,
-            borderRadius: '50%'
-        },
-        '&:not({checked}) {icon}': {
-            color: theme.text.secondary
-        },
-        '&': theme.checkbox ? theme.checkbox.root : null
-    },
-    layout: {
-        display: 'inline-flex',
-        alignItems: 'baseline',
-        cursor: 'pointer',
-        marginBefore: '16px',
-        paddingTop: '12px',
-        paddingBottom: '12px'
-    },
-    icon: {
-        position: 'relative',
-        marginAfter: '8px',
-        marginTop: 'auto',
-        marginBottom: 'auto',
-        width: '16px',
-        height: '16px',
-        userSelect: 'none',
-        '&::before, &::after': Object.assign({ content: `''` }, LY_COMMON_STYLES.fill, { width: '16px', height: '16px', margin: 'auto', boxSizing: 'border-box' }),
-        // border icon
-        '&::before': {
-            border: 'solid 2px',
-            borderRadius: '2px'
-        },
-        svg: {
-            position: 'absolute',
-            polyline: {
-                fill: 'none',
-                stroke: theme.background.primary.default,
-                strokeWidth: 2,
-                strokeLinecap: 'round',
-                strokeLinejoin: 'round',
-                strokeDasharray: '18px',
-                strokeDashoffset: '18px'
-            }
-        },
-    },
-    checked: {
-        '& {icon}::before': {
-            background: 'currentColor'
-        },
-        '& {icon} polyline': {
-            strokeDashoffset: 0
-        }
-    },
-    input: Object.assign({}, LY_COMMON_STYLES.visuallyHidden),
-    onFocusByKeyboard: {},
-    disabled: {
-        '& {input}': {
-            visibility: 'hidden'
-        },
-        '& {icon}': {
-            color: 'inherit !important'
-        }
-    },
-    animations: {
-        '& {icon} svg polyline': {
-            transition: `all ${theme.animations.durations.entering}ms ${theme.animations.curves.sharp}`
-        }
-    }
-});
+const STYLES = (theme, ref) => {
+    const checkbox = ref.selectorsOf(STYLES);
+    const { before, after } = theme;
+    return {
+        $name: LyCheckbox.и,
+        $priority: STYLE_PRIORITY,
+        root: () => (className) => `${className}{margin-${after}:16px;margin-${before}:-16px;display:inline-flex;}${styleTemplateToString(((theme.checkbox
+            && theme.checkbox.root
+            && (theme.checkbox.root instanceof StyleCollection
+                ? theme.checkbox.root.setTransformer(fn => fn(checkbox))
+                : theme.checkbox.root(checkbox)))), `${className}`)}${className}${checkbox.disabled}:not(${checkbox.checked}) ${checkbox.icon}:before{color:${theme.disabled.default};}${className}${checkbox.disabled}{pointer-events:none;}${className}${checkbox.disabled} ${checkbox.layout}{color:${theme.text.secondary};}${className}${checkbox.disabled}${checkbox.checked} ${checkbox.icon}:before{border:0;background:${theme.disabled.default};}${className}${checkbox.onFocusByKeyboard} ${checkbox.icon}::after{box-shadow:0 0 0 12px;opacity:.13;border-radius:50%;}${className}:not(${checkbox.checked}) ${checkbox.icon}{color:${theme.text.secondary};}`,
+        layout: (className) => `${className}{display:inline-flex;align-items:baseline;cursor:pointer;margin-${before}:16px;padding-top:12px;padding-bottom:12px;}`,
+        icon: (className) => `${className}{position:relative;margin-${after}:8px;margin-top:auto;margin-bottom:auto;width:16px;height:16px;user-select:none;}${className}::before,${className}::after{content:'';width:16px;height:16px;margin:auto;box-sizing:border-box;}${styleTemplateToString((LY_COMMON_STYLES.fill), `${className}::before,${className}::after`)}${className}::before{border:solid 2px;border-radius:2px;}${className} svg{position:absolute;}${className} svg polyline{fill:none;stroke:${theme.background.primary.default};stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:18px;stroke-dashoffset:18px;}`,
+        checked: () => (className) => `${className} ${checkbox.icon}::before{background:currentColor;}${className} ${checkbox.icon} polyline{stroke-dashoffset:0;}`,
+        input: LY_COMMON_STYLES.visuallyHidden,
+        onFocusByKeyboard: null,
+        disabled: () => (className) => `${className} ${checkbox.input}{visibility:hidden;}${className} ${checkbox.icon}{color:inherit !important;}`,
+        animations: () => (className) => `${className} ${checkbox.icon} svg polyline{transition:all ${theme.animations.durations.entering}ms ${theme.animations.curves.sharp};}`
+    };
+};
 /**
  * This allows it to support [(ngModel)].
  * @ignore
@@ -116,19 +49,20 @@ class LyCheckboxBase {
 }
 /** @docs-private */
 const LyCheckboxMixinBase = mixinDisableRipple(LyCheckboxBase);
-let LyCheckbox = class LyCheckbox extends LyCheckboxMixinBase {
-    constructor(_commonStyles, _theme, _el, _renderer, _changeDetectorRef, _focusState, ngZone) {
+let LyCheckbox = LyCheckbox_1 = class LyCheckbox extends LyCheckboxMixinBase {
+    constructor(_commonStyles, _theme, _el, _renderer, _changeDetectorRef, _focusState, _styleRenderer, ngZone) {
         super(_theme, ngZone);
         this._commonStyles = _commonStyles;
         this._el = _el;
         this._renderer = _renderer;
         this._changeDetectorRef = _changeDetectorRef;
         this._focusState = _focusState;
+        this._styleRenderer = _styleRenderer;
         /**
          * styles
          * @ignore
          */
-        this.classes = this._theme.addStyleSheet(STYLES);
+        this.classes = this._theme.renderStyleSheet(STYLES);
         /** Event emitted when the checkbox's `checked` value changes. */
         this.change = new EventEmitter();
         this._onTouched = () => { };
@@ -146,14 +80,14 @@ let LyCheckbox = class LyCheckbox extends LyCheckboxMixinBase {
     set color(val) {
         if (val !== this.color) {
             this._color = val;
-            this._colorClass = this._theme.addStyle(`lyCheckbox.color:${val}`, (theme) => ({
-                [`&{checked} {icon}`]: {
-                    color: theme.colorOf(val)
-                },
-                [`&{checked}:not({disabled}) {icon}`]: {
-                    boxShadow: shadowBuilder(1, theme.colorOf(val))
+            this._colorClass = this._styleRenderer.add(`${LyCheckbox_1.и}--color-${val}`, (theme, ref) => {
+                const checkbox = ref.selectorsOf(STYLES);
+                const color = theme.colorOf(val);
+                if (theme.checkbox && theme.checkbox.color) {
+                    return theme.checkbox.color(checkbox, color);
                 }
-            }), this._el.nativeElement, this._colorClass, STYLE_PRIORITY, STYLES);
+                throw new Error(`${LyCheckbox_1.и}: styles theme.checkbox.color is undefined`);
+            }, STYLE_PRIORITY, this._colorClass);
         }
     }
     /**
@@ -270,61 +204,58 @@ let LyCheckbox = class LyCheckbox extends LyCheckboxMixinBase {
         this._changeDetectorRef.markForCheck();
     }
 };
+/** @ignore */
+LyCheckbox.и = 'LyCheckbox';
+LyCheckbox.ctorParameters = () => [
+    { type: LyCoreStyles },
+    { type: LyTheme2 },
+    { type: ElementRef },
+    { type: Renderer2 },
+    { type: ChangeDetectorRef },
+    { type: LyFocusState },
+    { type: StyleRenderer },
+    { type: NgZone }
+];
 __decorate([
-    ViewChild('innerContainer', { static: false }),
-    __metadata("design:type", ElementRef)
+    ViewChild('innerContainer', { static: false })
 ], LyCheckbox.prototype, "_innerContainer", void 0);
 __decorate([
-    Input(),
-    __metadata("design:type", String)
+    Input()
 ], LyCheckbox.prototype, "value", void 0);
 __decorate([
-    Input(),
-    __metadata("design:type", String),
-    __metadata("design:paramtypes", [String])
+    Input()
 ], LyCheckbox.prototype, "color", null);
 __decorate([
-    Input(),
-    __metadata("design:type", Boolean),
-    __metadata("design:paramtypes", [Boolean])
+    Input()
 ], LyCheckbox.prototype, "checked", null);
 __decorate([
-    Input(),
-    __metadata("design:type", Boolean),
-    __metadata("design:paramtypes", [Boolean])
+    Input()
 ], LyCheckbox.prototype, "required", null);
 __decorate([
-    Input(),
-    __metadata("design:type", Boolean),
-    __metadata("design:paramtypes", [Boolean])
+    Input()
 ], LyCheckbox.prototype, "disabled", null);
 __decorate([
-    Output(),
-    __metadata("design:type", EventEmitter)
+    Output()
 ], LyCheckbox.prototype, "change", void 0);
 __decorate([
-    ViewChild('input', { static: false }),
-    __metadata("design:type", ElementRef)
+    ViewChild('input', { static: false })
 ], LyCheckbox.prototype, "_inputElement", void 0);
-LyCheckbox = __decorate([
+LyCheckbox = LyCheckbox_1 = __decorate([
     Component({
         selector: 'ly-checkbox',
         template: "\n<label [className]=\"classes.layout\">\n  <input #input\n  [className]=\"classes.input\"\n  type=\"checkbox\"\n  [checked]=\"checked\"\n  [required]=\"required\"\n  [attr.value]=\"value\"\n  [disabled]=\"disabled\"\n  (click)=\"_onInputClick($event)\"\n  (change)=\"_onChange($event)\"\n  >\n  <div #innerContainer [className]=\"classes.icon\">\n    <svg width=\"16px\" height=\"16px\" viewBox=\"0 0 20 20\">\n      <polyline points=\"4 11 8 15 16 6\"></polyline>\n    </svg>\n  </div>\n  <div #label>\n    <ng-content></ng-content>\n  </div>\n</label>",
         encapsulation: ViewEncapsulation.None,
         changeDetection: ChangeDetectionStrategy.OnPush,
-        providers: [LY_CHECKBOX_CONTROL_VALUE_ACCESSOR],
+        providers: [
+            LyHostClass,
+            StyleRenderer,
+            LY_CHECKBOX_CONTROL_VALUE_ACCESSOR,
+        ],
         exportAs: 'lyCheckbox',
         inputs: [
             'disableRipple'
         ]
-    }),
-    __metadata("design:paramtypes", [LyCoreStyles,
-        LyTheme2,
-        ElementRef,
-        Renderer2,
-        ChangeDetectorRef,
-        LyFocusState,
-        NgZone])
+    })
 ], LyCheckbox);
 
 let LyCheckboxModule = class LyCheckboxModule {
@@ -344,6 +275,10 @@ LyCheckboxModule = __decorate([
         ]
     })
 ], LyCheckboxModule);
+
+/**
+ * Generated bundle index. Do not edit.
+ */
 
 export { LY_CHECKBOX_CONTROL_VALUE_ACCESSOR, LyCheckbox, LyCheckboxBase, LyCheckboxChange, LyCheckboxMixinBase, LyCheckboxModule, STYLES };
 //# sourceMappingURL=alyle-ui-checkbox.js.map

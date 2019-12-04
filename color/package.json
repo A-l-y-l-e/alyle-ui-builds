@@ -1,0 +1,13 @@
+{
+  "main": "../bundles/alyle-ui-color.umd.js",
+  "module": "../fesm5/alyle-ui-color.js",
+  "es2015": "../fesm2015/alyle-ui-color.js",
+  "esm5": "../esm5/color/alyle-ui-color.js",
+  "esm2015": "../esm2015/color/alyle-ui-color.js",
+  "fesm5": "../fesm5/alyle-ui-color.js",
+  "fesm2015": "../fesm2015/alyle-ui-color.js",
+  "typings": "alyle-ui-color.d.ts",
+  "metadata": "alyle-ui-color.metadata.json",
+  "sideEffects": false,
+  "name": "@alyle/ui/color"
+}

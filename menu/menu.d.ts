@@ -1,5 +1,18 @@
 import { AfterViewInit, ElementRef, OnDestroy, OnInit, Renderer2, TemplateRef, EventEmitter } from '@angular/core';
-import { LyOverlay, LyTheme2, OverlayFactory, Placement, XPosition, YPosition } from '@alyle/ui';
+import { LyOverlay, LyTheme2, OverlayFactory, Placement, XPosition, YPosition, StyleCollection, LyClasses, StyleTemplate, ThemeRef } from '@alyle/ui';
+export interface LyMenuTheme {
+    /** Styles for Menu Component */
+    root?: StyleCollection<((classes: LyClasses<typeof STYLES>) => StyleTemplate)> | ((classes: LyClasses<typeof STYLES>) => StyleTemplate);
+}
+export interface LyMenuVariables {
+    menu?: LyMenuTheme;
+}
+declare const STYLES: (theme: import("@alyle/ui/alyle-ui").LyStyleUtils & import("@alyle/ui/alyle-ui").ThemeConfig & LyMenuVariables, ref: ThemeRef) => {
+    $priority: number;
+    root: () => StyleTemplate;
+    container: (className: string) => string;
+    item: (className: string) => string;
+};
 /** Menu container */
 export declare class LyMenu implements OnInit, AfterViewInit {
     private _theme;
@@ -9,7 +22,12 @@ export declare class LyMenu implements OnInit, AfterViewInit {
      * styles
      * @docs-private
      */
-    readonly classes: Record<"root" | "container" | "item", string>;
+    readonly classes: Pick<{
+        $priority: string;
+        root: string;
+        container: string;
+        item: string;
+    }, "root" | "container" | "item">;
     /**
      * Destroy menu
      * @docs-private
@@ -63,3 +81,4 @@ export declare class LyMenuTriggerFor implements OnDestroy {
     _getHostElement(): any;
     _setMenuOpenToTrue(): void;
 }
+export {};

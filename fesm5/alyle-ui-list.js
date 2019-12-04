@@ -1,74 +1,32 @@
-import { __assign, __decorate, __metadata, __extends } from 'tslib';
-import { Directive, ViewChild, ElementRef, ContentChildren, forwardRef, QueryList, ContentChild, Input, Component, ChangeDetectionStrategy, Renderer2, NgZone, ChangeDetectorRef, NgModule } from '@angular/core';
-import { LY_COMMON_STYLES, LyTheme2, mixinStyleUpdater, mixinBg, mixinColor, mixinRaised, mixinDisabled, mixinOutlined, mixinElevation, mixinShadowColor, mixinDisableRipple, Platform, toBoolean, LyRippleService, LyFocusState, LyCommonModule } from '@alyle/ui';
+import { __decorate, __extends } from 'tslib';
+import { Directive, ElementRef, Renderer2, NgZone, ChangeDetectorRef, ViewChild, ContentChildren, forwardRef, ContentChild, Input, Component, ChangeDetectionStrategy, NgModule } from '@angular/core';
+import { styleTemplateToString, StyleCollection, LY_COMMON_STYLES, LyTheme2, mixinStyleUpdater, mixinBg, mixinColor, mixinRaised, mixinDisabled, mixinOutlined, mixinElevation, mixinShadowColor, mixinDisableRipple, Platform, toBoolean, LyRippleService, LyFocusState, LyCommonModule } from '@alyle/ui';
 import { LyAvatar } from '@alyle/ui/avatar';
 import { CommonModule } from '@angular/common';
 
 var STYLE_PRIORITY = 2;
 var DISABLE_PADDING = false;
-var STYLES = function (theme) { return ({
-    $priority: STYLE_PRIORITY,
-    root: {
-        display: 'block',
-        position: 'relative',
-        paddingTop: '8px',
-        paddingBottom: '8px',
-        '&': theme.list ? theme.list.root : null
-    },
-    listItem: __assign({}, LY_COMMON_STYLES.button, { fontFamily: theme.typography.fontFamily, fontSize: theme.pxToRem(16), color: theme.text.default, display: 'flex', width: '100%', position: 'relative', padding: '0 16px', minHeight: '48px', overflow: 'hidden', textAlign: 'left', alignItems: 'flex-start', justifyContent: 'flex-start', borderRadius: 0, '&::after': __assign({ content: "''" }, LY_COMMON_STYLES.fill, { width: '100%', height: '100%', background: 'transparent', opacity: 0, pointerEvents: 'none' }), '&{onFocusByKeyboard}::after, &{actionListItem}:hover::after': {
-            background: 'currentColor',
-            opacity: .13,
-            borderRadius: 'inherit'
-        } }),
-    onFocusByKeyboard: null,
-    listItemContent: {
-        display: 'flex',
-        justifyContent: 'inherit',
-        alignItems: 'inherit',
-        alignContent: 'inherit',
-        fontSize: 'inherit',
-        width: '100%',
-        height: '100%',
-        boxSizing: 'border-box',
-    },
-    oneLine: {
-        paddingTop: '8px',
-        paddingBottom: '8px',
-        minHeight: '48px'
-    },
-    twoLine: {
-        paddingTop: '16px',
-        paddingBottom: '16px',
-        minHeight: '64px',
-        '{lines}': {
-            marginBottom: '-4px'
-        }
-    },
-    actionListItem: {
-        cursor: 'pointer',
-        userSelect: 'none'
-    },
-    lines: {
-        alignSelf: 'stretch',
-        minWidth: 0,
-        width: '100%',
-        justifyContent: 'center',
-        flexDirection: 'column',
-        display: 'flex'
-    },
-    listItemWithIcon: {
-        '{lines}': {
-            paddingBefore: '16px'
-        }
-    },
-    twoLineWithIcon: {
-        paddingTop: '16px',
-        paddingBottom: '16px',
-        '{lines}': {
-            marginBottom: '-4px'
-        }
-    }
-}); };
+var STYLES = function (theme, ref) {
+    var list = ref.selectorsOf(STYLES);
+    return {
+        $name: LyList.и,
+        $priority: STYLE_PRIORITY,
+        root: function () { return function (className) { return className + "{display:block;position:relative;padding-top:8px;padding-bottom:8px;}" + styleTemplateToString(((theme.list
+            && theme.list.root
+            && (theme.list.root instanceof StyleCollection
+                ? theme.list.root.setTransformer(function (fn) { return fn(list); })
+                : theme.list.root(list)))), "" + className); }; },
+        listItem: function () { return function (className) { return "" + styleTemplateToString((LY_COMMON_STYLES.button), "" + className) + className + "{font-family:" + theme.typography.fontFamily + ";font-size:" + theme.pxToRem(16) + ";color:" + theme.text.default + ";display:flex;width:100%;position:relative;padding:0 16px;min-height:48px;overflow:hidden;text-align:left;align-items:flex-start;justify-content:flex-start;border-radius:0;}" + className + "::after{content:'';width:100%;height:100%;background:transparent;opacity:0;pointer-events:none;}" + styleTemplateToString((LY_COMMON_STYLES.fill), className + "::after") + className + "::after }," + className + "::after" + list.onFocusByKeyboard + "::after," + className + "::after" + list.actionListItem + ":hover::after{background:currentColor;opacity:.13;border-radius:inherit;}"; }; },
+        onFocusByKeyboard: null,
+        listItemContent: function (className) { return className + "{display:flex;justify-content:inherit;align-items:inherit;align-content:inherit;font-size:inherit;width:100%;height:100%;box-sizing:border-box;}"; },
+        oneLine: function (className) { return className + "{padding-top:8px;padding-bottom:8px;min-height:48px;}"; },
+        twoLine: function () { return function (className) { return className + "{padding-top:16px;padding-bottom:16px;min-height:64px;}" + className + " " + list.lines + "{margin-bottom:-4px;}"; }; },
+        actionListItem: function (className) { return className + "{cursor:pointer;user-select:none;}"; },
+        lines: function (className) { return className + "{align-self:stretch;minWidth:0;width:100%;justify-content:center;flex-direction:column;display:flex;}"; },
+        listItemWithIcon: function () { return function (className) { return className + " " + list.lines + "{padding-before:16px;}"; }; },
+        twoLineWithIcon: function () { return function (className) { return className + "{padding-top:16px;padding-bottom:16px;}" + className + " " + list.lines + "{margin-bottom:-4px;}"; }; }
+    };
+};
 /** List container */
 var LyList = /** @class */ (function () {
     function LyList(theme) {
@@ -76,6 +34,10 @@ var LyList = /** @class */ (function () {
         /** @docs-private */
         this.classes = this.theme.addStyleSheet(STYLES);
     }
+    LyList.и = 'LyList';
+    LyList.ctorParameters = function () { return [
+        { type: LyTheme2 }
+    ]; };
     LyList = __decorate([
         Directive({
             selector: 'ly-list',
@@ -83,8 +45,7 @@ var LyList = /** @class */ (function () {
             host: {
                 '[className]': 'classes.root'
             }
-        }),
-        __metadata("design:paramtypes", [LyTheme2])
+        })
     ], LyList);
     return LyList;
 }());
@@ -178,26 +139,30 @@ var LyListItem = /** @class */ (function (_super) {
     LyListItem.prototype.ngOnDestroy = function () {
         this._focusState.unlisten(this._el);
     };
+    LyListItem.ctorParameters = function () { return [
+        { type: ElementRef },
+        { type: Renderer2 },
+        { type: LyTheme2 },
+        { type: NgZone },
+        { type: LyRippleService },
+        { type: LyFocusState },
+        { type: LyList },
+        { type: ChangeDetectorRef }
+    ]; };
     __decorate([
-        ViewChild('rippleContainer', { static: false }),
-        __metadata("design:type", ElementRef)
+        ViewChild('rippleContainer', { static: false })
     ], LyListItem.prototype, "_rippleContainer", void 0);
     __decorate([
-        ContentChildren(forwardRef(function () { return LyLine; })),
-        __metadata("design:type", QueryList)
+        ContentChildren(forwardRef(function () { return LyLine; }))
     ], LyListItem.prototype, "_lines", void 0);
     __decorate([
-        ContentChild(forwardRef(function () { return LyListIcon; }), { static: false }),
-        __metadata("design:type", Object)
+        ContentChild(forwardRef(function () { return LyListIcon; }), { static: false })
     ], LyListItem.prototype, "_icon", void 0);
     __decorate([
-        ContentChild(LyAvatar, { static: false }),
-        __metadata("design:type", LyAvatar)
+        ContentChild(LyAvatar, { static: false })
     ], LyListItem.prototype, "_avatar", void 0);
     __decorate([
-        Input('ly-list-item'),
-        __metadata("design:type", Object),
-        __metadata("design:paramtypes", [Object])
+        Input('ly-list-item')
     ], LyListItem.prototype, "isActionListItem", null);
     LyListItem = __decorate([
         Component({
@@ -215,15 +180,7 @@ var LyListItem = /** @class */ (function (_super) {
                 'disableRipple'
             ],
             exportAs: 'lyListItem'
-        }),
-        __metadata("design:paramtypes", [ElementRef,
-            Renderer2,
-            LyTheme2,
-            NgZone,
-            LyRippleService,
-            LyFocusState,
-            LyList,
-            ChangeDetectorRef])
+        })
     ], LyListItem);
     return LyListItem;
 }(LyListItemMixinBase));
@@ -258,18 +215,18 @@ var LyListIcon = /** @class */ (function () {
             this.disablePadding = DISABLE_PADDING;
         }
     };
+    LyListIcon.ctorParameters = function () { return [
+        { type: LyTheme2 },
+        { type: ElementRef },
+        { type: Renderer2 }
+    ]; };
     __decorate([
-        Input(),
-        __metadata("design:type", Object),
-        __metadata("design:paramtypes", [Object])
+        Input()
     ], LyListIcon.prototype, "disablePadding", null);
     LyListIcon = __decorate([
         Directive({
             selector: '[ly-list-icon]'
-        }),
-        __metadata("design:paramtypes", [LyTheme2,
-            ElementRef,
-            Renderer2])
+        })
     ], LyListIcon);
     return LyListIcon;
 }());
@@ -296,13 +253,15 @@ var LyLine = /** @class */ (function () {
             }
         }); }, STYLE_PRIORITY));
     }
+    LyLine.ctorParameters = function () { return [
+        { type: LyTheme2 },
+        { type: ElementRef },
+        { type: Renderer2 }
+    ]; };
     LyLine = __decorate([
         Directive({
             selector: '[ly-line]'
-        }),
-        __metadata("design:paramtypes", [LyTheme2,
-            ElementRef,
-            Renderer2])
+        })
     ], LyLine);
     return LyLine;
 }());
@@ -321,6 +280,10 @@ var LyListModule = /** @class */ (function () {
     ], LyListModule);
     return LyListModule;
 }());
+
+/**
+ * Generated bundle index. Do not edit.
+ */
 
 export { LyLine, LyList, LyListIcon, LyListItem, LyListItemBase, LyListItemMixinBase, LyListModule, STYLES };
 //# sourceMappingURL=alyle-ui-list.js.map

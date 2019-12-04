@@ -2,7 +2,7 @@
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('@alyle/ui'), require('@alyle/ui/button'), require('rxjs'), require('@angular/common')) :
     typeof define === 'function' && define.amd ? define('@alyle/ui/tabs', ['exports', '@angular/core', '@alyle/ui', '@alyle/ui/button', 'rxjs', '@angular/common'], factory) :
     (global = global || self, factory((global.ly = global.ly || {}, global.ly.tabs = {}), global.ng.core, global.ly.core, global.ly.button, global.rxjs, global.ng.common));
-}(this, function (exports, core, ui, button, rxjs, common) { 'use strict';
+}(this, (function (exports, core, ui, button, rxjs, common) { 'use strict';
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
@@ -44,6 +44,18 @@
         return __assign.apply(this, arguments);
     };
 
+    function __rest(s, e) {
+        var t = {};
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+            t[p] = s[p];
+        if (s != null && typeof Object.getOwnPropertySymbols === "function")
+            for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+                if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                    t[p[i]] = s[p[i]];
+            }
+        return t;
+    }
+
     function __decorate(decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -59,13 +71,145 @@
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(metadataKey, metadataValue);
     }
 
+    function __awaiter(thisArg, _arguments, P, generator) {
+        return new (P || (P = Promise))(function (resolve, reject) {
+            function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+            function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+            function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+            step((generator = generator.apply(thisArg, _arguments || [])).next());
+        });
+    }
+
+    function __generator(thisArg, body) {
+        var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+        return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+        function verb(n) { return function (v) { return step([n, v]); }; }
+        function step(op) {
+            if (f) throw new TypeError("Generator is already executing.");
+            while (_) try {
+                if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+                if (y = 0, t) op = [op[0] & 2, t.value];
+                switch (op[0]) {
+                    case 0: case 1: t = op; break;
+                    case 4: _.label++; return { value: op[1], done: false };
+                    case 5: _.label++; y = op[1]; op = [0]; continue;
+                    case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                    default:
+                        if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                        if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                        if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                        if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                        if (t[2]) _.ops.pop();
+                        _.trys.pop(); continue;
+                }
+                op = body.call(thisArg, _);
+            } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+            if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+        }
+    }
+
+    function __exportStar(m, exports) {
+        for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
+    }
+
+    function __values(o) {
+        var m = typeof Symbol === "function" && o[Symbol.iterator], i = 0;
+        if (m) return m.call(o);
+        return {
+            next: function () {
+                if (o && i >= o.length) o = void 0;
+                return { value: o && o[i++], done: !o };
+            }
+        };
+    }
+
+    function __read(o, n) {
+        var m = typeof Symbol === "function" && o[Symbol.iterator];
+        if (!m) return o;
+        var i = m.call(o), r, ar = [], e;
+        try {
+            while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
+        }
+        catch (error) { e = { error: error }; }
+        finally {
+            try {
+                if (r && !r.done && (m = i["return"])) m.call(i);
+            }
+            finally { if (e) throw e.error; }
+        }
+        return ar;
+    }
+
+    function __spread() {
+        for (var ar = [], i = 0; i < arguments.length; i++)
+            ar = ar.concat(__read(arguments[i]));
+        return ar;
+    }
+
+    function __spreadArrays() {
+        for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
+        for (var r = Array(s), k = 0, i = 0; i < il; i++)
+            for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
+                r[k] = a[j];
+        return r;
+    };
+
+    function __await(v) {
+        return this instanceof __await ? (this.v = v, this) : new __await(v);
+    }
+
+    function __asyncGenerator(thisArg, _arguments, generator) {
+        if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
+        var g = generator.apply(thisArg, _arguments || []), i, q = [];
+        return i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () { return this; }, i;
+        function verb(n) { if (g[n]) i[n] = function (v) { return new Promise(function (a, b) { q.push([n, v, a, b]) > 1 || resume(n, v); }); }; }
+        function resume(n, v) { try { step(g[n](v)); } catch (e) { settle(q[0][3], e); } }
+        function step(r) { r.value instanceof __await ? Promise.resolve(r.value.v).then(fulfill, reject) : settle(q[0][2], r); }
+        function fulfill(value) { resume("next", value); }
+        function reject(value) { resume("throw", value); }
+        function settle(f, v) { if (f(v), q.shift(), q.length) resume(q[0][0], q[0][1]); }
+    }
+
+    function __asyncDelegator(o) {
+        var i, p;
+        return i = {}, verb("next"), verb("throw", function (e) { throw e; }), verb("return"), i[Symbol.iterator] = function () { return this; }, i;
+        function verb(n, f) { i[n] = o[n] ? function (v) { return (p = !p) ? { value: __await(o[n](v)), done: n === "return" } : f ? f(v) : v; } : f; }
+    }
+
+    function __asyncValues(o) {
+        if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
+        var m = o[Symbol.asyncIterator], i;
+        return m ? m.call(o) : (o = typeof __values === "function" ? __values(o) : o[Symbol.iterator](), i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () { return this; }, i);
+        function verb(n) { i[n] = o[n] && function (v) { return new Promise(function (resolve, reject) { v = o[n](v), settle(resolve, reject, v.done, v.value); }); }; }
+        function settle(resolve, reject, d, v) { Promise.resolve(v).then(function(v) { resolve({ value: v, done: d }); }, reject); }
+    }
+
+    function __makeTemplateObject(cooked, raw) {
+        if (Object.defineProperty) { Object.defineProperty(cooked, "raw", { value: raw }); } else { cooked.raw = raw; }
+        return cooked;
+    };
+
+    function __importStar(mod) {
+        if (mod && mod.__esModule) return mod;
+        var result = {};
+        if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+        result.default = mod;
+        return result;
+    }
+
+    function __importDefault(mod) {
+        return (mod && mod.__esModule) ? mod : { default: mod };
+    }
+
     var LyTabContent = /** @class */ (function () {
         function LyTabContent(template) {
             this.template = template;
         }
+        LyTabContent.ctorParameters = function () { return [
+            { type: core.TemplateRef }
+        ]; };
         LyTabContent = __decorate([
-            core.Directive({ selector: '[ly-tab-content]' }),
-            __metadata("design:paramtypes", [core.TemplateRef])
+            core.Directive({ selector: '[ly-tab-content]' })
         ], LyTabContent);
         return LyTabContent;
     }());
@@ -76,94 +220,32 @@
     var DEFAULT_INDICATOR_COLOR = 'accent';
     var DEFAULT_ELEVATION = 4;
     var DEFAULT_HEADER_PLACEMENT = 'above';
-    var STYLES = function (theme) {
-        var _a;
-        return ({
+    var STYLES = function (theme, ref) {
+        var __ = ref.selectorsOf(STYLES);
+        return {
+            $name: LyTabs.и,
             $priority: STYLE_PRIORITY,
-            root: {
-                display: 'block'
-            },
-            container: {
-                display: 'flex'
-            },
-            tab: {
-                position: 'relative',
-                display: 'inline-flex'
-            },
+            root: function () { return function (className) { return className + "{display:block;}" + ui.styleTemplateToString(((theme.tab
+                && theme.tab.root
+                && (theme.tab.root instanceof ui.StyleCollection
+                    ? theme.tab.root.setTransformer(function (fn) { return fn(__); }).css
+                    : theme.tab.root(__)))), "" + className); }; },
+            container: function (className) { return className + "{display:flex;}"; },
+            tab: function (className) { return className + "{position:relative;display:inline-flex;}"; },
             /** Tab content */
-            contentContainer: {
-                overflow: 'hidden',
-                flexGrow: 1
-            },
+            contentContainer: function (className) { return className + "{overflow:hidden;flex-grow:1;}"; },
             /** Tab header */
-            tabsLabels: {
-                display: 'flex',
-                position: 'relative'
-            },
-            tabsLabelsContainer: {
-                overflow: 'hidden',
-                '{scrollable} &': {
-                    '@media (hover: none)': {
-                        overflow: 'auto'
-                    }
-                }
-            },
-            label: (_a = {
-                    '-webkit-tap-highlight-color': 'transparent',
-                    '-webkit-appearance': 'none',
-                    backgroundColor: 'transparent',
-                    userSelect: 'none',
-                    border: 0,
-                    minWidth: '72px',
-                    padding: '0 24px',
-                    cursor: 'pointer',
-                    height: '48px',
-                    display: 'inline-flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    position: 'relative',
-                    overflow: 'hidden',
-                    fontFamily: theme.typography.fontFamily,
-                    fontSize: theme.pxToRem(theme.typography.fontSize),
-                    letterSpacing: '0.02857em',
-                    color: 'currentColor',
-                    outline: 'none',
-                    width: '100%',
-                    fontWeight: 500,
-                    opacity: .7
-                },
-                _a[theme.getBreakpoint('XSmall')] = {
-                    padding: '0 12px'
-                },
-                _a),
-            tabLabelActive: {
-                opacity: 1
-            },
-            tabContents: {
-                display: 'flex',
-                transition: '450ms cubic-bezier(.1, 1, 0.5, 1)',
-                willChange: 'transform',
-                height: '100%'
-            },
-            tabContent: {
-                width: '100%',
-                height: '100%',
-                flexShrink: 0,
-                position: 'relative'
-            },
-            tabsIndicator: {
-                position: 'absolute',
-                height: '2px',
-                transition: '450ms cubic-bezier(.1, 1, 0.5, 1)',
-                background: 'currentColor'
-            },
-            tabsIndicatorForServer: {
-                position: 'absolute',
-                background: 'currentColor'
-            },
-            rippleContainer: __assign({}, ui.LY_COMMON_STYLES.fill, { overflow: 'hidden' }),
+            tabsLabels: function (className) { return className + "{display:flex;position:relative;}"; },
+            tabsLabelsContainer: function () { return function (className) { return className + "{overflow:hidden;}@media (hover: none){" + __.scrollable + " " + className + "{overflow:auto;}}"; }; },
+            label: function (className) { return className + "{-webkit-tap-highlight-color:transparent;-webkit-appearance:none;background-color:transparent;user-select:none;border:0;min-width:72px;padding:0 24px;cursor:pointer;height:48px;display:inline-flex;justify-content:center;align-items:center;position:relative;overflow:hidden;font-family:" + theme.typography.fontFamily + ";font-size:" + theme.pxToRem(theme.typography.fontSize) + ";letter-spacing:0.02857em;color:currentColor;outline:none;width:100%;font-weight:500;opacity:.7;}" + className + " " + theme.getBreakpoint('XSmall') + "{padding:0 12px;}"; },
+            tabLabelActive: function (className) { return className + "{opacity:1;}"; },
+            tabContents: function (className) { return className + "{display:flex;transition:450ms cubic-bezier(.1, 1, 0.5, 1);will-change:transform;height:100%;}"; },
+            tabContent: function (className) { return className + "{width:100%;height:100%;flex-shrink:0;position:relative;}"; },
+            tabsIndicator: function (className) { return className + "{position:absolute;height:2px;transition:450ms cubic-bezier(.1, 1, 0.5, 1);background:currentColor;}"; },
+            tabsIndicatorForServer: function (className) { return className + "{position:absolute;background:currentColor;}"; },
+            rippleContainer: function (className) { return "" + ui.styleTemplateToString((ui.LY_COMMON_STYLES.fill), "" + className) + className + "{overflow:hidden;}"; },
             scrollable: null
-        });
+        };
     };
     /** @docs-private */
     var LyTabsBase = /** @class */ (function () {
@@ -194,7 +276,7 @@
             _this.cd = cd;
             _this._resizeService = _resizeService;
             /** @docs-private */
-            _this.classes = _this.theme.addStyleSheet(STYLES);
+            _this.classes = _this.theme.renderStyleSheet(STYLES);
             _this._tabsSubscription = rxjs.Subscription.EMPTY;
             _this.selectedIndexOnChange = 'auto';
             _this.selectedIndexChange = new core.EventEmitter();
@@ -503,59 +585,50 @@
             }
             return flexDirection;
         };
+        /** @docs-private */
+        LyTabs.и = 'LyTabs';
+        LyTabs.ctorParameters = function () { return [
+            { type: ui.LyTheme2 },
+            { type: core.Renderer2 },
+            { type: core.ElementRef },
+            { type: core.ChangeDetectorRef },
+            { type: ui.WinResize }
+        ]; };
         __decorate([
-            core.ViewChild('tabs', { static: true }),
-            __metadata("design:type", core.ElementRef)
+            core.ViewChild('tabs', { static: true })
         ], LyTabs.prototype, "tabsRef", void 0);
         __decorate([
-            core.ViewChild('tabContents', { static: true }),
-            __metadata("design:type", core.ElementRef)
+            core.ViewChild('tabContents', { static: true })
         ], LyTabs.prototype, "tabContents", void 0);
         __decorate([
-            core.ViewChild('tabsIndicator', { static: true }),
-            __metadata("design:type", core.ElementRef)
+            core.ViewChild('tabsIndicator', { static: true })
         ], LyTabs.prototype, "tabsIndicator", void 0);
         __decorate([
-            core.Input(),
-            __metadata("design:type", Object)
+            core.Input()
         ], LyTabs.prototype, "selectedIndexOnChange", void 0);
         __decorate([
-            core.Input(),
-            __metadata("design:type", Object),
-            __metadata("design:paramtypes", [Object])
+            core.Input()
         ], LyTabs.prototype, "scrollable", null);
         __decorate([
-            core.Input(),
-            __metadata("design:type", String),
-            __metadata("design:paramtypes", [String])
+            core.Input()
         ], LyTabs.prototype, "indicatorColor", null);
         __decorate([
-            core.Input(),
-            __metadata("design:type", String),
-            __metadata("design:paramtypes", [String])
+            core.Input()
         ], LyTabs.prototype, "headerPlacement", null);
         __decorate([
-            core.Input(),
-            __metadata("design:type", String),
-            __metadata("design:paramtypes", [String])
+            core.Input()
         ], LyTabs.prototype, "alignTabs", null);
         __decorate([
-            core.Input(),
-            __metadata("design:type", String),
-            __metadata("design:paramtypes", [String])
+            core.Input()
         ], LyTabs.prototype, "textColor", null);
         __decorate([
-            core.Input(),
-            __metadata("design:type", Number),
-            __metadata("design:paramtypes", [Number])
+            core.Input()
         ], LyTabs.prototype, "selectedIndex", null);
         __decorate([
-            core.Output(),
-            __metadata("design:type", core.EventEmitter)
+            core.Output()
         ], LyTabs.prototype, "selectedIndexChange", void 0);
         __decorate([
-            core.ContentChildren(core.forwardRef(function () { return LyTab; })),
-            __metadata("design:type", core.QueryList)
+            core.ContentChildren(core.forwardRef(function () { return LyTab; }))
         ], LyTabs.prototype, "tabsList", void 0);
         LyTabs = __decorate([
             core.Component({
@@ -567,12 +640,7 @@
                 inputs: [
                     'bg', 'elevation', 'shadowColor'
                 ]
-            }),
-            __metadata("design:paramtypes", [ui.LyTheme2,
-                core.Renderer2,
-                core.ElementRef,
-                core.ChangeDetectorRef,
-                ui.WinResize])
+            })
         ], LyTabs);
         return LyTabs;
     }(LyTabsMixinBase));
@@ -586,21 +654,22 @@
         LyTab.prototype.ngOnInit = function () {
             this._renderer.addClass(this._el.nativeElement, this._tabs.classes.tab);
         };
+        LyTab.ctorParameters = function () { return [
+            { type: LyTabs },
+            { type: core.Renderer2 },
+            { type: core.ElementRef }
+        ]; };
         __decorate([
-            core.ContentChild(LyTabContent, { read: core.TemplateRef, static: true }),
-            __metadata("design:type", core.TemplateRef)
+            core.ContentChild(LyTabContent, { read: core.TemplateRef, static: true })
         ], LyTab.prototype, "_templateRefLazy", void 0);
         __decorate([
-            core.ViewChild('_templateNgContent', { static: true }),
-            __metadata("design:type", core.TemplateRef)
+            core.ViewChild('_templateNgContent', { static: true })
         ], LyTab.prototype, "_templateRef", void 0);
         __decorate([
-            core.ViewChild('tabIndicator', { static: false }),
-            __metadata("design:type", core.ElementRef)
+            core.ViewChild('tabIndicator', { static: false })
         ], LyTab.prototype, "_tabIndicator", void 0);
         __decorate([
-            core.ContentChild(core.forwardRef(function () { return LyTabLabel; }), { static: true }),
-            __metadata("design:type", Object)
+            core.ContentChild(core.forwardRef(function () { return LyTabLabel; }), { static: true })
         ], LyTab.prototype, "_tabLabel", void 0);
         LyTab = __decorate([
             core.Component({
@@ -608,17 +677,14 @@
                 template: "<ng-content select=\"ly-tab-label\"></ng-content>\n<ng-content select=\"[ly-tab-label]\"></ng-content>\n<ng-content select=\"[ly-tab-label-native]\"></ng-content>\n<div></div>\n<span *ngIf=\"!_isBrowser\" #tabIndicator></span>\n<ng-template #_templateNgContent>\n  <ng-content></ng-content>\n</ng-template>",
                 changeDetection: core.ChangeDetectionStrategy.OnPush,
                 encapsulation: core.ViewEncapsulation.None
-            }),
-            __metadata("design:paramtypes", [LyTabs,
-                core.Renderer2,
-                core.ElementRef])
+            })
         ], LyTab);
         return LyTab;
     }());
     var LyTabLabel = /** @class */ (function (_super) {
         __extends(LyTabLabel, _super);
-        function LyTabLabel(_el, _renderer, _theme, _ngZone, _rippleService, _focusState, _tab, _tabs) {
-            var _this = _super.call(this, _el, _renderer, _theme, _ngZone, _rippleService, _focusState) || this;
+        function LyTabLabel(_el, _renderer, _theme, _ngZone, _rippleService, _focusState, _hostClass, _tab, _tabs) {
+            var _this = _super.call(this, _el, _renderer, _theme, _ngZone, _rippleService, _focusState, _hostClass, null) || this;
             _this._tab = _tab;
             _this._tabs = _tabs;
             _this._isBrowser = ui.Platform.isBrowser;
@@ -681,20 +747,25 @@
             }
         };
         LyTabLabel.prototype.ngAfterViewInit = function () { };
+        LyTabLabel.ctorParameters = function () { return [
+            { type: core.ElementRef },
+            { type: core.Renderer2 },
+            { type: ui.LyTheme2 },
+            { type: core.NgZone },
+            { type: ui.LyRippleService },
+            { type: ui.LyFocusState },
+            { type: ui.LyHostClass },
+            { type: LyTab, decorators: [{ type: core.Optional }] },
+            { type: LyTabs, decorators: [{ type: core.Optional }] }
+        ]; };
         __decorate([
-            core.Input(),
-            __metadata("design:type", Boolean),
-            __metadata("design:paramtypes", [Boolean])
+            core.Input()
         ], LyTabLabel.prototype, "active", null);
         __decorate([
-            core.ViewChild('rippleContainer', { static: false }),
-            __metadata("design:type", core.ElementRef)
+            core.ViewChild('rippleContainer', { static: false })
         ], LyTabLabel.prototype, "_rippleContainer", void 0);
         __decorate([
-            core.HostListener('click'),
-            __metadata("design:type", Function),
-            __metadata("design:paramtypes", []),
-            __metadata("design:returntype", void 0)
+            core.HostListener('click')
         ], LyTabLabel.prototype, "_onClickTab", null);
         LyTabLabel = __decorate([
             core.Component({
@@ -709,18 +780,11 @@
                     'elevation',
                     'shadowColor',
                     'disableRipple'
-                ]
+                ],
+                providers: [ui.LyHostClass]
             }),
-            __param(6, core.Optional()),
             __param(7, core.Optional()),
-            __metadata("design:paramtypes", [core.ElementRef,
-                core.Renderer2,
-                ui.LyTheme2,
-                core.NgZone,
-                ui.LyRippleService,
-                ui.LyFocusState,
-                LyTab,
-                LyTabs])
+            __param(8, core.Optional())
         ], LyTabLabel);
         return LyTabLabel;
     }(button.LyButton));
@@ -751,5 +815,5 @@
 
     Object.defineProperty(exports, '__esModule', { value: true });
 
-}));
+})));
 //# sourceMappingURL=alyle-ui-tabs.umd.js.map

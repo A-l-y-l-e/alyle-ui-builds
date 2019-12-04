@@ -1,10 +1,9 @@
-import { __decorate, __metadata } from 'tslib';
-import { Input, Directive, ElementRef, Renderer2, NgModule } from '@angular/core';
-import { eachMedia, LyTheme2 } from '@alyle/ui';
+import { __decorate } from 'tslib';
+import { ElementRef, Input, Directive, Renderer2, NgModule } from '@angular/core';
+import { eachMedia, LyTheme2, StyleCollection, StyleRenderer, LyHostClass } from '@alyle/ui';
 
+var LyGridItem_1;
 const STYLE_PRIORITY = -1;
-/** @docs-private */
-const COL_VALUES = {};
 const ALIGN_ALIAS = {
     rowReverse: 'row-reverse',
     columnReverse: 'column-reverse',
@@ -15,19 +14,13 @@ const ALIGN_ALIAS = {
     around: 'space-around',
     evenly: 'space-evenly',
 };
-const styles = ({
-    root: {
-        width: '100%',
-        display: 'flex',
-        flexWrap: 'wrap',
-        boxSizing: 'border-box'
-    },
-    item: {
-        '&, & :first-child': {
-            boxSizing: 'border-box'
-        }
-    }
+const styles = () => ({
+    $priority: STYLE_PRIORITY,
+    $name: LyGrid.и,
+    root: (className) => `${className}{width:100%;display:flex;flex-wrap:wrap;box-sizing:border-box;}`,
+    item: (className) => `${className},${className} :first-child{box-sizing:border-box;}`
 });
+const ɵ0 = styles;
 /**
  * Grid container
  */
@@ -39,7 +32,7 @@ let LyGrid = class LyGrid {
          * Styles
          * @docs-private
          */
-        this.classes = this.theme.addStyleSheet(styles, STYLE_PRIORITY);
+        this.classes = this.theme.renderStyleSheet(styles);
         this.el.nativeElement.classList.add(this.classes.root);
     }
     get spacingX() {
@@ -231,48 +224,40 @@ let LyGrid = class LyGrid {
         return this._alignItems;
     }
 };
+LyGrid.и = 'LyGrid';
+LyGrid.ctorParameters = () => [
+    { type: LyTheme2 },
+    { type: ElementRef }
+];
 __decorate([
-    Input(),
-    __metadata("design:type", Object),
-    __metadata("design:paramtypes", [Object])
+    Input()
 ], LyGrid.prototype, "spacingX", null);
 __decorate([
-    Input(),
-    __metadata("design:type", Object),
-    __metadata("design:paramtypes", [Object])
+    Input()
 ], LyGrid.prototype, "spacingY", null);
 __decorate([
-    Input(),
-    __metadata("design:type", Object),
-    __metadata("design:paramtypes", [Object])
+    Input()
 ], LyGrid.prototype, "spacing", null);
 __decorate([
-    Input(),
-    __metadata("design:type", String),
-    __metadata("design:paramtypes", [String])
+    Input()
 ], LyGrid.prototype, "justify", null);
 __decorate([
-    Input(),
-    __metadata("design:type", String),
-    __metadata("design:paramtypes", [String])
+    Input()
 ], LyGrid.prototype, "direction", null);
 __decorate([
-    Input(),
-    __metadata("design:type", String),
-    __metadata("design:paramtypes", [String])
+    Input()
 ], LyGrid.prototype, "alignItems", null);
 LyGrid = __decorate([
     Directive({
         selector: 'ly-grid[container]'
-    }),
-    __metadata("design:paramtypes", [LyTheme2,
-        ElementRef])
+    })
 ], LyGrid);
-let LyGridItem = class LyGridItem {
-    constructor(gridContainer, el, renderer, theme) {
+let LyGridItem = LyGridItem_1 = class LyGridItem {
+    constructor(gridContainer, el, renderer, theme, _sr) {
         this.gridContainer = gridContainer;
         this.el = el;
         this.theme = theme;
+        this._sr = _sr;
         if (!gridContainer) {
             throw new Error(`Require parent <ly-grid container>`);
         }
@@ -286,30 +271,25 @@ let LyGridItem = class LyGridItem {
         return this._col;
     }
     set col(val) {
-        if (val !== this.col) {
-            this._col = val;
-            this._colClass = this.theme.addStyle(`lyGrid-col:${val}`, (theme) => {
-                if (typeof val === 'number') {
-                    return getColStyle(val);
+        const newVal = this._col = val || 0;
+        this._colClass = this._sr.add(`${LyGridItem_1.и}--col-${newVal}`, (theme) => {
+            const medias = new StyleCollection();
+            eachMedia(newVal, (value, media) => {
+                if (typeof value === 'string') {
+                    throw new Error(`${LyGridItem_1.и}: '${val}' is not valid.`);
+                }
+                const maxWidth = value ? value * 100 / 12 : 100;
+                const flexBasis = value ? value * 100 / 12 : 0;
+                const flexGrow = value ? 0 : 1;
+                if (media) {
+                    medias.add((className) => `@media ${theme.breakpoints[media]}{${className}{max-width:${maxWidth}%;,flex-basis:${flexBasis}%;,flex-grow:${flexGrow};}}`);
                 }
                 else {
-                    let colStyles;
-                    eachMedia(val, (value, media) => {
-                        const newColStyles = getColStyle(+value);
-                        if (media) {
-                            if (!colStyles) {
-                                colStyles = {};
-                            }
-                            colStyles[theme.getBreakpoint(media)] = newColStyles;
-                        }
-                        else {
-                            colStyles = newColStyles;
-                        }
-                    });
-                    return colStyles;
+                    medias.add((className) => `${className}{max-width:${maxWidth}%;flex-basis:${flexBasis}%;flex-grow:${flexGrow};}`);
                 }
-            }, this.el.nativeElement, this._colClass, STYLE_PRIORITY);
-        }
+            });
+            return medias.css;
+        }, STYLE_PRIORITY, this._colClass);
     }
     set gridItemCol(val) {
         this.col = val;
@@ -364,42 +344,32 @@ let LyGridItem = class LyGridItem {
         }
     }
 };
+LyGridItem.и = 'LyGridItem';
+LyGridItem.ctorParameters = () => [
+    { type: LyGrid },
+    { type: ElementRef },
+    { type: Renderer2 },
+    { type: LyTheme2 },
+    { type: StyleRenderer }
+];
 __decorate([
-    Input(),
-    __metadata("design:type", Object),
-    __metadata("design:paramtypes", [Object])
+    Input()
 ], LyGridItem.prototype, "col", null);
 __decorate([
-    Input('lyGridItem'),
-    __metadata("design:type", Object),
-    __metadata("design:paramtypes", [Object])
+    Input('lyGridItem')
 ], LyGridItem.prototype, "gridItemCol", null);
 __decorate([
-    Input(),
-    __metadata("design:type", Object),
-    __metadata("design:paramtypes", [Object])
+    Input()
 ], LyGridItem.prototype, "order", null);
-LyGridItem = __decorate([
+LyGridItem = LyGridItem_1 = __decorate([
     Directive({
-        selector: 'ly-grid[item], [ly-grid-item], [lyGridItem]'
-    }),
-    __metadata("design:paramtypes", [LyGrid,
-        ElementRef,
-        Renderer2,
-        LyTheme2])
+        selector: 'ly-grid[item], [ly-grid-item], [lyGridItem]',
+        providers: [
+            LyHostClass,
+            StyleRenderer
+        ]
+    })
 ], LyGridItem);
-function getColStyle(val) {
-    return {
-        maxWidth: val ? getColVal(val) : '100%',
-        flexBasis: val ? getColVal(val) : 0,
-        flexGrow: val ? 0 : 1
-    };
-}
-function getColVal(val) {
-    return val in COL_VALUES
-        ? COL_VALUES[val]
-        : COL_VALUES[val] = `${+val * 100 / 12}%`;
-}
 
 let LyGridModule = class LyGridModule {
 };
@@ -410,5 +380,9 @@ LyGridModule = __decorate([
     })
 ], LyGridModule);
 
-export { LyGrid, LyGridItem, LyGridModule };
+/**
+ * Generated bundle index. Do not edit.
+ */
+
+export { LyGrid, LyGridItem, LyGridModule, ɵ0 };
 //# sourceMappingURL=alyle-ui-grid.js.map

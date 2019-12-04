@@ -1,0 +1,13 @@
+{
+  "main": "../bundles/alyle-ui-skeleton.umd.js",
+  "module": "../fesm5/alyle-ui-skeleton.js",
+  "es2015": "../fesm2015/alyle-ui-skeleton.js",
+  "esm5": "../esm5/skeleton/alyle-ui-skeleton.js",
+  "esm2015": "../esm2015/skeleton/alyle-ui-skeleton.js",
+  "fesm5": "../fesm5/alyle-ui-skeleton.js",
+  "fesm2015": "../fesm2015/alyle-ui-skeleton.js",
+  "typings": "alyle-ui-skeleton.d.ts",
+  "metadata": "alyle-ui-skeleton.metadata.json",
+  "sideEffects": false,
+  "name": "@alyle/ui/skeleton"
+}

@@ -1,25 +1,17 @@
 import { TemplateRef, EventEmitter, OnDestroy } from '@angular/core';
-import { LyTheme2, LyOverlay, ThemeVariables, XPosition, YPosition } from '@alyle/ui';
+import { LyTheme2, LyOverlay, XPosition, YPosition, StyleTemplate, StyleCollection } from '@alyle/ui';
 import { LySnackBarService } from './snack-bar.service';
 import { LySnackBarRef } from './snack-bar-ref';
-export declare const STYLES: (theme: ThemeVariables) => {
+export interface LySnackBarTheme {
+    /** Styles for SnackBar Component */
+    root?: StyleTemplate | StyleCollection;
+}
+export interface LySnackBarVariables {
+    snackBar?: LySnackBarTheme;
+}
+export declare const STYLES: (theme: import("@alyle/ui/alyle-ui").LyStyleUtils & import("@alyle/ui/alyle-ui").ThemeConfig & LySnackBarVariables) => {
     $priority: number;
-    root: {
-        [x: string]: string | number | import("@alyle/ui/alyle-ui").StyleContainer;
-        borderRadius: string;
-        display: string;
-        justifyContent: string;
-        alignItems: string;
-        margin: string;
-        padding: string;
-        minHeight: string;
-        minWidth: string;
-        maxWidth: string;
-        opacity: number;
-        transition: string;
-        fontSize: string;
-        '&': import("@alyle/ui/alyle-ui").StyleContainer;
-    };
+    root: (className: string) => string;
 };
 /** Event that is emitted when a snack bar is dismissed. */
 export interface LySnackBarDismiss {
@@ -31,7 +23,10 @@ export declare class LySnackBar implements OnDestroy {
     private _theme;
     private _overlay;
     private _snackBarService;
-    readonly classes: Record<"root", string>;
+    readonly classes: Pick<{
+        $priority: string;
+        root: string;
+    }, "root">;
     duration: number | 'Infinity';
     horizontalPosition: 'center' | XPosition;
     verticalPosition: YPosition;

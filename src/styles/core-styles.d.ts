@@ -1,5 +1,10 @@
 import { LyTheme2 } from '../theme/theme2.service';
 export declare const LY_COMMON_STYLES: {
+    fill: (className: string) => string;
+    visuallyHidden: (className: string) => string;
+    button: (className: string) => string;
+};
+export declare const LY_COMMON_STYLES_DEPRECATED: {
     fill: {
         position: string;
         top: number;
@@ -39,6 +44,10 @@ export declare const LY_COMMON_STYLES: {
 };
 export declare class LyCoreStyles {
     private theme;
-    classes: Record<"button" | "fill" | "visuallyHidden", string>;
+    classes: Pick<{
+        fill: string;
+        visuallyHidden: string;
+        button: string;
+    }, "button" | "fill" | "visuallyHidden">;
     constructor(theme: LyTheme2);
 }

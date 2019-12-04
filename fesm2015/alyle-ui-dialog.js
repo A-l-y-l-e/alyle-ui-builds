@@ -1,6 +1,6 @@
-import { __decorate, __metadata } from 'tslib';
-import { Injectable, InjectionToken, TemplateRef, ViewChild, ViewContainerRef, Component, ChangeDetectionStrategy, ApplicationRef, ElementRef, ChangeDetectorRef, Renderer2, Injector, ComponentFactoryResolver, Directive, NgModule } from '@angular/core';
-import { LyOverlayRef, LyTheme2, shadowBuilder, STYLES_BACKDROP_DARK, LyOverlay, LyCommonModule, LyOverlayModule } from '@alyle/ui';
+import { __decorate } from 'tslib';
+import { Injectable, InjectionToken, TemplateRef, ApplicationRef, ElementRef, ChangeDetectorRef, Renderer2, ViewChild, ViewContainerRef, Component, ChangeDetectionStrategy, Injector, ComponentFactoryResolver, Directive, NgModule } from '@angular/core';
+import { LyOverlayRef, shadowBuilder, styleTemplateToString, StyleCollection, LyTheme2, STYLES_BACKDROP_DARK, LyOverlay, LyCommonModule, LyOverlayModule } from '@alyle/ui';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Subject } from 'rxjs';
 import { CommonModule } from '@angular/common';
@@ -33,9 +33,11 @@ let LyDialogRef = class LyDialogRef {
         this._result = result;
     }
 };
+LyDialogRef.ctorParameters = () => [
+    { type: LyOverlayRef }
+];
 LyDialogRef = __decorate([
-    Injectable(),
-    __metadata("design:paramtypes", [LyOverlayRef])
+    Injectable()
 ], LyDialogRef);
 
 /**
@@ -62,22 +64,17 @@ const LY_DIALOG_DATA = new InjectionToken('LyDialogData');
 
 const STYLE_PRIORITY = -2;
 /** @docs-private */
-const STYLES = (theme) => ({
-    root: {
-        display: 'flex',
-        position: 'relative',
-        backgroundColor: theme.background.primary.default,
-        borderRadius: '4px',
-        boxShadow: shadowBuilder(12),
-        overflow: 'auto',
-        '> :first-child': {
-            display: 'flex',
-            flexDirection: 'column',
-            width: '100%'
-        },
-        '&': theme.dialog ? theme.dialog.root : null
-    }
-});
+const STYLES = (theme, ref) => {
+    const dialog = ref.selectorsOf(STYLES);
+    return {
+        root: () => (className) => `${className}{display:flex;position:relative;background-color:${theme.background.primary.default};border-radius:4px;box-shadow:${shadowBuilder(12)};overflow:auto;}${styleTemplateToString(((theme.dialog
+            && theme.dialog.root
+            && (theme.dialog.root instanceof StyleCollection
+                ? theme.dialog.root.setTransformer(fn => fn(dialog))
+                : theme.dialog.root(dialog)))), `${className}`)}${className} > :first-child{display:flex;flex-direction:column;width:100%;}`
+    };
+};
+const ɵ0 = STYLES;
 /** @docs-private */
 let LyDialogContainer = class LyDialogContainer {
     constructor(_appRef, _overlayRef, _theme, _el, _cd, _renderer) {
@@ -169,9 +166,16 @@ let LyDialogContainer = class LyDialogContainer {
         return this._el.nativeElement;
     }
 };
+LyDialogContainer.ctorParameters = () => [
+    { type: ApplicationRef },
+    { type: LyOverlayRef },
+    { type: LyTheme2 },
+    { type: ElementRef },
+    { type: ChangeDetectorRef },
+    { type: Renderer2 }
+];
 __decorate([
-    ViewChild(TemplateRef, { read: ViewContainerRef, static: true }),
-    __metadata("design:type", ViewContainerRef)
+    ViewChild(TemplateRef, { read: ViewContainerRef, static: true })
 ], LyDialogContainer.prototype, "viewContainerRef", void 0);
 LyDialogContainer = __decorate([
     Component({
@@ -191,13 +195,7 @@ LyDialogContainer = __decorate([
             '(@dialogContainer.start)': '_onAnimationStart($event)',
             '(@dialogContainer.done)': '_onAnimationDone($event)'
         }
-    }),
-    __metadata("design:paramtypes", [ApplicationRef,
-        LyOverlayRef,
-        LyTheme2,
-        ElementRef,
-        ChangeDetectorRef,
-        Renderer2])
+    })
 ], LyDialogContainer);
 class LyDialogContext {
     constructor(_injector) {
@@ -293,12 +291,14 @@ let LyDialog = class LyDialog {
         return dialogRef;
     }
 };
+LyDialog.ctorParameters = () => [
+    { type: LyOverlay },
+    { type: ComponentFactoryResolver },
+    { type: LyTheme2 },
+    { type: Injector }
+];
 LyDialog = __decorate([
-    Injectable(),
-    __metadata("design:paramtypes", [LyOverlay,
-        ComponentFactoryResolver,
-        LyTheme2,
-        Injector])
+    Injectable()
 ], LyDialog);
 /**
  * convert number to px
@@ -316,16 +316,8 @@ function toPx(val) {
 /** @docs-private */
 const STYLE_PRIORITY$1 = -2;
 /** @docs-private */
-const STYLES_DIALOG_TITLE = (theme) => ({
-    display: 'block',
-    flex: '0 0 auto',
-    margin: '20px 0 16px',
-    padding: '0 24px',
-    fontSize: `20px`,
-    lineHeight: '24px',
-    fontWeight: 500,
-    fontFamily: theme.typography.fontFamily
-});
+const STYLES_DIALOG_TITLE = (theme) => (className) => `${className}{display:block;flex:0 0 auto;margin:20px 0 16px;padding:0 24px;font-size:20px;line-height:24px;font-weight:500;font-family:${theme.typography.fontFamily};}`;
+const ɵ0$1 = STYLES_DIALOG_TITLE;
 let LyDialogTitle = class LyDialogTitle {
     constructor(_renderer, _el, _theme) {
         this._renderer = _renderer;
@@ -333,29 +325,26 @@ let LyDialogTitle = class LyDialogTitle {
         this._theme = _theme;
     }
     ngOnInit() {
-        this._renderer.addClass(this._el.nativeElement, this._theme.style(STYLES_DIALOG_TITLE, STYLE_PRIORITY$1));
+        this._renderer.addClass(this._el.nativeElement, this._theme.renderStyle(STYLES_DIALOG_TITLE, STYLE_PRIORITY$1));
     }
 };
+LyDialogTitle.ctorParameters = () => [
+    { type: Renderer2 },
+    { type: ElementRef },
+    { type: LyTheme2 }
+];
 LyDialogTitle = __decorate([
     Directive({
         selector: '[ly-dialog-title], [lyDialogTitle]',
         exportAs: 'lyDialogTitle'
-    }),
-    __metadata("design:paramtypes", [Renderer2,
-        ElementRef,
-        LyTheme2])
+    })
 ], LyDialogTitle);
 
 /** @docs-private */
 const STYLE_PRIORITY$2 = -2;
 /** @docs-private */
-const STYLES_DIALOG_CONTENT = ({
-    display: 'block',
-    overflowY: 'auto',
-    flex: '1 1 auto',
-    padding: '0 24px 24px',
-    '-webkit-overflow-scrolling': 'touch'
-});
+const STYLES_DIALOG_CONTENT = () => (className) => `${className}{display:block;overflow-y:auto;flex:1 1 auto;padding:0 24px 24px;-webkit-overflow-scrolling:touch;}`;
+const ɵ0$2 = STYLES_DIALOG_CONTENT;
 let LyDialogContent = class LyDialogContent {
     constructor(_renderer, _el, _theme) {
         this._renderer = _renderer;
@@ -363,30 +352,26 @@ let LyDialogContent = class LyDialogContent {
         this._theme = _theme;
     }
     ngOnInit() {
-        this._renderer.addClass(this._el.nativeElement, this._theme.style(STYLES_DIALOG_CONTENT, STYLE_PRIORITY$2));
+        this._renderer.addClass(this._el.nativeElement, this._theme.renderStyle(STYLES_DIALOG_CONTENT, STYLE_PRIORITY$2));
     }
 };
+LyDialogContent.ctorParameters = () => [
+    { type: Renderer2 },
+    { type: ElementRef },
+    { type: LyTheme2 }
+];
 LyDialogContent = __decorate([
     Directive({
         selector: 'ly-dialog-content, [ly-dialog-content], [lyDialogContent]',
         exportAs: 'lyDialogContent'
-    }),
-    __metadata("design:paramtypes", [Renderer2,
-        ElementRef,
-        LyTheme2])
+    })
 ], LyDialogContent);
 
 /** @docs-private */
 const STYLE_PRIORITY$3 = -2;
 /** @docs-private */
-const STYLES_DIALOG_ACTIONS = ({
-    display: 'flex',
-    flex: '0 0 auto',
-    padding: '8px',
-    flexWrap: 'wrap',
-    minHeight: '52px',
-    alignItems: 'center'
-});
+const STYLES_DIALOG_ACTIONS = () => (className) => `${className}{display:flex;flex:0 0 auto;padding:8px;flex-wrap:wrap;min-height:52px;align-items:center;}`;
+const ɵ0$3 = STYLES_DIALOG_ACTIONS;
 let LyDialogActions = class LyDialogActions {
     constructor(_renderer, _el, _theme) {
         this._renderer = _renderer;
@@ -394,17 +379,19 @@ let LyDialogActions = class LyDialogActions {
         this._theme = _theme;
     }
     ngOnInit() {
-        this._renderer.addClass(this._el.nativeElement, this._theme.style(STYLES_DIALOG_ACTIONS, STYLE_PRIORITY$3));
+        this._renderer.addClass(this._el.nativeElement, this._theme.renderStyle(STYLES_DIALOG_ACTIONS, STYLE_PRIORITY$3));
     }
 };
+LyDialogActions.ctorParameters = () => [
+    { type: Renderer2 },
+    { type: ElementRef },
+    { type: LyTheme2 }
+];
 LyDialogActions = __decorate([
     Directive({
         selector: 'ly-dialog-actions, [ly-dialog-actions], [lyDialogActions]',
         exportAs: 'lyDialogActions'
-    }),
-    __metadata("design:paramtypes", [Renderer2,
-        ElementRef,
-        LyTheme2])
+    })
 ], LyDialogActions);
 
 let LyDialogModule = class LyDialogModule {
@@ -437,6 +424,10 @@ LyDialogModule = __decorate([
         ]
     })
 ], LyDialogModule);
+
+/**
+ * Generated bundle index. Do not edit.
+ */
 
 export { LY_DIALOG_DATA, LyDialog, LyDialogModule, LyDialogRef, LyDialogContainer as ɵa, LyDialogTitle as ɵb, LyDialogContent as ɵc, LyDialogActions as ɵd };
 //# sourceMappingURL=alyle-ui-dialog.js.map

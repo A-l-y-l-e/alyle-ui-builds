@@ -1,154 +1,39 @@
-import { __decorate, __metadata } from 'tslib';
-import { ViewChild, ElementRef, ContentChildren, forwardRef, QueryList, Input, Component, ChangeDetectionStrategy, ChangeDetectorRef, Renderer2, Directive, NgModule } from '@angular/core';
-import { DirAlias, toBoolean, Platform, LyTheme2, LyCommonModule } from '@alyle/ui';
-import * as _chroma from 'chroma-js';
+import { __decorate } from 'tslib';
+import { ElementRef, ChangeDetectorRef, Renderer2, ViewChild, ContentChildren, forwardRef, Input, Component, ChangeDetectionStrategy, Directive, NgModule } from '@angular/core';
+import { DirAlias, keyframesUniqueId, styleTemplateToString, StyleCollection, toBoolean, Platform, LyTheme2, LyCommonModule } from '@alyle/ui';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
 
-/** @docs-private */
-var chroma = _chroma;
 /** Default interval in ms */
 var DEFAULT_INTERVAL = 7000;
 var DEFAULT_AUTOPLAY = true;
 var DEFAULT_HAS_PROGRESS_BAR = false;
 var STYLE_PRIORITY = -2;
-var STYLES = function (theme) {
+var STYLES = function (theme, ref) {
     var dir = theme.getDirection(DirAlias.before);
     var right = dir === 'right' ? 0 : 180;
     var left = dir === 'left' ? 0 : 180;
+    var carousel = ref.selectorsOf(STYLES);
+    var barAnimation = keyframesUniqueId.next();
+    var after = theme.after, before = theme.before;
     return {
         $priority: STYLE_PRIORITY,
-        root: {
-            display: 'block',
-            '-webkit-user-select': 'none',
-            '-moz-user-select': 'none',
-            '-ms-user-select': 'none',
-            position: 'relative',
-            '& {actions}.right': {
-                after: 0,
-                transform: "rotate(" + right + "deg)"
-            },
-            '& {actions}.left': {
-                before: 0,
-                transform: "rotate(" + left + "deg)"
-            },
-            '& svg': {
-                display: 'block',
-                fill: 'currentColor'
-            },
-            '&': theme.carousel ? theme.carousel.root : null
-        },
-        actions: {
-            position: 'absolute',
-            top: 0,
-            bottom: 0,
-            margin: 'auto .25em',
-            height: '1em',
-            width: '1em',
-            fontSize: '36px',
-            cursor: 'pointer',
-            background: chroma(theme.background.primary.default).alpha(.25).css(),
-            color: theme.text.primary,
-            willChange: 'transform'
-        },
-        slideContainer: {
-            overflow: 'hidden',
-            display: 'block',
-            width: '100%',
-            height: '100%',
-            position: 'relative',
-            touchAction: 'pan-y !important'
-        },
-        slide: {
-            display: 'flex',
-            width: '100%',
-            height: '100%',
-            willChange: 'transform',
-            '& > ly-carousel-item': {
-                width: '100%',
-                flexShrink: 0,
-                position: 'relative',
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                backgroundRepeat: 'no-repeat'
-            }
-        },
-        slideContent: {
-            display: 'flex'
-        },
-        slideAnim: {
-            '& > div': {
-                transition: 'transform 750ms cubic-bezier(.1, 1, 0.5, 1)'
-            }
-        },
-        slideNoEvent: {
-            '&>div': {
-                touchAction: 'initial !important',
-                '-webkit-user-drag': 'initial !important'
-            }
-        },
-        carouselIndicators: {
-            position: 'absolute',
-            bottom: 0,
-            left: 0,
-            right: 0,
-            margin: 0,
-            boxSizing: 'border-box',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            height: '48px',
-            '&>div': {
-                display: 'inline-block',
-                borderRadius: '50%',
-                cursor: 'pointer',
-                position: 'relative',
-                padding: '.5em',
-                outline: 'none'
-            },
-            '&>div > span': {
-                transition: '300ms cubic-bezier(0.65, 0.05, 0.36, 1)',
-                width: '1em',
-                height: '1em',
-                transform: 'scale(.5)',
-                borderRadius: '50%',
-                willChange: 'transform',
-                display: 'block',
-                opacity: .65
-            },
-            '&>div>span.active': {
-                transform: 'scale(1)',
-                opacity: 1
-            }
-        },
-        barContainer: {
-            background: chroma(theme.background.primary.default).alpha(.25).css(),
-            height: '4px',
-            position: 'absolute',
-            bottom: 0,
-            width: '100%',
-        },
-        bar: {
-            height: '4px',
-            position: 'absolute',
-            bottom: 0,
-            width: '100%',
-            animationName: '{interval}',
-            animationTimingFunction: 'linear',
-            animationIterationCount: 'infinite',
-            background: theme.text.primary
-        },
-        $keyframes: {
-            interval: {
-                0: {
-                    transform: 'translateX(0%)'
-                },
-                100: {
-                    transform: "translateX(" + (dir === 'left' ? '-' : '') + "100%)"
-                }
-            }
-        }
+        $global: function (className) { return "@keyframes " + barAnimation + "{" + className + " 0%{transform:translateX(0%);}" + className + " 100%{transform:translateX(" + (dir === 'left' ? '-' : '') + "100%);}}"; },
+        root: function () { return function (className) { return className + "{display:block;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;position:relative;}" + styleTemplateToString(((theme.carousel
+            && theme.carousel.root
+            && (theme.carousel.root instanceof StyleCollection
+                ? theme.carousel.root.setTransformer(function (fn) { return fn(carousel); })
+                : theme.carousel.root(carousel)))), "" + className) + className + " " + carousel.actions + ".right{" + after + ":0;transform:rotate(" + right + "deg);}" + className + " " + carousel.actions + ".left{" + before + ":0;transform:rotate(" + left + "deg);}" + className + " svg{display:block;fill:currentColor;}"; }; },
+        actions: function (className) { return className + "{position:absolute;top:0;bottom:0;margin:auto .25em;height:1em;width:1em;font-size:36px;cursor:pointer;background:" + theme.background.primary.default.alpha(.25) + ";color:" + theme.text.primary + ";will-change:transform;}"; },
+        slideContainer: function (className) { return className + "{overflow:hidden;display:block;width:100%;height:100%;position:relative;touch-action:pan-y !important;}"; },
+        slide: function (className) { return className + "{display:flex;width:100%;height:100%;will-change:transform;}" + className + " > ly-carousel-item{width:100%;flex-shrink:0;position:relative;background-size:cover;background-position:center;background-repeat:no-repeat;}"; },
+        slideContent: function (className) { return className + "{display:flex;}"; },
+        slideAnim: function (className) { return className + " > div{transition:transform 750ms cubic-bezier(.1, 1, 0.5, 1);}"; },
+        slideNoEvent: function (className) { return className + ">div{touch-action:initial !important;-webkit-user-drag:initial !important;}"; },
+        carouselIndicators: function (className) { return className + "{position:absolute;bottom:0;left:0;right:0;margin:0;box-sizing:border-box;display:flex;align-items:center;justify-content:center;height:48px;}" + className + ">div{display:inline-block;border-radius:50%;cursor:pointer;position:relative;padding:.5em;outline:none;}" + className + ">div }," + className + ">div>div > span{transition:300ms cubic-bezier(0.65, 0.05, 0.36, 1);width:1em;height:1em;transform:scale(.5);border-radius:50%;will-change:transform;display:block;opacity:.65;}" + className + ">div } },'" + className + ">div }>div>span.active," + className + ">div>div > span },'" + className + ">div>div > span>div>span.active{transform:scale(1);opacity:1;}"; },
+        barContainer: function (className) { return className + "{background:" + theme.background.primary.default.alpha(.25) + ";height:4px;position:absolute;bottom:0;width:100%;}"; },
+        bar: function (className) { return className + "{height:4px;position:absolute;bottom:0;width:100%;animation-name:" + barAnimation + ";animation-timing-function:linear;animation-iteration-count:infinite;background:" + theme.text.primary + ";}"; }
     };
 };
 /** @docs-private */
@@ -408,54 +293,44 @@ var LyCarousel = /** @class */ (function () {
     LyCarousel.prototype._markForCheck = function () {
         this._cd.markForCheck();
     };
+    LyCarousel.ctorParameters = function () { return [
+        { type: ElementRef },
+        { type: ChangeDetectorRef },
+        { type: LyTheme2 },
+        { type: Renderer2 }
+    ]; };
     __decorate([
-        ViewChild('slideContainer', { static: false }),
-        __metadata("design:type", ElementRef)
+        ViewChild('slideContainer', { static: false })
     ], LyCarousel.prototype, "slideContainer", void 0);
     __decorate([
-        ViewChild('_slide', { static: false }),
-        __metadata("design:type", ElementRef)
+        ViewChild('_slide', { static: false })
     ], LyCarousel.prototype, "_slide", void 0);
     __decorate([
-        ViewChild('_progressBar', { static: false }),
-        __metadata("design:type", ElementRef)
+        ViewChild('_progressBar', { static: false })
     ], LyCarousel.prototype, "_progressBar", void 0);
     __decorate([
-        ContentChildren(forwardRef(function () { return LyCarouselItem; })),
-        __metadata("design:type", QueryList)
+        ContentChildren(forwardRef(function () { return LyCarouselItem; }))
     ], LyCarousel.prototype, "lyItems", void 0);
     __decorate([
-        Input(),
-        __metadata("design:type", Number)
+        Input()
     ], LyCarousel.prototype, "mode", void 0);
     __decorate([
-        Input(),
-        __metadata("design:type", Object)
+        Input()
     ], LyCarousel.prototype, "selectedIndex", void 0);
     __decorate([
-        Input(),
-        __metadata("design:type", Boolean),
-        __metadata("design:paramtypes", [Boolean])
+        Input()
     ], LyCarousel.prototype, "pauseOnHover", null);
     __decorate([
-        Input(),
-        __metadata("design:type", Boolean),
-        __metadata("design:paramtypes", [Boolean])
+        Input()
     ], LyCarousel.prototype, "touch", null);
     __decorate([
-        Input(),
-        __metadata("design:type", Boolean),
-        __metadata("design:paramtypes", [Boolean])
+        Input()
     ], LyCarousel.prototype, "autoplay", null);
     __decorate([
-        Input(),
-        __metadata("design:type", Boolean),
-        __metadata("design:paramtypes", [Boolean])
+        Input()
     ], LyCarousel.prototype, "hasProgressBar", null);
     __decorate([
-        Input(),
-        __metadata("design:type", Number),
-        __metadata("design:paramtypes", [Number])
+        Input()
     ], LyCarousel.prototype, "interval", null);
     LyCarousel = __decorate([
         Component({
@@ -467,11 +342,7 @@ var LyCarousel = /** @class */ (function () {
                 '(mouseenter)': '_onMouseEnter()',
                 '(mouseleave)': '_onMouseLeave()'
             }
-        }),
-        __metadata("design:paramtypes", [ElementRef,
-            ChangeDetectorRef,
-            LyTheme2,
-            Renderer2])
+        })
     ], LyCarousel);
     return LyCarousel;
 }());
@@ -487,17 +358,17 @@ var LyCarouselItem = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
+    LyCarouselItem.ctorParameters = function () { return [
+        { type: LyTheme2 },
+        { type: ElementRef }
+    ]; };
     __decorate([
-        Input(),
-        __metadata("design:type", String),
-        __metadata("design:paramtypes", [String])
+        Input()
     ], LyCarouselItem.prototype, "srcImg", null);
     LyCarouselItem = __decorate([
         Directive({
             selector: 'ly-carousel-item'
-        }),
-        __metadata("design:paramtypes", [LyTheme2,
-            ElementRef])
+        })
     ], LyCarouselItem);
     return LyCarouselItem;
 }());
@@ -514,6 +385,10 @@ var LyCarouselModule = /** @class */ (function () {
     ], LyCarouselModule);
     return LyCarouselModule;
 }());
+
+/**
+ * Generated bundle index. Do not edit.
+ */
 
 export { CarouselMode, LyCarousel, LyCarouselItem, LyCarouselModule, STYLES };
 //# sourceMappingURL=alyle-ui-carousel.js.map

@@ -1,14 +1,21 @@
-import { __assign, __decorate, __metadata } from 'tslib';
-import { Input, Directive, ElementRef, Renderer2, ChangeDetectorRef, NgZone, NgModule } from '@angular/core';
-import { YPosition, Positioning, LyTheme2, LyOverlay, LyFocusState, WinScroll, LY_COMMON_STYLES, Platform, LyOverlayModule } from '@alyle/ui';
+import { __decorate } from 'tslib';
+import { ElementRef, Renderer2, ChangeDetectorRef, NgZone, Input, Directive, NgModule } from '@angular/core';
+import { YPosition, StyleCollection, Platform, Positioning, LyTheme2, LyOverlay, LyFocusState, WinScroll, LyOverlayModule } from '@alyle/ui';
 
 var DEFAULT_PLACEMENT = YPosition.below;
 var STYLE_PRIORITY = -2;
-var styles = function (theme) { return ({
-    $priority: STYLE_PRIORITY,
-    root: __assign({}, LY_COMMON_STYLES.fill, { '&': theme.tooltip ? theme.tooltip.root : null })
-}); };
-var ɵ0 = styles;
+var STYLES = function (theme, ref) {
+    var __ = ref.selectorsOf(STYLES);
+    return {
+        $priority: STYLE_PRIORITY,
+        root: function () { return (theme.tooltip
+            && theme.tooltip.root
+            && (theme.tooltip.root instanceof StyleCollection
+                ? theme.tooltip.root.setTransformer(function (fn) { return fn(__); }).css
+                : theme.tooltip.root(__))); }
+    };
+};
+var ɵ0 = STYLES;
 var LyTooltip = /** @class */ (function () {
     function LyTooltip(_theme, _overlay, _el, _renderer, _cd, _focusState, ngZone, scroll) {
         var _this = this;
@@ -19,7 +26,7 @@ var LyTooltip = /** @class */ (function () {
         this._cd = _cd;
         this._focusState = _focusState;
         /** @docs-private */
-        this.classes = this._theme.addStyleSheet(styles);
+        this.classes = this._theme.renderStyleSheet(STYLES);
         this._listeners = new Map();
         this._scrollVal = 0;
         this.lyTooltipShowDelay = 0;
@@ -99,12 +106,22 @@ var LyTooltip = /** @class */ (function () {
                     },
                     onResizeScroll: _this._updatePosition.bind(_this),
                     classes: [
+                        _this.classes.root,
                         _this._theme.addStyle('LyTooltip', function (theme) {
                             var _a;
-                            return (__assign({ borderRadius: '4px' }, theme.tooltip.root, (_a = { fontSize: '10px', padding: '6px 8px', opacity: 0, transition: "opacity " + theme.animations.curves.standard + " 300ms", left: 0 }, _a[theme.getBreakpoint('XSmall')] = {
-                                padding: '8px 16px',
-                                fontSize: '14px',
-                            }, _a)));
+                            return (_a = {
+                                    borderRadius: '4px',
+                                    fontSize: '10px',
+                                    padding: '6px 8px',
+                                    opacity: 0,
+                                    transition: "opacity " + theme.animations.curves.standard + " 300ms",
+                                    left: 0
+                                },
+                                _a[theme.getBreakpoint('XSmall')] = {
+                                    padding: '8px 16px',
+                                    fontSize: '14px',
+                                },
+                                _a);
                         }, undefined, undefined, STYLE_PRIORITY)
                     ],
                     hasBackdrop: false
@@ -159,44 +176,39 @@ var LyTooltip = /** @class */ (function () {
             tooltip.containerElement.style.transform = "translate3d(" + position.x + "px," + position.y + "px,0)";
         }
     };
+    LyTooltip.ctorParameters = function () { return [
+        { type: LyTheme2 },
+        { type: LyOverlay },
+        { type: ElementRef },
+        { type: Renderer2 },
+        { type: ChangeDetectorRef },
+        { type: LyFocusState },
+        { type: NgZone },
+        { type: WinScroll }
+    ]; };
     __decorate([
-        Input('lyTooltip'),
-        __metadata("design:type", Object),
-        __metadata("design:paramtypes", [Object])
+        Input('lyTooltip')
     ], LyTooltip.prototype, "tooltip", null);
     __decorate([
-        Input(),
-        __metadata("design:type", Number)
+        Input()
     ], LyTooltip.prototype, "lyTooltipShowDelay", void 0);
     __decorate([
-        Input(),
-        __metadata("design:type", Number)
+        Input()
     ], LyTooltip.prototype, "lyTooltipHideDelay", void 0);
     __decorate([
-        Input('lyTooltipPlacement'),
-        __metadata("design:type", String)
+        Input('lyTooltipPlacement')
     ], LyTooltip.prototype, "placement", void 0);
     __decorate([
-        Input('lyTooltipXPosition'),
-        __metadata("design:type", String)
+        Input('lyTooltipXPosition')
     ], LyTooltip.prototype, "xPosition", void 0);
     __decorate([
-        Input('lyTooltipYPosition'),
-        __metadata("design:type", String)
+        Input('lyTooltipYPosition')
     ], LyTooltip.prototype, "yPosition", void 0);
     LyTooltip = __decorate([
         Directive({
             selector: '[lyTooltip]',
             exportAs: 'lyTooltip'
-        }),
-        __metadata("design:paramtypes", [LyTheme2,
-            LyOverlay,
-            ElementRef,
-            Renderer2,
-            ChangeDetectorRef,
-            LyFocusState,
-            NgZone,
-            WinScroll])
+        })
     ], LyTooltip);
     return LyTooltip;
 }());
@@ -213,6 +225,10 @@ var LyTooltipModule = /** @class */ (function () {
     ], LyTooltipModule);
     return LyTooltipModule;
 }());
+
+/**
+ * Generated bundle index. Do not edit.
+ */
 
 export { LyTooltip, LyTooltipModule, ɵ0 };
 //# sourceMappingURL=alyle-ui-tooltip.js.map

@@ -1,26 +1,8 @@
 import { InjectionToken } from '@angular/core';
 import { LyStyleUtils, Dir } from '../style-utils';
-import { StyleContainer } from './style';
 import { RippleVariables } from './variables/ripple';
-import { TypographyVariables } from './variables/typography';
-import { CheckboxVariables } from './variables/checkbox';
-import { SnackBarVariables } from './variables/snack-bar';
-import { ButtonVariables } from './variables/button';
-import { TooltipVariables } from './variables/tooltip';
-import { AvatarVariables } from './variables/avatar';
-import { ExpansionVariables } from './variables/expansion';
-import { CardVariables } from './variables/card';
-import { CarouselVariables } from './variables/carousel';
-import { MenuVariables } from './variables/menu';
-import { RadioVariables } from './variables/radio';
-import { ImgCropperVariables } from './variables/img-cropper';
-import { SelectVariables } from './variables/select';
-import { TabsVariables } from './variables/tabs';
-import { FieldVariables } from './variables/field';
-import { DialogVariables } from './variables/dialog';
-import { ListVariables } from './variables/list';
-import { ToolbarVariables } from './variables/toolbar';
-export declare const LY_THEME_GLOBAL_VARIABLES: InjectionToken<RecursivePartial<ThemeVariables>>;
+import { Color } from '@alyle/ui/color';
+export declare const LY_THEME_GLOBAL_VARIABLES: InjectionToken<RecursivePartialObject<ThemeVariables>>;
 export declare const LY_THEME: InjectionToken<ThemeConfig | ThemeConfig[]>;
 export declare const LY_THEME_NAME: InjectionToken<string>;
 export interface ThemeConfig {
@@ -29,37 +11,36 @@ export interface ThemeConfig {
     accent: DefaultVal & PaletteColor;
     warn: DefaultVal & PaletteColor;
     disabled: {
-        default: string;
-        contrast: string;
+        default: Color;
+        contrast: Color;
     };
     paper: DefaultVal & PaletteColor;
     background: {
         /** secondary */
-        default: string;
+        default: Color;
         primary: DefaultVal & PaletteColor;
-        secondary: string;
-        tertiary: string;
-        base: string;
+        secondary: Color;
+        tertiary: Color;
     };
-    hover: string;
+    hover: Color;
     text: {
-        default: string;
-        primary: string;
-        secondary: string;
-        disabled: string;
-        hint: string;
+        default: Color;
+        primary: Color;
+        secondary: Color;
+        disabled: Color;
+        hint: Color;
+        /** When a contrast is needed for a dark background */
+        light: Color;
+        /** When a contrast is needed for a light background */
+        dark: Color;
     };
-    typography?: TypographyVariables;
     /** color for divider */
-    divider: string;
-    shadow: string;
-    radio?: RadioVariables;
-    menu?: MenuVariables;
+    divider: Color;
+    shadow: Color;
     drawer: {
         /** color for drawer:backdrop */
-        backdrop: string;
+        backdrop: Color;
     };
-    field?: FieldVariables;
     iconButton: {
         size: string;
     };
@@ -87,38 +68,20 @@ export interface ThemeConfig {
         };
     };
     ripple: RippleVariables;
-    badge?: {
-        root?: StyleContainer;
-        position?: {
-            [positionName: string]: StyleContainer;
-        };
-    };
-    checkbox?: CheckboxVariables;
-    snackBar?: SnackBarVariables;
-    button?: ButtonVariables;
-    tooltip: TooltipVariables;
-    avatar?: AvatarVariables;
-    expansion?: ExpansionVariables;
-    card?: CardVariables;
-    carousel?: CarouselVariables;
-    imgCropper?: ImgCropperVariables;
-    select?: SelectVariables;
-    tabs?: TabsVariables;
-    dialog?: DialogVariables;
-    list?: ListVariables;
-    toolbar?: ToolbarVariables;
 }
 export declare type ThemeVariables = LyStyleUtils & ThemeConfig;
 export declare type PartialThemeVariables = RecursivePartial<ThemeVariables>;
 export interface DefaultVal {
-    default: string;
+    default: Color;
 }
 export interface PaletteColor {
-    contrast?: string;
+    contrast?: Color;
     /** shadow color */
-    shadow?: string;
+    shadow?: Color;
 }
-declare type RecursivePartial<T> = {
+declare type primitive = string | number | boolean | undefined | null;
+declare type RecursivePartialObject<T> = {
     [P in keyof T]?: RecursivePartial<T[P]>;
 };
+export declare type RecursivePartial<T> = T extends primitive ? T : RecursivePartialObject<T>;
 export {};

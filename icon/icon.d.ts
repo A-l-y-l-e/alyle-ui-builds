@@ -1,6 +1,6 @@
 import { ElementRef, OnChanges, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { LyIconService } from './icon.service';
-import { LyTheme2 } from '@alyle/ui';
+import { LyTheme2, LyHostClass } from '@alyle/ui';
 /** @docs-private */
 export declare class LyIconBase {
     _theme: LyTheme2;
@@ -12,6 +12,13 @@ export declare class LyIcon extends LyIconMixinBase implements OnChanges, OnInit
     private iconService;
     private _el;
     private _renderer;
+    private _hostClass;
+    readonly classes: Pick<{
+        $priority: string;
+        $global: string;
+        loading: string;
+        defaultIcon: string;
+    }, "loading" | "defaultIcon">;
     private _icon;
     private _fontSet;
     private _previousFontSet;
@@ -21,12 +28,14 @@ export declare class LyIcon extends LyIconMixinBase implements OnChanges, OnInit
     icon: string;
     fontSet: string;
     fontIcon: string;
-    constructor(iconService: LyIconService, _el: ElementRef, _renderer: Renderer2, theme: LyTheme2);
+    /** @docs-private */
+    readonly hostElement: any;
+    constructor(iconService: LyIconService, _el: ElementRef, _renderer: Renderer2, theme: LyTheme2, _hostClass: LyHostClass);
     ngOnChanges(): void;
     private _isDefault;
     private _prepareSvgIcon;
     private _appendChild;
-    private _appendDefaultSvgIcon;
+    private _addDefaultIcon;
     private _updateClass;
     ngOnInit(): void;
     ngOnDestroy(): void;

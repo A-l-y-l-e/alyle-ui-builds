@@ -1,6 +1,5 @@
 import { Renderer2, RendererFactory2 } from '@angular/core';
 import { ThemeConfig, ThemeVariables } from './theme-config';
-import { DataStyle } from '../theme.service';
 export declare class CoreTheme {
     private rendererFactory;
     renderer: Renderer2;
@@ -11,14 +10,15 @@ export declare class CoreTheme {
     readonly themes: Set<string>;
     private _themeMap;
     private _styleMap;
+    private _document;
     constructor(themeConfig: ThemeConfig[] | ThemeConfig, globalVariables: ThemeConfig, rendererFactory: RendererFactory2, _document: any);
+    initializeTheme(themeConfig: ThemeConfig[] | ThemeConfig, globalVariables: ThemeConfig): void;
     /**
      * add new theme
      * @param theme: ThemeVariables
      */
-    add(theme: ThemeVariables): void;
-    hasTheme(theme: ThemeVariables | string): void;
+    private _add;
+    hasTheme(theme: ThemeVariables | string): boolean;
     get(name: string): ThemeVariables;
-    getStyleMap(name: string): Map<string, DataStyle>;
     updateClassName(element: any, renderer: Renderer2, newClassname: string, oldClassname?: string): void;
 }

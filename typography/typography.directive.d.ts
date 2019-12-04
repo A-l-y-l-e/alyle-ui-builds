@@ -1,5 +1,15 @@
 import { ElementRef, Renderer2, OnInit, OnChanges } from '@angular/core';
-import { LyTheme2 } from '@alyle/ui';
+import { LyTheme2, StyleCollection, StyleTemplate, LyHostClass, StyleRenderer } from '@alyle/ui';
+export interface LyTypographyTheme {
+    /** Styles for Typography Component */
+    root?: StyleCollection<(() => StyleTemplate)> | (() => StyleTemplate);
+    lyTyp?: {
+        [name: string]: StyleCollection<(() => StyleTemplate)> | (() => StyleTemplate) | undefined;
+    };
+}
+export interface LyTypographyVariables {
+    typography?: LyTypographyTheme;
+}
 /** @docs-private */
 export declare class LyTypographyBase {
     _theme: LyTheme2;
@@ -10,16 +20,24 @@ export declare const LyTypographyMixinBase: import("@alyle/ui/src/common/constru
 export declare class LyTypography extends LyTypographyMixinBase implements OnInit, OnChanges {
     private _el;
     private renderer;
+    private sr;
+    private hostClass;
     /** @docs-private */
-    readonly classes: Record<"root", string>;
+    readonly classes: Pick<{
+        $name: string;
+        $priority: string;
+        root: string;
+        gutterTop: string;
+        gutterBottom: string;
+        gutter: string;
+    }, "root" | "gutterTop" | "gutterBottom" | "gutter">;
+    /** @docs-private */
+    static readonly и = "LyTypography";
     private _lyTyp;
-    private _lyTypClass?;
+    private _lyTypClass;
     private _gutter;
-    private _gutterClass;
     private _gutterTop;
-    private _gutterTopClass;
     private _gutterBottom;
-    private _gutterBottomClass;
     private _noWrap;
     private _noWrapClass?;
     lyTyp: string;
@@ -28,9 +46,8 @@ export declare class LyTypography extends LyTypographyMixinBase implements OnIni
     gutter: boolean;
     gutterTop: boolean;
     gutterBottom: boolean;
-    constructor(_theme: LyTheme2, _el: ElementRef, renderer: Renderer2);
+    constructor(_theme: LyTheme2, _el: ElementRef, renderer: Renderer2, sr: StyleRenderer, hostClass: LyHostClass);
     ngOnInit(): void;
     ngOnChanges(): void;
     private _createTypClass;
-    private _createGutterClass;
 }

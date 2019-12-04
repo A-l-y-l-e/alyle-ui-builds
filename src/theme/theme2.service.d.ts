@@ -2,13 +2,15 @@ import { Renderer2, NgZone } from '@angular/core';
 import { ThemeVariables } from './theme-config';
 import { CoreTheme } from './core-theme.service';
 import { DataStyle } from '../theme.service';
-import { StyleGroup, StyleContainer, Styles, StyleDeclarationsBlock, LyClasses } from './style';
+import { StyleGroup, TypeStyle, StyleContainer, Styles, StyleDeclarationsBlock, LyClasses, LyStyles } from './style';
+import { StyleTemplate, StringIdGenerator } from '../parse';
+export declare const keyframesUniqueId: StringIdGenerator;
 export declare class StylesInDocument {
     styles: {
         [themeName: string]: Map<string | Styles, HTMLStyleElement>;
     };
     styleContainers: Map<number, HTMLElement>;
-    styleElementGlobalMap: Map<string | ((T: any, theme: any) => StyleGroup) | StyleGroup, HTMLStyleElement>;
+    styleElementGlobalMap: Map<string | ((T: any, theme: any) => StyleGroup) | StyleGroup | ((T: any, theme: any) => import("./style").LyStyleGroup), HTMLStyleElement>;
 }
 export declare class LyTheme2 {
     private stylesInDocument;
@@ -34,6 +36,12 @@ export declare class LyTheme2 {
     constructor(stylesInDocument: StylesInDocument, core: CoreTheme, themeName: any, _document: any, _ngZone: NgZone);
     setUpTheme(themeName: string): void;
     /**
+     * Build multiple styles and render them in the DOM
+     */
+    renderStyleSheet<T>(styles: T & LyStyles): LyClasses<T>;
+    renderStyle<THEME_VARIABLES>(id: string, style: (theme: THEME_VARIABLES, ref: ThemeRef) => StyleTemplate, priority?: number): string;
+    renderStyle<THEME_VARIABLES>(style: (theme: THEME_VARIABLES, ref: ThemeRef) => StyleTemplate, priority?: number): string;
+    /**
      * Add a new dynamic style, use only within @Input()
      * @param id Unique id
      * @param style Styles
@@ -45,7 +53,7 @@ export declare class LyTheme2 {
     /**
      * Create basic style
      * @param style Styles.
-     * Note: Use only with inmutable variable.
+     * Note: Use only with immutable variable.
      * @param priority Priority of style
      * @param parentStyle
      */
@@ -75,15 +83,19 @@ export declare class LyTheme2 {
      * @param stylesOrId Style or Id of a style
      */
     existStyle(stylesOrId: string | Styles | StyleDeclarationsBlock): boolean;
-    private _createStyleContent2;
+    selectorsOf<T>(styles: T): LyClasses<T>;
+    getClass(styles: string | StyleTemplate): string;
+    /**
+     * For internal use only
+     * @docs-private
+     */
+    _createStyleContent2(styles: Styles | StyleDeclarationsBlock | ((theme: any, ref: ThemeRef) => StyleTemplate), id: string | null, priority: number | undefined | null, type: TypeStyle, forChangeTheme?: boolean, parentStyle?: Styles): any;
     private _createStyleContainer;
     private findNode;
     private _createElementStyle;
     requestAnimationFrame(fn: (...args: any[]) => void): void;
-    toClassSelector<T>(classes: T): T;
 }
 export declare function converterToCssKeyAndStyle(str: string, themeVariables: ThemeVariables): string;
 export declare function capitalizeFirstLetter(str: string): string;
-export interface ThemeRef extends Pick<LyTheme2, 'toClassSelector'> {
-    addStyleSheet<T>(styles: T & Styles): LyClasses<T>;
+export interface ThemeRef extends Pick<LyTheme2, 'selectorsOf'> {
 }
