@@ -1,60 +1,59 @@
 import { MinimaBase } from './base';
-import { Color } from '@alyle/ui/color';
 import { LyFieldTheme } from '@alyle/ui/field';
 import { LyTooltipTheme } from '@alyle/ui/tooltip';
 import { LySnackBarTheme } from '@alyle/ui/snack-bar';
 export declare class MinimaDark extends MinimaBase {
     name: string;
     primary: {
-        default: Color;
-        contrast: Color;
+        default: import("../@alyle/ui/color/color").ColorClass;
+        contrast: import("../@alyle/ui/color/color").ColorClass;
     };
     accent: {
-        default: Color;
-        contrast: Color;
+        default: import("../@alyle/ui/color/color").ColorClass;
+        contrast: import("../@alyle/ui/color/color").ColorClass;
     };
     warn: {
-        default: Color;
-        contrast: Color;
+        default: import("../@alyle/ui/color/color").ColorClass;
+        contrast: import("../@alyle/ui/color/color").ColorClass;
     };
     disabled: {
-        default: Color;
-        contrast: Color;
+        default: import("../@alyle/ui/color/color").ColorClass;
+        contrast: import("../@alyle/ui/color/color").ColorClass;
     };
     action: {
-        default: Color;
-        contrast: Color;
+        default: import("../@alyle/ui/color/color").ColorClass;
+        contrast: import("../@alyle/ui/color/color").ColorClass;
     };
     background: {
-        default: Color;
+        default: import("../@alyle/ui/color/color").ColorClass;
         primary: {
-            default: Color;
-            shadow: Color;
+            default: import("../@alyle/ui/color/color").ColorClass;
+            shadow: import("../@alyle/ui/color/color").ColorClass;
         };
-        secondary: Color;
-        tertiary: Color;
+        secondary: import("../@alyle/ui/color/color").ColorClass;
+        tertiary: import("../@alyle/ui/color/color").ColorClass;
     };
-    hover: Color;
+    hover: import("../@alyle/ui/color/color").ColorClass;
     paper: {
-        default: Color;
-        shadow: Color;
+        default: import("../@alyle/ui/color/color").ColorClass;
+        shadow: import("../@alyle/ui/color/color").ColorClass;
     };
     text: {
-        default: Color;
-        primary: Color;
-        secondary: Color;
-        disabled: Color;
-        hint: Color;
-        dark: Color;
-        light: Color;
+        default: import("../@alyle/ui/color/color").ColorClass;
+        primary: import("../@alyle/ui/color/color").ColorClass;
+        secondary: import("../@alyle/ui/color/color").ColorClass;
+        disabled: import("../@alyle/ui/color/color").ColorClass;
+        hint: import("../@alyle/ui/color/color").ColorClass;
+        dark: import("../@alyle/ui/color/color").ColorClass;
+        light: import("../@alyle/ui/color/color").ColorClass;
     };
     drawer: {
-        backdrop: Color;
+        backdrop: import("../@alyle/ui/color/color").ColorClass;
     };
-    bar: Color;
-    divider: Color;
-    colorShadow: Color;
-    shadow: Color;
+    bar: import("../@alyle/ui/color/color").ColorClass;
+    divider: import("../@alyle/ui/color/color").ColorClass;
+    colorShadow: import("../@alyle/ui/color/color").ColorClass;
+    shadow: import("../@alyle/ui/color/color").ColorClass;
     field: LyFieldTheme;
     snackBar: LySnackBarTheme;
     tooltip: LyTooltipTheme;

@@ -262,7 +262,7 @@ var MinimaDark = /** @class */ (function (_super) {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.name = 'minima-dark';
         _this.primary = {
-            default: new Color(0x1DE9B6),
+            default: Color(0x1DE9B6),
             contrast: new Color(0, 0, 0, 0.87)
         };
         _this.accent = {

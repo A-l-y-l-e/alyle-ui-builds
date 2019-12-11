@@ -238,7 +238,7 @@ class MinimaDark extends MinimaBase {
         super(...arguments);
         this.name = 'minima-dark';
         this.primary = {
-            default: new Color(0x1DE9B6),
+            default: Color(0x1DE9B6),
             contrast: new Color(0, 0, 0, 0.87)
         };
         this.accent = {

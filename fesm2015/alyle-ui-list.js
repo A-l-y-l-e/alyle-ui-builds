@@ -8,6 +8,7 @@ const STYLE_PRIORITY = 2;
 const DISABLE_PADDING = false;
 const STYLES = (theme, ref) => {
     const list = ref.selectorsOf(STYLES);
+    const { before } = theme;
     return {
         $name: LyList.и,
         $priority: STYLE_PRIORITY,
@@ -22,8 +23,8 @@ const STYLES = (theme, ref) => {
         oneLine: (className) => `${className}{padding-top:8px;padding-bottom:8px;min-height:48px;}`,
         twoLine: () => (className) => `${className}{padding-top:16px;padding-bottom:16px;min-height:64px;}${className} ${list.lines}{margin-bottom:-4px;}`,
         actionListItem: (className) => `${className}{cursor:pointer;user-select:none;}`,
-        lines: (className) => `${className}{align-self:stretch;minWidth:0;width:100%;justify-content:center;flex-direction:column;display:flex;}`,
-        listItemWithIcon: () => (className) => `${className} ${list.lines}{padding-before:16px;}`,
+        lines: (className) => `${className}{align-self:stretch;min-width:0;width:100%;justify-content:center;flex-direction:column;display:flex;}`,
+        listItemWithIcon: () => (className) => `${className} ${list.lines}{padding-${before}:16px;}`,
         twoLineWithIcon: () => (className) => `${className}{padding-top:16px;padding-bottom:16px;}${className} ${list.lines}{margin-bottom:-4px;}`
     };
 };

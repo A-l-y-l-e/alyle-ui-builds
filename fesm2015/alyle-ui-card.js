@@ -1,7 +1,7 @@
 import { __decorate } from 'tslib';
 import { ElementRef, Renderer2, NgZone, Directive, Input, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { styleTemplateToString, StyleCollection, mixinStyleUpdater, mixinBg, mixinColor, mixinRaised, mixinDisabled, mixinOutlined, mixinElevation, mixinShadowColor, mixinDisableRipple, LyTheme2, StyleRenderer, toBoolean, LyHostClass, LyCommonModule } from '@alyle/ui';
+import { styleTemplateToString, StyleCollection, mixinStyleUpdater, mixinBg, mixinColor, mixinRaised, mixinDisabled, mixinOutlined, mixinElevation, mixinShadowColor, mixinDisableRipple, LyTheme2, StyleRenderer, toBoolean, Style, LyHostClass, LyCommonModule } from '@alyle/ui';
 
 var LyCardMedia_1;
 const STYLES = (theme, ref) => {
@@ -14,6 +14,7 @@ const STYLES = (theme, ref) => {
             && (theme.card.root instanceof StyleCollection
                 ? theme.card.root.setTransformer(fn => fn(card))
                 : theme.card.root(card)))), `${className}`)}`,
+        bgImg: (className) => `${className}{display:block;background-size:cover;background-repeat:no-repeat;background-position:center;}`,
         content: (className) => `${className}{display:block;padding:16px 24px;}${className} ${theme.getBreakpoint('XSmall')}{padding:16px 16px;}`,
         actions: (className) => `${className}{display:block;padding:8px 12px;}${className} ${theme.getBreakpoint('XSmall')}{padding:8px 4px;}`,
         actionsItem: (className) => `${className}{margin:0 4px;}`
@@ -135,21 +136,14 @@ LyCardActions = __decorate([
         selector: 'ly-card-actions'
     })
 ], LyCardActions);
+const ɵ0 = (val) => () => (className) => `${className}{background-image:url('${val}');}`;
+/**
+ * @dynamic
+ */
 let LyCardMedia = LyCardMedia_1 = class LyCardMedia {
-    constructor(el, renderer, styleRenderer) {
-        this.el = el;
-        this.renderer = renderer;
-        this.styleRenderer = styleRenderer;
-    }
-    set bgImg(val) {
-        if (val !== this.bgImg) {
-            this._bgImg = val;
-            this[0x1] = this.styleRenderer.add(`${LyCardMedia_1.и}--bgImg-${val}`, () => (className) => `${className}{display:block;background-size:cover;background-repeat:no-repeat;background-position:center;}`, STYLE_PRIORITY, this[0x1]);
-            this.renderer.setStyle(this.el.nativeElement, `background-image`, `url("${val}")`);
-        }
-    }
-    get bgImg() {
-        return this._bgImg;
+    constructor(sRenderer, card) {
+        this.sRenderer = sRenderer;
+        sRenderer.addClass(card.classes.bgImg);
     }
     /**
      * Aspect ratio
@@ -161,7 +155,7 @@ let LyCardMedia = LyCardMedia_1 = class LyCardMedia {
     set ratio(val) {
         if (val !== this.ratio) {
             this._ratio = val;
-            this[0x2] = this.styleRenderer.add(`${LyCardMedia_1.и}--ratio-${val}`, () => (className) => `${className}::before{content:'';display:block;padding-top:${val
+            this[0x2] = this.sRenderer.add(`${LyCardMedia_1.и}--ratio-${val}`, () => (className) => `${className}::before{content:'';display:block;padding-top:${val
                 .split(':')
                 .reduce((prev, current) => (+current / +prev * 100).toString())}%;}`, STYLE_PRIORITY, this[0x2]);
         }
@@ -176,14 +170,15 @@ let LyCardMedia = LyCardMedia_1 = class LyCardMedia {
     }
 };
 LyCardMedia.и = 'LyCardMedia';
+LyCardMedia.$priority = STYLE_PRIORITY;
 LyCardMedia.ctorParameters = () => [
-    { type: ElementRef },
-    { type: Renderer2 },
-    { type: StyleRenderer }
+    { type: StyleRenderer },
+    { type: LyCard }
 ];
 __decorate([
-    Input()
-], LyCardMedia.prototype, "bgImg", null);
+    Input(),
+    Style(ɵ0)
+], LyCardMedia.prototype, "bgImg", void 0);
 __decorate([
     Input()
 ], LyCardMedia.prototype, "ratio", null);
@@ -213,5 +208,5 @@ LyCardModule = __decorate([
  * Generated bundle index. Do not edit.
  */
 
-export { LyCard, LyCardActions, LyCardBase, LyCardContent, LyCardMedia, LyCardMixinBase, LyCardModule, STYLES };
+export { LyCard, LyCardActions, LyCardBase, LyCardContent, LyCardMedia, LyCardMixinBase, LyCardModule, STYLES, ɵ0 };
 //# sourceMappingURL=alyle-ui-card.js.map

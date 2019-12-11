@@ -1,6 +1,6 @@
 import { Color } from '@alyle/ui/color';
 import { Styles, LyClasses } from './theme/style';
-import { StyleCollection, StyleTemplate } from './parse';
+import { StyleTemplate } from './parse';
 export declare class LyStyleUtils {
     name: string;
     typography: {
@@ -52,8 +52,8 @@ export declare enum DirPosition {
     left = "left",
     right = "right"
 }
-export declare function eachMedia(str: string | number | undefined, fn: ((val: string | number, media: string | null, index: number) => void)): void;
-export declare function eachMedia(str: string | number | undefined, fn: ((val: string | number, media: string | null, index: number) => void), styleCollection: StyleCollection): StyleTemplate;
+export declare function eachMedia(str: string | number, fn: ((val: string | number, media: string | null, index: number) => void)): void;
+export declare function eachMedia(str: string | number, fn: ((val: string | number, media: string | null, index: number) => void), styleCollection: boolean): StyleTemplate;
 export declare function mergeDeep<T, U>(target: T, source: U): T & U;
 export declare function mergeDeep<T, U, V>(target: T, source1: U, source2: V): T & U & V;
 export declare function mergeDeep<T, U, V, W>(target: T, source1: U, source2: V, source3: W): T & U & V & W;

@@ -71,7 +71,7 @@ let LyGrid = class LyGrid {
      */
     _createSpacingClass(xy, x, y) {
         const newSpacingClass = this.theme.addStyle(`lyGrid-spacing:${xy}·${x}·${y}`, (theme) => {
-            const val = xy || x || y;
+            const val = (xy || x || y);
             const spacingStyles = {};
             eachMedia(val, (value, media) => {
                 const valuePadding = `${(+value) / 2}px`;
@@ -103,7 +103,7 @@ let LyGrid = class LyGrid {
             }
         }
         this._negativeMarginClass = this.theme.addStyle(`lyGrid-negative-margin:${xy}·${x}·${y}`, (theme) => {
-            const val = xy || x || y;
+            const val = (xy || x || y);
             let negativeMarginStyles;
             eachMedia(val, (value, media) => {
                 const valueMargin = `${(-value) / 2}px`;
@@ -282,7 +282,7 @@ let LyGridItem = LyGridItem_1 = class LyGridItem {
                 const flexBasis = value ? value * 100 / 12 : 0;
                 const flexGrow = value ? 0 : 1;
                 if (media) {
-                    medias.add((className) => `@media ${theme.breakpoints[media]}{${className}{max-width:${maxWidth}%;,flex-basis:${flexBasis}%;,flex-grow:${flexGrow};}}`);
+                    medias.add((className) => `@media ${theme.breakpoints[media]}{${className}{max-width:${maxWidth}%;;flex-basis:${flexBasis}%;;flex-grow:${flexGrow};}}`);
                 }
                 else {
                     medias.add((className) => `${className}{max-width:${maxWidth}%;flex-basis:${flexBasis}%;flex-grow:${flexGrow};}`);

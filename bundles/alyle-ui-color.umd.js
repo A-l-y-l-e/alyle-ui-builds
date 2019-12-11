@@ -204,8 +204,8 @@
     var EPS = 1e-7;
     var MAX_ITER = 20;
     var pow = Math.pow, min = Math.min, max = Math.max;
-    var Color = /** @class */ (function () {
-        function Color() {
+    var ColorClass = /** @class */ (function () {
+        function ColorClass() {
             var args = [];
             for (var _i = 0; _i < arguments.length; _i++) {
                 args[_i] = arguments[_i];
@@ -224,20 +224,20 @@
                 this._color = [];
             }
         }
-        Color.prototype.rgb = function () {
+        ColorClass.prototype.rgba = function () {
             return this._color.slice(0);
         };
-        Color.prototype.alpha = function (value) {
+        ColorClass.prototype.alpha = function (value) {
             if (value === void 0) {
                 return this._color[3];
             }
             // Clone
-            var color = this._color.slice(0);
+            var _color = this.rgba();
             // Set alpha
-            color[3] = value;
-            return new (Color.bind.apply(Color, __spread([void 0], color)))();
+            _color[3] = value;
+            return new (Color.bind.apply(Color, __spread([void 0], _color)))();
         };
-        Color.prototype.luminance = function (lum) {
+        ColorClass.prototype.luminance = function (lum) {
             if (lum === void 0) {
                 return rgbToLuminance.apply(void 0, __spread(this._color));
             }
@@ -252,7 +252,7 @@
             var relativeLuminance = this.luminance();
             var max_iter = MAX_ITER;
             var test = function (low, high) {
-                var mid = new (Color.bind.apply(Color, __spread([void 0], interpolateRgb(low.rgb(), high.rgb(), 0.5))))();
+                var mid = new (Color.bind.apply(Color, __spread([void 0], interpolateRgb(low.rgba(), high.rgba(), 0.5))))();
                 var lm = mid.luminance();
                 if (Math.abs(lum - lm) < EPS || !max_iter--) {
                     return mid;
@@ -261,12 +261,12 @@
             };
             var rgb = (relativeLuminance > lum
                 ? test(new Color(0, 0, 0), this)
-                : test(this, new Color(255, 255, 255))).rgb();
+                : test(this, new Color(255, 255, 255))).rgba();
             rgb.pop();
             rgb.push(this._color[3]);
             return new (Color.bind.apply(Color, __spread([void 0], rgb)))();
         };
-        Color.prototype.saturate = function (amount) {
+        ColorClass.prototype.saturate = function (amount) {
             if (amount === void 0) { amount = 1; }
             var lab = rgbToLab(this._color);
             var lch = labToLch(lab);
@@ -281,14 +281,14 @@
             rgb.push(this._color[3]);
             return new (Color.bind.apply(Color, __spread([void 0], rgb)))();
         };
-        Color.prototype.desaturate = function (amount) {
+        ColorClass.prototype.desaturate = function (amount) {
             if (amount === void 0) { amount = 1; }
             return this.saturate(-amount);
         };
         /**
          * @param amount default 1
          */
-        Color.prototype.darken = function (amount) {
+        ColorClass.prototype.darken = function (amount) {
             if (amount === void 0) { amount = 1; }
             var lab = rgbToLab(this._color);
             lab[0] -= 18 * amount;
@@ -302,20 +302,20 @@
          * The opposite of darken
          * @param amount default 1
          */
-        Color.prototype.brighten = function (amount) {
+        ColorClass.prototype.brighten = function (amount) {
             if (amount === void 0) { amount = 1; }
             return this.darken(-amount);
         };
-        Color.prototype.css = function () {
+        ColorClass.prototype.css = function () {
             if (!this._color.length) {
                 return 'undefined - invalid color';
             }
-            return rgbToCss(this._color);
+            return rgbToCss(this.rgba());
         };
-        Color.prototype.toString = function () {
+        ColorClass.prototype.toString = function () {
             return this.css();
         };
-        return Color;
+        return ColorClass;
     }());
     // /**
     //  * Convert number to CSS
@@ -327,7 +327,11 @@
     //   return '#000000'.substring(0, 7 - hex.length) + hex;
     // }
     function rgbToCss(rgb) {
-        return "rgba(" + rgb.join() + ")";
+        var alpha = rgb.pop();
+        if (alpha === 1) {
+            return "rgb(" + rgb.map(Math.round).join() + ")";
+        }
+        return "rgba(" + rgb.map(Math.round).join() + "," + alpha + ")";
     }
     function bigIntToRgb(bigInt, alpha) {
         if (alpha === void 0) { alpha = 1; }
@@ -465,14 +469,29 @@
             rgb1[2] + f * (rgb2[2] - rgb1[2]),
         ];
     }
-    function hexColorToInt(color) {
-        if (color.startsWith('#')) {
-            return parseInt(color.slice(1), 16);
+    function hexColorToInt(_color) {
+        if (_color.startsWith('#')) {
+            return parseInt(_color.slice(1), 16);
         }
-        throw new Error("Expected to start with '#' the given value is: " + color);
+        throw new Error("Expected to start with '#' the given value is: " + _color);
     }
+    // https://stackoverflow.com/a/59186182
+    function CreateCallableConstructor(type) {
+        // tslint:disable-next-line: no-shadowed-variable
+        function Color() {
+            var args = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                args[_i] = arguments[_i];
+            }
+            return new (type.bind.apply(type, __spread([void 0], args)))();
+        }
+        Color.prototype = type.prototype;
+        return Color;
+    }
+    var Color = CreateCallableConstructor(ColorClass);
 
     exports.Color = Color;
+    exports.ColorClass = ColorClass;
     exports.hexColorToInt = hexColorToInt;
 
     Object.defineProperty(exports, '__esModule', { value: true });

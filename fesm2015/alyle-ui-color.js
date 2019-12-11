@@ -1,7 +1,7 @@
 const EPS = 1e-7;
 const MAX_ITER = 20;
 const { pow, min, max } = Math;
-class Color {
+class ColorClass {
     constructor(...args) {
         if (args.length < 3 && args.length > 0) {
             this._color = bigIntToRgb(args[0], args[1]);
@@ -17,7 +17,7 @@ class Color {
             this._color = [];
         }
     }
-    rgb() {
+    rgba() {
         return this._color.slice(0);
     }
     alpha(value) {
@@ -25,10 +25,10 @@ class Color {
             return this._color[3];
         }
         // Clone
-        const color = this._color.slice(0);
+        const _color = this.rgba();
         // Set alpha
-        color[3] = value;
-        return new Color(...color);
+        _color[3] = value;
+        return new Color(..._color);
     }
     luminance(lum) {
         if (lum === void 0) {
@@ -45,7 +45,7 @@ class Color {
         const relativeLuminance = this.luminance();
         let max_iter = MAX_ITER;
         const test = (low, high) => {
-            const mid = new Color(...interpolateRgb(low.rgb(), high.rgb(), 0.5));
+            const mid = new Color(...interpolateRgb(low.rgba(), high.rgba(), 0.5));
             const lm = mid.luminance();
             if (Math.abs(lum - lm) < EPS || !max_iter--) {
                 return mid;
@@ -54,7 +54,7 @@ class Color {
         };
         const rgb = (relativeLuminance > lum
             ? test(new Color(0, 0, 0), this)
-            : test(this, new Color(255, 255, 255))).rgb();
+            : test(this, new Color(255, 255, 255))).rgba();
         rgb.pop();
         rgb.push(this._color[3]);
         return new Color(...rgb);
@@ -99,7 +99,7 @@ class Color {
         if (!this._color.length) {
             return 'undefined - invalid color';
         }
-        return rgbToCss(this._color);
+        return rgbToCss(this.rgba());
     }
     toString() {
         return this.css();
@@ -115,7 +115,11 @@ class Color {
 //   return '#000000'.substring(0, 7 - hex.length) + hex;
 // }
 function rgbToCss(rgb) {
-    return `rgba(${rgb.join()})`;
+    const alpha = rgb.pop();
+    if (alpha === 1) {
+        return `rgb(${rgb.map(Math.round).join()})`;
+    }
+    return `rgba(${rgb.map(Math.round).join()},${alpha})`;
 }
 function bigIntToRgb(bigInt, alpha = 1) {
     // if (bigInt < 0x1000) {
@@ -251,25 +255,26 @@ function interpolateRgb(rgb1, rgb2, f = 0.5) {
         rgb1[2] + f * (rgb2[2] - rgb1[2]),
     ];
 }
-function hexColorToInt(color) {
-    if (color.startsWith('#')) {
-        return parseInt(color.slice(1), 16);
+function hexColorToInt(_color) {
+    if (_color.startsWith('#')) {
+        return parseInt(_color.slice(1), 16);
     }
-    throw new Error(`Expected to start with '#' the given value is: ${color}`);
+    throw new Error(`Expected to start with '#' the given value is: ${_color}`);
 }
-// export const color1 = new Color(0x00bcd4).alpha();
-// export const colorr = new Color(0x00bcd4).alpha(1);
-// export const color2 = new Color(0x00bcd4);
-// export const color3 = new Color(0x00bcd4, .5);
-// export const color4 = new Color(250, 250, 250);
-// export const color5 = new Color(250, 250, 250, .5);
-// export const color6 = new Color(...[250, 250, 250, .5]);
-// console.log(new Color(0x2b2b2b).luminance());
-// console.log(Color);
+// https://stackoverflow.com/a/59186182
+function CreateCallableConstructor(type) {
+    // tslint:disable-next-line: no-shadowed-variable
+    function Color(...args) {
+        return new type(...args);
+    }
+    Color.prototype = type.prototype;
+    return Color;
+}
+const Color = CreateCallableConstructor(ColorClass);
 
 /**
  * Generated bundle index. Do not edit.
  */
 
-export { Color, hexColorToInt };
+export { Color, ColorClass, hexColorToInt };
 //# sourceMappingURL=alyle-ui-color.js.map

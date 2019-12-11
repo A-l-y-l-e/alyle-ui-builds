@@ -211,6 +211,7 @@
                 && (theme.card.root instanceof ui.StyleCollection
                     ? theme.card.root.setTransformer(function (fn) { return fn(card); })
                     : theme.card.root(card)))), "" + className); }; },
+            bgImg: function (className) { return className + "{display:block;background-size:cover;background-repeat:no-repeat;background-position:center;}"; },
             content: function (className) { return className + "{display:block;padding:16px 24px;}" + className + " " + theme.getBreakpoint('XSmall') + "{padding:16px 16px;}"; },
             actions: function (className) { return className + "{display:block;padding:8px 12px;}" + className + " " + theme.getBreakpoint('XSmall') + "{padding:8px 4px;}"; },
             actionsItem: function (className) { return className + "{margin:0 4px;}"; }
@@ -339,27 +340,16 @@
         ], LyCardActions);
         return LyCardActions;
     }());
+    var ɵ0 = function (val) { return function () { return function (className) { return className + "{background-image:url('" + val + "');}"; }; }; };
+    /**
+     * @dynamic
+     */
     var LyCardMedia = /** @class */ (function () {
-        function LyCardMedia(el, renderer, styleRenderer) {
-            this.el = el;
-            this.renderer = renderer;
-            this.styleRenderer = styleRenderer;
+        function LyCardMedia(sRenderer, card) {
+            this.sRenderer = sRenderer;
+            sRenderer.addClass(card.classes.bgImg);
         }
         LyCardMedia_1 = LyCardMedia;
-        Object.defineProperty(LyCardMedia.prototype, "bgImg", {
-            get: function () {
-                return this._bgImg;
-            },
-            set: function (val) {
-                if (val !== this.bgImg) {
-                    this._bgImg = val;
-                    this[0x1] = this.styleRenderer.add(LyCardMedia_1.и + "--bgImg-" + val, function () { return function (className) { return className + "{display:block;background-size:cover;background-repeat:no-repeat;background-position:center;}"; }; }, STYLE_PRIORITY, this[0x1]);
-                    this.renderer.setStyle(this.el.nativeElement, "background-image", "url(\"" + val + "\")");
-                }
-            },
-            enumerable: true,
-            configurable: true
-        });
         Object.defineProperty(LyCardMedia.prototype, "ratio", {
             get: function () {
                 return this._ratio;
@@ -374,7 +364,7 @@
             set: function (val) {
                 if (val !== this.ratio) {
                     this._ratio = val;
-                    this[0x2] = this.styleRenderer.add(LyCardMedia_1.и + "--ratio-" + val, function () { return function (className) { return className + "::before{content:'';display:block;padding-top:" + val
+                    this[0x2] = this.sRenderer.add(LyCardMedia_1.и + "--ratio-" + val, function () { return function (className) { return className + "::before{content:'';display:block;padding-top:" + val
                         .split(':')
                         .reduce(function (prev, current) { return (+current / +prev * 100).toString(); }) + "%;}"; }; }, STYLE_PRIORITY, this[0x2]);
                 }
@@ -389,14 +379,15 @@
         };
         var LyCardMedia_1;
         LyCardMedia.и = 'LyCardMedia';
+        LyCardMedia.$priority = STYLE_PRIORITY;
         LyCardMedia.ctorParameters = function () { return [
-            { type: core.ElementRef },
-            { type: core.Renderer2 },
-            { type: ui.StyleRenderer }
+            { type: ui.StyleRenderer },
+            { type: LyCard }
         ]; };
         __decorate([
-            core.Input()
-        ], LyCardMedia.prototype, "bgImg", null);
+            core.Input(),
+            ui.Style(ɵ0)
+        ], LyCardMedia.prototype, "bgImg", void 0);
         __decorate([
             core.Input()
         ], LyCardMedia.prototype, "ratio", null);
@@ -435,6 +426,7 @@
     exports.LyCardMixinBase = LyCardMixinBase;
     exports.LyCardModule = LyCardModule;
     exports.STYLES = STYLES;
+    exports.ɵ0 = ɵ0;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 

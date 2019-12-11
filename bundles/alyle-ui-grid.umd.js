@@ -281,7 +281,7 @@
          */
         LyGrid.prototype._createSpacingClass = function (xy, x, y) {
             var newSpacingClass = this.theme.addStyle("lyGrid-spacing:" + xy + "\u00B7" + x + "\u00B7" + y, function (theme) {
-                var val = xy || x || y;
+                var val = (xy || x || y);
                 var spacingStyles = {};
                 ui.eachMedia(val, function (value, media) {
                     var valuePadding = (+value) / 2 + "px";
@@ -313,7 +313,7 @@
                 }
             }
             this._negativeMarginClass = this.theme.addStyle("lyGrid-negative-margin:" + xy + "\u00B7" + x + "\u00B7" + y, function (theme) {
-                var val = xy || x || y;
+                var val = (xy || x || y);
                 var negativeMarginStyles;
                 ui.eachMedia(val, function (value, media) {
                     var valueMargin = (-value) / 2 + "px";
@@ -507,7 +507,7 @@
                         var flexBasis = value ? value * 100 / 12 : 0;
                         var flexGrow = value ? 0 : 1;
                         if (media) {
-                            medias.add(function (className) { return "@media " + theme.breakpoints[media] + "{" + className + "{max-width:" + maxWidth + "%;,flex-basis:" + flexBasis + "%;,flex-grow:" + flexGrow + ";}}"; });
+                            medias.add(function (className) { return "@media " + theme.breakpoints[media] + "{" + className + "{max-width:" + maxWidth + "%;;flex-basis:" + flexBasis + "%;;flex-grow:" + flexGrow + ";}}"; });
                         }
                         else {
                             medias.add(function (className) { return className + "{max-width:" + maxWidth + "%;flex-basis:" + flexBasis + "%;flex-grow:" + flexGrow + ";}"; });

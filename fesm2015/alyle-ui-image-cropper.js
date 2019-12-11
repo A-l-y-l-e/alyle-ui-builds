@@ -668,7 +668,7 @@ LyImageCropper = __decorate([
     Component({
         changeDetection: ChangeDetectionStrategy.OnPush,
         preserveWhitespaces: false,
-        selector: 'ly-img-cropper, ly-cropping, ly-cropper',
+        selector: 'ly-img-cropper, ly-image-cropper',
         template: "<div #_imgContainer\n[className]=\"classes.imgContainer\"\n(slidestart)=\"_moveStart()\"\n(slide)=\"_move($event)\"\n(slideend)=\"_slideEnd()\">\n  <canvas #_imgCanvas></canvas>\n</div>\n<div #_area *ngIf=\"_isLoadedImg; else content\" [className]=\"classes.area\" [ngStyle]=\"{\n  width: config.width + 'px',\n  height: config.height + 'px'\n}\"></div>\n<ng-template #content>\n  <div [className]=\"classes.defaultContent\">\n    <input #_fileInput type=\"file\" (change)=\"selectInputEvent($event)\" accept=\"image/*\">\n    <ng-content></ng-content>\n  </div>\n</ng-template>\n"
     })
 ], LyImageCropper);

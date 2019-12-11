@@ -14,7 +14,7 @@ let LyDivider = LyDivider_1 = class LyDivider {
     set inset(val) {
         const newVal = this._inset = toBoolean(val);
         if (newVal) {
-            this[0x1] = this._styleRenderer.add(`${LyDivider_1.и}--inset`, () => (className) => `${className}{margin-before:74px;}`, this[0x1]);
+            this[0x1] = this._styleRenderer.add(`${LyDivider_1.и}--inset`, ({ before }) => (className) => `${className}{margin-${before}:74px;}`, this[0x1]);
         }
         else {
             this._hostClass.remove(this[0x1]);

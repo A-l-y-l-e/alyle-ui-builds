@@ -1,5 +1,5 @@
 import { Renderer2, NgZone } from '@angular/core';
-import { ThemeVariables } from './theme-config';
+import { ThemeVariables, ThemeConfig } from './theme-config';
 import { CoreTheme } from './core-theme.service';
 import { DataStyle } from '../theme.service';
 import { StyleGroup, TypeStyle, StyleContainer, Styles, StyleDeclarationsBlock, LyClasses, LyStyles } from './style';
@@ -33,7 +33,7 @@ export declare class LyTheme2 {
     private themeMap;
     /** ssr or hmr */
     private isDevOrServer;
-    constructor(stylesInDocument: StylesInDocument, core: CoreTheme, themeName: any, _document: any, _ngZone: NgZone);
+    constructor(stylesInDocument: StylesInDocument, core: CoreTheme, themeName: any, themeConfig: ThemeConfig[] | ThemeConfig, globalVariables: ThemeConfig, _document: any, _ngZone: NgZone);
     setUpTheme(themeName: string): void;
     /**
      * Build multiple styles and render them in the DOM

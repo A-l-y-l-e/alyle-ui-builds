@@ -1,11 +1,21 @@
-import { SimpleChanges } from '@angular/core';
 import { StyleTemplate } from '../parse';
-import { LyHostClass } from '../minimal/host-class';
-import { StyleRenderer } from '../minimal/renderer-style';
+import { StyleRenderer, WithStyles } from '../minimal/renderer-style';
 import { ThemeRef } from './theme2.service';
-export declare class LyStyle {
-    private _sr;
-    private _hClass;
+/**
+ * @dynamic
+ * Spacing
+ * [p], [pf], [pe], [pt], [pb], [px], [py],
+ * [m], [mf], [me], [mt], [mb], [mx], [my],
+ * Sizing
+ * [size],
+ * [width], [maxWidth], [minWidth],
+ * [height], [maxHeight], [minHeight],
+ * Others
+ * [lyStyle]
+ * [width]
+ */
+export declare class LyStyle implements WithStyles {
+    readonly sRenderer: StyleRenderer;
     /** @docs-private */
     static readonly и = "LyStyle";
     p: string | number | null;
@@ -22,12 +32,15 @@ export declare class LyStyle {
     mb: string | number | null;
     mx: string | number | null;
     my: string | number | null;
-    display: string | null;
     width: string | number | null;
     maxWidth: string | number | null;
+    minWidth: string | number | null;
+    height: string | number | null;
+    maxHeight: string | number | null;
+    minHeight: string | number | null;
+    size: string | number | null;
+    display: string | null;
     lyStyle: string | ((theme: any, ref: ThemeRef) => StyleTemplate) | null;
     private _lyStyle;
-    constructor(_sr: StyleRenderer, _hClass: LyHostClass);
-    private _updateStyle;
-    ngOnChanges({ p, pf, pe, pt, pb, px, py, m, mf, me, mt, mb, mx, my, display, width, maxWidth }: SimpleChanges): void;
+    constructor(sRenderer: StyleRenderer);
 }

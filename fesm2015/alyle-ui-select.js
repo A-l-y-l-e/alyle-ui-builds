@@ -14,9 +14,10 @@ const DEFAULT_DISABLE_RIPPLE = false;
 const STYLE_PRIORITY = -2;
 const STYLES = (theme, ref) => {
     const select = ref.selectorsOf(STYLES);
+    const { after } = theme;
     return {
         $priority: STYLE_PRIORITY,
-        root: () => (className) => `${className}{display:block;padding-after:1em;min-width:em;min-height:1.5em;-webkit-tap-highlight-color:transparent;}${styleTemplateToString(((theme.select
+        root: () => (className) => `${className}{display:block;padding-${after}:1em;min-width:em;min-height:1.5em;-webkit-tap-highlight-color:transparent;}${styleTemplateToString(((theme.select
             && theme.select.root
             && (theme.select.root instanceof StyleCollection
                 ? theme.select.root.setTransformer(fn => fn(select))

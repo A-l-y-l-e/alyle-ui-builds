@@ -28,7 +28,7 @@ let LySkeleton = class LySkeleton {
         this.styleRenderer = styleRenderer;
         this.hostClass = hostClass;
         /** @docs-private */
-        this.classes = this.styleRenderer.addSheet(STYLES);
+        this.classes = this.styleRenderer.renderSheet(STYLES);
     }
     get skeleton() {
         return this._skeleton;

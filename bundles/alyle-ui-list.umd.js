@@ -205,6 +205,7 @@
     var DISABLE_PADDING = false;
     var STYLES = function (theme, ref) {
         var list = ref.selectorsOf(STYLES);
+        var before = theme.before;
         return {
             $name: LyList.и,
             $priority: STYLE_PRIORITY,
@@ -219,8 +220,8 @@
             oneLine: function (className) { return className + "{padding-top:8px;padding-bottom:8px;min-height:48px;}"; },
             twoLine: function () { return function (className) { return className + "{padding-top:16px;padding-bottom:16px;min-height:64px;}" + className + " " + list.lines + "{margin-bottom:-4px;}"; }; },
             actionListItem: function (className) { return className + "{cursor:pointer;user-select:none;}"; },
-            lines: function (className) { return className + "{align-self:stretch;minWidth:0;width:100%;justify-content:center;flex-direction:column;display:flex;}"; },
-            listItemWithIcon: function () { return function (className) { return className + " " + list.lines + "{padding-before:16px;}"; }; },
+            lines: function (className) { return className + "{align-self:stretch;min-width:0;width:100%;justify-content:center;flex-direction:column;display:flex;}"; },
+            listItemWithIcon: function () { return function (className) { return className + " " + list.lines + "{padding-" + before + ":16px;}"; }; },
             twoLineWithIcon: function () { return function (className) { return className + "{padding-top:16px;padding-bottom:16px;}" + className + " " + list.lines + "{margin-bottom:-4px;}"; }; }
         };
     };

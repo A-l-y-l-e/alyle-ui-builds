@@ -1,5 +1,5 @@
 import { ElementRef, NgZone, OnChanges, OnDestroy, OnInit, Renderer2 } from '@angular/core';
-import { LyTheme2, StyleCollection, LyClasses, StyleTemplate, ThemeRef, StyleRenderer } from '@alyle/ui';
+import { LyTheme2, StyleCollection, LyClasses, StyleTemplate, ThemeRef, StyleRenderer, WithStyles } from '@alyle/ui';
 export interface LyCardTheme {
     /** Styles for Card Component */
     root?: StyleCollection<((classes: LyClasses<typeof STYLES>) => StyleTemplate)> | ((classes: LyClasses<typeof STYLES>) => StyleTemplate);
@@ -11,6 +11,7 @@ export declare const STYLES: (theme: import("@alyle/ui/alyle-ui").LyStyleUtils &
     $priority: number;
     $name: string;
     root: () => (className: string) => string;
+    bgImg: (className: string) => string;
     content: (className: string) => string;
     actions: (className: string) => string;
     actionsItem: (className: string) => string;
@@ -36,10 +37,11 @@ export declare class LyCard extends LyCardMixinBase implements OnChanges, OnInit
         $priority: string;
         $name: string;
         root: string;
+        bgImg: string;
         content: string;
         actions: string;
         actionsItem: string;
-    }, "root" | "content" | "actions" | "actionsItem">;
+    }, "root" | "bgImg" | "content" | "actions" | "actionsItem">;
     constructor(theme: LyTheme2, _el: ElementRef, renderer: Renderer2, ngZone: NgZone);
     ngOnChanges(): void;
     ngOnInit(): void;
@@ -60,16 +62,15 @@ export declare class LyCardActions implements OnInit {
     constructor(el: ElementRef, renderer: Renderer2, card: LyCard);
     ngOnInit(): void;
 }
-export declare class LyCardMedia implements OnInit {
-    private el;
-    private renderer;
-    private styleRenderer;
+/**
+ * @dynamic
+ */
+export declare class LyCardMedia implements WithStyles, OnInit {
+    readonly sRenderer: StyleRenderer;
     static readonly и = "LyCardMedia";
-    private _bgImg;
+    static readonly $priority = -1;
     private _ratio;
     bgImg: string;
-    /** bgImg class name */
-    [0x1]: string;
     /**
      * Aspect ratio
      *
@@ -79,6 +80,7 @@ export declare class LyCardMedia implements OnInit {
      */
     ratio: string;
     [0x2]: string;
-    constructor(el: ElementRef, renderer: Renderer2, styleRenderer: StyleRenderer);
+    constructor(sRenderer: StyleRenderer, card: LyCard);
     ngOnInit(): void;
+    static ngAcceptInputType_bgImg: string;
 }

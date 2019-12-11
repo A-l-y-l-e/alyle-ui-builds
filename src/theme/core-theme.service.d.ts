@@ -11,7 +11,7 @@ export declare class CoreTheme {
     private _themeMap;
     private _styleMap;
     private _document;
-    constructor(themeConfig: ThemeConfig[] | ThemeConfig, globalVariables: ThemeConfig, rendererFactory: RendererFactory2, _document: any);
+    constructor(rendererFactory: RendererFactory2, _document: any);
     initializeTheme(themeConfig: ThemeConfig[] | ThemeConfig, globalVariables: ThemeConfig): void;
     /**
      * add new theme

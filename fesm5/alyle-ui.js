@@ -1,5 +1,5 @@
 import { Color, hexColorToInt } from '@alyle/ui/color';
-import { InjectionToken, ViewEncapsulation, Optional, Inject, RendererFactory2, ɵɵdefineInjectable, ɵɵinject, Injectable, isDevMode, NgZone, ViewContainerRef, Input, Directive, NgModule, ElementRef, Renderer2, SimpleChange, HostListener, Component, Injector, TemplateRef, ComponentFactoryResolver, ApplicationRef, ChangeDetectionStrategy } from '@angular/core';
+import { InjectionToken, ViewEncapsulation, RendererFactory2, Inject, ɵɵdefineInjectable, ɵɵinject, Injectable, isDevMode, Optional, NgZone, ViewContainerRef, Input, Directive, NgModule, ElementRef, Renderer2, HostListener, Component, Injector, TemplateRef, ComponentFactoryResolver, ApplicationRef, ChangeDetectionStrategy } from '@angular/core';
 import { __spread, __values, __decorate, __param, __assign, __extends } from 'tslib';
 import { DOCUMENT } from '@angular/common';
 import { Subject, ReplaySubject, fromEvent, empty, Subscription, merge } from 'rxjs';
@@ -46,7 +46,7 @@ var Shadows = [
 ];
 function shadowBuilder(elevation, color) {
     var _color = color || new Color(0, 0, 0);
-    var rgb = _color.rgb;
+    var rgb = _color.rgba();
     if (!(rgb[0] === rgb[1] && rgb[0] === rgb[2])) {
         // Darken and saturate if the color is not in the grayscale
         _color = _color.darken().saturate(2);
@@ -171,7 +171,7 @@ var LylParse = /** @class */ (function () {
         var selector = null;
         var rules = new Map();
         this._template
-            .replace(/(\/\/[^\n\r]*(?:[\n\r]+|$))/g, '')
+            .replace(/(\/\/\s[^\n\r]*(?:[\n\r]+|$))/g, '')
             .replace(/,\n/g, ',')
             .replace(LINE_FEED_REGEX(), function (_ex, fullLine) {
             fullLine = fullLine.trim();
@@ -247,7 +247,7 @@ var LylParse = /** @class */ (function () {
                 var media = matchArray[1];
                 if (media !== key && val.length) {
                     var after = rules.get(media);
-                    var newValue = after + key.replace(media + '{', '') + ("{" + val + "}");
+                    var newValue = after + key.replace(media + '{', '') + ("{" + val.join(';') + "}");
                     rules.set(media, [newValue]);
                     rules.delete(key);
                 }
@@ -535,7 +535,7 @@ var StringIdGenerator = /** @class */ (function () {
 }());
 
 var CoreTheme = /** @class */ (function () {
-    function CoreTheme(themeConfig, globalVariables, rendererFactory, _document) {
+    function CoreTheme(rendererFactory, _document) {
         this.rendererFactory = rendererFactory;
         this.themes = new Set();
         this._themeMap = new Map();
@@ -558,9 +558,6 @@ var CoreTheme = /** @class */ (function () {
             styles: [],
             data: {}
         });
-        if (themeConfig) {
-            this.initializeTheme(themeConfig, globalVariables);
-        }
     }
     CoreTheme.prototype.initializeTheme = function (themeConfig, globalVariables) {
         var _this = this;
@@ -569,7 +566,8 @@ var CoreTheme = /** @class */ (function () {
         allThemes.forEach(function (item) {
             // Do not install themes that are already initialized.
             if (_this.hasTheme(item.name)) {
-                throw new Error("Theme '" + item.name + "' is already initialized.");
+                // throw new Error(`Theme '${item.name}' is already initialized.`);
+                // }
             }
             if (themes.has(item.name)) {
                 themes.get(item.name).push(item);
@@ -611,19 +609,15 @@ var CoreTheme = /** @class */ (function () {
         renderer.addClass(element, newClassname);
     };
     CoreTheme.ctorParameters = function () { return [
-        { type: undefined, decorators: [{ type: Optional }, { type: Inject, args: [LY_THEME,] }] },
-        { type: undefined, decorators: [{ type: Optional }, { type: Inject, args: [LY_THEME_GLOBAL_VARIABLES,] }] },
         { type: RendererFactory2 },
         { type: undefined, decorators: [{ type: Inject, args: [DOCUMENT,] }] }
     ]; };
-    CoreTheme.ngInjectableDef = ɵɵdefineInjectable({ factory: function CoreTheme_Factory() { return new CoreTheme(ɵɵinject(LY_THEME, 8), ɵɵinject(LY_THEME_GLOBAL_VARIABLES, 8), ɵɵinject(RendererFactory2), ɵɵinject(DOCUMENT)); }, token: CoreTheme, providedIn: "root" });
+    CoreTheme.ngInjectableDef = ɵɵdefineInjectable({ factory: function CoreTheme_Factory() { return new CoreTheme(ɵɵinject(RendererFactory2), ɵɵinject(DOCUMENT)); }, token: CoreTheme, providedIn: "root" });
     CoreTheme = __decorate([
         Injectable({
             providedIn: 'root'
         }),
-        __param(0, Optional()), __param(0, Inject(LY_THEME)),
-        __param(1, Optional()), __param(1, Inject(LY_THEME_GLOBAL_VARIABLES)),
-        __param(3, Inject(DOCUMENT))
+        __param(1, Inject(DOCUMENT))
     ], CoreTheme);
     return CoreTheme;
 }());
@@ -760,7 +754,11 @@ function get(obj, path, optional) {
     }
     // return typeof obj === 'string' ? obj as string : obj['default'] as string;
 }
-function eachMedia(str, fn, styleCollection) {
+function eachMedia(str, fn, withStyleCollection) {
+    var styleCollection;
+    if (withStyleCollection) {
+        styleCollection = new StyleCollection();
+    }
     if (typeof str === 'string') {
         var values = str.split(/\s/g);
         for (var index = 0; index < values.length; index++) {
@@ -1141,7 +1139,7 @@ var StylesInDocument = /** @class */ (function () {
 }());
 var THEME_MAP = new Map();
 var LyTheme2 = /** @class */ (function () {
-    function LyTheme2(stylesInDocument, core, themeName, _document, _ngZone) {
+    function LyTheme2(stylesInDocument, core, themeName, themeConfig, globalVariables, _document, _ngZone) {
         this.stylesInDocument = stylesInDocument;
         this.core = core;
         this._document = _document;
@@ -1152,6 +1150,9 @@ var LyTheme2 = /** @class */ (function () {
         this.themeMap = THEME_MAP;
         /** ssr or hmr */
         this.isDevOrServer = isDevMode() || !Platform.isBrowser;
+        if (themeConfig) {
+            core.initializeTheme(themeConfig, globalVariables);
+        }
         if (themeName) {
             this.setUpTheme(themeName);
         }
@@ -1456,13 +1457,17 @@ var LyTheme2 = /** @class */ (function () {
         { type: StylesInDocument },
         { type: CoreTheme },
         { type: undefined, decorators: [{ type: Inject, args: [LY_THEME_NAME,] }] },
+        { type: undefined, decorators: [{ type: Optional }, { type: Inject, args: [LY_THEME,] }] },
+        { type: undefined, decorators: [{ type: Optional }, { type: Inject, args: [LY_THEME_GLOBAL_VARIABLES,] }] },
         { type: undefined, decorators: [{ type: Inject, args: [DOCUMENT,] }] },
         { type: NgZone }
     ]; };
     LyTheme2 = __decorate([
         Injectable(),
         __param(2, Inject(LY_THEME_NAME)),
-        __param(3, Inject(DOCUMENT))
+        __param(3, Optional()), __param(3, Inject(LY_THEME)),
+        __param(4, Optional()), __param(4, Inject(LY_THEME_GLOBAL_VARIABLES)),
+        __param(5, Inject(DOCUMENT))
     ], LyTheme2);
     return LyTheme2;
 }());
@@ -2494,58 +2499,32 @@ var LyWithClass = /** @class */ (function () {
     return LyWithClass;
 }());
 
-var LyHostClass = /** @class */ (function () {
-    function LyHostClass(_el, _renderer) {
+var __CLASS_NAME__ = '__CLASS_NAME__';
+var StyleRenderer = /** @class */ (function () {
+    function StyleRenderer(_theme, _el, _renderer) {
+        this._theme = _theme;
         this._renderer = _renderer;
         this._set = new Set();
-        this._nEl = _el.nativeElement;
-    }
-    LyHostClass.prototype.add = function (className) {
-        if (!this._set.has(className)) {
-            this._set.add(className);
-            this._renderer.addClass(this._nEl, className);
+        if (_el) {
+            this._nEl = _el.nativeElement;
+            this._set = new Set();
         }
-    };
-    LyHostClass.prototype.remove = function (className) {
-        if (className && this._set.has(className)) {
-            this._set.delete(className);
-            this._renderer.removeClass(this._nEl, className);
-        }
-    };
-    LyHostClass.prototype.toggle = function (className, enabled) {
-        if (enabled) {
-            this.add(className);
-        }
-        else {
-            this.remove(className);
-        }
-    };
-    LyHostClass.prototype.update = function (newClassName, oldClassName) {
-        this.remove(oldClassName);
-        this.add(newClassName);
-        return newClassName;
-    };
-    LyHostClass.ctorParameters = function () { return [
-        { type: ElementRef },
-        { type: Renderer2 }
-    ]; };
-    LyHostClass = __decorate([
-        Injectable()
-    ], LyHostClass);
-    return LyHostClass;
-}());
-
-var StyleRenderer = /** @class */ (function () {
-    function StyleRenderer(_el, _theme, _hostClass) {
-        this._theme = _theme;
-        this._hostClass = _hostClass;
     }
     /**
-     * Build multiple styles and render them in the DOM
+     * Build multiple styles and render them in the DOM.
      */
-    StyleRenderer.prototype.addSheet = function (styles) {
+    StyleRenderer.prototype.renderSheet = function (styles) {
         return this._theme._createStyleContent2(styles, null, null, TypeStyle.Multiple);
     };
+    /**
+     * Render style and apply class name to host Component or Directive,
+     * require provide `StyleRenderer` in your Component.
+     * e.g.
+     * @Component({
+     *   ...
+     *   providers: [ StyleRenderer ]
+     * })
+     */
     StyleRenderer.prototype.add = function (id, style, priority, oldClass) {
         var args = arguments;
         /** Class name or keyframe name */
@@ -2594,211 +2573,315 @@ var StyleRenderer = /** @class */ (function () {
         else if (len === 4) {
             className = this._theme._createStyleContent2(style, id, priority, TypeStyle.LylStyle);
         }
-        if (this._hostClass) {
-            return this._hostClass.update(className, oldClass);
+        if (this._nEl) {
+            return this.updateClass(className, oldClass);
         }
-        throw new Error("LyHostClass is required "
-            + "to update classes.\n\n"
-            + "Add LyHostClass to Component or Directive:\n\n"
+        throw new Error("StyleRenderer is required on the Component!\n"
+            + "Add provider for StyleRenderer in Component or Directive:\n\n"
             + "e.g:\n\n"
             + "@Component({\n"
-            + "  providers: [ LyHostClass ]\n"
+            + "  providers: [ StyleRenderer ]\n"
             + "})\n");
     };
+    /**
+     * Only render style and return class name.
+     */
+    StyleRenderer.prototype.render = function (styleOrId, priorityOrStyle, priority) {
+        if (typeof styleOrId === 'string') {
+            return this._theme._createStyleContent2(priorityOrStyle, styleOrId, priority, TypeStyle.LylStyle);
+        }
+        return this._theme._createStyleContent2(styleOrId, null, priority, TypeStyle.LylStyle);
+    };
+    StyleRenderer.prototype.addClass = function (className) {
+        if (!this._set.has(className)) {
+            this._set.add(className);
+            this._renderer.addClass(this._nEl, className);
+        }
+    };
+    StyleRenderer.prototype.removeClass = function (className) {
+        if (className && this._set.has(className)) {
+            this._set.delete(className);
+            this._renderer.removeClass(this._nEl, className);
+        }
+    };
+    StyleRenderer.prototype.toggleClass = function (className, enabled) {
+        if (enabled) {
+            this.addClass(className);
+        }
+        else {
+            this.removeClass(className);
+        }
+    };
+    StyleRenderer.prototype.updateClass = function (newClassName, oldClassName) {
+        this.removeClass(oldClassName);
+        this.addClass(newClassName);
+        return newClassName;
+    };
     StyleRenderer.ctorParameters = function () { return [
-        { type: ElementRef },
         { type: LyTheme2 },
-        { type: LyHostClass, decorators: [{ type: Optional }] }
+        { type: ElementRef, decorators: [{ type: Optional }] },
+        { type: Renderer2, decorators: [{ type: Optional }] }
     ]; };
     StyleRenderer = __decorate([
         Injectable(),
+        __param(1, Optional()),
         __param(2, Optional())
     ], StyleRenderer);
     return StyleRenderer;
 }());
+function Style(style, priority) {
+    return function (target, propertyKey, descriptor) {
+        var index = "" + __CLASS_NAME__ + propertyKey;
+        if (descriptor) {
+            var set_1 = descriptor.set;
+            descriptor.set = function (val) {
+                var that = this;
+                if (val == null) {
+                    that.sRenderer.removeClass(that[index]);
+                }
+                else {
+                    that[index] = that.sRenderer.add(getComponentName(that) + "--" + propertyKey + "-" + val, style(val, that), priority || that.$priority || that.constructor.$priority || 0, that[index]);
+                }
+                set_1.call(that, val);
+            };
+        }
+        else {
+            Object.defineProperty(target, propertyKey, {
+                configurable: true,
+                enumerable: true,
+                set: function (val) {
+                    var that = this;
+                    if (val == null) {
+                        that.sRenderer.removeClass(that[index]);
+                    }
+                    else {
+                        that["_" + propertyKey] = val;
+                        that[index] = that.sRenderer.add(getComponentName(that) + "--" + propertyKey + "-" + val, style(val, that), priority || that.$priority || that.constructor.$priority || 0, that[index]);
+                    }
+                },
+                get: function () {
+                    return this["_" + propertyKey];
+                }
+            });
+        }
+    };
+}
+function getComponentName(comp) {
+    return comp.constructor.и || comp.constructor.name || 'unnamed';
+}
 
 var STYLE_PRIORITY$1 = -0.5;
+var ɵ0$2 = function (value) { return function (_a) {
+    var breakpoints = _a.breakpoints;
+    return eachMedia(value, function (val, media) { return (function (className) { return "@media " + ((media && breakpoints[media]) || 'all') + "{" + className + "{padding:" + to8Px(val) + ";}}"; }); }, true);
+}; }, ɵ1$2 = function (value) { return function (_a) {
+    var breakpoints = _a.breakpoints, after = _a.after;
+    return eachMedia(value, function (val, media) { return (function (className) { return "@media " + ((media && breakpoints[media]) || 'all') + "{" + className + "{padding-" + after + ":" + to8Px(val) + ";}}"; }); }, true);
+}; }, ɵ2$2 = function (value) { return function (_a) {
+    var breakpoints = _a.breakpoints, before = _a.before;
+    return eachMedia(value, function (val, media) { return (function (className) { return "@media " + ((media && breakpoints[media]) || 'all') + "{" + className + "{padding-" + before + ":" + to8Px(val) + ";}}"; }); }, true);
+}; }, ɵ3 = function (value) { return function (_a) {
+    var breakpoints = _a.breakpoints;
+    return eachMedia(value, function (val, media) { return (function (className) { return "@media " + ((media && breakpoints[media]) || 'all') + "{" + className + "{padding-top:" + to8Px(val) + ";}}"; }); }, true);
+}; }, ɵ4 = function (value) { return function (_a) {
+    var breakpoints = _a.breakpoints;
+    return eachMedia(value, function (val, media) { return (function (className) { return "@media " + ((media && breakpoints[media]) || 'all') + "{" + className + "{padding-bottom:" + to8Px(val) + ";}}"; }); }, true);
+}; }, ɵ5 = function (value) { return function (_a) {
+    var breakpoints = _a.breakpoints;
+    return eachMedia(value, function (val, media) { return (function (className) { return "@media " + ((media && breakpoints[media]) || 'all') + "{" + className + "{padding:0 " + to8Px(val) + ";}}"; }); }, true);
+}; }, ɵ6 = function (value) { return function (_a) {
+    var breakpoints = _a.breakpoints;
+    return eachMedia(value, function (val, media) { return (function (className) { return "@media " + ((media && breakpoints[media]) || 'all') + "{" + className + "{padding:" + to8Px(val) + " 0;}}"; }); }, true);
+}; }, ɵ7 = function (value) { return function (_a) {
+    var breakpoints = _a.breakpoints;
+    return eachMedia(value, function (val, media) { return (function (className) { return "@media " + ((media && breakpoints[media]) || 'all') + "{" + className + "{margin:" + to8Px(val) + ";}}"; }); }, true);
+}; }, ɵ8 = function (value) { return function (_a) {
+    var breakpoints = _a.breakpoints, after = _a.after;
+    return eachMedia(value, function (val, media) { return (function (className) { return "@media " + ((media && breakpoints[media]) || 'all') + "{" + className + "{margin-" + after + ":" + to8Px(val) + ";}}"; }); }, true);
+}; }, ɵ9 = function (value) { return function (_a) {
+    var breakpoints = _a.breakpoints, before = _a.before;
+    return eachMedia(value, function (val, media) { return (function (className) { return "@media " + ((media && breakpoints[media]) || 'all') + "{" + className + "{margin-" + before + ":" + to8Px(val) + ";}}"; }); }, true);
+}; }, ɵ10 = function (value) { return function (_a) {
+    var breakpoints = _a.breakpoints;
+    return eachMedia(value, function (val, media) { return (function (className) { return "@media " + ((media && breakpoints[media]) || 'all') + "{" + className + "{margin-top:" + to8Px(val) + ";}}"; }); }, true);
+}; }, ɵ11 = function (value) { return function (_a) {
+    var breakpoints = _a.breakpoints;
+    return eachMedia(value, function (val, media) { return (function (className) { return "@media " + ((media && breakpoints[media]) || 'all') + "{" + className + "{margin-bottom:" + to8Px(val) + ";}}"; }); }, true);
+}; }, ɵ12 = function (value) { return function (_a) {
+    var breakpoints = _a.breakpoints;
+    return eachMedia(value, function (val, media) { return (function (className) { return "@media " + ((media && breakpoints[media]) || 'all') + "{" + className + "{margin:0 " + to8Px(val) + ";}}"; }); }, true);
+}; }, ɵ13 = function (value) { return function (_a) {
+    var breakpoints = _a.breakpoints;
+    return eachMedia(value, function (val, media) { return (function (className) { return "@media " + ((media && breakpoints[media]) || 'all') + "{" + className + "{margin:" + to8Px(val) + " 0;}}"; }); }, true);
+}; }, ɵ14 = function (value) { return function (_a) {
+    var breakpoints = _a.breakpoints;
+    return eachMedia(value, function (val, media) { return (function (className) { return "@media " + ((media && breakpoints[media]) || 'all') + "{" + className + "{width:" + transform(val) + ";}}"; }); }, true);
+}; }, ɵ15 = function (value) { return function (_a) {
+    var breakpoints = _a.breakpoints;
+    return eachMedia(value, function (val, media) { return (function (className) { return "@media " + ((media && breakpoints[media]) || 'all') + "{" + className + "{max-width:" + transform(val) + ";}}"; }); }, true);
+}; }, ɵ16 = function (value) { return function (_a) {
+    var breakpoints = _a.breakpoints;
+    return eachMedia(value, function (val, media) { return (function (className) { return "@media " + ((media && breakpoints[media]) || 'all') + "{" + className + "{min-width:" + transform(val) + ";}}"; }); }, true);
+}; }, ɵ17 = function (value) { return function (_a) {
+    var breakpoints = _a.breakpoints;
+    return eachMedia(value, function (val, media) { return (function (className) { return "@media " + ((media && breakpoints[media]) || 'all') + "{" + className + "{height:" + transform(val) + ";}}"; }); }, true);
+}; }, ɵ18 = function (value) { return function (_a) {
+    var breakpoints = _a.breakpoints;
+    return eachMedia(value, function (val, media) { return (function (className) { return "@media " + ((media && breakpoints[media]) || 'all') + "{" + className + "{max-height:" + transform(val) + ";}}"; }); }, true);
+}; }, ɵ19 = function (value) { return function (_a) {
+    var breakpoints = _a.breakpoints;
+    return eachMedia(value, function (val, media) { return (function (className) { return "@media " + ((media && breakpoints[media]) || 'all') + "{" + className + "{min-height:" + transform(val) + ";}}"; }); }, true);
+}; }, ɵ20 = function (value) { return function (_a) {
+    var breakpoints = _a.breakpoints;
+    return eachMedia(value, function (val, media) { return (function (className) { return "@media " + ((media && breakpoints[media]) || 'all') + "{" + className + "{display:" + val + ";}}"; }); }, true);
+}; };
+/**
+ * @dynamic
+ * Spacing
+ * [p], [pf], [pe], [pt], [pb], [px], [py],
+ * [m], [mf], [me], [mt], [mb], [mx], [my],
+ * Sizing
+ * [size],
+ * [width], [maxWidth], [minWidth],
+ * [height], [maxHeight], [minHeight],
+ * Others
+ * [lyStyle]
+ * [width]
+ */
 var LyStyle = /** @class */ (function () {
-    function LyStyle(_sr, _hClass) {
-        this._sr = _sr;
-        this._hClass = _hClass;
+    function LyStyle(sRenderer) {
+        this.sRenderer = sRenderer;
     }
     LyStyle_1 = LyStyle;
+    Object.defineProperty(LyStyle.prototype, "size", {
+        set: function (value) {
+            this.width = value;
+            this.height = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(LyStyle.prototype, "lyStyle", {
         get: function () {
             return this._lyStyle;
         },
         set: function (val) {
             if (typeof val === 'function') {
-                this._sr.add(val);
+                this.sRenderer.add(val);
+            }
+            else if (val != null) {
+                this[0xa] = this.sRenderer.add(LyStyle_1.и + "--style-" + val, function (_a) {
+                    var breakpoints = _a.breakpoints;
+                    return eachMedia(val, function (v, media) { return (function (className) { return "@media " + ((media && breakpoints[media]) || 'all') + "{" + className + "{" + v + ";}}"; }); }, true);
+                }, STYLE_PRIORITY$1);
             }
             else {
-                this._updateStyle(0xa, 'style', val, function () { return eachMedia(val, function (v, media) { return (function (className) { return "@media " + (media || 'all') + "{" + className + "{" + v + ";}}"; }); }, new StyleCollection()); });
+                this.sRenderer.removeClass(this[0xa]);
             }
         },
         enumerable: true,
         configurable: true
     });
-    LyStyle.prototype._updateStyle = function (index, styleId, simpleChange, style) {
-        if (simpleChange) {
-            var currentValue = simpleChange instanceof SimpleChange
-                ? simpleChange.currentValue
-                : simpleChange;
-            if (currentValue != null) {
-                this[index] = this._sr.add(LyStyle_1.и + "--" + styleId + "-" + currentValue, style, STYLE_PRIORITY$1, this[index]);
-            }
-            else {
-                this._hClass.remove(this[index]);
-            }
-        }
-    };
-    LyStyle.prototype.ngOnChanges = function (_a) {
-        var p = _a.p, pf = _a.pf, pe = _a.pe, pt = _a.pt, pb = _a.pb, px = _a.px, py = _a.py, m = _a.m, mf = _a.mf, me = _a.me, mt = _a.mt, mb = _a.mb, mx = _a.mx, my = _a.my, display = _a.display, width = _a.width, maxWidth = _a.maxWidth;
-        if (p) {
-            var currentValue_1 = p.currentValue;
-            this._updateStyle(0x1, 'p', p, function () { return eachMedia(currentValue_1, function (val, media) { return (function (className) { return "@media " + (media || 'all') + "{" + className + "{padding:" + to8Px(val) + ";}}"; }); }, new StyleCollection()); });
-        }
-        if (pf) {
-            var currentValue_2 = pf.currentValue;
-            this._updateStyle(0x2, 'pf', pf, function (_a) {
-                var after = _a.after;
-                return eachMedia(currentValue_2, function (val, media) { return (function (className) { return "@media " + (media || 'all') + "{" + className + "{padding-" + after + ":" + to8Px(val) + ";}}"; }); }, new StyleCollection());
-            });
-        }
-        if (pe) {
-            var currentValue_3 = pe.currentValue;
-            this._updateStyle(0x3, 'pe', pe, function (_a) {
-                var before = _a.before;
-                return eachMedia(currentValue_3, function (val, media) { return (function (className) { return "@media " + (media || 'all') + "{" + className + "{padding-" + before + ":" + to8Px(val) + ";}}"; }); }, new StyleCollection());
-            });
-        }
-        if (pt) {
-            var currentValue_4 = pt.currentValue;
-            this._updateStyle(0x4, 'pt', pt, function () { return eachMedia(currentValue_4, function (val, media) { return (function (className) { return "@media " + (media || 'all') + "{" + className + "{padding-top:" + to8Px(val) + ";}}"; }); }, new StyleCollection()); });
-        }
-        if (pb) {
-            var currentValue_5 = pb.currentValue;
-            this._updateStyle(0x5, 'pb', pb, function () { return eachMedia(currentValue_5, function (val, media) { return (function (className) { return "@media " + (media || 'all') + "{" + className + "{padding-bottom:" + to8Px(val) + ";}}"; }); }, new StyleCollection()); });
-        }
-        if (px) {
-            var currentValue_6 = px.currentValue;
-            this._updateStyle(0x6, 'px', px, function () { return eachMedia(currentValue_6, function (val, media) { return (function (className) { return "@media " + (media || 'all') + "{" + className + "{padding:0 " + (typeof val === 'number'
-                ? val * 8 + 'px'
-                : val) + ";}}"; }); }, new StyleCollection()); });
-        }
-        if (py) {
-            var currentValue_7 = py.currentValue;
-            this._updateStyle(0x7, 'py', py, function () { return eachMedia(currentValue_7, function (val, media) { return (function (className) { return "@media " + (media || 'all') + "{" + className + "{padding:" + (typeof val === 'number'
-                ? val * 8 + 'px'
-                : val) + " 0;}}"; }); }, new StyleCollection()); });
-        }
-        if (m) {
-            var currentValue_8 = m.currentValue;
-            this._updateStyle(0x8, 'm', m, function () { return eachMedia(currentValue_8, function (val, media) { return (function (className) { return "@media " + (media || 'all') + "{" + className + "{margin:" + to8Px(val) + ";}}"; }); }, new StyleCollection()); });
-        }
-        if (mf) {
-            var currentValue_9 = mf.currentValue;
-            this._updateStyle(0x9, 'mf', mf, function (_a) {
-                var after = _a.after;
-                return eachMedia(currentValue_9, function (val, media) { return (function (className) { return "@media " + (media || 'all') + "{" + className + "{margin-" + after + ":" + to8Px(val) + ";}}"; }); }, new StyleCollection());
-            });
-        }
-        if (me) {
-            var currentValue_10 = me.currentValue;
-            this._updateStyle(0x10, 'me', me, function (_a) {
-                var before = _a.before;
-                return eachMedia(currentValue_10, function (val, media) { return (function (className) { return "@media " + (media || 'all') + "{" + className + "{margin-" + before + ":" + to8Px(val) + ";}}"; }); }, new StyleCollection());
-            });
-        }
-        if (mt) {
-            var currentValue_11 = mt.currentValue;
-            this._updateStyle(0x11, 'mt', mt, function () { return eachMedia(currentValue_11, function (val, media) { return (function (className) { return "@media " + (media || 'all') + "{" + className + "{margin-top:" + to8Px(val) + ";}}"; }); }, new StyleCollection()); });
-        }
-        if (mb) {
-            var currentValue_12 = mb.currentValue;
-            this._updateStyle(0x12, 'mb', mb, function () { return eachMedia(currentValue_12, function (val, media) { return (function (className) { return "@media " + (media || 'all') + "{" + className + "{margin-bottom:" + to8Px(val) + ";}}"; }); }, new StyleCollection()); });
-        }
-        if (mx) {
-            var currentValue_13 = mx.currentValue;
-            this._updateStyle(0x13, 'mx', mx, function () { return eachMedia(currentValue_13, function (val, media) { return (function (className) { return "@media " + (media || 'all') + "{" + className + "{margin:0 " + to8Px(val) + ";}}"; }); }, new StyleCollection()); });
-        }
-        if (my) {
-            var currentValue_14 = my.currentValue;
-            this._updateStyle(0x14, 'my', my, function () { return eachMedia(currentValue_14, function (val, media) { return (function (className) { return "@media " + (media || 'all') + "{" + className + "{margin:" + to8Px(val) + " 0;}}"; }); }, new StyleCollection()); });
-        }
-        if (display) {
-            var currentValue_15 = display.currentValue;
-            this._updateStyle(0x15, 'display', display, function () { return eachMedia(currentValue_15, function (val, media) { return (function (className) { return "@media " + (media || 'all') + "{" + className + "{display:" + val + ";}}"; }); }, new StyleCollection()); });
-        }
-        this._updateStyle(0x16, 'width', width, function () { return eachMedia(width.currentValue, function (val, media) { return (function (className) { return "@media " + (media || 'all') + "{" + className + "{width:" + transform(val) + ";}}"; }); }, new StyleCollection()); });
-        this._updateStyle(0x17, 'maxWidth', maxWidth, function () { return eachMedia(maxWidth.currentValue, function (val, media) { return (function (className) { return "@media " + (media || 'all') + "{" + className + "{max-width:" + transform(val) + ";}}"; }); }, new StyleCollection()); });
-    };
     var LyStyle_1;
     /** @docs-private */
     LyStyle.и = 'LyStyle';
     LyStyle.ctorParameters = function () { return [
-        { type: StyleRenderer },
-        { type: LyHostClass }
+        { type: StyleRenderer }
     ]; };
     __decorate([
-        Input()
+        Input(),
+        Style(ɵ0$2)
     ], LyStyle.prototype, "p", void 0);
     __decorate([
-        Input()
+        Input(),
+        Style(ɵ1$2)
     ], LyStyle.prototype, "pf", void 0);
     __decorate([
-        Input()
+        Input(),
+        Style(ɵ2$2)
     ], LyStyle.prototype, "pe", void 0);
     __decorate([
-        Input()
+        Input(),
+        Style(ɵ3)
     ], LyStyle.prototype, "pt", void 0);
     __decorate([
-        Input()
+        Input(),
+        Style(ɵ4)
     ], LyStyle.prototype, "pb", void 0);
     __decorate([
-        Input()
+        Input(),
+        Style(ɵ5)
     ], LyStyle.prototype, "px", void 0);
     __decorate([
-        Input()
+        Input(),
+        Style(ɵ6)
     ], LyStyle.prototype, "py", void 0);
     __decorate([
-        Input()
+        Input(),
+        Style(ɵ7)
     ], LyStyle.prototype, "m", void 0);
     __decorate([
-        Input()
+        Input(),
+        Style(ɵ8)
     ], LyStyle.prototype, "mf", void 0);
     __decorate([
-        Input()
+        Input(),
+        Style(ɵ9)
     ], LyStyle.prototype, "me", void 0);
     __decorate([
-        Input()
+        Input(),
+        Style(ɵ10)
     ], LyStyle.prototype, "mt", void 0);
     __decorate([
-        Input()
+        Input(),
+        Style(ɵ11)
     ], LyStyle.prototype, "mb", void 0);
     __decorate([
-        Input()
+        Input(),
+        Style(ɵ12)
     ], LyStyle.prototype, "mx", void 0);
     __decorate([
-        Input()
+        Input(),
+        Style(ɵ13)
     ], LyStyle.prototype, "my", void 0);
     __decorate([
-        Input()
-    ], LyStyle.prototype, "display", void 0);
-    __decorate([
-        Input()
+        Input(),
+        Style(ɵ14)
     ], LyStyle.prototype, "width", void 0);
     __decorate([
-        Input()
+        Input(),
+        Style(ɵ15)
     ], LyStyle.prototype, "maxWidth", void 0);
+    __decorate([
+        Input(),
+        Style(ɵ16)
+    ], LyStyle.prototype, "minWidth", void 0);
+    __decorate([
+        Input(),
+        Style(ɵ17)
+    ], LyStyle.prototype, "height", void 0);
+    __decorate([
+        Input(),
+        Style(ɵ18)
+    ], LyStyle.prototype, "maxHeight", void 0);
+    __decorate([
+        Input(),
+        Style(ɵ19)
+    ], LyStyle.prototype, "minHeight", void 0);
+    __decorate([
+        Input()
+    ], LyStyle.prototype, "size", null);
+    __decorate([
+        Input(),
+        Style(ɵ20)
+    ], LyStyle.prototype, "display", void 0);
     __decorate([
         Input()
     ], LyStyle.prototype, "lyStyle", null);
     LyStyle = LyStyle_1 = __decorate([
         Directive({
-            selector: "[lyStyle],\n              [p], [pf], [pe], [pt], [pb], [px], [py],\n              [m], [mf], [me], [mt], [mb], [mx], [my],\n              [display],\n              [maxWidth],\n              [width]",
+            selector: "[lyStyle],\n              [p], [pf], [pe], [pt], [pb], [px], [py],\n              [m], [mf], [me], [mt], [mb], [mx], [my],\n              [size],\n              [width], [maxWidth], [minWidth],\n              [height], [maxHeight], [minHeight],\n              [display]",
             providers: [
-                LyHostClass,
                 StyleRenderer
             ]
         })
@@ -2817,7 +2900,9 @@ function to8Px(val) {
 function transform(value) {
     return value <= 1
         ? value * 100 + "%"
-        : value;
+        : typeof value === 'string'
+            ? value
+            : value + "px";
 }
 
 var LyCommonModule = /** @class */ (function () {
@@ -2994,6 +3079,47 @@ function untilComponentDestroyed(component) {
     return function (source) { return source.pipe(takeUntil(componentDestroyed(component))); };
 }
 
+var LyHostClass = /** @class */ (function () {
+    function LyHostClass(_el, _renderer) {
+        this._renderer = _renderer;
+        this._set = new Set();
+        this._nEl = _el.nativeElement;
+    }
+    LyHostClass.prototype.add = function (className) {
+        if (!this._set.has(className)) {
+            this._set.add(className);
+            this._renderer.addClass(this._nEl, className);
+        }
+    };
+    LyHostClass.prototype.remove = function (className) {
+        if (className && this._set.has(className)) {
+            this._set.delete(className);
+            this._renderer.removeClass(this._nEl, className);
+        }
+    };
+    LyHostClass.prototype.toggle = function (className, enabled) {
+        if (enabled) {
+            this.add(className);
+        }
+        else {
+            this.remove(className);
+        }
+    };
+    LyHostClass.prototype.update = function (newClassName, oldClassName) {
+        this.remove(oldClassName);
+        this.add(newClassName);
+        return newClassName;
+    };
+    LyHostClass.ctorParameters = function () { return [
+        { type: ElementRef },
+        { type: Renderer2 }
+    ]; };
+    LyHostClass = __decorate([
+        Injectable()
+    ], LyHostClass);
+    return LyHostClass;
+}());
+
 var FocusStatus;
 (function (FocusStatus) {
     /**mouse and/or touch*/
@@ -3121,14 +3247,14 @@ var HAMMER_GESTURES_EVENTS = [
     'slideleft',
     'slidecancel'
 ];
-var ɵ0$2 = function () { }, ɵ1$2 = function () { };
+var ɵ0$3 = function () { }, ɵ1$3 = function () { };
 /**
  * Fake HammerInstance that is used when a Hammer instance is requested when HammerJS has not
  * been loaded on the page.
  */
 var noopHammerInstance = {
-    on: ɵ0$2,
-    off: ɵ1$2,
+    on: ɵ0$3,
+    off: ɵ1$3,
 };
 var LyHammerGestureConfig = /** @class */ (function (_super) {
     __extends(LyHammerGestureConfig, _super);
@@ -3182,6 +3308,7 @@ var LyThemeModule = /** @class */ (function () {
             ngModule: LyThemeModule_1,
             providers: [
                 [LyTheme2],
+                [StyleRenderer],
                 { provide: LY_THEME_NAME, useValue: themeName }
             ]
         };
@@ -3218,7 +3345,7 @@ var styles$1 = function (theme) { return ({
         pointerEvents: 'none'
     }
 }); };
-var ɵ0$3 = styles$1;
+var ɵ0$4 = styles$1;
 var LyOverlayContainer = /** @class */ (function () {
     function LyOverlayContainer(theme) {
         this.theme = theme;
@@ -3869,7 +3996,7 @@ var STYLES = function (theme) { return ({
         }
     }
 }); };
-var ɵ0$4 = STYLES;
+var ɵ0$5 = STYLES;
 var LyExpansionIcon = /** @class */ (function () {
     function LyExpansionIcon(_theme, _renderer, _el) {
         this._theme = _theme;
@@ -3952,5 +4079,5 @@ var LyExpansionIconModule = /** @class */ (function () {
  * Generated bundle index. Do not edit.
  */
 
-export { AUI_LAST_UPDATE, AUI_VERSION, AlignAlias, CoreTheme, Dir, DirAlias, DirPosition, ElementObserver, FocusStatus, IS_CORE_THEME, LY_COMMON_STYLES, LY_COMMON_STYLES_DEPRECATED, LY_HAMMER_OPTIONS, LY_THEME, LY_THEME_GLOBAL_VARIABLES, LY_THEME_NAME, LyCommonModule, LyCoreStyles, LyExpansionIcon, LyExpansionIconModule, LyFocusState, LyHammerGestureConfig, LyHostClass, LyOverlay, LyOverlayConfig, LyOverlayContainer, LyOverlayModule, LyOverlayRef, LyPaper, LyPaperBase, LyPaperMixinBase, LyRippleService, LySelectionModel, LyStyle, LyStyleUtils, LyTheme2, LyThemeModule, LylParse, MutationObserverFactory, NgTranscludeDirective, NgTranscludeModule, OverlayFactory, Platform, Positioning, Ripple, STYLES_BACKDROP_DARK, Shadows, StringIdGenerator, StyleCollection, StyleRenderer, StylesInDocument, THEME_VARIABLES, TypeStyle, Undefined, UndefinedValue, WinResize, WinScroll, XPosition, YPosition, _STYLE_MAP, capitalizeFirstLetter, converterToCssKeyAndStyle, createOverlayInjector, defaultEntry, eachMedia, getContrastYIQ, getLyThemeStyleUndefinedError, getLyThemeVariableOptionUndefinedError, getLyThemeVariableUndefinedError, getNativeElement, getThemeNameForSelectors, invertPlacement, keyframesUniqueId, lyl, mergeDeep, mergeThemes, mixinBg, mixinColor, mixinDisableRipple, mixinDisabled, mixinElevation, mixinOutlined, mixinRaised, mixinShadowColor, mixinStyleUpdater, mixinTabIndex, scrollTo, scrollToC, scrollWithAnimation, shadowBuilder, styleTemplateToString, supportsPassiveEventListeners, toBoolean, toNumber, untilComponentDestroyed, ɵ0$2 as ɵ0, ɵ1$2 as ɵ1, ɵ2$1 as ɵ2, LyWithClass as ɵa, LyOverlayBackdrop as ɵb };
+export { AUI_LAST_UPDATE, AUI_VERSION, AlignAlias, CoreTheme, Dir, DirAlias, DirPosition, ElementObserver, FocusStatus, IS_CORE_THEME, LY_COMMON_STYLES, LY_COMMON_STYLES_DEPRECATED, LY_HAMMER_OPTIONS, LY_THEME, LY_THEME_GLOBAL_VARIABLES, LY_THEME_NAME, LyCommonModule, LyCoreStyles, LyExpansionIcon, LyExpansionIconModule, LyFocusState, LyHammerGestureConfig, LyHostClass, LyOverlay, LyOverlayConfig, LyOverlayContainer, LyOverlayModule, LyOverlayRef, LyPaper, LyPaperBase, LyPaperMixinBase, LyRippleService, LySelectionModel, LyStyle, LyStyleUtils, LyTheme2, LyThemeModule, LylParse, MutationObserverFactory, NgTranscludeDirective, NgTranscludeModule, OverlayFactory, Platform, Positioning, Ripple, STYLES_BACKDROP_DARK, Shadows, StringIdGenerator, Style, StyleCollection, StyleRenderer, StylesInDocument, THEME_VARIABLES, TypeStyle, Undefined, UndefinedValue, WinResize, WinScroll, XPosition, YPosition, _STYLE_MAP, capitalizeFirstLetter, converterToCssKeyAndStyle, createOverlayInjector, defaultEntry, eachMedia, getContrastYIQ, getLyThemeStyleUndefinedError, getLyThemeVariableOptionUndefinedError, getLyThemeVariableUndefinedError, getNativeElement, getThemeNameForSelectors, invertPlacement, keyframesUniqueId, lyl, mergeDeep, mergeThemes, mixinBg, mixinColor, mixinDisableRipple, mixinDisabled, mixinElevation, mixinOutlined, mixinRaised, mixinShadowColor, mixinStyleUpdater, mixinTabIndex, scrollTo, scrollToC, scrollWithAnimation, shadowBuilder, styleTemplateToString, supportsPassiveEventListeners, toBoolean, toNumber, untilComponentDestroyed, ɵ0$2 as ɵ0, ɵ1$2 as ɵ1, ɵ10, ɵ11, ɵ12, ɵ13, ɵ14, ɵ15, ɵ16, ɵ17, ɵ18, ɵ19, ɵ2$2 as ɵ2, ɵ20, ɵ3, ɵ4, ɵ5, ɵ6, ɵ7, ɵ8, ɵ9, LyWithClass as ɵa, LyOverlayBackdrop as ɵb };
 //# sourceMappingURL=alyle-ui.js.map

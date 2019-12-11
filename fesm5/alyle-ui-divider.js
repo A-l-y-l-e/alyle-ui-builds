@@ -18,7 +18,10 @@ var LyDivider = /** @class */ (function () {
         set: function (val) {
             var newVal = this._inset = toBoolean(val);
             if (newVal) {
-                this[0x1] = this._styleRenderer.add(LyDivider_1.и + "--inset", function () { return function (className) { return className + "{margin-before:74px;}"; }; }, this[0x1]);
+                this[0x1] = this._styleRenderer.add(LyDivider_1.и + "--inset", function (_a) {
+                    var before = _a.before;
+                    return function (className) { return className + "{margin-" + before + ":74px;}"; };
+                }, this[0x1]);
             }
             else {
                 this._hostClass.remove(this[0x1]);

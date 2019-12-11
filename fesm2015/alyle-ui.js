@@ -1,5 +1,5 @@
 import { Color, hexColorToInt } from '@alyle/ui/color';
-import { InjectionToken, ViewEncapsulation, Optional, Inject, RendererFactory2, ɵɵdefineInjectable, ɵɵinject, Injectable, isDevMode, NgZone, ViewContainerRef, Input, Directive, NgModule, ElementRef, Renderer2, SimpleChange, HostListener, Component, Injector, TemplateRef, ComponentFactoryResolver, ApplicationRef, ChangeDetectionStrategy } from '@angular/core';
+import { InjectionToken, ViewEncapsulation, RendererFactory2, Inject, ɵɵdefineInjectable, ɵɵinject, Injectable, isDevMode, Optional, NgZone, ViewContainerRef, Input, Directive, NgModule, ElementRef, Renderer2, HostListener, Component, Injector, TemplateRef, ComponentFactoryResolver, ApplicationRef, ChangeDetectionStrategy } from '@angular/core';
 import { __decorate, __param } from 'tslib';
 import { DOCUMENT } from '@angular/common';
 import { Subject, ReplaySubject, fromEvent, empty, Subscription, merge } from 'rxjs';
@@ -46,7 +46,7 @@ const Shadows = [
 ];
 function shadowBuilder(elevation, color) {
     let _color = color || new Color(0, 0, 0);
-    const rgb = _color.rgb;
+    const rgb = _color.rgba();
     if (!(rgb[0] === rgb[1] && rgb[0] === rgb[2])) {
         // Darken and saturate if the color is not in the grayscale
         _color = _color.darken().saturate(2);
@@ -166,7 +166,7 @@ class LylParse {
         let selector = null;
         const rules = new Map();
         this._template
-            .replace(/(\/\/[^\n\r]*(?:[\n\r]+|$))/g, '')
+            .replace(/(\/\/\s[^\n\r]*(?:[\n\r]+|$))/g, '')
             .replace(/,\n/g, ',')
             .replace(LINE_FEED_REGEX(), (_ex, fullLine) => {
             fullLine = fullLine.trim();
@@ -242,7 +242,7 @@ class LylParse {
                 const media = matchArray[1];
                 if (media !== key && val.length) {
                     const after = rules.get(media);
-                    const newValue = after + key.replace(media + '{', '') + `{${val}}`;
+                    const newValue = after + key.replace(media + '{', '') + `{${val.join(';')}}`;
                     rules.set(media, [newValue]);
                     rules.delete(key);
                 }
@@ -497,7 +497,7 @@ class StringIdGenerator {
 }
 
 let CoreTheme = class CoreTheme {
-    constructor(themeConfig, globalVariables, rendererFactory, _document) {
+    constructor(rendererFactory, _document) {
         this.rendererFactory = rendererFactory;
         this.themes = new Set();
         this._themeMap = new Map();
@@ -520,9 +520,6 @@ let CoreTheme = class CoreTheme {
             styles: [],
             data: {}
         });
-        if (themeConfig) {
-            this.initializeTheme(themeConfig, globalVariables);
-        }
     }
     initializeTheme(themeConfig, globalVariables) {
         const allThemes = Array.isArray(themeConfig) ? themeConfig : [themeConfig];
@@ -530,7 +527,8 @@ let CoreTheme = class CoreTheme {
         allThemes.forEach(item => {
             // Do not install themes that are already initialized.
             if (this.hasTheme(item.name)) {
-                throw new Error(`Theme '${item.name}' is already initialized.`);
+                // throw new Error(`Theme '${item.name}' is already initialized.`);
+                // }
             }
             if (themes.has(item.name)) {
                 themes.get(item.name).push(item);
@@ -573,19 +571,15 @@ let CoreTheme = class CoreTheme {
     }
 };
 CoreTheme.ctorParameters = () => [
-    { type: undefined, decorators: [{ type: Optional }, { type: Inject, args: [LY_THEME,] }] },
-    { type: undefined, decorators: [{ type: Optional }, { type: Inject, args: [LY_THEME_GLOBAL_VARIABLES,] }] },
     { type: RendererFactory2 },
     { type: undefined, decorators: [{ type: Inject, args: [DOCUMENT,] }] }
 ];
-CoreTheme.ngInjectableDef = ɵɵdefineInjectable({ factory: function CoreTheme_Factory() { return new CoreTheme(ɵɵinject(LY_THEME, 8), ɵɵinject(LY_THEME_GLOBAL_VARIABLES, 8), ɵɵinject(RendererFactory2), ɵɵinject(DOCUMENT)); }, token: CoreTheme, providedIn: "root" });
+CoreTheme.ngInjectableDef = ɵɵdefineInjectable({ factory: function CoreTheme_Factory() { return new CoreTheme(ɵɵinject(RendererFactory2), ɵɵinject(DOCUMENT)); }, token: CoreTheme, providedIn: "root" });
 CoreTheme = __decorate([
     Injectable({
         providedIn: 'root'
     }),
-    __param(0, Optional()), __param(0, Inject(LY_THEME)),
-    __param(1, Optional()), __param(1, Inject(LY_THEME_GLOBAL_VARIABLES)),
-    __param(3, Inject(DOCUMENT))
+    __param(1, Inject(DOCUMENT))
 ], CoreTheme);
 
 /** For internal use only */
@@ -711,7 +705,11 @@ function get(obj, path, optional) {
     }
     // return typeof obj === 'string' ? obj as string : obj['default'] as string;
 }
-function eachMedia(str, fn, styleCollection) {
+function eachMedia(str, fn, withStyleCollection) {
+    let styleCollection;
+    if (withStyleCollection) {
+        styleCollection = new StyleCollection();
+    }
     if (typeof str === 'string') {
         const values = str.split(/\s/g);
         for (let index = 0; index < values.length; index++) {
@@ -1075,7 +1073,7 @@ StylesInDocument = __decorate([
 ], StylesInDocument);
 const THEME_MAP = new Map();
 let LyTheme2 = class LyTheme2 {
-    constructor(stylesInDocument, core, themeName, _document, _ngZone) {
+    constructor(stylesInDocument, core, themeName, themeConfig, globalVariables, _document, _ngZone) {
         this.stylesInDocument = stylesInDocument;
         this.core = core;
         this._document = _document;
@@ -1086,6 +1084,9 @@ let LyTheme2 = class LyTheme2 {
         this.themeMap = THEME_MAP;
         /** ssr or hmr */
         this.isDevOrServer = isDevMode() || !Platform.isBrowser;
+        if (themeConfig) {
+            core.initializeTheme(themeConfig, globalVariables);
+        }
         if (themeName) {
             this.setUpTheme(themeName);
         }
@@ -1382,13 +1383,17 @@ LyTheme2.ctorParameters = () => [
     { type: StylesInDocument },
     { type: CoreTheme },
     { type: undefined, decorators: [{ type: Inject, args: [LY_THEME_NAME,] }] },
+    { type: undefined, decorators: [{ type: Optional }, { type: Inject, args: [LY_THEME,] }] },
+    { type: undefined, decorators: [{ type: Optional }, { type: Inject, args: [LY_THEME_GLOBAL_VARIABLES,] }] },
     { type: undefined, decorators: [{ type: Inject, args: [DOCUMENT,] }] },
     { type: NgZone }
 ];
 LyTheme2 = __decorate([
     Injectable(),
     __param(2, Inject(LY_THEME_NAME)),
-    __param(3, Inject(DOCUMENT))
+    __param(3, Optional()), __param(3, Inject(LY_THEME)),
+    __param(4, Optional()), __param(4, Inject(LY_THEME_GLOBAL_VARIABLES)),
+    __param(5, Inject(DOCUMENT))
 ], LyTheme2);
 function createLylStyle(styleMap, styles, themeName) {
     // const className = styleMap.requireUpdate
@@ -2271,57 +2276,32 @@ LyWithClass = __decorate([
     })
 ], LyWithClass);
 
-let LyHostClass = class LyHostClass {
-    constructor(_el, _renderer) {
+const __CLASS_NAME__ = '__CLASS_NAME__';
+let StyleRenderer = class StyleRenderer {
+    constructor(_theme, _el, _renderer) {
+        this._theme = _theme;
         this._renderer = _renderer;
         this._set = new Set();
-        this._nEl = _el.nativeElement;
-    }
-    add(className) {
-        if (!this._set.has(className)) {
-            this._set.add(className);
-            this._renderer.addClass(this._nEl, className);
+        if (_el) {
+            this._nEl = _el.nativeElement;
+            this._set = new Set();
         }
-    }
-    remove(className) {
-        if (className && this._set.has(className)) {
-            this._set.delete(className);
-            this._renderer.removeClass(this._nEl, className);
-        }
-    }
-    toggle(className, enabled) {
-        if (enabled) {
-            this.add(className);
-        }
-        else {
-            this.remove(className);
-        }
-    }
-    update(newClassName, oldClassName) {
-        this.remove(oldClassName);
-        this.add(newClassName);
-        return newClassName;
-    }
-};
-LyHostClass.ctorParameters = () => [
-    { type: ElementRef },
-    { type: Renderer2 }
-];
-LyHostClass = __decorate([
-    Injectable()
-], LyHostClass);
-
-let StyleRenderer = class StyleRenderer {
-    constructor(_el, _theme, _hostClass) {
-        this._theme = _theme;
-        this._hostClass = _hostClass;
     }
     /**
-     * Build multiple styles and render them in the DOM
+     * Build multiple styles and render them in the DOM.
      */
-    addSheet(styles) {
+    renderSheet(styles) {
         return this._theme._createStyleContent2(styles, null, null, TypeStyle.Multiple);
     }
+    /**
+     * Render style and apply class name to host Component or Directive,
+     * require provide `StyleRenderer` in your Component.
+     * e.g.
+     * @Component({
+     *   ...
+     *   providers: [ StyleRenderer ]
+     * })
+     */
     add(id, style, priority, oldClass) {
         const args = arguments;
         /** Class name or keyframe name */
@@ -2370,185 +2350,233 @@ let StyleRenderer = class StyleRenderer {
         else if (len === 4) {
             className = this._theme._createStyleContent2(style, id, priority, TypeStyle.LylStyle);
         }
-        if (this._hostClass) {
-            return this._hostClass.update(className, oldClass);
+        if (this._nEl) {
+            return this.updateClass(className, oldClass);
         }
-        throw new Error(`LyHostClass is required `
-            + `to update classes.\n\n`
-            + `Add LyHostClass to Component or Directive:\n\n`
+        throw new Error(`StyleRenderer is required on the Component!\n`
+            + `Add provider for StyleRenderer in Component or Directive:\n\n`
             + `e.g:\n\n`
             + `@Component({\n`
-            + `  providers: [ LyHostClass ]\n`
+            + `  providers: [ StyleRenderer ]\n`
             + `})\n`);
+    }
+    /**
+     * Only render style and return class name.
+     */
+    render(styleOrId, priorityOrStyle, priority) {
+        if (typeof styleOrId === 'string') {
+            return this._theme._createStyleContent2(priorityOrStyle, styleOrId, priority, TypeStyle.LylStyle);
+        }
+        return this._theme._createStyleContent2(styleOrId, null, priority, TypeStyle.LylStyle);
+    }
+    addClass(className) {
+        if (!this._set.has(className)) {
+            this._set.add(className);
+            this._renderer.addClass(this._nEl, className);
+        }
+    }
+    removeClass(className) {
+        if (className && this._set.has(className)) {
+            this._set.delete(className);
+            this._renderer.removeClass(this._nEl, className);
+        }
+    }
+    toggleClass(className, enabled) {
+        if (enabled) {
+            this.addClass(className);
+        }
+        else {
+            this.removeClass(className);
+        }
+    }
+    updateClass(newClassName, oldClassName) {
+        this.removeClass(oldClassName);
+        this.addClass(newClassName);
+        return newClassName;
     }
 };
 StyleRenderer.ctorParameters = () => [
-    { type: ElementRef },
     { type: LyTheme2 },
-    { type: LyHostClass, decorators: [{ type: Optional }] }
+    { type: ElementRef, decorators: [{ type: Optional }] },
+    { type: Renderer2, decorators: [{ type: Optional }] }
 ];
 StyleRenderer = __decorate([
     Injectable(),
+    __param(1, Optional()),
     __param(2, Optional())
 ], StyleRenderer);
+function Style(style, priority) {
+    return function (target, propertyKey, descriptor) {
+        const index = `${__CLASS_NAME__}${propertyKey}`;
+        if (descriptor) {
+            const set = descriptor.set;
+            descriptor.set = function (val) {
+                const that = this;
+                if (val == null) {
+                    that.sRenderer.removeClass(that[index]);
+                }
+                else {
+                    that[index] = that.sRenderer.add(`${getComponentName(that)}--${propertyKey}-${val}`, style(val, that), priority || that.$priority || that.constructor.$priority || 0, that[index]);
+                }
+                set.call(that, val);
+            };
+        }
+        else {
+            Object.defineProperty(target, propertyKey, {
+                configurable: true,
+                enumerable: true,
+                set(val) {
+                    const that = this;
+                    if (val == null) {
+                        that.sRenderer.removeClass(that[index]);
+                    }
+                    else {
+                        that[`_${propertyKey}`] = val;
+                        that[index] = that.sRenderer.add(`${getComponentName(that)}--${propertyKey}-${val}`, style(val, that), priority || that.$priority || that.constructor.$priority || 0, that[index]);
+                    }
+                },
+                get() {
+                    return this[`_${propertyKey}`];
+                }
+            });
+        }
+    };
+}
+function getComponentName(comp) {
+    return comp.constructor.и || comp.constructor.name || 'unnamed';
+}
 
 var LyStyle_1;
 const STYLE_PRIORITY$1 = -0.5;
+const ɵ0$2 = value => ({ breakpoints }) => eachMedia(value, (val, media) => ((className) => `@media ${(media && breakpoints[media]) || 'all'}{${className}{padding:${to8Px(val)};}}`), true), ɵ1$2 = value => ({ breakpoints, after }) => eachMedia(value, (val, media) => ((className) => `@media ${(media && breakpoints[media]) || 'all'}{${className}{padding-${after}:${to8Px(val)};}}`), true), ɵ2$2 = value => ({ breakpoints, before }) => eachMedia(value, (val, media) => ((className) => `@media ${(media && breakpoints[media]) || 'all'}{${className}{padding-${before}:${to8Px(val)};}}`), true), ɵ3 = value => ({ breakpoints }) => eachMedia(value, (val, media) => ((className) => `@media ${(media && breakpoints[media]) || 'all'}{${className}{padding-top:${to8Px(val)};}}`), true), ɵ4 = value => ({ breakpoints }) => eachMedia(value, (val, media) => ((className) => `@media ${(media && breakpoints[media]) || 'all'}{${className}{padding-bottom:${to8Px(val)};}}`), true), ɵ5 = value => ({ breakpoints }) => eachMedia(value, (val, media) => ((className) => `@media ${(media && breakpoints[media]) || 'all'}{${className}{padding:0 ${to8Px(val)};}}`), true), ɵ6 = value => ({ breakpoints }) => eachMedia(value, (val, media) => ((className) => `@media ${(media && breakpoints[media]) || 'all'}{${className}{padding:${to8Px(val)} 0;}}`), true), ɵ7 = value => ({ breakpoints }) => eachMedia(value, (val, media) => ((className) => `@media ${(media && breakpoints[media]) || 'all'}{${className}{margin:${to8Px(val)};}}`), true), ɵ8 = value => ({ breakpoints, after }) => eachMedia(value, (val, media) => ((className) => `@media ${(media && breakpoints[media]) || 'all'}{${className}{margin-${after}:${to8Px(val)};}}`), true), ɵ9 = value => ({ breakpoints, before }) => eachMedia(value, (val, media) => ((className) => `@media ${(media && breakpoints[media]) || 'all'}{${className}{margin-${before}:${to8Px(val)};}}`), true), ɵ10 = value => ({ breakpoints }) => eachMedia(value, (val, media) => ((className) => `@media ${(media && breakpoints[media]) || 'all'}{${className}{margin-top:${to8Px(val)};}}`), true), ɵ11 = value => ({ breakpoints }) => eachMedia(value, (val, media) => ((className) => `@media ${(media && breakpoints[media]) || 'all'}{${className}{margin-bottom:${to8Px(val)};}}`), true), ɵ12 = value => ({ breakpoints }) => eachMedia(value, (val, media) => ((className) => `@media ${(media && breakpoints[media]) || 'all'}{${className}{margin:0 ${to8Px(val)};}}`), true), ɵ13 = value => ({ breakpoints }) => eachMedia(value, (val, media) => ((className) => `@media ${(media && breakpoints[media]) || 'all'}{${className}{margin:${to8Px(val)} 0;}}`), true), ɵ14 = value => ({ breakpoints }) => eachMedia(value, (val, media) => ((className) => `@media ${(media && breakpoints[media]) || 'all'}{${className}{width:${transform(val)};}}`), true), ɵ15 = value => ({ breakpoints }) => eachMedia(value, (val, media) => ((className) => `@media ${(media && breakpoints[media]) || 'all'}{${className}{max-width:${transform(val)};}}`), true), ɵ16 = value => ({ breakpoints }) => eachMedia(value, (val, media) => ((className) => `@media ${(media && breakpoints[media]) || 'all'}{${className}{min-width:${transform(val)};}}`), true), ɵ17 = value => ({ breakpoints }) => eachMedia(value, (val, media) => ((className) => `@media ${(media && breakpoints[media]) || 'all'}{${className}{height:${transform(val)};}}`), true), ɵ18 = value => ({ breakpoints }) => eachMedia(value, (val, media) => ((className) => `@media ${(media && breakpoints[media]) || 'all'}{${className}{max-height:${transform(val)};}}`), true), ɵ19 = value => ({ breakpoints }) => eachMedia(value, (val, media) => ((className) => `@media ${(media && breakpoints[media]) || 'all'}{${className}{min-height:${transform(val)};}}`), true), ɵ20 = value => ({ breakpoints }) => eachMedia(value, (val, media) => ((className) => `@media ${(media && breakpoints[media]) || 'all'}{${className}{display:${val};}}`), true);
+/**
+ * @dynamic
+ * Spacing
+ * [p], [pf], [pe], [pt], [pb], [px], [py],
+ * [m], [mf], [me], [mt], [mb], [mx], [my],
+ * Sizing
+ * [size],
+ * [width], [maxWidth], [minWidth],
+ * [height], [maxHeight], [minHeight],
+ * Others
+ * [lyStyle]
+ * [width]
+ */
 let LyStyle = LyStyle_1 = class LyStyle {
-    constructor(_sr, _hClass) {
-        this._sr = _sr;
-        this._hClass = _hClass;
+    constructor(sRenderer) {
+        this.sRenderer = sRenderer;
+    }
+    set size(value) {
+        this.width = value;
+        this.height = value;
     }
     get lyStyle() {
         return this._lyStyle;
     }
     set lyStyle(val) {
         if (typeof val === 'function') {
-            this._sr.add(val);
+            this.sRenderer.add(val);
+        }
+        else if (val != null) {
+            this[0xa] = this.sRenderer.add(`${LyStyle_1.и}--style-${val}`, ({ breakpoints }) => eachMedia(val, (v, media) => ((className) => `@media ${(media && breakpoints[media]) || 'all'}{${className}{${v};}}`), true), STYLE_PRIORITY$1);
         }
         else {
-            this._updateStyle(0xa, 'style', val, () => eachMedia(val, (v, media) => ((className) => `@media ${media || 'all'}{${className}{${v};}}`), new StyleCollection()));
+            this.sRenderer.removeClass(this[0xa]);
         }
-    }
-    _updateStyle(index, styleId, simpleChange, style) {
-        if (simpleChange) {
-            const currentValue = simpleChange instanceof SimpleChange
-                ? simpleChange.currentValue
-                : simpleChange;
-            if (currentValue != null) {
-                this[index] = this._sr.add(`${LyStyle_1.и}--${styleId}-${currentValue}`, style, STYLE_PRIORITY$1, this[index]);
-            }
-            else {
-                this._hClass.remove(this[index]);
-            }
-        }
-    }
-    ngOnChanges({ p, pf, pe, pt, pb, px, py, m, mf, me, mt, mb, mx, my, display, width, maxWidth }) {
-        if (p) {
-            const { currentValue } = p;
-            this._updateStyle(0x1, 'p', p, () => eachMedia(currentValue, (val, media) => ((className) => `@media ${media || 'all'}{${className}{padding:${to8Px(val)};}}`), new StyleCollection()));
-        }
-        if (pf) {
-            const { currentValue } = pf;
-            this._updateStyle(0x2, 'pf', pf, ({ after }) => eachMedia(currentValue, (val, media) => ((className) => `@media ${media || 'all'}{${className}{padding-${after}:${to8Px(val)};}}`), new StyleCollection()));
-        }
-        if (pe) {
-            const { currentValue } = pe;
-            this._updateStyle(0x3, 'pe', pe, ({ before }) => eachMedia(currentValue, (val, media) => ((className) => `@media ${media || 'all'}{${className}{padding-${before}:${to8Px(val)};}}`), new StyleCollection()));
-        }
-        if (pt) {
-            const { currentValue } = pt;
-            this._updateStyle(0x4, 'pt', pt, () => eachMedia(currentValue, (val, media) => ((className) => `@media ${media || 'all'}{${className}{padding-top:${to8Px(val)};}}`), new StyleCollection()));
-        }
-        if (pb) {
-            const { currentValue } = pb;
-            this._updateStyle(0x5, 'pb', pb, () => eachMedia(currentValue, (val, media) => ((className) => `@media ${media || 'all'}{${className}{padding-bottom:${to8Px(val)};}}`), new StyleCollection()));
-        }
-        if (px) {
-            const { currentValue } = px;
-            this._updateStyle(0x6, 'px', px, () => eachMedia(currentValue, (val, media) => ((className) => `@media ${media || 'all'}{${className}{padding:0 ${typeof val === 'number'
-                ? val * 8 + 'px'
-                : val};}}`), new StyleCollection()));
-        }
-        if (py) {
-            const { currentValue } = py;
-            this._updateStyle(0x7, 'py', py, () => eachMedia(currentValue, (val, media) => ((className) => `@media ${media || 'all'}{${className}{padding:${typeof val === 'number'
-                ? val * 8 + 'px'
-                : val} 0;}}`), new StyleCollection()));
-        }
-        if (m) {
-            const { currentValue } = m;
-            this._updateStyle(0x8, 'm', m, () => eachMedia(currentValue, (val, media) => ((className) => `@media ${media || 'all'}{${className}{margin:${to8Px(val)};}}`), new StyleCollection()));
-        }
-        if (mf) {
-            const { currentValue } = mf;
-            this._updateStyle(0x9, 'mf', mf, ({ after }) => eachMedia(currentValue, (val, media) => ((className) => `@media ${media || 'all'}{${className}{margin-${after}:${to8Px(val)};}}`), new StyleCollection()));
-        }
-        if (me) {
-            const { currentValue } = me;
-            this._updateStyle(0x10, 'me', me, ({ before }) => eachMedia(currentValue, (val, media) => ((className) => `@media ${media || 'all'}{${className}{margin-${before}:${to8Px(val)};}}`), new StyleCollection()));
-        }
-        if (mt) {
-            const { currentValue } = mt;
-            this._updateStyle(0x11, 'mt', mt, () => eachMedia(currentValue, (val, media) => ((className) => `@media ${media || 'all'}{${className}{margin-top:${to8Px(val)};}}`), new StyleCollection()));
-        }
-        if (mb) {
-            const { currentValue } = mb;
-            this._updateStyle(0x12, 'mb', mb, () => eachMedia(currentValue, (val, media) => ((className) => `@media ${media || 'all'}{${className}{margin-bottom:${to8Px(val)};}}`), new StyleCollection()));
-        }
-        if (mx) {
-            const { currentValue } = mx;
-            this._updateStyle(0x13, 'mx', mx, () => eachMedia(currentValue, (val, media) => ((className) => `@media ${media || 'all'}{${className}{margin:0 ${to8Px(val)};}}`), new StyleCollection()));
-        }
-        if (my) {
-            const { currentValue } = my;
-            this._updateStyle(0x14, 'my', my, () => eachMedia(currentValue, (val, media) => ((className) => `@media ${media || 'all'}{${className}{margin:${to8Px(val)} 0;}}`), new StyleCollection()));
-        }
-        if (display) {
-            const { currentValue } = display;
-            this._updateStyle(0x15, 'display', display, () => eachMedia(currentValue, (val, media) => ((className) => `@media ${media || 'all'}{${className}{display:${val};}}`), new StyleCollection()));
-        }
-        this._updateStyle(0x16, 'width', width, () => eachMedia(width.currentValue, (val, media) => ((className) => `@media ${media || 'all'}{${className}{width:${transform(val)};}}`), new StyleCollection()));
-        this._updateStyle(0x17, 'maxWidth', maxWidth, () => eachMedia(maxWidth.currentValue, (val, media) => ((className) => `@media ${media || 'all'}{${className}{max-width:${transform(val)};}}`), new StyleCollection()));
     }
 };
 /** @docs-private */
 LyStyle.и = 'LyStyle';
 LyStyle.ctorParameters = () => [
-    { type: StyleRenderer },
-    { type: LyHostClass }
+    { type: StyleRenderer }
 ];
 __decorate([
-    Input()
+    Input(),
+    Style(ɵ0$2)
 ], LyStyle.prototype, "p", void 0);
 __decorate([
-    Input()
+    Input(),
+    Style(ɵ1$2)
 ], LyStyle.prototype, "pf", void 0);
 __decorate([
-    Input()
+    Input(),
+    Style(ɵ2$2)
 ], LyStyle.prototype, "pe", void 0);
 __decorate([
-    Input()
+    Input(),
+    Style(ɵ3)
 ], LyStyle.prototype, "pt", void 0);
 __decorate([
-    Input()
+    Input(),
+    Style(ɵ4)
 ], LyStyle.prototype, "pb", void 0);
 __decorate([
-    Input()
+    Input(),
+    Style(ɵ5)
 ], LyStyle.prototype, "px", void 0);
 __decorate([
-    Input()
+    Input(),
+    Style(ɵ6)
 ], LyStyle.prototype, "py", void 0);
 __decorate([
-    Input()
+    Input(),
+    Style(ɵ7)
 ], LyStyle.prototype, "m", void 0);
 __decorate([
-    Input()
+    Input(),
+    Style(ɵ8)
 ], LyStyle.prototype, "mf", void 0);
 __decorate([
-    Input()
+    Input(),
+    Style(ɵ9)
 ], LyStyle.prototype, "me", void 0);
 __decorate([
-    Input()
+    Input(),
+    Style(ɵ10)
 ], LyStyle.prototype, "mt", void 0);
 __decorate([
-    Input()
+    Input(),
+    Style(ɵ11)
 ], LyStyle.prototype, "mb", void 0);
 __decorate([
-    Input()
+    Input(),
+    Style(ɵ12)
 ], LyStyle.prototype, "mx", void 0);
 __decorate([
-    Input()
+    Input(),
+    Style(ɵ13)
 ], LyStyle.prototype, "my", void 0);
 __decorate([
-    Input()
-], LyStyle.prototype, "display", void 0);
-__decorate([
-    Input()
+    Input(),
+    Style(ɵ14)
 ], LyStyle.prototype, "width", void 0);
 __decorate([
-    Input()
+    Input(),
+    Style(ɵ15)
 ], LyStyle.prototype, "maxWidth", void 0);
+__decorate([
+    Input(),
+    Style(ɵ16)
+], LyStyle.prototype, "minWidth", void 0);
+__decorate([
+    Input(),
+    Style(ɵ17)
+], LyStyle.prototype, "height", void 0);
+__decorate([
+    Input(),
+    Style(ɵ18)
+], LyStyle.prototype, "maxHeight", void 0);
+__decorate([
+    Input(),
+    Style(ɵ19)
+], LyStyle.prototype, "minHeight", void 0);
+__decorate([
+    Input()
+], LyStyle.prototype, "size", null);
+__decorate([
+    Input(),
+    Style(ɵ20)
+], LyStyle.prototype, "display", void 0);
 __decorate([
     Input()
 ], LyStyle.prototype, "lyStyle", null);
@@ -2557,11 +2585,11 @@ LyStyle = LyStyle_1 = __decorate([
         selector: `[lyStyle],
               [p], [pf], [pe], [pt], [pb], [px], [py],
               [m], [mf], [me], [mt], [mb], [mx], [my],
-              [display],
-              [maxWidth],
-              [width]`,
+              [size],
+              [width], [maxWidth], [minWidth],
+              [height], [maxHeight], [minHeight],
+              [display]`,
         providers: [
-            LyHostClass,
             StyleRenderer
         ]
     })
@@ -2578,7 +2606,9 @@ function to8Px(val) {
 function transform(value) {
     return value <= 1
         ? `${value * 100}%`
-        : value;
+        : typeof value === 'string'
+            ? value
+            : `${value}px`;
 }
 
 let LyCommonModule = class LyCommonModule {
@@ -2752,6 +2782,46 @@ function untilComponentDestroyed(component) {
     return (source) => source.pipe(takeUntil(componentDestroyed(component)));
 }
 
+let LyHostClass = class LyHostClass {
+    constructor(_el, _renderer) {
+        this._renderer = _renderer;
+        this._set = new Set();
+        this._nEl = _el.nativeElement;
+    }
+    add(className) {
+        if (!this._set.has(className)) {
+            this._set.add(className);
+            this._renderer.addClass(this._nEl, className);
+        }
+    }
+    remove(className) {
+        if (className && this._set.has(className)) {
+            this._set.delete(className);
+            this._renderer.removeClass(this._nEl, className);
+        }
+    }
+    toggle(className, enabled) {
+        if (enabled) {
+            this.add(className);
+        }
+        else {
+            this.remove(className);
+        }
+    }
+    update(newClassName, oldClassName) {
+        this.remove(oldClassName);
+        this.add(newClassName);
+        return newClassName;
+    }
+};
+LyHostClass.ctorParameters = () => [
+    { type: ElementRef },
+    { type: Renderer2 }
+];
+LyHostClass = __decorate([
+    Injectable()
+], LyHostClass);
+
 var FocusStatus;
 (function (FocusStatus) {
     /**mouse and/or touch*/
@@ -2875,14 +2945,14 @@ const HAMMER_GESTURES_EVENTS = [
     'slideleft',
     'slidecancel'
 ];
-const ɵ0$2 = () => { }, ɵ1$2 = () => { };
+const ɵ0$3 = () => { }, ɵ1$3 = () => { };
 /**
  * Fake HammerInstance that is used when a Hammer instance is requested when HammerJS has not
  * been loaded on the page.
  */
 const noopHammerInstance = {
-    on: ɵ0$2,
-    off: ɵ1$2,
+    on: ɵ0$3,
+    off: ɵ1$3,
 };
 let LyHammerGestureConfig = class LyHammerGestureConfig extends HammerGestureConfig {
     constructor(_hammerOptions) {
@@ -2927,6 +2997,7 @@ let LyThemeModule = LyThemeModule_1 = class LyThemeModule {
             ngModule: LyThemeModule_1,
             providers: [
                 [LyTheme2],
+                [StyleRenderer],
                 { provide: LY_THEME_NAME, useValue: themeName }
             ]
         };
@@ -2956,7 +3027,7 @@ const styles$1 = (theme) => ({
         pointerEvents: 'none'
     }
 });
-const ɵ0$3 = styles$1;
+const ɵ0$4 = styles$1;
 let LyOverlayContainer = class LyOverlayContainer {
     constructor(theme) {
         this.theme = theme;
@@ -3557,7 +3628,7 @@ const STYLES = (theme) => ({
         }
     }
 });
-const ɵ0$4 = STYLES;
+const ɵ0$5 = STYLES;
 let LyExpansionIcon = class LyExpansionIcon {
     constructor(_theme, _renderer, _el) {
         this._theme = _theme;
@@ -3628,5 +3699,5 @@ LyExpansionIconModule = __decorate([
  * Generated bundle index. Do not edit.
  */
 
-export { AUI_LAST_UPDATE, AUI_VERSION, AlignAlias, CoreTheme, Dir, DirAlias, DirPosition, ElementObserver, FocusStatus, IS_CORE_THEME, LY_COMMON_STYLES, LY_COMMON_STYLES_DEPRECATED, LY_HAMMER_OPTIONS, LY_THEME, LY_THEME_GLOBAL_VARIABLES, LY_THEME_NAME, LyCommonModule, LyCoreStyles, LyExpansionIcon, LyExpansionIconModule, LyFocusState, LyHammerGestureConfig, LyHostClass, LyOverlay, LyOverlayConfig, LyOverlayContainer, LyOverlayModule, LyOverlayRef, LyPaper, LyPaperBase, LyPaperMixinBase, LyRippleService, LySelectionModel, LyStyle, LyStyleUtils, LyTheme2, LyThemeModule, LylParse, MutationObserverFactory, NgTranscludeDirective, NgTranscludeModule, OverlayFactory, Platform, Positioning, Ripple, STYLES_BACKDROP_DARK, Shadows, StringIdGenerator, StyleCollection, StyleRenderer, StylesInDocument, THEME_VARIABLES, TypeStyle, Undefined, UndefinedValue, WinResize, WinScroll, XPosition, YPosition, _STYLE_MAP, capitalizeFirstLetter, converterToCssKeyAndStyle, createOverlayInjector, defaultEntry, eachMedia, getContrastYIQ, getLyThemeStyleUndefinedError, getLyThemeVariableOptionUndefinedError, getLyThemeVariableUndefinedError, getNativeElement, getThemeNameForSelectors, invertPlacement, keyframesUniqueId, lyl, mergeDeep, mergeThemes, mixinBg, mixinColor, mixinDisableRipple, mixinDisabled, mixinElevation, mixinOutlined, mixinRaised, mixinShadowColor, mixinStyleUpdater, mixinTabIndex, scrollTo, scrollToC, scrollWithAnimation, shadowBuilder, styleTemplateToString, supportsPassiveEventListeners, toBoolean, toNumber, untilComponentDestroyed, ɵ0$2 as ɵ0, ɵ1$2 as ɵ1, ɵ2$1 as ɵ2, LyWithClass as ɵa, LyOverlayBackdrop as ɵb };
+export { AUI_LAST_UPDATE, AUI_VERSION, AlignAlias, CoreTheme, Dir, DirAlias, DirPosition, ElementObserver, FocusStatus, IS_CORE_THEME, LY_COMMON_STYLES, LY_COMMON_STYLES_DEPRECATED, LY_HAMMER_OPTIONS, LY_THEME, LY_THEME_GLOBAL_VARIABLES, LY_THEME_NAME, LyCommonModule, LyCoreStyles, LyExpansionIcon, LyExpansionIconModule, LyFocusState, LyHammerGestureConfig, LyHostClass, LyOverlay, LyOverlayConfig, LyOverlayContainer, LyOverlayModule, LyOverlayRef, LyPaper, LyPaperBase, LyPaperMixinBase, LyRippleService, LySelectionModel, LyStyle, LyStyleUtils, LyTheme2, LyThemeModule, LylParse, MutationObserverFactory, NgTranscludeDirective, NgTranscludeModule, OverlayFactory, Platform, Positioning, Ripple, STYLES_BACKDROP_DARK, Shadows, StringIdGenerator, Style, StyleCollection, StyleRenderer, StylesInDocument, THEME_VARIABLES, TypeStyle, Undefined, UndefinedValue, WinResize, WinScroll, XPosition, YPosition, _STYLE_MAP, capitalizeFirstLetter, converterToCssKeyAndStyle, createOverlayInjector, defaultEntry, eachMedia, getContrastYIQ, getLyThemeStyleUndefinedError, getLyThemeVariableOptionUndefinedError, getLyThemeVariableUndefinedError, getNativeElement, getThemeNameForSelectors, invertPlacement, keyframesUniqueId, lyl, mergeDeep, mergeThemes, mixinBg, mixinColor, mixinDisableRipple, mixinDisabled, mixinElevation, mixinOutlined, mixinRaised, mixinShadowColor, mixinStyleUpdater, mixinTabIndex, scrollTo, scrollToC, scrollWithAnimation, shadowBuilder, styleTemplateToString, supportsPassiveEventListeners, toBoolean, toNumber, untilComponentDestroyed, ɵ0$2 as ɵ0, ɵ1$2 as ɵ1, ɵ10, ɵ11, ɵ12, ɵ13, ɵ14, ɵ15, ɵ16, ɵ17, ɵ18, ɵ19, ɵ2$2 as ɵ2, ɵ20, ɵ3, ɵ4, ɵ5, ɵ6, ɵ7, ɵ8, ɵ9, LyWithClass as ɵa, LyOverlayBackdrop as ɵb };
 //# sourceMappingURL=alyle-ui.js.map
