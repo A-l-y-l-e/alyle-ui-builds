@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const ts = require("typescript");
+const ts = require(process.cwd() + "/node_modules/typescript");
 function findNode(node, kind) {
     if (node.kind === kind) {
         return node;
