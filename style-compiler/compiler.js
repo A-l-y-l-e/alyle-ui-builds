@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const ts = require("typescript");
+const ts = require(process.cwd() + "/node_modules/typescript");
 const util_1 = require("./util/util");
 const parse_1 = require("./parse");
 const REGEX_LY = () => /lyl\s?(`{{*[^]*?}`)/g;

@@ -4,7 +4,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const tslib_1 = require("tslib");
 const fs_1 = require("fs");
 const path = require("path");
-const yargs = require("yargs");
+require("./check");
+const yargs = require(process.cwd() + "/node_modules/yargs");
 const chalk_1 = require("chalk");
 const compiler_1 = require("./compiler");
 const pkg = JSON.parse(fs_1.readFileSync('package.json', 'utf8'));
@@ -18,7 +19,7 @@ const argv = yargs
 if (argv.help) {
     console.log(`Version ${pkg.version}\n`);
     console.log(chalk_1.default.bold.yellowBright(note));
-    console.log(`Examples: lyl dist/lib`);
+    console.log(`Usage: lyl dist/my-app`);
     process.exit(0);
 }
 function walk(dir, fileList = []) {

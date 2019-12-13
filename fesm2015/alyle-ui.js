@@ -2933,8 +2933,8 @@ LyFocusState = __decorate([
     })
 ], LyFocusState);
 
-const AUI_VERSION = '2.9.8-nightly.1912130201';
-const AUI_LAST_UPDATE = '2019-12-13T02:01:08.050Z';
+const AUI_VERSION = '2.9.8-nightly.1912132150';
+const AUI_LAST_UPDATE = '2019-12-13T21:50:58.508Z';
 
 const LY_HAMMER_OPTIONS = new InjectionToken('LY_HAMMER_OPTIONS');
 const HAMMER_GESTURES_EVENTS = [
