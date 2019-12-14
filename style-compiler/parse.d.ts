@@ -53,10 +53,6 @@ export declare class StyleCollection<T = any> {
      */
     css(className: string): string;
 }
-export declare function mergeThemes<T, U>(target: T, source: U): T & U;
-export declare function mergeThemes<T, U, V>(target: T, source1: U, source2: V): T & U & V;
-export declare function mergeThemes<T, U, V, W>(target: T, source1: U, source2: V, source3: W): T & U & V & W;
-export declare function mergeThemes(target: object, ...sources: any[]): any;
 export declare function styleTemplateToString(fn: StyleTemplate | StyleCollection | null | undefined, className: string): string;
 export declare class StringIdGenerator {
     private _chars;

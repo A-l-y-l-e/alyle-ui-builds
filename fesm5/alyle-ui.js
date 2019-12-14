@@ -122,6 +122,21 @@ var LY_THEME_GLOBAL_VARIABLES = new InjectionToken('ly.theme.global.variables');
 var LY_THEME = new InjectionToken('ly_theme_config');
 var LY_THEME_NAME = new InjectionToken('ly.theme.name');
 
+/** For internal use only */
+var _STYLE_MAP = new Map();
+var TypeStyle;
+(function (TypeStyle) {
+    TypeStyle[TypeStyle["Multiple"] = 0] = "Multiple";
+    TypeStyle[TypeStyle["OnlyOne"] = 1] = "OnlyOne";
+    /**
+     * A lyl Style
+     */
+    TypeStyle[TypeStyle["LylStyle"] = 2] = "LylStyle";
+})(TypeStyle || (TypeStyle = {}));
+function getThemeNameForSelectors(themeId) {
+    return themeId + "<~(selectors)";
+}
+
 var LINE_FEED_REGEX = function () { return /(\n?[^\n]+\n?)/g; };
 var ɵ0 = LINE_FEED_REGEX;
 var AMPERSAND_REGEX = function () { return /&/g; };
@@ -434,52 +449,6 @@ var StyleCollection = /** @class */ (function () {
     };
     return StyleCollection;
 }());
-/**
- * Simple object check.
- * @param item
- */
-function isObject(item) {
-    return (item && typeof item === 'object' && !Array.isArray(item)) && !(item instanceof StyleCollection);
-}
-function mergeThemes(target) {
-    var _a;
-    var sources = [];
-    for (var _i = 1; _i < arguments.length; _i++) {
-        sources[_i - 1] = arguments[_i];
-    }
-    if (!sources.length) {
-        return target;
-    }
-    var source = sources.shift();
-    if (isObject(target) && isObject(source)) {
-        for (var key in source) {
-            if (isObject(source[key])) {
-                if (!target[key]) {
-                    if (source[key].constructor.name === 'Object') {
-                        target[key] = {};
-                    }
-                    else {
-                        // if is a class
-                        target[key] = source[key];
-                    }
-                }
-                mergeThemes(target[key], source[key]);
-            }
-            else {
-                var targetKey = target[key];
-                var sourceKey = source[key];
-                // Merge styles
-                if (targetKey instanceof StyleCollection && typeof sourceKey === 'function') {
-                    target[key] = target[key].add(sourceKey);
-                }
-                else {
-                    Object.assign(target, (_a = {}, _a[key] = source[key], _a));
-                }
-            }
-        }
-    }
-    return mergeThemes.apply(void 0, __spread([target], sources));
-}
 function styleTemplateToString(fn, className) {
     if (fn instanceof StyleCollection) {
         return fn.css(className);
@@ -534,109 +503,6 @@ var StringIdGenerator = /** @class */ (function () {
     };
     return StringIdGenerator;
 }());
-
-var CoreTheme = /** @class */ (function () {
-    function CoreTheme(rendererFactory, _document) {
-        this.rendererFactory = rendererFactory;
-        this.themes = new Set();
-        this._themeMap = new Map();
-        this._styleMap = new Map();
-        this._document = _document;
-        if (Platform.isBrowser) {
-            // Clean
-            var nodes = this._document.body.querySelectorAll('ly-s-c');
-            if (nodes.length) {
-                for (var index = 0; index < nodes.length; index++) {
-                    var element = nodes.item(index);
-                    this._document.body.removeChild(element);
-                }
-            }
-        }
-        this.firstElement = this._document.body.firstChild;
-        this.renderer = this.rendererFactory.createRenderer(null, {
-            id: 'ly',
-            encapsulation: ViewEncapsulation.None,
-            styles: [],
-            data: {}
-        });
-    }
-    CoreTheme.prototype.initializeTheme = function (themeConfig, globalVariables) {
-        var _this = this;
-        var allThemes = Array.isArray(themeConfig) ? themeConfig : [themeConfig];
-        var themes = new Map();
-        allThemes.forEach(function (item) {
-            // Do not install themes that are already initialized.
-            if (_this.hasTheme(item.name)) {
-                // throw new Error(`Theme '${item.name}' is already initialized.`);
-                // }
-            }
-            if (themes.has(item.name)) {
-                themes.get(item.name).push(item);
-            }
-            else {
-                themes.set(item.name, [item]);
-            }
-        });
-        themes.forEach(function (items) {
-            if (globalVariables) {
-                items.push(globalVariables);
-            }
-            if (items.length > 1) {
-                mergeThemes.apply(void 0, __spread([items[0]], items.slice(1)));
-            }
-            _this._add(items[0]);
-            _this.themes.add(items[0].name);
-        });
-    };
-    /**
-     * add new theme
-     * @param theme: ThemeVariables
-     */
-    CoreTheme.prototype._add = function (theme) {
-        this._themeMap.set(theme.name, theme);
-        this._styleMap.set(theme.name, new Map());
-    };
-    CoreTheme.prototype.hasTheme = function (theme) {
-        var name = typeof theme === 'string' ? theme : theme.name;
-        return this._themeMap.has(name);
-    };
-    CoreTheme.prototype.get = function (name) {
-        return this._themeMap.get(name);
-    };
-    CoreTheme.prototype.updateClassName = function (element, renderer, newClassname, oldClassname) {
-        if (oldClassname) {
-            renderer.removeClass(element, oldClassname);
-        }
-        renderer.addClass(element, newClassname);
-    };
-    CoreTheme.ctorParameters = function () { return [
-        { type: RendererFactory2 },
-        { type: undefined, decorators: [{ type: Inject, args: [DOCUMENT,] }] }
-    ]; };
-    CoreTheme.ngInjectableDef = ɵɵdefineInjectable({ factory: function CoreTheme_Factory() { return new CoreTheme(ɵɵinject(RendererFactory2), ɵɵinject(DOCUMENT)); }, token: CoreTheme, providedIn: "root" });
-    CoreTheme = __decorate([
-        Injectable({
-            providedIn: 'root'
-        }),
-        __param(1, Inject(DOCUMENT))
-    ], CoreTheme);
-    return CoreTheme;
-}());
-
-/** For internal use only */
-var _STYLE_MAP = new Map();
-var TypeStyle;
-(function (TypeStyle) {
-    TypeStyle[TypeStyle["Multiple"] = 0] = "Multiple";
-    TypeStyle[TypeStyle["OnlyOne"] = 1] = "OnlyOne";
-    /**
-     * A lyl Style
-     */
-    TypeStyle[TypeStyle["LylStyle"] = 2] = "LylStyle";
-})(TypeStyle || (TypeStyle = {}));
-function getThemeNameForSelectors(themeId) {
-    return themeId + "<~(selectors)";
-}
 
 var LyStyleUtils = /** @class */ (function () {
     function LyStyleUtils() {
@@ -797,7 +663,7 @@ function eachMedia(str, fn, withStyleCollection) {
  * Simple object check.
  * @param item
  */
-function isObject$1(item) {
+function isObject(item) {
     return (item && typeof item === 'object' && !Array.isArray(item));
 }
 /**
@@ -815,9 +681,9 @@ function mergeDeep(target) {
         return target;
     }
     var source = sources.shift();
-    if (isObject$1(target) && isObject$1(source)) {
+    if (isObject(target) && isObject(source)) {
         for (var key in source) {
-            if (isObject$1(source[key])) {
+            if (isObject(source[key])) {
                 if (!target[key]) {
                     Object.assign(target, (_a = {}, _a[key] = {}, _a));
                 }
@@ -830,6 +696,139 @@ function mergeDeep(target) {
     }
     return mergeDeep.apply(void 0, __spread([target], sources));
 }
+/**
+ * Simple object check.
+ * @param item
+ */
+function isObjectForTheme(item) {
+    return (item && typeof item === 'object' && !Array.isArray(item))
+        && !(item instanceof StyleCollection)
+        && !(item instanceof Color);
+}
+function mergeThemes(target) {
+    var _a, _b;
+    var sources = [];
+    for (var _i = 1; _i < arguments.length; _i++) {
+        sources[_i - 1] = arguments[_i];
+    }
+    if (!sources.length) {
+        return target;
+    }
+    var source = sources.shift();
+    if (isObjectForTheme(target) && isObjectForTheme(source)) {
+        for (var key in source) {
+            if (isObjectForTheme(source[key])) {
+                if (!target[key]) {
+                    Object.assign(target, (_a = {}, _a[key] = {}, _a));
+                }
+                mergeThemes(target[key], source[key]);
+            }
+            else {
+                var targetKey = target[key];
+                var sourceKey = source[key];
+                // Merge styles
+                if (targetKey instanceof StyleCollection && typeof sourceKey === 'function') {
+                    target[key] = target[key].add(sourceKey);
+                }
+                else if (sourceKey instanceof Color) {
+                    target[key] = sourceKey;
+                }
+                else {
+                    Object.assign(target, (_b = {}, _b[key] = source[key], _b));
+                }
+            }
+        }
+    }
+    return mergeThemes.apply(void 0, __spread([target], sources));
+}
+
+var CoreTheme = /** @class */ (function () {
+    function CoreTheme(rendererFactory, _document) {
+        this.rendererFactory = rendererFactory;
+        this.themes = new Set();
+        this._themeMap = new Map();
+        this._styleMap = new Map();
+        this._document = _document;
+        if (Platform.isBrowser) {
+            // Clean
+            var nodes = this._document.body.querySelectorAll('ly-s-c');
+            if (nodes.length) {
+                for (var index = 0; index < nodes.length; index++) {
+                    var element = nodes.item(index);
+                    this._document.body.removeChild(element);
+                }
+            }
+        }
+        this.firstElement = this._document.body.firstChild;
+        this.renderer = this.rendererFactory.createRenderer(null, {
+            id: 'ly',
+            encapsulation: ViewEncapsulation.None,
+            styles: [],
+            data: {}
+        });
+    }
+    CoreTheme.prototype.initializeTheme = function (themeConfig, globalVariables) {
+        var _this = this;
+        var allThemes = Array.isArray(themeConfig) ? themeConfig : [themeConfig];
+        var themes = new Map();
+        allThemes.forEach(function (item) {
+            // Do not install themes that are already initialized.
+            if (_this.hasTheme(item.name)) {
+                // throw new Error(`Theme '${item.name}' is already initialized.`);
+                // }
+            }
+            if (themes.has(item.name)) {
+                themes.get(item.name).push(item);
+            }
+            else {
+                themes.set(item.name, [item]);
+            }
+        });
+        themes.forEach(function (items) {
+            if (globalVariables) {
+                items.push(globalVariables);
+            }
+            if (items.length > 1) {
+                mergeThemes.apply(void 0, __spread([items[0]], items.slice(1)));
+            }
+            _this._add(items[0]);
+            _this.themes.add(items[0].name);
+        });
+    };
+    /**
+     * add new theme
+     * @param theme: ThemeVariables
+     */
+    CoreTheme.prototype._add = function (theme) {
+        this._themeMap.set(theme.name, theme);
+        this._styleMap.set(theme.name, new Map());
+    };
+    CoreTheme.prototype.hasTheme = function (theme) {
+        var name = typeof theme === 'string' ? theme : theme.name;
+        return this._themeMap.has(name);
+    };
+    CoreTheme.prototype.get = function (name) {
+        return this._themeMap.get(name);
+    };
+    CoreTheme.prototype.updateClassName = function (element, renderer, newClassname, oldClassname) {
+        if (oldClassname) {
+            renderer.removeClass(element, oldClassname);
+        }
+        renderer.addClass(element, newClassname);
+    };
+    CoreTheme.ctorParameters = function () { return [
+        { type: RendererFactory2 },
+        { type: undefined, decorators: [{ type: Inject, args: [DOCUMENT,] }] }
+    ]; };
+    CoreTheme.ngInjectableDef = ɵɵdefineInjectable({ factory: function CoreTheme_Factory() { return new CoreTheme(ɵɵinject(RendererFactory2), ɵɵinject(DOCUMENT)); }, token: CoreTheme, providedIn: "root" });
+    CoreTheme = __decorate([
+        Injectable({
+            providedIn: 'root'
+        }),
+        __param(1, Inject(DOCUMENT))
+    ], CoreTheme);
+    return CoreTheme;
+}());
 
 var YPosition;
 (function (YPosition) {
@@ -3236,8 +3235,8 @@ var LyFocusState = /** @class */ (function () {
     return LyFocusState;
 }());
 
-var AUI_VERSION = '2.9.8-nightly.1912141846';
-var AUI_LAST_UPDATE = '2019-12-14T18:46:49.490Z';
+var AUI_VERSION = '2.9.8-nightly.1912142112';
+var AUI_LAST_UPDATE = '2019-12-14T21:12:14.046Z';
 
 var LY_HAMMER_OPTIONS = new InjectionToken('LY_HAMMER_OPTIONS');
 var HAMMER_GESTURES_EVENTS = [

@@ -294,48 +294,6 @@ class StyleCollection {
     }
 }
 exports.StyleCollection = StyleCollection;
-/**
- * Simple object check.
- * @param item
- */
-function isObject(item) {
-    return (item && typeof item === 'object' && !Array.isArray(item)) && !(item instanceof StyleCollection);
-}
-function mergeThemes(target, ...sources) {
-    if (!sources.length) {
-        return target;
-    }
-    const source = sources.shift();
-    if (isObject(target) && isObject(source)) {
-        for (const key in source) {
-            if (isObject(source[key])) {
-                if (!target[key]) {
-                    if (source[key].constructor.name === 'Object') {
-                        target[key] = {};
-                    }
-                    else {
-                        // if is a class
-                        target[key] = source[key];
-                    }
-                }
-                mergeThemes(target[key], source[key]);
-            }
-            else {
-                const targetKey = target[key];
-                const sourceKey = source[key];
-                // Merge styles
-                if (targetKey instanceof StyleCollection && typeof sourceKey === 'function') {
-                    target[key] = target[key].add(sourceKey);
-                }
-                else {
-                    Object.assign(target, { [key]: source[key] });
-                }
-            }
-        }
-    }
-    return mergeThemes(target, ...sources);
-}
-exports.mergeThemes = mergeThemes;
 function styleTemplateToString(fn, className) {
     if (fn instanceof StyleCollection) {
         return fn.css(className);
