@@ -637,6 +637,7 @@
         return (item && typeof item === 'object' && !Array.isArray(item)) && !(item instanceof StyleCollection);
     }
     function mergeThemes(target) {
+        var _a;
         var sources = [];
         for (var _i = 1; _i < arguments.length; _i++) {
             sources[_i - 1] = arguments[_i];
@@ -667,7 +668,7 @@
                         target[key] = target[key].add(sourceKey);
                     }
                     else {
-                        target[key] = source[key];
+                        Object.assign(target, (_a = {}, _a[key] = source[key], _a));
                     }
                 }
             }
@@ -3430,8 +3431,8 @@
         return LyFocusState;
     }());
 
-    var AUI_VERSION = '2.9.8-nightly.1912140125';
-    var AUI_LAST_UPDATE = '2019-12-14T01:25:40.503Z';
+    var AUI_VERSION = '2.9.8-nightly.1912141846';
+    var AUI_LAST_UPDATE = '2019-12-14T18:46:49.490Z';
 
     var LY_HAMMER_OPTIONS = new core.InjectionToken('LY_HAMMER_OPTIONS');
     var HAMMER_GESTURES_EVENTS = [

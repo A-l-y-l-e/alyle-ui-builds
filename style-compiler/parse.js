@@ -328,7 +328,7 @@ function mergeThemes(target, ...sources) {
                     target[key] = target[key].add(sourceKey);
                 }
                 else {
-                    target[key] = source[key];
+                    Object.assign(target, { [key]: source[key] });
                 }
             }
         }
