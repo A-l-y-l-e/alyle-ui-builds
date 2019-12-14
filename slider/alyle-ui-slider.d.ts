@@ -1,6 +1,6 @@
 /**
  * Generated bundle index. Do not edit.
  */
-export * from './index';
+export * from './public_api';
 export { LyMark as ɵa } from './mark';
 export { LyTick as ɵb } from './tick';
