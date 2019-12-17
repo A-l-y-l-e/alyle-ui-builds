@@ -248,8 +248,20 @@
              * @docs-private
              */
             this.classes = this._theme.renderStyleSheet(STYLES);
+            this._hasBackdrop = true;
             this._renderer.addClass(this._el.nativeElement, this.classes.root);
         }
+        Object.defineProperty(LyMenu.prototype, "hasBackdrop", {
+            /** Whether the menu has a backdrop. */
+            get: function () {
+                return this._hasBackdrop;
+            },
+            set: function (value) {
+                this._hasBackdrop = ui.toBoolean(value);
+            },
+            enumerable: true,
+            configurable: true
+        });
         LyMenu.prototype.endAnimation = function (e) {
             if (e.toState === 'void') {
                 this.ref.destroy();
@@ -268,6 +280,7 @@
             var _this = this;
             if (this.ref._menuRef) {
                 this.ref._menuRef.onResizeScroll = this._updatePlacement.bind(this);
+                this.ref._menuRef.updateBackdrop(this.hasBackdrop);
             }
             this._updatePlacement();
             this.ref.menuOpened.emit();
@@ -309,6 +322,9 @@
         __decorate([
             core.Input()
         ], LyMenu.prototype, "yPosition", void 0);
+        __decorate([
+            core.Input()
+        ], LyMenu.prototype, "hasBackdrop", null);
         __decorate([
             core.HostBinding('@menuLeave')
         ], LyMenu.prototype, "menuLeave2", void 0);
@@ -387,7 +403,8 @@
                         left: 0,
                         pointerEvents: null
                     },
-                    fnDestroy: this.detach.bind(this)
+                    fnDestroy: this.detach.bind(this),
+                    hasBackdrop: false
                 });
             }
         };

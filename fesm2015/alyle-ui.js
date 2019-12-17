@@ -2932,8 +2932,8 @@ LyFocusState = __decorate([
     })
 ], LyFocusState);
 
-const AUI_VERSION = '2.9.8-nightly.1912142112';
-const AUI_LAST_UPDATE = '2019-12-14T21:12:14.046Z';
+const AUI_VERSION = '2.9.8-nightly.1912172304';
+const AUI_LAST_UPDATE = '2019-12-17T23:04:11.198Z';
 
 const LY_HAMMER_OPTIONS = new InjectionToken('LY_HAMMER_OPTIONS');
 const HAMMER_GESTURES_EVENTS = [
@@ -3223,7 +3223,7 @@ class OverlayFactory {
         if (config) {
             Object.assign(__styles, config.styles);
         }
-        const newInjector = createOverlayInjector(this._injector, Object.assign({ fnDestroy: this.destroy.bind(this) }, config, { styles: __styles }), this);
+        const newInjector = this._newInjector = createOverlayInjector(this._injector, Object.assign({ fnDestroy: this.destroy.bind(this) }, config, { styles: __styles }), this);
         this._updateStyles(__styles);
         if (config) {
             if (config.onResizeScroll) {
@@ -3239,12 +3239,7 @@ class OverlayFactory {
                 classes.forEach((className) => this._el.classList.add(className));
             }
         }
-        if (config.hasBackdrop) {
-            this._compRefOverlayBackdrop = this._generateComponent(LyOverlayBackdrop, newInjector);
-            this._appRef.attachView(this._compRefOverlayBackdrop.hostView);
-            const backdropEl = this._compRefOverlayBackdrop.location.nativeElement;
-            this._overlayContainer._add(backdropEl);
-        }
+        this.updateBackdrop(!!config.hasBackdrop);
         this._appendComponentToBody(_templateRefOrComponent, _context, newInjector);
         this._hiddeScroll();
     }
@@ -3253,6 +3248,21 @@ class OverlayFactory {
     }
     get componentRef() {
         return this._compRef;
+    }
+    updateBackdrop(hasBackdrop) {
+        if (hasBackdrop) {
+            this._compRefOverlayBackdrop = this._generateComponent(LyOverlayBackdrop, this._newInjector);
+            this._appRef.attachView(this._compRefOverlayBackdrop.hostView);
+            const backdropEl = this._compRefOverlayBackdrop.location.nativeElement;
+            this._overlayContainer._add(backdropEl);
+        }
+        else if (this._compRefOverlayBackdrop) {
+            this._resetScroll();
+            this._appRef.detachView(this._compRefOverlayBackdrop.hostView);
+            const backdropEl = this._compRefOverlayBackdrop.location.nativeElement;
+            this._overlayContainer._remove(backdropEl);
+            this._compRefOverlayBackdrop = null;
+        }
     }
     _updateStyles(__styles) {
         /** Apply styles */
@@ -3319,12 +3329,7 @@ class OverlayFactory {
             this._overlayContainer._remove(this._el);
             this._el = undefined;
         }
-        if (this._compRefOverlayBackdrop) {
-            this._appRef.detachView(this._compRefOverlayBackdrop.hostView);
-            this._compRefOverlayBackdrop.destroy();
-            const backdropEl = this._compRefOverlayBackdrop.location.nativeElement;
-            this._overlayContainer._remove(backdropEl);
-        }
+        this.updateBackdrop(false);
         this._windowSRSub.unsubscribe();
     }
     /** Detach & remove */
@@ -3349,7 +3354,7 @@ class OverlayFactory {
                 window.document.body.style.paddingRight = this._paddingRight;
                 this._paddingRight = null;
             }
-            window.document.body.style.overflow = null;
+            window.document.body.style.overflow = '';
         }
     }
 }

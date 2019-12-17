@@ -41,6 +41,9 @@ export declare class LyMenu implements OnInit, AfterViewInit {
     xPosition: XPosition;
     /** The y-axis position of the menu. */
     yPosition: YPosition;
+    /** Whether the menu has a backdrop. */
+    hasBackdrop: boolean;
+    private _hasBackdrop;
     menuLeave2: any;
     endAnimation(e: any): void;
     constructor(_theme: LyTheme2, _el: ElementRef, _renderer: Renderer2);

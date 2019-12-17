@@ -3430,8 +3430,8 @@
         return LyFocusState;
     }());
 
-    var AUI_VERSION = '2.9.8-nightly.1912142112';
-    var AUI_LAST_UPDATE = '2019-12-14T21:12:14.046Z';
+    var AUI_VERSION = '2.9.8-nightly.1912172304';
+    var AUI_LAST_UPDATE = '2019-12-17T23:04:11.198Z';
 
     var LY_HAMMER_OPTIONS = new core.InjectionToken('LY_HAMMER_OPTIONS');
     var HAMMER_GESTURES_EVENTS = [
@@ -3753,7 +3753,7 @@
             if (config) {
                 Object.assign(__styles, config.styles);
             }
-            var newInjector = createOverlayInjector(this._injector, __assign({ fnDestroy: this.destroy.bind(this) }, config, { styles: __styles }), this);
+            var newInjector = this._newInjector = createOverlayInjector(this._injector, __assign({ fnDestroy: this.destroy.bind(this) }, config, { styles: __styles }), this);
             this._updateStyles(__styles);
             if (config) {
                 if (config.onResizeScroll) {
@@ -3769,12 +3769,7 @@
                     classes.forEach(function (className) { return _this._el.classList.add(className); });
                 }
             }
-            if (config.hasBackdrop) {
-                this._compRefOverlayBackdrop = this._generateComponent(LyOverlayBackdrop, newInjector);
-                this._appRef.attachView(this._compRefOverlayBackdrop.hostView);
-                var backdropEl = this._compRefOverlayBackdrop.location.nativeElement;
-                this._overlayContainer._add(backdropEl);
-            }
+            this.updateBackdrop(!!config.hasBackdrop);
             this._appendComponentToBody(_templateRefOrComponent, _context, newInjector);
             this._hiddeScroll();
         }
@@ -3792,6 +3787,21 @@
             enumerable: true,
             configurable: true
         });
+        OverlayFactory.prototype.updateBackdrop = function (hasBackdrop) {
+            if (hasBackdrop) {
+                this._compRefOverlayBackdrop = this._generateComponent(LyOverlayBackdrop, this._newInjector);
+                this._appRef.attachView(this._compRefOverlayBackdrop.hostView);
+                var backdropEl = this._compRefOverlayBackdrop.location.nativeElement;
+                this._overlayContainer._add(backdropEl);
+            }
+            else if (this._compRefOverlayBackdrop) {
+                this._resetScroll();
+                this._appRef.detachView(this._compRefOverlayBackdrop.hostView);
+                var backdropEl = this._compRefOverlayBackdrop.location.nativeElement;
+                this._overlayContainer._remove(backdropEl);
+                this._compRefOverlayBackdrop = null;
+            }
+        };
         OverlayFactory.prototype._updateStyles = function (__styles) {
             /** Apply styles */
             /** set styles */
@@ -3858,12 +3868,7 @@
                 this._overlayContainer._remove(this._el);
                 this._el = undefined;
             }
-            if (this._compRefOverlayBackdrop) {
-                this._appRef.detachView(this._compRefOverlayBackdrop.hostView);
-                this._compRefOverlayBackdrop.destroy();
-                var backdropEl = this._compRefOverlayBackdrop.location.nativeElement;
-                this._overlayContainer._remove(backdropEl);
-            }
+            this.updateBackdrop(false);
             this._windowSRSub.unsubscribe();
         };
         /** Detach & remove */
@@ -3888,7 +3893,7 @@
                     window.document.body.style.paddingRight = this._paddingRight;
                     this._paddingRight = null;
                 }
-                window.document.body.style.overflow = null;
+                window.document.body.style.overflow = '';
             }
         };
         return OverlayFactory;

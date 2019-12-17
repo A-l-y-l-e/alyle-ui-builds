@@ -1,6 +1,6 @@
 import { __decorate, __param } from 'tslib';
 import { ElementRef, Renderer2, ViewChild, Input, HostBinding, HostListener, Component, Optional, Directive, EventEmitter, Output, NgModule } from '@angular/core';
-import { YPosition, XPosition, StyleCollection, shadowBuilder, Positioning, LyTheme2, LyOverlay, LyCommonModule, LyOverlayModule } from '@alyle/ui';
+import { YPosition, XPosition, StyleCollection, shadowBuilder, toBoolean, Positioning, LyTheme2, LyOverlay, LyCommonModule, LyOverlayModule } from '@alyle/ui';
 import { trigger, transition, animate, keyframes, style } from '@angular/animations';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -52,7 +52,15 @@ let LyMenu = class LyMenu {
          * @docs-private
          */
         this.classes = this._theme.renderStyleSheet(STYLES);
+        this._hasBackdrop = true;
         this._renderer.addClass(this._el.nativeElement, this.classes.root);
+    }
+    /** Whether the menu has a backdrop. */
+    get hasBackdrop() {
+        return this._hasBackdrop;
+    }
+    set hasBackdrop(value) {
+        this._hasBackdrop = toBoolean(value);
     }
     endAnimation(e) {
         if (e.toState === 'void') {
@@ -71,6 +79,7 @@ let LyMenu = class LyMenu {
     ngAfterViewInit() {
         if (this.ref._menuRef) {
             this.ref._menuRef.onResizeScroll = this._updatePlacement.bind(this);
+            this.ref._menuRef.updateBackdrop(this.hasBackdrop);
         }
         this._updatePlacement();
         this.ref.menuOpened.emit();
@@ -113,6 +122,9 @@ __decorate([
 __decorate([
     Input()
 ], LyMenu.prototype, "yPosition", void 0);
+__decorate([
+    Input()
+], LyMenu.prototype, "hasBackdrop", null);
 __decorate([
     HostBinding('@menuLeave')
 ], LyMenu.prototype, "menuLeave2", void 0);
@@ -184,7 +196,8 @@ let LyMenuTriggerFor = class LyMenuTriggerFor {
                     left: 0,
                     pointerEvents: null
                 },
-                fnDestroy: this.detach.bind(this)
+                fnDestroy: this.detach.bind(this),
+                hasBackdrop: false
             });
         }
     }
