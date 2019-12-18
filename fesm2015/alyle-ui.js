@@ -813,29 +813,38 @@ class Positioning {
         }
         // when there is not enough space
         if (this.checkAll(true, false)) {
+            let requireUpdateOrigin = false;
             const _max_width = this._overlayElementRect.width + offsetCheckx2 > window.innerWidth;
             const _max_height = this._overlayElementRect.height + offsetCheckx2 > window.innerHeight;
             if (_max_height) {
                 this.y = this._offsetCheck;
                 this.height = `${window.innerHeight - offsetCheckx2}px`;
+                requireUpdateOrigin = true;
             }
             else if (this.checkBottom(false, false)) {
                 this.y += this.checkBottom(true, false);
+                requireUpdateOrigin = true;
             }
             else if (this.checkTop(false, false)) {
                 this.y -= this.checkTop(true, false);
+                requireUpdateOrigin = true;
             }
             if (_max_width) {
                 this.x = this._offsetCheck;
                 this.width = `${window.innerWidth - offsetCheckx2}px`;
+                requireUpdateOrigin = true;
             }
             else if (this.checkRight(false, false)) {
                 this.x += this.checkRight(true, false);
+                requireUpdateOrigin = true;
             }
             else if (this.checkLeft(false, false)) {
                 this.x -= this.checkLeft(true, false);
+                requireUpdateOrigin = true;
             }
-            this.updateOrigin();
+            if (requireUpdateOrigin) {
+                this.updateOrigin();
+            }
         }
         if (this._offset) {
             this.updateOrigin();
@@ -2932,8 +2941,8 @@ LyFocusState = __decorate([
     })
 ], LyFocusState);
 
-const AUI_VERSION = '2.9.8-nightly.1912172304';
-const AUI_LAST_UPDATE = '2019-12-17T23:04:11.198Z';
+const AUI_VERSION = '2.9.8-nightly.1912181720';
+const AUI_LAST_UPDATE = '2019-12-18T17:20:59.096Z';
 
 const LY_HAMMER_OPTIONS = new InjectionToken('LY_HAMMER_OPTIONS');
 const HAMMER_GESTURES_EVENTS = [
