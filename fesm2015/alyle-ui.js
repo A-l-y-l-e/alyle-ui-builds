@@ -2941,8 +2941,8 @@ LyFocusState = __decorate([
     })
 ], LyFocusState);
 
-const AUI_VERSION = '2.9.8-nightly.1912200123';
-const AUI_LAST_UPDATE = '2019-12-20T01:23:50.227Z';
+const AUI_VERSION = '2.9.8-nightly.1912201627';
+const AUI_LAST_UPDATE = '2019-12-20T16:27:54.388Z';
 
 const LY_HAMMER_OPTIONS = new InjectionToken('LY_HAMMER_OPTIONS');
 const HAMMER_GESTURES_EVENTS = [
@@ -3057,9 +3057,14 @@ let LyOverlayContainer = class LyOverlayContainer {
      * Add instance
      * @ignore
      */
-    _add(item) {
+    _add(item, insertBefore) {
         this._items.add(item);
-        this.containerElement.insertBefore(item, this.containerElement.firstChild);
+        if (insertBefore) {
+            this.containerElement.insertBefore(item, this.containerElement.firstChild);
+        }
+        else {
+            this.containerElement.appendChild(item);
+        }
         this._update();
     }
     /**
@@ -3263,7 +3268,7 @@ class OverlayFactory {
             this._compRefOverlayBackdrop = this._generateComponent(LyOverlayBackdrop, this._newInjector);
             this._appRef.attachView(this._compRefOverlayBackdrop.hostView);
             const backdropEl = this._compRefOverlayBackdrop.location.nativeElement;
-            this._overlayContainer._add(backdropEl);
+            this._overlayContainer._add(backdropEl, true);
         }
         else if (this._compRefOverlayBackdrop) {
             this._resetScroll();

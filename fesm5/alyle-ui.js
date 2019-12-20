@@ -3244,8 +3244,8 @@ var LyFocusState = /** @class */ (function () {
     return LyFocusState;
 }());
 
-var AUI_VERSION = '2.9.8-nightly.1912200123';
-var AUI_LAST_UPDATE = '2019-12-20T01:23:50.227Z';
+var AUI_VERSION = '2.9.8-nightly.1912201627';
+var AUI_LAST_UPDATE = '2019-12-20T16:27:54.388Z';
 
 var LY_HAMMER_OPTIONS = new InjectionToken('LY_HAMMER_OPTIONS');
 var HAMMER_GESTURES_EVENTS = [
@@ -3384,9 +3384,14 @@ var LyOverlayContainer = /** @class */ (function () {
      * Add instance
      * @ignore
      */
-    LyOverlayContainer.prototype._add = function (item) {
+    LyOverlayContainer.prototype._add = function (item, insertBefore) {
         this._items.add(item);
-        this.containerElement.insertBefore(item, this.containerElement.firstChild);
+        if (insertBefore) {
+            this.containerElement.insertBefore(item, this.containerElement.firstChild);
+        }
+        else {
+            this.containerElement.appendChild(item);
+        }
         this._update();
     };
     /**
@@ -3606,7 +3611,7 @@ var OverlayFactory = /** @class */ (function () {
             this._compRefOverlayBackdrop = this._generateComponent(LyOverlayBackdrop, this._newInjector);
             this._appRef.attachView(this._compRefOverlayBackdrop.hostView);
             var backdropEl = this._compRefOverlayBackdrop.location.nativeElement;
-            this._overlayContainer._add(backdropEl);
+            this._overlayContainer._add(backdropEl, true);
         }
         else if (this._compRefOverlayBackdrop) {
             this._resetScroll();

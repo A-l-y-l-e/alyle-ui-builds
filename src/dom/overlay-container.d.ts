@@ -12,7 +12,7 @@ export declare class LyOverlayContainer {
      * Add instance
      * @ignore
      */
-    _add(item: any): void;
+    _add(item: any, insertBefore?: boolean): void;
     /**
    * Remove instance
    * @ignore
