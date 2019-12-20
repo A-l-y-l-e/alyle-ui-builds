@@ -2941,8 +2941,8 @@ LyFocusState = __decorate([
     })
 ], LyFocusState);
 
-const AUI_VERSION = '2.9.8-nightly.1912181720';
-const AUI_LAST_UPDATE = '2019-12-18T17:20:59.096Z';
+const AUI_VERSION = '2.9.8-nightly.1912200123';
+const AUI_LAST_UPDATE = '2019-12-20T01:23:50.227Z';
 
 const LY_HAMMER_OPTIONS = new InjectionToken('LY_HAMMER_OPTIONS');
 const HAMMER_GESTURES_EVENTS = [
@@ -3059,7 +3059,7 @@ let LyOverlayContainer = class LyOverlayContainer {
      */
     _add(item) {
         this._items.add(item);
-        this.containerElement.appendChild(item);
+        this.containerElement.insertBefore(item, this.containerElement.firstChild);
         this._update();
     }
     /**

@@ -3244,8 +3244,8 @@ var LyFocusState = /** @class */ (function () {
     return LyFocusState;
 }());
 
-var AUI_VERSION = '2.9.8-nightly.1912181720';
-var AUI_LAST_UPDATE = '2019-12-18T17:20:59.096Z';
+var AUI_VERSION = '2.9.8-nightly.1912200123';
+var AUI_LAST_UPDATE = '2019-12-20T01:23:50.227Z';
 
 var LY_HAMMER_OPTIONS = new InjectionToken('LY_HAMMER_OPTIONS');
 var HAMMER_GESTURES_EVENTS = [
@@ -3386,7 +3386,7 @@ var LyOverlayContainer = /** @class */ (function () {
      */
     LyOverlayContainer.prototype._add = function (item) {
         this._items.add(item);
-        this.containerElement.appendChild(item);
+        this.containerElement.insertBefore(item, this.containerElement.firstChild);
         this._update();
     };
     /**
