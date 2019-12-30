@@ -10,6 +10,14 @@ export interface LyTypographyTheme {
 export interface LyTypographyVariables {
     typography?: LyTypographyTheme;
 }
+export declare const STYLES: (theme: import("@alyle/ui/alyle-ui").LyStyleUtils & import("@alyle/ui/alyle-ui").ThemeConfig & LyTypographyVariables) => {
+    $name: string;
+    $priority: number;
+    root: (className: string) => string;
+    gutterTop: (className: string) => string;
+    gutterBottom: (className: string) => string;
+    gutter: (className: string) => string;
+};
 /** @docs-private */
 export declare class LyTypographyBase {
     _theme: LyTheme2;

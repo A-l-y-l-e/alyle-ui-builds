@@ -148,7 +148,6 @@ const STYLES = (theme) => {
         defaultIcon: (className) => `${className}{border-radius:50px;}`
     };
 };
-const ɵ0 = STYLES;
 /** @docs-private */
 class LyIconBase {
     constructor(_theme) {
@@ -332,5 +331,5 @@ LyIconModule = __decorate([
  * Generated bundle index. Do not edit.
  */
 
-export { LyIcon, LyIconBase, LyIconMixinBase, LyIconModule, LyIconService, ɵ0 };
+export { LyIcon, LyIconBase, LyIconMixinBase, LyIconModule, LyIconService, STYLES };
 //# sourceMappingURL=alyle-ui-icon.js.map

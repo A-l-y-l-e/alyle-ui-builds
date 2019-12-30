@@ -15,7 +15,6 @@ var STYLES = function (theme, ref) {
                 : theme.tooltip.root(__))); }
     };
 };
-var ɵ0 = STYLES;
 var LyTooltip = /** @class */ (function () {
     function LyTooltip(_theme, _overlay, _el, _renderer, _cd, _focusState, ngZone, scroll) {
         var _this = this;
@@ -230,5 +229,5 @@ var LyTooltipModule = /** @class */ (function () {
  * Generated bundle index. Do not edit.
  */
 
-export { LyTooltip, LyTooltipModule, ɵ0 };
+export { LyTooltip, LyTooltipModule, STYLES };
 //# sourceMappingURL=alyle-ui-tooltip.js.map

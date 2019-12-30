@@ -317,7 +317,10 @@
     var LY_THEME = new core.InjectionToken('ly_theme_config');
     var LY_THEME_NAME = new core.InjectionToken('ly.theme.name');
 
-    /** For internal use only */
+    /**
+     * For internal use only
+     * @docsPrivate
+     */
     var _STYLE_MAP = new Map();
 
     (function (TypeStyle) {
@@ -2833,6 +2836,12 @@
         ], StyleRenderer);
         return StyleRenderer;
     }());
+    /**
+     * Parameter decorator to be used for create Dynamic style together with `@Input`
+     * @param style style
+     * @param priority priority of style
+     * @decorator
+     */
     function Style(style, priority) {
         return function (target, propertyKey, descriptor) {
             var index = "" + __CLASS_NAME__ + propertyKey;
@@ -3125,7 +3134,10 @@
         return value !== '' && value !== void 0 ? value : defaultValue;
     }
 
-    // Element to move, time in ms to animate
+    /**
+     * @experimental
+     * Element to move, time in ms to animate
+     */
     function scrollTo(element, duration) {
         var e = document.documentElement;
         if (e.scrollTop === 0) {
@@ -3133,10 +3145,10 @@
             ++e.scrollTop;
             e = t + 1 === e.scrollTop-- ? e : document.body;
         }
-        scrollToC(e, e.scrollTop, element, duration);
+        scrollToFromTo(e, e.scrollTop, element, duration);
     }
     // Element to move, element or px from, element or px to, time in ms to animate
-    function scrollToC(element, from, to, duration) {
+    function scrollToFromTo(element, from, to, duration) {
         if (duration <= 0) {
             return;
         }
@@ -3148,6 +3160,9 @@
         }
         createScrollWithAnimation(element, from, to, 0, 1 / duration, 20, easeOutCuaic);
     }
+    /**
+     * @experimental
+     */
     function scrollWithAnimation(element, to, duration, p, motion) {
         var _motion = motion || easeOutCuaic;
         var scrollLeft = element.scrollLeft;
@@ -3439,8 +3454,8 @@
         return LyFocusState;
     }());
 
-    var AUI_VERSION = '2.9.8-nightly.1912201627';
-    var AUI_LAST_UPDATE = '2019-12-20T16:27:54.388Z';
+    var AUI_VERSION = '2.9.8-nightly.1912300012';
+    var AUI_LAST_UPDATE = '2019-12-30T00:12:13.826Z';
 
     var LY_HAMMER_OPTIONS = new core.InjectionToken('LY_HAMMER_OPTIONS');
     var HAMMER_GESTURES_EVENTS = [
@@ -4369,7 +4384,6 @@
     exports.mixinStyleUpdater = mixinStyleUpdater;
     exports.mixinTabIndex = mixinTabIndex;
     exports.scrollTo = scrollTo;
-    exports.scrollToC = scrollToC;
     exports.scrollWithAnimation = scrollWithAnimation;
     exports.shadowBuilder = shadowBuilder;
     exports.styleTemplateToString = styleTemplateToString;

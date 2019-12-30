@@ -12,6 +12,11 @@ export interface LyAvatarVariables {
     avatar?: LyAvatarTheme;
 }
 export declare const LY_AVATAR_DEFAULT_OPTIONS: InjectionToken<LyAvatarDefaultOptions>;
+export declare const STYLES: (theme: import("@alyle/ui/alyle-ui").LyStyleUtils & import("@alyle/ui/alyle-ui").ThemeConfig & LyAvatarVariables) => {
+    $name: string;
+    $priority: number;
+    root: (className: string) => string;
+};
 /** @docs-private */
 export declare class LyAvatarBase {
     _theme: LyTheme2;

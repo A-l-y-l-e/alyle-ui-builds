@@ -17,7 +17,6 @@ var STYLES = function (theme) {
         gutter: function (className) { return className + "{margin:0.35em 0;}"; }
     };
 };
-var ɵ0 = STYLES;
 /** @docs-private */
 var LyTypographyBase = /** @class */ (function () {
     function LyTypographyBase(_theme) {
@@ -200,5 +199,5 @@ var LyTypographyModule = /** @class */ (function () {
  * Generated bundle index. Do not edit.
  */
 
-export { LyTypography, LyTypographyBase, LyTypographyMixinBase, LyTypographyModule, ɵ0 };
+export { LyTypography, LyTypographyBase, LyTypographyMixinBase, LyTypographyModule, STYLES };
 //# sourceMappingURL=alyle-ui-typography.js.map

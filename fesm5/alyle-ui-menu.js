@@ -21,7 +21,6 @@ var STYLES = function (theme, ref) {
         item: function (className) { return className + "{display:flex;min-height:48px;border-radius:0;width:100%;justify-content:flex-start;}"; }
     };
 };
-var ɵ0 = STYLES;
 var ANIMATIONS = [
     trigger('menuEnter', [
         transition('void => in', [
@@ -291,5 +290,5 @@ var LyMenuModule = /** @class */ (function () {
  * Generated bundle index. Do not edit.
  */
 
-export { LyMenu, LyMenuItem, LyMenuModule, LyMenuTriggerFor, ɵ0 };
+export { LyMenu, LyMenuItem, LyMenuModule, LyMenuTriggerFor, STYLES };
 //# sourceMappingURL=alyle-ui-menu.js.map

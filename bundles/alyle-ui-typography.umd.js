@@ -216,7 +216,6 @@
             gutter: function (className) { return className + "{margin:0.35em 0;}"; }
         };
     };
-    var ɵ0 = STYLES;
     /** @docs-private */
     var LyTypographyBase = /** @class */ (function () {
         function LyTypographyBase(_theme) {
@@ -399,7 +398,7 @@
     exports.LyTypographyBase = LyTypographyBase;
     exports.LyTypographyMixinBase = LyTypographyMixinBase;
     exports.LyTypographyModule = LyTypographyModule;
-    exports.ɵ0 = ɵ0;
+    exports.STYLES = STYLES;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 

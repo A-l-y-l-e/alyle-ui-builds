@@ -17,7 +17,6 @@ const STYLES = (theme, ref) => {
                 : theme.toolbar.root(__)))), `${className}`)}${className} ${theme.getBreakpoint('XSmall')}{height:56px;}`
     };
 };
-const ɵ0 = STYLES;
 /** @docs-private */
 class LyToolbarBase {
     constructor(_theme) {
@@ -124,5 +123,5 @@ LyToolbarModule = __decorate([
  * Generated bundle index. Do not edit.
  */
 
-export { LyToolbar, LyToolbarBase, LyToolbarMixinBase, LyToolbarModule, ɵ0 };
+export { LyToolbar, LyToolbarBase, LyToolbarMixinBase, LyToolbarModule, STYLES };
 //# sourceMappingURL=alyle-ui-toolbar.js.map

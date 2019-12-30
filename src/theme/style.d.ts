@@ -1,7 +1,10 @@
 import { ThemeVariables } from './theme-config';
 import { StyleTemplate } from '../parse';
 import { Color } from '@alyle/ui/color';
-/** For internal use only */
+/**
+ * For internal use only
+ * @docsPrivate
+ */
 export declare const _STYLE_MAP: Map<any, StyleMap5>;
 /**
  * For internal use only

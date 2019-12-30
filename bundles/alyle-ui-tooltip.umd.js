@@ -214,7 +214,6 @@
                     : theme.tooltip.root(__))); }
         };
     };
-    var ɵ0 = STYLES;
     var LyTooltip = /** @class */ (function () {
         function LyTooltip(_theme, _overlay, _el, _renderer, _cd, _focusState, ngZone, scroll) {
             var _this = this;
@@ -427,7 +426,7 @@
 
     exports.LyTooltip = LyTooltip;
     exports.LyTooltipModule = LyTooltipModule;
-    exports.ɵ0 = ɵ0;
+    exports.STYLES = STYLES;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 

@@ -239,7 +239,6 @@
             disabled: function (className) { return className + "{cursor:default;}"; }
         };
     };
-    var ɵ0 = STYLES;
     /** A change event emitted by the LySlider component. */
     var LySliderChange = /** @class */ (function () {
         function LySliderChange(
@@ -1091,7 +1090,7 @@
     exports.LySlider = LySlider;
     exports.LySliderChange = LySliderChange;
     exports.LySliderModule = LySliderModule;
-    exports.ɵ0 = ɵ0;
+    exports.STYLES = STYLES;
     exports.ɵa = LyMark;
     exports.ɵb = LyTick;
     exports.гbetween = гbetween;

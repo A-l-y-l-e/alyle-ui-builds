@@ -1,6 +1,12 @@
 import { ElementRef, OnInit, Renderer2 } from '@angular/core';
 import { LyTheme2, StyleRenderer } from '@alyle/ui';
 export declare type AlignItems = 'start' | 'center' | 'end' | 'stretch' | 'baseline';
+export declare const STYLES: () => {
+    $priority: number;
+    $name: string;
+    root: (className: string) => string;
+    item: (className: string) => string;
+};
 export declare type Justify = 'start' | 'center' | 'end' | 'between' | 'around' | 'evenly';
 export declare type Direction = 'row' | 'rowReverse' | 'column' | 'columnReverse';
 /**

@@ -15,7 +15,6 @@ const STYLES = (theme, ref) => {
                 : theme.tooltip.root(__)))
     };
 };
-const ɵ0 = STYLES;
 let LyTooltip = class LyTooltip {
     constructor(_theme, _overlay, _el, _renderer, _cd, _focusState, ngZone, scroll) {
         this._theme = _theme;
@@ -214,5 +213,5 @@ LyTooltipModule = __decorate([
  * Generated bundle index. Do not edit.
  */
 
-export { LyTooltip, LyTooltipModule, ɵ0 };
+export { LyTooltip, LyTooltipModule, STYLES };
 //# sourceMappingURL=alyle-ui-tooltip.js.map

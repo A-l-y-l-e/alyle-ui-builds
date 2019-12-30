@@ -7,7 +7,7 @@ export interface LyMenuTheme {
 export interface LyMenuVariables {
     menu?: LyMenuTheme;
 }
-declare const STYLES: (theme: import("@alyle/ui/alyle-ui").LyStyleUtils & import("@alyle/ui/alyle-ui").ThemeConfig & LyMenuVariables, ref: ThemeRef) => {
+export declare const STYLES: (theme: import("@alyle/ui/alyle-ui").LyStyleUtils & import("@alyle/ui/alyle-ui").ThemeConfig & LyMenuVariables, ref: ThemeRef) => {
     $priority: number;
     root: () => StyleTemplate;
     container: (className: string) => string;
@@ -84,4 +84,3 @@ export declare class LyMenuTriggerFor implements OnDestroy {
     _getHostElement(): any;
     _setMenuOpenToTrue(): void;
 }
-export {};

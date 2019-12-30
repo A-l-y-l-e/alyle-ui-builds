@@ -212,13 +212,12 @@
         around: 'space-around',
         evenly: 'space-evenly',
     };
-    var styles = function () { return ({
+    var STYLES = function () { return ({
         $priority: STYLE_PRIORITY,
         $name: LyGrid.и,
         root: function (className) { return className + "{width:100%;display:flex;flex-wrap:wrap;box-sizing:border-box;}"; },
         item: function (className) { return className + "," + className + " :first-child{box-sizing:border-box;}"; }
     }); };
-    var ɵ0 = styles;
     /**
      * Grid container
      */
@@ -230,7 +229,7 @@
              * Styles
              * @docs-private
              */
-            this.classes = this.theme.renderStyleSheet(styles);
+            this.classes = this.theme.renderStyleSheet(STYLES);
             this.el.nativeElement.classList.add(this.classes.root);
         }
         Object.defineProperty(LyGrid.prototype, "spacingX", {
@@ -624,7 +623,7 @@
     exports.LyGrid = LyGrid;
     exports.LyGridItem = LyGridItem;
     exports.LyGridModule = LyGridModule;
-    exports.ɵ0 = ɵ0;
+    exports.STYLES = STYLES;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 

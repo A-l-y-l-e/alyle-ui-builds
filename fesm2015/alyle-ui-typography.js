@@ -17,7 +17,6 @@ const STYLES = (theme) => {
         gutter: (className) => `${className}{margin:0.35em 0;}`
     };
 };
-const ɵ0 = STYLES;
 /** @docs-private */
 class LyTypographyBase {
     constructor(_theme) {
@@ -173,5 +172,5 @@ LyTypographyModule = __decorate([
  * Generated bundle index. Do not edit.
  */
 
-export { LyTypography, LyTypographyBase, LyTypographyMixinBase, LyTypographyModule, ɵ0 };
+export { LyTypography, LyTypographyBase, LyTypographyMixinBase, LyTypographyModule, STYLES };
 //# sourceMappingURL=alyle-ui-typography.js.map

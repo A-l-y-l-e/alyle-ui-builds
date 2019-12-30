@@ -13,13 +13,12 @@ var ALIGN_ALIAS = {
     around: 'space-around',
     evenly: 'space-evenly',
 };
-var styles = function () { return ({
+var STYLES = function () { return ({
     $priority: STYLE_PRIORITY,
     $name: LyGrid.и,
     root: function (className) { return className + "{width:100%;display:flex;flex-wrap:wrap;box-sizing:border-box;}"; },
     item: function (className) { return className + "," + className + " :first-child{box-sizing:border-box;}"; }
 }); };
-var ɵ0 = styles;
 /**
  * Grid container
  */
@@ -31,7 +30,7 @@ var LyGrid = /** @class */ (function () {
          * Styles
          * @docs-private
          */
-        this.classes = this.theme.renderStyleSheet(styles);
+        this.classes = this.theme.renderStyleSheet(STYLES);
         this.el.nativeElement.classList.add(this.classes.root);
     }
     Object.defineProperty(LyGrid.prototype, "spacingX", {
@@ -426,5 +425,5 @@ var LyGridModule = /** @class */ (function () {
  * Generated bundle index. Do not edit.
  */
 
-export { LyGrid, LyGridItem, LyGridModule, ɵ0 };
+export { LyGrid, LyGridItem, LyGridModule, STYLES };
 //# sourceMappingURL=alyle-ui-grid.js.map

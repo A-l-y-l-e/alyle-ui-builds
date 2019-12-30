@@ -7,7 +7,7 @@ export interface LyImageCropperTheme {
 export interface LyImageCropperVariables {
     cropper?: LyImageCropperTheme;
 }
-declare const STYLES: (theme: import("@alyle/ui/alyle-ui").LyStyleUtils & import("@alyle/ui/alyle-ui").ThemeConfig & LyImageCropperVariables, ref: ThemeRef) => {
+export declare const STYLES: (theme: import("@alyle/ui/alyle-ui").LyStyleUtils & import("@alyle/ui/alyle-ui").ThemeConfig & LyImageCropperVariables, ref: ThemeRef) => {
     $name: string;
     $priority: number;
     root: () => (className: string) => string;
@@ -197,4 +197,3 @@ export declare class LyImageCropper implements OnDestroy {
     private _rootRect;
     private _areaCropperRect;
 }
-export {};

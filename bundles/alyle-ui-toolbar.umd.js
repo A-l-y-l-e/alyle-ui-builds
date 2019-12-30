@@ -215,7 +215,6 @@
                     : theme.toolbar.root(__)))), "" + className) + className + " " + theme.getBreakpoint('XSmall') + "{height:56px;}"; }; }
         };
     };
-    var ɵ0 = STYLES;
     /** @docs-private */
     var LyToolbarBase = /** @class */ (function () {
         function LyToolbarBase(_theme) {
@@ -337,7 +336,7 @@
     exports.LyToolbarBase = LyToolbarBase;
     exports.LyToolbarMixinBase = LyToolbarMixinBase;
     exports.LyToolbarModule = LyToolbarModule;
-    exports.ɵ0 = ɵ0;
+    exports.STYLES = STYLES;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 

@@ -19,7 +19,7 @@ export interface LyTooltipTheme {
 export interface LyTooltipVariables {
     tooltip?: LyTooltipTheme;
 }
-declare const STYLES: (theme: import("@alyle/ui/alyle-ui").LyStyleUtils & import("@alyle/ui/alyle-ui").ThemeConfig & LyTooltipVariables, ref: ThemeRef) => {
+export declare const STYLES: (theme: import("@alyle/ui/alyle-ui").LyStyleUtils & import("@alyle/ui/alyle-ui").ThemeConfig & LyTooltipVariables, ref: ThemeRef) => {
     $priority: number;
     root: () => StyleTemplate;
 };
@@ -57,4 +57,3 @@ export declare class LyTooltip implements OnInit, OnDestroy {
     private _markForCheck;
     private _updatePosition;
 }
-export {};

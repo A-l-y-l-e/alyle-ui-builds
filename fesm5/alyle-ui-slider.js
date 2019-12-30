@@ -43,7 +43,6 @@ var STYLES = function (theme, ref) {
         disabled: function (className) { return className + "{cursor:default;}"; }
     };
 };
-var ɵ0 = STYLES;
 /** A change event emitted by the LySlider component. */
 var LySliderChange = /** @class */ (function () {
     function LySliderChange(
@@ -894,5 +893,5 @@ var LySliderModule = /** @class */ (function () {
  * Generated bundle index. Do not edit.
  */
 
-export { LY_SLIDER_CONTROL_VALUE_ACCESSOR, LY_SLIDER_DEFAULT_OPTIONS, LySlider, LySliderChange, LySliderModule, ɵ0, LyMark as ɵa, LyTick as ɵb, гbetween, гvalueToPercent };
+export { LY_SLIDER_CONTROL_VALUE_ACCESSOR, LY_SLIDER_DEFAULT_OPTIONS, LySlider, LySliderChange, LySliderModule, STYLES, LyMark as ɵa, LyTick as ɵb, гbetween, гvalueToPercent };
 //# sourceMappingURL=alyle-ui-slider.js.map

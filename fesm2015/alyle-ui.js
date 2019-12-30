@@ -119,7 +119,10 @@ const LY_THEME_GLOBAL_VARIABLES = new InjectionToken('ly.theme.global.variables'
 const LY_THEME = new InjectionToken('ly_theme_config');
 const LY_THEME_NAME = new InjectionToken('ly.theme.name');
 
-/** For internal use only */
+/**
+ * For internal use only
+ * @docsPrivate
+ */
 const _STYLE_MAP = new Map();
 var TypeStyle;
 (function (TypeStyle) {
@@ -2413,6 +2416,12 @@ StyleRenderer = __decorate([
     __param(1, Optional()),
     __param(2, Optional())
 ], StyleRenderer);
+/**
+ * Parameter decorator to be used for create Dynamic style together with `@Input`
+ * @param style style
+ * @param priority priority of style
+ * @decorator
+ */
 function Style(style, priority) {
     return function (target, propertyKey, descriptor) {
         const index = `${__CLASS_NAME__}${propertyKey}`;
@@ -2632,7 +2641,10 @@ function defaultEntry(value, defaultValue) {
     return value !== '' && value !== void 0 ? value : defaultValue;
 }
 
-// Element to move, time in ms to animate
+/**
+ * @experimental
+ * Element to move, time in ms to animate
+ */
 function scrollTo(element, duration) {
     let e = document.documentElement;
     if (e.scrollTop === 0) {
@@ -2640,10 +2652,10 @@ function scrollTo(element, duration) {
         ++e.scrollTop;
         e = t + 1 === e.scrollTop-- ? e : document.body;
     }
-    scrollToC(e, e.scrollTop, element, duration);
+    scrollToFromTo(e, e.scrollTop, element, duration);
 }
 // Element to move, element or px from, element or px to, time in ms to animate
-function scrollToC(element, from, to, duration) {
+function scrollToFromTo(element, from, to, duration) {
     if (duration <= 0) {
         return;
     }
@@ -2655,6 +2667,9 @@ function scrollToC(element, from, to, duration) {
     }
     createScrollWithAnimation(element, from, to, 0, 1 / duration, 20, easeOutCuaic);
 }
+/**
+ * @experimental
+ */
 function scrollWithAnimation(element, to, duration, p, motion) {
     const _motion = motion || easeOutCuaic;
     const { scrollLeft } = element;
@@ -2941,8 +2956,8 @@ LyFocusState = __decorate([
     })
 ], LyFocusState);
 
-const AUI_VERSION = '2.9.8-nightly.1912201627';
-const AUI_LAST_UPDATE = '2019-12-20T16:27:54.388Z';
+const AUI_VERSION = '2.9.8-nightly.1912300012';
+const AUI_LAST_UPDATE = '2019-12-30T00:12:13.826Z';
 
 const LY_HAMMER_OPTIONS = new InjectionToken('LY_HAMMER_OPTIONS');
 const HAMMER_GESTURES_EVENTS = [
@@ -3717,5 +3732,5 @@ LyExpansionIconModule = __decorate([
  * Generated bundle index. Do not edit.
  */
 
-export { AUI_LAST_UPDATE, AUI_VERSION, AlignAlias, CoreTheme, Dir, DirAlias, DirPosition, ElementObserver, FocusStatus, IS_CORE_THEME, LY_COMMON_STYLES, LY_COMMON_STYLES_DEPRECATED, LY_HAMMER_OPTIONS, LY_THEME, LY_THEME_GLOBAL_VARIABLES, LY_THEME_NAME, LyCommonModule, LyCoreStyles, LyExpansionIcon, LyExpansionIconModule, LyFocusState, LyHammerGestureConfig, LyHostClass, LyOverlay, LyOverlayConfig, LyOverlayContainer, LyOverlayModule, LyOverlayRef, LyPaper, LyPaperBase, LyPaperMixinBase, LyRippleService, LySelectionModel, LyStyle, LyStyleUtils, LyTheme2, LyThemeModule, LylParse, MutationObserverFactory, NgTranscludeDirective, NgTranscludeModule, OverlayFactory, Platform, Positioning, Ripple, STYLES_BACKDROP_DARK, Shadows, StringIdGenerator, Style, StyleCollection, StyleRenderer, StylesInDocument, THEME_VARIABLES, TypeStyle, Undefined, UndefinedValue, WinResize, WinScroll, XPosition, YPosition, _STYLE_MAP, capitalizeFirstLetter, converterToCssKeyAndStyle, createOverlayInjector, defaultEntry, eachMedia, getContrastYIQ, getLyThemeStyleUndefinedError, getLyThemeVariableOptionUndefinedError, getLyThemeVariableUndefinedError, getNativeElement, getThemeNameForSelectors, invertPlacement, keyframesUniqueId, lyl, mergeDeep, mergeThemes, mixinBg, mixinColor, mixinDisableRipple, mixinDisabled, mixinElevation, mixinOutlined, mixinRaised, mixinShadowColor, mixinStyleUpdater, mixinTabIndex, scrollTo, scrollToC, scrollWithAnimation, shadowBuilder, styleTemplateToString, supportsPassiveEventListeners, toBoolean, toNumber, untilComponentDestroyed, ɵ0$2 as ɵ0, ɵ1$2 as ɵ1, ɵ10, ɵ11, ɵ12, ɵ13, ɵ14, ɵ15, ɵ16, ɵ17, ɵ18, ɵ19, ɵ2$2 as ɵ2, ɵ20, ɵ3, ɵ4, ɵ5, ɵ6, ɵ7, ɵ8, ɵ9, LyWithClass as ɵa, LyOverlayBackdrop as ɵb };
+export { AUI_LAST_UPDATE, AUI_VERSION, AlignAlias, CoreTheme, Dir, DirAlias, DirPosition, ElementObserver, FocusStatus, IS_CORE_THEME, LY_COMMON_STYLES, LY_COMMON_STYLES_DEPRECATED, LY_HAMMER_OPTIONS, LY_THEME, LY_THEME_GLOBAL_VARIABLES, LY_THEME_NAME, LyCommonModule, LyCoreStyles, LyExpansionIcon, LyExpansionIconModule, LyFocusState, LyHammerGestureConfig, LyHostClass, LyOverlay, LyOverlayConfig, LyOverlayContainer, LyOverlayModule, LyOverlayRef, LyPaper, LyPaperBase, LyPaperMixinBase, LyRippleService, LySelectionModel, LyStyle, LyStyleUtils, LyTheme2, LyThemeModule, LylParse, MutationObserverFactory, NgTranscludeDirective, NgTranscludeModule, OverlayFactory, Platform, Positioning, Ripple, STYLES_BACKDROP_DARK, Shadows, StringIdGenerator, Style, StyleCollection, StyleRenderer, StylesInDocument, THEME_VARIABLES, TypeStyle, Undefined, UndefinedValue, WinResize, WinScroll, XPosition, YPosition, _STYLE_MAP, capitalizeFirstLetter, converterToCssKeyAndStyle, createOverlayInjector, defaultEntry, eachMedia, getContrastYIQ, getLyThemeStyleUndefinedError, getLyThemeVariableOptionUndefinedError, getLyThemeVariableUndefinedError, getNativeElement, getThemeNameForSelectors, invertPlacement, keyframesUniqueId, lyl, mergeDeep, mergeThemes, mixinBg, mixinColor, mixinDisableRipple, mixinDisabled, mixinElevation, mixinOutlined, mixinRaised, mixinShadowColor, mixinStyleUpdater, mixinTabIndex, scrollTo, scrollWithAnimation, shadowBuilder, styleTemplateToString, supportsPassiveEventListeners, toBoolean, toNumber, untilComponentDestroyed, ɵ0$2 as ɵ0, ɵ1$2 as ɵ1, ɵ10, ɵ11, ɵ12, ɵ13, ɵ14, ɵ15, ɵ16, ɵ17, ɵ18, ɵ19, ɵ2$2 as ɵ2, ɵ20, ɵ3, ɵ4, ɵ5, ɵ6, ɵ7, ɵ8, ɵ9, LyWithClass as ɵa, LyOverlayBackdrop as ɵb };
 //# sourceMappingURL=alyle-ui.js.map

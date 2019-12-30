@@ -1,6 +1,12 @@
 import { ElementRef, OnChanges, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { LyIconService } from './icon.service';
-import { LyTheme2, LyHostClass } from '@alyle/ui';
+import { LyTheme2, ThemeVariables, LyHostClass } from '@alyle/ui';
+export declare const STYLES: (theme: ThemeVariables) => {
+    $priority: number;
+    $global: (className: string) => string;
+    loading: (className: string) => string;
+    defaultIcon: (className: string) => string;
+};
 /** @docs-private */
 export declare class LyIconBase {
     _theme: LyTheme2;

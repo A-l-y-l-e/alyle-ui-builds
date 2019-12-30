@@ -158,7 +158,6 @@ var STYLES = function (theme) {
         defaultIcon: function (className) { return className + "{border-radius:50px;}"; }
     };
 };
-var ɵ0 = STYLES;
 /** @docs-private */
 var LyIconBase = /** @class */ (function () {
     function LyIconBase(_theme) {
@@ -366,5 +365,5 @@ var LyIconModule = /** @class */ (function () {
  * Generated bundle index. Do not edit.
  */
 
-export { LyIcon, LyIconBase, LyIconMixinBase, LyIconModule, LyIconService, ɵ0 };
+export { LyIcon, LyIconBase, LyIconMixinBase, LyIconModule, LyIconService, STYLES };
 //# sourceMappingURL=alyle-ui-icon.js.map

@@ -14,13 +14,12 @@ const ALIGN_ALIAS = {
     around: 'space-around',
     evenly: 'space-evenly',
 };
-const styles = () => ({
+const STYLES = () => ({
     $priority: STYLE_PRIORITY,
     $name: LyGrid.и,
     root: (className) => `${className}{width:100%;display:flex;flex-wrap:wrap;box-sizing:border-box;}`,
     item: (className) => `${className},${className} :first-child{box-sizing:border-box;}`
 });
-const ɵ0 = styles;
 /**
  * Grid container
  */
@@ -32,7 +31,7 @@ let LyGrid = class LyGrid {
          * Styles
          * @docs-private
          */
-        this.classes = this.theme.renderStyleSheet(styles);
+        this.classes = this.theme.renderStyleSheet(STYLES);
         this.el.nativeElement.classList.add(this.classes.root);
     }
     get spacingX() {
@@ -384,5 +383,5 @@ LyGridModule = __decorate([
  * Generated bundle index. Do not edit.
  */
 
-export { LyGrid, LyGridItem, LyGridModule, ɵ0 };
+export { LyGrid, LyGridItem, LyGridModule, STYLES };
 //# sourceMappingURL=alyle-ui-grid.js.map

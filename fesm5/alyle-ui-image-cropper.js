@@ -22,7 +22,6 @@ var STYLES = function (theme, ref) {
         defaultContent: function (className) { return className + "{display:flex;align-items:center;justify-content:center;}" + styleTemplateToString((LY_COMMON_STYLES.fill), className + "," + className + " > input") + className + " *:not(input){pointer-events:none;}" + className + " > input{background:transparent;opacity:0;width:100%;height:100%;}"; }
     };
 };
-var ɵ0 = STYLES;
 /** Image output */
 var ImgResolution;
 (function (ImgResolution) {
@@ -793,5 +792,5 @@ var LyImageCropperModule = /** @class */ (function () {
  * Generated bundle index. Do not edit.
  */
 
-export { ImgCropperError, ImgResolution, LyImageCropper, LyImageCropperModule, ɵ0 };
+export { ImgCropperError, ImgResolution, LyImageCropper, LyImageCropperModule, STYLES };
 //# sourceMappingURL=alyle-ui-image-cropper.js.map

@@ -16,7 +16,6 @@ const STYLES = (theme) => {
             && theme.avatar.root())), `${className}`)}${className}>img{width:100%;height:100%;border-radius:50%;display:block;object-fit:cover;-webkit-background-clip:padding-box;}`
     };
 };
-const ɵ0 = STYLES;
 /** @docs-private */
 class LyAvatarBase {
     constructor(_theme) {
@@ -107,5 +106,5 @@ LyAvatarModule = __decorate([
  * Generated bundle index. Do not edit.
  */
 
-export { LY_AVATAR_DEFAULT_OPTIONS, LyAvatar, LyAvatarBase, LyAvatarMixinBase, LyAvatarModule, ɵ0 };
+export { LY_AVATAR_DEFAULT_OPTIONS, LyAvatar, LyAvatarBase, LyAvatarMixinBase, LyAvatarModule, STYLES };
 //# sourceMappingURL=alyle-ui-avatar.js.map

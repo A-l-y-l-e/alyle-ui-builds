@@ -217,7 +217,6 @@
             defaultContent: function (className) { return className + "{display:flex;align-items:center;justify-content:center;}" + ui.styleTemplateToString((ui.LY_COMMON_STYLES.fill), className + "," + className + " > input") + className + " *:not(input){pointer-events:none;}" + className + " > input{background:transparent;opacity:0;width:100%;height:100%;}"; }
         };
     };
-    var ɵ0 = STYLES;
     /** Image output */
 
     (function (ImgResolution) {
@@ -986,7 +985,7 @@
 
     exports.LyImageCropper = LyImageCropper;
     exports.LyImageCropperModule = LyImageCropperModule;
-    exports.ɵ0 = ɵ0;
+    exports.STYLES = STYLES;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 

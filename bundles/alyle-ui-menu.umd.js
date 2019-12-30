@@ -217,7 +217,6 @@
             item: function (className) { return className + "{display:flex;min-height:48px;border-radius:0;width:100%;justify-content:flex-start;}"; }
         };
     };
-    var ɵ0 = STYLES;
     var ANIMATIONS = [
         animations.trigger('menuEnter', [
             animations.transition('void => in', [
@@ -487,7 +486,7 @@
     exports.LyMenuItem = LyMenuItem;
     exports.LyMenuModule = LyMenuModule;
     exports.LyMenuTriggerFor = LyMenuTriggerFor;
-    exports.ɵ0 = ɵ0;
+    exports.STYLES = STYLES;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 

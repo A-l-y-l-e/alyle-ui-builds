@@ -353,7 +353,6 @@
             defaultIcon: function (className) { return className + "{border-radius:50px;}"; }
         };
     };
-    var ɵ0 = STYLES;
     /** @docs-private */
     var LyIconBase = /** @class */ (function () {
         function LyIconBase(_theme) {
@@ -562,7 +561,7 @@
     exports.LyIconMixinBase = LyIconMixinBase;
     exports.LyIconModule = LyIconModule;
     exports.LyIconService = LyIconService;
-    exports.ɵ0 = ɵ0;
+    exports.STYLES = STYLES;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 

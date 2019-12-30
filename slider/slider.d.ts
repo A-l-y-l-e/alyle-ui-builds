@@ -25,7 +25,7 @@ export declare const LY_SLIDER_CONTROL_VALUE_ACCESSOR: {
     useExisting: import("@angular/core").Type<any>;
     multi: boolean;
 };
-declare const STYLES: (theme: import("@alyle/ui/alyle-ui").LyStyleUtils & import("@alyle/ui/alyle-ui").ThemeConfig & LySliderVariables, ref: ThemeRef) => {
+export declare const STYLES: (theme: import("@alyle/ui/alyle-ui").LyStyleUtils & import("@alyle/ui/alyle-ui").ThemeConfig & LySliderVariables, ref: ThemeRef) => {
     $priority: number;
     root: () => (className: string) => string;
     track: (className: string) => string;

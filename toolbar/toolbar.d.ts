@@ -10,7 +10,7 @@ export interface LyToolbarTheme {
 export interface LyToolbarVariables {
     toolbar?: LyToolbarTheme;
 }
-declare const STYLES: (theme: import("@alyle/ui/alyle-ui").LyStyleUtils & import("@alyle/ui/alyle-ui").ThemeConfig & LyToolbarVariables, ref: ThemeRef) => {
+export declare const STYLES: (theme: import("@alyle/ui/alyle-ui").LyStyleUtils & import("@alyle/ui/alyle-ui").ThemeConfig & LyToolbarVariables, ref: ThemeRef) => {
     $priority: number;
     root: () => (className: string) => string;
 };

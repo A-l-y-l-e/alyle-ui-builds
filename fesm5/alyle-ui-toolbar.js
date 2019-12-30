@@ -17,7 +17,6 @@ var STYLES = function (theme, ref) {
                 : theme.toolbar.root(__)))), "" + className) + className + " " + theme.getBreakpoint('XSmall') + "{height:56px;}"; }; }
     };
 };
-var ɵ0 = STYLES;
 /** @docs-private */
 var LyToolbarBase = /** @class */ (function () {
     function LyToolbarBase(_theme) {
@@ -139,5 +138,5 @@ var LyToolbarModule = /** @class */ (function () {
  * Generated bundle index. Do not edit.
  */
 
-export { LyToolbar, LyToolbarBase, LyToolbarMixinBase, LyToolbarModule, ɵ0 };
+export { LyToolbar, LyToolbarBase, LyToolbarMixinBase, LyToolbarModule, STYLES };
 //# sourceMappingURL=alyle-ui-toolbar.js.map
