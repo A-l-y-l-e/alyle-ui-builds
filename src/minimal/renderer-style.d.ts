@@ -10,8 +10,20 @@ export declare class StyleRenderer {
     constructor(_theme: LyTheme2, _el: ElementRef, _renderer: Renderer2);
     /**
      * Build multiple styles and render them in the DOM.
+     * @param styles Styles
+     * @param applyRootClass If `applyToRoot` is `true` and the root property is defined,
+     * it will automatically be added to the component.
+     *
+     * e.g.
+     *
+     * ```ts
+     * const STYLES = () => ({
+     *   root: lyl `{...}` // this class will be added to the root component
+     * })
+     * ```
+     *
      */
-    renderSheet<T>(styles: T & LyStyles): LyClasses<T>;
+    renderSheet<T>(styles: T & LyStyles, applyRootClass?: boolean): LyClasses<T>;
     add(style: (theme: any, ref: ThemeRef) => StyleTemplate): string;
     add(style: (theme: any, ref: ThemeRef) => StyleTemplate, priority: number): string;
     add(style: (theme: any, ref: ThemeRef) => StyleTemplate, oldClass: string): string;

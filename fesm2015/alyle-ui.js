@@ -2300,9 +2300,25 @@ let StyleRenderer = class StyleRenderer {
     }
     /**
      * Build multiple styles and render them in the DOM.
+     * @param styles Styles
+     * @param applyRootClass If `applyToRoot` is `true` and the root property is defined,
+     * it will automatically be added to the component.
+     *
+     * e.g.
+     *
+     * ```ts
+     * const STYLES = () => ({
+     *   root: lyl `{...}` // this class will be added to the root component
+     * })
+     * ```
+     *
      */
-    renderSheet(styles) {
-        return this._theme._createStyleContent2(styles, null, null, TypeStyle.Multiple);
+    renderSheet(styles, applyRootClass) {
+        const classes = this._theme._createStyleContent2(styles, null, null, TypeStyle.Multiple);
+        if (applyRootClass && classes.root) {
+            this.addClass(classes.root);
+        }
+        return classes;
     }
     /**
      * Render style and apply class name to host Component or Directive,
@@ -2956,8 +2972,8 @@ LyFocusState = __decorate([
     })
 ], LyFocusState);
 
-const AUI_VERSION = '2.9.8-nightly.1912300012';
-const AUI_LAST_UPDATE = '2019-12-30T00:12:13.826Z';
+const AUI_VERSION = '2.9.8-nightly.2001022253';
+const AUI_LAST_UPDATE = '2020-01-02T22:53:28.876Z';
 
 const LY_HAMMER_OPTIONS = new InjectionToken('LY_HAMMER_OPTIONS');
 const HAMMER_GESTURES_EVENTS = [
