@@ -14,7 +14,7 @@ export declare const STYLES: (theme: import("@alyle/ui/alyle-ui").LyStyleUtils &
     $priority: number;
     root: () => (className: string) => string;
     container: {
-        background: import("@alyle/ui/color/color").ColorClass;
+        background: import("@alyle/ui/color/color").Color;
         borderRadius: string;
         boxShadow: string;
         display: string;
@@ -31,7 +31,7 @@ export declare const STYLES: (theme: import("@alyle/ui/alyle-ui").LyStyleUtils &
     option: {
         display: string;
         fontFamily: string;
-        color: import("@alyle/ui/color/color").ColorClass;
+        color: import("@alyle/ui/color/color").Color;
         '-webkit-tap-highlight-color': string;
         backgroundColor: string;
         border: number;

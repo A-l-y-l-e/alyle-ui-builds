@@ -354,27 +354,27 @@
         return {
             $priority: STYLE_PRIORITY$2,
             $global: function (className) { return "@keyframes " + shake + "{" + className + " 0%{margin-" + before + ":0;}" + className + " 40%{margin-" + before + ":2px;}" + className + " 50%{margin-" + before + ":-2px;}" + className + " 70%{margin-" + before + ":2px;}" + className + " 100%{margin-" + before + ":0;}}"; },
-            root: function () { return function (className) { return className + "{display:inline-block;position:relative;margin-top:1em;line-height:1.5;}" + ui.styleTemplateToString(((theme.field
+            root: function () { return function (className) { return className + "{display:inline-block;position:relative;margin-top:1em;line-height:1.5;}" + ui.st2c(((theme.field
                 && theme.field.root
                 && (theme.field.root instanceof ui.StyleCollection
                     ? theme.field.root.setTransformer(function (fn) { return fn(classes); })
                     : theme.field.root(classes)))), "" + className) + className + " " + classes.hint + "," + className + " " + classes.error + "{display:block;font-size:.75em;margin-top:.25em;}"; }; },
             animations: function () { return function (className) { return className + " " + classes.labelSpan + "{transition:font-size " + theme.animations.curves.deceleration + " ." + theme.animations.durations.complex + "s;}" + className + " " + classes.label + "{transition:" + theme.animations.curves.deceleration + " ." + theme.animations.durations.complex + "s;}"; }; },
-            container: function (className) { return className + "{height:100%;display:flex;align-items:center;position:relative;-webkit-tap-highlight-color:transparent;}" + ui.styleTemplateToString((ui.LY_COMMON_STYLES.fill), className + ":after") + className + ":after{content:'';pointer-events:none;}"; },
-            fieldset: function (className) { return "" + ui.styleTemplateToString((ui.LY_COMMON_STYLES.fill), "" + className) + className + "{margin:0;border-style:solid;border-width:0;}"; },
+            container: function (className) { return className + "{height:100%;display:flex;align-items:center;position:relative;-webkit-tap-highlight-color:transparent;}" + ui.st2c((ui.LY_COMMON_STYLES.fill), className + ":after") + className + ":after{content:'';pointer-events:none;}"; },
+            fieldset: function (className) { return "" + ui.st2c((ui.LY_COMMON_STYLES.fill), "" + className) + className + "{margin:0;border-style:solid;border-width:0;}"; },
             fieldsetSpan: function (className) { return className + "{padding:0;height:2px;}"; },
             labelSpan: function (className) { return className + "{max-width:100%;display:inline-block;}"; },
             prefix: function (className) { return className + "{max-height:2em;display:flex;align-items:center;}"; },
             infix: function (className) { return className + "{display:inline-flex;position:relative;align-items:baseline;min-width:0;width:180px;flex:1 0;}"; },
             suffix: function (className) { return className + "{max-height:2em;display:flex;align-items:center;}"; },
-            labelContainer: function (className) { return "" + ui.styleTemplateToString((ui.LY_COMMON_STYLES.fill), "" + className) + className + "{pointer-events:none;display:flex;width:100%;}"; },
+            labelContainer: function (className) { return "" + ui.st2c((ui.LY_COMMON_STYLES.fill), "" + className) + className + "{pointer-events:none;display:flex;width:100%;}"; },
             labelSpacingStart: null,
             labelCenter: function (className) { return className + "{display:flex;max-width:100%;}"; },
             labelSpacingEnd: function (className) { return className + "{flex:1;}"; },
-            label: function (className) { return "" + ui.styleTemplateToString((ui.LY_COMMON_STYLES.fill), "" + className) + className + "{margin:0;border:none;pointer-events:none;white-space:nowrap;text-overflow:ellipsis;overflow:hidden;width:100%;}"; },
+            label: function (className) { return "" + ui.st2c((ui.LY_COMMON_STYLES.fill), "" + className) + className + "{margin:0;border:none;pointer-events:none;white-space:nowrap;text-overflow:ellipsis;overflow:hidden;width:100%;}"; },
             isFloatingLabel: null,
             floatingLabel: function () { return function (className) { return className + " " + classes.labelSpan + "{font-size:75%;}"; }; },
-            placeholder: function (className) { return "" + ui.styleTemplateToString((ui.LY_COMMON_STYLES.fill), "" + className) + className + "{pointer-events:none;}"; },
+            placeholder: function (className) { return "" + ui.st2c((ui.LY_COMMON_STYLES.fill), "" + className) + className + "{pointer-events:none;}"; },
             focused: null,
             inputNative: function (className) { return className + "{resize:vertical;padding:0;outline:none;border:none;background-color:transparent;color:inherit;font:inherit;width:100%;}select" + className + "{-moz-appearance:none;-webkit-appearance:none;position:relative;background-color:transparent;display:inline-flex;box-sizing:border-box;padding-" + after + ":1em;}select" + className + " option:not([disabled]){color:initial;}select" + className + " optgroup:not([disabled]){color:initial;}select" + className + "::-ms-expand{display:none;}select" + className + "::-moz-focus-inner{border:0;}select" + className + ":not(:disabled){cursor:pointer;}select" + className + "::-ms-value{color:inherit;background:0 0;}"; },
             hintContainer: function (className) { return className + "{min-height:1.25em;line-height:1.25;}" + className + " > div{display:flex;flex:1 0 auto;max-width:100%;overflow:hidden;justify-content:space-between;}"; },

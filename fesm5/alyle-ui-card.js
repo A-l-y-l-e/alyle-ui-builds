@@ -1,14 +1,14 @@
 import { __extends, __decorate } from 'tslib';
 import { ElementRef, Renderer2, NgZone, Directive, Input, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { styleTemplateToString, StyleCollection, mixinStyleUpdater, mixinBg, mixinColor, mixinRaised, mixinDisabled, mixinOutlined, mixinElevation, mixinShadowColor, mixinDisableRipple, LyTheme2, StyleRenderer, toBoolean, Style, LyHostClass, LyCommonModule } from '@alyle/ui';
+import { st2c, StyleCollection, mixinStyleUpdater, mixinBg, mixinColor, mixinRaised, mixinDisabled, mixinOutlined, mixinElevation, mixinShadowColor, mixinDisableRipple, LyTheme2, StyleRenderer, toBoolean, Style, LyHostClass, LyCommonModule } from '@alyle/ui';
 
 var STYLES = function (theme, ref) {
     var card = ref.selectorsOf(STYLES);
     return {
         $priority: STYLE_PRIORITY,
         $name: LyCard.и,
-        root: function () { return function (className) { return className + "{display:block;overflow:hidden;border-radius:2px;}" + styleTemplateToString(((theme.card
+        root: function () { return function (className) { return className + "{display:block;overflow:hidden;border-radius:2px;}" + st2c(((theme.card
             && theme.card.root
             && (theme.card.root instanceof StyleCollection
                 ? theme.card.root.setTransformer(function (fn) { return fn(card); })

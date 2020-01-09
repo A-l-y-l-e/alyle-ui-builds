@@ -225,7 +225,7 @@
         return {
             $name: LyTabs.и,
             $priority: STYLE_PRIORITY,
-            root: function () { return function (className) { return className + "{display:block;}" + ui.styleTemplateToString(((theme.tab
+            root: function () { return function (className) { return className + "{display:block;}" + ui.st2c(((theme.tab
                 && theme.tab.root
                 && (theme.tab.root instanceof ui.StyleCollection
                     ? theme.tab.root.setTransformer(function (fn) { return fn(__); }).css
@@ -243,7 +243,7 @@
             tabContent: function (className) { return className + "{width:100%;height:100%;flex-shrink:0;position:relative;}"; },
             tabsIndicator: function (className) { return className + "{position:absolute;height:2px;transition:450ms cubic-bezier(.1, 1, 0.5, 1);background:currentColor;}"; },
             tabsIndicatorForServer: function (className) { return className + "{position:absolute;background:currentColor;}"; },
-            rippleContainer: function (className) { return "" + ui.styleTemplateToString((ui.LY_COMMON_STYLES.fill), "" + className) + className + "{overflow:hidden;}"; },
+            rippleContainer: function (className) { return "" + ui.st2c((ui.LY_COMMON_STYLES.fill), "" + className) + className + "{overflow:hidden;}"; },
             scrollable: null
         };
     };

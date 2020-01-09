@@ -213,7 +213,7 @@
         return {
             $name: LyBadge.и,
             $priority: STYLE_PRIORITY,
-            root: function () { return function (className) { return className + "{position:absolute;display:flex;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font-size:" + theme.pxToRem(12) + ";font-family:" + theme.typography.fontFamily + ";justify-content:center;align-items:center;box-sizing:border-box;z-index:1;}" + ui.styleTemplateToString(((theme.badge
+            root: function () { return function (className) { return className + "{position:absolute;display:flex;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font-size:" + theme.pxToRem(12) + ";font-family:" + theme.typography.fontFamily + ";justify-content:center;align-items:center;box-sizing:border-box;z-index:1;}" + ui.st2c(((theme.badge
                 && theme.badge.root
                 && (theme.badge.root instanceof ui.StyleCollection
                     ? theme.badge.root.setTransformer(function (fn) { return fn(badge); })

@@ -1,7 +1,7 @@
 const EPS = 1e-7;
 const MAX_ITER = 20;
 const { pow, min, max } = Math;
-class ColorClass {
+class Color {
     constructor(...args) {
         if (args.length < 3 && args.length > 0) {
             this._color = bigIntToRgb(args[0], args[1]);
@@ -59,6 +59,10 @@ class ColorClass {
         rgb.push(this._color[3]);
         return new Color(...rgb);
     }
+    /**
+     * Changes the saturation of a color by manipulating the Lch chromaticity.
+     * @param amount default: 1
+     */
     saturate(amount = 1) {
         const lab = rgbToLab(this._color);
         const lch = labToLch(lab);
@@ -73,11 +77,15 @@ class ColorClass {
         rgb.push(this._color[3]);
         return new Color(...rgb);
     }
+    /**
+     * Similar to saturate, but the opposite direction.
+     * @param amount default: 1
+     */
     desaturate(amount = 1) {
         return this.saturate(-amount);
     }
     /**
-     * @param amount default 1
+     * @param amount default: 1
      */
     darken(amount = 1) {
         const lab = rgbToLab(this._color);
@@ -261,20 +269,13 @@ function hexColorToInt(_color) {
     }
     throw new Error(`Expected to start with '#' the given value is: ${_color}`);
 }
-// https://stackoverflow.com/a/59186182
-function CreateCallableConstructor(type) {
-    // tslint:disable-next-line: no-shadowed-variable
-    function Color(...args) {
-        return new type(...args);
-    }
-    Color.prototype = type.prototype;
-    return Color;
+function color(...args) {
+    return new Color(...args);
 }
-const Color = CreateCallableConstructor(ColorClass);
 
 /**
  * Generated bundle index. Do not edit.
  */
 
-export { Color, ColorClass, hexColorToInt };
+export { Color, color, hexColorToInt };
 //# sourceMappingURL=alyle-ui-color.js.map

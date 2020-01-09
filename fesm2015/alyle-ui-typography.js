@@ -1,13 +1,13 @@
 import { __decorate } from 'tslib';
 import { ElementRef, Renderer2, Input, Directive, NgModule } from '@angular/core';
-import { styleTemplateToString, StyleCollection, mixinStyleUpdater, mixinColor, toBoolean, LyTheme2, StyleRenderer, LyHostClass, LyCommonModule } from '@alyle/ui';
+import { st2c, StyleCollection, mixinStyleUpdater, mixinColor, toBoolean, LyTheme2, StyleRenderer, LyHostClass, LyCommonModule } from '@alyle/ui';
 
 const STYLE_PRIORITY = -1;
 const STYLES = (theme) => {
     return {
         $name: LyTypography.и,
         $priority: STYLE_PRIORITY,
-        root: (className) => `${className}{margin:0;display:block;font-family:${theme.typography.fontFamily};}${styleTemplateToString(((theme.typography
+        root: (className) => `${className}{margin:0;display:block;font-family:${theme.typography.fontFamily};}${st2c(((theme.typography
             && theme.typography.root
             && (theme.typography.root instanceof StyleCollection
                 ? theme.typography.root.setTransformer(fn => fn()).css

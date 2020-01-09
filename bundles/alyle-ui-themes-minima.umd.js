@@ -459,7 +459,7 @@
             var _this = _super !== null && _super.apply(this, arguments) || this;
             _this.name = 'minima-dark';
             _this.primary = {
-                default: color.Color(0x1DE9B6),
+                default: color.color(0x1DE9B6),
                 contrast: new color.Color(0, 0, 0, 0.87)
             };
             _this.accent = {

@@ -200,15 +200,19 @@ var LylParse = /** @class */ (function () {
                 }
                 else {
                     var line_1 = fullLine.slice(0, fullLine.length - 1).trim();
-                    selectors.push(line_1
-                        .split(',')
-                        .map(function (_) { return _.trim(); }));
-                    selector = _this._resolveSelectors(selectors);
-                    if (line_1.includes('@')) {
+                    var isMediaQuery = line_1.includes('@');
+                    if (isMediaQuery) {
+                        selectors.push([line_1.trim()]);
                         if (!rules.has(line_1)) {
                             rules.set(line_1, []);
                         }
                     }
+                    else {
+                        selectors.push(line_1
+                            .split(',')
+                            .map(function (_) { return _.trim(); }));
+                    }
+                    selector = _this._resolveSelectors(selectors);
                 }
                 if (!rules.has(selector)) {
                     rules.set(selector, []);
@@ -265,7 +269,29 @@ var LylParse = /** @class */ (function () {
                 var media = matchArray[1];
                 if (media !== key && val.length) {
                     var after = rules.get(media);
-                    var newValue = after + key.replace(media + '{', '') + ("{" + val.join(';') + "}");
+                    var sel_1 = key.replace(media + '{', '');
+                    var newValue = after + val.reduce(function (previous, current) {
+                        var last = previous[previous.length - 1];
+                        if (current.startsWith('/* >> ds')) {
+                            previous.push(current.replace(/\|\|\&\|\|/g, sel_1));
+                        }
+                        else if (current.startsWith('/* >> cc')) {
+                            previous.push(transformCC(current, sel_1));
+                        }
+                        else {
+                            if (Array.isArray(last)) {
+                                last.push(current);
+                            }
+                            else {
+                                previous.push([current]);
+                            }
+                        }
+                        return previous;
+                    }, [])
+                        .map(function (item) { return Array.isArray(item) ? sel_1 + "{" + item.join('') + "}" : item; }).join('');
+                    // const newValue = after
+                    // + sel
+                    // + `{${val.join('')}}`;
                     rules.set(media, [newValue]);
                     rules.delete(key);
                 }
@@ -287,10 +313,7 @@ var LylParse = /** @class */ (function () {
                         set.add(contentRendered);
                     }
                     else if (content.startsWith('/* >> cc')) {
-                        content = content.replace(/\/\* >> cc[^\/\*]+\*\//g, '');
-                        var expression = content.slice(2, content.length - 1);
-                        expression = "styleTemplateToString((" + expression + "), `" + sel + "`)";
-                        contentRendered.push("${" + expression + "}");
+                        contentRendered.push(transformCC(content, sel));
                         set.add(contentRendered);
                     }
                     else {
@@ -319,7 +342,7 @@ var LylParse = /** @class */ (function () {
             // if (content.startsWith('/* >> cc')) {
             //   content = content.replace(/\/\* >> cc[^\/\*]+\*\//g, '');
             //   let variable = content.slice(2, content.length - 1);
-            //   variable = `styleTemplateToString((${variable}), \`${sel}\`)`;
+            //   variable = `st2c((${variable}), \`${sel}\`)`;
             //   return `\${${variable}}`;
             // }
             // // for non LylModule>
@@ -358,6 +381,12 @@ var LylParse = /** @class */ (function () {
     };
     return LylParse;
 }());
+function transformCC(content, sel) {
+    content = content.replace(/\/\* >> cc[^\/\*]+\*\//g, '');
+    var expression = content.slice(2, content.length - 1);
+    expression = "st2c((" + expression + "), `" + sel + "`)";
+    return "${" + expression + "}";
+}
 function lyl(literals) {
     var placeholders = [];
     for (var _i = 1; _i < arguments.length; _i++) {
@@ -371,7 +400,8 @@ function lyl(literals) {
             result += literals[i];
             if (result.endsWith('...')) {
                 result = result.slice(0, result.length - 3);
-                if (typeof placeholder === 'function' || placeholder instanceof StyleCollection) {
+                if (typeof placeholder === 'function'
+                    || placeholder instanceof StyleCollection) {
                     var newID = createUniqueId();
                     dsMap.set(newID, placeholder);
                     result += newID;
@@ -386,14 +416,7 @@ function lyl(literals) {
         var css = result.replace(STYLE_TEMPLATE_REGEX(), function (str) {
             if (dsMap.has(str)) {
                 var fn = dsMap.get(str);
-                var template = void 0;
-                if (fn instanceof StyleCollection) {
-                    template = fn.css;
-                }
-                else {
-                    template = fn;
-                }
-                return "" + createUniqueCommentSelector('ds') + template('||&||');
+                return "" + createUniqueCommentSelector('ds') + st2c(fn, '||&||');
             }
             return '';
         });
@@ -452,11 +475,20 @@ var StyleCollection = /** @class */ (function () {
     };
     return StyleCollection;
 }());
-function styleTemplateToString(fn, className) {
+/**
+ * Transform a ...{style} to css
+ * For internal use purposes only
+ * @param fn StyleTemplate or StyleCollection
+ * @param className class name
+ */
+function st2c(fn, className) {
+    if (fn == null) {
+        return '';
+    }
     if (fn instanceof StyleCollection) {
         return fn.css(className);
     }
-    return fn ? (fn)(className) : '';
+    return fn(className);
 }
 // export function normalizeStyleTemplate(
 //   fn: StyleTemplate
@@ -3275,8 +3307,8 @@ var LyFocusState = /** @class */ (function () {
     return LyFocusState;
 }());
 
-var AUI_VERSION = '2.9.8-nightly.2001022253';
-var AUI_LAST_UPDATE = '2020-01-02T22:53:28.876Z';
+var AUI_VERSION = '2.9.8-nightly.2001091811';
+var AUI_LAST_UPDATE = '2020-01-09T18:11:23.859Z';
 
 var LY_HAMMER_OPTIONS = new InjectionToken('LY_HAMMER_OPTIONS');
 var HAMMER_GESTURES_EVENTS = [
@@ -4129,5 +4161,5 @@ var LyExpansionIconModule = /** @class */ (function () {
  * Generated bundle index. Do not edit.
  */
 
-export { AUI_LAST_UPDATE, AUI_VERSION, AlignAlias, CoreTheme, Dir, DirAlias, DirPosition, ElementObserver, FocusStatus, IS_CORE_THEME, LY_COMMON_STYLES, LY_COMMON_STYLES_DEPRECATED, LY_HAMMER_OPTIONS, LY_THEME, LY_THEME_GLOBAL_VARIABLES, LY_THEME_NAME, LyCommonModule, LyCoreStyles, LyExpansionIcon, LyExpansionIconModule, LyFocusState, LyHammerGestureConfig, LyHostClass, LyOverlay, LyOverlayConfig, LyOverlayContainer, LyOverlayModule, LyOverlayRef, LyPaper, LyPaperBase, LyPaperMixinBase, LyRippleService, LySelectionModel, LyStyle, LyStyleUtils, LyTheme2, LyThemeModule, LylParse, MutationObserverFactory, NgTranscludeDirective, NgTranscludeModule, OverlayFactory, Platform, Positioning, Ripple, STYLES_BACKDROP_DARK, Shadows, StringIdGenerator, Style, StyleCollection, StyleRenderer, StylesInDocument, THEME_VARIABLES, TypeStyle, Undefined, UndefinedValue, WinResize, WinScroll, XPosition, YPosition, _STYLE_MAP, capitalizeFirstLetter, converterToCssKeyAndStyle, createOverlayInjector, defaultEntry, eachMedia, getContrastYIQ, getLyThemeStyleUndefinedError, getLyThemeVariableOptionUndefinedError, getLyThemeVariableUndefinedError, getNativeElement, getThemeNameForSelectors, invertPlacement, keyframesUniqueId, lyl, mergeDeep, mergeThemes, mixinBg, mixinColor, mixinDisableRipple, mixinDisabled, mixinElevation, mixinOutlined, mixinRaised, mixinShadowColor, mixinStyleUpdater, mixinTabIndex, scrollTo, scrollWithAnimation, shadowBuilder, styleTemplateToString, supportsPassiveEventListeners, toBoolean, toNumber, untilComponentDestroyed, ɵ0$2 as ɵ0, ɵ1$2 as ɵ1, ɵ10, ɵ11, ɵ12, ɵ13, ɵ14, ɵ15, ɵ16, ɵ17, ɵ18, ɵ19, ɵ2$2 as ɵ2, ɵ20, ɵ3, ɵ4, ɵ5, ɵ6, ɵ7, ɵ8, ɵ9, LyWithClass as ɵa, LyOverlayBackdrop as ɵb };
+export { AUI_LAST_UPDATE, AUI_VERSION, AlignAlias, CoreTheme, Dir, DirAlias, DirPosition, ElementObserver, FocusStatus, IS_CORE_THEME, LY_COMMON_STYLES, LY_COMMON_STYLES_DEPRECATED, LY_HAMMER_OPTIONS, LY_THEME, LY_THEME_GLOBAL_VARIABLES, LY_THEME_NAME, LyCommonModule, LyCoreStyles, LyExpansionIcon, LyExpansionIconModule, LyFocusState, LyHammerGestureConfig, LyHostClass, LyOverlay, LyOverlayConfig, LyOverlayContainer, LyOverlayModule, LyOverlayRef, LyPaper, LyPaperBase, LyPaperMixinBase, LyRippleService, LySelectionModel, LyStyle, LyStyleUtils, LyTheme2, LyThemeModule, LylParse, MutationObserverFactory, NgTranscludeDirective, NgTranscludeModule, OverlayFactory, Platform, Positioning, Ripple, STYLES_BACKDROP_DARK, Shadows, StringIdGenerator, Style, StyleCollection, StyleRenderer, StylesInDocument, THEME_VARIABLES, TypeStyle, Undefined, UndefinedValue, WinResize, WinScroll, XPosition, YPosition, _STYLE_MAP, capitalizeFirstLetter, converterToCssKeyAndStyle, createOverlayInjector, defaultEntry, eachMedia, getContrastYIQ, getLyThemeStyleUndefinedError, getLyThemeVariableOptionUndefinedError, getLyThemeVariableUndefinedError, getNativeElement, getThemeNameForSelectors, invertPlacement, keyframesUniqueId, lyl, mergeDeep, mergeThemes, mixinBg, mixinColor, mixinDisableRipple, mixinDisabled, mixinElevation, mixinOutlined, mixinRaised, mixinShadowColor, mixinStyleUpdater, mixinTabIndex, scrollTo, scrollWithAnimation, shadowBuilder, st2c, supportsPassiveEventListeners, toBoolean, toNumber, untilComponentDestroyed, ɵ0$2 as ɵ0, ɵ1$2 as ɵ1, ɵ10, ɵ11, ɵ12, ɵ13, ɵ14, ɵ15, ɵ16, ɵ17, ɵ18, ɵ19, ɵ2$2 as ɵ2, ɵ20, ɵ3, ɵ4, ɵ5, ɵ6, ɵ7, ɵ8, ɵ9, LyWithClass as ɵa, LyOverlayBackdrop as ɵb };
 //# sourceMappingURL=alyle-ui.js.map

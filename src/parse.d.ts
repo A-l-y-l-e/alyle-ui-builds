@@ -53,7 +53,13 @@ export declare class StyleCollection<T = any> {
      */
     css(className: string): string;
 }
-export declare function styleTemplateToString(fn: StyleTemplate | StyleCollection | null | undefined, className: string): string;
+/**
+ * Transform a ...{style} to css
+ * For internal use purposes only
+ * @param fn StyleTemplate or StyleCollection
+ * @param className class name
+ */
+export declare function st2c(fn: StyleTemplate | StyleCollection | null | undefined, className: string): string;
 export declare class StringIdGenerator {
     private _chars;
     private _nextId;

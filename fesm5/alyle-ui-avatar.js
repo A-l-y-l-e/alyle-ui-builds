@@ -1,6 +1,6 @@
 import { __extends, __decorate, __param } from 'tslib';
 import { InjectionToken, Renderer2, ElementRef, Optional, Inject, Input, Directive, NgModule } from '@angular/core';
-import { styleTemplateToString, mixinStyleUpdater, mixinBg, mixinColor, mixinRaised, mixinOutlined, mixinElevation, mixinShadowColor, LyTheme2, StyleRenderer, LyHostClass, LyCommonModule } from '@alyle/ui';
+import { st2c, mixinStyleUpdater, mixinBg, mixinColor, mixinRaised, mixinOutlined, mixinElevation, mixinShadowColor, LyTheme2, StyleRenderer, LyHostClass, LyCommonModule } from '@alyle/ui';
 
 var STYLE_PRIORITY = -2;
 var DEFAULT_SIZE = 40;
@@ -10,7 +10,7 @@ var STYLES = function (theme) {
     return {
         $name: LyAvatar.и,
         $priority: STYLE_PRIORITY,
-        root: function (className) { return className + "{display:inline-flex;position:relative;font-size:1.25em;flex-shrink:0;align-items:center;user-select:none;border-radius:50%;text-align:center;justify-content:center;}" + styleTemplateToString(((theme.avatar
+        root: function (className) { return className + "{display:inline-flex;position:relative;font-size:1.25em;flex-shrink:0;align-items:center;user-select:none;border-radius:50%;text-align:center;justify-content:center;}" + st2c(((theme.avatar
             && theme.avatar.root
             && theme.avatar.root())), "" + className) + className + ">img{width:100%;height:100%;border-radius:50%;display:block;object-fit:cover;-webkit-background-clip:padding-box;}"; }
     };

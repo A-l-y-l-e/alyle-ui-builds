@@ -207,14 +207,14 @@
         return {
             $name: LyImageCropper.и,
             $priority: STYLE_PRIORITY,
-            root: function () { return function (className) { return className + "{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;display:flex;overflow:hidden;position:relative;justify-content:center;align-items:center;}" + ui.styleTemplateToString(((theme.cropper
+            root: function () { return function (className) { return className + "{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;display:flex;overflow:hidden;position:relative;justify-content:center;align-items:center;}" + ui.st2c(((theme.cropper
                 && theme.cropper.root
                 && (theme.cropper.root instanceof ui.StyleCollection
                     ? theme.cropper.root.setTransformer(function (fn) { return fn(cropper); })
                     : theme.cropper.root(cropper)))), "" + className); }; },
             imgContainer: function (className) { return className + "{cursor:move;position:absolute;top:0;left:0;}" + className + " > canvas{pointer-events:none;}"; },
-            area: function (className) { return className + "{pointer-events:none;box-shadow:0 0 0 20000px rgba(0, 0, 0, 0.4);margin:auto;}" + ui.styleTemplateToString((ui.LY_COMMON_STYLES.fill), "" + className) + ui.styleTemplateToString((ui.LY_COMMON_STYLES.fill), className + ":before," + className + ":after") + className + ":before," + className + ":after{content:'';}" + className + ":before{width:0;height:0;margin:auto;border-radius:50%;background:#fff;border:solid 2px rgb(255, 255, 255);}" + className + ":after{border:solid 2px rgb(255, 255, 255);}"; },
-            defaultContent: function (className) { return className + "{display:flex;align-items:center;justify-content:center;}" + ui.styleTemplateToString((ui.LY_COMMON_STYLES.fill), className + "," + className + " > input") + className + " *:not(input){pointer-events:none;}" + className + " > input{background:transparent;opacity:0;width:100%;height:100%;}"; }
+            area: function (className) { return className + "{pointer-events:none;box-shadow:0 0 0 20000px rgba(0, 0, 0, 0.4);margin:auto;}" + ui.st2c((ui.LY_COMMON_STYLES.fill), "" + className) + ui.st2c((ui.LY_COMMON_STYLES.fill), className + ":before," + className + ":after") + className + ":before," + className + ":after{content:'';}" + className + ":before{width:0;height:0;margin:auto;border-radius:50%;background:#fff;border:solid 2px rgb(255, 255, 255);}" + className + ":after{border:solid 2px rgb(255, 255, 255);}"; },
+            defaultContent: function (className) { return className + "{display:flex;align-items:center;justify-content:center;}" + ui.st2c((ui.LY_COMMON_STYLES.fill), className + "," + className + " > input") + className + " *:not(input){pointer-events:none;}" + className + " > input{background:transparent;opacity:0;width:100%;height:100%;}"; }
         };
     };
     /** Image output */

@@ -221,7 +221,7 @@
             drawerContent: function (className) { return className + "{display:block;}"; },
             drawerOpened: function (className) { return className + "{transform:translate(0px, 0px);visibility:visible;}"; },
             drawerClosed: null,
-            backdrop: function (className) { return "" + ui.styleTemplateToString((ui.LY_COMMON_STYLES.fill), "" + className) + className + "{background-color:" + theme.drawer.backdrop + ";}"; },
+            backdrop: function (className) { return "" + ui.st2c((ui.LY_COMMON_STYLES.fill), "" + className) + className + "{background-color:" + theme.drawer.backdrop + ";}"; },
             transition: function (className) { return className + "{transition:" + theme.animations.durations.complex + "ms " + theme.animations.curves.deceleration + ";transition-property:transform, margin, visibility;}"; }
         };
     };

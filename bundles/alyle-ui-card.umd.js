@@ -206,7 +206,7 @@
         return {
             $priority: STYLE_PRIORITY,
             $name: LyCard.и,
-            root: function () { return function (className) { return className + "{display:block;overflow:hidden;border-radius:2px;}" + ui.styleTemplateToString(((theme.card
+            root: function () { return function (className) { return className + "{display:block;overflow:hidden;border-radius:2px;}" + ui.st2c(((theme.card
                 && theme.card.root
                 && (theme.card.root instanceof ui.StyleCollection
                     ? theme.card.root.setTransformer(function (fn) { return fn(card); })

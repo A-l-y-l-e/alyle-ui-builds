@@ -208,7 +208,7 @@
         var __ = ref.selectorsOf(STYLES);
         return {
             $priority: STYLE_PRIORITY,
-            root: function () { return function (className) { return className + "{padding:0 16px;display:flex;box-sizing:border-box;width:100%;flex-direction:row;align-items:center;white-space:nowrap;height:64px;z-index:" + theme.zIndex.toolbar + ";}" + ui.styleTemplateToString(((theme.toolbar
+            root: function () { return function (className) { return className + "{padding:0 16px;display:flex;box-sizing:border-box;width:100%;flex-direction:row;align-items:center;white-space:nowrap;height:64px;z-index:" + theme.zIndex.toolbar + ";}" + ui.st2c(((theme.toolbar
                 && theme.toolbar.root
                 && (theme.toolbar.root instanceof ui.StyleCollection
                     ? theme.toolbar.root.setTransformer(function (fn) { return fn(__); }).css

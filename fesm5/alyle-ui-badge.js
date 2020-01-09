@@ -1,6 +1,6 @@
 import { __extends, __decorate } from 'tslib';
 import { InjectionToken, ElementRef, Renderer2, Input, Directive, NgModule } from '@angular/core';
-import { styleTemplateToString, StyleCollection, mixinStyleUpdater, mixinBg, mixinColor, mixinRaised, mixinDisabled, mixinOutlined, mixinElevation, mixinShadowColor, LyHostClass, LyTheme2, LyCommonModule } from '@alyle/ui';
+import { st2c, StyleCollection, mixinStyleUpdater, mixinBg, mixinColor, mixinRaised, mixinDisabled, mixinOutlined, mixinElevation, mixinShadowColor, LyHostClass, LyTheme2, LyCommonModule } from '@alyle/ui';
 
 var LY_BADGE_DEFAULT_OPTIONS = new InjectionToken('BADGE_DEFAULT_OPTIONS');
 var STYLE_PRIORITY = -2;
@@ -14,7 +14,7 @@ var STYLES = function (theme, ref) {
     return {
         $name: LyBadge.и,
         $priority: STYLE_PRIORITY,
-        root: function () { return function (className) { return className + "{position:absolute;display:flex;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font-size:" + theme.pxToRem(12) + ";font-family:" + theme.typography.fontFamily + ";justify-content:center;align-items:center;box-sizing:border-box;z-index:1;}" + styleTemplateToString(((theme.badge
+        root: function () { return function (className) { return className + "{position:absolute;display:flex;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font-size:" + theme.pxToRem(12) + ";font-family:" + theme.typography.fontFamily + ";justify-content:center;align-items:center;box-sizing:border-box;z-index:1;}" + st2c(((theme.badge
             && theme.badge.root
             && (theme.badge.root instanceof StyleCollection
                 ? theme.badge.root.setTransformer(function (fn) { return fn(badge); })

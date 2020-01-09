@@ -2,7 +2,7 @@ import { __decorate, __extends, __param } from 'tslib';
 import { forwardRef, EventEmitter, ElementRef, Renderer2, ChangeDetectorRef, Input, Output, ContentChildren, Component, ChangeDetectionStrategy, Optional, NgZone, ViewChild, NgModule } from '@angular/core';
 import { NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { styleTemplateToString, StyleCollection, LY_COMMON_STYLES, LyTheme2, mixinDisableRipple, toBoolean, LyCoreStyles, LyFocusState, StyleRenderer, LyHostClass, LyCommonModule } from '@alyle/ui';
+import { st2c, StyleCollection, LY_COMMON_STYLES, LyTheme2, mixinDisableRipple, toBoolean, LyCoreStyles, LyFocusState, StyleRenderer, LyHostClass, LyCommonModule } from '@alyle/ui';
 
 var STYLE_PRIORITY = -2;
 var DEFAULT_DISABLE_RIPPLE = false;
@@ -23,7 +23,7 @@ var STYLES = function (theme, ref) {
     var after = theme.after, before = theme.before;
     return {
         $priority: STYLE_PRIORITY,
-        root: function () { return function (className) { return className + "{display:inline-block;}" + styleTemplateToString(((theme.radio
+        root: function () { return function (className) { return className + "{display:inline-block;}" + st2c(((theme.radio
             && theme.radio.root
             && (theme.radio.root instanceof StyleCollection
                 ? theme.radio.root.setTransformer(function (fn) { return fn(radio); })
@@ -31,7 +31,7 @@ var STYLES = function (theme, ref) {
         radio: function () { return function (className) { return className + "{display:inline-block;margin-" + after + ":16px;margin-" + before + ":-16px;}" + className + radio.checked + " " + radio.container + " div:nth-child(1){transform:scale(1.25);}" + className + radio.checked + " " + radio.container + " div:nth-child(2){transform:scale(0.8);}" + className + radio.onFocusByKeyboard + " " + radio.container + "::after{box-shadow:0 0 0 12px;background:currentColor;opacity:.13;border-radius:50%;}"; }; },
         label: function (className) { return className + "{margin-" + before + ":16px;cursor:pointer;white-space:nowrap;position:relative;display:flex;align-items:baseline;padding-top:12px;padding-bottom:12px;}"; },
         labelContent: null,
-        container: function (className) { return className + "{position:relative;margin-" + before + ":.125em;margin-" + after + ":.5em;margin-top:auto;margin-bottom:auto;width:16px;height:16px;}" + className + " div{margin:auto;border-radius:50%;width:1em;height:1em;box-sizing:border-box;}" + className + "::after{content:'';width:16px;height:16px;margin:auto;}" + styleTemplateToString((LY_COMMON_STYLES.fill), className + "::after") + className + " div:nth-child(2){background:currentColor;transform:scale(0);}" + className + " div:nth-child(1){transform:scale(1);border:solid .08em currentColor;color:" + theme.text.disabled + ";}"; },
+        container: function (className) { return className + "{position:relative;margin-" + before + ":.125em;margin-" + after + ":.5em;margin-top:auto;margin-bottom:auto;width:16px;height:16px;}" + className + " div{margin:auto;border-radius:50%;width:1em;height:1em;box-sizing:border-box;}" + className + "::after{content:'';width:16px;height:16px;margin:auto;}" + st2c((LY_COMMON_STYLES.fill), className + "::after") + className + " div:nth-child(2){background:currentColor;transform:scale(0);}" + className + " div:nth-child(1){transform:scale(1);border:solid .08em currentColor;color:" + theme.text.disabled + ";}"; },
         checked: null,
         _animations: function () { return function (className) { return className + " " + radio.container + " div{transition:transform cubic-bezier(.1, 1, 0.5, 1);transition-duration:250ms;}"; }; },
         onFocusByKeyboard: null,

@@ -307,7 +307,7 @@ var LyGridItem = /** @class */ (function () {
                     var flexBasis = value ? value * 100 / 12 : 0;
                     var flexGrow = value ? 0 : 1;
                     if (media) {
-                        medias.add(function (className) { return "@media " + theme.breakpoints[media] + "{" + className + "{max-width:" + maxWidth + "%;;flex-basis:" + flexBasis + "%;;flex-grow:" + flexGrow + ";}}"; });
+                        medias.add(function (className) { return "@media " + theme.breakpoints[media] + "{" + className + "{max-width:" + maxWidth + "%;flex-basis:" + flexBasis + "%;flex-grow:" + flexGrow + ";}}"; });
                     }
                     else {
                         medias.add(function (className) { return className + "{max-width:" + maxWidth + "%;flex-basis:" + flexBasis + "%;flex-grow:" + flexGrow + ";}"; });

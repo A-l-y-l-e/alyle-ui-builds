@@ -281,7 +281,7 @@ let LyGridItem = LyGridItem_1 = class LyGridItem {
                 const flexBasis = value ? value * 100 / 12 : 0;
                 const flexGrow = value ? 0 : 1;
                 if (media) {
-                    medias.add((className) => `@media ${theme.breakpoints[media]}{${className}{max-width:${maxWidth}%;;flex-basis:${flexBasis}%;;flex-grow:${flexGrow};}}`);
+                    medias.add((className) => `@media ${theme.breakpoints[media]}{${className}{max-width:${maxWidth}%;flex-basis:${flexBasis}%;flex-grow:${flexGrow};}}`);
                 }
                 else {
                     medias.add((className) => `${className}{max-width:${maxWidth}%;flex-basis:${flexBasis}%;flex-grow:${flexGrow};}`);

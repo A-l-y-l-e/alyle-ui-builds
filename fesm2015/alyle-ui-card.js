@@ -1,7 +1,7 @@
 import { __decorate } from 'tslib';
 import { ElementRef, Renderer2, NgZone, Directive, Input, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { styleTemplateToString, StyleCollection, mixinStyleUpdater, mixinBg, mixinColor, mixinRaised, mixinDisabled, mixinOutlined, mixinElevation, mixinShadowColor, mixinDisableRipple, LyTheme2, StyleRenderer, toBoolean, Style, LyHostClass, LyCommonModule } from '@alyle/ui';
+import { st2c, StyleCollection, mixinStyleUpdater, mixinBg, mixinColor, mixinRaised, mixinDisabled, mixinOutlined, mixinElevation, mixinShadowColor, mixinDisableRipple, LyTheme2, StyleRenderer, toBoolean, Style, LyHostClass, LyCommonModule } from '@alyle/ui';
 
 var LyCardMedia_1;
 const STYLES = (theme, ref) => {
@@ -9,7 +9,7 @@ const STYLES = (theme, ref) => {
     return {
         $priority: STYLE_PRIORITY,
         $name: LyCard.и,
-        root: () => (className) => `${className}{display:block;overflow:hidden;border-radius:2px;}${styleTemplateToString(((theme.card
+        root: () => (className) => `${className}{display:block;overflow:hidden;border-radius:2px;}${st2c(((theme.card
             && theme.card.root
             && (theme.card.root instanceof StyleCollection
                 ? theme.card.root.setTransformer(fn => fn(card))

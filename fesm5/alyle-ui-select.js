@@ -3,7 +3,7 @@ import { trigger, transition, animate, keyframes, style } from '@angular/animati
 import { Directive, Renderer2, ElementRef, Optional, ChangeDetectorRef, NgZone, Self, ViewChild, forwardRef, ContentChildren, ContentChild, HostListener, Input, Component, ChangeDetectionStrategy, Host, NgModule } from '@angular/core';
 import { NgControl, NgForm, FormGroupDirective } from '@angular/forms';
 import { STYLES as STYLES$1, LyField, LyFieldControlBase } from '@alyle/ui/field';
-import { styleTemplateToString, StyleCollection, shadowBuilder, mixinTabIndex, toBoolean, Dir, LySelectionModel, Positioning, YPosition, XPosition, LyTheme2, LyOverlay, mixinStyleUpdater, mixinBg, mixinColor, mixinRaised, mixinDisabled, mixinOutlined, mixinElevation, mixinShadowColor, mixinDisableRipple, LyRippleService, LyCommonModule, LyOverlayModule } from '@alyle/ui';
+import { st2c, StyleCollection, shadowBuilder, mixinTabIndex, toBoolean, Dir, LySelectionModel, Positioning, YPosition, XPosition, LyTheme2, LyOverlay, mixinStyleUpdater, mixinBg, mixinColor, mixinRaised, mixinDisabled, mixinOutlined, mixinElevation, mixinShadowColor, mixinDisableRipple, LyRippleService, LyCommonModule, LyOverlayModule } from '@alyle/ui';
 import { Subject } from 'rxjs';
 import { takeUntil, take } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
@@ -16,7 +16,7 @@ var STYLES = function (theme, ref) {
     var after = theme.after;
     return {
         $priority: STYLE_PRIORITY,
-        root: function () { return function (className) { return className + "{display:block;padding-" + after + ":1em;min-width:em;min-height:1.5em;-webkit-tap-highlight-color:transparent;}" + styleTemplateToString(((theme.select
+        root: function () { return function (className) { return className + "{display:block;padding-" + after + ":1em;min-width:em;min-height:1.5em;-webkit-tap-highlight-color:transparent;}" + st2c(((theme.select
             && theme.select.root
             && (theme.select.root instanceof StyleCollection
                 ? theme.select.root.setTransformer(function (fn) { return fn(select); })

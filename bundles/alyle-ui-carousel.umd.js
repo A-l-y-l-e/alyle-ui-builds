@@ -216,7 +216,7 @@
         return {
             $priority: STYLE_PRIORITY,
             $global: function (className) { return "@keyframes " + barAnimation + "{" + className + " 0%{transform:translateX(0%);}" + className + " 100%{transform:translateX(" + (dir === 'left' ? '-' : '') + "100%);}}"; },
-            root: function () { return function (className) { return className + "{display:block;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;position:relative;}" + ui.styleTemplateToString(((theme.carousel
+            root: function () { return function (className) { return className + "{display:block;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;position:relative;}" + ui.st2c(((theme.carousel
                 && theme.carousel.root
                 && (theme.carousel.root instanceof ui.StyleCollection
                     ? theme.carousel.root.setTransformer(function (fn) { return fn(carousel); })

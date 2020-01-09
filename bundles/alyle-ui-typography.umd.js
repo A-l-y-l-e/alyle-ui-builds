@@ -206,7 +206,7 @@
         return {
             $name: LyTypography.и,
             $priority: STYLE_PRIORITY,
-            root: function (className) { return className + "{margin:0;display:block;font-family:" + theme.typography.fontFamily + ";}" + ui.styleTemplateToString(((theme.typography
+            root: function (className) { return className + "{margin:0;display:block;font-family:" + theme.typography.fontFamily + ";}" + ui.st2c(((theme.typography
                 && theme.typography.root
                 && (theme.typography.root instanceof ui.StyleCollection
                     ? theme.typography.root.setTransformer(function (fn) { return fn(); }).css

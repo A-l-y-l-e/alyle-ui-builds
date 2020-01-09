@@ -2,7 +2,7 @@ import { __extends, __decorate } from 'tslib';
 import { Dir, shadowBuilder, StyleCollection, LyStyleUtils, LyTheme2, LY_THEME_NAME, mergeThemes } from '@alyle/ui';
 import { Breakpoints } from '@alyle/ui/responsive';
 import { Directive, NgModule } from '@angular/core';
-import { Color } from '@alyle/ui/color';
+import { Color, color } from '@alyle/ui/color';
 
 var iconButton = {
     size: '48px'
@@ -262,7 +262,7 @@ var MinimaDark = /** @class */ (function (_super) {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.name = 'minima-dark';
         _this.primary = {
-            default: Color(0x1DE9B6),
+            default: color(0x1DE9B6),
             contrast: new Color(0, 0, 0, 0.87)
         };
         _this.accent = {

@@ -1,18 +1,19 @@
 import { ThemeConfig } from '@alyle/ui';
+import { Color } from '@alyle/ui/color';
 import { MinimaDark } from './dark';
 export declare class MinimaDeepDark extends MinimaDark implements ThemeConfig {
     name: string;
     background: {
-        default: import("@alyle/ui/color/color").ColorClass;
+        default: Color;
         primary: {
-            default: import("@alyle/ui/color/color").ColorClass;
-            shadow: import("@alyle/ui/color/color").ColorClass;
+            default: Color;
+            shadow: Color;
         };
-        secondary: import("@alyle/ui/color/color").ColorClass;
-        tertiary: import("@alyle/ui/color/color").ColorClass;
+        secondary: Color;
+        tertiary: Color;
     };
     paper: {
-        default: import("@alyle/ui/color/color").ColorClass;
-        shadow: import("@alyle/ui/color/color").ColorClass;
+        default: Color;
+        shadow: Color;
     };
 }

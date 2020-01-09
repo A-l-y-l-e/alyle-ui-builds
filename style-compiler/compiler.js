@@ -70,7 +70,7 @@ function updateImport(content, numSimpleStyles, numComplexStyles) {
         });
         const modulePath = importDeclaration.moduleSpecifier.getFullText();
         if ((numSimpleStyles && numComplexStyles) || numComplexStyles) {
-            imports = imports.map(imp => imp === 'lyl' ? 'styleTemplateToString' : imp);
+            imports = imports.map(imp => imp === 'lyl' ? 'st2c' : imp);
         }
         else if (numSimpleStyles) {
             imports = imports.filter(imp => imp !== 'lyl');

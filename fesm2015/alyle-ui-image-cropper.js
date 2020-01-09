@@ -1,6 +1,6 @@
 import { __decorate } from 'tslib';
 import { EventEmitter, Renderer2, ElementRef, ChangeDetectorRef, NgZone, ViewChild, Input, Output, HostListener, Component, ChangeDetectionStrategy, NgModule } from '@angular/core';
-import { styleTemplateToString, StyleCollection, LY_COMMON_STYLES, mergeDeep, LyTheme2, LyHammerGestureConfig } from '@alyle/ui';
+import { st2c, StyleCollection, LY_COMMON_STYLES, mergeDeep, LyTheme2, LyHammerGestureConfig } from '@alyle/ui';
 import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
@@ -12,14 +12,14 @@ const STYLES = (theme, ref) => {
     return {
         $name: LyImageCropper.и,
         $priority: STYLE_PRIORITY,
-        root: () => (className) => `${className}{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;display:flex;overflow:hidden;position:relative;justify-content:center;align-items:center;}${styleTemplateToString(((theme.cropper
+        root: () => (className) => `${className}{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;display:flex;overflow:hidden;position:relative;justify-content:center;align-items:center;}${st2c(((theme.cropper
             && theme.cropper.root
             && (theme.cropper.root instanceof StyleCollection
                 ? theme.cropper.root.setTransformer(fn => fn(cropper))
                 : theme.cropper.root(cropper)))), `${className}`)}`,
         imgContainer: (className) => `${className}{cursor:move;position:absolute;top:0;left:0;}${className} > canvas{pointer-events:none;}`,
-        area: (className) => `${className}{pointer-events:none;box-shadow:0 0 0 20000px rgba(0, 0, 0, 0.4);margin:auto;}${styleTemplateToString((LY_COMMON_STYLES.fill), `${className}`)}${styleTemplateToString((LY_COMMON_STYLES.fill), `${className}:before,${className}:after`)}${className}:before,${className}:after{content:'';}${className}:before{width:0;height:0;margin:auto;border-radius:50%;background:#fff;border:solid 2px rgb(255, 255, 255);}${className}:after{border:solid 2px rgb(255, 255, 255);}`,
-        defaultContent: (className) => `${className}{display:flex;align-items:center;justify-content:center;}${styleTemplateToString((LY_COMMON_STYLES.fill), `${className},${className} > input`)}${className} *:not(input){pointer-events:none;}${className} > input{background:transparent;opacity:0;width:100%;height:100%;}`
+        area: (className) => `${className}{pointer-events:none;box-shadow:0 0 0 20000px rgba(0, 0, 0, 0.4);margin:auto;}${st2c((LY_COMMON_STYLES.fill), `${className}`)}${st2c((LY_COMMON_STYLES.fill), `${className}:before,${className}:after`)}${className}:before,${className}:after{content:'';}${className}:before{width:0;height:0;margin:auto;border-radius:50%;background:#fff;border:solid 2px rgb(255, 255, 255);}${className}:after{border:solid 2px rgb(255, 255, 255);}`,
+        defaultContent: (className) => `${className}{display:flex;align-items:center;justify-content:center;}${st2c((LY_COMMON_STYLES.fill), `${className},${className} > input`)}${className} *:not(input){pointer-events:none;}${className} > input{background:transparent;opacity:0;width:100%;height:100%;}`
     };
 };
 /** Image output */

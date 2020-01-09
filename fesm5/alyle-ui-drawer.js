@@ -1,6 +1,6 @@
 import { __decorate, __param } from 'tslib';
 import { Renderer2, ElementRef, Inject, forwardRef, Directive, ContentChild, ViewContainerRef, ChangeDetectorRef, NgZone, ViewChild, TemplateRef, Input, Component, ChangeDetectionStrategy, NgModule } from '@angular/core';
-import { XPosition, StyleCollection, styleTemplateToString, LY_COMMON_STYLES, LyTheme2, toBoolean, eachMedia, DirPosition, YPosition, Platform, StyleRenderer, WinResize, LyHostClass, LyCommonModule } from '@alyle/ui';
+import { XPosition, StyleCollection, st2c, LY_COMMON_STYLES, LyTheme2, toBoolean, eachMedia, DirPosition, YPosition, Platform, StyleRenderer, WinResize, LyHostClass, LyCommonModule } from '@alyle/ui';
 import { CommonModule } from '@angular/common';
 
 var DEFAULT_MODE = 'side';
@@ -23,7 +23,7 @@ var STYLES = function (theme, ref) {
         drawerContent: function (className) { return className + "{display:block;}"; },
         drawerOpened: function (className) { return className + "{transform:translate(0px, 0px);visibility:visible;}"; },
         drawerClosed: null,
-        backdrop: function (className) { return "" + styleTemplateToString((LY_COMMON_STYLES.fill), "" + className) + className + "{background-color:" + theme.drawer.backdrop + ";}"; },
+        backdrop: function (className) { return "" + st2c((LY_COMMON_STYLES.fill), "" + className) + className + "{background-color:" + theme.drawer.backdrop + ";}"; },
         transition: function (className) { return className + "{transition:" + theme.animations.durations.complex + "ms " + theme.animations.curves.deceleration + ";transition-property:transform, margin, visibility;}"; }
     };
 };

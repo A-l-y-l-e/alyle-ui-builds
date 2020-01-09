@@ -209,7 +209,7 @@
         return {
             $name: LyAvatar.и,
             $priority: STYLE_PRIORITY,
-            root: function (className) { return className + "{display:inline-flex;position:relative;font-size:1.25em;flex-shrink:0;align-items:center;user-select:none;border-radius:50%;text-align:center;justify-content:center;}" + ui.styleTemplateToString(((theme.avatar
+            root: function (className) { return className + "{display:inline-flex;position:relative;font-size:1.25em;flex-shrink:0;align-items:center;user-select:none;border-radius:50%;text-align:center;justify-content:center;}" + ui.st2c(((theme.avatar
                 && theme.avatar.root
                 && theme.avatar.root())), "" + className) + className + ">img{width:100%;height:100%;border-radius:50%;display:block;object-fit:cover;-webkit-background-clip:padding-box;}"; }
         };

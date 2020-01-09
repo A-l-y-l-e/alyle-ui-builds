@@ -1,6 +1,6 @@
 import { __decorate } from 'tslib';
 import { ɵɵdefineInjectable, Injectable, EventEmitter, TemplateRef, Input, Output, Directive, NgModule } from '@angular/core';
-import { XPosition, YPosition, styleTemplateToString, LyTheme2, LyOverlay, LyOverlayModule } from '@alyle/ui';
+import { XPosition, YPosition, st2c, LyTheme2, LyOverlay, LyOverlayModule } from '@alyle/ui';
 import { Subject } from 'rxjs';
 
 var LySnackBarService = /** @class */ (function () {
@@ -70,7 +70,7 @@ var DEFAULT_HORIZONTAL_POSITION = XPosition.after;
 var DEFAULT_VERTICAL_POSITION = YPosition.below;
 var STYLES = function (theme) { return ({
     $priority: STYLE_PRIORITY,
-    root: function (className) { return className + "{border-radius:4px;display:flex;justify-content:space-between;align-items:center;margin:8px;padding:0 16px;min-height:48px;min-width:320px;max-width:320px;opacity:0;transition:opacity " + theme.animations.curves.standard + " 350ms, transform " + theme.animations.curves.deceleration + " 350ms;font-size:" + theme.pxToRem(theme.typography.fontSize) + ";box-sizing:border-box;}" + styleTemplateToString(((theme.snackBar
+    root: function (className) { return className + "{border-radius:4px;display:flex;justify-content:space-between;align-items:center;margin:8px;padding:0 16px;min-height:48px;min-width:320px;max-width:320px;opacity:0;transition:opacity " + theme.animations.curves.standard + " 350ms, transform " + theme.animations.curves.deceleration + " 350ms;font-size:" + theme.pxToRem(theme.typography.fontSize) + ";box-sizing:border-box;}" + st2c(((theme.snackBar
         && theme.snackBar.root) || null), "" + className) + className + " " + theme.getBreakpoint('XSmall') + "{width:calc(100% - 16px);min-width:calc(100% - 16px);}"; }
 }); };
 var LySnackBar = /** @class */ (function () {

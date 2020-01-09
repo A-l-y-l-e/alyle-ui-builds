@@ -2,7 +2,7 @@ import { LyStyleUtils, Dir, shadowBuilder, StyleCollection, LyTheme2, LY_THEME_N
 import { Breakpoints } from '@alyle/ui/responsive';
 import { __decorate } from 'tslib';
 import { Directive, NgModule } from '@angular/core';
-import { Color } from '@alyle/ui/color';
+import { Color, color } from '@alyle/ui/color';
 
 const iconButton = {
     size: '48px'
@@ -238,7 +238,7 @@ class MinimaDark extends MinimaBase {
         super(...arguments);
         this.name = 'minima-dark';
         this.primary = {
-            default: Color(0x1DE9B6),
+            default: color(0x1DE9B6),
             contrast: new Color(0, 0, 0, 0.87)
         };
         this.accent = {

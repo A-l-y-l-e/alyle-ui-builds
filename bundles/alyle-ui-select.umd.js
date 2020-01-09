@@ -208,7 +208,7 @@
         var after = theme.after;
         return {
             $priority: STYLE_PRIORITY,
-            root: function () { return function (className) { return className + "{display:block;padding-" + after + ":1em;min-width:em;min-height:1.5em;-webkit-tap-highlight-color:transparent;}" + ui.styleTemplateToString(((theme.select
+            root: function () { return function (className) { return className + "{display:block;padding-" + after + ":1em;min-width:em;min-height:1.5em;-webkit-tap-highlight-color:transparent;}" + ui.st2c(((theme.select
                 && theme.select.root
                 && (theme.select.root instanceof ui.StyleCollection
                     ? theme.select.root.setTransformer(function (fn) { return fn(select); })

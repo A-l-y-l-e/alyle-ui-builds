@@ -1,6 +1,6 @@
 import { __decorate } from 'tslib';
 import { ElementRef, ChangeDetectorRef, Renderer2, ViewChild, ContentChildren, forwardRef, Input, Component, ChangeDetectionStrategy, Directive, NgModule } from '@angular/core';
-import { DirAlias, keyframesUniqueId, styleTemplateToString, StyleCollection, toBoolean, Platform, LyTheme2, LyCommonModule } from '@alyle/ui';
+import { DirAlias, keyframesUniqueId, st2c, StyleCollection, toBoolean, Platform, LyTheme2, LyCommonModule } from '@alyle/ui';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { CommonModule } from '@angular/common';
@@ -20,7 +20,7 @@ var STYLES = function (theme, ref) {
     return {
         $priority: STYLE_PRIORITY,
         $global: function (className) { return "@keyframes " + barAnimation + "{" + className + " 0%{transform:translateX(0%);}" + className + " 100%{transform:translateX(" + (dir === 'left' ? '-' : '') + "100%);}}"; },
-        root: function () { return function (className) { return className + "{display:block;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;position:relative;}" + styleTemplateToString(((theme.carousel
+        root: function () { return function (className) { return className + "{display:block;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;position:relative;}" + st2c(((theme.carousel
             && theme.carousel.root
             && (theme.carousel.root instanceof StyleCollection
                 ? theme.carousel.root.setTransformer(function (fn) { return fn(carousel); })

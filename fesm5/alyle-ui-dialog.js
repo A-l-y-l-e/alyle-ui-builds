@@ -1,6 +1,6 @@
 import { __decorate, __assign } from 'tslib';
 import { Injectable, InjectionToken, TemplateRef, ApplicationRef, ElementRef, ChangeDetectorRef, Renderer2, ViewChild, ViewContainerRef, Component, ChangeDetectionStrategy, Injector, ComponentFactoryResolver, Directive, NgModule } from '@angular/core';
-import { LyOverlayRef, shadowBuilder, styleTemplateToString, StyleCollection, LyTheme2, STYLES_BACKDROP_DARK, LyOverlay, LyCommonModule, LyOverlayModule } from '@alyle/ui';
+import { LyOverlayRef, shadowBuilder, st2c, StyleCollection, LyTheme2, STYLES_BACKDROP_DARK, LyOverlay, LyCommonModule, LyOverlayModule } from '@alyle/ui';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Subject } from 'rxjs';
 import { CommonModule } from '@angular/common';
@@ -85,7 +85,7 @@ var STYLE_PRIORITY = -2;
 var STYLES = function (theme, ref) {
     var dialog = ref.selectorsOf(STYLES);
     return {
-        root: function () { return function (className) { return className + "{display:flex;position:relative;background-color:" + theme.background.primary.default + ";border-radius:4px;box-shadow:" + shadowBuilder(12) + ";overflow:auto;}" + styleTemplateToString(((theme.dialog
+        root: function () { return function (className) { return className + "{display:flex;position:relative;background-color:" + theme.background.primary.default + ";border-radius:4px;box-shadow:" + shadowBuilder(12) + ";overflow:auto;}" + st2c(((theme.dialog
             && theme.dialog.root
             && (theme.dialog.root instanceof StyleCollection
                 ? theme.dialog.root.setTransformer(function (fn) { return fn(dialog); })

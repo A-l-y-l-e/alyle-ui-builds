@@ -1,6 +1,6 @@
 import { __decorate } from 'tslib';
 import { Renderer2, ElementRef, Input, Directive, NgModule } from '@angular/core';
-import { styleTemplateToString, StyleCollection, mixinStyleUpdater, mixinBg, mixinColor, mixinRaised, mixinDisabled, mixinOutlined, mixinElevation, mixinShadowColor, LyTheme2, StyleRenderer, LyHostClass, LyCommonModule } from '@alyle/ui';
+import { st2c, StyleCollection, mixinStyleUpdater, mixinBg, mixinColor, mixinRaised, mixinDisabled, mixinOutlined, mixinElevation, mixinShadowColor, LyTheme2, StyleRenderer, LyHostClass, LyCommonModule } from '@alyle/ui';
 import { CommonModule } from '@angular/common';
 
 const STYLE_PRIORITY = -2;
@@ -10,7 +10,7 @@ const STYLES = (theme, ref) => {
     const __ = ref.selectorsOf(STYLES);
     return {
         $priority: STYLE_PRIORITY,
-        root: () => (className) => `${className}{padding:0 16px;display:flex;box-sizing:border-box;width:100%;flex-direction:row;align-items:center;white-space:nowrap;height:64px;z-index:${theme.zIndex.toolbar};}${styleTemplateToString(((theme.toolbar
+        root: () => (className) => `${className}{padding:0 16px;display:flex;box-sizing:border-box;width:100%;flex-direction:row;align-items:center;white-space:nowrap;height:64px;z-index:${theme.zIndex.toolbar};}${st2c(((theme.toolbar
             && theme.toolbar.root
             && (theme.toolbar.root instanceof StyleCollection
                 ? theme.toolbar.root.setTransformer(fn => fn(__)).css

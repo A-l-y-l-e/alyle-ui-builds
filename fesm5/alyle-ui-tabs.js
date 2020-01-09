@@ -1,6 +1,6 @@
 import { __decorate, __extends, __param } from 'tslib';
 import { TemplateRef, Directive, EventEmitter, Renderer2, ElementRef, ChangeDetectorRef, ViewChild, Input, Output, ContentChildren, forwardRef, Component, ChangeDetectionStrategy, ViewEncapsulation, ContentChild, NgZone, Optional, HostListener, NgModule } from '@angular/core';
-import { styleTemplateToString, StyleCollection, LY_COMMON_STYLES, mixinStyleUpdater, mixinBg, mixinElevation, mixinShadowColor, mixinColor, mixinRaised, mixinDisabled, mixinOutlined, mixinDisableRipple, toBoolean, XPosition, YPosition, AlignAlias, Platform, Dir, LyTheme2, WinResize, scrollWithAnimation, LyRippleService, LyFocusState, LyHostClass, LyThemeModule, LyCommonModule, NgTranscludeModule } from '@alyle/ui';
+import { st2c, StyleCollection, LY_COMMON_STYLES, mixinStyleUpdater, mixinBg, mixinElevation, mixinShadowColor, mixinColor, mixinRaised, mixinDisabled, mixinOutlined, mixinDisableRipple, toBoolean, XPosition, YPosition, AlignAlias, Platform, Dir, LyTheme2, WinResize, scrollWithAnimation, LyRippleService, LyFocusState, LyHostClass, LyThemeModule, LyCommonModule, NgTranscludeModule } from '@alyle/ui';
 import { LyButton } from '@alyle/ui/button';
 import { Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
@@ -29,7 +29,7 @@ var STYLES = function (theme, ref) {
     return {
         $name: LyTabs.и,
         $priority: STYLE_PRIORITY,
-        root: function () { return function (className) { return className + "{display:block;}" + styleTemplateToString(((theme.tab
+        root: function () { return function (className) { return className + "{display:block;}" + st2c(((theme.tab
             && theme.tab.root
             && (theme.tab.root instanceof StyleCollection
                 ? theme.tab.root.setTransformer(function (fn) { return fn(__); }).css
@@ -47,7 +47,7 @@ var STYLES = function (theme, ref) {
         tabContent: function (className) { return className + "{width:100%;height:100%;flex-shrink:0;position:relative;}"; },
         tabsIndicator: function (className) { return className + "{position:absolute;height:2px;transition:450ms cubic-bezier(.1, 1, 0.5, 1);background:currentColor;}"; },
         tabsIndicatorForServer: function (className) { return className + "{position:absolute;background:currentColor;}"; },
-        rippleContainer: function (className) { return "" + styleTemplateToString((LY_COMMON_STYLES.fill), "" + className) + className + "{overflow:hidden;}"; },
+        rippleContainer: function (className) { return "" + st2c((LY_COMMON_STYLES.fill), "" + className) + className + "{overflow:hidden;}"; },
         scrollable: null
     };
 };

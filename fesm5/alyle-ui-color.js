@@ -3,8 +3,8 @@ import { __spread } from 'tslib';
 var EPS = 1e-7;
 var MAX_ITER = 20;
 var pow = Math.pow, min = Math.min, max = Math.max;
-var ColorClass = /** @class */ (function () {
-    function ColorClass() {
+var Color = /** @class */ (function () {
+    function Color() {
         var args = [];
         for (var _i = 0; _i < arguments.length; _i++) {
             args[_i] = arguments[_i];
@@ -23,10 +23,10 @@ var ColorClass = /** @class */ (function () {
             this._color = [];
         }
     }
-    ColorClass.prototype.rgba = function () {
+    Color.prototype.rgba = function () {
         return this._color.slice(0);
     };
-    ColorClass.prototype.alpha = function (value) {
+    Color.prototype.alpha = function (value) {
         if (value === void 0) {
             return this._color[3];
         }
@@ -36,7 +36,7 @@ var ColorClass = /** @class */ (function () {
         _color[3] = value;
         return new (Color.bind.apply(Color, __spread([void 0], _color)))();
     };
-    ColorClass.prototype.luminance = function (lum) {
+    Color.prototype.luminance = function (lum) {
         if (lum === void 0) {
             return rgbToLuminance.apply(void 0, __spread(this._color));
         }
@@ -65,7 +65,11 @@ var ColorClass = /** @class */ (function () {
         rgb.push(this._color[3]);
         return new (Color.bind.apply(Color, __spread([void 0], rgb)))();
     };
-    ColorClass.prototype.saturate = function (amount) {
+    /**
+     * Changes the saturation of a color by manipulating the Lch chromaticity.
+     * @param amount default: 1
+     */
+    Color.prototype.saturate = function (amount) {
         if (amount === void 0) { amount = 1; }
         var lab = rgbToLab(this._color);
         var lch = labToLch(lab);
@@ -80,14 +84,18 @@ var ColorClass = /** @class */ (function () {
         rgb.push(this._color[3]);
         return new (Color.bind.apply(Color, __spread([void 0], rgb)))();
     };
-    ColorClass.prototype.desaturate = function (amount) {
+    /**
+     * Similar to saturate, but the opposite direction.
+     * @param amount default: 1
+     */
+    Color.prototype.desaturate = function (amount) {
         if (amount === void 0) { amount = 1; }
         return this.saturate(-amount);
     };
     /**
-     * @param amount default 1
+     * @param amount default: 1
      */
-    ColorClass.prototype.darken = function (amount) {
+    Color.prototype.darken = function (amount) {
         if (amount === void 0) { amount = 1; }
         var lab = rgbToLab(this._color);
         lab[0] -= 18 * amount;
@@ -101,20 +109,20 @@ var ColorClass = /** @class */ (function () {
      * The opposite of darken
      * @param amount default 1
      */
-    ColorClass.prototype.brighten = function (amount) {
+    Color.prototype.brighten = function (amount) {
         if (amount === void 0) { amount = 1; }
         return this.darken(-amount);
     };
-    ColorClass.prototype.css = function () {
+    Color.prototype.css = function () {
         if (!this._color.length) {
             return 'undefined - invalid color';
         }
         return rgbToCss(this.rgba());
     };
-    ColorClass.prototype.toString = function () {
+    Color.prototype.toString = function () {
         return this.css();
     };
-    return ColorClass;
+    return Color;
 }());
 // /**
 //  * Convert number to CSS
@@ -274,24 +282,17 @@ function hexColorToInt(_color) {
     }
     throw new Error("Expected to start with '#' the given value is: " + _color);
 }
-// https://stackoverflow.com/a/59186182
-function CreateCallableConstructor(type) {
-    // tslint:disable-next-line: no-shadowed-variable
-    function Color() {
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        return new (type.bind.apply(type, __spread([void 0], args)))();
+function color() {
+    var args = [];
+    for (var _i = 0; _i < arguments.length; _i++) {
+        args[_i] = arguments[_i];
     }
-    Color.prototype = type.prototype;
-    return Color;
+    return new (Color.bind.apply(Color, __spread([void 0], args)))();
 }
-var Color = CreateCallableConstructor(ColorClass);
 
 /**
  * Generated bundle index. Do not edit.
  */
 
-export { Color, ColorClass, hexColorToInt };
+export { Color, color, hexColorToInt };
 //# sourceMappingURL=alyle-ui-color.js.map

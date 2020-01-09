@@ -281,7 +281,7 @@
     var STYLES = function (theme, ref) {
         var dialog = ref.selectorsOf(STYLES);
         return {
-            root: function () { return function (className) { return className + "{display:flex;position:relative;background-color:" + theme.background.primary.default + ";border-radius:4px;box-shadow:" + ui.shadowBuilder(12) + ";overflow:auto;}" + ui.styleTemplateToString(((theme.dialog
+            root: function () { return function (className) { return className + "{display:flex;position:relative;background-color:" + theme.background.primary.default + ";border-radius:4px;box-shadow:" + ui.shadowBuilder(12) + ";overflow:auto;}" + ui.st2c(((theme.dialog
                 && theme.dialog.root
                 && (theme.dialog.root instanceof ui.StyleCollection
                     ? theme.dialog.root.setTransformer(function (fn) { return fn(dialog); })
