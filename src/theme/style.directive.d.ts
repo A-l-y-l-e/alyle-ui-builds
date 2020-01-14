@@ -1,4 +1,5 @@
 import { StyleTemplate } from '../parse';
+import { MediaQueryArray } from '../style-utils';
 import { StyleRenderer, WithStyles } from '../minimal/renderer-style';
 import { ThemeRef } from './theme2.service';
 /**
@@ -40,7 +41,7 @@ export declare class LyStyle implements WithStyles {
     minHeight: string | number | null;
     size: string | number | null;
     display: string | null;
-    lyStyle: string | ((theme: any, ref: ThemeRef) => StyleTemplate) | null;
+    lyStyle: string | MediaQueryArray | ((theme: any, ref: ThemeRef) => StyleTemplate) | null;
     private _lyStyle;
     constructor(sRenderer: StyleRenderer);
 }

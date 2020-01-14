@@ -44,7 +44,7 @@ export declare class StyleRenderer {
 /**
  * Parameter decorator to be used for create Dynamic style together with `@Input`
  * @param style style
- * @param priority priority of style
+ * @param priority priority of style, default: 0
  * @decorator
  */
 export declare function Style<INPUT = any, C = any>(style: (val: NonNullable<INPUT>, comp: C) => ((theme: any, ref: ThemeRef) => StyleTemplate), priority?: number): (target: WithStyles, propertyKey: string, descriptor?: TypedPropertyDescriptor<INPUT>) => void;

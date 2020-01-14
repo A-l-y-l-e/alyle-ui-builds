@@ -467,11 +467,12 @@
                         var sel_1 = key.replace(media + '{', '');
                         var newValue = after + val.reduce(function (previous, current) {
                             var last = previous[previous.length - 1];
+                            // __READY__ is added to be ignored by content.startsWith ('/ * >> xx')
                             if (current.startsWith('/* >> ds')) {
-                                previous.push(current.replace(/\|\|\&\|\|/g, sel_1));
+                                previous.push('/* __READY__ */' + current.replace(/\|\|\&\|\|/g, sel_1));
                             }
                             else if (current.startsWith('/* >> cc')) {
-                                previous.push(transformCC(current, sel_1));
+                                previous.push('/* __READY__ */' + transformCC(current, sel_1));
                             }
                             else {
                                 if (Array.isArray(last)) {
@@ -528,23 +529,6 @@
                         return _.join('');
                     }
                 }).join('');
-                // return (css
-                //   ? `${sel}{${css}}`
-                //   :  '') + contentRendered;
-                // if (content.startsWith('/* >> ds')) {
-                //   return content.replace(/\|\|\&\|\|/g, sel);
-                // }
-                // if (content.startsWith('/* >> cc')) {
-                //   content = content.replace(/\/\* >> cc[^\/\*]+\*\//g, '');
-                //   let variable = content.slice(2, content.length - 1);
-                //   variable = `st2c((${variable}), \`${sel}\`)`;
-                //   return `\${${variable}}`;
-                // }
-                // // for non LylModule>
-                // if (sel.startsWith('@')) {
-                //   return `${sel}{${rule[1]}}`;
-                // }
-                // return `${sel}{${content}}`;
             }).join('');
         };
         LylParse.prototype._resolveSelectors = function (selectors) {
@@ -857,7 +841,7 @@
             styleCollection = new StyleCollection();
         }
         if (typeof str === 'string') {
-            var values = str.split(/\s/g);
+            var values = str.split(/\ /g);
             for (var index = 0; index < values.length; index++) {
                 var valItem = values[index].split(/\@/g);
                 var strValue = valItem.shift();
@@ -865,28 +849,46 @@
                 var value = isNaN(+strValue) ? strValue : +strValue;
                 if (len) {
                     for (var j = 0; j < len; j++) {
-                        var st = fn.call(undefined, value, valItem[j], index);
-                        if (styleCollection) {
-                            styleCollection.add(st);
-                        }
+                        resolveMediaEachItemStyle(fn, value, valItem[j], index, styleCollection);
                     }
                 }
                 else {
-                    var st = fn.call(undefined, value, null, index);
-                    if (styleCollection) {
-                        styleCollection.add(st);
+                    resolveMediaEachItemStyle(fn, value, null, index, styleCollection);
+                }
+            }
+        }
+        else if (Array.isArray(str)) {
+            for (var index = 0; index < str.length; index++) {
+                var val = str[index];
+                if (typeof val === 'number' || typeof val === 'string') {
+                    resolveMediaEachItemStyle(fn, val, null, index, styleCollection);
+                }
+                else {
+                    var medias = val[1].split(/\@/g).filter(function (media) { return media; });
+                    var strValue = val[0];
+                    var len = medias.length;
+                    if (len) {
+                        for (var ii = 0; ii < len; ii++) {
+                            resolveMediaEachItemStyle(fn, strValue, medias[ii], index, styleCollection);
+                        }
+                    }
+                    else {
+                        resolveMediaEachItemStyle(fn, strValue, null, index, styleCollection);
                     }
                 }
             }
         }
         else {
-            var st = fn.call(undefined, str, null, 0);
-            if (styleCollection) {
-                styleCollection.add(st);
-            }
+            resolveMediaEachItemStyle(fn, str, null, 0, styleCollection);
         }
         if (styleCollection) {
             return styleCollection.css;
+        }
+    }
+    function resolveMediaEachItemStyle(fn, val, media, index, styleCollection) {
+        var styl = fn(val, media, index);
+        if (styleCollection && styl) {
+            styleCollection.add(styl);
         }
     }
     /**
@@ -2887,7 +2889,7 @@
     /**
      * Parameter decorator to be used for create Dynamic style together with `@Input`
      * @param style style
-     * @param priority priority of style
+     * @param priority priority of style, default: 0
      * @decorator
      */
     function Style(style, priority) {
@@ -3028,13 +3030,13 @@
             },
             set: function (val) {
                 if (typeof val === 'function') {
-                    this.sRenderer.add(val);
+                    this[0xa] = this.sRenderer.add(val, this[0xa]);
                 }
                 else if (val != null) {
                     this[0xa] = this.sRenderer.add(LyStyle_1.и + "--style-" + val, function (_a) {
                         var breakpoints = _a.breakpoints;
-                        return eachMedia(val, function (v, media) { return (function (className) { return "@media " + ((media && breakpoints[media]) || 'all') + "{" + className + "{" + v + ";}}"; }); }, true);
-                    }, STYLE_PRIORITY$1);
+                        return eachMedia(val, function (v, media) { return (function (className) { return "@media " + ((media && (breakpoints[media] || media)) || 'all') + "{" + className + "{" + v + ";}}"; }); }, true);
+                    }, STYLE_PRIORITY$1, this[0xa]);
                 }
                 else {
                     this.sRenderer.removeClass(this[0xa]);
@@ -3502,8 +3504,8 @@
         return LyFocusState;
     }());
 
-    var AUI_VERSION = '2.9.8-nightly.2001091811';
-    var AUI_LAST_UPDATE = '2020-01-09T18:11:23.859Z';
+    var AUI_VERSION = '2.9.8-nightly.2001141731';
+    var AUI_LAST_UPDATE = '2020-01-14T17:31:41.145Z';
 
     var LY_HAMMER_OPTIONS = new core.InjectionToken('LY_HAMMER_OPTIONS');
     var HAMMER_GESTURES_EVENTS = [

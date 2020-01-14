@@ -267,11 +267,12 @@ class LylParse {
                     const sel = key.replace(media + '{', '');
                     const newValue = after + val.reduce((previous, current) => {
                         const last = previous[previous.length - 1];
+                        // __READY__ is added to be ignored by content.startsWith ('/ * >> xx')
                         if (current.startsWith('/* >> ds')) {
-                            previous.push(current.replace(/\|\|\&\|\|/g, sel));
+                            previous.push('/* __READY__ */' + current.replace(/\|\|\&\|\|/g, sel));
                         }
                         else if (current.startsWith('/* >> cc')) {
-                            previous.push(transformCC(current, sel));
+                            previous.push('/* __READY__ */' + transformCC(current, sel));
                         }
                         else {
                             if (Array.isArray(last)) {
@@ -328,23 +329,6 @@ class LylParse {
                     return _.join('');
                 }
             }).join('');
-            // return (css
-            //   ? `${sel}{${css}}`
-            //   :  '') + contentRendered;
-            // if (content.startsWith('/* >> ds')) {
-            //   return content.replace(/\|\|\&\|\|/g, sel);
-            // }
-            // if (content.startsWith('/* >> cc')) {
-            //   content = content.replace(/\/\* >> cc[^\/\*]+\*\//g, '');
-            //   let variable = content.slice(2, content.length - 1);
-            //   variable = `st2c((${variable}), \`${sel}\`)`;
-            //   return `\${${variable}}`;
-            // }
-            // // for non LylModule>
-            // if (sel.startsWith('@')) {
-            //   return `${sel}{${rule[1]}}`;
-            // }
-            // return `${sel}{${content}}`;
         }).join('');
     }
     _resolveSelectors(selectors) {
@@ -619,7 +603,7 @@ function eachMedia(str, fn, withStyleCollection) {
         styleCollection = new StyleCollection();
     }
     if (typeof str === 'string') {
-        const values = str.split(/\s/g);
+        const values = str.split(/\ /g);
         for (let index = 0; index < values.length; index++) {
             const valItem = values[index].split(/\@/g);
             const strValue = valItem.shift();
@@ -627,28 +611,46 @@ function eachMedia(str, fn, withStyleCollection) {
             const value = isNaN(+strValue) ? strValue : +strValue;
             if (len) {
                 for (let j = 0; j < len; j++) {
-                    const st = fn.call(undefined, value, valItem[j], index);
-                    if (styleCollection) {
-                        styleCollection.add(st);
-                    }
+                    resolveMediaEachItemStyle(fn, value, valItem[j], index, styleCollection);
                 }
             }
             else {
-                const st = fn.call(undefined, value, null, index);
-                if (styleCollection) {
-                    styleCollection.add(st);
+                resolveMediaEachItemStyle(fn, value, null, index, styleCollection);
+            }
+        }
+    }
+    else if (Array.isArray(str)) {
+        for (let index = 0; index < str.length; index++) {
+            const val = str[index];
+            if (typeof val === 'number' || typeof val === 'string') {
+                resolveMediaEachItemStyle(fn, val, null, index, styleCollection);
+            }
+            else {
+                const medias = val[1].split(/\@/g).filter(media => media);
+                const strValue = val[0];
+                const len = medias.length;
+                if (len) {
+                    for (let ii = 0; ii < len; ii++) {
+                        resolveMediaEachItemStyle(fn, strValue, medias[ii], index, styleCollection);
+                    }
+                }
+                else {
+                    resolveMediaEachItemStyle(fn, strValue, null, index, styleCollection);
                 }
             }
         }
     }
     else {
-        const st = fn.call(undefined, str, null, 0);
-        if (styleCollection) {
-            styleCollection.add(st);
-        }
+        resolveMediaEachItemStyle(fn, str, null, 0, styleCollection);
     }
     if (styleCollection) {
         return styleCollection.css;
+    }
+}
+function resolveMediaEachItemStyle(fn, val, media, index, styleCollection) {
+    const styl = fn(val, media, index);
+    if (styleCollection && styl) {
+        styleCollection.add(styl);
     }
 }
 /**
@@ -2467,7 +2469,7 @@ StyleRenderer = __decorate([
 /**
  * Parameter decorator to be used for create Dynamic style together with `@Input`
  * @param style style
- * @param priority priority of style
+ * @param priority priority of style, default: 0
  * @decorator
  */
 function Style(style, priority) {
@@ -2540,10 +2542,10 @@ let LyStyle = LyStyle_1 = class LyStyle {
     }
     set lyStyle(val) {
         if (typeof val === 'function') {
-            this.sRenderer.add(val);
+            this[0xa] = this.sRenderer.add(val, this[0xa]);
         }
         else if (val != null) {
-            this[0xa] = this.sRenderer.add(`${LyStyle_1.и}--style-${val}`, ({ breakpoints }) => eachMedia(val, (v, media) => ((className) => `@media ${(media && breakpoints[media]) || 'all'}{${className}{${v};}}`), true), STYLE_PRIORITY$1);
+            this[0xa] = this.sRenderer.add(`${LyStyle_1.и}--style-${val}`, ({ breakpoints }) => eachMedia(val, (v, media) => ((className) => `@media ${(media && (breakpoints[media] || media)) || 'all'}{${className}{${v};}}`), true), STYLE_PRIORITY$1, this[0xa]);
         }
         else {
             this.sRenderer.removeClass(this[0xa]);
@@ -3004,8 +3006,8 @@ LyFocusState = __decorate([
     })
 ], LyFocusState);
 
-const AUI_VERSION = '2.9.8-nightly.2001091811';
-const AUI_LAST_UPDATE = '2020-01-09T18:11:23.859Z';
+const AUI_VERSION = '2.9.8-nightly.2001141731';
+const AUI_LAST_UPDATE = '2020-01-14T17:31:41.145Z';
 
 const LY_HAMMER_OPTIONS = new InjectionToken('LY_HAMMER_OPTIONS');
 const HAMMER_GESTURES_EVENTS = [

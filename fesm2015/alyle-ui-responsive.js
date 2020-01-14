@@ -75,6 +75,9 @@ MediaDirective = __decorate([
     })
 ], MediaDirective);
 
+/**
+ * @deprecated use instead `[display]` or `[lyStyle]`
+ */
 let ResponsiveModule = class ResponsiveModule {
 };
 ResponsiveModule = __decorate([

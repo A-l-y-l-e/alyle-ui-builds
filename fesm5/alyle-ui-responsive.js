@@ -90,6 +90,9 @@ var MediaDirective = /** @class */ (function () {
     return MediaDirective;
 }());
 
+/**
+ * @deprecated use instead `[display]` or `[lyStyle]`
+ */
 var ResponsiveModule = /** @class */ (function () {
     function ResponsiveModule() {
     }
