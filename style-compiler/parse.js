@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const LINE_FEED_REGEX = () => /(\n?[^\n]+\n?)/g;
 const AMPERSAND_REGEX = () => /&/g;
-const STYLE_TEMPLATE_REGEX = () => /StyleTemplate\[[\w]+\]/g;
+const STYLE_TEMPLATE_REGEX = () => /__LY_EXPRESSION__\[[\w]+\]/g;
 let id = 0;
 /**
  * Transform a lyl style block to CSS
@@ -229,7 +229,8 @@ function transformCC(content, sel) {
 function lyl(literals, ...placeholders) {
     return (className) => {
         let result = '';
-        const dsMap = new Map();
+        // Save expressions
+        const exMap = {};
         for (let i = 0; i < placeholders.length; i++) {
             const placeholder = placeholders[i];
             result += literals[i];
@@ -237,31 +238,27 @@ function lyl(literals, ...placeholders) {
                 result = result.slice(0, result.length - 3);
                 if (typeof placeholder === 'function'
                     || placeholder instanceof StyleCollection) {
-                    const newID = createUniqueId();
-                    dsMap.set(newID, placeholder);
-                    result += newID;
+                    result += `${createUniqueCommentSelector('ds')}${st2c(placeholder, '||&||')}`;
                 }
             }
             else {
-                result += placeholder;
+                const newID = `__LY_EXPRESSION__[__${(id++).toString(36)}]`;
+                result += newID;
+                exMap[newID] = `${placeholder}`;
             }
         }
         // add the last literal
         result += literals[literals.length - 1];
-        const css = result.replace(STYLE_TEMPLATE_REGEX(), (str) => {
-            if (dsMap.has(str)) {
-                const fn = dsMap.get(str);
-                return `${createUniqueCommentSelector('ds')}${st2c(fn, '||&||')}`;
+        const css = new LylParse(result, className).toCss();
+        return css.replace(STYLE_TEMPLATE_REGEX(), (str) => {
+            if (str in exMap) {
+                return exMap[str];
             }
             return '';
         });
-        return new LylParse(css, className).toCss();
     };
 }
 exports.lyl = lyl;
-function createUniqueId() {
-    return `StyleTemplate[__${(id++).toString(36)}]`;
-}
 function createUniqueCommentSelector(text = 'id') {
     return `/* >> ${text} -- ${Math.floor(new Date().valueOf() * Math.random()).toString(36)} */`;
 }

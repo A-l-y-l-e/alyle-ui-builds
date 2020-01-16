@@ -144,7 +144,7 @@ var LINE_FEED_REGEX = function () { return /(\n?[^\n]+\n?)/g; };
 var ɵ0 = LINE_FEED_REGEX;
 var AMPERSAND_REGEX = function () { return /&/g; };
 var ɵ1 = AMPERSAND_REGEX;
-var STYLE_TEMPLATE_REGEX = function () { return /StyleTemplate\[[\w]+\]/g; };
+var STYLE_TEMPLATE_REGEX = function () { return /__LY_EXPRESSION__\[[\w]+\]/g; };
 var ɵ2 = STYLE_TEMPLATE_REGEX;
 var id = 0;
 /**
@@ -378,7 +378,8 @@ function lyl(literals) {
     }
     return function (className) {
         var result = '';
-        var dsMap = new Map();
+        // Save expressions
+        var exMap = {};
         for (var i = 0; i < placeholders.length; i++) {
             var placeholder = placeholders[i];
             result += literals[i];
@@ -386,29 +387,25 @@ function lyl(literals) {
                 result = result.slice(0, result.length - 3);
                 if (typeof placeholder === 'function'
                     || placeholder instanceof StyleCollection) {
-                    var newID = createUniqueId();
-                    dsMap.set(newID, placeholder);
-                    result += newID;
+                    result += "" + createUniqueCommentSelector('ds') + st2c(placeholder, '||&||');
                 }
             }
             else {
-                result += placeholder;
+                var newID = "__LY_EXPRESSION__[__" + (id++).toString(36) + "]";
+                result += newID;
+                exMap[newID] = "" + placeholder;
             }
         }
         // add the last literal
         result += literals[literals.length - 1];
-        var css = result.replace(STYLE_TEMPLATE_REGEX(), function (str) {
-            if (dsMap.has(str)) {
-                var fn = dsMap.get(str);
-                return "" + createUniqueCommentSelector('ds') + st2c(fn, '||&||');
+        var css = new LylParse(result, className).toCss();
+        return css.replace(STYLE_TEMPLATE_REGEX(), function (str) {
+            if (str in exMap) {
+                return exMap[str];
             }
             return '';
         });
-        return new LylParse(css, className).toCss();
     };
-}
-function createUniqueId() {
-    return "StyleTemplate[__" + (id++).toString(36) + "]";
 }
 function createUniqueCommentSelector(text) {
     if (text === void 0) { text = 'id'; }
@@ -1960,7 +1957,7 @@ function mixinStyleUpdater(base) {
                         }
                     }
                 }
-                return function (className) { return className + "{color:" + sColor + ";background:" + sBackground + ";border:" + sBorder + ";pointer-events:" + sPointerEvents + ";box-shadow:" + sBoxShadow + ";}" + className + ":active{box-shadow:" + sBoxShadowActive + ";}"; };
+                return function (className) { return className + "{" + (sColor ? 'color:' + sColor : '') + ";" + (sBackground ? 'background:' + sBackground : '') + ";" + (sBorder ? 'border:' + sBorder : '') + ";" + (sPointerEvents ? 'pointer-events:' + sPointerEvents : '') + ";" + (sBoxShadow ? 'box-shadow:' + sBoxShadow : '') + ";}" + className + ":active{" + (sBoxShadowActive ? 'box-shadow:' + sBoxShadowActive : '') + ";}"; };
             }, STYLE_PRIORITY);
             el.classList.remove(this._classNameAnonymous);
             el.classList.add(newClass);
@@ -3309,8 +3306,8 @@ var LyFocusState = /** @class */ (function () {
     return LyFocusState;
 }());
 
-var AUI_VERSION = '2.9.8-nightly.2001141731';
-var AUI_LAST_UPDATE = '2020-01-14T17:31:41.145Z';
+var AUI_VERSION = '2.9.8-nightly.2001161835';
+var AUI_LAST_UPDATE = '2020-01-16T18:35:13.856Z';
 
 var LY_HAMMER_OPTIONS = new InjectionToken('LY_HAMMER_OPTIONS');
 var HAMMER_GESTURES_EVENTS = [

@@ -141,7 +141,7 @@ const LINE_FEED_REGEX = () => /(\n?[^\n]+\n?)/g;
 const ɵ0 = LINE_FEED_REGEX;
 const AMPERSAND_REGEX = () => /&/g;
 const ɵ1 = AMPERSAND_REGEX;
-const STYLE_TEMPLATE_REGEX = () => /StyleTemplate\[[\w]+\]/g;
+const STYLE_TEMPLATE_REGEX = () => /__LY_EXPRESSION__\[[\w]+\]/g;
 const ɵ2 = STYLE_TEMPLATE_REGEX;
 let id = 0;
 /**
@@ -368,7 +368,8 @@ function transformCC(content, sel) {
 function lyl(literals, ...placeholders) {
     return (className) => {
         let result = '';
-        const dsMap = new Map();
+        // Save expressions
+        const exMap = {};
         for (let i = 0; i < placeholders.length; i++) {
             const placeholder = placeholders[i];
             result += literals[i];
@@ -376,29 +377,25 @@ function lyl(literals, ...placeholders) {
                 result = result.slice(0, result.length - 3);
                 if (typeof placeholder === 'function'
                     || placeholder instanceof StyleCollection) {
-                    const newID = createUniqueId();
-                    dsMap.set(newID, placeholder);
-                    result += newID;
+                    result += `${createUniqueCommentSelector('ds')}${st2c(placeholder, '||&||')}`;
                 }
             }
             else {
-                result += placeholder;
+                const newID = `__LY_EXPRESSION__[__${(id++).toString(36)}]`;
+                result += newID;
+                exMap[newID] = `${placeholder}`;
             }
         }
         // add the last literal
         result += literals[literals.length - 1];
-        const css = result.replace(STYLE_TEMPLATE_REGEX(), (str) => {
-            if (dsMap.has(str)) {
-                const fn = dsMap.get(str);
-                return `${createUniqueCommentSelector('ds')}${st2c(fn, '||&||')}`;
+        const css = new LylParse(result, className).toCss();
+        return css.replace(STYLE_TEMPLATE_REGEX(), (str) => {
+            if (str in exMap) {
+                return exMap[str];
             }
             return '';
         });
-        return new LylParse(css, className).toCss();
     };
-}
-function createUniqueId() {
-    return `StyleTemplate[__${(id++).toString(36)}]`;
 }
 function createUniqueCommentSelector(text = 'id') {
     return `/* >> ${text} -- ${Math.floor(new Date().valueOf() * Math.random()).toString(36)} */`;
@@ -1863,7 +1860,7 @@ function mixinStyleUpdater(base) {
                         }
                     }
                 }
-                return (className) => `${className}{color:${sColor};background:${sBackground};border:${sBorder};pointer-events:${sPointerEvents};box-shadow:${sBoxShadow};}${className}:active{box-shadow:${sBoxShadowActive};}`;
+                return (className) => `${className}{${sColor ? 'color:' + sColor : ''};${sBackground ? 'background:' + sBackground : ''};${sBorder ? 'border:' + sBorder : ''};${sPointerEvents ? 'pointer-events:' + sPointerEvents : ''};${sBoxShadow ? 'box-shadow:' + sBoxShadow : ''};}${className}:active{${sBoxShadowActive ? 'box-shadow:' + sBoxShadowActive : ''};}`;
             }, STYLE_PRIORITY);
             el.classList.remove(this._classNameAnonymous);
             el.classList.add(newClass);
@@ -3006,8 +3003,8 @@ LyFocusState = __decorate([
     })
 ], LyFocusState);
 
-const AUI_VERSION = '2.9.8-nightly.2001141731';
-const AUI_LAST_UPDATE = '2020-01-14T17:31:41.145Z';
+const AUI_VERSION = '2.9.8-nightly.2001161835';
+const AUI_LAST_UPDATE = '2020-01-16T18:35:13.856Z';
 
 const LY_HAMMER_OPTIONS = new InjectionToken('LY_HAMMER_OPTIONS');
 const HAMMER_GESTURES_EVENTS = [

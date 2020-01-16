@@ -752,8 +752,8 @@ function isSvgImage(dataUrl) {
 }
 function createHtmlImg(src) {
     const img = new Image();
-    img.src = src;
     img.crossOrigin = 'anonymous';
+    img.src = src;
     return img;
 }
 

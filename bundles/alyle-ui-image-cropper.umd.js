@@ -962,8 +962,8 @@
     }
     function createHtmlImg(src) {
         var img = new Image();
-        img.src = src;
         img.crossOrigin = 'anonymous';
+        img.src = src;
         return img;
     }
 
