@@ -2512,7 +2512,7 @@ function getComponentName(comp) {
 
 var LyStyle_1;
 const STYLE_PRIORITY$1 = -0.5;
-const ɵ0$2 = value => ({ breakpoints }) => eachMedia(value, (val, media) => ((className) => `@media ${(media && breakpoints[media]) || 'all'}{${className}{padding:${to8Px(val)};}}`), true), ɵ1$2 = value => ({ breakpoints, after }) => eachMedia(value, (val, media) => ((className) => `@media ${(media && breakpoints[media]) || 'all'}{${className}{padding-${after}:${to8Px(val)};}}`), true), ɵ2$2 = value => ({ breakpoints, before }) => eachMedia(value, (val, media) => ((className) => `@media ${(media && breakpoints[media]) || 'all'}{${className}{padding-${before}:${to8Px(val)};}}`), true), ɵ3 = value => ({ breakpoints }) => eachMedia(value, (val, media) => ((className) => `@media ${(media && breakpoints[media]) || 'all'}{${className}{padding-top:${to8Px(val)};}}`), true), ɵ4 = value => ({ breakpoints }) => eachMedia(value, (val, media) => ((className) => `@media ${(media && breakpoints[media]) || 'all'}{${className}{padding-bottom:${to8Px(val)};}}`), true), ɵ5 = value => ({ breakpoints }) => eachMedia(value, (val, media) => ((className) => `@media ${(media && breakpoints[media]) || 'all'}{${className}{padding:0 ${to8Px(val)};}}`), true), ɵ6 = value => ({ breakpoints }) => eachMedia(value, (val, media) => ((className) => `@media ${(media && breakpoints[media]) || 'all'}{${className}{padding:${to8Px(val)} 0;}}`), true), ɵ7 = value => ({ breakpoints }) => eachMedia(value, (val, media) => ((className) => `@media ${(media && breakpoints[media]) || 'all'}{${className}{margin:${to8Px(val)};}}`), true), ɵ8 = value => ({ breakpoints, after }) => eachMedia(value, (val, media) => ((className) => `@media ${(media && breakpoints[media]) || 'all'}{${className}{margin-${after}:${to8Px(val)};}}`), true), ɵ9 = value => ({ breakpoints, before }) => eachMedia(value, (val, media) => ((className) => `@media ${(media && breakpoints[media]) || 'all'}{${className}{margin-${before}:${to8Px(val)};}}`), true), ɵ10 = value => ({ breakpoints }) => eachMedia(value, (val, media) => ((className) => `@media ${(media && breakpoints[media]) || 'all'}{${className}{margin-top:${to8Px(val)};}}`), true), ɵ11 = value => ({ breakpoints }) => eachMedia(value, (val, media) => ((className) => `@media ${(media && breakpoints[media]) || 'all'}{${className}{margin-bottom:${to8Px(val)};}}`), true), ɵ12 = value => ({ breakpoints }) => eachMedia(value, (val, media) => ((className) => `@media ${(media && breakpoints[media]) || 'all'}{${className}{margin:0 ${to8Px(val)};}}`), true), ɵ13 = value => ({ breakpoints }) => eachMedia(value, (val, media) => ((className) => `@media ${(media && breakpoints[media]) || 'all'}{${className}{margin:${to8Px(val)} 0;}}`), true), ɵ14 = value => ({ breakpoints }) => eachMedia(value, (val, media) => ((className) => `@media ${(media && breakpoints[media]) || 'all'}{${className}{width:${transform(val)};}}`), true), ɵ15 = value => ({ breakpoints }) => eachMedia(value, (val, media) => ((className) => `@media ${(media && breakpoints[media]) || 'all'}{${className}{max-width:${transform(val)};}}`), true), ɵ16 = value => ({ breakpoints }) => eachMedia(value, (val, media) => ((className) => `@media ${(media && breakpoints[media]) || 'all'}{${className}{min-width:${transform(val)};}}`), true), ɵ17 = value => ({ breakpoints }) => eachMedia(value, (val, media) => ((className) => `@media ${(media && breakpoints[media]) || 'all'}{${className}{height:${transform(val)};}}`), true), ɵ18 = value => ({ breakpoints }) => eachMedia(value, (val, media) => ((className) => `@media ${(media && breakpoints[media]) || 'all'}{${className}{max-height:${transform(val)};}}`), true), ɵ19 = value => ({ breakpoints }) => eachMedia(value, (val, media) => ((className) => `@media ${(media && breakpoints[media]) || 'all'}{${className}{min-height:${transform(val)};}}`), true), ɵ20 = value => ({ breakpoints }) => eachMedia(value, (val, media) => ((className) => `@media ${(media && breakpoints[media]) || 'all'}{${className}{display:${val};}}`), true);
+const ɵ0$2 = value => ({ breakpoints }) => eachMedia(value, (val, media) => ((className) => `@media ${(media && breakpoints[media]) || 'all'}{${className}{padding:${to8Px(val)};}}`), true), ɵ1$2 = value => ({ breakpoints, after }) => eachMedia(value, (val, media) => ((className) => `@media ${(media && breakpoints[media]) || 'all'}{${className}{padding-${after}:${to8Px(val)};}}`), true), ɵ2$2 = value => ({ breakpoints, before }) => eachMedia(value, (val, media) => ((className) => `@media ${(media && breakpoints[media]) || 'all'}{${className}{padding-${before}:${to8Px(val)};}}`), true), ɵ3 = value => ({ breakpoints }) => eachMedia(value, (val, media) => ((className) => `@media ${(media && breakpoints[media]) || 'all'}{${className}{padding-top:${to8Px(val)};}}`), true), ɵ4 = value => ({ breakpoints }) => eachMedia(value, (val, media) => ((className) => `@media ${(media && breakpoints[media]) || 'all'}{${className}{padding-bottom:${to8Px(val)};}}`), true), ɵ5 = value => ({ breakpoints }) => eachMedia(value, (val, media) => ((className) => `@media ${(media && breakpoints[media]) || 'all'}{${className}{padding:0 ${to8Px(val)};}}`), true), ɵ6 = value => ({ breakpoints }) => eachMedia(value, (val, media) => ((className) => `@media ${(media && breakpoints[media]) || 'all'}{${className}{padding:${to8Px(val)} 0;}}`), true), ɵ7 = value => ({ breakpoints }) => eachMedia(value, (val, media) => ((className) => `@media ${(media && breakpoints[media]) || 'all'}{${className}{margin:${to8Px(val)};}}`), true), ɵ8 = value => ({ breakpoints, after }) => eachMedia(value, (val, media) => ((className) => `@media ${(media && breakpoints[media]) || 'all'}{${className}{margin-${after}:${to8Px(val)};}}`), true), ɵ9 = value => ({ breakpoints, before }) => eachMedia(value, (val, media) => ((className) => `@media ${(media && breakpoints[media]) || 'all'}{${className}{margin-${before}:${to8Px(val)};}}`), true), ɵ10 = value => ({ breakpoints }) => eachMedia(value, (val, media) => ((className) => `@media ${(media && breakpoints[media]) || 'all'}{${className}{margin-top:${to8Px(val)};}}`), true), ɵ11 = value => ({ breakpoints }) => eachMedia(value, (val, media) => ((className) => `@media ${(media && breakpoints[media]) || 'all'}{${className}{margin-bottom:${to8Px(val)};}}`), true), ɵ12 = value => ({ breakpoints }) => eachMedia(value, (val, media) => ((className) => `@media ${(media && breakpoints[media]) || 'all'}{${className}{margin:0 ${to8Px(val)};}}`), true), ɵ13 = value => ({ breakpoints }) => eachMedia(value, (val, media) => ((className) => `@media ${(media && breakpoints[media]) || 'all'}{${className}{margin:${to8Px(val)} 0;}}`), true), ɵ14 = value => ({ breakpoints }) => eachMedia(value, (val, media) => ((className) => `@media ${(media && breakpoints[media]) || 'all'}{${className}{width:${transform(val)};}}`), true), ɵ15 = value => ({ breakpoints }) => eachMedia(value, (val, media) => ((className) => `@media ${(media && breakpoints[media]) || 'all'}{${className}{max-width:${transform(val)};}}`), true), ɵ16 = value => ({ breakpoints }) => eachMedia(value, (val, media) => ((className) => `@media ${(media && breakpoints[media]) || 'all'}{${className}{min-width:${transform(val)};}}`), true), ɵ17 = value => ({ breakpoints }) => eachMedia(value, (val, media) => ((className) => `@media ${(media && breakpoints[media]) || 'all'}{${className}{height:${transform(val)};}}`), true), ɵ18 = value => ({ breakpoints }) => eachMedia(value, (val, media) => ((className) => `@media ${(media && breakpoints[media]) || 'all'}{${className}{max-height:${transform(val)};}}`), true), ɵ19 = value => ({ breakpoints }) => eachMedia(value, (val, media) => ((className) => `@media ${(media && breakpoints[media]) || 'all'}{${className}{min-height:${transform(val)};}}`), true), ɵ20 = value => ({ breakpoints }) => eachMedia(value, (val, media) => ((className) => `@media ${(media && breakpoints[media]) || 'all'}{${className}{display:${val};}}`), true), ɵ21 = value => ({ breakpoints }) => eachMedia(value, (val, media) => ((className) => `@media ${(media && breakpoints[media]) || 'all'}{${className}{flex:${val};}}`), true), ɵ22 = value => ({ breakpoints }) => eachMedia(value, (val, media) => ((className) => `@media ${(media && breakpoints[media]) || 'all'}{${className}{flex-basis:${val};}}`), true), ɵ23 = value => ({ breakpoints }) => eachMedia(value, (val, media) => ((className) => `@media ${(media && breakpoints[media]) || 'all'}{${className}{flex-direction:${val};}}`), true), ɵ24 = value => ({ breakpoints }) => eachMedia(value, (val, media) => ((className) => `@media ${(media && breakpoints[media]) || 'all'}{${className}{flex-grow:${val};}}`), true), ɵ25 = value => ({ breakpoints }) => eachMedia(value, (val, media) => ((className) => `@media ${(media && breakpoints[media]) || 'all'}{${className}{flex-self:${val};}}`), true), ɵ26 = value => ({ breakpoints }) => eachMedia(value, (val, media) => ((className) => `@media ${(media && breakpoints[media]) || 'all'}{${className}{flex-shrink:${val};}}`), true), ɵ27 = value => ({ breakpoints }) => eachMedia(value, (val, media) => ((className) => `@media ${(media && breakpoints[media]) || 'all'}{${className}{flex-wrap:${val};}}`), true), ɵ28 = value => ({ breakpoints }) => eachMedia(value, (val, media) => ((className) => `@media ${(media && breakpoints[media]) || 'all'}{${className}{justify-content:${val};}}`), true), ɵ29 = value => ({ breakpoints }) => eachMedia(value, (val, media) => ((className) => `@media ${(media && breakpoints[media]) || 'all'}{${className}{justify-items:${val};}}`), true), ɵ30 = value => ({ breakpoints }) => eachMedia(value, (val, media) => ((className) => `@media ${(media && breakpoints[media]) || 'all'}{${className}{justify-self:${val};}}`), true), ɵ31 = value => ({ breakpoints }) => eachMedia(value, (val, media) => ((className) => `@media ${(media && breakpoints[media]) || 'all'}{${className}{align-content:${val};}}`), true), ɵ32 = value => ({ breakpoints }) => eachMedia(value, (val, media) => ((className) => `@media ${(media && breakpoints[media]) || 'all'}{${className}{align-items:${val};}}`), true), ɵ33 = value => ({ breakpoints }) => eachMedia(value, (val, media) => ((className) => `@media ${(media && breakpoints[media]) || 'all'}{${className}{order:${val};}}`), true);
 /**
  * @dynamic
  * Spacing
@@ -2642,6 +2642,58 @@ __decorate([
     Style(ɵ20)
 ], LyStyle.prototype, "display", void 0);
 __decorate([
+    Input(),
+    Style(ɵ21)
+], LyStyle.prototype, "flex", void 0);
+__decorate([
+    Input(),
+    Style(ɵ22)
+], LyStyle.prototype, "flexBasis", void 0);
+__decorate([
+    Input(),
+    Style(ɵ23)
+], LyStyle.prototype, "flexDirection", void 0);
+__decorate([
+    Input(),
+    Style(ɵ24)
+], LyStyle.prototype, "flexGrow", void 0);
+__decorate([
+    Input(),
+    Style(ɵ25)
+], LyStyle.prototype, "flexSelf", void 0);
+__decorate([
+    Input(),
+    Style(ɵ26)
+], LyStyle.prototype, "flexShrink", void 0);
+__decorate([
+    Input(),
+    Style(ɵ27)
+], LyStyle.prototype, "flexWrap", void 0);
+__decorate([
+    Input(),
+    Style(ɵ28)
+], LyStyle.prototype, "justifyContent", void 0);
+__decorate([
+    Input(),
+    Style(ɵ29)
+], LyStyle.prototype, "justifyItems", void 0);
+__decorate([
+    Input(),
+    Style(ɵ30)
+], LyStyle.prototype, "justifySelf", void 0);
+__decorate([
+    Input(),
+    Style(ɵ31)
+], LyStyle.prototype, "alignContent", void 0);
+__decorate([
+    Input(),
+    Style(ɵ32)
+], LyStyle.prototype, "alignItems", void 0);
+__decorate([
+    Input(),
+    Style(ɵ33)
+], LyStyle.prototype, "order", void 0);
+__decorate([
     Input()
 ], LyStyle.prototype, "lyStyle", null);
 LyStyle = LyStyle_1 = __decorate([
@@ -2652,7 +2704,20 @@ LyStyle = LyStyle_1 = __decorate([
               [size],
               [width], [maxWidth], [minWidth],
               [height], [maxHeight], [minHeight],
-              [display]`,
+              [display],
+              [flex],
+              [flexBasis],
+              [flexDirection],
+              [flexGrow],
+              [flexSelf],
+              [flexShrink],
+              [flexWrap],
+              [justifyContent],
+              [justifyItems],
+              [justifySelf],
+              [alignContent],
+              [alignItems],
+              [order]`,
         providers: [
             StyleRenderer
         ]
@@ -3003,8 +3068,8 @@ LyFocusState = __decorate([
     })
 ], LyFocusState);
 
-const AUI_VERSION = '2.9.8-nightly.2001161835';
-const AUI_LAST_UPDATE = '2020-01-16T18:35:13.856Z';
+const AUI_VERSION = '2.9.8-nightly.2001172359';
+const AUI_LAST_UPDATE = '2020-01-17T23:59:41.611Z';
 
 const LY_HAMMER_OPTIONS = new InjectionToken('LY_HAMMER_OPTIONS');
 const HAMMER_GESTURES_EVENTS = [
@@ -3779,5 +3844,5 @@ LyExpansionIconModule = __decorate([
  * Generated bundle index. Do not edit.
  */
 
-export { AUI_LAST_UPDATE, AUI_VERSION, AlignAlias, CoreTheme, Dir, DirAlias, DirPosition, ElementObserver, FocusStatus, IS_CORE_THEME, LY_COMMON_STYLES, LY_COMMON_STYLES_DEPRECATED, LY_HAMMER_OPTIONS, LY_THEME, LY_THEME_GLOBAL_VARIABLES, LY_THEME_NAME, LyCommonModule, LyCoreStyles, LyExpansionIcon, LyExpansionIconModule, LyFocusState, LyHammerGestureConfig, LyHostClass, LyOverlay, LyOverlayConfig, LyOverlayContainer, LyOverlayModule, LyOverlayRef, LyPaper, LyPaperBase, LyPaperMixinBase, LyRippleService, LySelectionModel, LyStyle, LyStyleUtils, LyTheme2, LyThemeModule, LylParse, MutationObserverFactory, NgTranscludeDirective, NgTranscludeModule, OverlayFactory, Platform, Positioning, Ripple, STYLES_BACKDROP_DARK, Shadows, StringIdGenerator, Style, StyleCollection, StyleRenderer, StylesInDocument, THEME_VARIABLES, TypeStyle, Undefined, UndefinedValue, WinResize, WinScroll, XPosition, YPosition, _STYLE_MAP, capitalizeFirstLetter, converterToCssKeyAndStyle, createOverlayInjector, defaultEntry, eachMedia, getContrastYIQ, getLyThemeStyleUndefinedError, getLyThemeVariableOptionUndefinedError, getLyThemeVariableUndefinedError, getNativeElement, getThemeNameForSelectors, invertPlacement, keyframesUniqueId, lyl, mergeDeep, mergeThemes, mixinBg, mixinColor, mixinDisableRipple, mixinDisabled, mixinElevation, mixinOutlined, mixinRaised, mixinShadowColor, mixinStyleUpdater, mixinTabIndex, scrollTo, scrollWithAnimation, shadowBuilder, st2c, supportsPassiveEventListeners, toBoolean, toNumber, untilComponentDestroyed, ɵ0$2 as ɵ0, ɵ1$2 as ɵ1, ɵ10, ɵ11, ɵ12, ɵ13, ɵ14, ɵ15, ɵ16, ɵ17, ɵ18, ɵ19, ɵ2$2 as ɵ2, ɵ20, ɵ3, ɵ4, ɵ5, ɵ6, ɵ7, ɵ8, ɵ9, LyWithClass as ɵa, LyOverlayBackdrop as ɵb };
+export { AUI_LAST_UPDATE, AUI_VERSION, AlignAlias, CoreTheme, Dir, DirAlias, DirPosition, ElementObserver, FocusStatus, IS_CORE_THEME, LY_COMMON_STYLES, LY_COMMON_STYLES_DEPRECATED, LY_HAMMER_OPTIONS, LY_THEME, LY_THEME_GLOBAL_VARIABLES, LY_THEME_NAME, LyCommonModule, LyCoreStyles, LyExpansionIcon, LyExpansionIconModule, LyFocusState, LyHammerGestureConfig, LyHostClass, LyOverlay, LyOverlayConfig, LyOverlayContainer, LyOverlayModule, LyOverlayRef, LyPaper, LyPaperBase, LyPaperMixinBase, LyRippleService, LySelectionModel, LyStyle, LyStyleUtils, LyTheme2, LyThemeModule, LylParse, MutationObserverFactory, NgTranscludeDirective, NgTranscludeModule, OverlayFactory, Platform, Positioning, Ripple, STYLES_BACKDROP_DARK, Shadows, StringIdGenerator, Style, StyleCollection, StyleRenderer, StylesInDocument, THEME_VARIABLES, TypeStyle, Undefined, UndefinedValue, WinResize, WinScroll, XPosition, YPosition, _STYLE_MAP, capitalizeFirstLetter, converterToCssKeyAndStyle, createOverlayInjector, defaultEntry, eachMedia, getContrastYIQ, getLyThemeStyleUndefinedError, getLyThemeVariableOptionUndefinedError, getLyThemeVariableUndefinedError, getNativeElement, getThemeNameForSelectors, invertPlacement, keyframesUniqueId, lyl, mergeDeep, mergeThemes, mixinBg, mixinColor, mixinDisableRipple, mixinDisabled, mixinElevation, mixinOutlined, mixinRaised, mixinShadowColor, mixinStyleUpdater, mixinTabIndex, scrollTo, scrollWithAnimation, shadowBuilder, st2c, supportsPassiveEventListeners, toBoolean, toNumber, untilComponentDestroyed, ɵ0$2 as ɵ0, ɵ1$2 as ɵ1, ɵ10, ɵ11, ɵ12, ɵ13, ɵ14, ɵ15, ɵ16, ɵ17, ɵ18, ɵ19, ɵ2$2 as ɵ2, ɵ20, ɵ21, ɵ22, ɵ23, ɵ24, ɵ25, ɵ26, ɵ27, ɵ28, ɵ29, ɵ3, ɵ30, ɵ31, ɵ32, ɵ33, ɵ4, ɵ5, ɵ6, ɵ7, ɵ8, ɵ9, LyWithClass as ɵa, LyOverlayBackdrop as ɵb };
 //# sourceMappingURL=alyle-ui.js.map

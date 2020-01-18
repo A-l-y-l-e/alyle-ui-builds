@@ -2994,6 +2994,45 @@
     }; }, ɵ20 = function (value) { return function (_a) {
         var breakpoints = _a.breakpoints;
         return eachMedia(value, function (val, media) { return (function (className) { return "@media " + ((media && breakpoints[media]) || 'all') + "{" + className + "{display:" + val + ";}}"; }); }, true);
+    }; }, ɵ21 = function (value) { return function (_a) {
+        var breakpoints = _a.breakpoints;
+        return eachMedia(value, function (val, media) { return (function (className) { return "@media " + ((media && breakpoints[media]) || 'all') + "{" + className + "{flex:" + val + ";}}"; }); }, true);
+    }; }, ɵ22 = function (value) { return function (_a) {
+        var breakpoints = _a.breakpoints;
+        return eachMedia(value, function (val, media) { return (function (className) { return "@media " + ((media && breakpoints[media]) || 'all') + "{" + className + "{flex-basis:" + val + ";}}"; }); }, true);
+    }; }, ɵ23 = function (value) { return function (_a) {
+        var breakpoints = _a.breakpoints;
+        return eachMedia(value, function (val, media) { return (function (className) { return "@media " + ((media && breakpoints[media]) || 'all') + "{" + className + "{flex-direction:" + val + ";}}"; }); }, true);
+    }; }, ɵ24 = function (value) { return function (_a) {
+        var breakpoints = _a.breakpoints;
+        return eachMedia(value, function (val, media) { return (function (className) { return "@media " + ((media && breakpoints[media]) || 'all') + "{" + className + "{flex-grow:" + val + ";}}"; }); }, true);
+    }; }, ɵ25 = function (value) { return function (_a) {
+        var breakpoints = _a.breakpoints;
+        return eachMedia(value, function (val, media) { return (function (className) { return "@media " + ((media && breakpoints[media]) || 'all') + "{" + className + "{flex-self:" + val + ";}}"; }); }, true);
+    }; }, ɵ26 = function (value) { return function (_a) {
+        var breakpoints = _a.breakpoints;
+        return eachMedia(value, function (val, media) { return (function (className) { return "@media " + ((media && breakpoints[media]) || 'all') + "{" + className + "{flex-shrink:" + val + ";}}"; }); }, true);
+    }; }, ɵ27 = function (value) { return function (_a) {
+        var breakpoints = _a.breakpoints;
+        return eachMedia(value, function (val, media) { return (function (className) { return "@media " + ((media && breakpoints[media]) || 'all') + "{" + className + "{flex-wrap:" + val + ";}}"; }); }, true);
+    }; }, ɵ28 = function (value) { return function (_a) {
+        var breakpoints = _a.breakpoints;
+        return eachMedia(value, function (val, media) { return (function (className) { return "@media " + ((media && breakpoints[media]) || 'all') + "{" + className + "{justify-content:" + val + ";}}"; }); }, true);
+    }; }, ɵ29 = function (value) { return function (_a) {
+        var breakpoints = _a.breakpoints;
+        return eachMedia(value, function (val, media) { return (function (className) { return "@media " + ((media && breakpoints[media]) || 'all') + "{" + className + "{justify-items:" + val + ";}}"; }); }, true);
+    }; }, ɵ30 = function (value) { return function (_a) {
+        var breakpoints = _a.breakpoints;
+        return eachMedia(value, function (val, media) { return (function (className) { return "@media " + ((media && breakpoints[media]) || 'all') + "{" + className + "{justify-self:" + val + ";}}"; }); }, true);
+    }; }, ɵ31 = function (value) { return function (_a) {
+        var breakpoints = _a.breakpoints;
+        return eachMedia(value, function (val, media) { return (function (className) { return "@media " + ((media && breakpoints[media]) || 'all') + "{" + className + "{align-content:" + val + ";}}"; }); }, true);
+    }; }, ɵ32 = function (value) { return function (_a) {
+        var breakpoints = _a.breakpoints;
+        return eachMedia(value, function (val, media) { return (function (className) { return "@media " + ((media && breakpoints[media]) || 'all') + "{" + className + "{align-items:" + val + ";}}"; }); }, true);
+    }; }, ɵ33 = function (value) { return function (_a) {
+        var breakpoints = _a.breakpoints;
+        return eachMedia(value, function (val, media) { return (function (className) { return "@media " + ((media && breakpoints[media]) || 'all') + "{" + className + "{order:" + val + ";}}"; }); }, true);
     }; };
     /**
      * @dynamic
@@ -3136,11 +3175,63 @@
             Style(ɵ20)
         ], LyStyle.prototype, "display", void 0);
         __decorate([
+            core.Input(),
+            Style(ɵ21)
+        ], LyStyle.prototype, "flex", void 0);
+        __decorate([
+            core.Input(),
+            Style(ɵ22)
+        ], LyStyle.prototype, "flexBasis", void 0);
+        __decorate([
+            core.Input(),
+            Style(ɵ23)
+        ], LyStyle.prototype, "flexDirection", void 0);
+        __decorate([
+            core.Input(),
+            Style(ɵ24)
+        ], LyStyle.prototype, "flexGrow", void 0);
+        __decorate([
+            core.Input(),
+            Style(ɵ25)
+        ], LyStyle.prototype, "flexSelf", void 0);
+        __decorate([
+            core.Input(),
+            Style(ɵ26)
+        ], LyStyle.prototype, "flexShrink", void 0);
+        __decorate([
+            core.Input(),
+            Style(ɵ27)
+        ], LyStyle.prototype, "flexWrap", void 0);
+        __decorate([
+            core.Input(),
+            Style(ɵ28)
+        ], LyStyle.prototype, "justifyContent", void 0);
+        __decorate([
+            core.Input(),
+            Style(ɵ29)
+        ], LyStyle.prototype, "justifyItems", void 0);
+        __decorate([
+            core.Input(),
+            Style(ɵ30)
+        ], LyStyle.prototype, "justifySelf", void 0);
+        __decorate([
+            core.Input(),
+            Style(ɵ31)
+        ], LyStyle.prototype, "alignContent", void 0);
+        __decorate([
+            core.Input(),
+            Style(ɵ32)
+        ], LyStyle.prototype, "alignItems", void 0);
+        __decorate([
+            core.Input(),
+            Style(ɵ33)
+        ], LyStyle.prototype, "order", void 0);
+        __decorate([
             core.Input()
         ], LyStyle.prototype, "lyStyle", null);
         LyStyle = LyStyle_1 = __decorate([
             core.Directive({
-                selector: "[lyStyle],\n              [p], [pf], [pe], [pt], [pb], [px], [py],\n              [m], [mf], [me], [mt], [mb], [mx], [my],\n              [size],\n              [width], [maxWidth], [minWidth],\n              [height], [maxHeight], [minHeight],\n              [display]",
+                selector: "[lyStyle],\n              [p], [pf], [pe], [pt], [pb], [px], [py],\n              [m], [mf], [me], [mt], [mb], [mx], [my],\n              [size],\n              [width], [maxWidth], [minWidth],\n              [height], [maxHeight], [minHeight],\n              [display],\n              [flex],\n              [flexBasis],\n              [flexDirection],\n              [flexGrow],\n              [flexSelf],\n              [flexShrink],\n              [flexWrap],\n              [justifyContent],\n              [justifyItems],\n              [justifySelf],\n              [alignContent],\n              [alignItems],\n              [order]",
                 providers: [
                     StyleRenderer
                 ]
@@ -3501,8 +3592,8 @@
         return LyFocusState;
     }());
 
-    var AUI_VERSION = '2.9.8-nightly.2001161835';
-    var AUI_LAST_UPDATE = '2020-01-16T18:35:13.856Z';
+    var AUI_VERSION = '2.9.8-nightly.2001172359';
+    var AUI_LAST_UPDATE = '2020-01-17T23:59:41.611Z';
 
     var LY_HAMMER_OPTIONS = new core.InjectionToken('LY_HAMMER_OPTIONS');
     var HAMMER_GESTURES_EVENTS = [
@@ -4452,7 +4543,20 @@
     exports.ɵ19 = ɵ19;
     exports.ɵ2 = ɵ2$2;
     exports.ɵ20 = ɵ20;
+    exports.ɵ21 = ɵ21;
+    exports.ɵ22 = ɵ22;
+    exports.ɵ23 = ɵ23;
+    exports.ɵ24 = ɵ24;
+    exports.ɵ25 = ɵ25;
+    exports.ɵ26 = ɵ26;
+    exports.ɵ27 = ɵ27;
+    exports.ɵ28 = ɵ28;
+    exports.ɵ29 = ɵ29;
     exports.ɵ3 = ɵ3;
+    exports.ɵ30 = ɵ30;
+    exports.ɵ31 = ɵ31;
+    exports.ɵ32 = ɵ32;
+    exports.ɵ33 = ɵ33;
     exports.ɵ4 = ɵ4;
     exports.ɵ5 = ɵ5;
     exports.ɵ6 = ɵ6;

@@ -335,16 +335,16 @@ var MinimaDeepDark = /** @class */ (function (_super) {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.name = 'minima-deep-dark';
         _this.background = {
-            default: new Color(0x161616),
+            default: new Color(24, 24, 24),
             primary: {
-                default: new Color(0x101010),
+                default: new Color(16, 16, 16),
                 shadow: shadow$2
             },
-            secondary: new Color(0x161616),
-            tertiary: new Color(0x1b1b1b),
+            secondary: new Color(24, 24, 24),
+            tertiary: new Color(32, 32, 32),
         };
         _this.paper = {
-            default: new Color(0x101010),
+            default: new Color(16, 16, 16),
             shadow: shadow$2
         };
         return _this;

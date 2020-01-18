@@ -2799,6 +2799,45 @@ var ɵ0$2 = function (value) { return function (_a) {
 }; }, ɵ20 = function (value) { return function (_a) {
     var breakpoints = _a.breakpoints;
     return eachMedia(value, function (val, media) { return (function (className) { return "@media " + ((media && breakpoints[media]) || 'all') + "{" + className + "{display:" + val + ";}}"; }); }, true);
+}; }, ɵ21 = function (value) { return function (_a) {
+    var breakpoints = _a.breakpoints;
+    return eachMedia(value, function (val, media) { return (function (className) { return "@media " + ((media && breakpoints[media]) || 'all') + "{" + className + "{flex:" + val + ";}}"; }); }, true);
+}; }, ɵ22 = function (value) { return function (_a) {
+    var breakpoints = _a.breakpoints;
+    return eachMedia(value, function (val, media) { return (function (className) { return "@media " + ((media && breakpoints[media]) || 'all') + "{" + className + "{flex-basis:" + val + ";}}"; }); }, true);
+}; }, ɵ23 = function (value) { return function (_a) {
+    var breakpoints = _a.breakpoints;
+    return eachMedia(value, function (val, media) { return (function (className) { return "@media " + ((media && breakpoints[media]) || 'all') + "{" + className + "{flex-direction:" + val + ";}}"; }); }, true);
+}; }, ɵ24 = function (value) { return function (_a) {
+    var breakpoints = _a.breakpoints;
+    return eachMedia(value, function (val, media) { return (function (className) { return "@media " + ((media && breakpoints[media]) || 'all') + "{" + className + "{flex-grow:" + val + ";}}"; }); }, true);
+}; }, ɵ25 = function (value) { return function (_a) {
+    var breakpoints = _a.breakpoints;
+    return eachMedia(value, function (val, media) { return (function (className) { return "@media " + ((media && breakpoints[media]) || 'all') + "{" + className + "{flex-self:" + val + ";}}"; }); }, true);
+}; }, ɵ26 = function (value) { return function (_a) {
+    var breakpoints = _a.breakpoints;
+    return eachMedia(value, function (val, media) { return (function (className) { return "@media " + ((media && breakpoints[media]) || 'all') + "{" + className + "{flex-shrink:" + val + ";}}"; }); }, true);
+}; }, ɵ27 = function (value) { return function (_a) {
+    var breakpoints = _a.breakpoints;
+    return eachMedia(value, function (val, media) { return (function (className) { return "@media " + ((media && breakpoints[media]) || 'all') + "{" + className + "{flex-wrap:" + val + ";}}"; }); }, true);
+}; }, ɵ28 = function (value) { return function (_a) {
+    var breakpoints = _a.breakpoints;
+    return eachMedia(value, function (val, media) { return (function (className) { return "@media " + ((media && breakpoints[media]) || 'all') + "{" + className + "{justify-content:" + val + ";}}"; }); }, true);
+}; }, ɵ29 = function (value) { return function (_a) {
+    var breakpoints = _a.breakpoints;
+    return eachMedia(value, function (val, media) { return (function (className) { return "@media " + ((media && breakpoints[media]) || 'all') + "{" + className + "{justify-items:" + val + ";}}"; }); }, true);
+}; }, ɵ30 = function (value) { return function (_a) {
+    var breakpoints = _a.breakpoints;
+    return eachMedia(value, function (val, media) { return (function (className) { return "@media " + ((media && breakpoints[media]) || 'all') + "{" + className + "{justify-self:" + val + ";}}"; }); }, true);
+}; }, ɵ31 = function (value) { return function (_a) {
+    var breakpoints = _a.breakpoints;
+    return eachMedia(value, function (val, media) { return (function (className) { return "@media " + ((media && breakpoints[media]) || 'all') + "{" + className + "{align-content:" + val + ";}}"; }); }, true);
+}; }, ɵ32 = function (value) { return function (_a) {
+    var breakpoints = _a.breakpoints;
+    return eachMedia(value, function (val, media) { return (function (className) { return "@media " + ((media && breakpoints[media]) || 'all') + "{" + className + "{align-items:" + val + ";}}"; }); }, true);
+}; }, ɵ33 = function (value) { return function (_a) {
+    var breakpoints = _a.breakpoints;
+    return eachMedia(value, function (val, media) { return (function (className) { return "@media " + ((media && breakpoints[media]) || 'all') + "{" + className + "{order:" + val + ";}}"; }); }, true);
 }; };
 /**
  * @dynamic
@@ -2941,11 +2980,63 @@ var LyStyle = /** @class */ (function () {
         Style(ɵ20)
     ], LyStyle.prototype, "display", void 0);
     __decorate([
+        Input(),
+        Style(ɵ21)
+    ], LyStyle.prototype, "flex", void 0);
+    __decorate([
+        Input(),
+        Style(ɵ22)
+    ], LyStyle.prototype, "flexBasis", void 0);
+    __decorate([
+        Input(),
+        Style(ɵ23)
+    ], LyStyle.prototype, "flexDirection", void 0);
+    __decorate([
+        Input(),
+        Style(ɵ24)
+    ], LyStyle.prototype, "flexGrow", void 0);
+    __decorate([
+        Input(),
+        Style(ɵ25)
+    ], LyStyle.prototype, "flexSelf", void 0);
+    __decorate([
+        Input(),
+        Style(ɵ26)
+    ], LyStyle.prototype, "flexShrink", void 0);
+    __decorate([
+        Input(),
+        Style(ɵ27)
+    ], LyStyle.prototype, "flexWrap", void 0);
+    __decorate([
+        Input(),
+        Style(ɵ28)
+    ], LyStyle.prototype, "justifyContent", void 0);
+    __decorate([
+        Input(),
+        Style(ɵ29)
+    ], LyStyle.prototype, "justifyItems", void 0);
+    __decorate([
+        Input(),
+        Style(ɵ30)
+    ], LyStyle.prototype, "justifySelf", void 0);
+    __decorate([
+        Input(),
+        Style(ɵ31)
+    ], LyStyle.prototype, "alignContent", void 0);
+    __decorate([
+        Input(),
+        Style(ɵ32)
+    ], LyStyle.prototype, "alignItems", void 0);
+    __decorate([
+        Input(),
+        Style(ɵ33)
+    ], LyStyle.prototype, "order", void 0);
+    __decorate([
         Input()
     ], LyStyle.prototype, "lyStyle", null);
     LyStyle = LyStyle_1 = __decorate([
         Directive({
-            selector: "[lyStyle],\n              [p], [pf], [pe], [pt], [pb], [px], [py],\n              [m], [mf], [me], [mt], [mb], [mx], [my],\n              [size],\n              [width], [maxWidth], [minWidth],\n              [height], [maxHeight], [minHeight],\n              [display]",
+            selector: "[lyStyle],\n              [p], [pf], [pe], [pt], [pb], [px], [py],\n              [m], [mf], [me], [mt], [mb], [mx], [my],\n              [size],\n              [width], [maxWidth], [minWidth],\n              [height], [maxHeight], [minHeight],\n              [display],\n              [flex],\n              [flexBasis],\n              [flexDirection],\n              [flexGrow],\n              [flexSelf],\n              [flexShrink],\n              [flexWrap],\n              [justifyContent],\n              [justifyItems],\n              [justifySelf],\n              [alignContent],\n              [alignItems],\n              [order]",
             providers: [
                 StyleRenderer
             ]
@@ -3306,8 +3397,8 @@ var LyFocusState = /** @class */ (function () {
     return LyFocusState;
 }());
 
-var AUI_VERSION = '2.9.8-nightly.2001161835';
-var AUI_LAST_UPDATE = '2020-01-16T18:35:13.856Z';
+var AUI_VERSION = '2.9.8-nightly.2001172359';
+var AUI_LAST_UPDATE = '2020-01-17T23:59:41.611Z';
 
 var LY_HAMMER_OPTIONS = new InjectionToken('LY_HAMMER_OPTIONS');
 var HAMMER_GESTURES_EVENTS = [
@@ -4160,5 +4251,5 @@ var LyExpansionIconModule = /** @class */ (function () {
  * Generated bundle index. Do not edit.
  */
 
-export { AUI_LAST_UPDATE, AUI_VERSION, AlignAlias, CoreTheme, Dir, DirAlias, DirPosition, ElementObserver, FocusStatus, IS_CORE_THEME, LY_COMMON_STYLES, LY_COMMON_STYLES_DEPRECATED, LY_HAMMER_OPTIONS, LY_THEME, LY_THEME_GLOBAL_VARIABLES, LY_THEME_NAME, LyCommonModule, LyCoreStyles, LyExpansionIcon, LyExpansionIconModule, LyFocusState, LyHammerGestureConfig, LyHostClass, LyOverlay, LyOverlayConfig, LyOverlayContainer, LyOverlayModule, LyOverlayRef, LyPaper, LyPaperBase, LyPaperMixinBase, LyRippleService, LySelectionModel, LyStyle, LyStyleUtils, LyTheme2, LyThemeModule, LylParse, MutationObserverFactory, NgTranscludeDirective, NgTranscludeModule, OverlayFactory, Platform, Positioning, Ripple, STYLES_BACKDROP_DARK, Shadows, StringIdGenerator, Style, StyleCollection, StyleRenderer, StylesInDocument, THEME_VARIABLES, TypeStyle, Undefined, UndefinedValue, WinResize, WinScroll, XPosition, YPosition, _STYLE_MAP, capitalizeFirstLetter, converterToCssKeyAndStyle, createOverlayInjector, defaultEntry, eachMedia, getContrastYIQ, getLyThemeStyleUndefinedError, getLyThemeVariableOptionUndefinedError, getLyThemeVariableUndefinedError, getNativeElement, getThemeNameForSelectors, invertPlacement, keyframesUniqueId, lyl, mergeDeep, mergeThemes, mixinBg, mixinColor, mixinDisableRipple, mixinDisabled, mixinElevation, mixinOutlined, mixinRaised, mixinShadowColor, mixinStyleUpdater, mixinTabIndex, scrollTo, scrollWithAnimation, shadowBuilder, st2c, supportsPassiveEventListeners, toBoolean, toNumber, untilComponentDestroyed, ɵ0$2 as ɵ0, ɵ1$2 as ɵ1, ɵ10, ɵ11, ɵ12, ɵ13, ɵ14, ɵ15, ɵ16, ɵ17, ɵ18, ɵ19, ɵ2$2 as ɵ2, ɵ20, ɵ3, ɵ4, ɵ5, ɵ6, ɵ7, ɵ8, ɵ9, LyWithClass as ɵa, LyOverlayBackdrop as ɵb };
+export { AUI_LAST_UPDATE, AUI_VERSION, AlignAlias, CoreTheme, Dir, DirAlias, DirPosition, ElementObserver, FocusStatus, IS_CORE_THEME, LY_COMMON_STYLES, LY_COMMON_STYLES_DEPRECATED, LY_HAMMER_OPTIONS, LY_THEME, LY_THEME_GLOBAL_VARIABLES, LY_THEME_NAME, LyCommonModule, LyCoreStyles, LyExpansionIcon, LyExpansionIconModule, LyFocusState, LyHammerGestureConfig, LyHostClass, LyOverlay, LyOverlayConfig, LyOverlayContainer, LyOverlayModule, LyOverlayRef, LyPaper, LyPaperBase, LyPaperMixinBase, LyRippleService, LySelectionModel, LyStyle, LyStyleUtils, LyTheme2, LyThemeModule, LylParse, MutationObserverFactory, NgTranscludeDirective, NgTranscludeModule, OverlayFactory, Platform, Positioning, Ripple, STYLES_BACKDROP_DARK, Shadows, StringIdGenerator, Style, StyleCollection, StyleRenderer, StylesInDocument, THEME_VARIABLES, TypeStyle, Undefined, UndefinedValue, WinResize, WinScroll, XPosition, YPosition, _STYLE_MAP, capitalizeFirstLetter, converterToCssKeyAndStyle, createOverlayInjector, defaultEntry, eachMedia, getContrastYIQ, getLyThemeStyleUndefinedError, getLyThemeVariableOptionUndefinedError, getLyThemeVariableUndefinedError, getNativeElement, getThemeNameForSelectors, invertPlacement, keyframesUniqueId, lyl, mergeDeep, mergeThemes, mixinBg, mixinColor, mixinDisableRipple, mixinDisabled, mixinElevation, mixinOutlined, mixinRaised, mixinShadowColor, mixinStyleUpdater, mixinTabIndex, scrollTo, scrollWithAnimation, shadowBuilder, st2c, supportsPassiveEventListeners, toBoolean, toNumber, untilComponentDestroyed, ɵ0$2 as ɵ0, ɵ1$2 as ɵ1, ɵ10, ɵ11, ɵ12, ɵ13, ɵ14, ɵ15, ɵ16, ɵ17, ɵ18, ɵ19, ɵ2$2 as ɵ2, ɵ20, ɵ21, ɵ22, ɵ23, ɵ24, ɵ25, ɵ26, ɵ27, ɵ28, ɵ29, ɵ3, ɵ30, ɵ31, ɵ32, ɵ33, ɵ4, ɵ5, ɵ6, ɵ7, ɵ8, ɵ9, LyWithClass as ɵa, LyOverlayBackdrop as ɵb };
 //# sourceMappingURL=alyle-ui.js.map
