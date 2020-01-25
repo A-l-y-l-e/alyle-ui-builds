@@ -622,7 +622,7 @@ let LyOption = class LyOption extends LyOptionMixinBase {
     }
     /** The color of Select */
     get _color() {
-        return this._select._selectionModel.isSelected(this) ? this._select._field.color : '';
+        return this._select._selectionModel.isSelected(this) ? this._select._field.color : null;
     }
     get isSelected() {
         return this._select._selectionModel.isSelected(this);

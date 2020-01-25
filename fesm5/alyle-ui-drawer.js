@@ -99,6 +99,22 @@ var LyDrawer = /** @class */ (function () {
         this._renderer.addClass(this._el.nativeElement, _drawerContainer.classes.drawer);
     }
     LyDrawer_1 = LyDrawer;
+    Object.defineProperty(LyDrawer.prototype, "width", {
+        set: function (_val) {
+            console.log(LyDrawer_1.и, this._el.nativeElement);
+            throw new Error(LyDrawer_1.и + ": [width] is deprecated instead use [drawerWidth].");
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(LyDrawer.prototype, "height", {
+        set: function (_val) {
+            console.log(LyDrawer_1.и, this._el.nativeElement);
+            throw new Error(LyDrawer_1.и + ": [height] is deprecated instead use [drawerHeight].");
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(LyDrawer.prototype, "opened", {
         get: function () {
             return this._opened;
@@ -141,8 +157,8 @@ var LyDrawer = /** @class */ (function () {
         var __mode = this.mode;
         var __forceModeOverOpened = this._forceModeOverOpened;
         var __opened = this.opened;
-        var __width = this.width;
-        var __height = this.height;
+        var __width = this.drawerWidth;
+        var __height = this.drawerHeight;
         var __position = this.position;
         var __spacingAbove = this.spacingAbove;
         var __spacingBelow = this.spacingBelow;
@@ -206,7 +222,7 @@ var LyDrawer = /** @class */ (function () {
             if (__width) {
                 var dirXSign_1 = pos === DirPosition.left ? '-' : '+';
                 eachMedia(__width, function (val, media) {
-                    if ((__mode === 'over' || __forceModeOverOpened) && (val === '0' || val === 'over')) {
+                    if ((__mode === 'over' || __forceModeOverOpened) && (val === 0 || val === 'over')) {
                         return;
                     }
                     var newVal = val === 'over' ? '0px' : toPx(val);
@@ -387,6 +403,12 @@ var LyDrawer = /** @class */ (function () {
     ], LyDrawer.prototype, "_backdrop", void 0);
     __decorate([
         Input()
+    ], LyDrawer.prototype, "width", null);
+    __decorate([
+        Input()
+    ], LyDrawer.prototype, "height", null);
+    __decorate([
+        Input()
     ], LyDrawer.prototype, "opened", null);
     __decorate([
         Input()
@@ -405,10 +427,10 @@ var LyDrawer = /** @class */ (function () {
     ], LyDrawer.prototype, "spacingAfter", void 0);
     __decorate([
         Input()
-    ], LyDrawer.prototype, "width", void 0);
+    ], LyDrawer.prototype, "drawerWidth", void 0);
     __decorate([
         Input()
-    ], LyDrawer.prototype, "height", void 0);
+    ], LyDrawer.prototype, "drawerHeight", void 0);
     __decorate([
         Input()
     ], LyDrawer.prototype, "hasBackdrop", null);
@@ -455,7 +477,12 @@ var LyDrawerModule = /** @class */ (function () {
                 CommonModule,
                 LyCommonModule
             ],
-            exports: [LyDrawer, LyDrawerContainer, LyDrawerContent],
+            exports: [
+                LyDrawer,
+                LyDrawerContainer,
+                LyDrawerContent,
+                LyCommonModule
+            ],
             declarations: [LyDrawer, LyDrawerContainer, LyDrawerContent],
         })
     ], LyDrawerModule);

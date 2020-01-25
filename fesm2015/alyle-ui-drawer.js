@@ -97,6 +97,14 @@ let LyDrawer = LyDrawer_1 = class LyDrawer {
         this.mode = DEFAULT_MODE;
         this._renderer.addClass(this._el.nativeElement, _drawerContainer.classes.drawer);
     }
+    set width(_val) {
+        console.log(LyDrawer_1.и, this._el.nativeElement);
+        throw new Error(`${LyDrawer_1.и}: [width] is deprecated instead use [drawerWidth].`);
+    }
+    set height(_val) {
+        console.log(LyDrawer_1.и, this._el.nativeElement);
+        throw new Error(`${LyDrawer_1.и}: [height] is deprecated instead use [drawerHeight].`);
+    }
     set opened(val) {
         if (val !== this.opened) {
             this._opened = toBoolean(val);
@@ -127,8 +135,8 @@ let LyDrawer = LyDrawer_1 = class LyDrawer {
         const __mode = this.mode;
         const __forceModeOverOpened = this._forceModeOverOpened;
         const __opened = this.opened;
-        let __width = this.width;
-        const __height = this.height;
+        let __width = this.drawerWidth;
+        const __height = this.drawerHeight;
         const __position = this.position;
         const __spacingAbove = this.spacingAbove;
         const __spacingBelow = this.spacingBelow;
@@ -192,7 +200,7 @@ let LyDrawer = LyDrawer_1 = class LyDrawer {
             if (__width) {
                 const dirXSign = pos === DirPosition.left ? '-' : '+';
                 eachMedia(__width, (val, media) => {
-                    if ((__mode === 'over' || __forceModeOverOpened) && (val === '0' || val === 'over')) {
+                    if ((__mode === 'over' || __forceModeOverOpened) && (val === 0 || val === 'over')) {
                         return;
                     }
                     const newVal = val === 'over' ? '0px' : toPx(val);
@@ -371,6 +379,12 @@ __decorate([
 ], LyDrawer.prototype, "_backdrop", void 0);
 __decorate([
     Input()
+], LyDrawer.prototype, "width", null);
+__decorate([
+    Input()
+], LyDrawer.prototype, "height", null);
+__decorate([
+    Input()
 ], LyDrawer.prototype, "opened", null);
 __decorate([
     Input()
@@ -389,10 +403,10 @@ __decorate([
 ], LyDrawer.prototype, "spacingAfter", void 0);
 __decorate([
     Input()
-], LyDrawer.prototype, "width", void 0);
+], LyDrawer.prototype, "drawerWidth", void 0);
 __decorate([
     Input()
-], LyDrawer.prototype, "height", void 0);
+], LyDrawer.prototype, "drawerHeight", void 0);
 __decorate([
     Input()
 ], LyDrawer.prototype, "hasBackdrop", null);
@@ -436,7 +450,12 @@ LyDrawerModule = __decorate([
             CommonModule,
             LyCommonModule
         ],
-        exports: [LyDrawer, LyDrawerContainer, LyDrawerContent],
+        exports: [
+            LyDrawer,
+            LyDrawerContainer,
+            LyDrawerContent,
+            LyCommonModule
+        ],
         declarations: [LyDrawer, LyDrawerContainer, LyDrawerContent],
     })
 ], LyDrawerModule);

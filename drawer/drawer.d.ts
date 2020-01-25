@@ -90,14 +90,16 @@ export declare class LyDrawer implements OnChanges, AfterViewInit, OnDestroy {
     private _tabResizeSub;
     private _isOpen;
     _backdrop: TemplateRef<any>;
+    width: string;
+    height: string;
     opened: boolean;
     mode: LyDrawerMode;
     spacingAbove: string | number;
     spacingBelow: string | number;
     spacingBefore: string | number;
     spacingAfter: string | number;
-    width: number | string;
-    height: number | string;
+    drawerWidth: number | string;
+    drawerHeight: number | string;
     hasBackdrop: any;
     position: LyDrawerPosition;
     [0x1]: string;

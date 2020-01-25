@@ -148,6 +148,7 @@ var LyImageCropper = /** @class */ (function () {
     };
     LyImageCropper.prototype.selectInputEvent = function (img) {
         var _this = this;
+        this._currentInputElement = img.target;
         var _img = img.target;
         if (_img.files && _img.files.length !== 1) {
             return;
@@ -367,6 +368,11 @@ var LyImageCropper = /** @class */ (function () {
     };
     /** Clean the img cropper */
     LyImageCropper.prototype.clean = function () {
+        // fix choosing the same image does not load
+        if (this._currentInputElement) {
+            this._currentInputElement.value = '';
+            this._currentInputElement = null;
+        }
         if (this.isLoaded) {
             this._imgRect = {};
             this.offset = undefined;

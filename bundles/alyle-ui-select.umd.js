@@ -886,7 +886,7 @@
         Object.defineProperty(LyOption.prototype, "_color", {
             /** The color of Select */
             get: function () {
-                return this._select._selectionModel.isSelected(this) ? this._select._field.color : '';
+                return this._select._selectionModel.isSelected(this) ? this._select._field.color : null;
             },
             enumerable: true,
             configurable: true

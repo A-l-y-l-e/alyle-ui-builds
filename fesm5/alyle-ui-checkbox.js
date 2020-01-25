@@ -1,7 +1,7 @@
 import { __extends, __decorate } from 'tslib';
 import { forwardRef, EventEmitter, ElementRef, Renderer2, ChangeDetectorRef, NgZone, ViewChild, Input, Output, Component, ViewEncapsulation, ChangeDetectionStrategy, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { st2c, StyleCollection, LY_COMMON_STYLES, mixinDisableRipple, toBoolean, LyCoreStyles, LyTheme2, LyFocusState, StyleRenderer, LyHostClass, LyCommonModule } from '@alyle/ui';
+import { st2c, StyleCollection, LY_COMMON_STYLES, mixinDisableRipple, toBoolean, LyCoreStyles, LyTheme2, LyFocusState, StyleRenderer, Style, LyHostClass, LyCommonModule } from '@alyle/ui';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
 var STYLE_PRIORITY = -2;
@@ -52,16 +52,27 @@ var LyCheckboxBase = /** @class */ (function () {
 }());
 /** @docs-private */
 var LyCheckboxMixinBase = mixinDisableRipple(LyCheckboxBase);
+var ɵ0 = function (val) { return function (theme, ref) {
+    var checkbox = ref.selectorsOf(STYLES);
+    var color = theme.colorOf(val);
+    if (theme.checkbox && theme.checkbox.color) {
+        return theme.checkbox.color(checkbox, color);
+    }
+    throw new Error(LyCheckbox_1.и + ": styles theme.checkbox.color is undefined");
+}; };
+/**
+ * @dynamic
+ */
 var LyCheckbox = /** @class */ (function (_super) {
     __extends(LyCheckbox, _super);
-    function LyCheckbox(_commonStyles, _theme, _el, _renderer, _changeDetectorRef, _focusState, _styleRenderer, ngZone) {
+    function LyCheckbox(_commonStyles, _theme, _el, _renderer, _changeDetectorRef, _focusState, sRenderer, ngZone) {
         var _this = _super.call(this, _theme, ngZone) || this;
         _this._commonStyles = _commonStyles;
         _this._el = _el;
         _this._renderer = _renderer;
         _this._changeDetectorRef = _changeDetectorRef;
         _this._focusState = _focusState;
-        _this._styleRenderer = _styleRenderer;
+        _this.sRenderer = sRenderer;
         /**
          * styles
          * @ignore
@@ -80,26 +91,6 @@ var LyCheckbox = /** @class */ (function (_super) {
         return _this;
     }
     LyCheckbox_1 = LyCheckbox;
-    Object.defineProperty(LyCheckbox.prototype, "color", {
-        get: function () {
-            return this._color;
-        },
-        set: function (val) {
-            if (val !== this.color) {
-                this._color = val;
-                this._colorClass = this._styleRenderer.add(LyCheckbox_1.и + "--color-" + val, function (theme, ref) {
-                    var checkbox = ref.selectorsOf(STYLES);
-                    var color = theme.colorOf(val);
-                    if (theme.checkbox && theme.checkbox.color) {
-                        return theme.checkbox.color(checkbox, color);
-                    }
-                    throw new Error(LyCheckbox_1.и + ": styles theme.checkbox.color is undefined");
-                }, STYLE_PRIORITY, this._colorClass);
-            }
-        },
-        enumerable: true,
-        configurable: true
-    });
     Object.defineProperty(LyCheckbox.prototype, "checked", {
         /**
          * Whether the checkbox is checked.
@@ -246,8 +237,9 @@ var LyCheckbox = /** @class */ (function (_super) {
         Input()
     ], LyCheckbox.prototype, "value", void 0);
     __decorate([
-        Input()
-    ], LyCheckbox.prototype, "color", null);
+        Input(),
+        Style(ɵ0, STYLE_PRIORITY)
+    ], LyCheckbox.prototype, "color", void 0);
     __decorate([
         Input()
     ], LyCheckbox.prototype, "checked", null);
@@ -308,5 +300,5 @@ var LyCheckboxModule = /** @class */ (function () {
  * Generated bundle index. Do not edit.
  */
 
-export { LY_CHECKBOX_CONTROL_VALUE_ACCESSOR, LyCheckbox, LyCheckboxBase, LyCheckboxChange, LyCheckboxMixinBase, LyCheckboxModule, STYLES };
+export { LY_CHECKBOX_CONTROL_VALUE_ACCESSOR, LyCheckbox, LyCheckboxBase, LyCheckboxChange, LyCheckboxMixinBase, LyCheckboxModule, STYLES, ɵ0 };
 //# sourceMappingURL=alyle-ui-checkbox.js.map

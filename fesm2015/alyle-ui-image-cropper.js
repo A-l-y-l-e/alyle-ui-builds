@@ -135,6 +135,7 @@ let LyImageCropper = class LyImageCropper {
         }
     }
     selectInputEvent(img) {
+        this._currentInputElement = img.target;
         const _img = img.target;
         if (_img.files && _img.files.length !== 1) {
             return;
@@ -354,6 +355,11 @@ let LyImageCropper = class LyImageCropper {
     }
     /** Clean the img cropper */
     clean() {
+        // fix choosing the same image does not load
+        if (this._currentInputElement) {
+            this._currentInputElement.value = '';
+            this._currentInputElement = null;
+        }
         if (this.isLoaded) {
             this._imgRect = {};
             this.offset = undefined;

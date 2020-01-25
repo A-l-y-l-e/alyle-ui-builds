@@ -1,7 +1,7 @@
 import { __decorate } from 'tslib';
 import { forwardRef, EventEmitter, ElementRef, Renderer2, ChangeDetectorRef, NgZone, ViewChild, Input, Output, Component, ViewEncapsulation, ChangeDetectionStrategy, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { st2c, StyleCollection, LY_COMMON_STYLES, mixinDisableRipple, toBoolean, LyCoreStyles, LyTheme2, LyFocusState, StyleRenderer, LyHostClass, LyCommonModule } from '@alyle/ui';
+import { st2c, StyleCollection, LY_COMMON_STYLES, mixinDisableRipple, toBoolean, LyCoreStyles, LyTheme2, LyFocusState, StyleRenderer, Style, LyHostClass, LyCommonModule } from '@alyle/ui';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
 var LyCheckbox_1;
@@ -49,15 +49,26 @@ class LyCheckboxBase {
 }
 /** @docs-private */
 const LyCheckboxMixinBase = mixinDisableRipple(LyCheckboxBase);
+const ɵ0 = val => (theme, ref) => {
+    const checkbox = ref.selectorsOf(STYLES);
+    const color = theme.colorOf(val);
+    if (theme.checkbox && theme.checkbox.color) {
+        return theme.checkbox.color(checkbox, color);
+    }
+    throw new Error(`${LyCheckbox_1.и}: styles theme.checkbox.color is undefined`);
+};
+/**
+ * @dynamic
+ */
 let LyCheckbox = LyCheckbox_1 = class LyCheckbox extends LyCheckboxMixinBase {
-    constructor(_commonStyles, _theme, _el, _renderer, _changeDetectorRef, _focusState, _styleRenderer, ngZone) {
+    constructor(_commonStyles, _theme, _el, _renderer, _changeDetectorRef, _focusState, sRenderer, ngZone) {
         super(_theme, ngZone);
         this._commonStyles = _commonStyles;
         this._el = _el;
         this._renderer = _renderer;
         this._changeDetectorRef = _changeDetectorRef;
         this._focusState = _focusState;
-        this._styleRenderer = _styleRenderer;
+        this.sRenderer = sRenderer;
         /**
          * styles
          * @ignore
@@ -73,22 +84,6 @@ let LyCheckbox = LyCheckbox_1 = class LyCheckbox extends LyCheckboxMixinBase {
             radius: 'containerSize',
             percentageToIncrease: 150
         };
-    }
-    get color() {
-        return this._color;
-    }
-    set color(val) {
-        if (val !== this.color) {
-            this._color = val;
-            this._colorClass = this._styleRenderer.add(`${LyCheckbox_1.и}--color-${val}`, (theme, ref) => {
-                const checkbox = ref.selectorsOf(STYLES);
-                const color = theme.colorOf(val);
-                if (theme.checkbox && theme.checkbox.color) {
-                    return theme.checkbox.color(checkbox, color);
-                }
-                throw new Error(`${LyCheckbox_1.и}: styles theme.checkbox.color is undefined`);
-            }, STYLE_PRIORITY, this._colorClass);
-        }
     }
     /**
      * Whether the checkbox is checked.
@@ -223,8 +218,9 @@ __decorate([
     Input()
 ], LyCheckbox.prototype, "value", void 0);
 __decorate([
-    Input()
-], LyCheckbox.prototype, "color", null);
+    Input(),
+    Style(ɵ0, STYLE_PRIORITY)
+], LyCheckbox.prototype, "color", void 0);
 __decorate([
     Input()
 ], LyCheckbox.prototype, "checked", null);
@@ -280,5 +276,5 @@ LyCheckboxModule = __decorate([
  * Generated bundle index. Do not edit.
  */
 
-export { LY_CHECKBOX_CONTROL_VALUE_ACCESSOR, LyCheckbox, LyCheckboxBase, LyCheckboxChange, LyCheckboxMixinBase, LyCheckboxModule, STYLES };
+export { LY_CHECKBOX_CONTROL_VALUE_ACCESSOR, LyCheckbox, LyCheckboxBase, LyCheckboxChange, LyCheckboxMixinBase, LyCheckboxModule, STYLES, ɵ0 };
 //# sourceMappingURL=alyle-ui-checkbox.js.map

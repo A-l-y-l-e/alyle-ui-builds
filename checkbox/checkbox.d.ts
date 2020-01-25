@@ -1,6 +1,6 @@
 import { AfterViewInit, ChangeDetectorRef, ElementRef, EventEmitter, NgZone, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { ControlValueAccessor } from '@angular/forms';
-import { LyCoreStyles as LyCommonStyles, LyFocusState, LyTheme2, ThemeRef, StyleRenderer, StyleCollection, LyClasses, StyleTemplate } from '@alyle/ui';
+import { LyCoreStyles as LyCommonStyles, LyFocusState, LyTheme2, ThemeRef, StyleRenderer, StyleCollection, LyClasses, StyleTemplate, WithStyles } from '@alyle/ui';
 import { Color } from '@alyle/ui/color';
 export interface LyCheckboxTheme {
     /** Styles for Checkbox Component. */
@@ -43,13 +43,16 @@ export declare class LyCheckboxBase {
 }
 /** @docs-private */
 export declare const LyCheckboxMixinBase: import("@alyle/ui/src/common/constructor").Constructor<import("@alyle/ui/src/common/disable-ripple").CanDisableRipple> & typeof LyCheckboxBase;
-export declare class LyCheckbox extends LyCheckboxMixinBase implements ControlValueAccessor, OnInit, AfterViewInit, OnDestroy {
+/**
+ * @dynamic
+ */
+export declare class LyCheckbox extends LyCheckboxMixinBase implements WithStyles, ControlValueAccessor, OnInit, AfterViewInit, OnDestroy {
     _commonStyles: LyCommonStyles;
     private _el;
     private _renderer;
     private _changeDetectorRef;
     private _focusState;
-    private _styleRenderer;
+    readonly sRenderer: StyleRenderer;
     /** @ignore */
     static readonly и = "LyCheckbox";
     /**
@@ -78,7 +81,8 @@ export declare class LyCheckbox extends LyCheckboxMixinBase implements ControlVa
     _innerContainer: ElementRef<HTMLDivElement>;
     /** The value attribute of the native input element */
     value: string;
-    color: string;
+    /** Checkbox color when checked */
+    color: string | null;
     /**
      * Whether the checkbox is checked.
      */
@@ -91,7 +95,7 @@ export declare class LyCheckbox extends LyCheckboxMixinBase implements ControlVa
     _inputElement: ElementRef<HTMLInputElement>;
     _onTouched: () => any;
     private _controlValueAccessorChangeFn;
-    constructor(_commonStyles: LyCommonStyles, _theme: LyTheme2, _el: ElementRef, _renderer: Renderer2, _changeDetectorRef: ChangeDetectorRef, _focusState: LyFocusState, _styleRenderer: StyleRenderer, ngZone: NgZone);
+    constructor(_commonStyles: LyCommonStyles, _theme: LyTheme2, _el: ElementRef, _renderer: Renderer2, _changeDetectorRef: ChangeDetectorRef, _focusState: LyFocusState, sRenderer: StyleRenderer, ngZone: NgZone);
     ngOnInit(): void;
     ngAfterViewInit(): void;
     ngOnDestroy(): void;
